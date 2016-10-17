@@ -19,7 +19,7 @@ import net.minecraftforge.common.BiomeDictionary.Type;
 import net.minecraftforge.fml.common.IWorldGenerator;
 
 public class ChemOresGenerator implements IWorldGenerator {
-// Coal Ores
+
 	public static int mineralFrequency; public static int mineralMinVein; public static int mineralMaxVein;
 	public static int mineralMinLevel; public static int mineralMaxLevel;
 	

@@ -148,7 +148,7 @@ public class ChemBook extends ItemWrittenBook {
         				+ " - Mine Crawler allows to automatically mine blocks with different modes and functions. It is assembled in its Assembling Table\n"))));
         	bookPages.appendTag(new NBTTagString(ITextComponent.Serializer.componentToJson(new TextComponentString(
         				" - Redstone Laser allows to transfer the redstone as a laser beam signal up to 30 blocks away"))));
-        	
+
         	bookPages.appendTag(new NBTTagString(ITextComponent.Serializer.componentToJson(new TextComponentString(
         				"MINE CRAWLER.\n"
         			  + "The Mine Crawler is made of several parts defining its functions and a tier level defining the mining grid. These parts are assembled in the Assembling Table where the machine can be also dismantled and reconfigured.\n"))));

@@ -17,9 +17,9 @@ public class TileEntityLaserBeam extends TileEntity implements ITickable {
 	    EnumFacing enumfacing = state.getValue(LaserBeam.FACING);
 
 	    if(!worldObj.isRemote){
-	    	if( worldObj.getBlockState(pos.offset(enumfacing.getOpposite(), 1)).getBlock() != ModContents.laserBeam && 
-	    		worldObj.getBlockState(pos.offset(enumfacing.getOpposite(), 1)).getBlock() != ModContents.laserRedstoneTx &&
-	    		worldObj.getBlockState(pos.offset(enumfacing.getOpposite(), 1)).getBlock() != ModContents.laserSplitter){
+	    	if( worldObj.getBlockState(pos.offset(enumfacing.getOpposite())).getBlock() != ModContents.laserBeam && 
+	    		worldObj.getBlockState(pos.offset(enumfacing.getOpposite())).getBlock() != ModContents.laserRedstoneTx &&
+	    		worldObj.getBlockState(pos.offset(enumfacing.getOpposite())).getBlock() != ModContents.laserSplitter){
 	    		worldObj.setBlockState(pos, Blocks.AIR.getDefaultState());
 	    	}
 	    }

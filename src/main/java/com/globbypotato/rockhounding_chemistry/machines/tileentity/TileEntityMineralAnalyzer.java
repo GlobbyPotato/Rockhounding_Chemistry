@@ -346,9 +346,7 @@ public class TileEntityMineralAnalyzer extends TileEntityLockable implements ITi
     public void update(){
     	if(slots[fuelSlot] != null){fuelHandler();}
     	if(!worldObj.isRemote){
-	    	if(canAnalyze()){
-	    		execute();
-	    	}
+	    	if(canAnalyze()){ execute(); }
     	}
     }
 

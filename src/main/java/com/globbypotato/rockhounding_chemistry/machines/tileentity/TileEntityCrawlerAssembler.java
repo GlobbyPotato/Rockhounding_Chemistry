@@ -275,7 +275,6 @@ public class TileEntityCrawlerAssembler extends TileEntityLockable implements IT
     	}
     }
 
-
 	private void assemblyCrawler() {
     	boolean flag = false;
 		cookTime++;
@@ -293,38 +292,14 @@ public class TileEntityCrawlerAssembler extends TileEntityLockable implements IT
 	private boolean hasCasing() {return slots[0] != null && slots[0].getItem() == ModContents.miscItems  && slots[0].getItemDamage() == 12  && slots[0].stackSize == 1;}
 	private boolean hasCache() {return slots[memorySlot] != null && slots[memorySlot].getItem() == ModContents.miscItems  && slots[memorySlot].getItemDamage() == 9  && slots[memorySlot].stackSize == 1;}
 	private boolean hasGrid() {
-		if(slots[3] == null && 
-		   slots[4] == null && 
-		   slots[5] == null && 
-		   slots[6] == null &&
-		   hasMiningHead(7) &&		   
-		   slots[8] == null ){
-			getTier = 1;
-		   return true;
-		}else if(slots[3] == null && 
-		   hasMiningHead(4) &&		   
-		   slots[5] == null && 
-		   slots[6] == null &&
-		   hasMiningHead(7) &&		   
-		   slots[8] == null ){
-			getTier = 2;
-		   return true;
-		}else if(slots[3] == null && 
-		   slots[4] == null && 
-		   slots[5] == null && 
-		   hasMiningHead(6) &&		   
-		   hasMiningHead(7) &&		   
-		   hasMiningHead(8) ){
-			getTier = 3;
-		   return true;
-		}else if( hasMiningHead(3) &&		   
-		   hasMiningHead(4) &&		   
-		   hasMiningHead(5) &&		   
-		   hasMiningHead(6) &&		   
-		   hasMiningHead(7) &&		   
-		   hasMiningHead(8) ){		 
-			getTier = 4;
-		   return true;
+		if(slots[3] == null &&  slots[4] == null && slots[5] == null && slots[6] == null && hasMiningHead(7) && slots[8] == null ){
+			getTier = 1; return true;
+		}else if(slots[3] == null &&  hasMiningHead(4) && slots[5] == null && slots[6] == null && hasMiningHead(7) && slots[8] == null ){
+			getTier = 2; return true;
+		}else if(slots[3] == null && slots[4] == null && slots[5] == null && hasMiningHead(6) && hasMiningHead(7) && hasMiningHead(8) ){
+			getTier = 3; return true;
+		}else if( hasMiningHead(3) && hasMiningHead(4) && hasMiningHead(5) && hasMiningHead(6) && hasMiningHead(7) && hasMiningHead(8) ){		 
+			getTier = 4; return true;
 		}
 		return false;
 	}
@@ -368,7 +343,6 @@ public class TileEntityCrawlerAssembler extends TileEntityLockable implements IT
 		return slots[i] != null && slots[i].getItem() == ModContents.miscItems  && slots[i].getItemDamage() == 11  && slots[i].stackSize == 1;
 	}
 
-
 	private void dismantleCrawler() {
     	boolean flag = false;
 		cookTime++;
@@ -385,7 +359,6 @@ public class TileEntityCrawlerAssembler extends TileEntityLockable implements IT
 				&& slots[7] == null && slots[8] == null && slots[fillerSlot] == null && slots[absorbSlot] == null && slots[tunnelerSlot] == null && slots[lighterSlot] == null && slots[railmakerSlot] == null  && slots[outputSlot] == null
 				&& (slots[0] != null && slots[0].getItem() == Item.getItemFromBlock(ModContents.mineCrawler));
 	}
-
 
 	private void handleDismantler() {
 		slots[outputSlot] = new ItemStack(ModContents.miscItems, 1, 12);
@@ -442,53 +415,54 @@ public class TileEntityCrawlerAssembler extends TileEntityLockable implements IT
 		return slots[chargeSlot] != null && slots[chargeSlot].getItem() == Item.getItemFromBlock(ModContents.mineCrawler);
 	}
 	private void loadCrawler() {
+		int getNbt;
 		if(slots[chargeSlot].hasTagCompound()){
 			if(slots[chargeSlot].getTagCompound().hasKey(ModArray.glassName)){
 				if(slots[loaderSlot] != null && slots[loaderSlot].getItem() == Item.getItemFromBlock(Blocks.GLASS)){
-					int getNbt = slots[chargeSlot].getTagCompound().getInteger(ModArray.glassName) + slots[loaderSlot].stackSize;
+					getNbt = slots[chargeSlot].getTagCompound().getInteger(ModArray.glassName) + slots[loaderSlot].stackSize;
 					slots[chargeSlot].getTagCompound().setInteger(ModArray.glassName, getNbt);
 					slots[loaderSlot] = null;
 				}
 			}
 			if(slots[chargeSlot].getTagCompound().hasKey(ModArray.cobbleName)){
 				if(slots[loaderSlot] != null && slots[loaderSlot].getItem() == Item.getItemFromBlock(Blocks.COBBLESTONE)){
-					int getNbt = slots[chargeSlot].getTagCompound().getInteger(ModArray.cobbleName) + slots[loaderSlot].stackSize;
+					getNbt = slots[chargeSlot].getTagCompound().getInteger(ModArray.cobbleName) + slots[loaderSlot].stackSize;
 					slots[chargeSlot].getTagCompound().setInteger(ModArray.cobbleName, getNbt);
 					slots[loaderSlot] = null;
 				}
 			}
 			if(slots[chargeSlot].getTagCompound().hasKey(ModArray.torchName)){
 				if(slots[loaderSlot] != null && slots[loaderSlot].getItem() == Item.getItemFromBlock(Blocks.TORCH)){
-					int getNbt = slots[chargeSlot].getTagCompound().getInteger(ModArray.torchName) + slots[loaderSlot].stackSize;
+					getNbt = slots[chargeSlot].getTagCompound().getInteger(ModArray.torchName) + slots[loaderSlot].stackSize;
 					slots[chargeSlot].getTagCompound().setInteger(ModArray.torchName, getNbt);
 					slots[loaderSlot] = null;
 				}
 			}
 			if(slots[chargeSlot].getTagCompound().hasKey(ModArray.railName)){
 				if(slots[loaderSlot] != null && slots[loaderSlot].getItem() == Item.getItemFromBlock(Blocks.RAIL)){
-					int getNbt = slots[chargeSlot].getTagCompound().getInteger(ModArray.railName) + slots[loaderSlot].stackSize;
+					getNbt = slots[chargeSlot].getTagCompound().getInteger(ModArray.railName) + slots[loaderSlot].stackSize;
 					slots[chargeSlot].getTagCompound().setInteger(ModArray.railName, getNbt);
 					slots[loaderSlot] = null;
 				}
 			}
 			if(hasLoadedCache()){
 				if(slots[loaderSlot].getTagCompound().hasKey(ModArray.glassName)){
-					int getNbt = slots[chargeSlot].getTagCompound().getInteger(ModArray.glassName) + slots[loaderSlot].getTagCompound().getInteger(ModArray.glassName);
+					getNbt = slots[chargeSlot].getTagCompound().getInteger(ModArray.glassName) + slots[loaderSlot].getTagCompound().getInteger(ModArray.glassName);
 					slots[chargeSlot].getTagCompound().setInteger(ModArray.glassName, getNbt);
 					slots[loaderSlot].getTagCompound().setInteger(ModArray.glassName, 0);
 				}
 				if(slots[loaderSlot].getTagCompound().hasKey(ModArray.cobbleName)){
-					int getNbt = slots[chargeSlot].getTagCompound().getInteger(ModArray.cobbleName) + slots[loaderSlot].getTagCompound().getInteger(ModArray.cobbleName);
+					getNbt = slots[chargeSlot].getTagCompound().getInteger(ModArray.cobbleName) + slots[loaderSlot].getTagCompound().getInteger(ModArray.cobbleName);
 					slots[chargeSlot].getTagCompound().setInteger(ModArray.cobbleName, getNbt);
 					slots[loaderSlot].getTagCompound().setInteger(ModArray.cobbleName, 0);
 				}
 				if(slots[loaderSlot].getTagCompound().hasKey(ModArray.torchName)){
-					int getNbt = slots[chargeSlot].getTagCompound().getInteger(ModArray.torchName) + slots[loaderSlot].getTagCompound().getInteger(ModArray.torchName);
+					getNbt = slots[chargeSlot].getTagCompound().getInteger(ModArray.torchName) + slots[loaderSlot].getTagCompound().getInteger(ModArray.torchName);
 					slots[chargeSlot].getTagCompound().setInteger(ModArray.torchName, getNbt);
 					slots[loaderSlot].getTagCompound().setInteger(ModArray.torchName, 0);
 				}
 				if(slots[loaderSlot].getTagCompound().hasKey(ModArray.railName)){
-					int getNbt = slots[chargeSlot].getTagCompound().getInteger(ModArray.railName) + slots[loaderSlot].getTagCompound().getInteger(ModArray.railName);
+					getNbt = slots[chargeSlot].getTagCompound().getInteger(ModArray.railName) + slots[loaderSlot].getTagCompound().getInteger(ModArray.railName);
 					slots[chargeSlot].getTagCompound().setInteger(ModArray.railName, getNbt);
 					slots[loaderSlot].getTagCompound().setInteger(ModArray.railName, 0);
 				}

@@ -60,6 +60,7 @@ public class TileEntityChemicalExtractor extends TileEntityLockable implements I
     private int consumedSyng = 1;
     private int consumedFluo = 2;
 	ItemStack dustStack;
+
 	private int scrollSlots;
 	private int scrollMin = 6;
 	private int scrollMax = 61;
@@ -69,8 +70,8 @@ public class TileEntityChemicalExtractor extends TileEntityLockable implements I
 
     public static int extractingSpeed;
 	public static int extractingFactor;
-	private int redstoneCharge = extractingSpeed;
 
+	private int redstoneCharge = extractingSpeed;
     private String furnaceCustomName;
 
 	private int inputSlot = 0;
@@ -466,11 +467,9 @@ public class TileEntityChemicalExtractor extends TileEntityLockable implements I
     @Override
     public void update(){
     	if(slots[fuelSlot] != null){fuelHandler();}
-    	if(slots[redstoneSlot] != null){redstoneHandler();}
+    	if(slots[redstoneSlot] != null && !canInduct()){redstoneHandler();}
     	if(!worldObj.isRemote){
-	    	if(canExtractElements()){
-	    		execute();
-	    	}
+	    	if(canExtractElements()){execute();}
 	    	if(hasCylinder()){transferDust();}
     	}
 
@@ -509,7 +508,7 @@ public class TileEntityChemicalExtractor extends TileEntityLockable implements I
 
 	private void execute() {
     	boolean flag = false;
-		cookTime++; powerCount--; redstoneCount -= 2;
+		cookTime++; powerCount--; redstoneCount--;
 			if(cookTime >= machineSpeed()) {
 				cookTime = 0; 
 				handleOutput();
@@ -1044,7 +1043,7 @@ public class TileEntityChemicalExtractor extends TileEntityLockable implements I
 		return  isValidMineral()
 				&& (hasConsumable() && isConsumableUsable())
 				&& powerCount >= machineSpeed()
-				&& redstoneCount >= machineSpeed() * 2
+				&& redstoneCount >= machineSpeed()
 				&& hasAcid(syngSlot, 5, consumedSyng) && hasAcid(fluoSlot, 4, consumedFluo);
 	}
 
