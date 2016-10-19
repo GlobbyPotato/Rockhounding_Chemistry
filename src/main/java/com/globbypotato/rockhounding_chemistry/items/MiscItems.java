@@ -2,45 +2,35 @@ package com.globbypotato.rockhounding_chemistry.items;
 
 import java.util.List;
 
-import com.globbypotato.rockhounding_chemistry.ModContents;
 import com.globbypotato.rockhounding_chemistry.handlers.ModArray;
-import com.globbypotato.rockhounding_chemistry.handlers.Reference;
-import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityLabOven;
+import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockLiquid;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.stats.StatList;
-import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class MiscItems extends Item {
+public class MiscItems extends ItemBase{
+	static int crawlerMemoryMeta = 6;
+	static int fluidContainerMeta = 5;
+	static int ingotPatternMeta = 13;
+	
 	private String[] itemArray;
-
+	
 	public MiscItems(String name, String[] array) {
-		super();
-		setRegistryName(name);
-		setUnlocalizedName(getRegistryName().toString());
+		super(name);
 		setHasSubtypes(true);
-		setCreativeTab(Reference.RockhoundingChemistry);
 		this.itemArray = array;
 	}
 
@@ -59,59 +49,35 @@ public class MiscItems extends Item {
 
 	@Override
     public void onCreated(ItemStack itemstack, World world, EntityPlayer player) {
-		if(itemstack.getItemDamage() == 2 || itemstack.getItemDamage() == 5 || itemstack.getItemDamage() == 9 || itemstack.getItemDamage() == 16 ){
+		if(itemstack.getItemDamage() == crawlerMemoryMeta || itemstack.getItemDamage() == ingotPatternMeta){
 			setItemNbt(itemstack);
 		}
     }
 
     private static void setItemNbt(ItemStack itemstack) {
-    	if(itemstack.getItemDamage() == 2){
-        	itemstack.setTagCompound(new NBTTagCompound());
-            itemstack.getTagCompound().setInteger(ModArray.toolUses, ModContents.gearUses);
-    	}
-    	if(itemstack.getItemDamage() == 5){
-        	itemstack.setTagCompound(new NBTTagCompound());
-            itemstack.getTagCompound().setInteger(ModArray.toolUses, ModContents.tubeUses);
-    	}
-    	if(itemstack.getItemDamage() == 9){
+    	if(itemstack.getItemDamage() == crawlerMemoryMeta){
         	itemstack.setTagCompound(new NBTTagCompound());
             itemstack.getTagCompound().setInteger(ModArray.cobbleName, 0);
             itemstack.getTagCompound().setInteger(ModArray.glassName, 0);
             itemstack.getTagCompound().setInteger(ModArray.torchName, 0);
             itemstack.getTagCompound().setInteger(ModArray.railName, 0);
     	}
-    	if(itemstack.getItemDamage() == 16){
+    	if(itemstack.getItemDamage() == ingotPatternMeta){
         	itemstack.setTagCompound(new NBTTagCompound());
-            itemstack.getTagCompound().setInteger(ModArray.toolUses, ModContents.patternUses);
+            itemstack.getTagCompound().setInteger(ModArray.toolUses, ModConfig.patternUses);
     	}
 	}
 
 	@Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack itemstack, EntityPlayer player, List<String> tooltip, boolean held) {
-    	if(itemstack.getItemDamage() == 2){
-            if(itemstack.hasTagCompound()) {
-            	int uses = itemstack.getTagCompound().getInteger(ModArray.toolUses);
-            	tooltip.add(TextFormatting.DARK_GRAY + ModArray.toolUses + ": " + TextFormatting.WHITE + uses + "/" + ModContents.gearUses);
-            }else{
-            	setItemNbt(itemstack);
-            }
-    	}
-    	if(itemstack.getItemDamage() == 5){
-            if(itemstack.hasTagCompound()) {
-            	int uses = itemstack.getTagCompound().getInteger(ModArray.toolUses);
-            	tooltip.add(TextFormatting.DARK_GRAY + ModArray.toolUses + ": " + TextFormatting.WHITE + uses + "/" + ModContents.tubeUses);
-            }else{
-            	setItemNbt(itemstack);
-            }
-    	}
-    	if(itemstack.getItemDamage() == 8){
+    	if(itemstack.getItemDamage() == fluidContainerMeta){
             if(itemstack.hasTagCompound()) {
             	String blockName = itemstack.getTagCompound().getString("Block");
             	tooltip.add(TextFormatting.DARK_GRAY + "Contained Fluid" + ": " + TextFormatting.YELLOW + blockName);
             }
         }
-    	if(itemstack.getItemDamage() == 9){
+    	if(itemstack.getItemDamage() == crawlerMemoryMeta){
             if(itemstack.hasTagCompound()) {
             	int numCobble = itemstack.getTagCompound().getInteger(ModArray.cobbleName);
             	int numGlass = itemstack.getTagCompound().getInteger(ModArray.glassName);
@@ -123,10 +89,10 @@ public class MiscItems extends Item {
             	tooltip.add(TextFormatting.DARK_GRAY + ModArray.railName + ": " + TextFormatting.YELLOW + numRail);
             }
     	}
-    	if(itemstack.getItemDamage() == 16){
+    	if(itemstack.getItemDamage() == ingotPatternMeta){
             if(itemstack.hasTagCompound()) {
             	int uses = itemstack.getTagCompound().getInteger(ModArray.toolUses);
-            	tooltip.add(TextFormatting.DARK_GRAY + ModArray.toolUses + ": " + TextFormatting.WHITE + uses + "/" + ModContents.patternUses);
+            	tooltip.add(TextFormatting.DARK_GRAY + ModArray.toolUses + ": " + TextFormatting.WHITE + uses + "/" + ModConfig.patternUses);
             }else{
             	setItemNbt(itemstack);
             }
@@ -135,7 +101,7 @@ public class MiscItems extends Item {
 
 	@Override
     public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ){
-		if(stack.getItemDamage() == 8){
+		if(stack.getItemDamage() == fluidContainerMeta){
 	        if (!playerIn.canPlayerEdit(pos.offset(facing), facing, stack)){
 	            return EnumActionResult.FAIL;
 	        }else{

@@ -4,9 +4,10 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import com.globbypotato.rockhounding_chemistry.ModContents;
+import com.globbypotato.rockhounding_chemistry.blocks.ModBlocks;
 import com.globbypotato.rockhounding_chemistry.handlers.ModArray;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
+import com.globbypotato.rockhounding_chemistry.items.ModItems;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityMineCrawler;
 
 import net.minecraft.block.Block;
@@ -18,12 +19,9 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Enchantments;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -66,7 +64,7 @@ public class MineCrawler extends Block implements ITileEntityProvider {
     @Nullable
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune){
-        return Item.getItemFromBlock(ModContents.mineCrawler);
+        return Item.getItemFromBlock(ModBlocks.mineCrawler);
     }
 
     @Override
@@ -85,7 +83,7 @@ public class MineCrawler extends Block implements ITileEntityProvider {
 
     @Override
     public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state){
-        return new ItemStack(ModContents.mineCrawler);
+        return new ItemStack(ModBlocks.mineCrawler);
     }
 
     public EnumBlockRenderType getRenderType(IBlockState state){
@@ -175,7 +173,7 @@ public class MineCrawler extends Block implements ITileEntityProvider {
         TileEntity tileentity = world.getTileEntity(pos);
         if(tileentity != null && tileentity instanceof TileEntityMineCrawler){
         	if(hasWrench(player, hand)){
-    			ItemStack dropCrawler = new ItemStack(ModContents.mineCrawler);
+    			ItemStack dropCrawler = new ItemStack(ModBlocks.mineCrawler);
     			dropCrawler.setTagCompound(new NBTTagCompound());
     			dropCrawler.getTagCompound().setInteger(ModArray.tierName, ((TileEntityMineCrawler)tileentity).numTier);
     			dropCrawler.getTagCompound().setInteger(ModArray.modeName, ((TileEntityMineCrawler)tileentity).numMode);
@@ -198,7 +196,7 @@ public class MineCrawler extends Block implements ITileEntityProvider {
     }
 
 	private boolean hasWrench(EntityPlayer player, EnumHand hand) {
-		return player.getHeldItem(hand) != null && player.getHeldItem(hand).getItem() == ModContents.miscItems && player.getHeldItem(hand).getItemDamage() == 15;
+		return player.getHeldItem(hand) != null && player.getHeldItem(hand).getItem() == ModItems.miscItems && player.getHeldItem(hand).getItemDamage() == 15;
 	}
 
 	private void dropItemStack(World worldIn, ItemStack itemStack, BlockPos pos) {

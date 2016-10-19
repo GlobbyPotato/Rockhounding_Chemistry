@@ -1,11 +1,11 @@
 package com.globbypotato.rockhounding_chemistry.machines.tileentity;
 
-import com.globbypotato.rockhounding_chemistry.ModContents;
+import com.globbypotato.rockhounding_chemistry.blocks.ModBlocks;
+import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.machines.SaltMaker;
 import com.globbypotato.rockhounding_chemistry.machines.SaltMaker.EnumType;
 
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
@@ -32,7 +32,7 @@ public class TileEntitySaltMaker extends TileEntity implements ITickable {
 			if(type.getMetadata() == 0){
 				evaporateCount = -1;
 				if(canRainRefill(biome)){
-	  		    	state = ModContents.saltMaker.getStateFromMeta(1);
+	  		    	state = ModBlocks.saltMaker.getStateFromMeta(1);
 					worldObj.setBlockState(pos, state);
 				}
 			}
@@ -41,7 +41,7 @@ public class TileEntitySaltMaker extends TileEntity implements ITickable {
 			if(type.getMetadata() > 0){
 				if(canRainMelt(biome)){
 					evaporateCount = -1;
-	  		    	state = ModContents.saltMaker.getStateFromMeta(1);
+	  		    	state = ModBlocks.saltMaker.getStateFromMeta(1);
 					worldObj.setBlockState(pos, state);
 				}
 			}
@@ -50,7 +50,7 @@ public class TileEntitySaltMaker extends TileEntity implements ITickable {
 			if(type.getMetadata() > 0 && type.getMetadata() < 6){
 				if(evaporateCount >= calculatedEvaporation(biome)){
 					evaporateCount = -1;
-	  		    	state = ModContents.saltMaker.getStateFromMeta(type.getMetadata() + 1);
+	  		    	state = ModBlocks.saltMaker.getStateFromMeta(type.getMetadata() + 1);
 					worldObj.setBlockState(pos, state);
 				}else{
 					if(canEvaporate()){
@@ -58,7 +58,7 @@ public class TileEntitySaltMaker extends TileEntity implements ITickable {
 					}else{
 						if(canRainRefill(biome)){
 							evaporateCount = -1;
-			  		    	state = ModContents.saltMaker.getStateFromMeta(1);
+			  		    	state = ModBlocks.saltMaker.getStateFromMeta(1);
 							worldObj.setBlockState(pos, state);
 						}
 					}
@@ -89,7 +89,7 @@ public class TileEntitySaltMaker extends TileEntity implements ITickable {
 	}
 
 	private boolean canRainRefill(Biome biome) {
-		return worldObj.isRaining() && ModContents.enableRainRefill && !BiomeDictionary.isBiomeOfType(biome, Type.SANDY);
+		return worldObj.isRaining() && ModConfig.enableRainRefill && !BiomeDictionary.isBiomeOfType(biome, Type.SANDY);
 	}
 
     @Override

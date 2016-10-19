@@ -4,8 +4,8 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
 
-import com.globbypotato.rockhounding_chemistry.ModContents;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
+import com.globbypotato.rockhounding_chemistry.items.ModItems;
 import com.google.common.collect.Multimap;
 
 import net.minecraft.block.Block;
@@ -22,6 +22,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -32,6 +33,7 @@ public class ScalBat extends ItemSword {
 		super(material);
 		setRegistryName(name);
 		setUnlocalizedName(getRegistryName().toString());
+		GameRegistry.register(this);
         this.maxStackSize = 1;
 		this.setCreativeTab(Reference.RockhoundingChemistry);
         this.material = material;
@@ -88,14 +90,14 @@ public class ScalBat extends ItemSword {
 
     @Override
     public boolean getIsRepairable(ItemStack toRepair, ItemStack repair){
-        ItemStack mat = new ItemStack(ModContents.alloyItems, 1, 4);
+        ItemStack mat = new ItemStack(ModItems.alloyItems, 1, 4);
         if (mat != null && net.minecraftforge.oredict.OreDictionary.itemMatches(mat, repair, false)) return true;
         return super.getIsRepairable(toRepair, repair);
     }
 
     
     /**
-     * the following 2 methods are taken from @Choonster from #minecraftforum
+     * the following 2 methods are taken 	from @Choonster from #minecraftforum
      */
 
 	@Override

@@ -7,27 +7,27 @@ import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerChemicalExtractor;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityChemicalExtractor;
 
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GuiChemicalExtractor extends GuiContainer {
-	
-    private static final ResourceLocation GUI_TEXTURES = new ResourceLocation(Reference.MODID + ":textures/gui/guichemicalextractor.png");
+public class GuiChemicalExtractor extends GuiBase {
     /** The player inventory bound to this GUI. */
     private final InventoryPlayer playerInventory;
     private final TileEntityChemicalExtractor chemicalExtractor;
+	public static final int WIDTH = 245;
+	public static final int HEIGHT = 256;
 
-    public GuiChemicalExtractor(InventoryPlayer playerInv, TileEntityChemicalExtractor furnaceInv){
-        super(new ContainerChemicalExtractor(playerInv, furnaceInv));
+	
+    public GuiChemicalExtractor(InventoryPlayer playerInv, TileEntityChemicalExtractor tile){
+        super(tile,new ContainerChemicalExtractor(playerInv, tile));
         this.playerInventory = playerInv;
-        this.chemicalExtractor = furnaceInv;
-		this.xSize = 245;
-		this.ySize = 256;
+        this.chemicalExtractor = tile;
+        TEXTURE = new ResourceLocation(Reference.MODID + ":textures/gui/guichemicalextractor.png");
+		this.xSize = WIDTH;
+		this.ySize = HEIGHT;
     }
 
     @Override
@@ -38,25 +38,25 @@ public class GuiChemicalExtractor extends GuiContainer {
 	   //bars progression (fuel-redstone)
 	   if(mouseX >= 11+x && mouseX <= 20+x && mouseY >= 40+y && mouseY <= 89+y){
 		   String[] text = {this.chemicalExtractor.getField(0) + "/" + this.chemicalExtractor.getField(1) + " ticks"};
-	       List tooltip = Arrays.asList(text);
+		   List<String> tooltip = Arrays.asList(text);
 		   drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
 	   }
 	   if(mouseX >= 31+x && mouseX <= 40+x && mouseY >= 40+y && mouseY <= 89+y){
 		   String[] text = {this.chemicalExtractor.getField(4) + "/" + this.chemicalExtractor.getField(5) + " RF"};
-	       List tooltip = Arrays.asList(text);
+		   List<String> tooltip = Arrays.asList(text);
 		   drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
 	   }
     }
 
     public void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
-        String s = this.chemicalExtractor.getDisplayName().getUnformattedText();
-        this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
+    	super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+        //String s = this.chemicalExtractor.getDisplayName().getUnformattedText();
+        //this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
         this.fontRendererObj.drawString(this.playerInventory.getDisplayName().getUnformattedText(), 8, this.ySize - 96 + 2, 4210752);
     }
 
     public void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY){
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.getTextureManager().bindTexture(GUI_TEXTURES);
+    	super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
         int i = (this.width - this.xSize) / 2;
         int j = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
@@ -73,15 +73,16 @@ public class GuiChemicalExtractor extends GuiContainer {
         //smelt bar
         int l = this.getCookProgressScaled(36);
         this.drawTexturedModalRect(i + 62, j + 97, 250, 50, 6, 36 - l);
+  
         
 		//cabinet bars
-		for(int hSlot = 0; hSlot <= 7; hSlot++){
-			for(int vSlot = 0; vSlot <= 6; vSlot++){
-				int slotID = (vSlot * 8) + hSlot;
+		for(int hSlot = 0; hSlot <= 6; hSlot++){
+			for(int vSlot = 0; vSlot <= 7; vSlot++){
+				int slotID = (hSlot * 8) + vSlot;
 	            int k = this.getCabinetScaled(19);
 				int cab = (this.chemicalExtractor.elementList[slotID] * 19) / this.chemicalExtractor.extractingFactor;
 				if(cab > 19){cab = 19;}
-				this.drawTexturedModalRect(i + 100 + (19 * hSlot), j + 19 + (21 * vSlot), 245, 89, 4, 19 - cab);
+				this.drawTexturedModalRect(i + 100 + (19 * vSlot), j + 19 + (21 * hSlot), 245, 89, 4, 19 - cab);
 			}
 		}
     }

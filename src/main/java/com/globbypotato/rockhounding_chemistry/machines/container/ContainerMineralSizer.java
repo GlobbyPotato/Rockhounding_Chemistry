@@ -1,29 +1,42 @@
 package com.globbypotato.rockhounding_chemistry.machines.container;
 
-import javax.annotation.Nullable;
-
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityMineralSizer;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
-import net.minecraft.inventory.Slot;
-import net.minecraft.inventory.SlotFurnaceFuel;
-import net.minecraft.inventory.SlotFurnaceOutput;
-import net.minecraft.item.ItemStack;
+import net.minecraft.inventory.IInventory;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.SlotItemHandler;
 
-public class ContainerMineralSizer extends Container{
-    private TileEntityMineralSizer mineralSizer;
+public class ContainerMineralSizer extends ContainerBase<TileEntityMineralSizer>{
     private int cookTime;
     private int totalCookTime;
     private int powerCount;
     private int powerCurrent;
 
+	public ContainerMineralSizer(IInventory playerInventory, TileEntityMineralSizer te) {
+		super(playerInventory,te);
+	}
+	
+	@Override
+	protected void addOwnSlots() {
+		IItemHandler input = tile.getInput();
+		IItemHandler output = tile.getOutput();
+		
+		 this.addSlotToContainer(new SlotItemHandler(input, 0, 44, 28));//input
+	        this.addSlotToContainer(new SlotItemHandler(input, 1, 8, 20));//fuel
+	        this.addSlotToContainer(new SlotItemHandler(input, 2, 81, 48));//consumable
+	        this.addSlotToContainer(new SlotItemHandler(input, 3, 23, 74));//inductor
+	        
+	        this.addSlotToContainer(new SlotItemHandler(output, 0, 120, 48));//output
+	        this.addSlotToContainer(new SlotItemHandler(output, 1, 144, 48));//secondary
+	        this.addSlotToContainer(new SlotItemHandler(output, 2, 120, 72));//waste
+
+	}
+	/*
     public ContainerMineralSizer(InventoryPlayer playerInventory, TileEntityMineralSizer furnaceInventory){
-        this.mineralSizer = furnaceInventory;
+        this.tile = furnaceInventory;
         this.addSlotToContainer(new Slot(furnaceInventory, 0, 44, 28));//input
         this.addSlotToContainer(new SlotFurnaceFuel(furnaceInventory, 1, 8, 20));//fuel
         this.addSlotToContainer(new SlotFurnaceOutput(playerInventory.player, furnaceInventory, 2, 120, 48));//output
@@ -41,51 +54,52 @@ public class ContainerMineralSizer extends Container{
         for (int k = 0; k < 9; ++k){
             this.addSlotToContainer(new Slot(playerInventory, k, 8 + k * 18, 167));
         }
-    }
-
-    public void addListener(IContainerListener listener){
-        super.addListener(listener);
-        listener.sendAllWindowProperties(this, this.mineralSizer);
-    }
+    }*/
+//
+//	@Override
+//    public void addListener(IContainerListener listener){
+//        super.addListener(listener);
+//        listener.sendAllWindowProperties(this, this.tile);
+//    }
 
     /**
      * Looks for changes made in the container, sends them to every listener.
      */
+	@Override
     public void detectAndSendChanges(){
         super.detectAndSendChanges();
         for (int i = 0; i < this.listeners.size(); ++i){
             IContainerListener icontainerlistener = (IContainerListener)this.listeners.get(i);
-            if (this.powerCount != this.mineralSizer.getField(0)){
-                icontainerlistener.sendProgressBarUpdate(this, 0, this.mineralSizer.getField(0));
+            if (this.powerCount != this.tile.getField(0)){
+                icontainerlistener.sendProgressBarUpdate(this, 0, this.tile.getField(0));
             }
-            if (this.powerCurrent != this.mineralSizer.getField(1)){
-                icontainerlistener.sendProgressBarUpdate(this, 1, this.mineralSizer.getField(1));
+            if (this.powerCurrent != this.tile.getField(1)){
+                icontainerlistener.sendProgressBarUpdate(this, 1, this.tile.getField(1));
             }
-            if (this.cookTime != this.mineralSizer.getField(2)){
-                icontainerlistener.sendProgressBarUpdate(this, 2, this.mineralSizer.getField(2));
+            if (this.cookTime != this.tile.getField(2)){
+                icontainerlistener.sendProgressBarUpdate(this, 2, this.tile.getField(2));
             }
-            if (this.totalCookTime != this.mineralSizer.getField(3)){
-                icontainerlistener.sendProgressBarUpdate(this, 3, this.mineralSizer.getField(3));
+            if (this.totalCookTime != this.tile.getField(3)){
+                icontainerlistener.sendProgressBarUpdate(this, 3, this.tile.getField(3));
             }
         }
-        this.cookTime = this.mineralSizer.getField(2);
-        this.totalCookTime = this.mineralSizer.getField(3);
-        this.powerCount = this.mineralSizer.getField(0);
-        this.powerCurrent = this.mineralSizer.getField(1);
+        this.cookTime = this.tile.getField(2);
+        this.totalCookTime = this.tile.getField(3);
+        this.powerCount = this.tile.getField(0);
+        this.powerCurrent = this.tile.getField(1);
     }
 
+	@Override
     @SideOnly(Side.CLIENT)
     public void updateProgressBar(int id, int data){
-        this.mineralSizer.setField(id, data);
+        this.tile.setField(id, data);
     }
 
-    public boolean canInteractWith(EntityPlayer playerIn){
-        return this.mineralSizer.isUseableByPlayer(playerIn);
-    }
 
     /**
      * Take a stack from the specified inventory slot.
      */
+    /*
     @Nullable
     public ItemStack transferStackInSlot(EntityPlayer playerIn, int index){
         ItemStack itemstack = null;
@@ -124,5 +138,5 @@ public class ContainerMineralSizer extends Container{
             slot.onPickupFromSlot(playerIn, itemstack1);
         }
         return itemstack;
-    }
+    }*/
 }

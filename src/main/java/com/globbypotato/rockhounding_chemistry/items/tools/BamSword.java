@@ -4,8 +4,8 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
 
-import com.globbypotato.rockhounding_chemistry.ModContents;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
+import com.globbypotato.rockhounding_chemistry.items.ModItems;
 import com.google.common.collect.Multimap;
 
 import net.minecraft.block.state.IBlockState;
@@ -14,11 +14,11 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -29,6 +29,7 @@ public class BamSword extends ItemSword {
 		super(toolMaterial);
 		setRegistryName(name);
 		setUnlocalizedName(getRegistryName().toString());
+		GameRegistry.register(this);
         this.setMaxStackSize(1);
         this.setMaxDamage(toolMaterial.getMaxUses());
 		this.setCreativeTab(Reference.RockhoundingChemistry);
@@ -71,7 +72,7 @@ public class BamSword extends ItemSword {
 
     @Override
     public boolean getIsRepairable(ItemStack toRepair, ItemStack repair){
-        ItemStack mat = new ItemStack(ModContents.alloyItems, 1, 7);
+        ItemStack mat = new ItemStack(ModItems.alloyItems, 1, 7);
         if (mat != null && net.minecraftforge.oredict.OreDictionary.itemMatches(mat, repair, false)) return true;
         return super.getIsRepairable(toRepair, repair);
     }

@@ -2,12 +2,10 @@ package com.globbypotato.rockhounding_chemistry.machines;
 
 import java.util.Random;
 
-import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityLaserBeam;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
-import net.minecraft.block.BlockLog.EnumAxis;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;

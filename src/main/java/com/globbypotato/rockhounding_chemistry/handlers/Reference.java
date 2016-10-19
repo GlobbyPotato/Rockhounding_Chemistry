@@ -1,11 +1,7 @@
 package com.globbypotato.rockhounding_chemistry.handlers;
 
 
-import com.globbypotato.rockhounding_chemistry.ModContents;
-
-import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 

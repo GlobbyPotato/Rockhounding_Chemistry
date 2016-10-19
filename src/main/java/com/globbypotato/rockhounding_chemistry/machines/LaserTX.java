@@ -2,9 +2,6 @@ package com.globbypotato.rockhounding_chemistry.machines;
 
 import java.util.Random;
 
-import javax.annotation.Nullable;
-
-import com.globbypotato.rockhounding_chemistry.blocks.MineralOres.EnumType;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityLaserTX;
 
@@ -18,8 +15,6 @@ import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.init.Blocks;
-import net.minecraft.inventory.Container;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;

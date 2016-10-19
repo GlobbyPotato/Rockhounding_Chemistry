@@ -1,6 +1,6 @@
 package com.globbypotato.rockhounding_chemistry.machines.tileentity;
 
-import com.globbypotato.rockhounding_chemistry.ModContents;
+import com.globbypotato.rockhounding_chemistry.blocks.ModBlocks;
 import com.globbypotato.rockhounding_chemistry.machines.LaserBeam;
 import com.globbypotato.rockhounding_chemistry.machines.LaserSplitter;
 
@@ -66,7 +66,7 @@ public class TileEntityLaserSplitter extends TileEntity implements ITickable {
 
 	private void shutBeam(IBlockState state, EnumFacing enumfacing, int sides) {
 	    EnumFacing beamsent = enumfacing.getHorizontal(sides);
-    	if(worldObj.getBlockState(pos.offset(beamsent, 1)).getBlock() == ModContents.laserBeam &&
+    	if(worldObj.getBlockState(pos.offset(beamsent, 1)).getBlock() == ModBlocks.laserBeam &&
    		   worldObj.getBlockState(pos.offset(beamsent, 1)).getValue(LaserBeam.FACING) == beamsent){
     		worldObj.setBlockState(pos.offset(beamsent, 1), Blocks.AIR.getDefaultState());
     	}
@@ -81,10 +81,10 @@ public class TileEntityLaserSplitter extends TileEntity implements ITickable {
 				IBlockState checkingState = worldObj.getBlockState(checkingPos); 
     			if(firstObstacle[sides] == false){
 				    if(checkingState.getBlock() == Blocks.AIR){
-						IBlockState beamState = ModContents.laserBeam.getDefaultState().withProperty(LaserBeam.FACING, beamsent); 
+						IBlockState beamState = ModBlocks.laserBeam.getDefaultState().withProperty(LaserBeam.FACING, beamsent); 
 				    	worldObj.setBlockState(checkingPos, beamState);
 			    		firstObstacle[sides] = false;
-				    }else if(checkingState.getBlock() == ModContents.laserBeam){
+				    }else if(checkingState.getBlock() == ModBlocks.laserBeam){
 				    	if(checkingState.getValue(LaserBeam.FACING) == beamsent ) {
 				    		firstObstacle[sides] = false;
 					    }else{
@@ -102,7 +102,7 @@ public class TileEntityLaserSplitter extends TileEntity implements ITickable {
 	}
 
 	private boolean isReceivingLaser(EnumFacing enumfacing, EnumFacing beamFacing) {
-		return worldObj.getBlockState(pos.offset(enumfacing)).getBlock() == ModContents.laserBeam
+		return worldObj.getBlockState(pos.offset(enumfacing)).getBlock() == ModBlocks.laserBeam
 				&& worldObj.getBlockState(pos.offset(enumfacing)).getValue(LaserSplitter.FACING) == beamFacing;
 	}
 
