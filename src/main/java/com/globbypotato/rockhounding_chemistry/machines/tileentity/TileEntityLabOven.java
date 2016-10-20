@@ -17,10 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileEntityLabOven extends TileEntityInvReceiver {
-
-	public int redstoneCount;
-	public int redstoneMax = 32000;
+public class TileEntityLabOven extends TileEntityInvRFReceiver {
 
 	public int recipeDisplayIndex;
 
@@ -128,7 +125,7 @@ public class TileEntityLabOven extends TileEntityInvReceiver {
 		case 0: return this.powerCount;
 		case 1: return this.powerMax;
 		case 2: return this.cookTime;
-		case 3: return this.totalCookTime;
+		case 3: return this.cookingSpeed;
 		case 4: return this.redstoneCount;
 		case 5: return this.redstoneMax;
 		default:return 0;
@@ -140,7 +137,7 @@ public class TileEntityLabOven extends TileEntityInvReceiver {
 		case 0: this.powerCount = value; break;
 		case 1: this.powerMax = value; break;
 		case 2: this.cookTime = value; break;
-		case 3: this.totalCookTime = value; break;
+		case 3: this.cookingSpeed = value; break;
 		case 4: this.redstoneCount = value; break;
 		case 5: this.redstoneMax = value;
 		}
@@ -155,7 +152,6 @@ public class TileEntityLabOven extends TileEntityInvReceiver {
 		this.recipeDisplayIndex = compound.getInteger("RecipeCount");
 		this.redstoneCount = compound.getInteger("RedstoneCount");
 		this.cookTime = compound.getInteger("CookTime");
-		this.totalCookTime = compound.getInteger("CookTimeTotal");
 	}
 
 	@Override
@@ -164,7 +160,6 @@ public class TileEntityLabOven extends TileEntityInvReceiver {
 		compound.setInteger("RecipeCount", this.recipeDisplayIndex);
 		compound.setInteger("RedstoneCount", this.redstoneCount);
 		compound.setInteger("CookTime", this.cookTime);
-		compound.setInteger("CookTimeTotal", this.totalCookTime);
 		return compound;
 	}
 

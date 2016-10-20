@@ -1,6 +1,6 @@
 package com.globbypotato.rockhounding_chemistry.machines.tileentity;
 
-import com.globbypotato.rockhounding_chemistry.handlers.ModArray;
+import com.globbypotato.rockhounding_chemistry.handlers.EnumSetups;
 import com.globbypotato.rockhounding_chemistry.items.ModItems;
 import com.globbypotato.rockhounding_chemistry.machines.MineCrawler;
 
@@ -541,37 +541,37 @@ public class TileEntityMineCrawler extends TileEntity implements ITickable {
     @Override
     public void readFromNBT(NBTTagCompound compound){
         super.readFromNBT(compound);
-        this.numTier = compound.getInteger(ModArray.tierName);
-        this.numMode = compound.getInteger(ModArray.modeName);
-        this.numStep = compound.getInteger(ModArray.stepName);
-        this.numUpgrade = compound.getInteger(ModArray.upgradeName);
-        this.canFill = compound.getBoolean(ModArray.fillerName);
-        this.canAbsorb = compound.getBoolean(ModArray.absorbName);
-        this.canTunnel = compound.getBoolean(ModArray.tunnelName);
-        this.canLight = compound.getBoolean(ModArray.lighterName);
-        this.canRail = compound.getBoolean(ModArray.railmakerName);
-        this.numCobble = compound.getInteger(ModArray.cobbleName);
-        this.numGlass = compound.getInteger(ModArray.glassName);
-        this.numTorch = compound.getInteger(ModArray.torchName);
-        this.numRail = compound.getInteger(ModArray.railName);
+        this.numTier = compound.getInteger(EnumSetups.TIERS.getName());
+        this.numMode = compound.getInteger(EnumSetups.MODES.getName());
+        this.numStep = compound.getInteger(EnumSetups.STEP.getName());
+        this.numUpgrade = compound.getInteger(EnumSetups.UPGRADE.getName());
+        this.canFill = compound.getBoolean(EnumSetups.FILLER.getName());
+        this.canAbsorb = compound.getBoolean(EnumSetups.ABSORBER.getName());
+        this.canTunnel = compound.getBoolean(EnumSetups.TUNNELER.getName());
+        this.canLight = compound.getBoolean(EnumSetups.LIGHTER.getName());
+        this.canRail = compound.getBoolean(EnumSetups.RAILMAKER.getName());
+        this.numCobble = compound.getInteger(EnumSetups.COBBLESTONE.getName());
+        this.numGlass = compound.getInteger(EnumSetups.GLASS.getName());
+        this.numTorch = compound.getInteger(EnumSetups.TORCHES.getName());
+        this.numRail = compound.getInteger(EnumSetups.RAILS.getName());
     }
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound){
         super.writeToNBT(compound);
-        compound.setInteger(ModArray.tierName, this.numTier);
-        compound.setInteger(ModArray.modeName, this.numMode);
-        compound.setInteger(ModArray.stepName, this.numStep);
-        compound.setInteger(ModArray.upgradeName, this.numUpgrade);
-        compound.setInteger(ModArray.cobbleName, this.numCobble);
-        compound.setInteger(ModArray.torchName, this.numTorch);
-        compound.setInteger(ModArray.glassName, this.numGlass);
-        compound.setInteger(ModArray.railName, this.numRail);
-        compound.setBoolean(ModArray.fillerName, this.canFill);
-        compound.setBoolean(ModArray.absorbName, this.canAbsorb);
-        compound.setBoolean(ModArray.tunnelName, this.canTunnel);
-        compound.setBoolean(ModArray.lighterName, this.canLight);
-        compound.setBoolean(ModArray.railmakerName, this.canRail);
+        compound.setInteger(EnumSetups.TIERS.getName(), this.numTier);
+        compound.setInteger(EnumSetups.MODES.getName(), this.numMode);
+        compound.setInteger(EnumSetups.STEP.getName(), this.numStep);
+        compound.setInteger(EnumSetups.UPGRADE.getName(), this.numUpgrade);
+        compound.setInteger(EnumSetups.COBBLESTONE.getName(), this.numCobble);
+        compound.setInteger(EnumSetups.TORCHES.getName(), this.numTorch);
+        compound.setInteger(EnumSetups.GLASS.getName(), this.numGlass);
+        compound.setInteger(EnumSetups.RAILS.getName(), this.numRail);
+        compound.setBoolean(EnumSetups.FILLER.getName(), this.canFill);
+        compound.setBoolean(EnumSetups.ABSORBER.getName(), this.canAbsorb);
+        compound.setBoolean(EnumSetups.TUNNELER.getName(), this.canTunnel);
+        compound.setBoolean(EnumSetups.LIGHTER.getName(), this.canLight);
+        compound.setBoolean(EnumSetups.RAILMAKER.getName(), this.canRail);
         return compound;
     }
 

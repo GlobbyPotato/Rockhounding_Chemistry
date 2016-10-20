@@ -15,7 +15,7 @@ public class ModDictionary {
 		OreDictionary.registerOre("dustSalt", new ItemStack(ModItems.chemicalItems, 1, 1));	
 		OreDictionary.registerOre("itemFluorite", new ItemStack(ModItems.halideShards, 1, 4));	
 		OreDictionary.registerOre("itemPyrite", new ItemStack(ModItems.sulfideShards, 1, 6));	
-		OreDictionary.registerOre("nuggetIron", new ItemStack(ModItems.miscItems, 1, 4));	
+		OreDictionary.registerOre("nuggetIron", new ItemStack(ModItems.miscItems, 1, 2));	
 		
 
 		for(int x = 0; x < ModArray.alloyArray.length; x++){

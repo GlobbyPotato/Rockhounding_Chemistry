@@ -2,6 +2,7 @@ package com.globbypotato.rockhounding_chemistry.items;
 
 import java.util.List;
 
+import com.globbypotato.rockhounding_chemistry.handlers.EnumSetups;
 import com.globbypotato.rockhounding_chemistry.handlers.ModArray;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 
@@ -24,7 +25,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class MiscItems extends ItemBase{
 	static int crawlerMemoryMeta = 6;
 	static int fluidContainerMeta = 5;
-	static int ingotPatternMeta = 13;
 	
 	private String[] itemArray;
 	
@@ -49,7 +49,7 @@ public class MiscItems extends ItemBase{
 
 	@Override
     public void onCreated(ItemStack itemstack, World world, EntityPlayer player) {
-		if(itemstack.getItemDamage() == crawlerMemoryMeta || itemstack.getItemDamage() == ingotPatternMeta){
+		if(itemstack.getItemDamage() == crawlerMemoryMeta){
 			setItemNbt(itemstack);
 		}
     }
@@ -57,14 +57,10 @@ public class MiscItems extends ItemBase{
     private static void setItemNbt(ItemStack itemstack) {
     	if(itemstack.getItemDamage() == crawlerMemoryMeta){
         	itemstack.setTagCompound(new NBTTagCompound());
-            itemstack.getTagCompound().setInteger(ModArray.cobbleName, 0);
-            itemstack.getTagCompound().setInteger(ModArray.glassName, 0);
-            itemstack.getTagCompound().setInteger(ModArray.torchName, 0);
-            itemstack.getTagCompound().setInteger(ModArray.railName, 0);
-    	}
-    	if(itemstack.getItemDamage() == ingotPatternMeta){
-        	itemstack.setTagCompound(new NBTTagCompound());
-            itemstack.getTagCompound().setInteger(ModArray.toolUses, ModConfig.patternUses);
+            itemstack.getTagCompound().setInteger(EnumSetups.COBBLESTONE.getName(), 0);
+            itemstack.getTagCompound().setInteger(EnumSetups.GLASS.getName(), 0);
+            itemstack.getTagCompound().setInteger(EnumSetups.TORCHES.getName(), 0);
+            itemstack.getTagCompound().setInteger(EnumSetups.RAILS.getName(), 0);
     	}
 	}
 
@@ -79,22 +75,14 @@ public class MiscItems extends ItemBase{
         }
     	if(itemstack.getItemDamage() == crawlerMemoryMeta){
             if(itemstack.hasTagCompound()) {
-            	int numCobble = itemstack.getTagCompound().getInteger(ModArray.cobbleName);
-            	int numGlass = itemstack.getTagCompound().getInteger(ModArray.glassName);
-            	int numTorch = itemstack.getTagCompound().getInteger(ModArray.torchName);
-            	int numRail = itemstack.getTagCompound().getInteger(ModArray.railName);
-            	tooltip.add(TextFormatting.DARK_GRAY + ModArray.cobbleName + ": " + TextFormatting.YELLOW + numCobble);
-            	tooltip.add(TextFormatting.DARK_GRAY + ModArray.glassName + ": " + TextFormatting.YELLOW + numGlass);
-            	tooltip.add(TextFormatting.DARK_GRAY + ModArray.torchName + ": " + TextFormatting.YELLOW + numTorch);
-            	tooltip.add(TextFormatting.DARK_GRAY + ModArray.railName + ": " + TextFormatting.YELLOW + numRail);
-            }
-    	}
-    	if(itemstack.getItemDamage() == ingotPatternMeta){
-            if(itemstack.hasTagCompound()) {
-            	int uses = itemstack.getTagCompound().getInteger(ModArray.toolUses);
-            	tooltip.add(TextFormatting.DARK_GRAY + ModArray.toolUses + ": " + TextFormatting.WHITE + uses + "/" + ModConfig.patternUses);
-            }else{
-            	setItemNbt(itemstack);
+            	int numCobble = itemstack.getTagCompound().getInteger(EnumSetups.COBBLESTONE.getName());
+            	int numGlass = itemstack.getTagCompound().getInteger(EnumSetups.GLASS.getName());
+            	int numTorch = itemstack.getTagCompound().getInteger(EnumSetups.TORCHES.getName());
+            	int numRail = itemstack.getTagCompound().getInteger(EnumSetups.RAILS.getName());
+            	tooltip.add(TextFormatting.DARK_GRAY + EnumSetups.COBBLESTONE.getName() + ": " + TextFormatting.YELLOW + numCobble);
+            	tooltip.add(TextFormatting.DARK_GRAY + EnumSetups.GLASS.getName() + ": " + TextFormatting.YELLOW + numGlass);
+            	tooltip.add(TextFormatting.DARK_GRAY + EnumSetups.TORCHES.getName() + ": " + TextFormatting.YELLOW + numTorch);
+            	tooltip.add(TextFormatting.DARK_GRAY + EnumSetups.RAILS.getName() + ": " + TextFormatting.YELLOW + numRail);
             }
     	}
     }

@@ -16,18 +16,21 @@ import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 import net.minecraftforge.items.wrapper.RangedWrapper;
 
-public abstract class TileEntityInvReceiver extends TileEntityInv  implements IEnergyReceiver, IEnergyStorage {
+public abstract class TileEntityInvRFReceiver extends TileEntityInv  implements IEnergyReceiver, IEnergyStorage {
 
 	public int powerMax = 32000;
 	public int powerCount;
 	
+	public int redstoneCount;
+	public int redstoneMax = 32000;
+
 	public Random rand = new Random();
 
 	protected int cookTime;
 	
 	public static int FUEL_SLOT;
 
-	public TileEntityInvReceiver(int inputSlots, int outputSlots, int fuelSlot) {
+	public TileEntityInvRFReceiver(int inputSlots, int outputSlots, int fuelSlot) {
 		super(inputSlots, outputSlots);
 		this.FUEL_SLOT = fuelSlot;
 	}
@@ -99,6 +102,13 @@ public abstract class TileEntityInvReceiver extends TileEntityInv  implements IE
 				powerCount += received;
 				if(powerCount >= powerMax){powerCount = powerMax;}
 			}
+		}else{
+			if (redstoneCount == -1) return 0;
+			received = Math.min(redstoneMax - redstoneCount, maxReceive);
+			if (!simulate) {
+				redstoneCount += received;
+				if(redstoneCount >= redstoneMax){redstoneCount = redstoneMax;}
+			}
 		}
 		return received;
 	}
@@ -116,6 +126,13 @@ public abstract class TileEntityInvReceiver extends TileEntityInv  implements IE
 				powerCount += received;
 				if(powerCount >= powerMax){powerCount = powerMax;}
 			}
+		}else{
+			if (redstoneCount == -1) return 0;
+			received = Math.min(redstoneMax - redstoneCount, maxReceive);
+			if (!simulate) {
+				redstoneCount += received;
+				if(redstoneCount >= redstoneMax){redstoneCount = redstoneMax;}
+			}
 		}
 		return received;
 	}
@@ -130,13 +147,17 @@ public abstract class TileEntityInvReceiver extends TileEntityInv  implements IE
 		if(canInduct()){
 			return powerCount;
 		}else{
-			return 0;
+			return redstoneCount;
 		}
 	}
 
 	@Override
 	public int getMaxEnergyStored() {
-		return powerMax;
+		if(canInduct()){
+			return powerMax;
+		}else{
+			return redstoneMax;
+		}
 	}
 
 	@Override

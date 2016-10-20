@@ -95,26 +95,23 @@ public class GuiLabOven extends GuiBase {
 		this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
 		//power bar
 		if (this.tile.powerCount > 0){
-			int k = this.getPowerLeftScaled(50);
+	        int k = this.getBarScaled(50, this.tile.getField(0), this.tile.getField(1));
 			this.drawTexturedModalRect(i + 11, j + 40 + (50 - k), 176, 27, 10, k);
 		}
 		//redstone
 		if (this.tile.redstoneCount > 0){
-			int k = this.getRedstoneLeftScaled(50);
+	        int k = this.getBarScaled(50, this.tile.getField(4), this.tile.getField(5));
 			this.drawTexturedModalRect(i + 155, j + 40 + (50 - k), 176, 81, 10, k);
 		}
 		//smelt bar
-		int l = this.getCookProgressScaled(14);
-		this.drawTexturedModalRect(i + 61, j + 58, 176, 0, l, 15);
-		//flame icon
+        int k = this.getBarScaled(14, this.tile.getField(2), this.tile.getField(3));
+		this.drawTexturedModalRect(i + 61, j + 58, 176, 0, k, 15);
+		//process icons
 		if(this.tile.getField(2) != 0 && this.tile.getField(3) != 0){
 			this.drawTexturedModalRect(i + 82, j + 79, 176, 131, 12, 14);
-		}
-		//solvent icon
-		if(this.tile.getField(2) != 0 && this.tile.getField(3) != 0){
 			this.drawTexturedModalRect(i + 100, j + 63, 176, 145, 14, 9);
 		}
-		//recipe icon
+		//recipe solvent icon
 		if(this.tile.recipeDisplayIndex == 0 || this.tile.recipeDisplayIndex == 3){
 			this.drawTexturedModalRect(i + 118, j + 77, 195, 27, 12, 16);
 		}else if(this.tile.recipeDisplayIndex == 1 || this.tile.recipeDisplayIndex == 2){
@@ -124,21 +121,9 @@ public class GuiLabOven extends GuiBase {
 		}
 	}
 
-	private int getCookProgressScaled(int pixels){
-		int i = this.tile.getField(2);
-		int j = this.tile.getField(3);
-		return j != 0 && i != 0 ? i * pixels / j : 0;
-	}
-
-	private int getPowerLeftScaled(int pixels){
-		int i = this.tile.getField(1);
-		if (i == 0){i = this.tile.machineSpeed();}
-		return this.tile.getField(0) * pixels / i;
-	}
-
-	private int getRedstoneLeftScaled(int pixels){
-		int i = this.tile.getField(5);
-		if (i == 0){i = this.tile.redstoneMax;}
-		return this.tile.getField(4) * pixels / i;
+	private int getBarScaled(int pixels, int count, int max) {
+        int i = max;
+        if (i == 0){i = max;}
+        return count > 0 && max > 0 ? count * pixels / max : 0;
 	}
 }

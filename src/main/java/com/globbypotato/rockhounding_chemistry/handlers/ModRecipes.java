@@ -26,7 +26,6 @@ public class ModRecipes {
 	private static ItemStack ingotforcedstack;
 	
 	static ItemStack testTube = new ItemStack(ModItems.testTube);
-	static ItemStack cylinder = new ItemStack(ModItems.cylinder);
 	static ItemStack gear = new ItemStack(ModItems.gear);
 	static ItemStack inductor = new ItemStack(ModItems.inductor);
 	static ItemStack logicChip = misc(0);
@@ -42,11 +41,11 @@ public class ModRecipes {
 	static ItemStack crawlerHead = misc(10);
 	static ItemStack crawlerArm = misc(11);
 	static ItemStack modWrench = misc(12);
-	static ItemStack ingotPattern = misc(13);
+	static ItemStack cylinder = misc(13);
 	static ItemStack yagRod = misc(14);
 	static ItemStack laserResonator = misc(15);
 	static ItemStack heatingElement = misc(16);
-
+	static ItemStack crackedCoal = new ItemStack(ModItems.chemicalItems, 1, 6);
 	
 	private static ItemStack misc(int meta){
 		return new ItemStack(ModItems.miscItems,1,meta);
@@ -61,23 +60,23 @@ public class ModRecipes {
 	public static void machineRecipes(){
 		sizerRecipes.add(new MineralSizerRecipe(ModBlocks.mineralOres,null));
 		sizerRecipes.add(new MineralSizerRecipe(Items.IRON_INGOT, 0, ModItems.chemicalDusts,16)); //iron dust
-		sizerRecipes.add(new MineralSizerRecipe(Items.GOLD_INGOT,0,ModItems.chemicalDusts,45)); //gold dust
-		sizerRecipes.add(new MineralSizerRecipe(Blocks.STONE,1,ModItems.chemicalItems,0)); //TODO granite to fluid tank. this can't be right?
+		sizerRecipes.add(new MineralSizerRecipe(Items.GOLD_INGOT,0, ModItems.chemicalDusts,45)); //gold dust
+		sizerRecipes.add(new MineralSizerRecipe(Blocks.STONE,1, ModItems.chemicalItems,4)); //fuorite dust
 		for(int i=0;i<22;i++){
 			if((i - 1) % 3 == 0 || i == 1){
-				sizerRecipes.add(new MineralSizerRecipe(ModItems.alloyItems,i,ModItems.alloyItems,i-1));
+				sizerRecipes.add(new MineralSizerRecipe(ModItems.alloyItems,i, ModItems.alloyItems,i-1));
 			}
 		}
 		for(int i=0;i<20;i++){
 			if((i - 1) % 3 == 0 || i == 1){
-				sizerRecipes.add(new MineralSizerRecipe(ModItems.alloyBItems,i,ModItems.alloyBItems,i-1));
+				sizerRecipes.add(new MineralSizerRecipe(ModItems.alloyBItems,i, ModItems.alloyBItems,i-1));
 			}
 		}
 
-		labOvenRecipes.add(new LabOvenRecipe(ModItems.chemicalItems,2,EnumFluid.WATER,EnumFluid.SULFURIC_ACID));
-		labOvenRecipes.add(new LabOvenRecipe(ModItems.chemicalItems,3,EnumFluid.SULFURIC_ACID,EnumFluid.HYDROCHLORIC_ACID));
-		labOvenRecipes.add(new LabOvenRecipe(ModItems.chemicalItems,4,EnumFluid.SULFURIC_ACID,EnumFluid.HYDROFLUORIC_ACID));
-		labOvenRecipes.add(new LabOvenRecipe(ModItems.chemicalItems,5,EnumFluid.WATER,EnumFluid.SYNGAS));
+		labOvenRecipes.add(new LabOvenRecipe(ModItems.chemicalItems,2, EnumFluid.WATER, EnumFluid.SULFURIC_ACID));
+		labOvenRecipes.add(new LabOvenRecipe(ModItems.chemicalItems,3, EnumFluid.SULFURIC_ACID, EnumFluid.HYDROCHLORIC_ACID));
+		labOvenRecipes.add(new LabOvenRecipe(ModItems.chemicalItems,4, EnumFluid.SULFURIC_ACID, EnumFluid.HYDROFLUORIC_ACID));
+		labOvenRecipes.add(new LabOvenRecipe(ModItems.chemicalItems,5, EnumFluid.WATER, EnumFluid.SYNGAS));
 
 	}
 	
@@ -127,7 +126,7 @@ public class ModRecipes {
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ModItems.chemBook), new Object[] { "paper", "paper", "paper", "dustRedstone" }));
 
 	//lab oven
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.labOven), new Object[] { "IBI", "IGI", "IFI", 'B', new ItemStack(ModItems.cylinder), 'I', "ingotIron", 'F', Blocks.FURNACE, 'G', "blockGlass" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.labOven), new Object[] { "IBI", "IGI", "IFI", 'B', cylinder, 'I', "ingotIron", 'F', Blocks.FURNACE, 'G', "blockGlass" }));
 	//mineral sizer
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.mineralSizer), new Object[] { "I I", "GcG", "ICI", 'C', cabinet, 'I', "ingotIron", 'G', gear, 'c', logicChip }));
 	//mineral analyzer
@@ -149,9 +148,9 @@ public class ModRecipes {
 
 
 	//chemical tank
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.chemicalItems, 1, 0), new Object[] { "GCG", "G G", "GGG", 'G', "blockGlass", 'C', new ItemStack(ModItems.cylinder) }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.chemicalItems, 1, 0), new Object[] { "GCG", "G G", "GGG", 'G', "blockGlass", 'C', cylinder }));
 	//cylinder
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.cylinder, 16), new Object[] { " G "," G ","GGG", 'G', "blockGlass" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.cylinder), new Object[] { " G "," G ","GGG", 'G', "blockGlass" }));
 	//gear
 		GameRegistry.addRecipe(new ShapedOreRecipe(gear, new Object[] { " N ","NIN"," N ", 'I', "ingotIron", 'N', "nuggetIron" }));
 	//cabinet
@@ -169,16 +168,18 @@ public class ModRecipes {
 		GameRegistry.addRecipe(new ShapedOreRecipe(setupChip, new Object[] { "III","ICI","III", 'C', advancedChip, 'I', "ingotHastelloy" }));
 	//test tube
 		GameRegistry.addRecipe(new ShapedOreRecipe(testTube, new Object[] { "  G"," G ","N  ", 'N', "nuggetIron", 'G', "blockGlass" }));
-	//crawler case
-		GameRegistry.addRecipe(new ShapedOreRecipe(crawlerCasing, new Object[] { "IAI","ICI","BBB", 'A', crawlerArm, 'C', setupChip, 'I', "ingotHastelloy", 'B', "blockHastelloy" }));
+	//crawler casing
+		GameRegistry.addRecipe(new ShapedOreRecipe(crawlerCasing, new Object[] { "IAI","ICI","BBB", 'A', crawlerArm, 'C', crawlerMemory, 'I', "ingotHastelloy", 'B', "blockHastelloy" }));
 	//crawler head
-		GameRegistry.addRecipe(new ShapedOreRecipe(crawlerHead, new Object[] { "III"," B "," P ", 'P', new ItemStack(Blocks.STICKY_PISTON), 'I', "ingotHastelloy", 'B', "blockHastelloy" }));
-	//crawler head //arm?
+		GameRegistry.addRecipe(new ShapedOreRecipe(crawlerHead, new Object[] { "III"," B "," P ", 'P', Blocks.STICKY_PISTON, 'I', "ingotHastelloy", 'B', "blockHastelloy" }));
+	//crawler arms
 		GameRegistry.addRecipe(new ShapedOreRecipe(crawlerArm, new Object[] { "I I","III","I I", 'I', "ingotHastelloy"}));
 	//wrench
 		GameRegistry.addRecipe(new ShapedOreRecipe(modWrench, new Object[] { " N "," IN","I  ", 'I', "ingotIron", 'N', "nuggetIron"}));
+	//flask
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.miscItems, 16, 13), new Object[] { " G ","G G","GGG", 'G', "blockGlass"}));
 	//ingot pattern
-		GameRegistry.addRecipe(new ShapedOreRecipe(ingotPattern, new Object[] { "T","P", 'T', Blocks.IRON_TRAPDOOR, 'P', Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE}));
+		GameRegistry.addRecipe(new ShapedOreRecipe(ModItems.ingotPattern, new Object[] { "T","P", 'T', Blocks.IRON_TRAPDOOR, 'P', Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE}));
 	//yag rod
 		GameRegistry.addRecipe(new ShapedOreRecipe(yagRod, new Object[] { "YYY", "   ", "YYY", 'Y', "gemYag"}));
 	//yag emitter
@@ -207,7 +208,7 @@ public class ModRecipes {
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ModItems.chemicalItems, 2, 6), new Object[] { cylinder, "blockcCoal"}));
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ModItems.chemicalItems, 1, 6), new Object[] { cylinder, "blockLignite"}));
 	//carbon compost
-		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ModItems.chemicalItems, 1, 5), new Object[] { new ItemStack(ModItems.chemicalItems, 1, 6), new ItemStack(ModItems.chemicalItems, 1, 6), new ItemStack(ModItems.chemicalItems, 1, 6), new ItemStack(ModItems.chemicalItems, 1, 6)}));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ModItems.chemicalItems, 1, 5), new Object[] { crackedCoal, crackedCoal, crackedCoal, crackedCoal}));
 	//force smelting
 		if(ModConfig.forceSmelting){
 			for(int x = 0; x < ModArray.chemicalDustsOredict.length; x++){

@@ -38,7 +38,8 @@ public class ModItems {
 	public static ItemTestTube testTube;
 	public static ItemCylinder cylinder;
 	public static ItemInductor inductor;
-	
+	public static ItemPattern ingotPattern;
+
 	public static Item cubeCrossbow;
 	public static Item scalBow;
 	public static ToolMaterial scalMaterial = EnumHelper.addToolMaterial("scalMaterial", 2, 400, 2.0F, 2F, 10);
@@ -70,6 +71,7 @@ public class ModItems {
 		testTube = new ItemTestTube();
 		cylinder = new ItemCylinder();
 		inductor = new ItemInductor();
+		ingotPattern = new ItemPattern();
 		
 		//tools
 		cubeCrossbow = new CubeCrossbow("cubeCrossbow");
@@ -107,6 +109,7 @@ public class ModItems {
 		testTube.initModel();
 		cylinder.initModel();
 		inductor.initModel();
+		ingotPattern.initModel();
 	}
 	
 	

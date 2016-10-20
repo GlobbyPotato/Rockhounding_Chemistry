@@ -46,8 +46,6 @@ public class GuiMineralAnalyzer extends GuiBase {
 
     public void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
     	super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-        //String s = this.mineralAnalyzer.getDisplayName().getUnformattedText();
-       // this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
         this.fontRendererObj.drawString(this.playerInventory.getDisplayName().getUnformattedText(), 8, this.ySize - 96 + 2, 4210752);
     }
 
@@ -59,24 +57,20 @@ public class GuiMineralAnalyzer extends GuiBase {
         this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
         //power bar
         if (this.mineralAnalyzer.powerCount > 0){
-            int k = this.getPowerLeftScaled(50);
+            int k = this.getBarScaled(50, this.mineralAnalyzer.getField(0), this.mineralAnalyzer.getField(1));
             this.drawTexturedModalRect(i + 11, j + 40 + (50 - k), 176, 51, 10, k);
         }
         //smelt bar
-        int l = this.getCookProgressScaled(51);
-        this.drawTexturedModalRect(i + 48, j + 42, 176, 0, 27, l);
+        if (this.mineralAnalyzer.getField(2) > 0){
+            int k = this.getBarScaled(51, this.mineralAnalyzer.getField(2), this.mineralAnalyzer.getField(3));
+            this.drawTexturedModalRect(i + 48, j + 42, 176, 0, 27, k);
+        }
     }
 
-    private int getCookProgressScaled(int pixels){
-        int i = this.mineralAnalyzer.getField(2);
-        int j = this.mineralAnalyzer.getField(3);
-        return j != 0 && i != 0 ? i * pixels / j : 0;
-    }
-
-    private int getPowerLeftScaled(int pixels){
-        int i = this.mineralAnalyzer.getField(1);
-        if (i == 0){i = this.mineralAnalyzer.machineSpeed();}
-        return this.mineralAnalyzer.getField(0) * pixels / i;
-    }
+	private int getBarScaled(int pixels, int count, int max) {
+        int i = max;
+        if (i == 0){i = max;}
+        return count > 0 && max > 0 ? count * pixels / max : 0;
+	}
 
 }

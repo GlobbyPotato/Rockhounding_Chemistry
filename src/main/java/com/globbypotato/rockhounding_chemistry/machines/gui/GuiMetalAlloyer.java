@@ -60,7 +60,7 @@ public class GuiMetalAlloyer extends GuiContainer {
         this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
         this.fontRendererObj.drawString(this.playerInventory.getDisplayName().getUnformattedText(), 8, this.ySize - 96 + 2, 4210752);
        
-        String name = " - ";
+        String name = "No Recipe";
         name = this.metalAlloyer.alloyNames[this.metalAlloyer.countRecipes()];
         this.fontRendererObj.drawString(name, 106, 20, 4210752);
     }
@@ -73,25 +73,20 @@ public class GuiMetalAlloyer extends GuiContainer {
         this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
         //power bar
         if (this.metalAlloyer.powerCount > 0){
-            int k = this.getPowerLeftScaled(50);
+            int k = this.getBarScaled(50, this.metalAlloyer.getField(0), this.metalAlloyer.getField(1));
             this.drawTexturedModalRect(i + 11, j + 40 + (50 - k), 176, 27, 10, k);
         }
         //smelt bar
-        int ll = this.getCookProgressScaled(17);
-        this.drawTexturedModalRect(i + 99, j + 69, 176, 0, 14, ll);
-
+        if (this.metalAlloyer.getField(2) > 0){
+            int k = this.getBarScaled(17, this.metalAlloyer.getField(2), this.metalAlloyer.getField(3));
+            this.drawTexturedModalRect(i + 99, j + 69, 176, 0, 14, k);
+        }
     }
 
-    private int getCookProgressScaled(int pixels){
-        int i = this.metalAlloyer.getField(2);
-        int j = this.metalAlloyer.getField(3);
-        return j != 0 && i != 0 ? i * pixels / j : 0;
-    }
-
-    private int getPowerLeftScaled(int pixels){
-        int i = this.metalAlloyer.getField(1);
-        if (i == 0){i = this.metalAlloyer.machineSpeed();}
-        return this.metalAlloyer.getField(0) * pixels / i;
-    }
+	private int getBarScaled(int pixels, int count, int max) {
+        int i = max;
+        if (i == 0){i = max;}
+        return count > 0 && max > 0 ? count * pixels / max : 0;
+	}
 
 }

@@ -1,11 +1,9 @@
 package com.globbypotato.rockhounding_chemistry.machines.tileentity;
 
-import java.util.Random;
-
 import javax.annotation.Nullable;
 
 import com.globbypotato.rockhounding_chemistry.blocks.ModBlocks;
-import com.globbypotato.rockhounding_chemistry.handlers.ModArray;
+import com.globbypotato.rockhounding_chemistry.handlers.EnumSetups;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.items.ModItems;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerCrawlerAssembler;
@@ -31,31 +29,57 @@ import net.minecraft.util.datafix.walkers.ItemStackDataLists;
 
 public class TileEntityCrawlerAssembler extends TileEntityLockable implements ITickable, ISidedInventory {
     private ItemStack[] slots = new ItemStack[19];
-    private static final int[] SLOTS_TOP = new int[] {0};
-    private static final int[] SLOTS_BOTTOM = new int[] {15};
-    private static final int[] SLOTS_SIDES = new int[] {16};
-    Random rand = new Random();
 
     private int cookTime;
-    private int totalCookTime;
-    private int getTier;
+    private String furnaceCustomName;
     
     public static int assemblingSpeed;
+    private static int getTier;
 
-    private String furnaceCustomName;
+    //main slots
+    private static final int SLOT_CASING = 0;
+    private static final int SLOT_MODE = 1;
+    private static final int SLOT_ARMS = 2;
+    
+    //handling slots
+    private static final int SLOT_OUTPUT = 9;
+    private static final int SLOT_LOADER = 10;
+    private static final int SLOT_MATERIAL = 11;
 
-    private int fillerSlot = 9;
-    private int absorbSlot = 10;
-    private int tunnelerSlot = 11;
-    private int lighterSlot = 12;
-    private int railmakerSlot = 13;
-    //unused setup 14
+    private static final int SLOT_MEMORY = 12;
+
+    //setup slots
+    private static final int SLOT_FILLER = 13;
+    private static final int SLOT_ABSORBER = 14;
+    private static final int SLOT_TUNNELER = 15;
+    private static final int SLOT_LIGHTER = 16;
+    private static final int SLOT_RAILMAKER = 17;
+    //private static final int SLOT_DECORATOR = 18;
     
-    private int outputSlot = 15;
-    
-    private int chargeSlot = 16;
-    private int loaderSlot = 17;
-    private int memorySlot = 18;
+    private static final int[] SLOTS_TOP = new int[] {SLOT_CASING};
+    private static final int[] SLOTS_BOTTOM = new int[] {SLOT_OUTPUT};
+    private static final int[] SLOTS_SIDES = new int[] {SLOT_MATERIAL};
+
+	//parts itemstacks
+	ItemStack baseLogic = crawlerPart(0);
+	ItemStack crawlerMemory = crawlerPart(6);
+	ItemStack advancedLogic = crawlerPart(7);
+	ItemStack crawlerSetup = crawlerPart(8);
+	ItemStack crawlerCasing = crawlerPart(9);
+	ItemStack miningHead = crawlerPart(10);
+	ItemStack supportArms = crawlerPart(11);
+	ItemStack anyCrawler = new ItemStack(ModBlocks.mineCrawler);
+    private int DAMAGE_BASE_LOGIC = 0;
+    private int DAMAGE_MEMORY = 6;
+    private int DAMAGE_ADVANCED_LOGIC = 7;
+    private int DAMAGE_SETUP = 8;
+    private int DAMAGE_CASING = 9;
+    private int DAMAGE_HEAD = 10;
+    private int DAMAGE_ARMS = 11;
+
+	private static ItemStack crawlerPart(int meta){
+		return new ItemStack(ModItems.miscItems, 1, meta);
+	}
 
     //----------------------- STANDARD -----------------------
     public int getSizeInventory(){
@@ -84,7 +108,6 @@ public class TileEntityCrawlerAssembler extends TileEntityLockable implements IT
             stack.stackSize = this.getInventoryStackLimit();
         }
         if (index == 0 && !flag){
-            this.totalCookTime = this.getCookTime(stack);
             this.cookTime = 0;
             this.markDirty();
         }
@@ -133,7 +156,7 @@ public class TileEntityCrawlerAssembler extends TileEntityLockable implements IT
     public void closeInventory(EntityPlayer player){}
 
     public boolean isItemValidForSlot(int index, ItemStack stack){
-        if (index == outputSlot){
+        if (index == SLOT_OUTPUT){
             return false;
         }else{
             return true;
@@ -202,7 +225,7 @@ public class TileEntityCrawlerAssembler extends TileEntityLockable implements IT
     public int getField(int id){
         switch (id){
             case 0: return this.cookTime;
-            case 1: return this.totalCookTime;
+            case 1: return this.assemblingSpeed;
             default:return 0;
         }
     }
@@ -210,7 +233,7 @@ public class TileEntityCrawlerAssembler extends TileEntityLockable implements IT
     public void setField(int id, int value){
         switch (id){
             case 0: this.cookTime = value; break;
-            case 1: this.totalCookTime = value; 
+            case 1: this.assemblingSpeed = value; 
         }
     }
 
@@ -236,7 +259,6 @@ public class TileEntityCrawlerAssembler extends TileEntityLockable implements IT
             }
         }
         this.cookTime = compound.getInteger("CookTime");
-        this.totalCookTime = compound.getInteger("CookTimeTotal");
         if (compound.hasKey("CustomName", 8)){
             this.furnaceCustomName = compound.getString("CustomName");
         }
@@ -246,7 +268,6 @@ public class TileEntityCrawlerAssembler extends TileEntityLockable implements IT
     public NBTTagCompound writeToNBT(NBTTagCompound compound){
         super.writeToNBT(compound);
         compound.setInteger("CookTime", this.cookTime);
-        compound.setInteger("CookTimeTotal", this.totalCookTime);
         NBTTagList nbttaglist = new NBTTagList();
         for (int i = 0; i < this.slots.length; ++i){
             if (this.slots[i] != null){
@@ -276,6 +297,7 @@ public class TileEntityCrawlerAssembler extends TileEntityLockable implements IT
     	}
     }
 
+
 	private void assemblyCrawler() {
     	boolean flag = false;
 		cookTime++;
@@ -287,61 +309,105 @@ public class TileEntityCrawlerAssembler extends TileEntityLockable implements IT
 		if(flag){this.markDirty();}
 	}
 
-	private boolean canAssembly() {return slots[outputSlot] == null && hasCasing() && hasLogic() && hasArms() && hasGrid() && hasCache();}
-	private boolean hasArms() {	 return slots[2] != null && slots[2].getItem() == ModItems.miscItems  && slots[2].getItemDamage() == 14 && slots[2].stackSize == 12;}
-	private boolean hasLogic() { return slots[1] != null && slots[1].getItem() == ModItems.miscItems  && (slots[1].getItemDamage() == 0 || slots[1].getItemDamage() == 10)  && slots[1].stackSize == 1;}
-	private boolean hasCasing() {return slots[0] != null && slots[0].getItem() == ModItems.miscItems  && slots[0].getItemDamage() == 12  && slots[0].stackSize == 1;}
-	private boolean hasCache() {return slots[memorySlot] != null && slots[memorySlot].getItem() == ModItems.miscItems  && slots[memorySlot].getItemDamage() == 9  && slots[memorySlot].stackSize == 1;}
+	private boolean canAssembly() {
+		return slots[SLOT_OUTPUT] == null 
+				&& hasCasing() 
+				&& hasLogic() 
+				&& hasArms() 
+				&& hasGrid() 
+				&& hasMemory();
+	}
+	
+	private boolean hasArms() {	 
+		return slots[SLOT_ARMS] != null 
+				&& slots[SLOT_ARMS].isItemEqual(supportArms) 
+				&& slots[SLOT_ARMS].stackSize == 12;
+	}
+	
+	private boolean hasLogic() { 
+		return slots[SLOT_MODE] != null 
+				&& (slots[SLOT_MODE].isItemEqual(baseLogic) || slots[SLOT_MODE].isItemEqual(advancedLogic))
+				&& slots[SLOT_MODE].stackSize == 1;
+	}
+	
+	private boolean hasCasing() {
+		return slots[SLOT_CASING] != null 
+				&& slots[SLOT_CASING].isItemEqual(crawlerCasing) 
+				&& slots[SLOT_CASING].stackSize == 1;
+	}
+	
+	private boolean hasMemory() {
+		return slots[SLOT_MEMORY] != null 
+				&& slots[SLOT_MEMORY].isItemEqual(crawlerMemory)  
+				&& slots[SLOT_MEMORY].stackSize == 1;
+	}
+
 	private boolean hasGrid() {
 		if(slots[3] == null &&  slots[4] == null && slots[5] == null && slots[6] == null && hasMiningHead(7) && slots[8] == null ){
-			getTier = 1; return true;
-		}else if(slots[3] == null &&  hasMiningHead(4) && slots[5] == null && slots[6] == null && hasMiningHead(7) && slots[8] == null ){
-			getTier = 2; return true;
+			getTier = 1;
+		   return true;
+		}else if(slots[3] == null && hasMiningHead(4) && slots[5] == null && slots[6] == null && hasMiningHead(7) && slots[8] == null ){
+			getTier = 2;
+		   return true;
 		}else if(slots[3] == null && slots[4] == null && slots[5] == null && hasMiningHead(6) && hasMiningHead(7) && hasMiningHead(8) ){
-			getTier = 3; return true;
+			getTier = 3;
+		   return true;
 		}else if( hasMiningHead(3) && hasMiningHead(4) && hasMiningHead(5) && hasMiningHead(6) && hasMiningHead(7) && hasMiningHead(8) ){		 
-			getTier = 4; return true;
+			getTier = 4;
+		   return true;
 		}
 		return false;
 	}
+
 	private boolean hasMiningHead(int slot) {
-		return slots[slot] != null && slots[slot].getItem() == ModItems.miscItems && slots[slot].getItemDamage() == 13;
+		return slots[slot] != null 
+				&& slots[slot].isItemEqual(miningHead)
+				&& slots[slot].stackSize == 1;
 	}
 
 	private void handleAssembler() {
 		ItemStack crawlerOut = new ItemStack(ModBlocks.mineCrawler);
 		crawlerOut.setTagCompound(new NBTTagCompound());
-		crawlerOut.getTagCompound().setInteger(ModArray.tierName, getTier);
-		crawlerOut.getTagCompound().setInteger(ModArray.modeName, slots[1].getItemDamage() / 10);
-		crawlerOut.getTagCompound().setInteger(ModArray.stepName, TileEntityMineCrawler.numStep);
-		crawlerOut.getTagCompound().setInteger(ModArray.upgradeName, 0);
-		crawlerOut.getTagCompound().setBoolean(ModArray.fillerName, hasEnabler(fillerSlot));
-		crawlerOut.getTagCompound().setBoolean(ModArray.absorbName, hasEnabler(absorbSlot));
-		crawlerOut.getTagCompound().setBoolean(ModArray.tunnelName, hasEnabler(tunnelerSlot));
-		crawlerOut.getTagCompound().setBoolean(ModArray.lighterName, hasEnabler(lighterSlot));
-		crawlerOut.getTagCompound().setBoolean(ModArray.railmakerName, hasEnabler(railmakerSlot));
-		if(slots[memorySlot].hasTagCompound()){
-			int getcobble = crawlerOut.getTagCompound().getInteger(ModArray.cobbleName) + slots[memorySlot].getTagCompound().getInteger(ModArray.cobbleName);
-			crawlerOut.getTagCompound().setInteger(ModArray.cobbleName, getcobble);
-			int getglass = crawlerOut.getTagCompound().getInteger(ModArray.glassName) + slots[memorySlot].getTagCompound().getInteger(ModArray.glassName);
-			crawlerOut.getTagCompound().setInteger(ModArray.glassName, getglass);
-			int gettorch = crawlerOut.getTagCompound().getInteger(ModArray.torchName) + slots[memorySlot].getTagCompound().getInteger(ModArray.torchName);
-			crawlerOut.getTagCompound().setInteger(ModArray.torchName, gettorch);
-			int getrail = crawlerOut.getTagCompound().getInteger(ModArray.railName) + slots[memorySlot].getTagCompound().getInteger(ModArray.railName);
-			crawlerOut.getTagCompound().setInteger(ModArray.railName, getrail);
+		crawlerOut.getTagCompound().setInteger(EnumSetups.TIERS.getName(), getTier);
+		crawlerOut.getTagCompound().setInteger(EnumSetups.MODES.getName(), getMode());
+		crawlerOut.getTagCompound().setInteger(EnumSetups.STEP.getName(), TileEntityMineCrawler.numStep);
+		crawlerOut.getTagCompound().setInteger(EnumSetups.UPGRADE.getName(), 0);
+		crawlerOut.getTagCompound().setBoolean(EnumSetups.FILLER.getName(), hasSetupEnabled(SLOT_FILLER));
+		crawlerOut.getTagCompound().setBoolean(EnumSetups.ABSORBER.getName(), hasSetupEnabled(SLOT_ABSORBER));
+		crawlerOut.getTagCompound().setBoolean(EnumSetups.TUNNELER.getName(), hasSetupEnabled(SLOT_TUNNELER));
+		crawlerOut.getTagCompound().setBoolean(EnumSetups.LIGHTER.getName(), hasSetupEnabled(SLOT_LIGHTER));
+		crawlerOut.getTagCompound().setBoolean(EnumSetups.RAILMAKER.getName(), hasSetupEnabled(SLOT_RAILMAKER));
+		if(slots[SLOT_MEMORY].hasTagCompound()){
+			int getcobble = crawlerOut.getTagCompound().getInteger(EnumSetups.COBBLESTONE.getName()) + slots[SLOT_MEMORY].getTagCompound().getInteger(EnumSetups.COBBLESTONE.getName());
+			crawlerOut.getTagCompound().setInteger(EnumSetups.COBBLESTONE.getName(), getcobble);
+			int getglass = crawlerOut.getTagCompound().getInteger(EnumSetups.GLASS.getName()) + slots[SLOT_MEMORY].getTagCompound().getInteger(EnumSetups.GLASS.getName());
+			crawlerOut.getTagCompound().setInteger(EnumSetups.GLASS.getName(), getglass);
+			int gettorch = crawlerOut.getTagCompound().getInteger(EnumSetups.TORCHES.getName()) + slots[SLOT_MEMORY].getTagCompound().getInteger(EnumSetups.TORCHES.getName());
+			crawlerOut.getTagCompound().setInteger(EnumSetups.TORCHES.getName(), gettorch);
+			int getrail = crawlerOut.getTagCompound().getInteger(EnumSetups.RAILS.getName()) + slots[SLOT_MEMORY].getTagCompound().getInteger(EnumSetups.RAILS.getName());
+			crawlerOut.getTagCompound().setInteger(EnumSetups.RAILS.getName(), getrail);
 		}else{
-			crawlerOut.getTagCompound().setInteger(ModArray.cobbleName, 0);
-			crawlerOut.getTagCompound().setInteger(ModArray.glassName, 0);
-			crawlerOut.getTagCompound().setInteger(ModArray.torchName, 0);
-			crawlerOut.getTagCompound().setInteger(ModArray.railName, 0);
+			crawlerOut.getTagCompound().setInteger(EnumSetups.COBBLESTONE.getName(), 0);
+			crawlerOut.getTagCompound().setInteger(EnumSetups.GLASS.getName(), 0);
+			crawlerOut.getTagCompound().setInteger(EnumSetups.TORCHES.getName(), 0);
+			crawlerOut.getTagCompound().setInteger(EnumSetups.RAILS.getName(), 0);
 		}
-		slots[outputSlot] = crawlerOut;
-		for(int x = 0; x <= 13; x++){slots[x] = null;}
-		slots[memorySlot] = null;
+		slots[SLOT_OUTPUT] = crawlerOut;
+		for(int x = 0; x < slots.length; x++){
+			if(x < 9 || x > 11){
+				slots[x] = null;
+			}
+		}
 	}
 
-	private boolean hasEnabler(int i) {
-		return slots[i] != null && slots[i].getItem() == ModItems.miscItems  && slots[i].getItemDamage() == 11  && slots[i].stackSize == 1;
+	private int getMode() {
+		return slots[SLOT_MODE].isItemEqual(advancedLogic) ? 1 : 0;
+	}
+
+	private boolean hasSetupEnabled(int i) {
+		return slots[i] != null 
+				&& slots[i].isItemEqual(crawlerSetup)
+				&& slots[i].stackSize == 1;
 	}
 
 	private void dismantleCrawler() {
@@ -356,123 +422,124 @@ public class TileEntityCrawlerAssembler extends TileEntityLockable implements IT
 	}
 
 	private boolean canDismantle() {
-		return  slots[1] == null && slots[2] == null && slots[3] == null && slots[4] == null && slots[5] == null && slots[6] == null && slots[memorySlot] == null
-				&& slots[7] == null && slots[8] == null && slots[fillerSlot] == null && slots[absorbSlot] == null && slots[tunnelerSlot] == null && slots[lighterSlot] == null && slots[railmakerSlot] == null  && slots[outputSlot] == null
-				&& (slots[0] != null && slots[0].getItem() == Item.getItemFromBlock(ModBlocks.mineCrawler));
+		return  slots[SLOT_MODE] == null 
+				&& slots[SLOT_ARMS] == null 
+				&& (slots[3] == null && slots[4] == null && slots[5] == null && slots[6] == null && slots[7] == null && slots[8] == null) 
+				&& slots[SLOT_MEMORY] == null
+				&& slots[SLOT_FILLER] == null 
+				&& slots[SLOT_ABSORBER] == null 
+				&& slots[SLOT_TUNNELER] == null 
+				&& slots[SLOT_LIGHTER] == null 
+				&& slots[SLOT_RAILMAKER] == null  
+				&& slots[SLOT_OUTPUT] == null
+				&& (slots[SLOT_CASING] != null && slots[SLOT_CASING].isItemEqual(anyCrawler));
 	}
 
 	private void handleDismantler() {
-		slots[outputSlot] = new ItemStack(ModItems.miscItems, 1, 12);
-		slots[2]  = new ItemStack(ModItems.miscItems, 12, 14);
-		if(slots[0].hasTagCompound()){
+		slots[SLOT_OUTPUT] = new ItemStack(ModItems.miscItems,1,DAMAGE_CASING);
+		slots[SLOT_ARMS] = new ItemStack(ModItems.miscItems,12,DAMAGE_ARMS);
+		if(slots[SLOT_CASING].hasTagCompound()){
 			int getNbt; boolean getEnabler;
-			getNbt = slots[0].getTagCompound().getInteger(ModArray.modeName);
-			slots[1]  = new ItemStack(ModItems.miscItems, 1, getNbt * 10);
+			getNbt = slots[SLOT_CASING].getTagCompound().getInteger(EnumSetups.MODES.getName());
+			slots[SLOT_MODE] = new ItemStack(ModItems.miscItems,1,setMode(getNbt));
 
-			getNbt = slots[0].getTagCompound().getInteger(ModArray.tierName);
+			getNbt = slots[SLOT_CASING].getTagCompound().getInteger(EnumSetups.TIERS.getName());
+
 			if(getNbt > 0){
-				slots[7]  = new ItemStack(ModItems.miscItems, 1, 13);
+				slots[7] = new ItemStack(ModItems.miscItems,1,DAMAGE_HEAD);
 			}
 			if(getNbt == 2 || getNbt == 4){
-				slots[4]  = new ItemStack(ModItems.miscItems, 1, 13);
+				slots[4] = new ItemStack(ModItems.miscItems,1,DAMAGE_HEAD);
 			}
 			if(getNbt == 3 || getNbt == 4){
-				slots[6]  = new ItemStack(ModItems.miscItems, 1, 13);
-				slots[8]  = new ItemStack(ModItems.miscItems, 1, 13);
+				slots[6] = new ItemStack(ModItems.miscItems,1,DAMAGE_HEAD);
+				slots[8] = new ItemStack(ModItems.miscItems,1,DAMAGE_HEAD);
 			}
 			if(getNbt == 4){
-				slots[3]  = new ItemStack(ModItems.miscItems, 1, 13);
-				slots[5]  = new ItemStack(ModItems.miscItems, 1, 13);
+				slots[3] = new ItemStack(ModItems.miscItems,1,DAMAGE_HEAD);
+				slots[5] = new ItemStack(ModItems.miscItems,1,DAMAGE_HEAD);
 			}
 
-			getEnabler = slots[0].getTagCompound().getBoolean(ModArray.fillerName);
-			if(getEnabler){slots[fillerSlot] = new ItemStack(ModItems.miscItems, 1, 11);}
-			getEnabler = slots[0].getTagCompound().getBoolean(ModArray.absorbName);
-			if(getEnabler){slots[absorbSlot] = new ItemStack(ModItems.miscItems, 1, 11);}
-			getEnabler = slots[0].getTagCompound().getBoolean(ModArray.tunnelName);
-			if(getEnabler){slots[tunnelerSlot] = new ItemStack(ModItems.miscItems, 1, 11);}
-			getEnabler = slots[0].getTagCompound().getBoolean(ModArray.lighterName);
-			if(getEnabler){slots[lighterSlot] = new ItemStack(ModItems.miscItems, 1, 11);}
-			getEnabler = slots[0].getTagCompound().getBoolean(ModArray.railmakerName);
-			if(getEnabler){slots[railmakerSlot] = new ItemStack(ModItems.miscItems, 1, 11);}
+			getEnabler = slots[SLOT_CASING].getTagCompound().getBoolean(EnumSetups.FILLER.getName());
+			if(getEnabler){slots[SLOT_FILLER] = new ItemStack(ModItems.miscItems,1,DAMAGE_SETUP);}
+			getEnabler = slots[SLOT_CASING].getTagCompound().getBoolean(EnumSetups.ABSORBER.getName());
+			if(getEnabler){slots[SLOT_ABSORBER] = new ItemStack(ModItems.miscItems,1,DAMAGE_SETUP);}
+			getEnabler = slots[SLOT_CASING].getTagCompound().getBoolean(EnumSetups.TUNNELER.getName());
+			if(getEnabler){slots[SLOT_TUNNELER] = new ItemStack(ModItems.miscItems,1,DAMAGE_SETUP);}
+			getEnabler = slots[SLOT_CASING].getTagCompound().getBoolean(EnumSetups.LIGHTER.getName());
+			if(getEnabler){slots[SLOT_LIGHTER] = new ItemStack(ModItems.miscItems,1,DAMAGE_SETUP);}
+			getEnabler = slots[SLOT_CASING].getTagCompound().getBoolean(EnumSetups.RAILMAKER.getName());
+			if(getEnabler){slots[SLOT_RAILMAKER] = new ItemStack(ModItems.miscItems,1,DAMAGE_SETUP);}
 
-			slots[memorySlot] = new ItemStack (ModItems.miscItems, 1, 9);
-			slots[memorySlot].setTagCompound(new NBTTagCompound());
-
-			getNbt = slots[0].getTagCompound().getInteger(ModArray.cobbleName);
-			slots[memorySlot].getTagCompound().setInteger(ModArray.cobbleName, getNbt);
-			getNbt = slots[0].getTagCompound().getInteger(ModArray.glassName);
-			slots[memorySlot].getTagCompound().setInteger(ModArray.glassName, getNbt);
-			getNbt = slots[0].getTagCompound().getInteger(ModArray.torchName);
-			slots[memorySlot].getTagCompound().setInteger(ModArray.torchName, getNbt);
-			getNbt = slots[0].getTagCompound().getInteger(ModArray.railName);
-			slots[memorySlot].getTagCompound().setInteger(ModArray.railName, getNbt);
+			slots[SLOT_MEMORY] = new ItemStack(ModItems.miscItems,1,DAMAGE_MEMORY);
+			slots[SLOT_MEMORY].setTagCompound(new NBTTagCompound());
+				getNbt = slots[SLOT_CASING].getTagCompound().getInteger(EnumSetups.COBBLESTONE.getName());
+				slots[SLOT_MEMORY].getTagCompound().setInteger(EnumSetups.COBBLESTONE.getName(), getNbt);
+				getNbt = slots[SLOT_CASING].getTagCompound().getInteger(EnumSetups.GLASS.getName());
+				slots[SLOT_MEMORY].getTagCompound().setInteger(EnumSetups.GLASS.getName(), getNbt);
+				getNbt = slots[SLOT_CASING].getTagCompound().getInteger(EnumSetups.TORCHES.getName());
+				slots[SLOT_MEMORY].getTagCompound().setInteger(EnumSetups.TORCHES.getName(), getNbt);
+				getNbt = slots[SLOT_CASING].getTagCompound().getInteger(EnumSetups.RAILS.getName());
+				slots[SLOT_MEMORY].getTagCompound().setInteger(EnumSetups.RAILS.getName(), getNbt);
 		}
-		
-		slots[0] = null;
+		slots[SLOT_CASING] = null;
+	}
+
+	private int setMode(int getNbt) {
+		return getNbt == 1 ? 7 : 0;
 	}
 
 	private boolean canLoad() {
-		return slots[chargeSlot] != null && slots[chargeSlot].getItem() == Item.getItemFromBlock(ModBlocks.mineCrawler);
+		return slots[SLOT_LOADER] != null && (slots[SLOT_LOADER].isItemEqual(anyCrawler) || slots[SLOT_LOADER].isItemEqual(crawlerMemory)) && slots[SLOT_LOADER].hasTagCompound();
 	}
+
 	private void loadCrawler() {
-		int getNbt;
-		if(slots[chargeSlot].hasTagCompound()){
-			if(slots[chargeSlot].getTagCompound().hasKey(ModArray.glassName)){
-				if(slots[loaderSlot] != null && slots[loaderSlot].getItem() == Item.getItemFromBlock(Blocks.GLASS)){
-					getNbt = slots[chargeSlot].getTagCompound().getInteger(ModArray.glassName) + slots[loaderSlot].stackSize;
-					slots[chargeSlot].getTagCompound().setInteger(ModArray.glassName, getNbt);
-					slots[loaderSlot] = null;
-				}
-			}
-			if(slots[chargeSlot].getTagCompound().hasKey(ModArray.cobbleName)){
-				if(slots[loaderSlot] != null && slots[loaderSlot].getItem() == Item.getItemFromBlock(Blocks.COBBLESTONE)){
-					getNbt = slots[chargeSlot].getTagCompound().getInteger(ModArray.cobbleName) + slots[loaderSlot].stackSize;
-					slots[chargeSlot].getTagCompound().setInteger(ModArray.cobbleName, getNbt);
-					slots[loaderSlot] = null;
-				}
-			}
-			if(slots[chargeSlot].getTagCompound().hasKey(ModArray.torchName)){
-				if(slots[loaderSlot] != null && slots[loaderSlot].getItem() == Item.getItemFromBlock(Blocks.TORCH)){
-					getNbt = slots[chargeSlot].getTagCompound().getInteger(ModArray.torchName) + slots[loaderSlot].stackSize;
-					slots[chargeSlot].getTagCompound().setInteger(ModArray.torchName, getNbt);
-					slots[loaderSlot] = null;
-				}
-			}
-			if(slots[chargeSlot].getTagCompound().hasKey(ModArray.railName)){
-				if(slots[loaderSlot] != null && slots[loaderSlot].getItem() == Item.getItemFromBlock(Blocks.RAIL)){
-					getNbt = slots[chargeSlot].getTagCompound().getInteger(ModArray.railName) + slots[loaderSlot].stackSize;
-					slots[chargeSlot].getTagCompound().setInteger(ModArray.railName, getNbt);
-					slots[loaderSlot] = null;
-				}
-			}
-			if(hasLoadedCache()){
-				if(slots[loaderSlot].getTagCompound().hasKey(ModArray.glassName)){
-					getNbt = slots[chargeSlot].getTagCompound().getInteger(ModArray.glassName) + slots[loaderSlot].getTagCompound().getInteger(ModArray.glassName);
-					slots[chargeSlot].getTagCompound().setInteger(ModArray.glassName, getNbt);
-					slots[loaderSlot].getTagCompound().setInteger(ModArray.glassName, 0);
-				}
-				if(slots[loaderSlot].getTagCompound().hasKey(ModArray.cobbleName)){
-					getNbt = slots[chargeSlot].getTagCompound().getInteger(ModArray.cobbleName) + slots[loaderSlot].getTagCompound().getInteger(ModArray.cobbleName);
-					slots[chargeSlot].getTagCompound().setInteger(ModArray.cobbleName, getNbt);
-					slots[loaderSlot].getTagCompound().setInteger(ModArray.cobbleName, 0);
-				}
-				if(slots[loaderSlot].getTagCompound().hasKey(ModArray.torchName)){
-					getNbt = slots[chargeSlot].getTagCompound().getInteger(ModArray.torchName) + slots[loaderSlot].getTagCompound().getInteger(ModArray.torchName);
-					slots[chargeSlot].getTagCompound().setInteger(ModArray.torchName, getNbt);
-					slots[loaderSlot].getTagCompound().setInteger(ModArray.torchName, 0);
-				}
-				if(slots[loaderSlot].getTagCompound().hasKey(ModArray.railName)){
-					getNbt = slots[chargeSlot].getTagCompound().getInteger(ModArray.railName) + slots[loaderSlot].getTagCompound().getInteger(ModArray.railName);
-					slots[chargeSlot].getTagCompound().setInteger(ModArray.railName, getNbt);
-					slots[loaderSlot].getTagCompound().setInteger(ModArray.railName, 0);
-				}
-			}
+		if(slots[SLOT_MATERIAL] != null && slots[SLOT_MATERIAL].getItem() == Item.getItemFromBlock(Blocks.GLASS)){
+			int getNbt = slots[SLOT_LOADER].getTagCompound().getInteger(EnumSetups.GLASS.getName()) + slots[SLOT_MATERIAL].stackSize;
+			slots[SLOT_LOADER].getTagCompound().setInteger(EnumSetups.GLASS.getName(), getNbt);
+			slots[SLOT_MATERIAL] = null;
+		}
+
+		if(slots[SLOT_MATERIAL] != null && slots[SLOT_MATERIAL].getItem() == Item.getItemFromBlock(Blocks.COBBLESTONE)){
+			int getNbt = slots[SLOT_LOADER].getTagCompound().getInteger(EnumSetups.COBBLESTONE.getName()) + slots[SLOT_MATERIAL].stackSize;
+			slots[SLOT_LOADER].getTagCompound().setInteger(EnumSetups.COBBLESTONE.getName(), getNbt);
+			slots[SLOT_MATERIAL] = null;
+		}
+
+		if(slots[SLOT_MATERIAL] != null && slots[SLOT_MATERIAL].getItem() == Item.getItemFromBlock(Blocks.TORCH)){
+			int getNbt = slots[SLOT_LOADER].getTagCompound().getInteger(EnumSetups.TORCHES.getName()) + slots[SLOT_MATERIAL].stackSize;
+			slots[SLOT_LOADER].getTagCompound().setInteger(EnumSetups.TORCHES.getName(), getNbt);
+			slots[SLOT_MATERIAL] = null;
+		}
+
+		if(slots[SLOT_MATERIAL] != null && slots[SLOT_MATERIAL].getItem() == Item.getItemFromBlock(Blocks.RAIL)){
+			int getNbt = slots[SLOT_LOADER].getTagCompound().getInteger(EnumSetups.RAILS.getName()) + slots[SLOT_MATERIAL].stackSize;
+			slots[SLOT_LOADER].getTagCompound().setInteger(EnumSetups.RAILS.getName(), getNbt);
+			slots[SLOT_MATERIAL] = null;
+		}
+
+		if(hasLoadedCache()){
+			int getNbt = 0;
+			getNbt = slots[SLOT_LOADER].getTagCompound().getInteger(EnumSetups.GLASS.getName()) + slots[SLOT_MATERIAL].getTagCompound().getInteger(EnumSetups.GLASS.getName());
+			slots[SLOT_LOADER].getTagCompound().setInteger(EnumSetups.GLASS.getName(), getNbt);
+			slots[SLOT_MATERIAL].getTagCompound().setInteger(EnumSetups.GLASS.getName(), 0);
+
+			getNbt = slots[SLOT_LOADER].getTagCompound().getInteger(EnumSetups.COBBLESTONE.getName()) + slots[SLOT_MATERIAL].getTagCompound().getInteger(EnumSetups.COBBLESTONE.getName());
+			slots[SLOT_LOADER].getTagCompound().setInteger(EnumSetups.COBBLESTONE.getName(), getNbt);
+			slots[SLOT_MATERIAL].getTagCompound().setInteger(EnumSetups.COBBLESTONE.getName(), 0);
+
+			getNbt = slots[SLOT_LOADER].getTagCompound().getInteger(EnumSetups.TORCHES.getName()) + slots[SLOT_MATERIAL].getTagCompound().getInteger(EnumSetups.TORCHES.getName());
+			slots[SLOT_LOADER].getTagCompound().setInteger(EnumSetups.TORCHES.getName(), getNbt);
+			slots[SLOT_MATERIAL].getTagCompound().setInteger(EnumSetups.TORCHES.getName(), 0);
+
+			getNbt = slots[SLOT_LOADER].getTagCompound().getInteger(EnumSetups.RAILS.getName()) + slots[SLOT_MATERIAL].getTagCompound().getInteger(EnumSetups.RAILS.getName());
+			slots[SLOT_LOADER].getTagCompound().setInteger(EnumSetups.RAILS.getName(), getNbt);
+			slots[SLOT_MATERIAL].getTagCompound().setInteger(EnumSetups.RAILS.getName(), 0);
 		}
 	}
 
 	private boolean hasLoadedCache() {
-		return slots[loaderSlot] != null && slots[loaderSlot].getItem() == ModItems.miscItems && slots[loaderSlot].getItemDamage() == 9 && slots[loaderSlot].hasTagCompound();
+		return slots[SLOT_MATERIAL] != null && slots[SLOT_MATERIAL].isItemEqual(crawlerMemory) && slots[SLOT_MATERIAL].hasTagCompound();
 	}
 
 

@@ -5,6 +5,7 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import com.globbypotato.rockhounding_chemistry.blocks.ModBlocks;
+import com.globbypotato.rockhounding_chemistry.handlers.EnumSetups;
 import com.globbypotato.rockhounding_chemistry.handlers.ModArray;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.items.ModItems;
@@ -111,19 +112,19 @@ public class MineCrawler extends Block implements ITileEntityProvider {
     public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack){
         worldIn.setBlockState(pos, state.withProperty(FACING, placer.getHorizontalFacing()), 2);
 		if(stack.hasTagCompound()){
-        	int numTier = stack.getTagCompound().getInteger(ModArray.tierName);
-        	int numMode = stack.getTagCompound().getInteger(ModArray.modeName);
-        	int numStep = stack.getTagCompound().getInteger(ModArray.stepName);
-        	int numUpgrade = stack.getTagCompound().getInteger(ModArray.upgradeName);
-        	int numCobble = stack.getTagCompound().getInteger(ModArray.cobbleName);
-        	int numGlass = stack.getTagCompound().getInteger(ModArray.glassName);
-        	int numTorch = stack.getTagCompound().getInteger(ModArray.torchName);
-        	int numRail = stack.getTagCompound().getInteger(ModArray.railName);
-        	boolean canFill = stack.getTagCompound().getBoolean(ModArray.fillerName);
-        	boolean canAbsorb = stack.getTagCompound().getBoolean(ModArray.absorbName);
-        	boolean canTunnel = stack.getTagCompound().getBoolean(ModArray.tunnelName);
-        	boolean canLight = stack.getTagCompound().getBoolean(ModArray.lighterName);
-        	boolean canRail = stack.getTagCompound().getBoolean(ModArray.railmakerName);
+        	int numTier = stack.getTagCompound().getInteger(EnumSetups.TIERS.getName());
+        	int numMode = stack.getTagCompound().getInteger(EnumSetups.MODES.getName());
+        	int numStep = stack.getTagCompound().getInteger(EnumSetups.STEP.getName());
+        	int numUpgrade = stack.getTagCompound().getInteger(EnumSetups.UPGRADE.getName());
+        	int numCobble = stack.getTagCompound().getInteger(EnumSetups.COBBLESTONE.getName());
+        	int numGlass = stack.getTagCompound().getInteger(EnumSetups.GLASS.getName());
+        	int numTorch = stack.getTagCompound().getInteger(EnumSetups.TORCHES.getName());
+        	int numRail = stack.getTagCompound().getInteger(EnumSetups.RAILS.getName());
+        	boolean canFill = stack.getTagCompound().getBoolean(EnumSetups.FILLER.getName());
+        	boolean canAbsorb = stack.getTagCompound().getBoolean(EnumSetups.ABSORBER.getName());
+        	boolean canTunnel = stack.getTagCompound().getBoolean(EnumSetups.TUNNELER.getName());
+        	boolean canLight = stack.getTagCompound().getBoolean(EnumSetups.LIGHTER.getName());
+        	boolean canRail = stack.getTagCompound().getBoolean(EnumSetups.RAILMAKER.getName());
 			TileEntityMineCrawler te = (TileEntityMineCrawler) worldIn.getTileEntity(pos);
 			if(te != null){
             	te.numTier = numTier;
@@ -174,20 +175,7 @@ public class MineCrawler extends Block implements ITileEntityProvider {
         if(tileentity != null && tileentity instanceof TileEntityMineCrawler){
         	if(hasWrench(player, hand)){
     			ItemStack dropCrawler = new ItemStack(ModBlocks.mineCrawler);
-    			dropCrawler.setTagCompound(new NBTTagCompound());
-    			dropCrawler.getTagCompound().setInteger(ModArray.tierName, ((TileEntityMineCrawler)tileentity).numTier);
-    			dropCrawler.getTagCompound().setInteger(ModArray.modeName, ((TileEntityMineCrawler)tileentity).numMode);
-    			dropCrawler.getTagCompound().setInteger(ModArray.stepName, ((TileEntityMineCrawler)tileentity).numStep);
-    			dropCrawler.getTagCompound().setInteger(ModArray.upgradeName, ((TileEntityMineCrawler)tileentity).numUpgrade);
-    			dropCrawler.getTagCompound().setBoolean(ModArray.fillerName, ((TileEntityMineCrawler)tileentity).canFill);
-    			dropCrawler.getTagCompound().setBoolean(ModArray.absorbName, ((TileEntityMineCrawler)tileentity).canAbsorb);
-    			dropCrawler.getTagCompound().setBoolean(ModArray.tunnelName, ((TileEntityMineCrawler)tileentity).canTunnel);
-    			dropCrawler.getTagCompound().setBoolean(ModArray.lighterName, ((TileEntityMineCrawler)tileentity).canLight);
-    			dropCrawler.getTagCompound().setBoolean(ModArray.railmakerName, ((TileEntityMineCrawler)tileentity).canRail);
-    			dropCrawler.getTagCompound().setInteger(ModArray.cobbleName, ((TileEntityMineCrawler)tileentity).numCobble);
-    			dropCrawler.getTagCompound().setInteger(ModArray.glassName, ((TileEntityMineCrawler)tileentity).numGlass);
-    			dropCrawler.getTagCompound().setInteger(ModArray.torchName, ((TileEntityMineCrawler)tileentity).numTorch);
-    			dropCrawler.getTagCompound().setInteger(ModArray.railName, ((TileEntityMineCrawler)tileentity).numRail);
+    			addNbt(dropCrawler, tileentity);
     			if(!world.isRemote) { dropItemStack(world, dropCrawler, pos); }
 				((TileEntityMineCrawler)tileentity).invalidate(); world.setBlockToAir(pos);
 			}
@@ -195,8 +183,25 @@ public class MineCrawler extends Block implements ITileEntityProvider {
     	return false;
     }
 
+	private void addNbt(ItemStack dropCrawler, TileEntity tileentity) {
+		dropCrawler.setTagCompound(new NBTTagCompound());
+		dropCrawler.getTagCompound().setInteger(EnumSetups.TIERS.getName(), ((TileEntityMineCrawler)tileentity).numTier);
+		dropCrawler.getTagCompound().setInteger(EnumSetups.MODES.getName(), ((TileEntityMineCrawler)tileentity).numMode);
+		dropCrawler.getTagCompound().setInteger(EnumSetups.STEP.getName(), ((TileEntityMineCrawler)tileentity).numStep);
+		dropCrawler.getTagCompound().setInteger(EnumSetups.UPGRADE.getName(), ((TileEntityMineCrawler)tileentity).numUpgrade);
+		dropCrawler.getTagCompound().setBoolean(EnumSetups.FILLER.getName(), ((TileEntityMineCrawler)tileentity).canFill);
+		dropCrawler.getTagCompound().setBoolean(EnumSetups.ABSORBER.getName(), ((TileEntityMineCrawler)tileentity).canAbsorb);
+		dropCrawler.getTagCompound().setBoolean(EnumSetups.TUNNELER.getName(), ((TileEntityMineCrawler)tileentity).canTunnel);
+		dropCrawler.getTagCompound().setBoolean(EnumSetups.LIGHTER.getName(), ((TileEntityMineCrawler)tileentity).canLight);
+		dropCrawler.getTagCompound().setBoolean(EnumSetups.RAILMAKER.getName(), ((TileEntityMineCrawler)tileentity).canRail);
+		dropCrawler.getTagCompound().setInteger(EnumSetups.COBBLESTONE.getName(), ((TileEntityMineCrawler)tileentity).numCobble);
+		dropCrawler.getTagCompound().setInteger(EnumSetups.GLASS.getName(), ((TileEntityMineCrawler)tileentity).numGlass);
+		dropCrawler.getTagCompound().setInteger(EnumSetups.TORCHES.getName(), ((TileEntityMineCrawler)tileentity).numTorch);
+		dropCrawler.getTagCompound().setInteger(EnumSetups.RAILS.getName(), ((TileEntityMineCrawler)tileentity).numRail);
+	}
+
 	private boolean hasWrench(EntityPlayer player, EnumHand hand) {
-		return player.getHeldItem(hand) != null && player.getHeldItem(hand).getItem() == ModItems.miscItems && player.getHeldItem(hand).getItemDamage() == 15;
+		return player.getHeldItem(hand) != null && player.getHeldItem(hand).getItem() == ModItems.miscItems && player.getHeldItem(hand).getItemDamage() == 12;
 	}
 
 	private void dropItemStack(World worldIn, ItemStack itemStack, BlockPos pos) {
@@ -215,20 +220,7 @@ public class MineCrawler extends Block implements ITileEntityProvider {
         ItemStack itemstack = this.createStackedBlock(state);
         if(te != null && te instanceof TileEntityMineCrawler){
         	if(((TileEntityMineCrawler)te).numTier > 0){
-        		itemstack.setTagCompound(new NBTTagCompound());
-        		itemstack.getTagCompound().setInteger(ModArray.tierName, ((TileEntityMineCrawler)te).numTier);
-        		itemstack.getTagCompound().setInteger(ModArray.modeName, ((TileEntityMineCrawler)te).numMode);
-        		itemstack.getTagCompound().setInteger(ModArray.stepName, ((TileEntityMineCrawler)te).numStep);
-        		itemstack.getTagCompound().setInteger(ModArray.upgradeName, ((TileEntityMineCrawler)te).numUpgrade);
-        		itemstack.getTagCompound().setBoolean(ModArray.fillerName, ((TileEntityMineCrawler)te).canFill);
-        		itemstack.getTagCompound().setBoolean(ModArray.absorbName, ((TileEntityMineCrawler)te).canAbsorb);
-        		itemstack.getTagCompound().setBoolean(ModArray.tunnelName, ((TileEntityMineCrawler)te).canTunnel);
-        		itemstack.getTagCompound().setBoolean(ModArray.lighterName, ((TileEntityMineCrawler)te).canLight);
-        		itemstack.getTagCompound().setBoolean(ModArray.railmakerName, ((TileEntityMineCrawler)te).canRail);
-        		itemstack.getTagCompound().setInteger(ModArray.cobbleName, ((TileEntityMineCrawler)te).numCobble);
-        		itemstack.getTagCompound().setInteger(ModArray.glassName, ((TileEntityMineCrawler)te).numGlass);
-        		itemstack.getTagCompound().setInteger(ModArray.torchName, ((TileEntityMineCrawler)te).numTorch);
-        		itemstack.getTagCompound().setInteger(ModArray.railName, ((TileEntityMineCrawler)te).numRail);
+    			addNbt(itemstack, te);
         	}
         }
         if (itemstack != null){ items.add(itemstack); }

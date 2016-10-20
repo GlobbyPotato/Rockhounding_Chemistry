@@ -32,19 +32,19 @@ public class ContainerCrawlerAssembler extends Container{
         this.addSlotToContainer(new Slot(furnaceInventory, 7, 35, 57));//grid5
         this.addSlotToContainer(new Slot(furnaceInventory, 8, 53, 57));//grid6
 
-        this.addSlotToContainer(new Slot(furnaceInventory, 9,  89, 17));//F
-        this.addSlotToContainer(new Slot(furnaceInventory, 10, 89, 39));//A
-        this.addSlotToContainer(new Slot(furnaceInventory, 11, 89, 61));//T
-        this.addSlotToContainer(new Slot(furnaceInventory, 12, 89, 83));//L
-        this.addSlotToContainer(new Slot(furnaceInventory, 13, 111, 17));//R
-        this.addSlotToContainer(new Slot(furnaceInventory, 14, 111, 39));//unused
+        this.addSlotToContainer(new SlotFurnaceOutput(playerInventory.player, furnaceInventory, 9, 35, 79));//output
 
-        this.addSlotToContainer(new SlotFurnaceOutput(playerInventory.player, furnaceInventory, 15, 35, 79));//output
-
-        this.addSlotToContainer(new Slot(furnaceInventory, 16, 152, 48));//charger
-        this.addSlotToContainer(new Slot(furnaceInventory, 17, 152, 21));//material
+        this.addSlotToContainer(new Slot(furnaceInventory, 10, 152, 48));//charger
+        this.addSlotToContainer(new Slot(furnaceInventory, 11, 152, 21));//material
         
-        this.addSlotToContainer(new Slot(furnaceInventory, 18, 62, 79));//memory
+        this.addSlotToContainer(new Slot(furnaceInventory, 12, 62, 79));//memory
+
+        this.addSlotToContainer(new Slot(furnaceInventory, 13,  89, 17));//F
+        this.addSlotToContainer(new Slot(furnaceInventory, 14, 89, 39));//A
+        this.addSlotToContainer(new Slot(furnaceInventory, 15, 89, 61));//T
+        this.addSlotToContainer(new Slot(furnaceInventory, 16, 89, 83));//L
+        this.addSlotToContainer(new Slot(furnaceInventory, 17, 111, 17));//R
+        this.addSlotToContainer(new Slot(furnaceInventory, 18, 111, 39));//unused
 
 
         

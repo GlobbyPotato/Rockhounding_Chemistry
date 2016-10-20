@@ -7,22 +7,6 @@ public class ModArray {
 	public static String chemTankQuantity = "Quantity";
 	public static String toolUses = "Uses";
 
-	//mineCrawler
-	public static String tierName = "Tier";
-	public static String modeName = "Mode";
-	public static String stepName = "Step";
-	public static String upgradeName = "Upgrade";
-	public static String fillerName = "Filler";
-	public static String absorbName = "Absorb";
-	public static String tunnelName = "Tunneler";
-	public static String lighterName = "Lighter";
-	public static String railmakerName = "RailMaker";
-	public static String cobbleName = "Cobblestone";
-	public static String glassName = "Glass";
-	public static String torchName = "Torch";
-	public static String railName = "Rails";
-
-
 //------- OREDICT -------
     public static String[] 	chemicalDustsOredict = new String[] {  "dustCerium", "dustDysprosium", "dustErbium", "dustEuropium", "dustGadolinium", "dustHolmium", "dustLanthanum", "dustLutetium", "dustNeodymium", "dustPraseodymium", 
 																   "dustSamarium", "dustScandium", "dustTerbium", "dustThulium", "dustYtterbium", "dustYttrium", "dustIron", "dustCopper", "dustTin", "dustLead", 
@@ -50,10 +34,10 @@ public class ModArray {
 
 //------- ITEMS -------
     public static String[] 	chemicalItemsArray = new String[] 	{"tank", "salt", "sulfurCompost", "saltCompost", "fluoriteCompost", "carbonCompost", "crackedCoal"};
-    public static String[] 	miscItemsArray = new String[] 		{"logicChip", "cabinet", "ironNugget", "bowBarrel", "bowWheel", "fluidCan", "memoryChip", 
-    															 "coringChip", "setupChip", "crawlerCase", "crawlerHead", "crawlerArm", "wrench", "ingotPattern", "yagRod", "resonator", "heater"};
+    public static String[] 	miscItemsArray = new String[] 		{"logicChip", "cabinet", "ironNugget", "bowBarrel", "bowWheel", "fluidCan", "memoryChip", "coringChip", "setupChip", "crawlerCase", 
+    															 "crawlerHead", "crawlerArm", "wrench", "flask", "yagRod", "resonator", "heater"};
+
     public static String[] 	saltMakerArray = new String[] 	 	{"empty", "water", "stepa", "stepb", "stepc", "stepd", "salt"};
-    public static String[] 	booksArray = new String[] 	 		{"chemistry", "alloys"};
 
 //------- ALLOYS -------
     public static String[] 	alloyArray = new String[] 	 		{"cube", "scal", "bam", "yag", "cupronickel", "nimonic", "hastelloy", "nichrome"};

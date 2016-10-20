@@ -17,18 +17,15 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityChemicalExtractor extends TileEntityInvReceiver {
+public class TileEntityChemicalExtractor extends TileEntityInvRFReceiver {
 	
 	public int[] elementList = new int[56];
-
-	public int redstoneCount;
-	public int redstoneMax = 32000;
 
 	private int consumedSyng = 1;
 	private int consumedFluo = 2;
 
 	public static int extractingSpeed;
-	public static int extractingFactor; //from config
+	public static int extractingFactor;
 	private int redstoneCharge = extractingSpeed;
 
 	private static final int INPUT_SLOT = 0;
@@ -104,7 +101,7 @@ public class TileEntityChemicalExtractor extends TileEntityInvReceiver {
 		if(id == 0){		return this.powerCount;
 		}else if(id == 1){  return this.powerMax;
 		}else if(id == 2){  return this.cookTime;
-		}else if(id == 3){  return this.totalCookTime;
+		}else if(id == 3){  return this.extractingSpeed;
 		}else if(id == 4){  return this.redstoneCount;
 		}else if(id == 5){  return this.redstoneMax;
 		}else if(id >= 6 && id <= 61){ return this.elementList[id-6];
@@ -115,7 +112,7 @@ public class TileEntityChemicalExtractor extends TileEntityInvReceiver {
 		if(id == 0){	    this.powerCount = value;
 		}else if(id == 1){  this.powerMax = value;
 		}else if(id == 2){  this.cookTime = value;
-		}else if(id == 3){  this.totalCookTime = value;
+		}else if(id == 3){  this.extractingSpeed = value;
 		}else if(id == 4){  this.redstoneCount = value;
 		}else if(id == 5){  this.redstoneMax = value;
 		}else if(id >= 6 && id <= 61){  elementList[id-6] = value;
@@ -136,7 +133,7 @@ public class TileEntityChemicalExtractor extends TileEntityInvReceiver {
 	}
 
 	public boolean hasCylinder() {
-		return ItemStack.areItemsEqual(input.getStackInSlot(CONSUMABLE_SLOT), new ItemStack(ModItems.cylinder));
+		return Utils.areItemsEqualIgnoreMeta(input.getStackInSlot(CONSUMABLE_SLOT), new ItemStack(ModItems.cylinder));
 	}
 
 	public boolean hasTestTube(){
@@ -161,7 +158,6 @@ public class TileEntityChemicalExtractor extends TileEntityInvReceiver {
 		}
 		this.redstoneCount = compound.getInteger("RedstoneCount");
 		this.cookTime = compound.getInteger("CookTime");
-		this.totalCookTime = compound.getInteger("CookTimeTotal");
 	}
 
 	@Override
@@ -173,7 +169,6 @@ public class TileEntityChemicalExtractor extends TileEntityInvReceiver {
 		compound.setInteger("PowerCount", this.powerCount);
 		compound.setInteger("RedstoneCount", this.redstoneCount);
 		compound.setInteger("CookTime", this.cookTime);
-		compound.setInteger("CookTimeTotal", this.totalCookTime);
 		return compound;
 	}
 
@@ -198,6 +193,7 @@ public class TileEntityChemicalExtractor extends TileEntityInvReceiver {
 			if(elementList[i] >= extractingFactor){
 				elementList[i]-= extractingFactor;
 				output.setOrIncrement(i, new ItemStack(ModItems.chemicalDusts,1,i));
+				input.damageSlot(CONSUMABLE_SLOT);
 				this.markDirty();
 			}
 		}
@@ -229,7 +225,8 @@ public class TileEntityChemicalExtractor extends TileEntityInvReceiver {
 
 	@Override
 	protected boolean canInduct() {
-		return ItemStack.areItemsEqual(new ItemStack(ModItems.inductor), input.getStackInSlot(REDSTONE_SLOT));
+		return redstoneCount >= redstoneMax 
+				&& ItemStack.areItemsEqual(new ItemStack(ModItems.inductor), input.getStackInSlot(REDSTONE_SLOT));
 	}
 
 

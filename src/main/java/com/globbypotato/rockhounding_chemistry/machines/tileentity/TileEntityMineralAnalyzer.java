@@ -107,7 +107,7 @@ public class TileEntityMineralAnalyzer extends TileEntityInvReceiver {
 		case 0: return this.powerCount;
 		case 1: return this.powerMax;
 		case 2: return this.cookTime;
-		case 3: return this.totalCookTime;
+		case 3: return this.analyzingSpeed;
 		default:return 0;
 		}
 	}
@@ -117,7 +117,7 @@ public class TileEntityMineralAnalyzer extends TileEntityInvReceiver {
 		case 0: this.powerCount = value; break;
 		case 1: this.powerMax = value; break;
 		case 2: this.cookTime = value; break;
-		case 3: this.totalCookTime = value;
+		case 3: this.analyzingSpeed = value;
 		}
 	}
 
@@ -135,14 +135,12 @@ public class TileEntityMineralAnalyzer extends TileEntityInvReceiver {
 	public void readFromNBT(NBTTagCompound compound){
 		super.readFromNBT(compound);
 		this.cookTime = compound.getInteger("CookTime");
-		this.totalCookTime = compound.getInteger("CookTimeTotal");
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound){
 		super.writeToNBT(compound);
 		compound.setInteger("CookTime", this.cookTime);
-		compound.setInteger("CookTimeTotal", this.totalCookTime);
 		return compound;
 	}
 

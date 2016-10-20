@@ -14,7 +14,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class GuiChemicalExtractor extends GuiBase {
-    /** The player inventory bound to this GUI. */
     private final InventoryPlayer playerInventory;
     private final TileEntityChemicalExtractor chemicalExtractor;
 	public static final int WIDTH = 245;
@@ -50,8 +49,6 @@ public class GuiChemicalExtractor extends GuiBase {
 
     public void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
     	super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-        //String s = this.chemicalExtractor.getDisplayName().getUnformattedText();
-        //this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
         this.fontRendererObj.drawString(this.playerInventory.getDisplayName().getUnformattedText(), 8, this.ySize - 96 + 2, 4210752);
     }
 
@@ -62,51 +59,33 @@ public class GuiChemicalExtractor extends GuiBase {
         this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
         //power bar
         if (this.chemicalExtractor.powerCount > 0){
-            int k = this.getPowerLeftScaled(50);
+	        int k = this.getBarScaled(50, this.chemicalExtractor.getField(0), this.chemicalExtractor.getField(1));
             this.drawTexturedModalRect(i + 11, j + 40 + (50 - k), 246, 0, 10, k);
         }
         //redstone bar
         if (this.chemicalExtractor.redstoneCount > 0){
-            int k = this.getRedstoneLeftScaled(50);
+	        int k = this.getBarScaled(50, this.chemicalExtractor.getField(4), this.chemicalExtractor.getField(5));
             this.drawTexturedModalRect(i + 31, j + 40 + (50 - k), 246, 109, 10, k);
         }
         //smelt bar
-        int l = this.getCookProgressScaled(36);
-        this.drawTexturedModalRect(i + 62, j + 97, 250, 50, 6, 36 - l);
-  
-        
+        int k = this.getBarScaled(36, this.chemicalExtractor.getField(2), this.chemicalExtractor.getField(3));
+        this.drawTexturedModalRect(i + 62, j + 97, 250, 50, 6, 36 - k);
 		//cabinet bars
 		for(int hSlot = 0; hSlot <= 6; hSlot++){
 			for(int vSlot = 0; vSlot <= 7; vSlot++){
 				int slotID = (hSlot * 8) + vSlot;
-	            int k = this.getCabinetScaled(19);
-				int cab = (this.chemicalExtractor.elementList[slotID] * 19) / this.chemicalExtractor.extractingFactor;
+		        int cab = this.getBarScaled(19, this.chemicalExtractor.elementList[slotID], this.chemicalExtractor.extractingFactor);
 				if(cab > 19){cab = 19;}
 				this.drawTexturedModalRect(i + 100 + (19 * vSlot), j + 19 + (21 * hSlot), 245, 89, 4, 19 - cab);
 			}
 		}
     }
 
-    private int getCookProgressScaled(int pixels){
-        int i = this.chemicalExtractor.getField(2);
-        int j = this.chemicalExtractor.getField(3);
-        return j != 0 && i != 0 ? i * pixels / j : 0;
-    }
 
-    private int getPowerLeftScaled(int pixels){
-        int i = this.chemicalExtractor.getField(1);
-        if (i == 0){i = this.chemicalExtractor.machineSpeed();}
-        return this.chemicalExtractor.getField(0) * pixels / i;
-    }
-    private int getRedstoneLeftScaled(int pixels){
-        int i = this.chemicalExtractor.getField(5);
-        if (i == 0){i = this.chemicalExtractor.redstoneMax;}
-        return this.chemicalExtractor.getField(4) * pixels / i;
-    }
-    private int getCabinetScaled(int pixels){
-        int i = this.chemicalExtractor.extractingFactor;
-        if (i == 0){i = this.chemicalExtractor.extractingFactor;}
-        return this.chemicalExtractor.getField(4) * pixels / i;
-    }
+	private int getBarScaled(int pixels, int count, int max) {
+        int i = max;
+        if (i == 0){i = max;}
+        return count > 0 && max > 0 ? count * pixels / max : 0;
+	}
 
 }
