@@ -375,10 +375,15 @@ public class TileEntityMineralSizer extends TileEntityLockable implements ITicka
 		cookTime++; powerCount--;
 		if(cookTime >= machineSpeed()) {
 			cookTime = 0;
-				  if(recipeID == 1){ returnMInerals();//internal minerals
-			}else if(recipeID == 2){ returnCrushes(2, output, 4);//generic crushed items
-			}else if(recipeID == 3){ returnDusts(3, output, damage);//internal alloys
-			}else if(recipeID == 4){ returnDusts(4, output, damage);}//specific ingots
+			if(recipeID == 1){
+				returnMInerals();
+			}else if(recipeID == 2){
+				returnCrushes(2, output, 4);
+			}else if(recipeID == 3){
+				returnDusts(3, output, damage);
+			}else if(recipeID == 4){
+				returnDusts(4, output, damage);
+			}
 			flag = true;
 		}
 		if(flag){this.markDirty();}

@@ -74,16 +74,17 @@ public class TileEntityLabOven extends TileEntityLockable implements ITickable, 
 	private int solventSlot = 3;
 	private int redstoneSlot = 4;
 
+	
     private ItemStack[] inputStack = new ItemStack[] {	null,
     													new ItemStack(ModContents.chemicalItems, 1, 2), 
     													new ItemStack(ModContents.chemicalItems, 1, 3), 
     													new ItemStack(ModContents.chemicalItems, 1, 4), 
     													new ItemStack(ModContents.chemicalItems, 1, 5)};
-
+    
     public static String[] solventNames = new String[]{	"Empty", 
     													"Water", 
     													"Sulfuric Acid"};
-
+    
     public static String[] acidNames = new String[] {	"Empty", 
     													"Water", 
     													"Sulfuric Acid", 
@@ -363,12 +364,13 @@ public class TileEntityLabOven extends TileEntityLockable implements ITickable, 
     @Override
     public void update(){
 		if(slots[fuelSlot] != null){fuelHandler();}
-    	if(slots[redstoneSlot] != null && !canInduct()){redstoneHandler();}
+    	if(slots[redstoneSlot] != null){redstoneHandler();}
+//    	if(!worldObj.isRemote && redstoneCount < redstoneMax){rfHandler();}
     	
     	if(!worldObj.isRemote){
     		//show recipes
 	   		if(countRecipes() > 0 && recipeScan){ showIngredients(countRecipes());}
-    		//solute-solvent-solution arrays
+    		//solute-solvent-solution
 			if(canSyntetize(1, 1, 2)){execute(2);}// sulfuric acid
 			if(canSyntetize(2, 2, 3)){execute(3);}// hydrochloric acid
 			if(canSyntetize(3, 2, 4)){execute(4);}// hydrofluoric acid
@@ -397,7 +399,7 @@ public class TileEntityLabOven extends TileEntityLockable implements ITickable, 
 				&& (slots[solventSlot] != null && isTankFilled(solventID))
 				&& (slots[outputSlot] != null && isTankEmpty(outputID))
 				&& powerCount >= machineSpeed()
-				&& redstoneCount >= machineSpeed();
+				&& redstoneCount >= machineSpeed() * 2;
 	}
 
 	private boolean isTankEmpty(int outputID) {
