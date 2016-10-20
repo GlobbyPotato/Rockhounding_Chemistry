@@ -19,7 +19,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityChemicalExtractor extends TileEntityInvReceiver {
 	
-	public int[] elementList = new int[100]; //TODO
+	public int[] elementList = new int[56];
 
 	public int redstoneCount;
 	public int redstoneMax = 32000;

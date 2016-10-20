@@ -1,5 +1,7 @@
 package com.globbypotato.rockhounding_chemistry;
 
+import java.util.ArrayList;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
@@ -84,10 +86,12 @@ public class Utils {
 		return false;
 	}
 
-	public static boolean implies(boolean bool1, boolean bool2){
-		if(!bool1) return true;
-		if(bool1 && bool2) return true;
-		return false;
+	public static ArrayList<Integer> intArrayToList(int[] array){
+		ArrayList<Integer> temp = new ArrayList<Integer>(array.length);
+		for(int i=0;i<array.length;i++){
+			temp.add(array[i]);
+		}
+		return temp;
 	}
 
 }

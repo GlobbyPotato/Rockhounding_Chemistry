@@ -82,12 +82,6 @@ public abstract class TileEntityInv extends TileEntityBase implements ITickable{
 		return new CombinedInvWrapper(input,output);
 	}
 
-	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-
-	}
-
 
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {

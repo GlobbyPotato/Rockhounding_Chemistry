@@ -47,22 +47,22 @@ public class TileEntityMineralAnalyzer extends TileEntityInvReceiver {
 				if(slot == INPUT_SLOT && insertingStack.getMetadata() != 0 && Utils.areItemsEqualIgnoreMeta(new ItemStack(ModBlocks.mineralOres), insertingStack)){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
-				if(slot == 1 && Utils.isItemFuel(insertingStack)){
+				if(slot == FUEL_SLOT && Utils.isItemFuel(insertingStack)){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
-				if(slot == 2 && insertingStack.getItem() == ModItems.testTube){
+				if(slot == CONSUMABLE_SLOT && insertingStack.getItem() == ModItems.testTube){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
-				if(slot == 3 && fluidName.equals("Sulfuric Acid") && ItemStack.areItemsEqual(insertingStack, new ItemStack(ModItems.chemicalItems,1,0))){
+				if(slot == SULFUR_SLOT && fluidName.equals("Sulfuric Acid") && ItemStack.areItemsEqual(insertingStack, new ItemStack(ModItems.chemicalItems,1,0))){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
-				if(slot == 4 && fluidName.equals("Hydrochloric Acid") && ItemStack.areItemsEqual(insertingStack, new ItemStack(ModItems.chemicalItems,1,0))){
+				if(slot == CHLOR_SLOT && fluidName.equals("Hydrochloric Acid") && ItemStack.areItemsEqual(insertingStack, new ItemStack(ModItems.chemicalItems,1,0))){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
-				if(slot == 5 && fluidName.equals("Hydrofluoric Acid") && ItemStack.areItemsEqual(insertingStack, new ItemStack(ModItems.chemicalItems,1,0))){
+				if(slot == FLUO_SLOT && fluidName.equals("Hydrofluoric Acid") && ItemStack.areItemsEqual(insertingStack, new ItemStack(ModItems.chemicalItems,1,0))){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
-				if(slot == 6 && ItemStack.areItemsEqual(insertingStack, new ItemStack(ModItems.miscItems,1,17))){
+				if(slot == INDUCTOR_SLOT && ItemStack.areItemsEqual(insertingStack, new ItemStack(ModItems.inductor))){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
 				

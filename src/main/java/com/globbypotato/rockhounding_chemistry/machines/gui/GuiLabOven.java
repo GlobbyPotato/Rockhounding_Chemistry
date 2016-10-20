@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.globbypotato.rockhounding_chemistry.CommonProxy;
 import com.globbypotato.rockhounding_chemistry.handlers.EnumFluid;
+import com.globbypotato.rockhounding_chemistry.handlers.ModRecipes;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerLabOven;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityLabOven;
@@ -40,7 +41,7 @@ public class GuiLabOven extends GuiBase {
 		if(mouseX >= 118+x && mouseX <= 130+x && mouseY >= 77+y && mouseY <= 92+y){
 			String toolStr = "";
 			if(tile.currentRecipeIndex() < 0) toolStr = EnumFluid.EMPTY.getName();
-			else toolStr = CommonProxy.getLabOvenSolvent(tile.getTemplate().getStackInSlot(0)).getName();
+			else toolStr = ModRecipes.getLabOvenSolvent(tile.getTemplate().getStackInSlot(0)).getName();
 			List<String> tooltip = Arrays.asList(toolStr);
 			drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
 		}
@@ -79,7 +80,7 @@ public class GuiLabOven extends GuiBase {
 
 		String name = "";
 		if(tile.recipeDisplayIndex == -1) name = "No Recipe";
-		else name = CommonProxy.labOvenRecipes.get(tile.recipeDisplayIndex).getOutput().getName();
+		else name = ModRecipes.labOvenRecipes.get(tile.recipeDisplayIndex).getOutput().getName();
 		this.fontRendererObj.drawString(name, 44, 24, 4210752);
 
 	}

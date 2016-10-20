@@ -1,10 +1,12 @@
 package com.globbypotato.rockhounding_chemistry.machines.tileentity;
 
+import java.util.ArrayList;
+
 import javax.annotation.Nullable;
 
-import com.globbypotato.rockhounding_chemistry.CommonProxy;
 import com.globbypotato.rockhounding_chemistry.Utils;
 import com.globbypotato.rockhounding_chemistry.blocks.ModBlocks;
+import com.globbypotato.rockhounding_chemistry.handlers.ModRecipes;
 import com.globbypotato.rockhounding_chemistry.items.ModItems;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiMineralSizer;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.MineralSizerRecipe;
@@ -15,6 +17,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.ItemHandlerHelper;
+import net.minecraftforge.oredict.OreDictionary;
+import scala.actors.threadpool.Arrays;
 
 public class TileEntityMineralSizer extends TileEntityInvReceiver {
 
@@ -37,7 +41,7 @@ public class TileEntityMineralSizer extends TileEntityInvReceiver {
 			@Override
 			public ItemStack insertItem(int slot, ItemStack insertingStack, boolean simulate){
 				//input slots
-				if(slot == 0 && hasRecipe(insertingStack)){
+				if(slot == 0 && (hasRecipe(insertingStack) || isIngotOredicted(insertingStack)) ){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
 				if(slot == 1 && Utils.isItemFuel(insertingStack)){
@@ -46,7 +50,7 @@ public class TileEntityMineralSizer extends TileEntityInvReceiver {
 				if(slot == 2 && Utils.areItemsEqualIgnoreMeta(new ItemStack(ModItems.gear), insertingStack)){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
-				if(slot == 3 && ItemStack.areItemsEqual(new ItemStack(ModItems.miscItems,1,17),insertingStack)){
+				if(slot == 3 && ItemStack.areItemsEqual(new ItemStack(ModItems.inductor),insertingStack)){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
 				return insertingStack;
@@ -131,7 +135,7 @@ public class TileEntityMineralSizer extends TileEntityInvReceiver {
 
 	public boolean hasRecipe(ItemStack stack){
 		if(stack != null){
-			for(MineralSizerRecipe recipe: CommonProxy.sizerRecipes){
+			for(MineralSizerRecipe recipe: ModRecipes.sizerRecipes){
 				if(ItemStack.areItemsEqual(recipe.getInput(), stack)) return true;
 			}
 		}
@@ -145,7 +149,7 @@ public class TileEntityMineralSizer extends TileEntityInvReceiver {
 
 	public static ItemStack getRecipeOutput(ItemStack inputStack){
 		if(inputStack != null){
-			for(MineralSizerRecipe recipe: CommonProxy.sizerRecipes){
+			for(MineralSizerRecipe recipe: ModRecipes.sizerRecipes){
 				if(ItemStack.areItemsEqual(recipe.getInput(), inputStack)){
 					return recipe.getOutput();
 				}
@@ -188,13 +192,11 @@ public class TileEntityMineralSizer extends TileEntityInvReceiver {
 				}
 			}
 		}
-		//TODO //if(canProcess(ModItems.alloyItems)){									execute(3, ModItems.alloyItems, 0);}
-		//TODO//if(canProcess(ModItems.alloyBItems)){									execute(3, ModItems.alloyBItems, 0);}
 	}
 
 	private boolean canProcess(ItemStack stack) {
 		return  (canOutput(stack)
-				&& hasRecipe(stack)
+				&& (hasRecipe(stack) || isIngotOredicted(stack))
 				&& hasGear()
 				&& powerCount >= machineSpeed());
 	}
@@ -249,18 +251,21 @@ public class TileEntityMineralSizer extends TileEntityInvReceiver {
 
 
 
-	/*//TODO
-	private boolean isIngotOredict() {
-		int[] oreIDs = OreDictionary.getOreIDs(input.getStackInSlot(INPUT_SLOT));
-			for(int i = 0; i < oreIDs.length; i++) {
-				if(oreIDs[i] > -1) {
-					String oreName = OreDictionary.getOreName(oreIDs[i]);
-					if(oreName != null && oreName.contains("ingot")){
-						return true;
-					}
+
+	private boolean isIngotOredicted(ItemStack stack) {
+		if(stack != null){
+			ArrayList<Integer> inputOreIDs = Utils.intArrayToList(OreDictionary.getOreIDs(stack));
+
+			for(MineralSizerRecipe recipe: ModRecipes.sizerRecipes){
+				ArrayList<Integer> recipeOreIDs = Utils.intArrayToList(OreDictionary.getOreIDs(recipe.getInput()));
+				for(Integer oreID: recipeOreIDs){
+					if(inputOreIDs.contains(oreID)) return true;
 				}
+				//if(oreName != null && oreName.contains("ingot")){
 			}
+		}
 		return false;
-	}*/
+	}
+
 
 }

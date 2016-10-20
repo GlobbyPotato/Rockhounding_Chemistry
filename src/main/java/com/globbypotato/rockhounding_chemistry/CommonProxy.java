@@ -27,9 +27,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class CommonProxy {
 
-	public static final ArrayList<MineralSizerRecipe> sizerRecipes = new ArrayList<MineralSizerRecipe>();
-	public static final ArrayList<LabOvenRecipe> labOvenRecipes = new ArrayList<LabOvenRecipe>();
-	
+
 	public void preInit(FMLPreInitializationEvent e){
 		// Load Config
 		ModConfig.loadConfig(e);
@@ -57,7 +55,6 @@ public class CommonProxy {
 	public void init(FMLInitializationEvent e){
 		// Register Recipes
 		ModRecipes.init();
-		this.initMachineRecipes();
 
 		//Register Guis
 		NetworkRegistry.INSTANCE.registerGuiHandler(Reference.MODID, new GuiHandler());
@@ -77,28 +74,5 @@ public class CommonProxy {
 
 	public void registerRenderInformation() {
 
-	}
-
-	//TODO: Move recipe stuff to separate class rather than clutter commonproxy
-	public void initMachineRecipes(){
-		sizerRecipes.add(new MineralSizerRecipe(ModBlocks.mineralOres,null));
-		sizerRecipes.add(new MineralSizerRecipe(Items.IRON_INGOT, 0, ModItems.chemicalDusts,16));
-		sizerRecipes.add(new MineralSizerRecipe(Items.GOLD_INGOT,0,ModItems.chemicalDusts,45));
-		sizerRecipes.add(new MineralSizerRecipe(Blocks.STONE,1,ModItems.chemicalItems,0));
-
-		labOvenRecipes.add(new LabOvenRecipe(ModItems.chemicalItems,2,EnumFluid.WATER,EnumFluid.SULFURIC_ACID));
-		labOvenRecipes.add(new LabOvenRecipe(ModItems.chemicalItems,3,EnumFluid.SULFURIC_ACID,EnumFluid.HYDROCHLORIC_ACID));
-		labOvenRecipes.add(new LabOvenRecipe(ModItems.chemicalItems,4,EnumFluid.SULFURIC_ACID,EnumFluid.HYDROFLUORIC_ACID));
-		labOvenRecipes.add(new LabOvenRecipe(ModItems.chemicalItems,5,EnumFluid.WATER,EnumFluid.SYNGAS));
-
-	}
-	
-	public static EnumFluid getLabOvenSolvent(ItemStack input){
-		for(LabOvenRecipe recipe: labOvenRecipes){
-			if(ItemStack.areItemsEqual(input, recipe.getSolute())){
-				return recipe.getSolvent();
-			}
-		}
-		return EnumFluid.EMPTY;
 	}
 }

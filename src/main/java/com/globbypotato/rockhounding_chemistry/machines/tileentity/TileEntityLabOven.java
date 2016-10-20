@@ -6,6 +6,7 @@ import com.globbypotato.rockhounding_chemistry.CommonProxy;
 import com.globbypotato.rockhounding_chemistry.Utils;
 import com.globbypotato.rockhounding_chemistry.handlers.EnumFluid;
 import com.globbypotato.rockhounding_chemistry.handlers.ModArray;
+import com.globbypotato.rockhounding_chemistry.handlers.ModRecipes;
 import com.globbypotato.rockhounding_chemistry.items.ModItems;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiLabOven;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.LabOvenRecipe;
@@ -90,7 +91,7 @@ public class TileEntityLabOven extends TileEntityInvReceiver {
 	}
 
 	public static boolean hasRecipe(ItemStack stack){
-		for(LabOvenRecipe recipe: CommonProxy.labOvenRecipes){
+		for(LabOvenRecipe recipe: ModRecipes.labOvenRecipes){
 			if(ItemStack.areItemsEqual(recipe.getSolute(),stack)){
 				return true;
 			}
@@ -99,7 +100,7 @@ public class TileEntityLabOven extends TileEntityInvReceiver {
 	}
 
 	public EnumFluid getFluidOutput(){
-		for(LabOvenRecipe recipe: CommonProxy.labOvenRecipes){
+		for(LabOvenRecipe recipe: ModRecipes.labOvenRecipes){
 			if(ItemStack.areItemsEqual(recipe.getSolute(),input.getStackInSlot(SOLUTE_SLOT))){
 				return recipe.getOutput();
 			}
@@ -109,7 +110,7 @@ public class TileEntityLabOven extends TileEntityInvReceiver {
 
 	public static boolean isSolvent(ItemStack stack){
 		if(stack.hasTagCompound()){
-			for(LabOvenRecipe recipe: CommonProxy.labOvenRecipes){
+			for(LabOvenRecipe recipe: ModRecipes.labOvenRecipes){
 				if(recipe.getSolvent().getName().equals(stack.getTagCompound().getString("Fluid"))){
 					return true;
 				}
@@ -185,7 +186,7 @@ public class TileEntityLabOven extends TileEntityInvReceiver {
 	}
 
 	private void showIngredients(int countRecipes) {
-		template.setStackInSlot(TEMPLATE_SLOT, CommonProxy.labOvenRecipes.get(currentRecipeIndex()).getSolute());
+		template.setStackInSlot(TEMPLATE_SLOT, ModRecipes.labOvenRecipes.get(currentRecipeIndex()).getSolute());
 		recipeScan = false;
 	}
 
@@ -206,7 +207,7 @@ public class TileEntityLabOven extends TileEntityInvReceiver {
 
 	private boolean canSynthesize() {
 		if(this.recipeDisplayIndex >= 0){
-			EnumFluid fluid = CommonProxy.labOvenRecipes.get(recipeDisplayIndex).getOutput();
+			EnumFluid fluid = ModRecipes.labOvenRecipes.get(recipeDisplayIndex).getOutput();
 			return     hasRecipe()
 					&& (isTankEmpty(OUTPUT_SLOT) || stackHasFluid(input.getStackInSlot(OUTPUT_SLOT),fluid))
 					&& (!isTankFull(OUTPUT_SLOT))

@@ -1,6 +1,6 @@
 package com.globbypotato.rockhounding_chemistry.machines.container;
 
-import com.globbypotato.rockhounding_chemistry.CommonProxy;
+import com.globbypotato.rockhounding_chemistry.handlers.ModRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityLabOven;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -101,7 +101,7 @@ public class ContainerLabOven extends ContainerBase<TileEntityLabOven> {
 			this.tile.resetGrid();
 			this.tile.recipeScan = true;
 			return null;
-		}else if(slot == 6 && this.tile.recipeDisplayIndex < CommonProxy.labOvenRecipes.size()-1){
+		}else if(slot == 6 && this.tile.recipeDisplayIndex < ModRecipes.labOvenRecipes.size()-1){
 			this.tile.recipeDisplayIndex++;
 			this.tile.resetGrid();
 			this.tile.recipeScan = true;

@@ -1,7 +1,11 @@
 package com.globbypotato.rockhounding_chemistry.handlers;
 
+import java.util.ArrayList;
+
 import com.globbypotato.rockhounding_chemistry.blocks.ModBlocks;
 import com.globbypotato.rockhounding_chemistry.items.ModItems;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.LabOvenRecipe;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.MineralSizerRecipe;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -11,7 +15,13 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
+
 public class ModRecipes {
+	
+	public static final ArrayList<MineralSizerRecipe> sizerRecipes = new ArrayList<MineralSizerRecipe>();
+	public static final ArrayList<LabOvenRecipe> labOvenRecipes = new ArrayList<LabOvenRecipe>();
+	
+	
 	private static ItemStack dustforcedstack;
 	private static ItemStack ingotforcedstack;
 	
@@ -43,13 +53,44 @@ public class ModRecipes {
 	}
 
 	public static void init() {
-		ModRecipes.chemRecipes();
-		ModRecipes.machinesRecipes();
-		ModRecipes.alloyRecipes();
-		ModRecipes.toolsRecipes();
+		craftingRecipes();
+		machineRecipes();
 	}
 
-	private static void toolsRecipes() {
+
+	public static void machineRecipes(){
+		sizerRecipes.add(new MineralSizerRecipe(ModBlocks.mineralOres,null));
+		sizerRecipes.add(new MineralSizerRecipe(Items.IRON_INGOT, 0, ModItems.chemicalDusts,16)); //iron dust
+		sizerRecipes.add(new MineralSizerRecipe(Items.GOLD_INGOT,0,ModItems.chemicalDusts,45)); //gold dust
+		sizerRecipes.add(new MineralSizerRecipe(Blocks.STONE,1,ModItems.chemicalItems,0)); //TODO granite to fluid tank. this can't be right?
+		for(int i=0;i<22;i++){
+			if((i - 1) % 3 == 0 || i == 1){
+				sizerRecipes.add(new MineralSizerRecipe(ModItems.alloyItems,i,ModItems.alloyItems,i-1));
+			}
+		}
+		for(int i=0;i<20;i++){
+			if((i - 1) % 3 == 0 || i == 1){
+				sizerRecipes.add(new MineralSizerRecipe(ModItems.alloyBItems,i,ModItems.alloyBItems,i-1));
+			}
+		}
+
+		labOvenRecipes.add(new LabOvenRecipe(ModItems.chemicalItems,2,EnumFluid.WATER,EnumFluid.SULFURIC_ACID));
+		labOvenRecipes.add(new LabOvenRecipe(ModItems.chemicalItems,3,EnumFluid.SULFURIC_ACID,EnumFluid.HYDROCHLORIC_ACID));
+		labOvenRecipes.add(new LabOvenRecipe(ModItems.chemicalItems,4,EnumFluid.SULFURIC_ACID,EnumFluid.HYDROFLUORIC_ACID));
+		labOvenRecipes.add(new LabOvenRecipe(ModItems.chemicalItems,5,EnumFluid.WATER,EnumFluid.SYNGAS));
+
+	}
+	
+	public static EnumFluid getLabOvenSolvent(ItemStack input){
+		for(LabOvenRecipe recipe: labOvenRecipes){
+			if(ItemStack.areItemsEqual(input, recipe.getSolute())){
+				return recipe.getSolvent();
+			}
+		}
+		return EnumFluid.EMPTY;
+	}
+	
+	private static void craftingRecipes() {
 	//bow barrel
 		GameRegistry.addRecipe(new ShapedOreRecipe(bowBarrel, new Object[] { "III"," PP", 'I', "ingotCube", 'P', "plankWood" }));
 	//cube crossbow
@@ -61,9 +102,7 @@ public class ModRecipes {
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.scalBow), new Object[] { " IW", "I S", " IW",  'I', "ingotScal", 'W', bowWheel, 'S', "string" }));
 	//scal bat
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.scalBat), new Object[] { "  I", " I ", "I  ",  'I', "ingotScal"}));
-	}
 
-	private static void alloyRecipes() {
  	//alloy parts
  		for(int x = 0; x < ModArray.alloyArray.length; x++){
  			for(ItemStack ore : OreDictionary.getOres(ModArray.alloyDustsOredict[x])) {if(ore != null)  {if(ore.getItemDamage() != -1 || ore.getItemDamage() != OreDictionary.WILDCARD_VALUE) {GameRegistry.addSmelting(ore, new ItemStack(ModItems.alloyItems, 1, (x*3) + 1), 1.0F);}}}
@@ -83,9 +122,7 @@ public class ModRecipes {
  			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.alloyBBlocks, 1, x), new Object[] { "XXX", "XXX", "XXX", 'X', ModArray.alloyBIngotsOredict[x] }));
  			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.alloyBBricks, 4, x), new Object[] { "XX", "XX", 'X', ModArray.alloyBBlocksOredict[x] }));
  		}
-	}
 
-	private static void machinesRecipes() {
 	//Book
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ModItems.chemBook), new Object[] { "paper", "paper", "paper", "dustRedstone" }));
 
@@ -150,10 +187,7 @@ public class ModRecipes {
 		GameRegistry.addRecipe(new ShapedOreRecipe(heatingElement, new Object[] { "NNN", "N N", "I I", 'I', "ingotIron", 'N', "ingotNichrome"}));
 	//inductor
 		GameRegistry.addRecipe(new ShapedOreRecipe(inductor, new Object[] { "III", "HHH", "III", 'I', "ingotIron", 'H', heatingElement}));
-	}
-
-	private static void chemRecipes() {
-
+	
 	//sulfur compost
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ModItems.chemicalItems, 4, 2), new Object[] { cylinder, "dustSulfur", "dustSulfur", "dustSulfur" }));
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ModItems.chemicalItems, 4, 2), new Object[] { cylinder, "itemPyrite", "itemPyrite", "itemPyrite" }));
