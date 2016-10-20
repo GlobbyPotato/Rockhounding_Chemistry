@@ -2,10 +2,6 @@ package com.globbypotato.rockhounding_chemistry.items;
 
 import java.util.List;
 
-import com.globbypotato.rockhounding_chemistry.ModContents;
-import com.globbypotato.rockhounding_chemistry.handlers.ModArray;
-import com.globbypotato.rockhounding_chemistry.handlers.Reference;
-
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -14,15 +10,12 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class MineralShards extends Item {
+public class MineralShards extends ItemBase {
 	private String[] itemArray;
 
 	public MineralShards(String name, String[] array) {
-		super();
-		setRegistryName(name);
-		setUnlocalizedName(getRegistryName().toString());
+		super(name);
 		setHasSubtypes(true);
-		setCreativeTab(Reference.RockhoundingChemistry);
 		this.itemArray = array;
 	}
 
@@ -44,7 +37,7 @@ public class MineralShards extends Item {
     @SideOnly(Side.CLIENT)
 	@Override
     public void addInformation(ItemStack itemstack, EntityPlayer player, List list, boolean held) {
-    	if(itemstack.getItem() == ModContents.arsenateShards){
+    	if(itemstack.getItem() == ModItems.arsenateShards){
     		if(itemstack.getItemDamage() == 0){
     			list.add(TextFormatting.DARK_GRAY + "Category: " + TextFormatting.YELLOW + "Arsenate");
     			list.add(TextFormatting.DARK_GRAY + "Copper: " + TextFormatting.WHITE + "36%");
@@ -69,7 +62,7 @@ public class MineralShards extends Item {
     			list.add(TextFormatting.DARK_GRAY + "Chromium: " + TextFormatting.WHITE + "7%");
     		}
     	}
-    	if(itemstack.getItem() == ModContents.borateShards){
+    	if(itemstack.getItem() == ModItems.borateShards){
     		if(itemstack.getItemDamage() == 0){
     			list.add(TextFormatting.DARK_GRAY + "Category: " + TextFormatting.YELLOW + "Borate");
     			list.add(TextFormatting.DARK_GRAY + "Sodium: " + TextFormatting.WHITE + "12%");
@@ -112,7 +105,7 @@ public class MineralShards extends Item {
     			list.add(TextFormatting.DARK_GRAY + "Potassium: " + TextFormatting.WHITE + "4%");
     		}
     	}
-    	if(itemstack.getItem() == ModContents.carbonateShards){
+    	if(itemstack.getItem() == ModItems.carbonateShards){
     		if(itemstack.getItemDamage() == 0){
     			list.add(TextFormatting.DARK_GRAY + "Category: " + TextFormatting.YELLOW + "Carbonate");
     			list.add(TextFormatting.DARK_GRAY + "Calcium: " + TextFormatting.WHITE + "19%");
@@ -139,7 +132,7 @@ public class MineralShards extends Item {
     			list.add(TextFormatting.DARK_GRAY + "Calcium: " + TextFormatting.WHITE + "7%");
     		}
     	}
-    	if(itemstack.getItem() == ModContents.halideShards){
+    	if(itemstack.getItem() == ModItems.halideShards){
     		if(itemstack.getItemDamage() == 0){
     			list.add(TextFormatting.DARK_GRAY + "Category: " + TextFormatting.YELLOW + "Halide");
     			list.add(TextFormatting.DARK_GRAY + "Lead: " + TextFormatting.WHITE + "49%");
@@ -167,7 +160,7 @@ public class MineralShards extends Item {
     			list.add(TextFormatting.DARK_GRAY + "Fluorite: " + TextFormatting.WHITE + "100%");
     		}
     	}    	
-    	if(itemstack.getItem() == ModContents.nativeShards){
+    	if(itemstack.getItem() == ModItems.nativeShards){
     		if(itemstack.getItemDamage() == 0){
     			list.add(TextFormatting.DARK_GRAY + "Category: " + TextFormatting.YELLOW + "Native");
     			list.add(TextFormatting.DARK_GRAY + "Iron: " + TextFormatting.WHITE + "55%");
@@ -234,7 +227,7 @@ public class MineralShards extends Item {
     			list.add(TextFormatting.DARK_GRAY + "Platinum: " + TextFormatting.WHITE + "11%");
     		}
     	}
-    	if(itemstack.getItem() == ModContents.oxideShards){
+    	if(itemstack.getItem() == ModItems.oxideShards){
     		if(itemstack.getItemDamage() == 0){
     			list.add(TextFormatting.DARK_GRAY + "Category: " + TextFormatting.YELLOW + "Oxide");
     			list.add(TextFormatting.DARK_GRAY + "Chromium: " + TextFormatting.WHITE + "47%");
@@ -370,7 +363,7 @@ public class MineralShards extends Item {
     			list.add(TextFormatting.DARK_GRAY + "Cadmium: " + TextFormatting.WHITE + "88%");
     		}
     	}
-    	if(itemstack.getItem() == ModContents.phosphateShards){
+    	if(itemstack.getItem() == ModItems.phosphateShards){
     		if(itemstack.getItemDamage() == 0){
     			list.add(TextFormatting.DARK_GRAY + "Category: " + TextFormatting.YELLOW + "Phosphate");
     			list.add(TextFormatting.DARK_GRAY + "Aluminum: " + TextFormatting.WHITE + "20%");
@@ -453,7 +446,7 @@ public class MineralShards extends Item {
 				list.add(TextFormatting.DARK_GRAY + "Zinc: " + TextFormatting.WHITE + "1%");
     		}
     	}
-    	if(itemstack.getItem() == ModContents.silicateShards){
+    	if(itemstack.getItem() == ModItems.silicateShards){
     		if(itemstack.getItemDamage() == 0){
     			list.add(TextFormatting.DARK_GRAY + "Category: " + TextFormatting.YELLOW + "Silicate");
     			list.add(TextFormatting.DARK_GRAY + "Silicon: " + TextFormatting.WHITE + "20%");
@@ -572,7 +565,7 @@ public class MineralShards extends Item {
     			list.add(TextFormatting.DARK_GRAY + "Iron: " + TextFormatting.WHITE + "1%");
     		}
     	}
-    	if(itemstack.getItem() == ModContents.sulfateShards){
+    	if(itemstack.getItem() == ModItems.sulfateShards){
     		if(itemstack.getItemDamage() == 0){
     			list.add(TextFormatting.DARK_GRAY + "Category: " + TextFormatting.YELLOW + "Sulfate");
     			list.add(TextFormatting.DARK_GRAY + "Aluminum: " + TextFormatting.WHITE + "20%");
@@ -628,7 +621,7 @@ public class MineralShards extends Item {
     			list.add(TextFormatting.DARK_GRAY + "Tungsten: " + TextFormatting.WHITE + "40%");
     		}
     	}
-    	if(itemstack.getItem() == ModContents.sulfideShards){
+    	if(itemstack.getItem() == ModItems.sulfideShards){
     		if(itemstack.getItemDamage() == 0){
     			list.add(TextFormatting.DARK_GRAY + "Category: " + TextFormatting.YELLOW + "Sulfide");
     			list.add(TextFormatting.DARK_GRAY + "Lead: " + TextFormatting.WHITE + "37%");

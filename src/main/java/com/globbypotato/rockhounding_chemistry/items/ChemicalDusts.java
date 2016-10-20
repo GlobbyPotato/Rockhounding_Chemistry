@@ -2,22 +2,16 @@ package com.globbypotato.rockhounding_chemistry.items;
 
 import java.util.List;
 
-import com.globbypotato.rockhounding_chemistry.handlers.ModArray;
-import com.globbypotato.rockhounding_chemistry.handlers.Reference;
-
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-public class ChemicalDusts extends Item {
+public class ChemicalDusts extends ItemBase {
 	private String[] itemArray;
 
 	public ChemicalDusts(String name, String[] array) {
-		super();
-		setRegistryName(name);
-		setUnlocalizedName(getRegistryName().toString());
+		super(name);
 		setHasSubtypes(true);
-		setCreativeTab(Reference.RockhoundingChemistry);
 		this.itemArray = array;
 	}
 

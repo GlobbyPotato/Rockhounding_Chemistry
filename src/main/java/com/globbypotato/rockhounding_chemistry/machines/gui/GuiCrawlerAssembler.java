@@ -32,8 +32,9 @@ public class GuiCrawlerAssembler extends GuiContainer {
      * Draw the foreground layer for the GuiContainer (everything in front of the items)
      */
     public void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
-        String s = this.crawlerAssembler.getDisplayName().getUnformattedText();
-        this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
+    	super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+        //String s = this.crawlerAssembler.getDisplayName().getUnformattedText();
+        //this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
         this.fontRendererObj.drawString(this.playerInventory.getDisplayName().getUnformattedText(), 8, this.ySize - 96 + 2, 4210752);
     }
 

@@ -4,9 +4,10 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import com.globbypotato.rockhounding_chemistry.ModContents;
+import com.globbypotato.rockhounding_chemistry.blocks.ModBlocks;
 import com.globbypotato.rockhounding_chemistry.handlers.ModArray;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
+import com.globbypotato.rockhounding_chemistry.items.ModItems;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerCrawlerAssembler;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -287,10 +288,10 @@ public class TileEntityCrawlerAssembler extends TileEntityLockable implements IT
 	}
 
 	private boolean canAssembly() {return slots[outputSlot] == null && hasCasing() && hasLogic() && hasArms() && hasGrid() && hasCache();}
-	private boolean hasArms() {	 return slots[2] != null && slots[2].getItem() == ModContents.miscItems  && slots[2].getItemDamage() == 14 && slots[2].stackSize == 12;}
-	private boolean hasLogic() { return slots[1] != null && slots[1].getItem() == ModContents.miscItems  && (slots[1].getItemDamage() == 0 || slots[1].getItemDamage() == 10)  && slots[1].stackSize == 1;}
-	private boolean hasCasing() {return slots[0] != null && slots[0].getItem() == ModContents.miscItems  && slots[0].getItemDamage() == 12  && slots[0].stackSize == 1;}
-	private boolean hasCache() {return slots[memorySlot] != null && slots[memorySlot].getItem() == ModContents.miscItems  && slots[memorySlot].getItemDamage() == 9  && slots[memorySlot].stackSize == 1;}
+	private boolean hasArms() {	 return slots[2] != null && slots[2].getItem() == ModItems.miscItems  && slots[2].getItemDamage() == 14 && slots[2].stackSize == 12;}
+	private boolean hasLogic() { return slots[1] != null && slots[1].getItem() == ModItems.miscItems  && (slots[1].getItemDamage() == 0 || slots[1].getItemDamage() == 10)  && slots[1].stackSize == 1;}
+	private boolean hasCasing() {return slots[0] != null && slots[0].getItem() == ModItems.miscItems  && slots[0].getItemDamage() == 12  && slots[0].stackSize == 1;}
+	private boolean hasCache() {return slots[memorySlot] != null && slots[memorySlot].getItem() == ModItems.miscItems  && slots[memorySlot].getItemDamage() == 9  && slots[memorySlot].stackSize == 1;}
 	private boolean hasGrid() {
 		if(slots[3] == null &&  slots[4] == null && slots[5] == null && slots[6] == null && hasMiningHead(7) && slots[8] == null ){
 			getTier = 1; return true;
@@ -304,11 +305,11 @@ public class TileEntityCrawlerAssembler extends TileEntityLockable implements IT
 		return false;
 	}
 	private boolean hasMiningHead(int slot) {
-		return slots[slot] != null && slots[slot].getItem() == ModContents.miscItems && slots[slot].getItemDamage() == 13;
+		return slots[slot] != null && slots[slot].getItem() == ModItems.miscItems && slots[slot].getItemDamage() == 13;
 	}
 
 	private void handleAssembler() {
-		ItemStack crawlerOut = new ItemStack(ModContents.mineCrawler);
+		ItemStack crawlerOut = new ItemStack(ModBlocks.mineCrawler);
 		crawlerOut.setTagCompound(new NBTTagCompound());
 		crawlerOut.getTagCompound().setInteger(ModArray.tierName, getTier);
 		crawlerOut.getTagCompound().setInteger(ModArray.modeName, slots[1].getItemDamage() / 10);
@@ -340,7 +341,7 @@ public class TileEntityCrawlerAssembler extends TileEntityLockable implements IT
 	}
 
 	private boolean hasEnabler(int i) {
-		return slots[i] != null && slots[i].getItem() == ModContents.miscItems  && slots[i].getItemDamage() == 11  && slots[i].stackSize == 1;
+		return slots[i] != null && slots[i].getItem() == ModItems.miscItems  && slots[i].getItemDamage() == 11  && slots[i].stackSize == 1;
 	}
 
 	private void dismantleCrawler() {
@@ -357,45 +358,45 @@ public class TileEntityCrawlerAssembler extends TileEntityLockable implements IT
 	private boolean canDismantle() {
 		return  slots[1] == null && slots[2] == null && slots[3] == null && slots[4] == null && slots[5] == null && slots[6] == null && slots[memorySlot] == null
 				&& slots[7] == null && slots[8] == null && slots[fillerSlot] == null && slots[absorbSlot] == null && slots[tunnelerSlot] == null && slots[lighterSlot] == null && slots[railmakerSlot] == null  && slots[outputSlot] == null
-				&& (slots[0] != null && slots[0].getItem() == Item.getItemFromBlock(ModContents.mineCrawler));
+				&& (slots[0] != null && slots[0].getItem() == Item.getItemFromBlock(ModBlocks.mineCrawler));
 	}
 
 	private void handleDismantler() {
-		slots[outputSlot] = new ItemStack(ModContents.miscItems, 1, 12);
-		slots[2]  = new ItemStack(ModContents.miscItems, 12, 14);
+		slots[outputSlot] = new ItemStack(ModItems.miscItems, 1, 12);
+		slots[2]  = new ItemStack(ModItems.miscItems, 12, 14);
 		if(slots[0].hasTagCompound()){
 			int getNbt; boolean getEnabler;
 			getNbt = slots[0].getTagCompound().getInteger(ModArray.modeName);
-			slots[1]  = new ItemStack(ModContents.miscItems, 1, getNbt * 10);
+			slots[1]  = new ItemStack(ModItems.miscItems, 1, getNbt * 10);
 
 			getNbt = slots[0].getTagCompound().getInteger(ModArray.tierName);
 			if(getNbt > 0){
-				slots[7]  = new ItemStack(ModContents.miscItems, 1, 13);
+				slots[7]  = new ItemStack(ModItems.miscItems, 1, 13);
 			}
 			if(getNbt == 2 || getNbt == 4){
-				slots[4]  = new ItemStack(ModContents.miscItems, 1, 13);
+				slots[4]  = new ItemStack(ModItems.miscItems, 1, 13);
 			}
 			if(getNbt == 3 || getNbt == 4){
-				slots[6]  = new ItemStack(ModContents.miscItems, 1, 13);
-				slots[8]  = new ItemStack(ModContents.miscItems, 1, 13);
+				slots[6]  = new ItemStack(ModItems.miscItems, 1, 13);
+				slots[8]  = new ItemStack(ModItems.miscItems, 1, 13);
 			}
 			if(getNbt == 4){
-				slots[3]  = new ItemStack(ModContents.miscItems, 1, 13);
-				slots[5]  = new ItemStack(ModContents.miscItems, 1, 13);
+				slots[3]  = new ItemStack(ModItems.miscItems, 1, 13);
+				slots[5]  = new ItemStack(ModItems.miscItems, 1, 13);
 			}
 
 			getEnabler = slots[0].getTagCompound().getBoolean(ModArray.fillerName);
-			if(getEnabler){slots[fillerSlot] = new ItemStack(ModContents.miscItems, 1, 11);}
+			if(getEnabler){slots[fillerSlot] = new ItemStack(ModItems.miscItems, 1, 11);}
 			getEnabler = slots[0].getTagCompound().getBoolean(ModArray.absorbName);
-			if(getEnabler){slots[absorbSlot] = new ItemStack(ModContents.miscItems, 1, 11);}
+			if(getEnabler){slots[absorbSlot] = new ItemStack(ModItems.miscItems, 1, 11);}
 			getEnabler = slots[0].getTagCompound().getBoolean(ModArray.tunnelName);
-			if(getEnabler){slots[tunnelerSlot] = new ItemStack(ModContents.miscItems, 1, 11);}
+			if(getEnabler){slots[tunnelerSlot] = new ItemStack(ModItems.miscItems, 1, 11);}
 			getEnabler = slots[0].getTagCompound().getBoolean(ModArray.lighterName);
-			if(getEnabler){slots[lighterSlot] = new ItemStack(ModContents.miscItems, 1, 11);}
+			if(getEnabler){slots[lighterSlot] = new ItemStack(ModItems.miscItems, 1, 11);}
 			getEnabler = slots[0].getTagCompound().getBoolean(ModArray.railmakerName);
-			if(getEnabler){slots[railmakerSlot] = new ItemStack(ModContents.miscItems, 1, 11);}
+			if(getEnabler){slots[railmakerSlot] = new ItemStack(ModItems.miscItems, 1, 11);}
 
-			slots[memorySlot] = new ItemStack (ModContents.miscItems, 1, 9);
+			slots[memorySlot] = new ItemStack (ModItems.miscItems, 1, 9);
 			slots[memorySlot].setTagCompound(new NBTTagCompound());
 
 			getNbt = slots[0].getTagCompound().getInteger(ModArray.cobbleName);
@@ -412,7 +413,7 @@ public class TileEntityCrawlerAssembler extends TileEntityLockable implements IT
 	}
 
 	private boolean canLoad() {
-		return slots[chargeSlot] != null && slots[chargeSlot].getItem() == Item.getItemFromBlock(ModContents.mineCrawler);
+		return slots[chargeSlot] != null && slots[chargeSlot].getItem() == Item.getItemFromBlock(ModBlocks.mineCrawler);
 	}
 	private void loadCrawler() {
 		int getNbt;
@@ -471,7 +472,7 @@ public class TileEntityCrawlerAssembler extends TileEntityLockable implements IT
 	}
 
 	private boolean hasLoadedCache() {
-		return slots[loaderSlot] != null && slots[loaderSlot].getItem() == ModContents.miscItems && slots[loaderSlot].getItemDamage() == 9 && slots[loaderSlot].hasTagCompound();
+		return slots[loaderSlot] != null && slots[loaderSlot].getItem() == ModItems.miscItems && slots[loaderSlot].getItemDamage() == 9 && slots[loaderSlot].hasTagCompound();
 	}
 
 

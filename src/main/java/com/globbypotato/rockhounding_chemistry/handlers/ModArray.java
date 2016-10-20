@@ -47,17 +47,11 @@ public class ModArray {
     public static String[] 	silicateShardsArray = new String[] 	{"axinite", "biotite", "gadolinite", "iranite", "jervisite", "magbasite", "moskvinite", "eucryptite", "steacyite", "manandonite", "vistepite", "khristovite"};
     public static String[] 	sulfateShardsArray = new String[] 	{"alunite", "fedotovite", "jarosite", "guarinoite", "bentorite", "aplowite", "bieberite", "scheelite", "stolzite"};
     public static String[] 	sulfideShardsArray = new String[] 	{"abramovite", "aikinite", "balkanite", "galena", "kesterite", "pentlandite", "pyrite", "stannite", "valleriite", "sphalerite", "petrukite", "mawsonite", "tungstenite", "erlichmanite", "malanite", "greenockite", "cernyite"};
-    public static String[] 	chemicalDustsArray = new String[] 	{"cerium", "dysprosium", "erbium", "europium", "gadolinium", "holmium", "lanthanum", "lutetium", "neodymium", "praseodymium", 
-			 												   	 "samarium", "scandium", "terbium", "thulium", "ytterbium", "yttrium", "iron", "copper", "tin", "lead",
-			 												   	 "zinc", "chromium", "boron", "silver", "aluminum", "manganese", "nickel", "cobalt", "magnesium", "titanium",
-			 												   	 "sodium", "thorium", "calcium", "phosphorus",  "lithium", "potassium", "beryllium", "sulfur", "bismuth", "niobium", 
-			 												   	 "tantalum", "arsenic", "silicon", "uranium", "platinum", "gold", "tungsten", "osmium", "iridium", "cadmium"};
 
 //------- ITEMS -------
     public static String[] 	chemicalItemsArray = new String[] 	{"tank", "salt", "sulfurCompost", "saltCompost", "fluoriteCompost", "carbonCompost", "crackedCoal"};
-    public static String[] 	miscItemsArray = new String[] 		{"logicChip", "cylinder", "gear", "cabinet", "ironNugget", "testTube", "bowBarrel", "bowWheel", "fluidCan", "memoryChip", 
-    															 "coringChip", "setupChip", "crawlerCase", "crawlerHead", "crawlerArm", "wrench", "ingotPattern", "yagRod", "resonator", "heater", 
-    															 "inductor"};
+    public static String[] 	miscItemsArray = new String[] 		{"logicChip", "cabinet", "ironNugget", "bowBarrel", "bowWheel", "fluidCan", "memoryChip", 
+    															 "coringChip", "setupChip", "crawlerCase", "crawlerHead", "crawlerArm", "wrench", "ingotPattern", "yagRod", "resonator", "heater"};
     public static String[] 	saltMakerArray = new String[] 	 	{"empty", "water", "stepa", "stepb", "stepc", "stepd", "salt"};
     public static String[] 	booksArray = new String[] 	 		{"chemistry", "alloys"};
 

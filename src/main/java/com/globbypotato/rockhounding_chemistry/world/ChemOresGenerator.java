@@ -2,7 +2,7 @@ package com.globbypotato.rockhounding_chemistry.world;
 
 import java.util.Random;
 
-import com.globbypotato.rockhounding_chemistry.ModContents;
+import com.globbypotato.rockhounding_chemistry.blocks.ModBlocks;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -10,12 +10,9 @@ import net.minecraft.block.state.pattern.BlockMatcher;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.IChunkGenerator;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenMinable;
-import net.minecraftforge.common.BiomeDictionary;
-import net.minecraftforge.common.BiomeDictionary.Type;
 import net.minecraftforge.fml.common.IWorldGenerator;
 
 public class ChemOresGenerator implements IWorldGenerator {
@@ -36,7 +33,7 @@ public class ChemOresGenerator implements IWorldGenerator {
 	private void generateNether(World world, Random random, BlockPos pos) { }
 
 	private void generateOverworld(World world, Random random, BlockPos pos) {
-		addNewMineral(ModContents.mineralOres, 0,  world, random, pos, 16, 16, mineralMaxVein, mineralFrequency, mineralMinLevel, mineralMaxLevel, Blocks.STONE);//mineral
+		addNewMineral(ModBlocks.mineralOres, 0,  world, random, pos, 16, 16, mineralMaxVein, mineralFrequency, mineralMinLevel, mineralMaxLevel, Blocks.STONE);//mineral
 	}
 
 	private void addNewMineral(Block block, int metadata, World world, Random random, BlockPos pos, int maxX, int maxZ, int maxVeinSize, int chanceToSpawn, int minY, int maxY, Block generateIn) {

@@ -7,7 +7,6 @@ import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerMineralAnalyzer;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityMineralAnalyzer;
 
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -15,18 +14,20 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GuiMineralAnalyzer extends GuiContainer {
+public class GuiMineralAnalyzer extends GuiBase {
 	
     private static final ResourceLocation GUI_TEXTURES = new ResourceLocation(Reference.MODID + ":textures/gui/guimineralanalyzer.png");
     private final InventoryPlayer playerInventory;
     private final TileEntityMineralAnalyzer mineralAnalyzer;
+	public static final int WIDTH = 176;
+	public static final int HEIGHT = 191;
 
-    public GuiMineralAnalyzer(InventoryPlayer playerInv, TileEntityMineralAnalyzer furnaceInv){
-        super(new ContainerMineralAnalyzer(playerInv, furnaceInv));
+    public GuiMineralAnalyzer(InventoryPlayer playerInv, TileEntityMineralAnalyzer tile){
+        super(tile, new ContainerMineralAnalyzer(playerInv, tile));
         this.playerInventory = playerInv;
-        this.mineralAnalyzer = furnaceInv;
-		this.xSize = 176;
-		this.ySize = 191;
+        this.mineralAnalyzer = tile;
+		this.xSize = WIDTH;
+		this.ySize = HEIGHT;
     }
 
     @Override
@@ -37,15 +38,16 @@ public class GuiMineralAnalyzer extends GuiContainer {
 	   //bars progression (fuel-redstone)
 	   if(mouseX >= 11+x && mouseX <= 20+x && mouseY >= 40+y && mouseY <= 89+y){
 		   String[] text = {this.mineralAnalyzer.getField(0) + "/" + this.mineralAnalyzer.getField(1) + " ticks"};
-	       List tooltip = Arrays.asList(text);
+		   List<String> tooltip = Arrays.asList(text);
 		   drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
 	   }
 
     }
 
     public void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
-        String s = this.mineralAnalyzer.getDisplayName().getUnformattedText();
-        this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
+    	super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+        //String s = this.mineralAnalyzer.getDisplayName().getUnformattedText();
+       // this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
         this.fontRendererObj.drawString(this.playerInventory.getDisplayName().getUnformattedText(), 8, this.ySize - 96 + 2, 4210752);
     }
 

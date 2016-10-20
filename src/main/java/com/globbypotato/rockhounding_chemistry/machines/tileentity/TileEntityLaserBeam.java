@@ -1,6 +1,6 @@
 package com.globbypotato.rockhounding_chemistry.machines.tileentity;
 
-import com.globbypotato.rockhounding_chemistry.ModContents;
+import com.globbypotato.rockhounding_chemistry.blocks.ModBlocks;
 import com.globbypotato.rockhounding_chemistry.machines.LaserBeam;
 
 import net.minecraft.block.state.IBlockState;
@@ -17,9 +17,9 @@ public class TileEntityLaserBeam extends TileEntity implements ITickable {
 	    EnumFacing enumfacing = state.getValue(LaserBeam.FACING);
 
 	    if(!worldObj.isRemote){
-	    	if( worldObj.getBlockState(pos.offset(enumfacing.getOpposite(), 1)).getBlock() != ModContents.laserBeam && 
-	    		worldObj.getBlockState(pos.offset(enumfacing.getOpposite(), 1)).getBlock() != ModContents.laserRedstoneTx &&
-	    		worldObj.getBlockState(pos.offset(enumfacing.getOpposite(), 1)).getBlock() != ModContents.laserSplitter){
+	    	if( worldObj.getBlockState(pos.offset(enumfacing.getOpposite(), 1)).getBlock() != ModBlocks.laserBeam && 
+	    		worldObj.getBlockState(pos.offset(enumfacing.getOpposite(), 1)).getBlock() != ModBlocks.laserRedstoneTx &&
+	    		worldObj.getBlockState(pos.offset(enumfacing.getOpposite(), 1)).getBlock() != ModBlocks.laserSplitter){
 	    		worldObj.setBlockState(pos, Blocks.AIR.getDefaultState());
 	    	}
 	    }

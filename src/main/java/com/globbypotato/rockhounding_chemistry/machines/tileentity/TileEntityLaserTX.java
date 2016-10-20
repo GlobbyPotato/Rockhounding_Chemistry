@@ -1,6 +1,6 @@
 package com.globbypotato.rockhounding_chemistry.machines.tileentity;
 
-import com.globbypotato.rockhounding_chemistry.ModContents;
+import com.globbypotato.rockhounding_chemistry.blocks.ModBlocks;
 import com.globbypotato.rockhounding_chemistry.machines.LaserBeam;
 import com.globbypotato.rockhounding_chemistry.machines.LaserTX;
 
@@ -41,10 +41,10 @@ public class TileEntityLaserTX extends TileEntity implements ITickable {
 						IBlockState checkingState = worldObj.getBlockState(checkingPos); 
 		    			if(firstObstacle == false){
 						    if(checkingState.getBlock() == Blocks.AIR){
-								IBlockState beamState = ModContents.laserBeam.getDefaultState().withProperty(LaserBeam.FACING, beamFacing); 
+								IBlockState beamState = ModBlocks.laserBeam.getDefaultState().withProperty(LaserBeam.FACING, beamFacing); 
 						    	worldObj.setBlockState(checkingPos, beamState);
 					    		firstObstacle = false;
-						    }else if(checkingState.getBlock() == ModContents.laserBeam){
+						    }else if(checkingState.getBlock() == ModBlocks.laserBeam){
 						    	if(checkingState.getValue(LaserBeam.FACING) == beamFacing ) {
 						    		firstObstacle = false;
 							    }else{
@@ -56,7 +56,7 @@ public class TileEntityLaserTX extends TileEntity implements ITickable {
 		    			}
 		    		}
 			    }else{
-			    	if(worldObj.getBlockState(pos.offset(enumfacing.getOpposite(), 1)).getBlock() == ModContents.laserBeam){
+			    	if(worldObj.getBlockState(pos.offset(enumfacing.getOpposite(), 1)).getBlock() == ModBlocks.laserBeam){
 			    		worldObj.setBlockState(pos.offset(enumfacing.getOpposite(), 1), Blocks.AIR.getDefaultState());
 			    	}
 			    }

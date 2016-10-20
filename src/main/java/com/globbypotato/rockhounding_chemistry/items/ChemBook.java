@@ -3,12 +3,9 @@ package com.globbypotato.rockhounding_chemistry.items;
 import java.util.List;
 
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
-import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityLabOven;
 
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemWrittenBook;
 import net.minecraft.nbt.NBTTagCompound;
@@ -24,6 +21,7 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -33,6 +31,7 @@ public class ChemBook extends ItemWrittenBook {
 		super();
 		setRegistryName(name);
 		setUnlocalizedName(getRegistryName().toString());
+		GameRegistry.register(this);
 		setCreativeTab(Reference.RockhoundingChemistry);
         setMaxStackSize(1);
 	}

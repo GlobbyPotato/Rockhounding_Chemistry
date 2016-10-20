@@ -1,125 +1,125 @@
 package com.globbypotato.rockhounding_chemistry.machines.container;
 
-import javax.annotation.Nullable;
-
+import com.globbypotato.rockhounding_chemistry.handlers.ModRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityLabOven;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ClickType;
-import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
-import net.minecraft.inventory.SlotFurnaceFuel;
-import net.minecraft.inventory.SlotFurnaceOutput;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.SlotItemHandler;
 
-public class ContainerLabOven extends Container{
-    private TileEntityLabOven labOven;
-    private int cookTime;
-    private int totalCookTime;
-    private int powerCount;
-    private int powerCurrent;
-    private int redstoneCount;
-    private int redstoneCurrent;
+public class ContainerLabOven extends ContainerBase<TileEntityLabOven> {
+	private int cookTime;
+	private int totalCookTime;
+	private int powerCount;
+	private int powerCurrent;
+	private int redstoneCount;
+	private int redstoneCurrent;
+	Slot templateSlot;
 
-    public ContainerLabOven(InventoryPlayer playerInventory, TileEntityLabOven furnaceInventory){
-        this.labOven = furnaceInventory;
-        this.addSlotToContainer(new Slot(furnaceInventory, 0, 44, 59));//input solute
-        this.addSlotToContainer(new SlotFurnaceFuel(furnaceInventory, 1, 8, 20));//fuel
-        this.addSlotToContainer(new Slot(furnaceInventory, 2, 80, 59));//output
-        this.addSlotToContainer(new Slot(furnaceInventory, 3, 116, 59));//input solvent
-        this.addSlotToContainer(new Slot(furnaceInventory, 4, 152, 20));//input redstone
+	public ContainerLabOven(InventoryPlayer playerInventory, TileEntityLabOven tile){
+		super(playerInventory,tile);
 
-        this.addSlotToContainer(new Slot(furnaceInventory, 5, 28, 20));//rec-
-        this.addSlotToContainer(new Slot(furnaceInventory, 6, 132, 20));//rec+
+	}
 
-        this.addSlotToContainer(new Slot(furnaceInventory, 7, 44, 42));//rec i
+	@Override
+	protected void addOwnSlots() {
+		IItemHandler input = tile.getInput();
+		IItemHandler template = tile.getTemplate();
 
-        for (int i = 0; i < 3; ++i){
-            for (int j = 0; j < 9; ++j){
-                this.addSlotToContainer(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 113 + i * 18));
-            }
-        }
-        
-        for (int k = 0; k < 9; ++k){
-            this.addSlotToContainer(new Slot(playerInventory, k, 8 + k * 18, 171));
-        }
+		this.addSlotToContainer(new SlotItemHandler(input, 0, 44, 59));//input solute
+		this.addSlotToContainer(new SlotItemHandler(input, 1, 8, 20));//fuel
+		this.addSlotToContainer(new SlotItemHandler(input, 2, 116, 59));//input solvent
+		this.addSlotToContainer(new SlotItemHandler(input, 3, 80, 59));//output
+		this.addSlotToContainer(new SlotItemHandler(input, 4, 152, 20));//input redstone
+		this.addSlotToContainer(new SlotItemHandler(input, 5, 28, 20));//Previous recipe
+		this.addSlotToContainer(new SlotItemHandler(input, 6, 132, 20));//Next recipe
+
+		templateSlot = this.addSlotToContainer(new SlotItemHandler(template, 0, 44, 42));//solute template
+	}
+
+	@Override
+	public void addListener(IContainerListener listener){
+		super.addListener(listener);
+		// listener.sendAllWindowProperties(this, this.tile);
+	}
+
+	/**
+	 * Looks for changes made in the container, sends them to every listener.
+	 */
+
+	@Override
+	public void detectAndSendChanges(){
+		super.detectAndSendChanges();
+		for (int i = 0; i < this.listeners.size(); ++i){
+			IContainerListener icontainerlistener = (IContainerListener)this.listeners.get(i);
+			if (this.powerCount != this.tile.getField(0)){
+				icontainerlistener.sendProgressBarUpdate(this, 0, this.tile.getField(0));
+			}
+			if (this.powerCurrent != this.tile.getField(1)){
+				icontainerlistener.sendProgressBarUpdate(this, 1, this.tile.getField(1));
+			}
+			if (this.cookTime != this.tile.getField(2)){
+				icontainerlistener.sendProgressBarUpdate(this, 2, this.tile.getField(2));
+			}
+			if (this.totalCookTime != this.tile.getField(3)){
+				icontainerlistener.sendProgressBarUpdate(this, 3, this.tile.getField(3));
+			}
+			if (this.redstoneCount != this.tile.getField(4)){
+				icontainerlistener.sendProgressBarUpdate(this, 4, this.tile.getField(4));
+			}
+			if (this.redstoneCurrent != this.tile.getField(5)){
+				icontainerlistener.sendProgressBarUpdate(this, 5, this.tile.getField(5));
+			}
+		}
+		this.cookTime = this.tile.getField(2);
+		this.totalCookTime = this.tile.getField(3);
+		this.powerCount = this.tile.getField(0);
+		this.powerCurrent = this.tile.getField(1);
+		this.redstoneCount = this.tile.getField(4);
+		this.redstoneCurrent = this.tile.getField(5);
+	}
+
+	@SideOnly(Side.CLIENT)
+	public void updateProgressBar(int id, int data){
+		this.tile.setField(id, data);
+	}
+
+
+	@Override
+	public ItemStack slotClick(int slot, int dragType, ClickType clickTypeIn, EntityPlayer player){
+		if(slot == 7){
+			return null;
+		}else if(slot == 5 && this.tile.recipeDisplayIndex >= 0){
+			this.tile.recipeDisplayIndex--;
+			this.tile.resetGrid();
+			this.tile.recipeScan = true;
+			return null;
+		}else if(slot == 6 && this.tile.recipeDisplayIndex < ModRecipes.labOvenRecipes.size()-1){
+			this.tile.recipeDisplayIndex++;
+			this.tile.resetGrid();
+			this.tile.recipeScan = true;
+			return null;
+		}else{
+			return super.slotClick(slot, dragType, clickTypeIn, player);
+		}
+	}
+	
+	//Prevent from merging into stack 7, the stack with the recipe template
+	@Override
+	protected boolean mergeItemStack(ItemStack stack, int startIndex, int endIndex, boolean reverseDirection)
+    {
+		if(super.mergeItemStack(stack, startIndex, 7, reverseDirection)){
+			return true;
+		}
+		else {
+			return super.mergeItemStack(stack, 8, endIndex, reverseDirection);
+		}
     }
-
-    public void addListener(IContainerListener listener){
-        super.addListener(listener);
-        listener.sendAllWindowProperties(this, this.labOven);
-    }
-
-    /**
-     * Looks for changes made in the container, sends them to every listener.
-     */
-    public void detectAndSendChanges(){
-        super.detectAndSendChanges();
-        for (int i = 0; i < this.listeners.size(); ++i){
-            IContainerListener icontainerlistener = (IContainerListener)this.listeners.get(i);
-            if (this.powerCount != this.labOven.getField(0)){
-                icontainerlistener.sendProgressBarUpdate(this, 0, this.labOven.getField(0));
-            }
-            if (this.powerCurrent != this.labOven.getField(1)){
-                icontainerlistener.sendProgressBarUpdate(this, 1, this.labOven.getField(1));
-            }
-            if (this.cookTime != this.labOven.getField(2)){
-                icontainerlistener.sendProgressBarUpdate(this, 2, this.labOven.getField(2));
-            }
-            if (this.totalCookTime != this.labOven.getField(3)){
-                icontainerlistener.sendProgressBarUpdate(this, 3, this.labOven.getField(3));
-            }
-            if (this.redstoneCount != this.labOven.getField(4)){
-                icontainerlistener.sendProgressBarUpdate(this, 4, this.labOven.getField(4));
-            }
-            if (this.redstoneCurrent != this.labOven.getField(5)){
-                icontainerlistener.sendProgressBarUpdate(this, 5, this.labOven.getField(5));
-            }
-        }
-        this.cookTime = this.labOven.getField(2);
-        this.totalCookTime = this.labOven.getField(3);
-        this.powerCount = this.labOven.getField(0);
-        this.powerCurrent = this.labOven.getField(1);
-        this.redstoneCount = this.labOven.getField(4);
-        this.redstoneCurrent = this.labOven.getField(5);
-    }
-
-    @SideOnly(Side.CLIENT)
-    public void updateProgressBar(int id, int data){
-        this.labOven.setField(id, data);
-    }
-
-    public boolean canInteractWith(EntityPlayer playerIn){
-        return this.labOven.isUseableByPlayer(playerIn);
-    }
-
-    @Override
-    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index){
-    	return null;
-    }
-    
-    @Override
-    public ItemStack slotClick(int slot, int dragType, ClickType clickTypeIn, EntityPlayer player){
-    	if(slot == 7){
-    		return null;
-    	}else if(slot == 5 && this.labOven.recipeCount > 0){
-        		this.labOven.recipeCount--; this.labOven.resetGrid(); this.labOven.recipeScan = true;
-        		return null;
-    	}else if(slot == 6 && this.labOven.recipeCount < this.labOven.maxAcids){
-    		this.labOven.recipeCount++; this.labOven.resetGrid(); this.labOven.recipeScan = true;
-    		return null;
-    	}else{
-    		return super.slotClick(slot, dragType, clickTypeIn, player);
-    	}
-    }
-
-    @Override
-    public boolean canMergeSlot(ItemStack stack, Slot slot){
-        return slot.slotNumber < 5 || slot.slotNumber > 7;
-    }
-
 }

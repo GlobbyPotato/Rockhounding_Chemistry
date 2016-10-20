@@ -5,10 +5,10 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import com.globbypotato.rockhounding_chemistry.ModContents;
 import com.globbypotato.rockhounding_chemistry.blocks.IMetaBlockName;
 import com.globbypotato.rockhounding_chemistry.handlers.ModArray;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
+import com.globbypotato.rockhounding_chemistry.items.ModItems;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntitySaltMaker;
 
 import net.minecraft.block.Block;
@@ -28,15 +28,12 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResult;
 import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -210,7 +207,7 @@ public class SaltMaker extends Block implements ITileEntityProvider, IMetaBlockN
                 playerIn.playSound(SoundEvents.BLOCK_GRAVEL_HIT, 0.5F, 1.5F);
     			if(!worldIn.isRemote) {
     				int getSalt = rand.nextInt(saltAmount) + 1; 
-    				dropItemStack(worldIn, new ItemStack(ModContents.chemicalItems, getSalt, 1), pos);
+    				dropItemStack(worldIn, new ItemStack(ModItems.chemicalItems, getSalt, 1), pos);
     			}
     			if(!playerIn.capabilities.isCreativeMode){
 	    			int damageItem = heldItem.getItemDamage() + 1;

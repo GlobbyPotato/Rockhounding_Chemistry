@@ -7,7 +7,6 @@ import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerMetalAlloyer;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityMetalAlloyer;
 
-import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -39,18 +38,18 @@ public class GuiMetalAlloyer extends GuiContainer {
 	   //recipe buttons
 	   if(mouseX >= 52+x && mouseX <= 67+x && mouseY >= 16+y && mouseY <= 31+y){
 		   String[] text = {"Previous Recipe"};
-	       List tooltip = Arrays.asList(text);
+		   List<String> tooltip = Arrays.asList(text);
 		   drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
 	   }
 	   if(mouseX >= 88+x && mouseX <= 103+x && mouseY >= 16+y && mouseY <= 31+y){
 		   String[] text = {"Next Recipe"};
-	       List tooltip = Arrays.asList(text);
+		   List<String> tooltip = Arrays.asList(text);
 		   drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
 	   }
 	   //bars progression (fuel-redstone)
 	   if(mouseX >= 11+x && mouseX <= 20+x && mouseY >= 40+y && mouseY <= 89+y){
 		   String[] text = {this.metalAlloyer.getField(0) + "/" + this.metalAlloyer.getField(1) + " ticks"};
-	       List tooltip = Arrays.asList(text);
+		   List<String> tooltip = Arrays.asList(text);
 		   drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
 	   }
 

@@ -1,31 +1,22 @@
 package com.globbypotato.rockhounding_chemistry.machines.tileentity;
 
-import com.globbypotato.rockhounding_chemistry.ModContents;
 import com.globbypotato.rockhounding_chemistry.handlers.ModArray;
+import com.globbypotato.rockhounding_chemistry.items.ModItems;
 import com.globbypotato.rockhounding_chemistry.machines.MineCrawler;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockFalling;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumFacing.Axis;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.MutableBlockPos;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
-import net.minecraftforge.fluids.FluidRegistry;
 
 public class TileEntityMineCrawler extends TileEntity implements ITickable {
 	public static int numTier;
@@ -469,7 +460,7 @@ public class TileEntityMineCrawler extends TileEntity implements ITickable {
 			if(canAbsorb && numGlass > 0 && state.getBlock().getMetaFromState(state) == 0){
 				String blockName = state.getBlock().getRegistryName().toString();
 				if(!blockName.contains("flowing")){
-					dropCrawler = new ItemStack(ModContents.miscItems, 1, 8);
+					dropCrawler = new ItemStack(ModItems.miscItems, 1, 8);
 					dropCrawler.setTagCompound(new NBTTagCompound());
 					dropCrawler.getTagCompound().setString("Block", blockName);
 					numGlass--;

@@ -2,10 +2,9 @@ package com.globbypotato.rockhounding_chemistry.items.tools;
 
 import javax.annotation.Nullable;
 
-import com.globbypotato.rockhounding_chemistry.ModContents;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
+import com.globbypotato.rockhounding_chemistry.items.ModItems;
 
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,7 +14,6 @@ import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.IItemPropertyGetter;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemArrow;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
@@ -26,6 +24,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -33,6 +32,7 @@ public class CubeCrossbow extends ItemBow {
     public CubeCrossbow(String name){
 		setRegistryName(name);
 		setUnlocalizedName(getRegistryName().toString());
+		GameRegistry.register(this);
         this.maxStackSize = 1;
         this.setMaxDamage(600);
 		this.setCreativeTab(Reference.RockhoundingChemistry);
@@ -43,7 +43,7 @@ public class CubeCrossbow extends ItemBow {
                     return 0.0F;
                 }else{
                     ItemStack itemstack = entityIn.getActiveItemStack();
-                    return itemstack != null && itemstack.getItem() == ModContents.cubeCrossbow ? (float)(stack.getMaxItemUseDuration() - entityIn.getItemInUseCount()) / 20.0F : 0.0F;
+                    return itemstack != null && itemstack.getItem() == ModItems.cubeCrossbow ? (float)(stack.getMaxItemUseDuration() - entityIn.getItemInUseCount()) / 20.0F : 0.0F;
                 }
             }
         });
