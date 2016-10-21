@@ -4,7 +4,6 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import com.globbypotato.rockhounding_chemistry.handlers.ModArray;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.items.ModItems;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerMetalAlloyer;
@@ -68,22 +67,22 @@ public class TileEntityMetalAlloyer extends TileEntityLockable implements ITicka
 
 	public static String[] alloyNames = new String[]{"No Recipe", "CuBe", "ScAl", "BAM", "YAG", "Cupronickel", "Nimonic", "Hastelloy", "Nichrome", "Mischmetal", "Rose Gold", "Green Gold", "White Gold", "Shibuichi", "Tombak", "Pewter"};
     	public int maxAlloys = alloyNames.length - 1;
-	String[] cubeRecipe = new String[]{"dustCopper", "dustBeryllium"}; 															int[] cubeQuantity = new int[]{7, 2};
-	String[] scalRecipe = new String[]{"dustAluminum", "dustScandium"}; 														int[] scalQuantity = new int[]{7, 2};
-	String[] bamRecipe = new String[]{"dustBoron", "dustAluminum", "dustMagnesium"}; 											int[] bamQuantity = new int[]{6, 2, 1};
-	String[] yagRecipe = new String[]{"dustYttrium", "dustAluminum", "dustNeodymium", "dustChromium"}; 							int[] yagQuantity = new int[]{4, 2, 2, 1};
-	String[] cupronickelRecipe = new String[]{"dustCopper", "dustNickel", "dustManganese", "dustIron"}; 						int[] cupronickelQuantity = new int[]{5, 2, 1, 1};
-	String[] nimonicRecipe = new String[]{"dustNickel", "dustCobalt", "dustChromium"}; 											int[] nimonicQuantity = new int[]{5, 2, 2};
-	String[] hastelloyRecipe = new String[]{"dustIron", "dustNickel", "dustChromium"}; 											int[] hastelloyQuantity = new int[]{5, 3, 1};
-	String[] nichromeRecipe = new String[]{"dustNickel", "dustChromium", "dustIron",}; 											int[] nichromeQuantity = new int[]{6, 2, 1};
-	private int decoSplit = 8;
-	String[] mischmetalRecipe = new String[]{"dustCerium", "dustLanthanum", "dustNeodymium", "dustPraseodymium", "dustIron"}; 	int[] mischmetalQuantity = new int[]{4, 2, 1, 1, 1};
-	String[] rosegoldRecipe = new String[]{"dustGold", "dustCopper", "dustSilver"}; 											int[] rosegoldQuantity = new int[]{5, 3, 1};
-	String[] greengoldRecipe = new String[]{"dustGold", "dustSilver", "dustCopper", "dustCadmium"}; 							int[] greengoldQuantity = new int[]{5, 2, 1, 1};
-	String[] whitegoldRecipe = new String[]{"dustGold", "dustSilver", "dustCopper", "dustManganese"}; 							int[] whitegoldQuantity = new int[]{5, 2, 1, 1};
-	String[] shibuichiRecipe = new String[]{"dustCopper", "dustSilver", "dustGold"}; 											int[] shibuichiQuantity = new int[]{7, 2, 1};
-	String[] tombakRecipe = new String[]{"dustCopper", "dustZinc", "dustArsenic"}; 												int[] tombakQuantity = new int[]{6, 2, 1};
-	String[] pewterRecipe = new String[]{"dustTin", "dustCopper", "dustBismuth", "dustLead"}; 									int[] pewterQuantity = new int[]{5, 1, 1, 1};
+		String[] cubeRecipe = new String[]{"dustCopper", "dustBeryllium"}; 															int[] cubeQuantity = new int[]{7, 2};
+		String[] scalRecipe = new String[]{"dustAluminum", "dustScandium"}; 														int[] scalQuantity = new int[]{7, 2};
+		String[] bamRecipe = new String[]{"dustBoron", "dustAluminum", "dustMagnesium"}; 											int[] bamQuantity = new int[]{6, 2, 1};
+		String[] yagRecipe = new String[]{"dustYttrium", "dustAluminum", "dustNeodymium", "dustChromium"}; 							int[] yagQuantity = new int[]{4, 2, 2, 1};
+		String[] cupronickelRecipe = new String[]{"dustCopper", "dustNickel", "dustManganese", "dustIron"}; 						int[] cupronickelQuantity = new int[]{5, 2, 1, 1};
+		String[] nimonicRecipe = new String[]{"dustNickel", "dustCobalt", "dustChromium"}; 											int[] nimonicQuantity = new int[]{5, 2, 2};
+		String[] hastelloyRecipe = new String[]{"dustIron", "dustNickel", "dustChromium"}; 											int[] hastelloyQuantity = new int[]{5, 3, 1};
+		String[] nichromeRecipe = new String[]{"dustNickel", "dustChromium", "dustIron",}; 											int[] nichromeQuantity = new int[]{6, 2, 1};
+		private int decoSplit = 8;
+		String[] mischmetalRecipe = new String[]{"dustCerium", "dustLanthanum", "dustNeodymium", "dustPraseodymium", "dustIron"}; 	int[] mischmetalQuantity = new int[]{4, 2, 1, 1, 1};
+		String[] rosegoldRecipe = new String[]{"dustGold", "dustCopper", "dustSilver"}; 											int[] rosegoldQuantity = new int[]{5, 3, 1};
+		String[] greengoldRecipe = new String[]{"dustGold", "dustSilver", "dustCopper", "dustCadmium"}; 							int[] greengoldQuantity = new int[]{5, 2, 1, 1};
+		String[] whitegoldRecipe = new String[]{"dustGold", "dustSilver", "dustCopper", "dustManganese"}; 							int[] whitegoldQuantity = new int[]{5, 2, 1, 1};
+		String[] shibuichiRecipe = new String[]{"dustCopper", "dustSilver", "dustGold"}; 											int[] shibuichiQuantity = new int[]{7, 2, 1};
+		String[] tombakRecipe = new String[]{"dustCopper", "dustZinc", "dustArsenic"}; 												int[] tombakQuantity = new int[]{6, 2, 1};
+		String[] pewterRecipe = new String[]{"dustTin", "dustCopper", "dustBismuth", "dustLead"}; 									int[] pewterQuantity = new int[]{5, 1, 1, 1};
 
 
 
@@ -377,9 +376,9 @@ public class TileEntityMetalAlloyer extends TileEntityLockable implements ITicka
         private void countIngredients(int countRecipes, String[] recipe, int[] quantity) {
 		for(int x = 0; x < recipe.length; x++){
 			for(ItemStack dust : OreDictionary.getOres(recipe[x])) {
-	            		if(dust != null){
-	            			slots[x + 11] = dust; slots[x + 11].stackSize = quantity[x];
-	            		}
+            		if(dust != null){
+            			slots[x + 11] = dust; slots[x + 11].stackSize = quantity[x];
+            		}
 			}
 		}
 	}
@@ -426,8 +425,10 @@ public class TileEntityMetalAlloyer extends TileEntityLockable implements ITicka
 		return  countRecipes() > 0 &&
 			isFullRecipe(recipe) &&
 			hasConsumable() &&
-			(slots[7] == null || (slots[7] != null && slots[SLOT_TEMPLATE] != null && slots[7].isItemEqual(slots[SLOT_TEMPLATE]) && slots[7].stackSize <= slots[7].getMaxStackSize() - 8)) &&
-			powerCount >= machineSpeed();
+			(slots[SLOT_OUTPUT] == null 
+			|| (slots[SLOT_OUTPUT] != null && slots[SLOT_TEMPLATE] != null && slots[SLOT_OUTPUT].isItemEqual(slots[SLOT_TEMPLATE]) 
+			&& slots[SLOT_OUTPUT].stackSize <= slots[SLOT_OUTPUT].getMaxStackSize() - 8)) 
+			&& powerCount >= machineSpeed();
 	}
 
 	private boolean isFullRecipe(String[] recipe) {
@@ -487,7 +488,7 @@ public class TileEntityMetalAlloyer extends TileEntityLockable implements ITicka
 		//add output
 		if(slots[SLOT_OUTPUT] == null){
 			slots[SLOT_OUTPUT] = slots[SLOT_TEMPLATE].copy(); slots[SLOT_OUTPUT].stackSize = 8;
-		}else if(slots[SLOT_OUTPUT].isItemEqual(slots[SLOT_TEMPLATE]) && slots[SLOT_OUTPUT].stackSize < slots[SLOT_OUTPUT].getMaxStackSize() - 8){
+		}else if(slots[SLOT_OUTPUT].isItemEqual(slots[SLOT_TEMPLATE]) && slots[SLOT_OUTPUT].stackSize <= slots[SLOT_OUTPUT].getMaxStackSize() - 8){
 			slots[SLOT_OUTPUT].stackSize += 8;
 			if(slots[SLOT_OUTPUT].stackSize > slots[SLOT_OUTPUT].getMaxStackSize()){slots[SLOT_OUTPUT].stackSize = slots[SLOT_OUTPUT].getMaxStackSize();}
 		}
