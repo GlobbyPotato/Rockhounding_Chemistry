@@ -483,7 +483,7 @@ public class TileEntityCrawlerAssembler extends TileEntityLockable implements IT
 	}
 
 	private boolean canLoad() {
-		return slots[SLOT_LOADER] != null && (slots[SLOT_LOADER].isItemEqual(anyCrawler) || slots[SLOT_LOADER].isItemEqual(crawlerMemory)) && slots[SLOT_LOADER].hasTagCompound();
+		return slots[SLOT_LOADER] != null && (slots[SLOT_LOADER].isItemEqual(anyCrawler) || slots[SLOT_LOADER].isItemEqual(crawlerMemory)) && slots[SLOT_LOADER].stackSize == 1 && slots[SLOT_LOADER].hasTagCompound();
 	}
 
 	private void loadCrawler() {
@@ -532,7 +532,7 @@ public class TileEntityCrawlerAssembler extends TileEntityLockable implements IT
 	}
 
 	private boolean hasLoadedCache() {
-		return slots[SLOT_MATERIAL] != null && slots[SLOT_MATERIAL].isItemEqual(crawlerMemory) && slots[SLOT_MATERIAL].hasTagCompound();
+		return slots[SLOT_MATERIAL] != null && slots[SLOT_MATERIAL].isItemEqual(crawlerMemory) && slots[SLOT_MATERIAL].stackSize == 1 && slots[SLOT_MATERIAL].hasTagCompound();
 	}
 
 

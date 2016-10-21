@@ -460,7 +460,7 @@ public class TileEntityMineCrawler extends TileEntity implements ITickable {
 			if(canAbsorb && numGlass > 0 && state.getBlock().getMetaFromState(state) == 0){
 				String blockName = state.getBlock().getRegistryName().toString();
 				if(!blockName.contains("flowing")){
-					dropCrawler = new ItemStack(ModItems.miscItems, 1, 8);
+					dropCrawler = new ItemStack(ModItems.miscItems, 1, 5);
 					dropCrawler.setTagCompound(new NBTTagCompound());
 					dropCrawler.getTagCompound().setString("Block", blockName);
 					numGlass--;
@@ -472,8 +472,7 @@ public class TileEntityMineCrawler extends TileEntity implements ITickable {
 			dropCrawler = state.getBlock().getPickBlock(state, null, worldObj, pos, null);
 		}
 		if(dropCrawler != null && dropCrawler.getItem() != null){
-			EntityItem entityitem = new EntityItem(worldObj, pos.getX(), pos.getY(), pos.getZ(), dropCrawler);
-			entityitem.setPosition(samplePos.getX(), samplePos.getY() + 0.5D, samplePos.getZ());
+			EntityItem entityitem = new EntityItem(worldObj, pos.getX(), pos.getY() + 1, pos.getZ(), dropCrawler);
 			worldObj.spawnEntityInWorld(entityitem);
 		}
 		worldObj.setBlockToAir(samplePos);

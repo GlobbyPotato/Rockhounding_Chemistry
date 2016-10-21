@@ -4,7 +4,7 @@
         "facing=up":    { "model": "rockhounding_chemistry:mineralSizer" 	},
         "facing=south": { "model": "rockhounding_chemistry:mineralSizer"},
         "facing=north": { "model": "rockhounding_chemistry:mineralSizer", "y": 180 },
-        "facing=east":  { "model": "rockhounding_chemistry:mineralSizer", "y": 90  },
-        "facing=west":  { "model": "rockhounding_chemistry:mineralSizer", "y": 270 }
+        "facing=east":  { "model": "rockhounding_chemistry:mineralSizer", "y": 270  },
+        "facing=west":  { "model": "rockhounding_chemistry:mineralSizer", "y": 90 }
     }
 }

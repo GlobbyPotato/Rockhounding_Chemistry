@@ -2,7 +2,6 @@ package com.globbypotato.rockhounding_chemistry.machines.tileentity;
 
 import javax.annotation.Nullable;
 
-import com.globbypotato.rockhounding_chemistry.CommonProxy;
 import com.globbypotato.rockhounding_chemistry.Utils;
 import com.globbypotato.rockhounding_chemistry.handlers.EnumFluid;
 import com.globbypotato.rockhounding_chemistry.handlers.ModArray;
@@ -11,6 +10,7 @@ import com.globbypotato.rockhounding_chemistry.items.ModItems;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiLabOven;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.LabOvenRecipe;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.WrappedItemHandler.WriteMode;
+import com.globbypotato.rockhounding_chemistry.proxy.CommonProxy;
 
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -143,7 +143,9 @@ public class TileEntityLabOven extends TileEntityInvRFReceiver {
 		}
 	}
 
-
+	public boolean isBurning(){
+		return this.canSynthesize();
+	}
 
 	//----------------------- I/O -----------------------
 	@Override
@@ -202,14 +204,20 @@ public class TileEntityLabOven extends TileEntityInvRFReceiver {
 
 	private boolean canSynthesize() {
 		if(this.recipeDisplayIndex >= 0){
-			EnumFluid fluid = ModRecipes.labOvenRecipes.get(recipeDisplayIndex).getOutput();
-			return     hasRecipe()
-					&& (isTankEmpty(OUTPUT_SLOT) || stackHasFluid(input.getStackInSlot(OUTPUT_SLOT),fluid))
-					&& (!isTankFull(OUTPUT_SLOT))
-					&& powerCount >= machineSpeed()
-					&& redstoneCount >= machineSpeed() * 2;
+			if(powerCount >= machineSpeed() && redstoneCount >= machineSpeed() ){
+				EnumFluid acid = ModRecipes.labOvenRecipes.get(recipeDisplayIndex).getOutput();
+				if(isTankEmpty(OUTPUT_SLOT) || (stackHasFluid(input.getStackInSlot(OUTPUT_SLOT), acid) && (!isTankFull(OUTPUT_SLOT))) ){
+					EnumFluid solvent = ModRecipes.labOvenRecipes.get(recipeDisplayIndex).getSolvent();
+					if(hasTank(SOLVENT_SLOT) && stackHasFluid(input.getStackInSlot(SOLVENT_SLOT),solvent) ){
+						ItemStack solute = ModRecipes.labOvenRecipes.get(recipeDisplayIndex).getSolute();
+						if(input.getStackInSlot(SOLUTE_SLOT) != null && solute.isItemEqual(input.getStackInSlot(SOLUTE_SLOT))){
+							return true;
+						}
+					}
+				}
+			}			
 		}
-		else return false;
+		return false;
 	}
 
 	private boolean isTankEmpty(int slot) {
@@ -241,11 +249,11 @@ public class TileEntityLabOven extends TileEntityInvRFReceiver {
 		return false;
 	}
 
-	private boolean hasTank(int outputSlot) {
-		return  input.getStackInSlot(OUTPUT_SLOT) != null
-				&& input.getStackInSlot(OUTPUT_SLOT).getItem() == ModItems.chemicalItems
-				&& input.getStackInSlot(OUTPUT_SLOT).getItemDamage() == 0 
-				&& input.getStackInSlot(OUTPUT_SLOT).stackSize == 1;
+	private boolean hasTank(int slot) {
+		return  input.getStackInSlot(slot) != null
+				&& input.getStackInSlot(slot).getItem() == ModItems.chemicalItems
+				&& input.getStackInSlot(slot).getItemDamage() == 0 
+				&& input.getStackInSlot(slot).stackSize == 1;
 	}
 
 	private void handleOutput(EnumFluid fluidOutput) {
@@ -253,9 +261,9 @@ public class TileEntityLabOven extends TileEntityInvRFReceiver {
 		input.decrementSlot(SOLUTE_SLOT);
 		input.decrementFluid(SOLVENT_SLOT);
 		//add output
-		quantity = input.getStackInSlot(OUTPUT_SLOT).getTagCompound().getInteger(ModArray.chemTankQuantity) + 1;
-		input.getStackInSlot(OUTPUT_SLOT).getTagCompound().setString(ModArray.chemTankName, fluidOutput.getName());
-		input.getStackInSlot(OUTPUT_SLOT).getTagCompound().setInteger(ModArray.chemTankQuantity, quantity);
+		quantity = input.getStackInSlot(OUTPUT_SLOT).getTagCompound().getInteger("Quantity") + 1;
+		input.getStackInSlot(OUTPUT_SLOT).getTagCompound().setString("Fluid", fluidOutput.getName());
+		input.getStackInSlot(OUTPUT_SLOT).getTagCompound().setInteger("Quantity", quantity);
 	}
 
 
