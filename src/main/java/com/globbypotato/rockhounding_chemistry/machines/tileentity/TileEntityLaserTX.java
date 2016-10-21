@@ -17,7 +17,7 @@ public class TileEntityLaserTX extends TileEntity implements ITickable {
 	private int maxRange = 30;
 	private boolean firstObstacle;
 
-	private boolean isPowered(IBlockState state, EnumFacing enumfacing) {
+	public boolean isPowered(IBlockState state, EnumFacing enumfacing) {
 	    if(worldObj.getBlockState(pos.offset(enumfacing, 1)).getBlock() == Blocks.POWERED_REPEATER  ){
 		    EnumFacing repeaterfacing = worldObj.getBlockState(pos.offset(enumfacing, 1)).getValue(BlockRedstoneRepeater.FACING);
 		    if(enumfacing == repeaterfacing){
@@ -32,12 +32,12 @@ public class TileEntityLaserTX extends TileEntity implements ITickable {
 		if(!worldObj.isRemote){
 		    IBlockState state = worldObj.getBlockState(pos);
 		    EnumFacing enumfacing = state.getValue(LaserTX.FACING);
-		    EnumFacing beamFacing = enumfacing.getOpposite();
+		    EnumFacing beamFacing = enumfacing;
 			firstObstacle = false;
 			if(countBeam >= maxRange){
-				if(isPowered(state, enumfacing)){
+				if(isPowered(state, enumfacing.getOpposite())){
 		    		for(int x = 1; x <= maxRange; x++){
-		    			BlockPos checkingPos = pos.offset(enumfacing.getOpposite(), x);
+		    			BlockPos checkingPos = pos.offset(enumfacing, x);
 						IBlockState checkingState = worldObj.getBlockState(checkingPos); 
 		    			if(firstObstacle == false){
 						    if(checkingState.getBlock() == Blocks.AIR){
@@ -56,8 +56,11 @@ public class TileEntityLaserTX extends TileEntity implements ITickable {
 		    			}
 		    		}
 			    }else{
-			    	if(worldObj.getBlockState(pos.offset(enumfacing.getOpposite(), 1)).getBlock() == ModBlocks.laserBeam){
-			    		worldObj.setBlockState(pos.offset(enumfacing.getOpposite(), 1), Blocks.AIR.getDefaultState());
+			    	if(worldObj.getBlockState(pos.offset(enumfacing)).getBlock() == ModBlocks.laserBeam){
+					    EnumFacing beamfacing = worldObj.getBlockState(pos.offset(enumfacing)).getValue(LaserTX.FACING);
+					    if(beamfacing == enumfacing){
+					    	worldObj.setBlockState(pos.offset(enumfacing), Blocks.AIR.getDefaultState());
+					    }
 			    	}
 			    }
 				countBeam = 0;

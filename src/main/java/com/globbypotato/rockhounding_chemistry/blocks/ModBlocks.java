@@ -84,6 +84,9 @@ public class ModBlocks {
 		registerMetaBlock(saltMaker, "saltMaker");
 		registerCrawlerBlock(mineCrawler, "mineCrawler");
 		registerMetaBlock(laserRedstoneRx, "laserRedstoneRx");
+		registerSimpleBlock(laserRedstoneTx, "laserRedstoneTx");
+		registerSimpleBlock(laserSplitter, "laserSplitter");
+		registerSimpleBlock(laserBeam, "laserBeam");
 	}
 
 	//register blocks and itemblocks
@@ -91,7 +94,11 @@ public class ModBlocks {
 		GameRegistry.register(block);
 		GameRegistry.register(new TiersIB(block).setRegistryName(name));
 	}
-
+	//register simple blocks and itemblocks
+	public static void registerSimpleBlock(Block block, String name) {
+		GameRegistry.register(block);
+		GameRegistry.register(new SimpleIB(block).setRegistryName(name));
+	}
 	//register specific blocks and itemblocks
 	public static void registerCrawlerBlock(Block block, String name) {
 		GameRegistry.register(block);
@@ -117,9 +124,9 @@ public class ModBlocks {
 		registerSingleBlockRender(mineCrawler, 0, "mineCrawler");
 		registerSingleBlockRender(crawlerAssembler, 0, "crawlerAssembler");
 		registerSingleBlockRender(metalAlloyer, 0, "metalAlloyer");
-		//registerSingleBlockRender(laserRedstoneTx, 0, "laserRedstoneTx");
-		//registerSingleBlockRender(laserBeam, 0, "laserBeam");
-		//registerSingleBlockRender(laserSplitter, 0, "laserSplitter");
+		registerSingleBlockRender(laserRedstoneTx, 0, "laserRedstoneTx");
+		registerSingleBlockRender(laserBeam, 0, "laserBeam");
+		registerSingleBlockRender(laserSplitter, 0, "laserSplitter");
 	}
 
 

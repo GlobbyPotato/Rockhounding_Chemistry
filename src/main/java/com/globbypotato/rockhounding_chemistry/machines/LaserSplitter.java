@@ -5,7 +5,7 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
-import com.globbypotato.rockhounding_chemistry.items.ModItems;
+import com.globbypotato.rockhounding_chemistry.items.ToolService;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityLaserSplitter;
 
 import net.minecraft.block.Block;
@@ -150,7 +150,7 @@ public class LaserSplitter extends Block implements ITileEntityProvider {
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ){
     	TileEntityLaserSplitter splitter = (TileEntityLaserSplitter) world.getTileEntity(pos);
         if (splitter != null){
-        	if(hasWrench(player, hand)){
+        	if(ToolService.hasWrench(player, hand)){
             	if(!world.isRemote){
             		if(side != world.getBlockState(pos).getValue(FACING).DOWN && side != world.getBlockState(pos).getValue(FACING).UP){
 		        		if(splitter.splitSide < 4){
@@ -185,8 +185,5 @@ public class LaserSplitter extends Block implements ITileEntityProvider {
         return false;
     }
     
-	private boolean hasWrench(EntityPlayer player, EnumHand hand) {
-		return player.getHeldItem(hand) != null && player.getHeldItem(hand).getItem() == ModItems.miscItems && player.getHeldItem(hand).getItemDamage() == 15;
-	}
 
 }
