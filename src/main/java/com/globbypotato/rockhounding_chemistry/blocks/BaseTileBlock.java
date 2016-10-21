@@ -53,41 +53,22 @@ public class BaseTileBlock extends BaseBlock implements ITileEntityProvider{
 		return false;
 	}
 
-
 	@SideOnly(Side.CLIENT)
 	public void initModel() {
 		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
 	}
 
-
-
-	protected void setDefaultFacing(World worldIn, BlockPos pos, IBlockState state){
+	public void setDefaultFacing(World worldIn, BlockPos pos, IBlockState state){
 		if (!worldIn.isRemote){
-			IBlockState iblockstate = worldIn.getBlockState(pos.north());
-			IBlockState iblockstate1 = worldIn.getBlockState(pos.south());
-			IBlockState iblockstate2 = worldIn.getBlockState(pos.west());
-			IBlockState iblockstate3 = worldIn.getBlockState(pos.east());
 			EnumFacing enumfacing = (EnumFacing)state.getValue(FACING);
-
-			if (enumfacing == EnumFacing.NORTH && iblockstate.isFullBlock() && !iblockstate1.isFullBlock()){
-				enumfacing = EnumFacing.SOUTH;
-			}else if (enumfacing == EnumFacing.SOUTH && iblockstate1.isFullBlock() && !iblockstate.isFullBlock()){
-				enumfacing = EnumFacing.NORTH;
-			}else if (enumfacing == EnumFacing.WEST && iblockstate2.isFullBlock() && !iblockstate3.isFullBlock()){
-				enumfacing = EnumFacing.EAST;
-			}else if (enumfacing == EnumFacing.EAST && iblockstate3.isFullBlock() && !iblockstate2.isFullBlock()){
-				enumfacing = EnumFacing.WEST;
-			}
 			worldIn.setBlockState(pos, state.withProperty(FACING, enumfacing), 2);
 		}
 	}
-	
 
 	@Override
 	public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state){
 		this.setDefaultFacing(worldIn, pos, state);
 	}
-
 	
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
@@ -128,18 +109,11 @@ public class BaseTileBlock extends BaseBlock implements ITileEntityProvider{
 		return true;
 	}
 
-    /**
-     * Called by ItemBlocks just before a block is actually set in the world, to allow for adjustments to the
-     * IBlockstate
-     */
     @Override
     public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer){
         return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing());
     }
 
-    /**
-     * Called by ItemBlocks after a block is set in the world, to allow post-place logic
-     */
     @Override
     public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack){
         worldIn.setBlockState(pos, state.withProperty(FACING, placer.getHorizontalFacing()), 2);
@@ -155,18 +129,10 @@ public class BaseTileBlock extends BaseBlock implements ITileEntityProvider{
 		return Container.calcRedstone(worldIn.getTileEntity(pos));
 	}
 
-	/*@Override
-	public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state){
-		return new ItemStack(ModBlocks.);
-	}*/
-	
     public EnumBlockRenderType getRenderType(IBlockState state){
         return EnumBlockRenderType.MODEL;
     }
     
-    /**
-     * Convert the given metadata into a BlockState for this Block
-     */
     @Override
     public IBlockState getStateFromMeta(int meta){
         EnumFacing enumfacing = EnumFacing.getFront(meta);
@@ -176,27 +142,16 @@ public class BaseTileBlock extends BaseBlock implements ITileEntityProvider{
         return this.getDefaultState().withProperty(FACING, enumfacing);
     }
 
-    /**
-     * Convert the BlockState into the correct metadata value
-     */
     @Override
     public int getMetaFromState(IBlockState state){
         return ((EnumFacing)state.getValue(FACING)).getIndex();
     }
 
-    /**
-     * Returns the blockstate with the given rotation from the passed blockstate. If inapplicable, returns the passed
-     * blockstate.
-     */
     @Override
     public IBlockState withRotation(IBlockState state, Rotation rot){
         return state.withProperty(FACING, rot.rotate((EnumFacing)state.getValue(FACING)));
     }
 
-    /**
-     * Returns the blockstate with the given mirror of the passed blockstate. If inapplicable, returns the passed
-     * blockstate.
-     */
     @Override
     public IBlockState withMirror(IBlockState state, Mirror mirrorIn){
         return state.withRotation(mirrorIn.toRotation((EnumFacing)state.getValue(FACING)));
@@ -206,6 +161,5 @@ public class BaseTileBlock extends BaseBlock implements ITileEntityProvider{
     public BlockStateContainer createBlockState(){
         return new BlockStateContainer(this, new IProperty[] {FACING});
     }
-
 
 }
