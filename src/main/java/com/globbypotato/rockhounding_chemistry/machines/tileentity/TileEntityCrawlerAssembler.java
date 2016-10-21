@@ -69,13 +69,6 @@ public class TileEntityCrawlerAssembler extends TileEntityLockable implements IT
 	ItemStack miningHead = crawlerPart(10);
 	ItemStack supportArms = crawlerPart(11);
 	ItemStack anyCrawler = new ItemStack(ModBlocks.mineCrawler);
-    private int DAMAGE_BASE_LOGIC = 0;
-    private int DAMAGE_MEMORY = 6;
-    private int DAMAGE_ADVANCED_LOGIC = 7;
-    private int DAMAGE_SETUP = 8;
-    private int DAMAGE_CASING = 9;
-    private int DAMAGE_HEAD = 10;
-    private int DAMAGE_ARMS = 11;
 
 	private static ItemStack crawlerPart(int meta){
 		return new ItemStack(ModItems.miscItems, 1, meta);
@@ -366,7 +359,7 @@ public class TileEntityCrawlerAssembler extends TileEntityLockable implements IT
 	}
 
 	private void handleAssembler() {
-		ItemStack crawlerOut = new ItemStack(ModBlocks.mineCrawler);
+		ItemStack crawlerOut = anyCrawler.copy();
 		crawlerOut.setTagCompound(new NBTTagCompound());
 		crawlerOut.getTagCompound().setInteger(EnumSetups.TIERS.getName(), getTier);
 		crawlerOut.getTagCompound().setInteger(EnumSetups.MODES.getName(), getMode());
@@ -436,42 +429,42 @@ public class TileEntityCrawlerAssembler extends TileEntityLockable implements IT
 	}
 
 	private void handleDismantler() {
-		slots[SLOT_OUTPUT] = new ItemStack(ModItems.miscItems,1,DAMAGE_CASING);
-		slots[SLOT_ARMS] = new ItemStack(ModItems.miscItems,12,DAMAGE_ARMS);
+		slots[SLOT_OUTPUT] = crawlerCasing.copy();
+		slots[SLOT_ARMS] = supportArms; slots[SLOT_ARMS].stackSize = 12;
 		if(slots[SLOT_CASING].hasTagCompound()){
 			int getNbt; boolean getEnabler;
 			getNbt = slots[SLOT_CASING].getTagCompound().getInteger(EnumSetups.MODES.getName());
-			slots[SLOT_MODE] = new ItemStack(ModItems.miscItems,1,setMode(getNbt));
+			slots[SLOT_MODE] = setMode(getNbt).copy();
 
 			getNbt = slots[SLOT_CASING].getTagCompound().getInteger(EnumSetups.TIERS.getName());
 
 			if(getNbt > 0){
-				slots[7] = new ItemStack(ModItems.miscItems,1,DAMAGE_HEAD);
+				slots[7] = miningHead.copy();
 			}
 			if(getNbt == 2 || getNbt == 4){
-				slots[4] = new ItemStack(ModItems.miscItems,1,DAMAGE_HEAD);
+				slots[4] = miningHead.copy();
 			}
 			if(getNbt == 3 || getNbt == 4){
-				slots[6] = new ItemStack(ModItems.miscItems,1,DAMAGE_HEAD);
-				slots[8] = new ItemStack(ModItems.miscItems,1,DAMAGE_HEAD);
+				slots[6] = miningHead.copy();
+				slots[8] = miningHead.copy();
 			}
 			if(getNbt == 4){
-				slots[3] = new ItemStack(ModItems.miscItems,1,DAMAGE_HEAD);
-				slots[5] = new ItemStack(ModItems.miscItems,1,DAMAGE_HEAD);
+				slots[3] = miningHead.copy();
+				slots[5] = miningHead.copy();
 			}
 
 			getEnabler = slots[SLOT_CASING].getTagCompound().getBoolean(EnumSetups.FILLER.getName());
-			if(getEnabler){slots[SLOT_FILLER] = new ItemStack(ModItems.miscItems,1,DAMAGE_SETUP);}
+			if(getEnabler){slots[SLOT_FILLER] = crawlerSetup.copy();}
 			getEnabler = slots[SLOT_CASING].getTagCompound().getBoolean(EnumSetups.ABSORBER.getName());
-			if(getEnabler){slots[SLOT_ABSORBER] = new ItemStack(ModItems.miscItems,1,DAMAGE_SETUP);}
+			if(getEnabler){slots[SLOT_ABSORBER] = crawlerSetup.copy();}
 			getEnabler = slots[SLOT_CASING].getTagCompound().getBoolean(EnumSetups.TUNNELER.getName());
-			if(getEnabler){slots[SLOT_TUNNELER] = new ItemStack(ModItems.miscItems,1,DAMAGE_SETUP);}
+			if(getEnabler){slots[SLOT_TUNNELER] = crawlerSetup.copy();}
 			getEnabler = slots[SLOT_CASING].getTagCompound().getBoolean(EnumSetups.LIGHTER.getName());
-			if(getEnabler){slots[SLOT_LIGHTER] = new ItemStack(ModItems.miscItems,1,DAMAGE_SETUP);}
+			if(getEnabler){slots[SLOT_LIGHTER] = crawlerSetup.copy();}
 			getEnabler = slots[SLOT_CASING].getTagCompound().getBoolean(EnumSetups.RAILMAKER.getName());
-			if(getEnabler){slots[SLOT_RAILMAKER] = new ItemStack(ModItems.miscItems,1,DAMAGE_SETUP);}
+			if(getEnabler){slots[SLOT_RAILMAKER] = crawlerSetup.copy();}
 
-			slots[SLOT_MEMORY] = new ItemStack(ModItems.miscItems,1,DAMAGE_MEMORY);
+			slots[SLOT_MEMORY] = crawlerMemory.copy();
 			slots[SLOT_MEMORY].setTagCompound(new NBTTagCompound());
 				getNbt = slots[SLOT_CASING].getTagCompound().getInteger(EnumSetups.COBBLESTONE.getName());
 				slots[SLOT_MEMORY].getTagCompound().setInteger(EnumSetups.COBBLESTONE.getName(), getNbt);
@@ -485,8 +478,8 @@ public class TileEntityCrawlerAssembler extends TileEntityLockable implements IT
 		slots[SLOT_CASING] = null;
 	}
 
-	private int setMode(int getNbt) {
-		return getNbt == 1 ? 7 : 0;
+	private ItemStack setMode(int getNbt) {
+		return getNbt == 1 ? advancedLogic : baseLogic;
 	}
 
 	private boolean canLoad() {
