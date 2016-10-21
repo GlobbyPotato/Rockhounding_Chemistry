@@ -128,7 +128,7 @@ public class ModRecipes {
 	//lab oven
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.labOven), new Object[] { "IBI", "IGI", "IFI", 'B', cylinder, 'I', "ingotIron", 'F', Blocks.FURNACE, 'G', "blockGlass" }));
 	//mineral sizer
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.mineralSizer), new Object[] { "I I", "GcG", "ICI", 'C', cabinet, 'I', "ingotIron", 'G', gear, 'c', logicChip }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.mineralSizer), new Object[] { "IHI", "GcG", "ICI", 'C', cabinet, 'I', "ingotIron", 'G', gear, 'c', logicChip, 'H', Blocks.HOPPER }));
 	//mineral analyzer
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.mineralAnalyzer), new Object[] { "ICC", "IcI", "III", 'C', cabinet, 'I', "ingotIron", 'c', logicChip }));
 	//chemical extractor
@@ -138,11 +138,11 @@ public class ModRecipes {
 	//crawler assembler
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.crawlerAssembler), new Object[] { "C", "B", 'C', "workbench", 'B', "blockHastelloy" }));
 	//metal alloyer
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.metalAlloyer), new Object[] { "bFb", "III", "ITI", 'I', "ingotIron", 'F', Blocks.FURNACE, 'b', Items.BOWL, 'T', Blocks.IRON_TRAPDOOR }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.metalAlloyer), new Object[] { "bFb", "III", "ITI", 'I', "ingotIron", 'F', Blocks.FURNACE, 'b', Items.BOWL, 'T', Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE }));
 	//Laser TX
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.laserRedstoneTx), new Object[] { " E ", "III", "I I", 'I', "ingotIron", 'E', laserResonator }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.laserRedstoneTx), new Object[] { "RE ", "III", "I I", 'I', "ingotIron", 'E', laserResonator, 'R', Items.REPEATER }));
 	//Laser RX
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.laserRedstoneRx), new Object[] { "PEP", "ICI", "IRI", 'I', "ingotIron", 'E', laserResonator, 'C', Items.COMPARATOR, 'P', "paneGlass", 'R', "blockRedstone" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.laserRedstoneRx), new Object[] { "ERE", "PCP", "EIE", 'I', "blockIron", 'E', laserResonator, 'C', Items.COMPARATOR, 'P', "paneGlass", 'R', "blockRedstone" }));
 	//Laser Splitter
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.laserSplitter), new Object[] { "EEE", "CER", "IBI", 'B', "blockIron", 'I', "ingotIron", 'E', laserResonator, 'C', Items.COMPARATOR, 'R', Items.REPEATER }));
 
