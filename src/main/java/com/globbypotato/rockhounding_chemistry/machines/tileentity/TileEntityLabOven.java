@@ -45,20 +45,20 @@ public class TileEntityLabOven extends TileEntityInvRFReceiver {
 		input =  new MachineStackHandler(INPUT_SLOTS,this){
 			@Override
 			public ItemStack insertItem(int slot, ItemStack insertingStack, boolean simulate){
-				if(slot == SOLUTE_SLOT && hasRecipe(insertingStack)){
+				if(slot == SOLUTE_SLOT && isCorrectSolute(insertingStack)){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
 				if(slot == FUEL_SLOT && Utils.isItemFuel(insertingStack)){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
-				if(slot == SOLVENT_SLOT && isSolvent(insertingStack)){
+				if(slot == SOLVENT_SLOT && isCorrectSolvent(insertingStack)){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
 				if(slot == REDSTONE_SLOT &&
 						(insertingStack.getItem() == Items.REDSTONE || (insertingStack.isItemEqual(inductor)))){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
-				if(slot == OUTPUT_SLOT && ItemStack.areItemsEqual(insertingStack, new ItemStack(ModItems.chemicalItems,1,0))){
+				if(slot == OUTPUT_SLOT && ItemStack.areItemsEqual(insertingStack, new ItemStack(ModItems.chemicalItems,1,0)) && isValidTank(insertingStack)){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
 				return insertingStack;
@@ -80,6 +80,55 @@ public class TileEntityLabOven extends TileEntityInvRFReceiver {
 		return cookingSpeed;
 	}
 
+	
+//new checks
+	private boolean isCorrectSolute(ItemStack stack) {
+		if(this.recipeDisplayIndex >= 0){
+			ItemStack solute = ModRecipes.labOvenRecipes.get(recipeDisplayIndex).getSolute();
+			if(solute.isItemEqual(stack)){
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean isCorrectSolvent(ItemStack stack){
+		if(this.recipeDisplayIndex >= 0){
+			EnumFluid solvent = ModRecipes.labOvenRecipes.get(recipeDisplayIndex).getSolvent();
+			if(stack.hasTagCompound()){
+				if(solvent.getName().equals(stack.getTagCompound().getString("Fluid"))){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	public boolean isValidTank(ItemStack stack){
+		if(this.recipeDisplayIndex >= 0){
+			EnumFluid acid = ModRecipes.labOvenRecipes.get(recipeDisplayIndex).getOutput();
+			if(stack.hasTagCompound()){
+				if(stack.getTagCompound().getString("Fluid").equals(EnumFluid.EMPTY.getName()) || acid.getName().equals(stack.getTagCompound().getString("Fluid"))){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+//---------------------------------
+
+
+//original checks
+	public EnumFluid getFluidOutput(){
+		for(LabOvenRecipe recipe: ModRecipes.labOvenRecipes){
+			if(ItemStack.areItemsEqual(recipe.getSolute(),input.getStackInSlot(SOLUTE_SLOT))){
+				return recipe.getOutput();
+			}
+		}
+		return null;
+	}
+
+/*
 	public boolean hasRecipe(){
 		return hasRecipe(input.getStackInSlot(SOLUTE_SLOT));
 	}
@@ -93,15 +142,6 @@ public class TileEntityLabOven extends TileEntityInvRFReceiver {
 		return false;
 	}
 
-	public EnumFluid getFluidOutput(){
-		for(LabOvenRecipe recipe: ModRecipes.labOvenRecipes){
-			if(ItemStack.areItemsEqual(recipe.getSolute(),input.getStackInSlot(SOLUTE_SLOT))){
-				return recipe.getOutput();
-			}
-		}
-		return null;
-	}
-
 	public static boolean isSolvent(ItemStack stack){
 		if(stack.hasTagCompound()){
 			for(LabOvenRecipe recipe: ModRecipes.labOvenRecipes){
@@ -111,7 +151,8 @@ public class TileEntityLabOven extends TileEntityInvRFReceiver {
 			}
 		}
 		return false;
-	}
+	}*/
+//---------------------------------
 
 	public int getFieldCount() {
 		return 6;
@@ -172,7 +213,7 @@ public class TileEntityLabOven extends TileEntityInvRFReceiver {
 		if(input.getStackInSlot(FUEL_SLOT) != null){fuelHandler();}
 		if(input.getStackInSlot(REDSTONE_SLOT) != null){redstoneHandler();}
 		if(!worldObj.isRemote){
-			if(currentRecipeIndex() >= 0 && recipeScan){ showIngredients(currentRecipeIndex());}
+			if(currentRecipeIndex() >= 0 && (recipeScan || (!recipeScan && template.getStackInSlot(TEMPLATE_SLOT) == null)) ){ showIngredients(currentRecipeIndex());}
 			if(canSynthesize()){
 				execute();
 			}
