@@ -37,7 +37,7 @@ public class LaserRX extends Block implements ITileEntityProvider, IMetaBlockNam
 		setHardness(hardness); setResistance(resistance);	
 		setHarvestLevel("pickaxe", 0);
 		setCreativeTab(Reference.RockhoundingChemistry);
-		setSoundType(SoundType.STONE);
+		setSoundType(SoundType.METAL);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(VARIANT, EnumType.byMetadata(0)));
 	}
 	

@@ -6,9 +6,8 @@ import javax.annotation.Nullable;
 
 import com.globbypotato.rockhounding_chemistry.blocks.ModBlocks;
 import com.globbypotato.rockhounding_chemistry.handlers.EnumSetups;
-import com.globbypotato.rockhounding_chemistry.handlers.ModArray;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
-import com.globbypotato.rockhounding_chemistry.items.ModItems;
+import com.globbypotato.rockhounding_chemistry.items.ToolService;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityMineCrawler;
 
 import net.minecraft.block.Block;
@@ -173,7 +172,7 @@ public class MineCrawler extends Block implements ITileEntityProvider {
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ){
         TileEntity tileentity = world.getTileEntity(pos);
         if(tileentity != null && tileentity instanceof TileEntityMineCrawler){
-        	if(hasWrench(player, hand)){
+        	if(ToolService.hasWrench(player, hand)){
     			ItemStack dropCrawler = new ItemStack(ModBlocks.mineCrawler);
     			addNbt(dropCrawler, tileentity);
     			if(!world.isRemote) { dropItemStack(world, dropCrawler, pos); }
@@ -198,10 +197,6 @@ public class MineCrawler extends Block implements ITileEntityProvider {
 		dropCrawler.getTagCompound().setInteger(EnumSetups.GLASS.getName(), ((TileEntityMineCrawler)tileentity).numGlass);
 		dropCrawler.getTagCompound().setInteger(EnumSetups.TORCHES.getName(), ((TileEntityMineCrawler)tileentity).numTorch);
 		dropCrawler.getTagCompound().setInteger(EnumSetups.RAILS.getName(), ((TileEntityMineCrawler)tileentity).numRail);
-	}
-
-	private boolean hasWrench(EntityPlayer player, EnumHand hand) {
-		return player.getHeldItem(hand) != null && player.getHeldItem(hand).getItem() == ModItems.miscItems && player.getHeldItem(hand).getItemDamage() == 12;
 	}
 
 	private void dropItemStack(World worldIn, ItemStack itemStack, BlockPos pos) {

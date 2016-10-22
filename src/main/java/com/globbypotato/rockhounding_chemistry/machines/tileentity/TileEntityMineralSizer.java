@@ -18,7 +18,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.oredict.OreDictionary;
-import scala.actors.threadpool.Arrays;
 
 public class TileEntityMineralSizer extends TileEntityInvReceiver {
 
@@ -33,6 +32,7 @@ public class TileEntityMineralSizer extends TileEntityInvReceiver {
 	public static final int GOOD_SLOT = 1;
 	public static final int WASTE_SLOT = 2;
 
+	ItemStack inductor = new ItemStack(ModItems.miscItems,1,17);
 
 	public TileEntityMineralSizer() {
 		super(4,3,1);
@@ -50,7 +50,7 @@ public class TileEntityMineralSizer extends TileEntityInvReceiver {
 				if(slot == 2 && Utils.areItemsEqualIgnoreMeta(new ItemStack(ModItems.gear), insertingStack)){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
-				if(slot == 3 && ItemStack.areItemsEqual(new ItemStack(ModItems.inductor),insertingStack)){
+				if(slot == 3 && ItemStack.areItemsEqual(insertingStack, inductor)){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
 				return insertingStack;

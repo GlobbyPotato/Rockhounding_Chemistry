@@ -65,6 +65,8 @@ public class TileEntityMetalAlloyer extends TileEntityLockable implements ITicka
 	private int SLOT_RECIPE_START = 11;
 	private int SLOT_RECIPE_END = 16;
 
+	ItemStack inductor = new ItemStack(ModItems.miscItems,1,17);
+
 	public static String[] alloyNames = new String[]{"No Recipe", "CuBe", "ScAl", "BAM", "YAG", "Cupronickel", "Nimonic", "Hastelloy", "Nichrome", "Mischmetal", "Rose Gold", "Green Gold", "White Gold", "Shibuichi", "Tombak", "Pewter"};
     	public int maxAlloys = alloyNames.length - 1;
 		String[] cubeRecipe = new String[]{"dustCopper", "dustBeryllium"}; 															int[] cubeQuantity = new int[]{7, 2};
@@ -518,7 +520,7 @@ public class TileEntityMetalAlloyer extends TileEntityLockable implements ITicka
 
 	
 	private boolean canInduct() {
-		return slots[SLOT_INDUCTOR] != null && slots[SLOT_INDUCTOR].getItem() == ModItems.inductor && slots[SLOT_INDUCTOR].stackSize == 1;
+		return slots[SLOT_INDUCTOR] != null && slots[SLOT_INDUCTOR].isItemEqual(inductor);
 	}
 
 	

@@ -1,6 +1,5 @@
 package com.globbypotato.rockhounding_chemistry.proxy;
 
-import com.globbypotato.rockhounding_chemistry.CommonProxy;
 import com.globbypotato.rockhounding_chemistry.blocks.ModBlocks;
 import com.globbypotato.rockhounding_chemistry.items.ModItems;
 

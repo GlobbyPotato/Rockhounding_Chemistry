@@ -1,6 +1,7 @@
 package com.globbypotato.rockhounding_chemistry;
 
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
+import com.globbypotato.rockhounding_chemistry.proxy.CommonProxy;
 
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;

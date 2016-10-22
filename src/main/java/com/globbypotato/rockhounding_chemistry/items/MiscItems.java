@@ -3,8 +3,6 @@ package com.globbypotato.rockhounding_chemistry.items;
 import java.util.List;
 
 import com.globbypotato.rockhounding_chemistry.handlers.EnumSetups;
-import com.globbypotato.rockhounding_chemistry.handlers.ModArray;
-import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -32,6 +30,14 @@ public class MiscItems extends ItemBase{
 		super(name);
 		setHasSubtypes(true);
 		this.itemArray = array;
+	}
+
+	@Override
+	public int getItemStackLimit(ItemStack stack) {
+		if(stack.getItemDamage() == 17){
+			return 1;
+		}
+		return this.getItemStackLimit();
 	}
 
 	@Override
@@ -83,6 +89,8 @@ public class MiscItems extends ItemBase{
             	tooltip.add(TextFormatting.DARK_GRAY + EnumSetups.GLASS.getName() + ": " + TextFormatting.YELLOW + numGlass);
             	tooltip.add(TextFormatting.DARK_GRAY + EnumSetups.TORCHES.getName() + ": " + TextFormatting.YELLOW + numTorch);
             	tooltip.add(TextFormatting.DARK_GRAY + EnumSetups.RAILS.getName() + ": " + TextFormatting.YELLOW + numRail);
+			}else{
+				setItemNbt(itemstack);
             }
     	}
     }

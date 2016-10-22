@@ -27,7 +27,7 @@ public class ModRecipes {
 	
 	static ItemStack testTube = new ItemStack(ModItems.testTube);
 	static ItemStack gear = new ItemStack(ModItems.gear);
-	static ItemStack inductor = new ItemStack(ModItems.inductor);
+	static ItemStack inductor = misc(17);
 	static ItemStack logicChip = misc(0);
 	static ItemStack cabinet = misc(1);
 	static ItemStack ironNuggets = new ItemStack(ModItems.miscItems,9,2);

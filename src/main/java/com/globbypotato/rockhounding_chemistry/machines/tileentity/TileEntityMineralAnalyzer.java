@@ -5,7 +5,6 @@ import javax.annotation.Nullable;
 import com.globbypotato.rockhounding_chemistry.Utils;
 import com.globbypotato.rockhounding_chemistry.blocks.ModBlocks;
 import com.globbypotato.rockhounding_chemistry.handlers.EnumFluid;
-import com.globbypotato.rockhounding_chemistry.handlers.ModArray;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.items.ModItems;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiMineralAnalyzer;
@@ -34,6 +33,7 @@ public class TileEntityMineralAnalyzer extends TileEntityInvReceiver {
 	private static final int INDUCTOR_SLOT = 6;
 
 	private static final int OUTPUT_SLOT = 0;
+	ItemStack inductor = new ItemStack(ModItems.miscItems,1,17);
 
 	public TileEntityMineralAnalyzer() {
 		super(7,1,1);
@@ -62,7 +62,7 @@ public class TileEntityMineralAnalyzer extends TileEntityInvReceiver {
 				if(slot == FLUO_SLOT && fluidName.equals("Hydrofluoric Acid") && ItemStack.areItemsEqual(insertingStack, new ItemStack(ModItems.chemicalItems,1,0))){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
-				if(slot == INDUCTOR_SLOT && ItemStack.areItemsEqual(insertingStack, new ItemStack(ModItems.inductor))){
+				if(slot == INDUCTOR_SLOT && ItemStack.areItemsEqual(insertingStack, inductor)){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
 				
@@ -72,8 +72,6 @@ public class TileEntityMineralAnalyzer extends TileEntityInvReceiver {
 
 		this.automationInput = new WrappedItemHandler(input, WrappedItemHandler.WriteMode.IN_OUT);
 	}
-
-
 
 	private boolean isOutputEmpty(){
 		return output.getStackInSlot(OUTPUT_SLOT) == null;
@@ -170,15 +168,15 @@ public class TileEntityMineralAnalyzer extends TileEntityInvReceiver {
 		input.decrementSlot(INPUT_SLOT);
 
 		//decrease acids
-		quantity = input.getStackInSlot(SULFUR_SLOT).getTagCompound().getInteger(ModArray.chemTankQuantity) - consumedSulf;
-		input.getStackInSlot(SULFUR_SLOT).getTagCompound().setInteger(ModArray.chemTankQuantity, quantity);
-		if(quantity <= 0){input.getStackInSlot(SULFUR_SLOT).getTagCompound().setString(ModArray.chemTankName, EnumFluid.EMPTY.getName());}
-		quantity = input.getStackInSlot(CHLOR_SLOT).getTagCompound().getInteger(ModArray.chemTankQuantity) - consumedChlo;
-		input.getStackInSlot(CHLOR_SLOT).getTagCompound().setInteger(ModArray.chemTankQuantity, quantity);
-		if(quantity <= 0){input.getStackInSlot(CHLOR_SLOT).getTagCompound().setString(ModArray.chemTankName, EnumFluid.EMPTY.getName());}
-		quantity = input.getStackInSlot(FLUO_SLOT).getTagCompound().getInteger(ModArray.chemTankQuantity) - consumedFluo;
-		input.getStackInSlot(FLUO_SLOT).getTagCompound().setInteger(ModArray.chemTankQuantity, quantity);
-		if(quantity <= 0){input.getStackInSlot(FLUO_SLOT).getTagCompound().setString(ModArray.chemTankName, EnumFluid.EMPTY.getName());}
+		quantity = input.getStackInSlot(SULFUR_SLOT).getTagCompound().getInteger("Quantity") - consumedSulf;
+		input.getStackInSlot(SULFUR_SLOT).getTagCompound().setInteger("Quantity", quantity);
+		if(quantity <= 0){input.getStackInSlot(SULFUR_SLOT).getTagCompound().setString("Fluid", EnumFluid.EMPTY.getName());}
+		quantity = input.getStackInSlot(CHLOR_SLOT).getTagCompound().getInteger("Quantity") - consumedChlo;
+		input.getStackInSlot(CHLOR_SLOT).getTagCompound().setInteger("Quantity", quantity);
+		if(quantity <= 0){input.getStackInSlot(CHLOR_SLOT).getTagCompound().setString("Fluid", EnumFluid.EMPTY.getName());}
+		quantity = input.getStackInSlot(FLUO_SLOT).getTagCompound().getInteger("Quantity") - consumedFluo;
+		input.getStackInSlot(FLUO_SLOT).getTagCompound().setInteger("Quantity", quantity);
+		if(quantity <= 0){input.getStackInSlot(FLUO_SLOT).getTagCompound().setString("Fluid", EnumFluid.EMPTY.getName());}
 	}
 
 	private void calculateOutput(int entryMineral) {
@@ -443,8 +441,8 @@ public class TileEntityMineralAnalyzer extends TileEntityInvReceiver {
 	private boolean hasAcid(int acidSlot, EnumFluid acidType, int acidConsumed) {
 		if(hasTank(acidSlot)){
 			if(input.getStackInSlot(acidSlot).hasTagCompound()){
-				if(input.getStackInSlot(acidSlot).getTagCompound().getString(ModArray.chemTankName).matches(acidType.getName())){
-					if(input.getStackInSlot(acidSlot).getTagCompound().getInteger(ModArray.chemTankQuantity) >= acidConsumed){
+				if(input.getStackInSlot(acidSlot).getTagCompound().getString("Fluid").matches(acidType.getName())){
+					if(input.getStackInSlot(acidSlot).getTagCompound().getInteger("Quantity") >= acidConsumed){
 						return true;
 					}
 				}
@@ -452,7 +450,6 @@ public class TileEntityMineralAnalyzer extends TileEntityInvReceiver {
 		}
 		return false;
 	}
-
 
 	@Override
 	protected boolean canInduct(){

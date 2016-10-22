@@ -8,7 +8,6 @@ import com.globbypotato.rockhounding_chemistry.handlers.ModRecipes;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerLabOven;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityLabOven;
-import com.globbypotato.rockhounding_chemistry.proxy.CommonProxy;
 
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -71,7 +70,12 @@ public class GuiLabOven extends GuiBase {
 	}
 
 	public void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
-		this.fontRendererObj.drawString(this.playerInventory.getDisplayName().getUnformattedText(), 8, this.ySize - 92 + 2, 4210752);
+    	super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+
+    	String device = "Lab Oven";
+        this.fontRendererObj.drawString(device, this.xSize / 2 - this.fontRendererObj.getStringWidth(device) / 2, 6, 4210752);
+
+        this.fontRendererObj.drawString(this.playerInventory.getDisplayName().getUnformattedText(), 8, this.ySize - 96 + 2, 4210752);
 
 		String name = "";
 		if(labOven.recipeDisplayIndex == -1) name = "No Recipe";

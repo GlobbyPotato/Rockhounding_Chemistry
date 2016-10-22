@@ -1,9 +1,6 @@
-package com.globbypotato.rockhounding_chemistry;
-
-import java.util.ArrayList;
+package com.globbypotato.rockhounding_chemistry.proxy;
 
 import com.globbypotato.rockhounding_chemistry.blocks.ModBlocks;
-import com.globbypotato.rockhounding_chemistry.handlers.EnumFluid;
 import com.globbypotato.rockhounding_chemistry.handlers.GuiHandler;
 import com.globbypotato.rockhounding_chemistry.handlers.ModArray;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
@@ -12,13 +9,8 @@ import com.globbypotato.rockhounding_chemistry.handlers.ModRecipes;
 import com.globbypotato.rockhounding_chemistry.handlers.ModTileEntities;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.items.ModItems;
-import com.globbypotato.rockhounding_chemistry.machines.recipe.LabOvenRecipe;
-import com.globbypotato.rockhounding_chemistry.machines.recipe.MineralSizerRecipe;
 import com.globbypotato.rockhounding_chemistry.world.ChemOresGenerator;
 
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;

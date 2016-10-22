@@ -58,7 +58,7 @@ public class ChemicalItems extends ItemBase {
 		for(int i = 0; i < itemArray.length; i++){subItems.add(new ItemStack(itemIn, 1, i));}
 		for(int x = 1; x < EnumFluid.values().length; x++){
 			ItemStack tank = new ItemStack(itemIn, 1, 0);
-			subItems.add(makeTanks(tank, ModArray.chemTankName, EnumFluid.values()[x].getName(), ModArray.chemTankQuantity, TileEntityLabOven.tankMax));
+			subItems.add(makeTanks(tank, "Fluid", EnumFluid.values()[x].getName(), "Quantity", TileEntityLabOven.tankMax));
 		}
 	}
 
@@ -79,8 +79,8 @@ public class ChemicalItems extends ItemBase {
 	private static void setItemNbt(ItemStack itemstack) {
 		if(itemstack.getItemDamage() == 0){
 			itemstack.setTagCompound(new NBTTagCompound());
-			itemstack.getTagCompound().setString(ModArray.chemTankName, EnumFluid.EMPTY.getName());
-			itemstack.getTagCompound().setInteger(ModArray.chemTankQuantity, 0);
+			itemstack.getTagCompound().setString("Fluid", EnumFluid.EMPTY.getName());
+			itemstack.getTagCompound().setInteger("Quantity", 0);
 		}
 	}
 
@@ -89,10 +89,10 @@ public class ChemicalItems extends ItemBase {
 	public void addInformation(ItemStack itemstack, EntityPlayer player, List<String> tooltip, boolean held) {
 		if(itemstack.getItemDamage() == 0){
 			if(itemstack.hasTagCompound()) {
-				String fluid = itemstack.getTagCompound().getString(ModArray.chemTankName);
-				int quantity = itemstack.getTagCompound().getInteger(ModArray.chemTankQuantity);
-				tooltip.add(TextFormatting.DARK_GRAY + ModArray.chemTankName + ": " + TextFormatting.YELLOW + fluid);
-				tooltip.add(TextFormatting.DARK_GRAY + ModArray.chemTankQuantity +": " + TextFormatting.WHITE + quantity + "/" + TileEntityLabOven.tankMax + " beakers");
+				String fluid = itemstack.getTagCompound().getString("Fluid");
+				int quantity = itemstack.getTagCompound().getInteger("Quantity");
+				tooltip.add(TextFormatting.DARK_GRAY + "Fluid" + ": " + TextFormatting.YELLOW + fluid);
+				tooltip.add(TextFormatting.DARK_GRAY + "Quantity" +": " + TextFormatting.WHITE + quantity + "/" + TileEntityLabOven.tankMax + " beakers");
 			}else{
 				setItemNbt(itemstack);
 			}
@@ -104,8 +104,8 @@ public class ChemicalItems extends ItemBase {
 		if(itemstack.getItemDamage() == 0){
 			if(itemstack.hasTagCompound()) {
 				if(isSelected){
-					String fluid = itemstack.getTagCompound().getString(ModArray.chemTankName);
-					int quantity = itemstack.getTagCompound().getInteger(ModArray.chemTankQuantity);
+					String fluid = itemstack.getTagCompound().getString("Fluid");
+					int quantity = itemstack.getTagCompound().getInteger("Quantity");
 					if(fluid.matches(EnumFluid.EMPTY.getName()) || fluid.matches(EnumFluid.WATER.getName())){
 						if(quantity < TileEntityLabOven.tankMax){
 							if(entityIn != null && entityIn instanceof EntityPlayer){
@@ -113,8 +113,8 @@ public class ChemicalItems extends ItemBase {
 								if(entityplayer.isInWater()){
 									if(fillTank >= 40){
 										quantity++;
-										itemstack.getTagCompound().setInteger(ModArray.chemTankQuantity, quantity);
-										if(fluid.matches(EnumFluid.EMPTY.getName())){itemstack.getTagCompound().setString(ModArray.chemTankName, EnumFluid.WATER.getName());}
+										itemstack.getTagCompound().setInteger("Quantity", quantity);
+										if(fluid.matches(EnumFluid.EMPTY.getName())){itemstack.getTagCompound().setString("Fluid", EnumFluid.WATER.getName());}
 										fillTank = 0;
 										entityplayer.playSound(SoundEvents.ITEM_BUCKET_FILL, 1.0F, 1.0F);
 										BlockPos.MutableBlockPos blockPos = new BlockPos.MutableBlockPos();

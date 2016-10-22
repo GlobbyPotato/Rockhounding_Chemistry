@@ -4,13 +4,11 @@ import javax.annotation.Nullable;
 
 import com.globbypotato.rockhounding_chemistry.Utils;
 import com.globbypotato.rockhounding_chemistry.handlers.EnumFluid;
-import com.globbypotato.rockhounding_chemistry.handlers.ModArray;
 import com.globbypotato.rockhounding_chemistry.handlers.ModRecipes;
 import com.globbypotato.rockhounding_chemistry.items.ModItems;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiLabOven;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.LabOvenRecipe;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.WrappedItemHandler.WriteMode;
-import com.globbypotato.rockhounding_chemistry.proxy.CommonProxy;
 
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -27,9 +25,9 @@ public class TileEntityLabOven extends TileEntityInvRFReceiver {
 
 	//Input handler slots
 	public static final int SOLUTE_SLOT = 0;
-	//				   FUEL_SLOT = 1;
+	//						 FUEL_SLOT = 1;
 	public static final int SOLVENT_SLOT = 2;
-	public static final int OUTPUT_SLOT = 3; //the name is a bit confusing, but it's easier to handle it in input handler
+	public static final int OUTPUT_SLOT = 3;
 
 	public static final int REDSTONE_SLOT = 4;
 
@@ -37,8 +35,7 @@ public class TileEntityLabOven extends TileEntityInvRFReceiver {
 	private static int TEMPLATE_SLOT = 0;
 
 	public boolean recipeScan;
-
-	//----------------------- CUSTOM -----------------------
+	ItemStack inductor = new ItemStack(ModItems.miscItems,1,17);
 
 	public TileEntityLabOven() {
 		super(7, 0, 1);
@@ -58,7 +55,7 @@ public class TileEntityLabOven extends TileEntityInvRFReceiver {
 					return super.insertItem(slot, insertingStack, simulate);
 				}
 				if(slot == REDSTONE_SLOT &&
-						(insertingStack.getItem() == Items.REDSTONE || (insertingStack.getItem() == ModItems.inductor))){
+						(insertingStack.getItem() == Items.REDSTONE || (insertingStack.isItemEqual(inductor)))){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
 				if(slot == OUTPUT_SLOT && ItemStack.areItemsEqual(insertingStack, new ItemStack(ModItems.chemicalItems,1,0))){
@@ -278,7 +275,7 @@ public class TileEntityLabOven extends TileEntityInvRFReceiver {
 	protected boolean canInduct() {
 		return redstoneCount >= redstoneMax 
 				&& input.getStackInSlot(REDSTONE_SLOT) != null 
-				&& input.getStackInSlot(REDSTONE_SLOT).getItem() == ModItems.inductor;
+				&& input.getStackInSlot(REDSTONE_SLOT).isItemEqual(inductor);
 	}
 
 	@Override

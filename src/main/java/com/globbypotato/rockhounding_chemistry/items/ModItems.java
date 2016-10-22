@@ -2,6 +2,7 @@ package com.globbypotato.rockhounding_chemistry.items;
 
 import com.globbypotato.rockhounding_chemistry.handlers.EnumElement;
 import com.globbypotato.rockhounding_chemistry.handlers.ModArray;
+import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.items.tools.BamShears;
 import com.globbypotato.rockhounding_chemistry.items.tools.BamSword;
 import com.globbypotato.rockhounding_chemistry.items.tools.CubeCrossbow;
@@ -34,11 +35,10 @@ public class ModItems {
 	public static Item alloyItems;
 	public static Item alloyBItems;
 
-	public static ItemGear gear;
-	public static ItemTestTube testTube;
-	public static ItemCylinder cylinder;
-	public static ItemInductor inductor;
-	public static ItemPattern ingotPattern;
+	public static ItemConsumable gear;
+	public static ItemConsumable testTube;
+	public static ItemConsumable cylinder;
+	public static ItemConsumable ingotPattern;
 
 	public static Item cubeCrossbow;
 	public static Item scalBow;
@@ -67,11 +67,10 @@ public class ModItems {
 		alloyItems = new AlloyItems("alloyItems", ModArray.alloyItemArray);	
 		alloyBItems = new AlloyItems("alloyBItems", ModArray.alloyBItemArray);	
 		
-		gear = new ItemGear();
-		testTube = new ItemTestTube();
-		cylinder = new ItemCylinder();
-		inductor = new ItemInductor();
-		ingotPattern = new ItemPattern();
+		gear = new ItemConsumable("gear", ModConfig.gearUses);
+		testTube = new ItemConsumable("testTube", ModConfig.tubeUses);
+		cylinder = new ItemConsumable("cylinder", ModConfig.tubeUses);
+		ingotPattern = new ItemConsumable("ingotPattern", ModConfig.patternUses);
 		
 		//tools
 		cubeCrossbow = new CubeCrossbow("cubeCrossbow");
@@ -108,7 +107,6 @@ public class ModItems {
 		gear.initModel();
 		testTube.initModel();
 		cylinder.initModel();
-		inductor.initModel();
 		ingotPattern.initModel();
 	}
 	

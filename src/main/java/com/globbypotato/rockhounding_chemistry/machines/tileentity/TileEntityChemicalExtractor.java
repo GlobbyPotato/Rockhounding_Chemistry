@@ -4,7 +4,6 @@ import javax.annotation.Nullable;
 
 import com.globbypotato.rockhounding_chemistry.Utils;
 import com.globbypotato.rockhounding_chemistry.handlers.EnumFluid;
-import com.globbypotato.rockhounding_chemistry.handlers.ModArray;
 import com.globbypotato.rockhounding_chemistry.items.ModItems;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiChemicalExtractor;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.WrappedItemHandler.WriteMode;
@@ -34,7 +33,7 @@ public class TileEntityChemicalExtractor extends TileEntityInvRFReceiver {
 	private static final int CONSUMABLE_SLOT = 3;
 	private static final int SYNGAS_SLOT = 4;
 	private static final int FLUO_SLOT = 5;
-
+	ItemStack inductor = new ItemStack(ModItems.miscItems,1,17);
 
 	public TileEntityChemicalExtractor() {
 		super(6,56,1);
@@ -49,7 +48,7 @@ public class TileEntityChemicalExtractor extends TileEntityInvRFReceiver {
 					return super.insertItem(slot, insertingStack, simulate);
 				}
 				if(slot == REDSTONE_SLOT &&
-						(insertingStack.getItem() == Items.REDSTONE || (insertingStack.getItem() == ModItems.inductor))){
+						(insertingStack.getItem() == Items.REDSTONE || (insertingStack.isItemEqual(inductor)))){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
 				if(slot == CONSUMABLE_SLOT &&
@@ -226,7 +225,7 @@ public class TileEntityChemicalExtractor extends TileEntityInvRFReceiver {
 	@Override
 	protected boolean canInduct() {
 		return redstoneCount >= redstoneMax 
-				&& ItemStack.areItemsEqual(new ItemStack(ModItems.inductor), input.getStackInSlot(REDSTONE_SLOT));
+				&& ItemStack.areItemsEqual(inductor, input.getStackInSlot(REDSTONE_SLOT));
 	}
 
 
@@ -234,7 +233,7 @@ public class TileEntityChemicalExtractor extends TileEntityInvRFReceiver {
 		return  hasRecipe(input.getStackInSlot(INPUT_SLOT))
 				&& hasTestTube()
 				&& powerCount >= machineSpeed()
-				&& redstoneCount >= machineSpeed() * 2
+				&& redstoneCount >= machineSpeed()
 				&& hasEnoughAcid(SYNGAS_SLOT, EnumFluid.SYNGAS, consumedSyng) && hasEnoughAcid(FLUO_SLOT, EnumFluid.HYDROFLUORIC_ACID, consumedFluo);
 	}
 
@@ -259,8 +258,8 @@ public class TileEntityChemicalExtractor extends TileEntityInvRFReceiver {
 	private boolean hasEnoughAcid(int acidSlot, EnumFluid acidType, int acidConsumed) {
 		if(hasTank(acidSlot)){
 			if(input.getStackInSlot(acidSlot).hasTagCompound()){
-				if(input.getStackInSlot(acidSlot).getTagCompound().getString(ModArray.chemTankName).matches(acidType.getName())){
-					if(input.getStackInSlot(acidSlot).getTagCompound().getInteger(ModArray.chemTankQuantity) >= acidConsumed){
+				if(input.getStackInSlot(acidSlot).getTagCompound().getString("Fluid").matches(acidType.getName())){
+					if(input.getStackInSlot(acidSlot).getTagCompound().getInteger("Quantity") >= acidConsumed){
 						return true;
 					}
 				}

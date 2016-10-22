@@ -29,6 +29,10 @@ public class GuiCrawlerAssembler extends GuiContainer {
 
     public void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
     	super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+		
+        String device = "Mine Crawler Assembler";
+        this.fontRendererObj.drawString(device, this.xSize / 2 - this.fontRendererObj.getStringWidth(device) / 2, 6, 4210752);
+
         this.fontRendererObj.drawString(this.playerInventory.getDisplayName().getUnformattedText(), 8, this.ySize - 96 + 2, 4210752);
     }
 

@@ -10,7 +10,6 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerChemicalExtractor extends ContainerBase<TileEntityChemicalExtractor>{
-    //private TileEntityChemicalExtractor tile;
     private int cookTime;
     private int totalCookTime;
     private int powerCount;

@@ -3,8 +3,6 @@ package com.globbypotato.rockhounding_chemistry.handlers;
 public class ModArray {
 //------- NBT Tag Names -------
 	//chemical tank
-	public static String chemTankName = "Fluid";
-	public static String chemTankQuantity = "Quantity";
 	public static String toolUses = "Uses";
 
 //------- OREDICT -------
@@ -35,7 +33,7 @@ public class ModArray {
 //------- ITEMS -------
     public static String[] 	chemicalItemsArray = new String[] 	{"tank", "salt", "sulfurCompost", "saltCompost", "fluoriteCompost", "carbonCompost", "crackedCoal"};
     public static String[] 	miscItemsArray = new String[] 		{"logicChip", "cabinet", "ironNugget", "bowBarrel", "bowWheel", "fluidCan", "memoryChip", "coringChip", "setupChip", "crawlerCase", 
-    															 "crawlerHead", "crawlerArm", "wrench", "flask", "yagRod", "resonator", "heater"};
+    															 "crawlerHead", "crawlerArm", "wrench", "flask", "yagRod", "resonator", "heater", "inductor"};
 
     public static String[] 	saltMakerArray = new String[] 	 	{"empty", "water", "stepa", "stepb", "stepc", "stepd", "salt"};
 

@@ -131,9 +131,6 @@ public class LaserBeam extends Block implements ITileEntityProvider{
     private void setDefaultFacing(World worldIn, BlockPos pos, IBlockState state){
         if (!worldIn.isRemote){
             IBlockState iblockstate = worldIn.getBlockState(pos.north());
-            IBlockState iblockstate1 = worldIn.getBlockState(pos.south());
-            IBlockState iblockstate2 = worldIn.getBlockState(pos.west());
-            IBlockState iblockstate3 = worldIn.getBlockState(pos.east());
             EnumFacing enumfacing = (EnumFacing)state.getValue(FACING);
             worldIn.setBlockState(pos, state.withProperty(FACING, enumfacing), 2);
         }

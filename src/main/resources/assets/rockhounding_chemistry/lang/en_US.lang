@@ -219,11 +219,11 @@ item.rockhounding_chemistry:miscItems.flask.name=Chemical Flask
 item.rockhounding_chemistry:miscItems.yagRod.name=YAG Rod
 item.rockhounding_chemistry:miscItems.resonator.name=Laser Resonator
 item.rockhounding_chemistry:miscItems.heater.name=Heating Element
+item.rockhounding_chemistry:miscItems.inductor.name=Induction Heating Interface
 #consumables
 item.rockhounding_chemistry:cylinder.name=Graduated Cylinder
 item.rockhounding_chemistry:gear.name=Crushing Gear
 item.rockhounding_chemistry:testTube.name=Test Tube
-item.rockhounding_chemistry:inductor.name=Induction Heating Interface
 item.rockhounding_chemistry:ingotPattern.name=Ingot Pattern
 #alloys
 tile.rockhounding_chemistry:alloyBlocks.cube.name=CuBe Block

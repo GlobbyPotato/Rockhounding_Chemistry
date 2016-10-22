@@ -38,7 +38,6 @@ public class ContainerMineralAnalyzer extends ContainerBase<TileEntityMineralAna
 
 	public void addListener(IContainerListener listener){
 		super.addListener(listener);
-		//listener.sendAllWindowProperties(this, this.tile);
 	}
 
 	/**

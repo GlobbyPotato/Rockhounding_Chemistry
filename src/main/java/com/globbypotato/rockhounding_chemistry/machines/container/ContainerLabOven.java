@@ -47,7 +47,6 @@ public class ContainerLabOven extends ContainerBase<TileEntityLabOven> {
 	@Override
 	public void addListener(IContainerListener listener){
 		super.addListener(listener);
-		// listener.sendAllWindowProperties(this, this.tile);
 	}
 
 	/**

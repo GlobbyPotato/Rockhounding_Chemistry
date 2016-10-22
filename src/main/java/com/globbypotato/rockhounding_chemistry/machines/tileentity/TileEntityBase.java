@@ -38,5 +38,4 @@ public abstract class TileEntityBase extends TileEntity {
 	{
 		return 64;
 	}
-
 }

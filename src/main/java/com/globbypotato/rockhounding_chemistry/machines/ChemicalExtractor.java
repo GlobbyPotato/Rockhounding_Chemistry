@@ -18,7 +18,7 @@ public class ChemicalExtractor extends BaseTileBlock{
 		setHardness(hardness); 
 		setResistance(resistance);	
 		setHarvestLevel("pickaxe", 0);
-		setSoundType(SoundType.WOOD);
+		setSoundType(SoundType.METAL);
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
     }
 }
