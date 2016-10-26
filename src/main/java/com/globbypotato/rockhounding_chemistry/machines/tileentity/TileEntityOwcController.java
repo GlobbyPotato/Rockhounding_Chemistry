@@ -137,16 +137,16 @@ public class TileEntityOwcController extends TileEntityOwcEnergyController {
 		return accumulations() * efficiencyMultiplier();
 	}
 
-			public int accumulations(){			//	MAX		MIN
-				return    biomeTicks() 			//	20		0
-						+ moonTicks() 			//	30		5		to be reworked with moon phases
-						+ weatherTicks() 		//	40		10
-						+ conveyorTicks()  		//	30		10
-						+ dualityTicks() 		//	20		10
-						+ efficiencyTicks() 	//	30		10
-						+ scaledVolumeForce()	//	50		1
-						+ scaledTideForce();	//	30		1
-												//	250		47
+			public int accumulations(){		//	MAX		MIN
+				return    biomeTicks() 		//	20		0
+					+ moonTicks() 		//	30		5		to be reworked with moon phases
+					+ weatherTicks() 	//	40		10
+					+ conveyorTicks()  	//	30		10
+					+ dualityTicks() 	//	20		10
+					+ efficiencyTicks() 	//	30		10
+					+ scaledVolumeForce()	//	50		1
+					+ scaledTideForce();	//	30		1
+								//	250		47
 			}
 					private int scaledVolumeForce() {
 				        return this.actualVolume() > 0 && this.totalVolume() > 0 ? (this.actualVolume() * 49 / this.totalVolume()) + 1 : 1;
@@ -419,8 +419,8 @@ public class TileEntityOwcController extends TileEntityOwcEnergyController {
 	}
 	private boolean isAnyDeflectorType(MutableBlockPos checkPos) {
 		return worldObj.getBlockState(checkPos) != null 
-				&& worldObj.getBlockState(checkPos).getBlock() == ModBlocks.owcBlocks 
-				&& (worldObj.getBlockState(checkPos).getBlock().getMetaFromState(worldObj.getBlockState(checkPos)) >= 8 && worldObj.getBlockState(checkPos).getBlock().getMetaFromState(worldObj.getBlockState(checkPos)) <= 11);
+			&& worldObj.getBlockState(checkPos).getBlock() == ModBlocks.owcBlocks 
+			&& (worldObj.getBlockState(checkPos).getBlock().getMetaFromState(worldObj.getBlockState(checkPos)) >= 8 && worldObj.getBlockState(checkPos).getBlock().getMetaFromState(worldObj.getBlockState(checkPos)) <= 11);
 	}
 
 /**
@@ -430,8 +430,6 @@ public class TileEntityOwcController extends TileEntityOwcEnergyController {
 		if(flag){this.markDirty();}
 	}
 
-	
-	
     @Override
     public void readFromNBT(NBTTagCompound compound){
         super.readFromNBT(compound);
