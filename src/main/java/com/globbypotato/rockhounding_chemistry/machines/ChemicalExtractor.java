@@ -5,7 +5,6 @@ import com.globbypotato.rockhounding_chemistry.handlers.GuiHandler;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityChemicalExtractor;
 
 import net.minecraft.block.BlockHorizontal;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.util.EnumFacing;
@@ -18,7 +17,6 @@ public class ChemicalExtractor extends BaseTileBlock{
 		setHardness(hardness); 
 		setResistance(resistance);	
 		setHarvestLevel("pickaxe", 0);
-		setSoundType(SoundType.METAL);
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
     }
 }

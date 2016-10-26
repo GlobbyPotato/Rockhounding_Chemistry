@@ -19,7 +19,7 @@ public abstract class TileEntityOwcEnergyController extends TileEntityOwcBaseCon
 
     public boolean activationKey;
     public boolean extractionKey;
-    
+
     protected int yeldCount;
     protected int powerCount;
     protected int maxCapacity;

@@ -7,6 +7,7 @@ import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityInv
 
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.ITileEntityProvider;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
@@ -44,6 +45,7 @@ public class BaseTileBlock extends BaseBlock implements ITileEntityProvider{
 		super(name, material);
 		this.tileClass = tileClass;
 		this.guiID = guiID;
+		setSoundType(SoundType.METAL);
 		String tileName = name.substring(0,1).toUpperCase() + name.substring(1);
 		GameRegistry.registerTileEntity(tileClass, tileName);
 	}
