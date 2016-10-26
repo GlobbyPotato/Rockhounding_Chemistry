@@ -1,5 +1,6 @@
 /**
  * TODO: GUI not showing/syncing correctly rf integers/bar on server
+ * TODO: Moon phases can't be obtained on server
  */
 
 package com.globbypotato.rockhounding_chemistry.machines.tileentity;
