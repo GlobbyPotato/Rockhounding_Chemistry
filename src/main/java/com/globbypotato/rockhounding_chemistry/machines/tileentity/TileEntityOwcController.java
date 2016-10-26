@@ -30,25 +30,25 @@ public class TileEntityOwcController extends TileEntityOwcEnergyController {
 
 	@Override
 	public int getField(int id) {
-        switch (id){
-		    case 0: return this.powerCount;
-		    case 1: return this.maxCapacity;
-		    case 2: return this.yeldCount;
-		    case 3: return this.actualVolume;
-		    case 4: return this.actualTide;
-		    default:return 0;
-        }
+		switch (id){
+			case 0: return this.powerCount;
+			case 1: return this.maxCapacity;
+			case 2: return this.yeldCount;
+			case 3: return this.actualVolume;
+			case 4: return this.actualTide;
+			default:return 0;
+		}
 	}
 
 	@Override
 	public void setField(int id, int value) {
-        switch (id){
-	        case 0: this.powerCount = value; break;
-	        case 1: this.maxCapacity = value; break;
-	        case 2: this.yeldCount = value; break;
-	        case 3: this.actualVolume = value; break;
-	        case 4: this.actualTide = value;
-        }
+		switch (id){
+			case 0: this.powerCount = value; break;
+			case 1: this.maxCapacity = value; break;
+			case 2: this.yeldCount = value; break;
+			case 3: this.actualVolume = value; break;
+			case 4: this.actualTide = value;
+		}
 	}
 
 	@Override
@@ -58,7 +58,6 @@ public class TileEntityOwcController extends TileEntityOwcEnergyController {
 			performSanityCheck();
 
 			if(sanityCheckPassed()){
-				performUpgradeCheck();
 				if(checkConveyor()){
 					animateDeflectors();
 				}
@@ -107,17 +106,6 @@ public class TileEntityOwcController extends TileEntityOwcEnergyController {
 
 			public boolean sanityCheckPassed(){
 				return checkChamber() && checkTower() && checkDevices() && checkConduit() && checkVolume() && checkTide();
-			}
-
-			private void performUpgradeCheck() {
-				boolean flag = false;
-				if(rand.nextInt(this.sanityCheckChance()) == 0){
-					checkConveyor();
-					checkDuality();
-					checkEfficiency();
-					flag = true;
-				}
-				getDirty(flag);
 			}
 
 			public int getMaxCapacity(){
