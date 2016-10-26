@@ -41,7 +41,7 @@ public class BaseTileBlock extends BaseBlock implements ITileEntityProvider{
 
 
 	public BaseTileBlock(String name, Material material, Class<? extends TileEntity> tileClass, int guiID) {
-		super(name);
+		super(name, material);
 		this.tileClass = tileClass;
 		this.guiID = guiID;
 		String tileName = name.substring(0,1).toUpperCase() + name.substring(1);

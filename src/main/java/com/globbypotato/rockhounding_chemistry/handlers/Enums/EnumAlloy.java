@@ -1,20 +1,21 @@
-package com.globbypotato.rockhounding_chemistry.blocks;
+package com.globbypotato.rockhounding_chemistry.handlers.Enums;
 
 import net.minecraft.util.IStringSerializable;
 
-public enum EnumAlloyB implements IStringSerializable {
-	MISCHMETAL			(0,  "mischmetal"),
-	ROSEGOLD			(1,  "rosegold"),
-	GREENGOLD			(2,  "greengold"),
-	WHITEGOLD			(3,  "whitegold"),
-	SHIBUICHI			(4,  "shibuichi"),
-	TOMBAK				(5,  "tombak"),
-	PEWTER				(6,  "pewter");
-    private static final EnumAlloyB[] META_LOOKUP = new EnumAlloyB[values().length];
+public enum EnumAlloy implements IStringSerializable {
+	CUBE				(0,  "cube"),
+	SCAL				(1,  "scal"),
+	BAM					(2,  "bam"),
+	YAG					(3,  "yag"),
+	CUPRONICKEL			(4,  "cupronickel"),
+	NIMONIC				(5,  "nimonic"),
+	HASTELLOY			(6,  "hastelloy"),
+	NICHROME			(7,  "nichrome");
+	private static final EnumAlloy[] META_LOOKUP = new EnumAlloy[values().length];
 	private int meta;
 	private final String name;
 
-	private EnumAlloyB(int meta, String name) {
+	private EnumAlloy(int meta, String name) {
 		this.meta = meta;
 		this.name = name;
 	}
@@ -33,16 +34,16 @@ public enum EnumAlloyB implements IStringSerializable {
 		return this.getName();
 	}
 
-    public static EnumAlloyB byMetadata(int meta) {
+    public static EnumAlloy byMetadata(int meta) {
         if (meta < 0 || meta >= META_LOOKUP.length) { meta = 0; }
         return META_LOOKUP[meta];
     }
 
     static {
-    	EnumAlloyB[] metas = values();
+    	EnumAlloy[] metas = values();
         int metaLenght = metas.length;
         for (int x = 0; x < metaLenght; ++x) {
-        	EnumAlloyB metaIn = metas[x];
+        	EnumAlloy metaIn = metas[x];
             META_LOOKUP[metaIn.getMetadata()] = metaIn;
         }
     }

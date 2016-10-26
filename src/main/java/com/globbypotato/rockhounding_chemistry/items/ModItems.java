@@ -1,8 +1,8 @@
 package com.globbypotato.rockhounding_chemistry.items;
 
-import com.globbypotato.rockhounding_chemistry.handlers.EnumElement;
 import com.globbypotato.rockhounding_chemistry.handlers.ModArray;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
+import com.globbypotato.rockhounding_chemistry.handlers.Enums.EnumElement;
 import com.globbypotato.rockhounding_chemistry.items.tools.BamShears;
 import com.globbypotato.rockhounding_chemistry.items.tools.BamSword;
 import com.globbypotato.rockhounding_chemistry.items.tools.CubeCrossbow;

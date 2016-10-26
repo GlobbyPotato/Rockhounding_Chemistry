@@ -19,4 +19,9 @@ public abstract class GuiBase extends GuiContainer{
 	    this.mc.getTextureManager().bindTexture(TEXTURE);
 	    this.drawTexturedModalRect(guiLeft, guiTop, 0, 0, this.xSize, this.ySize);
 	}
+	
+	protected int getBarScaled(int pixels, int count, int max) {
+        return count > 0 && max > 0 ? count * pixels / max : 0;
+	}
+
 }

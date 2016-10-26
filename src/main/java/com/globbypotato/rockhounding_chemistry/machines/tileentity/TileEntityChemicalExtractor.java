@@ -3,7 +3,7 @@ package com.globbypotato.rockhounding_chemistry.machines.tileentity;
 import javax.annotation.Nullable;
 
 import com.globbypotato.rockhounding_chemistry.Utils;
-import com.globbypotato.rockhounding_chemistry.handlers.EnumFluid;
+import com.globbypotato.rockhounding_chemistry.handlers.Enums.EnumFluid;
 import com.globbypotato.rockhounding_chemistry.items.ModItems;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiChemicalExtractor;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.WrappedItemHandler.WriteMode;
@@ -155,7 +155,6 @@ public class TileEntityChemicalExtractor extends TileEntityInvRFReceiver {
 		for(int i = 0; i < elementList.length; i++){
 			elementList[i] = compound.getInteger("element" + i);
 		}
-		this.redstoneCount = compound.getInteger("RedstoneCount");
 		this.cookTime = compound.getInteger("CookTime");
 	}
 
@@ -165,8 +164,6 @@ public class TileEntityChemicalExtractor extends TileEntityInvRFReceiver {
 		for(int i = 0; i < elementList.length; i++){
 			compound.setInteger("element" + i, elementList[i]);
 		}
-		compound.setInteger("PowerCount", this.powerCount);
-		compound.setInteger("RedstoneCount", this.redstoneCount);
 		compound.setInteger("CookTime", this.cookTime);
 		return compound;
 	}

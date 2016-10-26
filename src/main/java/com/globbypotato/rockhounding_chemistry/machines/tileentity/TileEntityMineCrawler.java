@@ -1,6 +1,6 @@
 package com.globbypotato.rockhounding_chemistry.machines.tileentity;
 
-import com.globbypotato.rockhounding_chemistry.handlers.EnumSetups;
+import com.globbypotato.rockhounding_chemistry.handlers.Enums.EnumSetups;
 import com.globbypotato.rockhounding_chemistry.items.ModItems;
 import com.globbypotato.rockhounding_chemistry.machines.MineCrawler;
 

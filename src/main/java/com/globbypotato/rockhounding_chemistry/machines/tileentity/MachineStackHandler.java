@@ -1,7 +1,7 @@
 package com.globbypotato.rockhounding_chemistry.machines.tileentity;
 
 import com.globbypotato.rockhounding_chemistry.Utils;
-import com.globbypotato.rockhounding_chemistry.handlers.EnumFluid;
+import com.globbypotato.rockhounding_chemistry.handlers.Enums.EnumFluid;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.ItemHandlerHelper;

@@ -5,8 +5,8 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import com.globbypotato.rockhounding_chemistry.blocks.ModBlocks;
-import com.globbypotato.rockhounding_chemistry.handlers.EnumSetups;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
+import com.globbypotato.rockhounding_chemistry.handlers.Enums.EnumSetups;
 import com.globbypotato.rockhounding_chemistry.items.ToolService;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityMineCrawler;
 

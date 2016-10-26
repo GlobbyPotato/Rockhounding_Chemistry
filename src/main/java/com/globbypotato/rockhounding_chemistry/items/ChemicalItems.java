@@ -2,8 +2,7 @@ package com.globbypotato.rockhounding_chemistry.items;
 
 import java.util.List;
 
-import com.globbypotato.rockhounding_chemistry.handlers.EnumFluid;
-import com.globbypotato.rockhounding_chemistry.handlers.ModArray;
+import com.globbypotato.rockhounding_chemistry.handlers.Enums.EnumFluid;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityLabOven;
 
 import net.minecraft.creativetab.CreativeTabs;
@@ -14,6 +13,8 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -27,10 +28,8 @@ public class ChemicalItems extends ItemBase {
 	public ChemicalItems(String name, String[] array) {
 		super(name);
 		setHasSubtypes(true);
-
 		this.itemArray = array;
 	}
-
 
 	@Override
 	public int getItemStackLimit(ItemStack stack) {
@@ -43,7 +42,6 @@ public class ChemicalItems extends ItemBase {
 		}
 		return this.getItemStackLimit();
 	}
-
 
 	@Override
 	public String getUnlocalizedName(ItemStack stack) {
@@ -136,4 +134,26 @@ public class ChemicalItems extends ItemBase {
 		}
 	}
 
+	@Override
+	public ActionResult<ItemStack> onItemRightClick(ItemStack itemstack, World worldIn, EntityPlayer playerIn, EnumHand hand) {
+		if(itemstack.getItemDamage() == 0){
+			if(itemstack.hasTagCompound()) {
+				String fluid = itemstack.getTagCompound().getString("Fluid");
+				int quantity = itemstack.getTagCompound().getInteger("Quantity");
+				if(fluid.matches(EnumFluid.SULFURIC_ACID.getName())){
+					if(quantity > 0){
+						quantity--;
+						itemstack.getTagCompound().setInteger("Quantity", quantity);
+						playerIn.playSound(SoundEvents.ITEM_BUCKET_EMPTY, 1.0F, 1.0F);
+						if(!worldIn.isRemote){
+	                        if(!playerIn.inventory.addItemStackToInventory(new ItemStack(ModItems.miscItems,1,29))){
+	                        	playerIn.dropItem(new ItemStack(ModItems.miscItems,1,29), false);
+	                        }
+						}
+					}
+				}
+			}
+		}
+		return super.onItemRightClick(itemstack, worldIn, playerIn, hand);
+	}
 }

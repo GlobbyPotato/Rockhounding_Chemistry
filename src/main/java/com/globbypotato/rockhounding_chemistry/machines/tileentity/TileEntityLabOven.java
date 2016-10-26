@@ -3,8 +3,8 @@ package com.globbypotato.rockhounding_chemistry.machines.tileentity;
 import javax.annotation.Nullable;
 
 import com.globbypotato.rockhounding_chemistry.Utils;
-import com.globbypotato.rockhounding_chemistry.handlers.EnumFluid;
 import com.globbypotato.rockhounding_chemistry.handlers.ModRecipes;
+import com.globbypotato.rockhounding_chemistry.handlers.Enums.EnumFluid;
 import com.globbypotato.rockhounding_chemistry.items.ModItems;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiLabOven;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.LabOvenRecipe;
@@ -80,8 +80,7 @@ public class TileEntityLabOven extends TileEntityInvRFReceiver {
 		return cookingSpeed;
 	}
 
-	
-//new checks
+
 	private boolean isCorrectSolute(ItemStack stack) {
 		if(this.recipeDisplayIndex >= 0){
 			ItemStack solute = ModRecipes.labOvenRecipes.get(recipeDisplayIndex).getSolute();
@@ -115,10 +114,7 @@ public class TileEntityLabOven extends TileEntityInvRFReceiver {
 		}
 		return false;
 	}
-//---------------------------------
 
-
-//original checks
 	public EnumFluid getFluidOutput(){
 		for(LabOvenRecipe recipe: ModRecipes.labOvenRecipes){
 			if(ItemStack.areItemsEqual(recipe.getSolute(),input.getStackInSlot(SOLUTE_SLOT))){
@@ -127,32 +123,6 @@ public class TileEntityLabOven extends TileEntityInvRFReceiver {
 		}
 		return null;
 	}
-
-/*
-	public boolean hasRecipe(){
-		return hasRecipe(input.getStackInSlot(SOLUTE_SLOT));
-	}
-
-	public static boolean hasRecipe(ItemStack stack){
-		for(LabOvenRecipe recipe: ModRecipes.labOvenRecipes){
-			if(ItemStack.areItemsEqual(recipe.getSolute(),stack)){
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public static boolean isSolvent(ItemStack stack){
-		if(stack.hasTagCompound()){
-			for(LabOvenRecipe recipe: ModRecipes.labOvenRecipes){
-				if(recipe.getSolvent().getName().equals(stack.getTagCompound().getString("Fluid"))){
-					return true;
-				}
-			}
-		}
-		return false;
-	}*/
-//---------------------------------
 
 	public int getFieldCount() {
 		return 6;
@@ -190,7 +160,6 @@ public class TileEntityLabOven extends TileEntityInvRFReceiver {
 	public void readFromNBT(NBTTagCompound compound){
 		super.readFromNBT(compound);
 		this.recipeDisplayIndex = compound.getInteger("RecipeCount");
-		this.redstoneCount = compound.getInteger("RedstoneCount");
 		this.cookTime = compound.getInteger("CookTime");
 	}
 
@@ -198,12 +167,9 @@ public class TileEntityLabOven extends TileEntityInvRFReceiver {
 	public NBTTagCompound writeToNBT(NBTTagCompound compound){
 		super.writeToNBT(compound);
 		compound.setInteger("RecipeCount", this.recipeDisplayIndex);
-		compound.setInteger("RedstoneCount", this.redstoneCount);
 		compound.setInteger("CookTime", this.cookTime);
 		return compound;
 	}
-
-
 
 
 	//----------------------- PROCESS -----------------------

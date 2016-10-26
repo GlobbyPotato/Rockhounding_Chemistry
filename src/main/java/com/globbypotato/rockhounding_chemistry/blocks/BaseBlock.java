@@ -15,7 +15,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BaseBlock extends Block {
 
 	public BaseBlock(String name) {
-		this(name,Material.ROCK);
+		this(name, Material.ROCK);
 	}
 	
 	public BaseBlock(String name, Material material) {
@@ -26,8 +26,6 @@ public class BaseBlock extends Block {
 		GameRegistry.register(new ItemBlock(this), getRegistryName());
 		setCreativeTab(Reference.RockhoundingChemistry);
 	}
-	
-	
 
 	@SideOnly(Side.CLIENT)
 	public void initModel() {

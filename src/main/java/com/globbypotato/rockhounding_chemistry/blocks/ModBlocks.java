@@ -12,9 +12,13 @@ import com.globbypotato.rockhounding_chemistry.machines.MetalAlloyer;
 import com.globbypotato.rockhounding_chemistry.machines.MineCrawler;
 import com.globbypotato.rockhounding_chemistry.machines.MineralAnalyzer;
 import com.globbypotato.rockhounding_chemistry.machines.MineralSizer;
+import com.globbypotato.rockhounding_chemistry.machines.OwcAssembler;
+import com.globbypotato.rockhounding_chemistry.machines.OwcController;
 import com.globbypotato.rockhounding_chemistry.machines.SaltMaker;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
+import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.model.ModelLoader;
@@ -28,18 +32,11 @@ public class ModBlocks {
 	public static Block alloyBricks;
 	public static Block alloyBBricks;
 
-
 	public static Block labOven;
-
 	public static Block mineralSizer;
-
 	public static Block mineralAnalyzer;
-
 	public static Block crawlerAssembler;
-
 	public static Block metalAlloyer;
-
-
 	public static Block chemicalExtractor;
 	public static Block saltMaker;
 	public static Block mineCrawler;
@@ -48,45 +45,56 @@ public class ModBlocks {
 	public static Block laserBeam;
 	public static Block laserSplitter;
 
+	public static Block owcBlocks;
+	public static Block owcAssembler;
+	public static Block owcController;
 
 	//initialize the block
 	public static void init() {
 		//blocks
 		mineralOres = new MineralOres(3.0F, 5.0F, "mineralOres");
-		alloyBlocks = new AlloyBlocks(3.0F, 5.0F, "alloyBlocks");
-		alloyBBlocks = new AlloyBBlocks(3.0F, 5.0F, "alloyBBlocks");
-		alloyBricks = new AlloyBricks(3.0F, 5.0F, "alloyBricks");
-		alloyBBricks = new AlloyBBricks(3.0F, 5.0F, "alloyBBricks");
+		alloyBlocks = new AlloyBlocks(Material.IRON, ModArray.alloyArray, 3.0F, 5.0F, "alloyBlocks", SoundType.METAL);
+		alloyBBlocks = new AlloyBBlocks(Material.IRON, ModArray.alloyBArray, 3.0F, 5.0F, "alloyBBlocks", SoundType.METAL);
+		alloyBricks = new AlloyBricks(Material.IRON, ModArray.alloyArray, 3.0F, 5.0F, "alloyBricks", SoundType.METAL);
+		alloyBBricks = new AlloyBBricks(Material.IRON, ModArray.alloyBArray, 3.0F, 5.0F, "alloyBBricks", SoundType.METAL);
 
 		labOven = new LabOven(3.0F, 5.0F, "labOven");
 		mineralSizer = new MineralSizer(3.0F, 5.0F, "mineralSizer");
 		mineralAnalyzer = new MineralAnalyzer(3.0F, 5.0F, "mineralAnalyzer");
 		chemicalExtractor = new ChemicalExtractor(3.0F, 5.0F, "chemicalExtractor");
-		saltMaker = new SaltMaker(3.0F, 5.0F, "saltMaker");
-		mineCrawler = new MineCrawler("mineCrawler");
-		crawlerAssembler = new CrawlerAssembler(3.0F, 5.0F, "crawlerAssembler");
 		metalAlloyer = new MetalAlloyer(3.0F, 5.0F, "metalAlloyer");
+		
+		saltMaker = new SaltMaker(3.0F, 5.0F, "saltMaker");
+
+		crawlerAssembler = new CrawlerAssembler(3.0F, 5.0F, "crawlerAssembler");
+		mineCrawler = new MineCrawler("mineCrawler");
+
 		laserRedstoneTx = new LaserTX(3.0F, 5.0F,"laserRedstoneTx");
 		laserRedstoneRx = new LaserRX(3.0F, 5.0F,"laserRedstoneRx");
-		laserBeam = new LaserBeam("laserBeam");
 		laserSplitter = new LaserSplitter(3.0F, 5.0F,"laserSplitter");
+		laserBeam = new LaserBeam("laserBeam");
 		
+		owcAssembler = new OwcAssembler(3.0F, 5.0F, "owcAssembler");
+		owcBlocks = new OwcBlocks(Material.IRON, ModArray.owcBlocksArray, 4.0F, 7.0F, "owcBlocks", SoundType.METAL);
+		owcController = new OwcController(3.0F, 5.0F, "owcController");
+
 	}
 
 	//recall the registry
 	public static void register() {
 		//blocks
+		registerMetaBlock(mineralOres, "mineralOres");
 		registerMetaBlock(alloyBlocks, "alloyBlocks");
 		registerMetaBlock(alloyBBlocks, "alloyBBlocks");
 		registerMetaBlock(alloyBricks, "alloyBricks");
 		registerMetaBlock(alloyBBricks, "alloyBBricks");
-		registerMetaBlock(mineralOres, "mineralOres");
 		registerMetaBlock(saltMaker, "saltMaker");
 		registerCrawlerBlock(mineCrawler, "mineCrawler");
 		registerMetaBlock(laserRedstoneRx, "laserRedstoneRx");
 		registerSimpleBlock(laserRedstoneTx, "laserRedstoneTx");
 		registerSimpleBlock(laserSplitter, "laserSplitter");
 		registerSimpleBlock(laserBeam, "laserBeam");
+		registerMetaBlock(owcBlocks, "owcBlocks");
 	}
 
 	//register blocks and itemblocks
@@ -117,6 +125,7 @@ public class ModBlocks {
 		for(int i = 0; i < ModArray.alloyArray.length; i++){			registerMetaBlockRender(alloyBricks, i, ModArray.alloyArray[i]);				}
 		for(int i = 0; i < ModArray.alloyBArray.length; i++){			registerMetaBlockRender(alloyBBricks, i, ModArray.alloyBArray[i]);				}
 		for(int i = 0; i < ModArray.laserArray.length; i++){			registerMetaBlockRender(laserRedstoneRx, i, ModArray.laserArray[i]);			}
+		for(int i = 0; i < ModArray.owcBlocksArray.length; i++){		registerMetaBlockRender(owcBlocks, i, ModArray.owcBlocksArray[i]);				}
 		registerSingleBlockRender(labOven, 0, "labOven");
 		registerSingleBlockRender(mineralSizer, 0, "mineralSizer");
 		registerSingleBlockRender(mineralAnalyzer, 0, "mineralAnalyzer");
@@ -127,6 +136,8 @@ public class ModBlocks {
 		registerSingleBlockRender(laserRedstoneTx, 0, "laserRedstoneTx");
 		registerSingleBlockRender(laserBeam, 0, "laserBeam");
 		registerSingleBlockRender(laserSplitter, 0, "laserSplitter");
+		registerSingleBlockRender(owcAssembler, 0, "owcAssembler");
+		registerSingleBlockRender(owcController, 0, "owcController");
 	}
 
 

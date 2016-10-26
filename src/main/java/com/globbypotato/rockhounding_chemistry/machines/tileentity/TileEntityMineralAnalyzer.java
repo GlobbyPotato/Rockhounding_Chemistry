@@ -4,8 +4,8 @@ import javax.annotation.Nullable;
 
 import com.globbypotato.rockhounding_chemistry.Utils;
 import com.globbypotato.rockhounding_chemistry.blocks.ModBlocks;
-import com.globbypotato.rockhounding_chemistry.handlers.EnumFluid;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
+import com.globbypotato.rockhounding_chemistry.handlers.Enums.EnumFluid;
 import com.globbypotato.rockhounding_chemistry.items.ModItems;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiMineralAnalyzer;
 
@@ -426,7 +426,7 @@ public class TileEntityMineralAnalyzer extends TileEntityInvReceiver {
 	}
 
 	private boolean canAnalyze() {
-		return  (output.getStackInSlot(OUTPUT_SLOT)== null
+		return  (output.getStackInSlot(OUTPUT_SLOT) == null
 				&& hasInput()
 				&& hasConsumable()
 				&& powerCount >= machineSpeed()

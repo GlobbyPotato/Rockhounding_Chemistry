@@ -6,6 +6,7 @@
 		"type=whitegold": 	{"model" : "rockhounding_chemistry:alloyBBricks_whitegold"},
 		"type=shibuichi": 	{"model" : "rockhounding_chemistry:alloyBBricks_shibuichi"},
 		"type=tombak": 		{"model" : "rockhounding_chemistry:alloyBBricks_tombak"},
-		"type=pewter": 		{"model" : "rockhounding_chemistry:alloyBBricks_pewter"}
+		"type=pewter": 		{"model" : "rockhounding_chemistry:alloyBBricks_pewter"},
+		"type=corten": 		{"model" : "rockhounding_chemistry:alloyBBricks_corten"}
     }
 }

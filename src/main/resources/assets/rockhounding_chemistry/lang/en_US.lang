@@ -15,13 +15,17 @@ tile.rockhounding_chemistry:laserRedstoneRx.off.name=Redstone Laser Receiver
 tile.rockhounding_chemistry:laserRedstoneRx.on.name=Redstone Laser Receiver
 tile.rockhounding_chemistry:laserSplitter.name=Redstone Laser Node
 tile.rockhounding_chemistry:laserBeam.name=Redstone Laser Beam
+tile.rockhounding_chemistry:owcAssembler.name=OWC Assembler
+tile.rockhounding_chemistry:owcController.name=OWC Controller
 #containers
 container.labOven=Lab Oven
 container.mineralSizer=Mineral Sizer
 container.mineralAnalyzer=Mineral Analyzer
 container.chemicalExtractor=Chemical Extractor
 container.crawlerAssembler=Mine Crawler Assembler
+container.owcAssembler=OWC Assembler
 container.metalAlloyer=Metal Alloyer
+container.owcController=OWC Controller
 #ores
 tile.rockhounding_chemistry:mineralOres.uninspected.name=Uninspected Mineral
 tile.rockhounding_chemistry:mineralOres.arsenate.name=Arsenate Mineral
@@ -42,6 +46,18 @@ tile.rockhounding_chemistry:saltMaker.stepb.name=Evaporation Tank (Phase 2)
 tile.rockhounding_chemistry:saltMaker.stepc.name=Evaporation Tank (Phase 3)
 tile.rockhounding_chemistry:saltMaker.stepd.name=Evaporation Tank (Phase 4)
 tile.rockhounding_chemistry:saltMaker.salt.name=Evaporation Tank (Salt)
+tile.rockhounding_chemistry:owcBlocks.bulkhead.name=OWC Bulkhead
+tile.rockhounding_chemistry:owcBlocks.concrete.name=OWC Concrete
+tile.rockhounding_chemistry:owcBlocks.duct.name=OWC Air Duct
+tile.rockhounding_chemistry:owcBlocks.turbine.name=OWC Turbine
+tile.rockhounding_chemistry:owcBlocks.valve.name=OWC Valve
+tile.rockhounding_chemistry:owcBlocks.generator.name=OWC Generator
+tile.rockhounding_chemistry:owcBlocks.storage.name=OWC Storage
+tile.rockhounding_chemistry:owcBlocks.inverter.name=OWC Inverter
+tile.rockhounding_chemistry:owcBlocks.deflectora.name=OWC Deflector
+tile.rockhounding_chemistry:owcBlocks.deflectorb.name=OWC Deflector
+tile.rockhounding_chemistry:owcBlocks.deflectorc.name=OWC Deflector
+tile.rockhounding_chemistry:owcBlocks.deflectord.name=OWC Deflector
 #mineral shards
 item.rockhounding_chemistry:arsenateShards.agardite.name=Agardite Shard
 item.rockhounding_chemistry:arsenateShards.fornacite.name=Fornacite Shard
@@ -220,6 +236,18 @@ item.rockhounding_chemistry:miscItems.yagRod.name=YAG Rod
 item.rockhounding_chemistry:miscItems.resonator.name=Laser Resonator
 item.rockhounding_chemistry:miscItems.heater.name=Heating Element
 item.rockhounding_chemistry:miscItems.inductor.name=Induction Heating Interface
+item.rockhounding_chemistry:miscItems.cupronickelFoil.name=Cupronickel Foil
+item.rockhounding_chemistry:miscItems.copperCoil.name=Copper Coil
+item.rockhounding_chemistry:miscItems.stator.name=OWC Stator
+item.rockhounding_chemistry:miscItems.rotor.name=OWC Rotor
+item.rockhounding_chemistry:miscItems.arm.name=OWC Supprt Arm
+item.rockhounding_chemistry:miscItems.fan.name=OWC Turbine Fan
+item.rockhounding_chemistry:miscItems.nimonicFoil.name=Nimonic Sheet
+item.rockhounding_chemistry:miscItems.copperIngot.name=Copper Ingot
+item.rockhounding_chemistry:miscItems.energyCell.name=Energy Cell
+item.rockhounding_chemistry:miscItems.leadIngot.name=Lead Ingot
+item.rockhounding_chemistry:miscItems.owcCasing.name=OWC Machine Casing
+item.rockhounding_chemistry:miscItems.sulfuricBeaker.name=Sulfuric Acid Beaker
 #consumables
 item.rockhounding_chemistry:cylinder.name=Graduated Cylinder
 item.rockhounding_chemistry:gear.name=Crushing Gear
@@ -302,6 +330,11 @@ tile.rockhounding_chemistry:alloyBBricks.pewter.name=Pewter Brick
 item.rockhounding_chemistry:alloyBItems.pewterDust.name=Pewter Dust
 item.rockhounding_chemistry:alloyBItems.pewterIngot.name=Pewter Ingot
 item.rockhounding_chemistry:alloyBItems.pewterNugget.name=Pewter Nugget
+tile.rockhounding_chemistry:alloyBBlocks.corten.name=Corten Steel Block
+tile.rockhounding_chemistry:alloyBBricks.corten.name=Corten Steel Brick
+item.rockhounding_chemistry:alloyBItems.cortenDust.name=Corten Steel Dust
+item.rockhounding_chemistry:alloyBItems.cortenIngot.name=Corten Steel Ingot
+item.rockhounding_chemistry:alloyBItems.cortenNugget.name=Corten Steel Nugget
 #tools
 item.rockhounding_chemistry:bamShears.name=BAM Shears
 #weapons

@@ -3,9 +3,9 @@ package com.globbypotato.rockhounding_chemistry.machines.gui;
 import java.util.Arrays;
 import java.util.List;
 
-import com.globbypotato.rockhounding_chemistry.handlers.EnumFluid;
 import com.globbypotato.rockhounding_chemistry.handlers.ModRecipes;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
+import com.globbypotato.rockhounding_chemistry.handlers.Enums.EnumFluid;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerLabOven;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityLabOven;
 
@@ -117,9 +117,4 @@ public class GuiLabOven extends GuiBase {
 		}
 	}
 
-	private int getBarScaled(int pixels, int count, int max) {
-        int i = max;
-        if (i == 0){i = max;}
-        return count > 0 && max > 0 ? count * pixels / max : 0;
-	}
 }

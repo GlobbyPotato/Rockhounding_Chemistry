@@ -1,4 +1,4 @@
-package com.globbypotato.rockhounding_chemistry.handlers;
+package com.globbypotato.rockhounding_chemistry.handlers.Enums;
 
 public enum EnumElement {
 	CERIUM(),

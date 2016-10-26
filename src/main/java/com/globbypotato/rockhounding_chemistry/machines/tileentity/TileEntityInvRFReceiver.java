@@ -56,12 +56,14 @@ public abstract class TileEntityInvRFReceiver extends TileEntityInv  implements 
 	public void readFromNBT(NBTTagCompound compound){
 		super.readFromNBT(compound);
 		this.powerCount = compound.getInteger("PowerCount");
+		this.redstoneCount = compound.getInteger("RedstoneCount");
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound){
 		super.writeToNBT(compound);
 		compound.setInteger("PowerCount", this.powerCount);
+		compound.setInteger("RedstoneCount", this.redstoneCount);
 		return compound;
 	}
 

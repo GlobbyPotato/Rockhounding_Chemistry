@@ -1,6 +1,6 @@
 package com.globbypotato.rockhounding_chemistry.machines.recipe;
 
-import com.globbypotato.rockhounding_chemistry.handlers.EnumFluid;
+import com.globbypotato.rockhounding_chemistry.handlers.Enums.EnumFluid;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

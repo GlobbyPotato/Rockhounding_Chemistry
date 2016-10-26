@@ -73,10 +73,4 @@ public class GuiMineralAnalyzer extends GuiBase {
         }
     }
 
-	private int getBarScaled(int pixels, int count, int max) {
-        int i = max;
-        if (i == 0){i = max;}
-        return count > 0 && max > 0 ? count * pixels / max : 0;
-	}
-
 }

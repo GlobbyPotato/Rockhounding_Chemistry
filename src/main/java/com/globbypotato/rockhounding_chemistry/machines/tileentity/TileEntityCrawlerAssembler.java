@@ -3,8 +3,8 @@ package com.globbypotato.rockhounding_chemistry.machines.tileentity;
 import javax.annotation.Nullable;
 
 import com.globbypotato.rockhounding_chemistry.blocks.ModBlocks;
-import com.globbypotato.rockhounding_chemistry.handlers.EnumSetups;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
+import com.globbypotato.rockhounding_chemistry.handlers.Enums.EnumSetups;
 import com.globbypotato.rockhounding_chemistry.items.ModItems;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerCrawlerAssembler;
 

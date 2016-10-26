@@ -19,7 +19,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class CommonProxy {
 
-
 	public void preInit(FMLPreInitializationEvent e){
 		// Load Config
 		ModConfig.loadConfig(e);
@@ -31,6 +30,7 @@ public class CommonProxy {
 		ModBlocks.init();
 		ModBlocks.register();
 		ModItems.init();
+
 		// Register tile entities
 		ModTileEntities.registerTileEntities();
 		
@@ -39,9 +39,6 @@ public class CommonProxy {
 
 		// Register oreDictionary
 		ModDictionary.loadDictionary();
-
-		// Register new Renders
-		//this.registerRenders(); 
 	}
 
 	public void init(FMLInitializationEvent e){
@@ -50,15 +47,11 @@ public class CommonProxy {
 
 		//Register Guis
 		NetworkRegistry.INSTANCE.registerGuiHandler(Reference.MODID, new GuiHandler());
-
-
-
 	}
+
 	public void postInit(FMLPostInitializationEvent e){
 
 	}
-
-
 
 	public void registerTileEntitySpecialRenderer() {
 

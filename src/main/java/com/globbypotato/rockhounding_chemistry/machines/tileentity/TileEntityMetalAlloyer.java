@@ -67,24 +67,25 @@ public class TileEntityMetalAlloyer extends TileEntityLockable implements ITicka
 
 	ItemStack inductor = new ItemStack(ModItems.miscItems,1,17);
 
-	public static String[] alloyNames = new String[]{"No Recipe", "CuBe", "ScAl", "BAM", "YAG", "Cupronickel", "Nimonic", "Hastelloy", "Nichrome", "Mischmetal", "Rose Gold", "Green Gold", "White Gold", "Shibuichi", "Tombak", "Pewter"};
+	public static String[] alloyNames = new String[]{"No Recipe", "CuBe", "ScAl", "BAM", "YAG", "Cupronickel", "Nimonic", "Hastelloy", "Nichrome", "Mischmetal", "Rose Gold", "Green Gold", "White Gold", "Shibuichi", "Tombak", "Pewter", "Corten Steel"};
     	public int maxAlloys = alloyNames.length - 1;
-		String[] cubeRecipe = new String[]{"dustCopper", "dustBeryllium"}; 															int[] cubeQuantity = new int[]{7, 2};
-		String[] scalRecipe = new String[]{"dustAluminum", "dustScandium"}; 														int[] scalQuantity = new int[]{7, 2};
-		String[] bamRecipe = new String[]{"dustBoron", "dustAluminum", "dustMagnesium"}; 											int[] bamQuantity = new int[]{6, 2, 1};
-		String[] yagRecipe = new String[]{"dustYttrium", "dustAluminum", "dustNeodymium", "dustChromium"}; 							int[] yagQuantity = new int[]{4, 2, 2, 1};
-		String[] cupronickelRecipe = new String[]{"dustCopper", "dustNickel", "dustManganese", "dustIron"}; 						int[] cupronickelQuantity = new int[]{5, 2, 1, 1};
-		String[] nimonicRecipe = new String[]{"dustNickel", "dustCobalt", "dustChromium"}; 											int[] nimonicQuantity = new int[]{5, 2, 2};
-		String[] hastelloyRecipe = new String[]{"dustIron", "dustNickel", "dustChromium"}; 											int[] hastelloyQuantity = new int[]{5, 3, 1};
-		String[] nichromeRecipe = new String[]{"dustNickel", "dustChromium", "dustIron",}; 											int[] nichromeQuantity = new int[]{6, 2, 1};
+		String[] cubeRecipe = new String[]{"dustCopper", "dustBeryllium"}; 																	int[] cubeQuantity = new int[]{7, 2};
+		String[] scalRecipe = new String[]{"dustAluminum", "dustScandium"}; 																int[] scalQuantity = new int[]{7, 2};
+		String[] bamRecipe = new String[]{"dustBoron", "dustAluminum", "dustMagnesium"}; 													int[] bamQuantity = new int[]{6, 2, 1};
+		String[] yagRecipe = new String[]{"dustYttrium", "dustAluminum", "dustNeodymium", "dustChromium"}; 									int[] yagQuantity = new int[]{4, 2, 2, 1};
+		String[] cupronickelRecipe = new String[]{"dustCopper", "dustNickel", "dustManganese", "dustIron"}; 								int[] cupronickelQuantity = new int[]{5, 2, 1, 1};
+		String[] nimonicRecipe = new String[]{"dustNickel", "dustCobalt", "dustChromium"}; 													int[] nimonicQuantity = new int[]{5, 2, 2};
+		String[] hastelloyRecipe = new String[]{"dustIron", "dustNickel", "dustChromium"}; 													int[] hastelloyQuantity = new int[]{5, 3, 1};
+		String[] nichromeRecipe = new String[]{"dustNickel", "dustChromium", "dustIron",}; 													int[] nichromeQuantity = new int[]{6, 2, 1};
 		private int decoSplit = 8;
-		String[] mischmetalRecipe = new String[]{"dustCerium", "dustLanthanum", "dustNeodymium", "dustPraseodymium", "dustIron"}; 	int[] mischmetalQuantity = new int[]{4, 2, 1, 1, 1};
-		String[] rosegoldRecipe = new String[]{"dustGold", "dustCopper", "dustSilver"}; 											int[] rosegoldQuantity = new int[]{5, 3, 1};
-		String[] greengoldRecipe = new String[]{"dustGold", "dustSilver", "dustCopper", "dustCadmium"}; 							int[] greengoldQuantity = new int[]{5, 2, 1, 1};
-		String[] whitegoldRecipe = new String[]{"dustGold", "dustSilver", "dustCopper", "dustManganese"}; 							int[] whitegoldQuantity = new int[]{5, 2, 1, 1};
-		String[] shibuichiRecipe = new String[]{"dustCopper", "dustSilver", "dustGold"}; 											int[] shibuichiQuantity = new int[]{7, 2, 1};
-		String[] tombakRecipe = new String[]{"dustCopper", "dustZinc", "dustArsenic"}; 												int[] tombakQuantity = new int[]{6, 2, 1};
-		String[] pewterRecipe = new String[]{"dustTin", "dustCopper", "dustBismuth", "dustLead"}; 									int[] pewterQuantity = new int[]{5, 1, 1, 1};
+		String[] mischmetalRecipe = new String[]{"dustCerium", "dustLanthanum", "dustNeodymium", "dustPraseodymium", "dustIron"}; 			int[] mischmetalQuantity = new int[]{4, 2, 1, 1, 1};
+		String[] rosegoldRecipe = new String[]{"dustGold", "dustCopper", "dustSilver"}; 													int[] rosegoldQuantity = new int[]{5, 3, 1};
+		String[] greengoldRecipe = new String[]{"dustGold", "dustSilver", "dustCopper", "dustCadmium"}; 									int[] greengoldQuantity = new int[]{5, 2, 1, 1};
+		String[] whitegoldRecipe = new String[]{"dustGold", "dustSilver", "dustCopper", "dustManganese"}; 									int[] whitegoldQuantity = new int[]{5, 2, 1, 1};
+		String[] shibuichiRecipe = new String[]{"dustCopper", "dustSilver", "dustGold"}; 													int[] shibuichiQuantity = new int[]{7, 2, 1};
+		String[] tombakRecipe = new String[]{"dustCopper", "dustZinc", "dustArsenic"}; 														int[] tombakQuantity = new int[]{6, 2, 1};
+		String[] pewterRecipe = new String[]{"dustTin", "dustCopper", "dustBismuth", "dustLead"}; 											int[] pewterQuantity = new int[]{5, 1, 1, 1};
+		String[] cortenRecipe = new String[]{"dustNickel", "dustSilicon", "dustChromium", "dustPhosphorus", "dustManganese", "dustCopper"}; int[] cortenQuantity = new int[]{2, 2, 2, 1, 1, 1};
 
 
 
@@ -378,9 +379,9 @@ public class TileEntityMetalAlloyer extends TileEntityLockable implements ITicka
         private void countIngredients(int countRecipes, String[] recipe, int[] quantity) {
 		for(int x = 0; x < recipe.length; x++){
 			for(ItemStack dust : OreDictionary.getOres(recipe[x])) {
-            		if(dust != null){
-            			slots[x + 11] = dust; slots[x + 11].stackSize = quantity[x];
-            		}
+        		if(dust != null){
+        			slots[x + 11] = dust; slots[x + 11].stackSize = quantity[x];
+        		}
 			}
 		}
 	}
@@ -400,7 +401,8 @@ public class TileEntityMetalAlloyer extends TileEntityLockable implements ITicka
 		}else if(countRecipes == 12){ return whitegoldRecipe;
 		}else if(countRecipes == 13){ return shibuichiRecipe;
 		}else if(countRecipes == 14){ return tombakRecipe;
-		}else if(countRecipes == 15){ return pewterRecipe;}
+		}else if(countRecipes == 15){ return pewterRecipe;
+		}else if(countRecipes == 16){ return cortenRecipe;}
 		return null;
 	}
 
@@ -419,7 +421,8 @@ public class TileEntityMetalAlloyer extends TileEntityLockable implements ITicka
 		}else if(countRecipes == 12){ return whitegoldQuantity;
 		}else if(countRecipes == 13){ return shibuichiQuantity;
 		}else if(countRecipes == 14){ return tombakQuantity;
-		}else if(countRecipes == 15){ return pewterQuantity;}
+		}else if(countRecipes == 15){ return pewterQuantity;
+		}else if(countRecipes == 16){ return cortenQuantity;}
 		return null;
 	}
 

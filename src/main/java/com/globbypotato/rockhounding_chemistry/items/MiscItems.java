@@ -2,7 +2,7 @@ package com.globbypotato.rockhounding_chemistry.items;
 
 import java.util.List;
 
-import com.globbypotato.rockhounding_chemistry.handlers.EnumSetups;
+import com.globbypotato.rockhounding_chemistry.handlers.Enums.EnumSetups;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
