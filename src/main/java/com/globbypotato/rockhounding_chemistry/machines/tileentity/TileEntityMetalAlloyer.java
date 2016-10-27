@@ -164,7 +164,8 @@ public class TileEntityMetalAlloyer extends TileEntityInvReceiver {
 		if(!worldObj.isRemote){
 			//show allor
 			showAlloy(countRecipes());
-			if(countRecipes() >= 0 && recipeScan){ 
+			if((countRecipes() >= 0 && recipeScan)
+				|| (!recipeScan && countRecipes() >= 0 && template.getStackInSlot(SLOT_FAKE[0]) != null && template.getStackInSlot(SLOT_FAKE[1]) == null) ){ 
 				showIngredients(countRecipes());
 			}
 			//reset grid
