@@ -193,7 +193,7 @@ public class TileEntityMetalAlloyer extends TileEntityInvReceiver {
 	private void handleOutput(String[] recipe, int[] quantity) {
 		int uses = 0;
 		//decrease input 
-		for (int x = 0; x < recipe.length; x++){input.getStackInSlot(x + 1).stackSize -= quantity[x]; if(input.getStackInSlot(x + 1).stackSize <= 0) { input.setStackInSlot(x + 1, null);; }}
+		for (int x = 0; x < recipe.length; x++){input.getStackInSlot(x + 1).stackSize -= quantity[x]; if(input.getStackInSlot(x + 1).stackSize <= 0) { input.setStackInSlot(x + 1, null); }}
 		//decrease consumable
 		input.damageSlot(SLOT_CONSUMABLE);
 		//add output
