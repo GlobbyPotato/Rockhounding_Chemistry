@@ -26,30 +26,26 @@ public class TileEntityOwcController extends TileEntityOwcEnergyController {
 
 	@Override
 	public int getFieldCount() {
-		return 5;
+		return 3;
 	}
 
 	@Override
 	public int getField(int id) {
-		switch (id){
-			case 0: return this.powerCount;
-			case 1: return this.maxCapacity;
-			case 2: return this.yeldCount;
-			case 3: return this.actualVolume;
-			case 4: return this.actualTide;
-			default:return 0;
-		}
+        switch (id){
+		    case 0: return this.powerCount;
+		    case 1: return this.maxCapacity;
+		    case 2: return this.yeldCount;
+		    default:return 0;
+        }
 	}
 
 	@Override
 	public void setField(int id, int value) {
-		switch (id){
-			case 0: this.powerCount = value; break;
-			case 1: this.maxCapacity = value; break;
-			case 2: this.yeldCount = value; break;
-			case 3: this.actualVolume = value; break;
-			case 4: this.actualTide = value;
-		}
+        switch (id){
+	        case 0: this.powerCount = value; break;
+	        case 1: this.maxCapacity = value; break;
+	        case 2: this.yeldCount = value; break;
+        }
 	}
 
 	@Override
@@ -137,46 +133,46 @@ public class TileEntityOwcController extends TileEntityOwcEnergyController {
 		return accumulations() * efficiencyMultiplier();
 	}
 
-			public int accumulations(){		//	MAX		MIN
-				return    biomeTicks() 		//	20		0
-					+ moonTicks() 		//	30		5		to be reworked with moon phases
-					+ weatherTicks() 	//	40		10
-					+ conveyorTicks()  	//	30		10
-					+ dualityTicks() 	//	20		10
-					+ efficiencyTicks() 	//	30		10
-					+ scaledVolumeForce()	//	50		1
-					+ scaledTideForce();	//	30		1
-								//	250		47
+			public int accumulations(){			//	MAX		MIN
+				return    biomeTicks() 			//	20		0
+						+ moonTicks() 			//	30		5		to be reworked with moon phases
+						+ weatherTicks() 		//	40		10
+						+ conveyorTicks()  		//	30		10
+						+ dualityTicks() 		//	20		10
+						+ efficiencyTicks() 	//	30		10
+						+ scaledVolumeForce()	//	50		1
+						+ scaledTideForce();	//	30		1
+												//	250		47
 			}
 					private int scaledVolumeForce() {
 				        return this.actualVolume() > 0 && this.totalVolume() > 0 ? (this.actualVolume() * 49 / this.totalVolume()) + 1 : 1;
 					}
-		
+
 					private int scaledTideForce() {
 				        return this.actualTide() > 0 && this.totalTide() > 0 ? (this.actualTide() * 29 / this.totalTide()) + 1 : 1;
 					}
-		
+
 					private int efficiencyTicks() {
 						return 10 * this.efficiencyMultiplier();
 					}
-		
+
 					private int dualityTicks() {
 						return 10 * this.dualityBonus();
 					}
-		
+
 					private int conveyorTicks() {
 						return 15 * this.conveyorBonus();
 					}
-		
+
 					private int weatherTicks() {
-					return worldObj.isRaining() ? 40 : 10;
+						return worldObj.isRaining() ? 40 : 10;
 					}
-		
+
 					private int moonTicks() {
 				    	//actually moon phases should be used here
 						return !worldObj.isDaytime() ? 30 : 5;
 					}
-		
+
 					private int biomeTicks() {
 						Biome biome = worldObj.getBiomeGenForCoords(pos);
 						if(BiomeDictionary.isBiomeOfType(biome, Type.OCEAN)){
@@ -304,7 +300,7 @@ public class TileEntityOwcController extends TileEntityOwcEnergyController {
 /**
  * Perform the sanity check of each part of the structure
  */
-	public boolean checkTide() {
+	public int actualTide() {
 		int tide = 0;
 		for (int y = -5; y <= -1; y++){
 			for (int x = -3; x <= 3; x++){
@@ -316,11 +312,14 @@ public class TileEntityOwcController extends TileEntityOwcEnergyController {
 				}
 			}
 		}
-		this.actualTide = tide;
-		return tide >= this.tideLimit();
+		return tide;
 	}
 
-	public boolean checkVolume() {
+			public boolean checkTide(){
+				return actualTide() >= this.tideLimit();
+			}
+
+	public int actualVolume() {
 		int volume = 0;
 		for (int y = -9; y <= -1; y++){
 			for (int x = -10; x <= 10; x++){
@@ -332,9 +331,12 @@ public class TileEntityOwcController extends TileEntityOwcEnergyController {
 				}
 			}
 		}
-		this.actualVolume = volume;
-		return volume >= this.volumeLimit();
+		return volume;
 	}
+
+			public boolean checkVolume(){
+				return actualVolume() >= this.volumeLimit();
+			}
 
 	public boolean checkConduit() {
 		int conduit = 0; 
@@ -419,8 +421,8 @@ public class TileEntityOwcController extends TileEntityOwcEnergyController {
 	}
 	private boolean isAnyDeflectorType(MutableBlockPos checkPos) {
 		return worldObj.getBlockState(checkPos) != null 
-			&& worldObj.getBlockState(checkPos).getBlock() == ModBlocks.owcBlocks 
-			&& (worldObj.getBlockState(checkPos).getBlock().getMetaFromState(worldObj.getBlockState(checkPos)) >= 8 && worldObj.getBlockState(checkPos).getBlock().getMetaFromState(worldObj.getBlockState(checkPos)) <= 11);
+				&& worldObj.getBlockState(checkPos).getBlock() == ModBlocks.owcBlocks 
+				&& (worldObj.getBlockState(checkPos).getBlock().getMetaFromState(worldObj.getBlockState(checkPos)) >= 8 && worldObj.getBlockState(checkPos).getBlock().getMetaFromState(worldObj.getBlockState(checkPos)) <= 11);
 	}
 
 /**
@@ -436,8 +438,6 @@ public class TileEntityOwcController extends TileEntityOwcEnergyController {
         this.powerCount = compound.getInteger("PowerCount");
         this.maxCapacity = compound.getInteger("MaxCapacity");
         this.yeldCount = compound.getInteger("YeldCount");
-        this.actualVolume = compound.getInteger("ActualVolume");
-        this.actualTide = compound.getInteger("ActualTide");
         this.activationKey = compound.getBoolean("Activation");
         this.extractionKey = compound.getBoolean("Extraction");
         this.tideInterval = compound.getInteger("TideInterval");
@@ -449,8 +449,6 @@ public class TileEntityOwcController extends TileEntityOwcEnergyController {
         compound.setInteger("PowerCount", this.powerCount);
         compound.setInteger("MaxCapacity", this.maxCapacity);
         compound.setInteger("YeldCount", this.yeldCount);
-        compound.setInteger("ActualVolume", this.actualVolume);
-        compound.setInteger("ActualTide", this.actualTide);
         compound.setBoolean("Activation", this.activationKey);
         compound.setBoolean("Extraction", this.extractionKey);
         compound.setInteger("TideInterval", this.tideInterval);

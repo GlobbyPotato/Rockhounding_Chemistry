@@ -14,9 +14,6 @@ import net.minecraftforge.energy.IEnergyStorage;
 public abstract class TileEntityOwcEnergyController extends TileEntityOwcBaseController implements IEnergyProvider, IEnergyStorage {
     Random rand = new Random();
 
-    protected int actualVolume; 
-    protected int actualTide; 
-
     public boolean activationKey;
     public boolean extractionKey;
 
@@ -50,20 +47,12 @@ public abstract class TileEntityOwcEnergyController extends TileEntityOwcBaseCon
     	return 1000;
     }
 
-    protected int actualVolume(){
-    	return this.actualVolume;
-    }
-
     public int totalTide(){
     	return 240;
     }
 
     protected int tideLimit(){
     	return 90;
-    }
-
-    protected int actualTide(){
-    	return this.actualTide;
     }
 
     protected int sanityCheckChance(){

@@ -40,7 +40,7 @@ public class GuiOwcController extends GuiContainer {
 	   int maxPower = this.owcController.getField(1);
 	   String rfString = TextFormatting.DARK_GRAY + "Storage: " + TextFormatting.WHITE + currentPower + "/" + maxPower + " RF";
 	   //tide
-	   int totalWater = this.owcController.getField(4) + this.owcController.getField(3);
+	   int totalWater = this.owcController.actualTide() + this.owcController.actualVolume();
 	   int totalMaxWater = this.owcController.totalTide() + this.owcController.totalVolume();
 	   String waterString = TextFormatting.DARK_GRAY + "Water: " + TextFormatting.AQUA + totalWater + "/" + totalMaxWater + " tiles";
 	   //yeld
@@ -150,9 +150,9 @@ public class GuiOwcController extends GuiContainer {
             this.drawTexturedModalRect(i + 161, j + 17 + (60 - k), 176, 119, 5, k);
         }
         //tide bar
-        if (this.owcController.getField(4) > 0){
-        	int totalWater = this.owcController.getField(4) + this.owcController.getField(3);
+        	int totalWater = this.owcController.actualTide() + this.owcController.actualVolume();
         	int totalMaxWater = this.owcController.totalTide() + this.owcController.totalVolume();
+        if (totalWater > 0){
             int k = this.getBarScaled(60, totalWater, totalMaxWater);
             this.drawTexturedModalRect(i + 145, j + 17 + (60 - k), 183, 119, 5, k);
         }

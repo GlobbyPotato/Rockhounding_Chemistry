@@ -51,7 +51,7 @@ public class GuiMetalAlloyer extends GuiBase {
 			   drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
 		   }
 	}
-	
+
 	public void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
     	super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 

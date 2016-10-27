@@ -17,8 +17,6 @@ public class ContainerOwcController extends Container{
     private int powerCount;
     private int maxCapacity;
     private int yeldCount;
-    private int actualVolume;
-    private int actualTide;
 
     public ContainerOwcController(InventoryPlayer playerInventory, TileEntityOwcController furnaceInventory){
         this.owcController = furnaceInventory;
@@ -55,18 +53,10 @@ public class ContainerOwcController extends Container{
             if (this.yeldCount != this.owcController.getField(2)){
                 icontainerlistener.sendProgressBarUpdate(this, 2, this.owcController.getField(2));
             }
-            if (this.actualVolume != this.owcController.getField(3)){
-                icontainerlistener.sendProgressBarUpdate(this, 3, this.owcController.getField(3));
-            }
-            if (this.actualTide != this.owcController.getField(4)){
-                icontainerlistener.sendProgressBarUpdate(this, 4, this.owcController.getField(4));
-            }
         }
         this.powerCount = this.owcController.getField(0);
         this.maxCapacity = this.owcController.getField(1);
         this.yeldCount = this.owcController.getField(2);
-        this.actualVolume = this.owcController.getField(3);
-        this.actualTide = this.owcController.getField(4);
     }
 
     @SideOnly(Side.CLIENT)
