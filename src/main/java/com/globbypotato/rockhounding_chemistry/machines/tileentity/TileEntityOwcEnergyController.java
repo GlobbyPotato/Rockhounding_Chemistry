@@ -7,7 +7,6 @@ import com.globbypotato.rockhounding_chemistry.machines.OwcController;
 import cofh.api.energy.IEnergyProvider;
 import cofh.api.energy.IEnergyReceiver;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -19,17 +18,16 @@ public abstract class TileEntityOwcEnergyController extends TileEntityOwcBaseCon
     public boolean extractionKey;
 
     public int yeldCount;
-    public int powerCount;
-    public int maxCapacity;
+    public int[] owcChannels = new int[10];
 
     protected int tideInterval;
 
     protected int storageMax(){
-    	return 500000;
+    	return 32500;
     }
 
     public int maxYeld(){
-    	return 750;
+    	return 900;
     }
 
     public int tideChance(){
@@ -37,7 +35,7 @@ public abstract class TileEntityOwcEnergyController extends TileEntityOwcBaseCon
     }
 
     public int rfTransfer(){
-    	return 20;
+    	return 40;
     }
 
     protected int totalVolume(){
@@ -47,7 +45,6 @@ public abstract class TileEntityOwcEnergyController extends TileEntityOwcBaseCon
     protected int volumeLimit(){
     	return 1000;
     }
-
 
     protected int totalTide(){
     	return 240;
@@ -65,8 +62,28 @@ public abstract class TileEntityOwcEnergyController extends TileEntityOwcBaseCon
     	return 60;
     }
 
-    protected boolean hasPower(){
-    	return powerCount > 0;
+    protected int activeChannels(){
+    	return 5;
+    }
+
+    protected int dualityBonus(){
+    	return 1;
+    }
+
+    public int totalPower(){
+    	int totPower = 0;
+    	for (int x = 0; x < activeChannels(); x++){
+    		totPower += this.owcChannels[x];
+    	}
+    	return totPower;
+	}
+
+    protected int getMaxCapacity(){
+    	return this.storageMax();
+    }
+
+    public boolean hasPower(){
+    	return this.totalPower() > 0;
     }
 
     protected void powerExtraction() {
@@ -75,41 +92,55 @@ public abstract class TileEntityOwcEnergyController extends TileEntityOwcBaseCon
 		for(int side = 0; side < 6; side++){
 			TileEntity checkTile = this.worldObj.getTileEntity(pos.offset(facing.getFront(side)));
 			if(checkTile != null){
-				if(powerCount >= rfTransfer()) {
-					sendPower(checkTile, rfTransfer());
+				if(this.totalPower() >= rfTransfer()) {
+					sendPower(checkTile, facing, rfTransfer());
 					markDirty();
 				}				
 			}
 		}
 	}
 
-	protected void sendPower(TileEntity tileentity, int transfer) {
+	protected void sendPower(TileEntity tileentity, EnumFacing facing, int transfer) {
 		if (tileentity instanceof IEnergyReceiver) {
 			IEnergyReceiver te = (IEnergyReceiver) tileentity;
 			if (te.getEnergyStored(null) < te.getMaxEnergyStored(null)) {
-				te.receiveEnergy(EnumFacing.SOUTH, transfer, false);
-				powerCount -= transfer;
+				te.receiveEnergy(facing.getOpposite(), transfer, false);
+				doTransfer(transfer);
 			}
 		} else if (tileentity instanceof IEnergyStorage) {
 			IEnergyStorage te = (IEnergyStorage) tileentity;
 			if (te.getEnergyStored() < te.getMaxEnergyStored()) {
 				te.receiveEnergy(transfer, false);
-				powerCount -= transfer;
+				doTransfer(transfer);
 			}
 		}
 	}
 
-
+	private void doTransfer(int transfer) {
+		int decreaseTransher = transfer;
+		for(int x = 0; x < activeChannels(); x++){
+			if(decreaseTransher > 0){
+				int availableRF = this.owcChannels[x]; 
+				if(decreaseTransher <= availableRF){
+					this.owcChannels[x] -= decreaseTransher;
+					decreaseTransher = 0;
+				}else{
+					this.owcChannels[x] = 0;
+					decreaseTransher -= availableRF;
+				}
+			}
+		}	
+	}
 
 	//COFH SUPPORT
 	@Override
 	public int getEnergyStored(EnumFacing from) {
-		return powerCount;
+		return this.totalPower();
 	}
 
 	@Override
 	public int getMaxEnergyStored(EnumFacing from) {
-		return maxCapacity;
+		return this.getMaxCapacity();
 	}
 
 	@Override
@@ -135,12 +166,12 @@ public abstract class TileEntityOwcEnergyController extends TileEntityOwcBaseCon
 
 	@Override
 	public int getEnergyStored() {
-		return powerCount;
+		return this.totalPower();
 	}
 
 	@Override
 	public int getMaxEnergyStored() {
-		return maxCapacity;
+		return this.getMaxCapacity();
 	}
 
 	@Override
@@ -152,5 +183,5 @@ public abstract class TileEntityOwcEnergyController extends TileEntityOwcBaseCon
 	public boolean canReceive() {
 		return false;
 	}
-	
+
 }

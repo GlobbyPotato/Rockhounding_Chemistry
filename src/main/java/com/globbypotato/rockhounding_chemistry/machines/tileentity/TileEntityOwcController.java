@@ -1,6 +1,5 @@
 /**
- * TODO: GUI not showing/syncing correctly rf integers/bar on server
- * TODO: Moon phases can't be obtained on server
+ * TODO: Moon phases can't be obtained on server?
  */
 
 package com.globbypotato.rockhounding_chemistry.machines.tileentity;
@@ -24,25 +23,26 @@ public class TileEntityOwcController extends TileEntityOwcEnergyController {
 
 	@Override
 	public int getFieldCount() {
-		return 3;
+		return 11;
 	}
 
 	@Override
 	public int getField(int id) {
-        switch (id){
-		    case 0: return this.powerCount;
-		    case 1: return this.maxCapacity;
-		    case 2: return this.yeldCount;
-		    default:return 0;
+        if(id < this.owcChannels.length){
+        	return this.owcChannels[id];
+        }else if(id == 10){
+        	return this.yeldCount;
+        }else{
+        	return 0;
         }
 	}
 
 	@Override
 	public void setField(int id, int value) {
-        switch (id){
-	        case 0: this.powerCount = value; break;
-	        case 1: this.maxCapacity = value; break;
-	        case 2: this.yeldCount = value;
+        if(id < this.owcChannels.length){
+        	this.owcChannels[id] = value;
+        }else if(id == 10){
+        	this.yeldCount = value;
         }
 	}
 
@@ -53,9 +53,8 @@ public class TileEntityOwcController extends TileEntityOwcEnergyController {
 			performSanityCheck();
 	
 			if(sanityCheckPassed()){
-				this.maxCapacity = this.getMaxCapacity();
 				if(checkConveyor()){ animateDeflectors(); }
-				if(activationKey && powerCount < this.getMaxCapacity()){ acquireEnergy(); }
+				if(activationKey && this.totalPower() < this.getMaxCapacity()){ acquireEnergy(); }
 				flag = true;
 				getDirty(flag);
 			}
@@ -88,8 +87,14 @@ public class TileEntityOwcController extends TileEntityOwcEnergyController {
 				return checkChamber() && checkTower() && checkDevices() && checkConduit() && checkVolume() && checkTide();
 			}
 
+			@Override
 			public int getMaxCapacity(){
-				return this.storageMax() * this.dualityBonus();
+				return this.storageMax() * this.activeChannels();
+			}
+
+			@Override
+			public int activeChannels(){
+				return this.dualityBonus() * 5;
 			}
 
 /**
@@ -99,9 +104,21 @@ public class TileEntityOwcController extends TileEntityOwcEnergyController {
 		tideInterval++;
 		if(tideInterval >= maxTideInterval()) {
 			tideInterval = 0;
-			this.yeldCount = getYeld();
-			this.powerCount += this.yeldCount;
-			if(powerCount > this.maxCapacity){powerCount = this.maxCapacity;}
+			int randomFactor = rand.nextInt(46) + 5;
+			this.yeldCount = this.getYeld() + randomFactor;
+			int tempYeld = this.yeldCount;
+			for(int x = 0; x < this.activeChannels(); x++){
+				if(tempYeld > 0){
+					int freeChannel = this.storageMax() - this.owcChannels[x]; 
+					if(tempYeld <= freeChannel){
+						this.owcChannels[x] += tempYeld;
+						tempYeld = 0;
+					}else{
+						this.owcChannels[x] = this.storageMax();
+						tempYeld -= freeChannel;
+					}
+				}
+			}
 		}
 	}
 
@@ -113,7 +130,7 @@ public class TileEntityOwcController extends TileEntityOwcEnergyController {
 		    	return actualTide() + actualVolume();
 		    }
 
-	private int getYeld(){
+	public int getYeld(){
 		return accumulations() * efficiencyMultiplier();
 	}
 
@@ -126,8 +143,10 @@ public class TileEntityOwcController extends TileEntityOwcEnergyController {
 						+ efficiencyTicks() 	//	30		10
 						+ scaledVolumeForce()	//	50		1
 						+ scaledTideForce();	//	30		1
-												//	250		47
+						//random factor				50		5
+												//	300		47
 			}
+
 					private int scaledVolumeForce() {
 				        return this.actualVolume() > 0 && this.totalVolume() > 0 ? (this.actualVolume() * 49 / this.totalVolume()) + 1 : 1;
 					}
@@ -176,6 +195,7 @@ public class TileEntityOwcController extends TileEntityOwcEnergyController {
 		return isOwcStructure(checkPos, 6);
 	}
 
+			@Override
 			public int dualityBonus(){
 				return checkDuality() ? 2 : 1;
 			}
@@ -254,7 +274,7 @@ public class TileEntityOwcController extends TileEntityOwcEnergyController {
 	public boolean checkEfficiency(){
 		return anyEfficiency();
 	}
-	
+
 			public boolean anyEfficiency(){
 				BlockPos invPos = new BlockPos(pos.getX(), pos.getY() + 1, pos.getZ());
 				return hasInverterOnSide(invPos, getFacing(), 90) || hasInverterOnSide(invPos, getFacing(), 270);
@@ -415,13 +435,13 @@ public class TileEntityOwcController extends TileEntityOwcEnergyController {
 	private void getDirty(boolean flag) {
 		if(flag){this.markDirty();}
 	}
-	
 
     @Override
     public void readFromNBT(NBTTagCompound compound){
         super.readFromNBT(compound);
-        this.powerCount = compound.getInteger("PowerCount");
-        this.maxCapacity = compound.getInteger("MaxCapacity");
+        for(int x = 0; x < this.owcChannels.length; x++){
+        	this.owcChannels[x] = compound.getInteger("OwcChannel" + x);
+        }
         this.yeldCount = compound.getInteger("YeldCount");
         this.activationKey = compound.getBoolean("Activation");
         this.extractionKey = compound.getBoolean("Extraction");
@@ -434,8 +454,9 @@ public class TileEntityOwcController extends TileEntityOwcEnergyController {
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound){
         super.writeToNBT(compound);
-        compound.setInteger("PowerCount", this.powerCount);
-        compound.setInteger("MaxCapacity", this.maxCapacity);
+        for(int x = 0; x < this.owcChannels.length; x++){
+            compound.setInteger("OwcChannel" + x, this.owcChannels[x]);
+        }
         compound.setInteger("YeldCount", this.yeldCount);
         compound.setBoolean("Activation", this.activationKey);
         compound.setBoolean("Extraction", this.extractionKey);
@@ -445,5 +466,4 @@ public class TileEntityOwcController extends TileEntityOwcEnergyController {
         }
         return compound;
     }
-
 }

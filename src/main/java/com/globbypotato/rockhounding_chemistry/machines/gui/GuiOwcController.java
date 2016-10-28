@@ -36,13 +36,16 @@ public class GuiOwcController extends GuiContainer {
 	   int x = (this.width - this.xSize) / 2;
 	   int y = (this.height - this.ySize) / 2;
 	   //RF
-	   int currentPower = this.owcController.getField(0);
-	   int maxPower = this.owcController.getField(1);
+	   long currentPower = 0;
+	   for(int h = 0; h < this.owcController.activeChannels(); h++){
+		   currentPower += this.owcController.getField(h);
+	   }
+	   int maxPower = this.owcController.getMaxCapacity();
 	   String rfString = TextFormatting.DARK_GRAY + "Storage: " + TextFormatting.WHITE + currentPower + "/" + maxPower + " RF";
 	   //tide
 	   String waterString = TextFormatting.DARK_GRAY + "Water: " + TextFormatting.AQUA + this.owcController.actualWater() + "/" + this.owcController.totalWater() + " tiles";
 	   //yeld
-	   int currentYeld = this.owcController.getField(2);
+	   int currentYeld = this.owcController.getField(10);
 	   String yeldString = TextFormatting.DARK_GRAY + "Yeld: " + TextFormatting.YELLOW + currentYeld + "/" + this.owcController.maxYeld() + " RF/tide";
 	   //interval
 	   int tideInterval = this.owcController.tideChance() * this.owcController.conveyorMultiplier();
@@ -138,13 +141,17 @@ public class GuiOwcController extends GuiContainer {
         int j = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
         //power bar
-        if (this.owcController.getField(0) > 0){
-            int k = this.getBarScaled(60, this.owcController.getField(0), this.owcController.getField(1));
+        if (this.owcController.hasPower()){
+        	int currentPower = 0;
+        	for(int h = 0; h < this.owcController.activeChannels(); h++){
+        		currentPower += this.owcController.getField(h);
+        	}
+            int k = this.getBarScaled(60, currentPower, this.owcController.getMaxCapacity());
             this.drawTexturedModalRect(i + 94, j + 17 + (60 - k), 176, 59, 23, k);
         }
         //yeld bar
-        if (this.owcController.getField(2) > 0){
-            int k = this.getBarScaled(60, this.owcController.getField(2), this.owcController.maxYeld());
+        if (this.owcController.getYeld() > 0){
+            int k = this.getBarScaled(60, this.owcController.getField(10), this.owcController.maxYeld());
             this.drawTexturedModalRect(i + 161, j + 17 + (60 - k), 176, 119, 5, k);
         }
         //tide bar

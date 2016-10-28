@@ -88,7 +88,7 @@ public class ModRecipes {
 //concrete
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.owcBlocks, 4, 1), new Object[] { "GSG", "SCS", "GWG", 'G', "gravel", 'S', "sand", 'C', Items.CLAY_BALL, 'W', Items.WATER_BUCKET }));
 //duct
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.owcBlocks, 1, 2), new Object[] { "F F", "C C", "F F", 'C', machineCasing, 'F', nimonicFoil }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.owcBlocks, 1, 2), new Object[] { "FGF", "CGC", "FGF", 'C', machineCasing, 'F', nimonicFoil, 'G', "blockGlass" }));
 //turbine
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.owcBlocks, 1, 3), new Object[] { "FAF", "CTC", "FAF", 'C', machineCasing, 'A', owcArm, 'T', owcFan, 'F', nimonicFoil }));
 //valve
@@ -96,7 +96,7 @@ public class ModRecipes {
 //generator
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.owcBlocks, 1, 5), new Object[] { "FSF", "CRC", "FAF", 'S', owcStator, 'C', machineCasing, 'R', owcRotor, 'A', owcArm, 'F', nimonicFoil }));
 //storage
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.owcBlocks, 1, 6), new Object[] { "CEC", "EME", "CEC", 'C', copperCoil, 'E', energyCell, 'M', machineCasing }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.owcBlocks, 1, 6), new Object[] { "ECE", "MEM", "ECE", 'C', copperCoil, 'E', energyCell, 'M', machineCasing }));
 //inverter
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.owcBlocks, 1, 7), new Object[] { "MCI", "cCI", "MCI", 'C', copperCoil, 'I', "blockIron", 'c', Items.COMPARATOR, 'M', machineCasing }));
 //deflector
@@ -104,7 +104,7 @@ public class ModRecipes {
 //owc assembler
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.owcAssembler), new Object[] { "ICI", " I ", 'C', "workbench", 'I', "ingotNimonic" }));
 //owc controller
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.owcController), new Object[] { "LFL", "FXF", "FCF", 'L', Blocks.LEVER, 'F', machineCasing, 'C', Items.COMPARATOR, 'X', logicChip }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.owcController), new Object[] { "XFX", "FLF", "FCF", 'L', Blocks.LEVER, 'F', machineCasing, 'C', Items.COMPARATOR, 'X', logicChip }));
 
 //cupronickel foils
 		GameRegistry.addRecipe(new ShapelessOreRecipe(cupronickelFoils, new Object[] { "ingotCupronickel", "ingotCupronickel" }));
@@ -121,7 +121,7 @@ public class ModRecipes {
 //nimonic foils
 		GameRegistry.addRecipe(new ShapelessOreRecipe(nimonicFoils, new Object[] { "ingotNimonic", "ingotNimonic" }));
 //energy Cell
-		GameRegistry.addRecipe(new ShapedOreRecipe(energyCell, new Object[] { "N N", "L L", "LXL", 'N', "nuggetIron", 'L', "ingotLead", 'X', sulfuricBeaker }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(energyCell, new Object[] { "NMN", "LML", "LXL", 'N', "nuggetIron", 'L', "ingotLead", 'X', sulfuricBeaker, 'M', machineCasing }));
 //machine Casing
 		GameRegistry.addRecipe(new ShapedOreRecipe(machineCasings, new Object[] { "NIN", "IBI", "NIN", 'N', "nuggetIron", 'I', "ingotIron", 'B', "blockNimonic" }));
 	}

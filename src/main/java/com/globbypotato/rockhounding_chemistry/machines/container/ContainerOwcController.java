@@ -14,9 +14,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerOwcController extends Container{
     private TileEntityOwcController owcController;
-    private int powerCount;
-    private int maxCapacity;
-    private int yeldCount;
+    public int[] owcChannels = new int[11];
 
     public ContainerOwcController(InventoryPlayer playerInventory, TileEntityOwcController furnaceInventory){
         this.owcController = furnaceInventory;
@@ -44,19 +42,19 @@ public class ContainerOwcController extends Container{
         super.detectAndSendChanges();
         for (int i = 0; i < this.listeners.size(); ++i){
             IContainerListener icontainerlistener = (IContainerListener)this.listeners.get(i);
-            if (this.powerCount != this.owcController.getField(0)){
-                icontainerlistener.sendProgressBarUpdate(this, 0, this.owcController.getField(0));
+            for(int x = 0; x < this.owcChannels.length; x++){
+	            if (this.owcChannels[x] != this.owcController.getField(x)){
+	                icontainerlistener.sendProgressBarUpdate(this, x, this.owcController.getField(x));
+	            }
             }
-            if (this.maxCapacity != this.owcController.getField(1)){
-                icontainerlistener.sendProgressBarUpdate(this, 1, this.owcController.getField(1));
-            }
-            if (this.yeldCount != this.owcController.getField(2)){
-                icontainerlistener.sendProgressBarUpdate(this, 2, this.owcController.getField(2));
+            if (this.owcChannels[10] != this.owcController.getField(10)){
+                icontainerlistener.sendProgressBarUpdate(this, 10, this.owcController.getField(10));
             }
         }
-        this.powerCount = this.owcController.getField(0);
-        this.maxCapacity = this.owcController.getField(1);
-        this.yeldCount = this.owcController.getField(2);
+        for(int x = 0; x < this.owcChannels.length; x++){
+        	this.owcChannels[x] = this.owcController.getField(x);
+        }
+    	this.owcChannels[10] = this.owcController.getField(10);
     }
 
     @SideOnly(Side.CLIENT)
