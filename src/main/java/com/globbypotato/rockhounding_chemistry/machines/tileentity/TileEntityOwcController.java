@@ -12,8 +12,6 @@ import com.globbypotato.rockhounding_chemistry.machines.OwcController;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.MutableBlockPos;
@@ -44,61 +42,46 @@ public class TileEntityOwcController extends TileEntityOwcEnergyController {
         switch (id){
 	        case 0: this.powerCount = value; break;
 	        case 1: this.maxCapacity = value; break;
-	        case 2: this.yeldCount = value; break;
+	        case 2: this.yeldCount = value;
         }
 	}
 
 	@Override
 	public void update() {
 		boolean flag = false;
-		if(!worldObj.isRemote){
+		if (!worldObj.isRemote){
 			performSanityCheck();
-
+	
 			if(sanityCheckPassed()){
-				if(checkConveyor()){
-					animateDeflectors();
-				}
 				this.maxCapacity = this.getMaxCapacity();
+				if(checkConveyor()){ animateDeflectors(); }
+				if(activationKey && powerCount < this.getMaxCapacity()){ acquireEnergy(); }
 				flag = true;
+				getDirty(flag);
 			}
-
-			if(sanityCheckPassed() && activationKey){
-				if(powerCount < this.getMaxCapacity()){ 
-					acquireEnergy(); 
-				}
-			}
-
-			if(extractionKey && this.hasPower()){
-				powerExtraction();
-			}
+	
+			if(extractionKey && this.hasPower()){ powerExtraction(); }
 		}
-		getDirty(flag);
 	}
 
 /**
  * Perform sanity check of the structure at different chances to don't hit the performance
  */
 	private void performSanityCheck() {
-		boolean flag = false;
 		if(rand.nextInt(this.sanityCheckChance()) == 0){
 			checkDevices();
 			checkConduit();
-			flag = true;
 		}
 		if(rand.nextInt(this.sanityCheckChance() * 2) == 0){
 			checkChamber();
 			checkTower();
-			flag = true;
 		}
 		if(rand.nextInt(this.sanityCheckChance() * 4) == 0){
 			checkTide();
-			flag = true;
 		}
 		if(rand.nextInt(this.sanityCheckChance() * 8) == 0){
 			checkVolume();
-			flag = true;
 		}
-		getDirty(flag);
 	}
 
 			public boolean sanityCheckPassed(){
@@ -113,21 +96,22 @@ public class TileEntityOwcController extends TileEntityOwcEnergyController {
  * Calculate the energy acquired by the structure
  */
 	private void acquireEnergy() {
-		boolean flag = false;
 		tideInterval++;
 		if(tideInterval >= maxTideInterval()) {
 			tideInterval = 0;
 			this.yeldCount = getYeld();
 			this.powerCount += this.yeldCount;
 			if(powerCount > this.maxCapacity){powerCount = this.maxCapacity;}
-			flag = true;
 		}
-		getDirty(flag);
 	}
 
 			private int maxTideInterval() {
 				return tideChance() * conveyorMultiplier();
 			}
+
+		    public int actualWater(){
+		    	return actualTide() + actualVolume();
+		    }
 
 	private int getYeld(){
 		return accumulations() * efficiencyMultiplier();
@@ -431,6 +415,7 @@ public class TileEntityOwcController extends TileEntityOwcEnergyController {
 	private void getDirty(boolean flag) {
 		if(flag){this.markDirty();}
 	}
+	
 
     @Override
     public void readFromNBT(NBTTagCompound compound){
@@ -441,6 +426,9 @@ public class TileEntityOwcController extends TileEntityOwcEnergyController {
         this.activationKey = compound.getBoolean("Activation");
         this.extractionKey = compound.getBoolean("Extraction");
         this.tideInterval = compound.getInteger("TideInterval");
+        if (compound.hasKey("CustomName", 8)){
+            this.inventoryName = compound.getString("CustomName");
+        }
     }
 
     @Override
@@ -452,25 +440,10 @@ public class TileEntityOwcController extends TileEntityOwcEnergyController {
         compound.setBoolean("Activation", this.activationKey);
         compound.setBoolean("Extraction", this.extractionKey);
         compound.setInteger("TideInterval", this.tideInterval);
+        if (this.hasCustomName()){
+            compound.setString("CustomName", this.inventoryName);
+        }
         return compound;
     }
-
-	@Override
-	public SPacketUpdateTileEntity getUpdatePacket() {
-		NBTTagCompound tag = new NBTTagCompound();
-		this.writeToNBT(tag);
-		return new SPacketUpdateTileEntity(pos, 0, tag);
-	}
-
-	@Override
-	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet) {
-		super.onDataPacket(net, packet);
-        readFromNBT(packet.getNbtCompound());
-	}
-
-	@Override
-	public NBTTagCompound getUpdateTag() {
-		return this.writeToNBT(new NBTTagCompound());
-	}
 
 }

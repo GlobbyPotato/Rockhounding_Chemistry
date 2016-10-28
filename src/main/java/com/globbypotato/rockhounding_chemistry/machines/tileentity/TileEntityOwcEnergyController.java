@@ -7,6 +7,7 @@ import com.globbypotato.rockhounding_chemistry.machines.OwcController;
 import cofh.api.energy.IEnergyProvider;
 import cofh.api.energy.IEnergyReceiver;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -17,13 +18,13 @@ public abstract class TileEntityOwcEnergyController extends TileEntityOwcBaseCon
     public boolean activationKey;
     public boolean extractionKey;
 
-    protected int yeldCount;
-    protected int powerCount;
-    protected int maxCapacity;
+    public int yeldCount;
+    public int powerCount;
+    public int maxCapacity;
 
     protected int tideInterval;
 
-    public int storageMax(){
+    protected int storageMax(){
     	return 500000;
     }
 
@@ -39,15 +40,16 @@ public abstract class TileEntityOwcEnergyController extends TileEntityOwcBaseCon
     	return 20;
     }
 
-    public int totalVolume(){
+    protected int totalVolume(){
     	return 3960;
     }
-    
+
     protected int volumeLimit(){
     	return 1000;
     }
 
-    public int totalTide(){
+
+    protected int totalTide(){
     	return 240;
     }
 
@@ -55,12 +57,16 @@ public abstract class TileEntityOwcEnergyController extends TileEntityOwcBaseCon
     	return 90;
     }
 
+    public int totalWater(){
+    	return totalTide() + totalVolume();
+    }
+
     protected int sanityCheckChance(){
     	return 60;
     }
 
     protected boolean hasPower(){
-    	return powerCount >= rfTransfer();
+    	return powerCount > 0;
     }
 
     protected void powerExtraction() {
@@ -71,10 +77,10 @@ public abstract class TileEntityOwcEnergyController extends TileEntityOwcBaseCon
 			if(checkTile != null){
 				if(powerCount >= rfTransfer()) {
 					sendPower(checkTile, rfTransfer());
+					markDirty();
 				}				
 			}
 		}
-		markDirty();
 	}
 
 	protected void sendPower(TileEntity tileentity, int transfer) {
@@ -95,7 +101,6 @@ public abstract class TileEntityOwcEnergyController extends TileEntityOwcBaseCon
 
 
 
-
 	//COFH SUPPORT
 	@Override
 	public int getEnergyStored(EnumFacing from) {
@@ -104,7 +109,7 @@ public abstract class TileEntityOwcEnergyController extends TileEntityOwcBaseCon
 
 	@Override
 	public int getMaxEnergyStored(EnumFacing from) {
-		return storageMax();
+		return maxCapacity;
 	}
 
 	@Override
@@ -116,9 +121,6 @@ public abstract class TileEntityOwcEnergyController extends TileEntityOwcBaseCon
 	public int extractEnergy(EnumFacing from, int maxReceive, boolean simulate) {
 		return rfTransfer();
 	}
-
-
-
 
 	//FORGE ENERGY SUPPORT
 	@Override
