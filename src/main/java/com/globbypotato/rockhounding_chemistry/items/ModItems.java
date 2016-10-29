@@ -6,6 +6,7 @@ import com.globbypotato.rockhounding_chemistry.handlers.Enums.EnumElement;
 import com.globbypotato.rockhounding_chemistry.items.tools.BamShears;
 import com.globbypotato.rockhounding_chemistry.items.tools.BamSword;
 import com.globbypotato.rockhounding_chemistry.items.tools.CubeCrossbow;
+import com.globbypotato.rockhounding_chemistry.items.tools.Petrographer;
 import com.globbypotato.rockhounding_chemistry.items.tools.ScalBat;
 import com.globbypotato.rockhounding_chemistry.items.tools.ScalBow;
 
@@ -47,6 +48,7 @@ public class ModItems {
 	public static ToolMaterial bamMaterial = EnumHelper.addToolMaterial("bamMaterial", 2, 500, 2.0F, 2F, 10);
 	public static Item bamShears;
 	public static Item bamSword;
+	public static Item petrographer;
 
 	public static void init(){
 		//items
@@ -78,6 +80,7 @@ public class ModItems {
 		scalBat = new ScalBat(scalMaterial, "scalBat");
 		bamShears = new BamShears(bamMaterial, "bamShears");
 		bamSword = new BamSword(bamMaterial, "bamSword");
+		petrographer = new Petrographer(ToolMaterial.DIAMOND, "petrographer");
 	}
 	
 	public static void initClient(){
@@ -103,7 +106,7 @@ public class ModItems {
 		registerSimpleItemRender(scalBat, 0, "scalBat");
 		registerSimpleItemRender(bamShears, 0, "bamShears");
 		registerSimpleItemRender(bamSword, 0, "bamSword");
-		//registerSimpleItemRender(gear,0,"gear");
+		registerSimpleItemRender(petrographer, 0, "petrographer");
 		gear.initModel();
 		testTube.initModel();
 		cylinder.initModel();

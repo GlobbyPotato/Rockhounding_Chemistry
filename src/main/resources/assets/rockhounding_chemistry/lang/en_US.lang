@@ -17,6 +17,7 @@ tile.rockhounding_chemistry:laserSplitter.name=Redstone Laser Node
 tile.rockhounding_chemistry:laserBeam.name=Redstone Laser Beam
 tile.rockhounding_chemistry:owcAssembler.name=OWC Assembler
 tile.rockhounding_chemistry:owcController.name=OWC Controller
+tile.rockhounding_chemistry:petrographerTable.name=Petrographer Table
 #containers
 container.labOven=Lab Oven
 container.mineralSizer=Mineral Sizer
@@ -337,6 +338,7 @@ item.rockhounding_chemistry:alloyBItems.cortenIngot.name=Corten Steel Ingot
 item.rockhounding_chemistry:alloyBItems.cortenNugget.name=Corten Steel Nugget
 #tools
 item.rockhounding_chemistry:bamShears.name=BAM Shears
+item.rockhounding_chemistry:petrographer.name=Petrographer
 #weapons
 item.rockhounding_chemistry:cubeCrossbow.name=CuBe Crossbow
 item.rockhounding_chemistry:scalBow.name=Long Range Bow

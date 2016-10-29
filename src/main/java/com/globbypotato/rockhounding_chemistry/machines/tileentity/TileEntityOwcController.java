@@ -1,7 +1,3 @@
-/**
- * TODO: Moon phases can't be obtained on server?
- */
-
 package com.globbypotato.rockhounding_chemistry.machines.tileentity;
 
 import com.globbypotato.rockhounding_chemistry.blocks.ModBlocks;
@@ -104,7 +100,7 @@ public class TileEntityOwcController extends TileEntityOwcEnergyController {
 		tideInterval++;
 		if(tideInterval >= maxTideInterval()) {
 			tideInterval = 0;
-			int randomFactor = rand.nextInt(46) + 5;
+			int randomFactor = rand.nextInt(36) + 5;
 			this.yeldCount = this.getYeld() + randomFactor;
 			int tempYeld = this.yeldCount;
 			for(int x = 0; x < this.activeChannels(); x++){
@@ -136,14 +132,14 @@ public class TileEntityOwcController extends TileEntityOwcEnergyController {
 
 			public int accumulations(){			//	MAX		MIN
 				return    biomeTicks() 			//	20		0
-						+ moonTicks() 			//	30		5		to be reworked with moon phases
+						+ moonTicks() 			//	40		5
 						+ weatherTicks() 		//	40		10
 						+ conveyorTicks()  		//	30		10
 						+ dualityTicks() 		//	20		10
 						+ efficiencyTicks() 	//	30		10
 						+ scaledVolumeForce()	//	50		1
 						+ scaledTideForce();	//	30		1
-						//random factor				50		5
+						//random factor				40		5
 												//	300		47
 			}
 
@@ -172,8 +168,8 @@ public class TileEntityOwcController extends TileEntityOwcEnergyController {
 					}
 
 					private int moonTicks() {
-				    	//actually moon phases should be used here
-						return !worldObj.isDaytime() ? 30 : 5;
+						int phase = 40 - (int) (((worldObj.getWorldTime()/24000)%8) * 5);
+						return phase;
 					}
 
 					private int biomeTicks() {

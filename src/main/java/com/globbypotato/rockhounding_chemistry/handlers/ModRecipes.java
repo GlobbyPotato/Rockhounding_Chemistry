@@ -18,10 +18,8 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 
 public class ModRecipes {
-	
 	public static final ArrayList<MineralSizerRecipe> sizerRecipes = new ArrayList<MineralSizerRecipe>();
 	public static final ArrayList<LabOvenRecipe> labOvenRecipes = new ArrayList<LabOvenRecipe>();
-	
 	
 	private static ItemStack dustforcedstack;
 	private static ItemStack ingotforcedstack;
@@ -159,6 +157,8 @@ public class ModRecipes {
 	}
 	
 	private static void craftingRecipes() {
+	//petrographer
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.petrographer), new Object[] { " DD", "DS ", " S ", 'D', "gemDiamond", 'S', "stickWood" }));
 	//bow barrel
 		GameRegistry.addRecipe(new ShapedOreRecipe(bowBarrel, new Object[] { "III"," PP", 'I', "ingotCube", 'P', "plankWood" }));
 	//cube crossbow
@@ -214,6 +214,8 @@ public class ModRecipes {
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.laserRedstoneRx), new Object[] { "ERE", "PCP", "EIE", 'I', "blockIron", 'E', laserResonator, 'C', Items.COMPARATOR, 'P', "paneGlass", 'R', "blockRedstone" }));
 	//Laser Splitter
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.laserSplitter), new Object[] { "EEE", "CER", "IBI", 'B', "blockIron", 'I', "ingotIron", 'E', laserResonator, 'C', Items.COMPARATOR, 'R', Items.REPEATER }));
+	//petrographer table
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.petrographerTable), new Object[] { " G ", "SSS", " P ", 'P', "plankWood", 'S', "slabWood", 'G', "blockGlass" }));
 
 
 	//chemical tank

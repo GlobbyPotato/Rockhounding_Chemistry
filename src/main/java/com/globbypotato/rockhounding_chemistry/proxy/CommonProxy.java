@@ -1,6 +1,7 @@
 package com.globbypotato.rockhounding_chemistry.proxy;
 
 import com.globbypotato.rockhounding_chemistry.blocks.ModBlocks;
+import com.globbypotato.rockhounding_chemistry.handlers.GlobbyEventHandler;
 import com.globbypotato.rockhounding_chemistry.handlers.GuiHandler;
 import com.globbypotato.rockhounding_chemistry.handlers.ModArray;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
@@ -11,6 +12,7 @@ import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.items.ModItems;
 import com.globbypotato.rockhounding_chemistry.world.ChemOresGenerator;
 
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -30,6 +32,9 @@ public class CommonProxy {
 		ModBlocks.init();
 		ModBlocks.register();
 		ModItems.init();
+
+		// Regidter Events
+		MinecraftForge.EVENT_BUS.register(new GlobbyEventHandler());	
 
 		// Register tile entities
 		ModTileEntities.registerTileEntities();

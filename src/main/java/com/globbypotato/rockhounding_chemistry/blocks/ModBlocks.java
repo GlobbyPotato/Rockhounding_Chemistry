@@ -14,6 +14,7 @@ import com.globbypotato.rockhounding_chemistry.machines.MineralAnalyzer;
 import com.globbypotato.rockhounding_chemistry.machines.MineralSizer;
 import com.globbypotato.rockhounding_chemistry.machines.OwcAssembler;
 import com.globbypotato.rockhounding_chemistry.machines.OwcController;
+import com.globbypotato.rockhounding_chemistry.machines.PetrographerTable;
 import com.globbypotato.rockhounding_chemistry.machines.SaltMaker;
 
 import net.minecraft.block.Block;
@@ -44,6 +45,7 @@ public class ModBlocks {
 	public static Block laserRedstoneRx;
 	public static Block laserBeam;
 	public static Block laserSplitter;
+	public static Block petrographerTable;
 
 	public static Block owcBlocks;
 	public static Block owcAssembler;
@@ -63,7 +65,8 @@ public class ModBlocks {
 		mineralAnalyzer = new MineralAnalyzer(3.0F, 5.0F, "mineralAnalyzer");
 		chemicalExtractor = new ChemicalExtractor(3.0F, 5.0F, "chemicalExtractor");
 		metalAlloyer = new MetalAlloyer(3.0F, 5.0F, "metalAlloyer");
-		
+		petrographerTable = new PetrographerTable(3.0F, 5.0F, "petrographerTable");
+
 		saltMaker = new SaltMaker(3.0F, 5.0F, "saltMaker");
 
 		crawlerAssembler = new CrawlerAssembler(3.0F, 5.0F, "crawlerAssembler");
@@ -138,6 +141,7 @@ public class ModBlocks {
 		registerSingleBlockRender(laserSplitter, 0, "laserSplitter");
 		registerSingleBlockRender(owcAssembler, 0, "owcAssembler");
 		registerSingleBlockRender(owcController, 0, "owcController");
+		registerSingleBlockRender(petrographerTable, 0, "petrographerTable");
 	}
 
 

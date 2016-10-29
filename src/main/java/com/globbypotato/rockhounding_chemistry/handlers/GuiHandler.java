@@ -8,6 +8,7 @@ import com.globbypotato.rockhounding_chemistry.machines.container.ContainerMiner
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerMineralSizer;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerOwcAssembler;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerOwcController;
+import com.globbypotato.rockhounding_chemistry.machines.container.ContainerPetrographerTable;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiChemicalExtractor;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiCrawlerAssembler;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiLabOven;
@@ -16,6 +17,7 @@ import com.globbypotato.rockhounding_chemistry.machines.gui.GuiMineralAnalyzer;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiMineralSizer;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiOwcAssembler;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiOwcController;
+import com.globbypotato.rockhounding_chemistry.machines.gui.GuiPetrographerTable;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityChemicalExtractor;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityCrawlerAssembler;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityLabOven;
@@ -24,6 +26,7 @@ import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityMin
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityMineralSizer;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityOwcAssembler;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityOwcController;
+import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityPetrographerTable;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -41,6 +44,7 @@ public class GuiHandler implements IGuiHandler {
 	public static final int metalAlloyerID = 5;
 	public static final int owcAssemblerID = 6;
 	public static final int owcControllerID = 7;
+	public static final int petrographerTableID = 8;
 
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -63,6 +67,8 @@ public class GuiHandler implements IGuiHandler {
 				if (entity != null && entity instanceof TileEntityOwcAssembler){return new ContainerOwcAssembler(player.inventory, (TileEntityOwcAssembler) entity);}
 			case owcControllerID:
 				if (entity != null && entity instanceof TileEntityOwcController){return new ContainerOwcController(player.inventory, (TileEntityOwcController) entity);}
+			case petrographerTableID:
+				if (entity != null && entity instanceof TileEntityPetrographerTable){return new ContainerPetrographerTable(player.inventory, (TileEntityPetrographerTable) entity);}
 		}
         return null;
 	}
@@ -88,6 +94,8 @@ public class GuiHandler implements IGuiHandler {
 				if (entity != null && entity instanceof TileEntityOwcAssembler) {return new GuiOwcAssembler(player.inventory, (TileEntityOwcAssembler) entity);}
 			case owcControllerID:
 				if (entity != null && entity instanceof TileEntityOwcController) {return new GuiOwcController(player.inventory, (TileEntityOwcController) entity);}
+			case petrographerTableID:
+				if (entity != null && entity instanceof TileEntityPetrographerTable) {return new GuiPetrographerTable(player.inventory, (TileEntityPetrographerTable) entity);}
 		}
         return null;
 	}

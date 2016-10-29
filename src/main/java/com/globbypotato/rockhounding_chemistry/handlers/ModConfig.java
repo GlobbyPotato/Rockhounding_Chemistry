@@ -39,7 +39,14 @@ public class ModConfig {
 		ChemOresGenerator.mineralMinVein = config.get(				CATEGORY_MINERAL, "MineralMinVein", 		10,		"Lowest mineral vein size").getInt();
 		ChemOresGenerator.mineralMaxLevel = config.get(				CATEGORY_MINERAL, "MineralMaxLevel", 		200, 	"Highest mineral level").getInt();
 		ChemOresGenerator.mineralMinLevel = config.get(				CATEGORY_MINERAL, "MineralMinLevel", 		27,		"Lowest mineral level").getInt();
+		ChemOresGenerator.aromaFrequency = config.get(				CATEGORY_MINERAL, "AromaMineralFrequency", 	16, 	"Frequency of the Uninspected Mineral in the Aroma Mining Dimension").getInt();
+		ChemOresGenerator.aromaMaxVein = config.get(				CATEGORY_MINERAL, "AromaMineralMaxVein", 	24, 	"Highest mineral vein size in the Aroma Mining Dimension").getInt();
+		ChemOresGenerator.aromaMinVein = config.get(				CATEGORY_MINERAL, "AromaMineralMinVein", 	10,		"Lowest mineral vein size in the Aroma Mining Dimension").getInt();
+		ChemOresGenerator.aromaMaxLevel = config.get(				CATEGORY_MINERAL, "AromaMineralMaxLevel", 	75, 	"Highest mineral level in the Aroma Mining Dimension. Must fit the Dimension height").getInt();
+		ChemOresGenerator.aromaMinLevel = config.get(				CATEGORY_MINERAL, "AromaMineralMinLevel", 	20,		"Lowest mineral level in the Aroma Mining Dimension").getInt();
 		forceSmelting = config.get(									CATEGORY_MINERAL, "ForceSmelting", 			true,	"Force the smelting of dusts into other mod ingots when available").getBoolean();
+		ChemOresGenerator.enableAromaDimension = config.get(		CATEGORY_MINERAL, "AromaDimensionEnabler", 	true,	"Spawn the mineral in the Aroma Mining Dimension").getBoolean();
+		ChemOresGenerator.aromaDimension = config.get(				CATEGORY_MINERAL, "AromaDimensionID", 		6,		"ID of the Aroma DImension. Must match the one in the Aroma config").getInt();
 
 	//SALT
 		config.addCustomCategoryComment("Salt", "These settings handle the making of Salt.");

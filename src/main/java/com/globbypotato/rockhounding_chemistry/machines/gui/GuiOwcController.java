@@ -36,7 +36,7 @@ public class GuiOwcController extends GuiContainer {
 	   int x = (this.width - this.xSize) / 2;
 	   int y = (this.height - this.ySize) / 2;
 	   //RF
-	   long currentPower = 0;
+	   int currentPower = 0;
 	   for(int h = 0; h < this.owcController.activeChannels(); h++){
 		   currentPower += this.owcController.getField(h);
 	   }
