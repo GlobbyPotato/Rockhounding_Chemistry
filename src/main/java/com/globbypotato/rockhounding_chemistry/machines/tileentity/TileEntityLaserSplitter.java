@@ -66,9 +66,9 @@ public class TileEntityLaserSplitter extends TileEntity implements ITickable {
 
 	private void shutBeam(IBlockState state, EnumFacing enumfacing, int sides) {
 	    EnumFacing beamsent = enumfacing.getHorizontal(sides);
-    	if(worldObj.getBlockState(pos.offset(beamsent, 1)).getBlock() == ModBlocks.laserBeam &&
-   		   worldObj.getBlockState(pos.offset(beamsent, 1)).getValue(LaserBeam.FACING) == beamsent){
-    		worldObj.setBlockState(pos.offset(beamsent, 1), Blocks.AIR.getDefaultState());
+    	if(worldObj.getBlockState(pos.offset(beamsent)).getBlock() == ModBlocks.laserBeam &&
+   		   worldObj.getBlockState(pos.offset(beamsent)).getValue(LaserBeam.FACING) == beamsent){
+    		worldObj.setBlockState(pos.offset(beamsent), Blocks.AIR.getDefaultState());
     	}
 	}
 
@@ -101,9 +101,9 @@ public class TileEntityLaserSplitter extends TileEntity implements ITickable {
 		}
 	}
 
-	private boolean isReceivingLaser(EnumFacing enumfacing, EnumFacing beamFacing) {
+	private boolean isReceivingLaser(EnumFacing enumfacing, EnumFacing beamArriving) {
 		return worldObj.getBlockState(pos.offset(enumfacing)).getBlock() == ModBlocks.laserBeam
-				&& worldObj.getBlockState(pos.offset(enumfacing)).getValue(LaserSplitter.FACING) == beamFacing;
+				&& worldObj.getBlockState(pos.offset(enumfacing)).getValue(LaserBeam.FACING) == beamArriving;
 	}
 
 	public int emittingSide(){

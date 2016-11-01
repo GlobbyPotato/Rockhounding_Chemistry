@@ -28,7 +28,7 @@ import net.minecraft.world.World;
 
 public class LaserTX extends Block implements ITileEntityProvider {
     public static final PropertyDirection FACING = BlockHorizontal.FACING;
-    private static final AxisAlignedBB BOUNDBOX = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.73D, 1.0D);
+    private static final AxisAlignedBB BOUNDBOX = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.55D, 1.0D);
     
     public LaserTX(float hardness, float resistance, String name){
         super(Material.IRON);

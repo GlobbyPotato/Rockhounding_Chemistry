@@ -19,7 +19,8 @@ import net.minecraftforge.common.BiomeDictionary.Type;
 public class TileEntitySaltMaker extends TileEntity implements ITickable {
 	private int evaporateCount = -1;
 	public static int evaporationMultiplier;
-	private int evaporationSpeed = 2000 * evaporationMultiplier;
+	public static int evaporationBase;
+	private int evaporationSpeed = evaporationBase * evaporationMultiplier;
 
 	@Override
 	public void update() {
@@ -36,7 +37,7 @@ public class TileEntitySaltMaker extends TileEntity implements ITickable {
 					worldObj.setBlockState(pos, state);
 				}
 			}
-			
+
 			//lose profress on rain
 			if(type.getMetadata() > 0){
 				if(canRainMelt(biome)){
@@ -125,6 +126,4 @@ public class TileEntitySaltMaker extends TileEntity implements ITickable {
 	public NBTTagCompound getUpdateTag() {
 		return this.writeToNBT(new NBTTagCompound());
 	}
-
 }
-

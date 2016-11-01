@@ -2,6 +2,7 @@ package com.globbypotato.rockhounding_chemistry.machines.tileentity;
 
 import com.globbypotato.rockhounding_chemistry.blocks.ModBlocks;
 import com.globbypotato.rockhounding_chemistry.machines.LaserBeam;
+import com.globbypotato.rockhounding_chemistry.machines.LaserSplitter;
 import com.globbypotato.rockhounding_chemistry.machines.LaserTX;
 
 import net.minecraft.block.BlockRedstoneRepeater;
@@ -21,16 +22,37 @@ public class TileEntityLaserBeam extends TileEntity implements ITickable {
 	    if(!worldObj.isRemote){
 	    	if( !isSameBeamDirection(state, enumfacing) 
 	    		&& !isValidEmitter(state, enumfacing) 
-	    		&& !isValidSplitter(state, enumfacing)){
-	    		worldObj.setBlockState(pos, Blocks.AIR.getDefaultState());
+	    		&& !isValidSplitter(state, enumfacing)
+	    		&& !isValidTxPin(state, enumfacing, 4, EnumFacing.UP) 
+	    		&& !isValidTxPin(state, enumfacing, 6, EnumFacing.DOWN) 
+	    		&& !isValidRxPin(state, enumfacing)
+	    		){ worldObj.setBlockState(pos, Blocks.AIR.getDefaultState());
 	    	}
 	    }
+	}
+
+	private boolean isValidRxPin(IBlockState state, EnumFacing enumfacing) {
+		IBlockState checkstate = worldObj.getBlockState(pos.offset(enumfacing.getOpposite()));
+		if(checkstate != null && checkstate.getBlock() == ModBlocks.laserRedstoneRx && (checkstate.getBlock().getMetaFromState(checkstate) == 5 || checkstate.getBlock().getMetaFromState(checkstate) == 7)){
+			return true;
+		}
+		return false;
+	}
+
+	private boolean isValidTxPin(IBlockState state, EnumFacing enumfacing, int meta, EnumFacing pinfacing) {
+		IBlockState checkstate = worldObj.getBlockState(pos.offset(enumfacing.getOpposite()));
+		if(checkstate != null && checkstate.getBlock() == ModBlocks.laserRedstoneRx && checkstate.getBlock().getMetaFromState(checkstate) == meta){
+			if(enumfacing == pinfacing){
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private boolean isValidSplitter(IBlockState state, EnumFacing enumfacing){
 		IBlockState checkstate = worldObj.getBlockState(pos.offset(enumfacing.getOpposite()));
 		if(checkstate != null && checkstate.getBlock() == ModBlocks.laserSplitter){
-		    EnumFacing splitterfacing = checkstate.getValue(LaserTX.FACING);
+		    EnumFacing splitterfacing = checkstate.getValue(LaserSplitter.FACING);
 			if(splitterfacing != enumfacing ){
 				return true;
 			}

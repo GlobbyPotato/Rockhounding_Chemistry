@@ -76,6 +76,7 @@ public class ModRecipes {
 	public static void init() {
 		craftingRecipes();
 		machineRecipes();
+		laserRecipes();
 		owcRecipes();
 	}
 
@@ -122,6 +123,24 @@ public class ModRecipes {
 		GameRegistry.addRecipe(new ShapedOreRecipe(energyCell, new Object[] { "NMN", "LML", "LXL", 'N', "nuggetIron", 'L', "ingotLead", 'X', sulfuricBeaker, 'M', machineCasing }));
 //machine Casing
 		GameRegistry.addRecipe(new ShapedOreRecipe(machineCasings, new Object[] { "NIN", "IBI", "NIN", 'N', "nuggetIron", 'I', "ingotIron", 'B', "blockNimonic" }));
+	}
+
+	private static void laserRecipes() {
+	//Laser TX
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.laserRedstoneTx), new Object[] { "RE ", " I ", "III", 'I', "ingotIron", 'E', laserResonator, 'R', Items.REPEATER }));
+	//Laser RX
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.laserRedstoneRx, 1, 0), new Object[] { "ERE", "PCP", "EIE", 'I', "ingotIron", 'E', laserResonator, 'C', Items.COMPARATOR, 'P', "paneGlass", 'R', "blockRedstone" }));
+	//Laser Node
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.laserSplitter), new Object[] { "EEE", "CER", "III", 'I', "ingotIron", 'E', laserResonator, 'C', Items.COMPARATOR, 'R', Items.REPEATER }));
+	//Laser Pin Tx
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.laserRedstoneRx, 1, 4), new Object[] { "EEE", "ERE", "III", 'I', "ingotIron", 'E', laserResonator, 'R', Items.REPEATER}));
+	//Laser Pin Rx
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.laserRedstoneRx, 1, 5), new Object[] { "EEE", "ECE", "III", 'I', "ingotIron", 'E', laserResonator, 'C', Items.COMPARATOR}));
+
+	//yag rod
+		GameRegistry.addRecipe(new ShapedOreRecipe(yagRod, new Object[] { "YYY", "   ", "YYY", 'Y', "gemYag"}));
+	//yag emitter
+		GameRegistry.addRecipe(new ShapedOreRecipe(laserResonator, new Object[] { "TTT", "CRP", "TTT", 'T', Blocks.REDSTONE_TORCH, 'C', Items.COMPARATOR, 'R', yagRod, 'P', "paneGlass"}));
 	}
 
 	public static void machineRecipes(){
@@ -208,12 +227,6 @@ public class ModRecipes {
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.crawlerAssembler), new Object[] { "ICI", " I ", 'C', "workbench", 'I', "ingotHastelloy" }));
 	//metal alloyer
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.metalAlloyer), new Object[] { "bFb", "III", "ITI", 'I', "ingotIron", 'F', Blocks.FURNACE, 'b', Items.BOWL, 'T', Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE }));
-	//Laser TX
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.laserRedstoneTx), new Object[] { "RE ", "III", "I I", 'I', "ingotIron", 'E', laserResonator, 'R', Items.REPEATER }));
-	//Laser RX
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.laserRedstoneRx), new Object[] { "ERE", "PCP", "EIE", 'I', "blockIron", 'E', laserResonator, 'C', Items.COMPARATOR, 'P', "paneGlass", 'R', "blockRedstone" }));
-	//Laser Splitter
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.laserSplitter), new Object[] { "EEE", "CER", "IBI", 'B', "blockIron", 'I', "ingotIron", 'E', laserResonator, 'C', Items.COMPARATOR, 'R', Items.REPEATER }));
 	//petrographer table
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.petrographerTable), new Object[] { " G ", "SSS", " P ", 'P', "plankWood", 'S', "slabWood", 'G', "blockGlass" }));
 
@@ -252,10 +265,6 @@ public class ModRecipes {
 		GameRegistry.addRecipe(new ShapedOreRecipe(flasks, new Object[] { " G ","G G","GGG", 'G', "blockGlass"}));
 	//ingot pattern
 		GameRegistry.addRecipe(new ShapedOreRecipe(ingotPattern, new Object[] { "T","P", 'T', Blocks.IRON_TRAPDOOR, 'P', Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE}));
-	//yag rod
-		GameRegistry.addRecipe(new ShapedOreRecipe(yagRod, new Object[] { "YYY", "   ", "YYY", 'Y', "gemYag"}));
-	//yag emitter
-		GameRegistry.addRecipe(new ShapedOreRecipe(laserResonator, new Object[] { "TTT", "CRP", "TTT", 'T', Blocks.REDSTONE_TORCH, 'C', Items.COMPARATOR, 'R', yagRod, 'P', "paneGlass"}));
 	//heater
 		GameRegistry.addRecipe(new ShapedOreRecipe(heatingElement, new Object[] { "NNN", "N N", "I I", 'I', "ingotIron", 'N', "ingotNichrome"}));
 	//inductor

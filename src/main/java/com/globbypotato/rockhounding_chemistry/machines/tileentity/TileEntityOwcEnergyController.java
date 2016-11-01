@@ -93,7 +93,7 @@ public abstract class TileEntityOwcEnergyController extends TileEntityOwcBaseCon
 			TileEntity checkTile = this.worldObj.getTileEntity(pos.offset(facing.getFront(side)));
 			if(checkTile != null){
 				if(this.totalPower() >= rfTransfer()) {
-					sendPower(checkTile, facing, rfTransfer());
+					sendPower(checkTile, facing.getFront(side).getOpposite(), rfTransfer());
 					markDirty();
 				}				
 			}
@@ -103,8 +103,8 @@ public abstract class TileEntityOwcEnergyController extends TileEntityOwcBaseCon
 	protected void sendPower(TileEntity tileentity, EnumFacing facing, int transfer) {
 		if (tileentity instanceof IEnergyReceiver) {
 			IEnergyReceiver te = (IEnergyReceiver) tileentity;
-			if (te.getEnergyStored(null) < te.getMaxEnergyStored(null)) {
-				te.receiveEnergy(facing.getOpposite(), transfer, false);
+			if (te.getEnergyStored(facing) < te.getMaxEnergyStored(facing)) {
+				te.receiveEnergy(facing, transfer, false);
 				doTransfer(transfer);
 			}
 		} else if (tileentity instanceof IEnergyStorage) {

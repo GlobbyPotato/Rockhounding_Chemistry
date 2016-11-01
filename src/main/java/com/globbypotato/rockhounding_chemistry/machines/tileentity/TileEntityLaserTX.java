@@ -69,5 +69,4 @@ public class TileEntityLaserTX extends TileEntity implements ITickable {
 			}
 		}
 	}
-
 }

@@ -36,17 +36,20 @@ public class ModBlocks {
 	public static Block labOven;
 	public static Block mineralSizer;
 	public static Block mineralAnalyzer;
-	public static Block crawlerAssembler;
 	public static Block metalAlloyer;
 	public static Block chemicalExtractor;
+	public static Block petrographerTable;
+
 	public static Block saltMaker;
+	
+	public static Block crawlerAssembler;
 	public static Block mineCrawler;
+	
 	public static Block laserRedstoneTx;
 	public static Block laserRedstoneRx;
 	public static Block laserBeam;
 	public static Block laserSplitter;
-	public static Block petrographerTable;
-
+	
 	public static Block owcBlocks;
 	public static Block owcAssembler;
 	public static Block owcController;
@@ -73,7 +76,7 @@ public class ModBlocks {
 		mineCrawler = new MineCrawler("mineCrawler");
 
 		laserRedstoneTx = new LaserTX(3.0F, 5.0F,"laserRedstoneTx");
-		laserRedstoneRx = new LaserRX(3.0F, 5.0F,"laserRedstoneRx");
+		laserRedstoneRx = new LaserRX(3.0F, 5.0F,"laserRedstoneRx", ModArray.laserArray);
 		laserSplitter = new LaserSplitter(3.0F, 5.0F,"laserSplitter");
 		laserBeam = new LaserBeam("laserBeam");
 		
@@ -114,6 +117,11 @@ public class ModBlocks {
 	public static void registerCrawlerBlock(Block block, String name) {
 		GameRegistry.register(block);
 		GameRegistry.register(new CrawlerIB(block).setRegistryName(name));
+	}
+	//register fueled blocks and itemblocks
+	public static void registerFueledBlock(Block block, String name) {
+		GameRegistry.register(block);
+		GameRegistry.register(new FueledMachineIB(block).setRegistryName(name));
 	}
 
 

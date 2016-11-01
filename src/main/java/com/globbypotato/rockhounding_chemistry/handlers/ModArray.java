@@ -59,7 +59,7 @@ public class ModArray {
     public static String[] 	alloyBIngotsOredict = new String[] 	{"ingotMischmetal", "ingotRosegold", "ingotGreengold", "ingotWhitegold", "ingotShibuichi", "ingotTombak", "ingotPewter", "ingotCorten"};
     public static String[] 	alloyBNuggetsOredict = new String[] {"nuggetMischmetal", "nuggetRosegold", "nuggetGreengold", "nuggetWhitegold", "nuggetShibuichi", "nuggetTombak", "nuggetPewter", "nuggetCorten"};
 
-    public static String[] 	laserArray = new String[] 	 		{"off", "on"};
+    public static String[] 	laserArray = new String[] 	 		{"offpin", "onpin", "offprobe", "onprobe", "pintx", "pinrx", "probetx", "proberx"};
 
 
 //------- BLOCKS -------

@@ -23,7 +23,7 @@ public class BaseBlock extends Block {
 		setRegistryName(name);
 		setUnlocalizedName(getRegistryName().toString());
 		GameRegistry.register(this);
-		GameRegistry.register(new ItemBlock(this), getRegistryName());
+		GameRegistry.register(new FueledMachineIB(this), getRegistryName());
 		setCreativeTab(Reference.RockhoundingChemistry);
 	}
 

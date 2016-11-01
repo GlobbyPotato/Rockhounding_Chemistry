@@ -50,7 +50,8 @@ public class ModConfig {
 
 	//SALT
 		config.addCustomCategoryComment("Salt", "These settings handle the making of Salt.");
-		TileEntitySaltMaker.evaporationMultiplier = config.get(		CATEGORY_SALT, "EvaporationMultiplier", 	4, 		"Multiply ticks to advance in the evaporation process. Base ticks = 2000").getInt();
+		TileEntitySaltMaker.evaporationMultiplier = config.get(		CATEGORY_SALT, "EvaporationMultiplier", 	4, 		"Multiply factor for the EvaporationBaseInterval").getInt();
+		TileEntitySaltMaker.evaporationBase = config.get(			CATEGORY_SALT, "EvaporationBaseInterval", 	1300, 	"Base ticks required to advance in the evaporation process").getInt();
 		enableRainRefill = config.get(								CATEGORY_SALT, "RefillTankFromRain", 		true,	"Wether the rain can automatically refill the tank when empty").getBoolean();
 		SaltMaker.saltAmount = config.get(							CATEGORY_SALT, "SaltQuantity", 				4, 		"Max quantity of salt items a single tank can produce").getInt();
 

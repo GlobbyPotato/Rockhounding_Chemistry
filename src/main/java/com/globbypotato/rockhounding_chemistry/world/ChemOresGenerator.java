@@ -43,7 +43,7 @@ public class ChemOresGenerator implements IWorldGenerator {
 		addNewMineral(ModBlocks.mineralOres, 0,  world, random, pos, 16, 16, mineralMinVein, mineralMaxVein, mineralFrequency, mineralMinLevel, mineralMaxLevel, Blocks.STONE);//mineral
 	}
 	private void generateAroma(World world, Random random, BlockPos pos) {
-		addNewMineral(ModBlocks.mineralOres, 0,  world, random, pos, 16, 16, aromaMinVein, aromaMaxVein, aromaFrequency, mineralMinLevel, mineralMaxLevel, Blocks.STONE);//mineral
+		addNewMineral(ModBlocks.mineralOres, 0,  world, random, pos, 16, 16, aromaMinVein, aromaMaxVein, aromaFrequency, aromaMinLevel, aromaMaxLevel, Blocks.STONE);//mineral
 	}
 
 	private void addNewMineral(Block block, int metadata, World world, Random random, BlockPos pos, int maxX, int maxZ, int minVeinSize, int maxVeinSize, int chanceToSpawn, int minY, int maxY, Block generateIn) {
