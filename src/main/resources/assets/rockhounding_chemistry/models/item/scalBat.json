@@ -1,6 +1,0 @@
-{
-    "parent": "item/handheld",
-    "textures": {
-        "layer0": "rockhounding_chemistry:items/scalBat"
-    }
-}

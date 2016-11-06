@@ -1,6 +1,0 @@
-{
-    "parent": "rockhounding_chemistry:item/scalBow",
-    "textures": {
-        "layer0": "rockhounding_chemistry:items/scalBow_pulling_2"
-    }
-}
