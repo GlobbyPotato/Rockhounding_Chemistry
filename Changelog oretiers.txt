@@ -1,0 +1,137 @@
+v1.19 changelog
+	Some minor fixes
+
+v1.18 changelog
+	Misc Fixes
+		Added a whitelist array for additional dimensions (excluding those separately configured).
+
+v1.17 changelog
+	Config additions
+		The default amount of molten bloom for each iron ore can be also set from config
+		The default fuel value of each tier coal can be set from config
+	Iron Tiers
+		Reworked the ore textures to fit more the vanilla style
+		The modded Goethite ore will no longer generate.
+		Replaced by the renamed vanilla iron ore being them supposed to be equivalent
+		Modded Goethite eventually available in the mod for further usage
+	Misc fixes
+		Some code cleaning
+		Some recipes and tooltip updates
+		Changed the ore names to include "iron" for an easy search
+		Added a "listAllcoal" oredict entry to include all the coal types for recipe purposes (false by default).
+	Integrations
+		Added the ores in modded dimensions with specific systems (dimension parameters must fit the original mod ones)
+			Aroma1997 Mining Dimension (to be enabled) 
+			ExtraUtilities DeepDark dimension (to be enabled)
+
+v1.16 changelog
+	Misc Fixes
+		Fixed some machine dropping issue
+		Bloomery will retain fuel and fluid data when removed
+	Rockhounding API
+		Archive updated
+		Refiner and Pallet recipes added to the recipe api
+		Added the machines recipe removal methods to the recipe API
+
+v1.15 changelog
+	Misc fixes
+		Fixed some stacking issue
+		Some code
+
+v1.14 changelog
+	Misc fixes
+		Fixed an issue with blocks
+		Some JEI updates
+		Some code cleaning
+
+v1.13 changelog
+	Misc fixes
+	Disabled via config the vanilla iron ore crafting
+	Added the Bloomery to the recipes api
+	Minor recipe tweaks
+	Minor generic tweaks
+	Some code cleanin
+
+v1.12 changelog
+	Misc Fixes
+	Updated Forge to latest version (1.10.2-12.18.3.2185)
+	Slightly fixed the Bloomery model to nicely blend with the hopper
+	Minor JEI addition
+
+v1.11 changelog
+	Misc
+		Some gui fixes
+		Some item fixes
+
+v1.10 changelog
+	Fixed a wrong recipe
+	Misc fixes
+
+v1.09 changelog
+	Balanced the recipe to 500mb of Molten Bloom per ingot
+	misc fixes
+
+v1.08 changelog
+	Added the Bloomery (harder alternative to iron ores smelting)
+	Enabled from the config (true by default)
+		false: basic smelting (lumps/pellets/ingots), higher yeld
+		true: bloomery process, lower yeld
+		Iron ores will produce a different quantity of Molten Iron Bloom
+		Needs fuel to melt, a Forge Hammer to cast ingots, a Draining Valve to output the fluid
+		Added the Molten Iron Bloom fluid and bucket
+	Misc fixes
+		Some code and gui fixes
+		Book updated
+		Wiki updated
+
+v1.07 changelog
+	Code cleaning and device fixes
+	Added jei support
+	Added general enablers for both coal and iron tiers
+
+v1.06 changelog Config regen suggested to clean the old values
+	Peat drier recipe bug
+	Spawning settings reworked
+	Setting Frequency at zero will disable the specific ore
+	Added to config the min/max vein size for each ore
+
+v1.05 changelog
+	Some code cleaning
+
+v1.04 changelog
+	Book updated
+	Some code cleaning
+	Added Smouldering coal deposits (Coal seam fires)
+		Clouds of burning coal, may spread fire when broken
+		sets on fire on collision
+		Needs to be washed on a filled cauldron to estinguish into a coal block
+
+v1.03 changelog (Ore Tiers)
+	Improved all the jsons
+	Basic Coal Refiner
+		Model updated
+		Can be heated by turning on a fire under the block
+		If under the block there is an extracting hopper, the torch/fire can be placed beneath the hopper.
+
+v1.02 changelog (Ore Tiers)
+	Tweaked some spawning occurrences
+		Anthracite will no longer spawn in dead biomes.
+		Anthracite will spawn at half frequency in sandy biomes.
+		Peat will spawn at double frequency in wet biomes.
+		Coal should not spawn under the oceans.
+	Added the Peat Drying Pallet (with GUI).
+		Slowly turns Moist Peat Chunks into Dried Peat.
+		Working time: 2400 ticks.
+		Peat coal icon and localized name reworked into Moist Peat Chunk.
+		Dried Peat icon reworked.
+	Added the Basic Coal Refiner (with GUI).
+		Slowly turns some coal types into a better tier through pre-combustion.
+		Lignite turns into vanilla coal.
+		Vanilla coal turns into bituminous coal.
+		Requires a torch beneath the device for heating.
+		Working time: 3200 ticks.
+	Generic code fixes.
+	Book updated.
+
+v1.01 changelog (Ore Tiers)
+	Guide book was not correctly formatting and storing the text
