@@ -1,0 +1,304 @@
+v1.27 changelog
+	Uninspected Mineral will generate in whitelisted dimensions
+
+v1.26 changelog
+	Misc Fixes
+		Fixed some machine dropping issues
+		Rockhounding API
+		Archive updated
+		Added the machines recipe removal methods to the recipe API
+
+v1.25 changelog
+	Misc Fixes
+		Sorted a potential issue with block integration
+		Fixed Mischmetal sparks
+		Some code cleaning
+		Some generic fixes
+		Minor JEI text update
+		Minor texture update
+		Minor recipe fixes
+
+v1.24 changelog
+	Misc fixes
+		Some code cleaning
+
+v1.23 changelog
+	Lab Oven
+		When No Recipe is selected, all tanks will try to drain
+		Breaking the machine will store the content of the tanks
+	Mineral Analyzer
+		Added a drain switch to allow draining the tanks
+		Breaking the machine will store the content of the tanks
+	Chemical Extractor
+		Added a drain switch to allow draining the tanks
+		Breaking the machine will store the content of the elements cabinet and tanks
+	Misc Fixes
+		Some code cleaning
+
+v1.21/v1.22 changelog
+	Recipe Api
+		Unified all the Rockhounding modules into one api
+		Adjusted the folders names
+		Added custom recipes for the Chemical Extractor
+		Added custom recipes for the Wood Incubator
+		Updated the Example class
+		Added an additional text document for Chemical extractor recipe reference
+	Lab Oven
+		Fixed fluid quantity handling
+		Some JEI fixes
+	Chemical Extractor
+		Recipe updates
+		Added partial JEI support
+	Metal Alloyer
+		Added JEI Support
+	Misc fixes
+		Some code cleaning
+		Some minor fixes
+
+v1.20 changelog
+	Impoved the API to send custom recipes
+		Added as a separated archive to extract into scr/main/java/ folder
+		The custom class should extend "IReciper" and be called from the Init() event
+		Example recipe class available
+	Seasoning Rack
+		Updated to work also as a generic item processor
+		Added a clickable recipe area
+
+v1.19 changelog
+	Misc Fixes
+		Added some missing recipes for BAM tools
+	Machines
+		Added the IMC support to send custom recipes via the FMLInterModComms (EXPERIMENTAL)
+		Lab Oven, Mineral Sizer, Metal Alloyer, Seasoning Rack (see the example class)
+	Lab Oven
+		Added a "No Recipe" position to freeze the machine
+		Some minor tweaks
+	Metal Alloyer
+		Some gui fixes
+		some code cleaning
+
+v1.18 changelog
+	Hotfix
+		Fixed a potential crash with the Mine Crawler running out of blocks
+
+v1.17 changelog
+	Misc fixes
+		Rebalanced element weights and supplies
+		Several code cleaning and bug fixing
+		Several recipes made less expensive
+		Some gui updates
+		Fixed a bug with the Metal Alloyer output slots
+
+v1.16 changelog
+	Misc
+		Added a config enabler to toggle the direct recipe Silicone to Slime ball
+		Fixed the Petrographer Table not accepting the tool
+		Minor texture and render fixes
+
+v1.15 changelog
+	Lab Oven
+		Fixed the mod beaker not accepted in the output slot
+		Added a secondary solvent tank for advanced recipes
+	Mine Crawler
+		Assembly table must be broken before updating to prevent crashes
+		Added the Pathfinder Setup
+			Uses an extra filling block to create a path under the crawler
+		Added the Storage Setup
+			Adds to memory compatible Material blocks instead to drop them
+	Chemistry features
+		Artificial snow (Snow block simulant)
+			Added the Polyacrylic Acid + beaker
+			Added the Sodium polyacrilate: used on a filled cauldron will produce a snow block
+		Silicone (Slime ball simulant)
+			Added the Chloromethane + beaker
+			Added the silicon compost
+			Added the molten silicone + beaker
+			Added the Silicone Cartridge (100 uses): can be used as a slime ball in recipes
+	Misc
+		Fixed an issue with the Petrographer with drops from some blocks
+		Fixes containers in crafting grid
+
+v1.14 changelog
+	Machines
+		Unified fuel and induction slots. Either accepts common fuel or RF
+		Several gui fixes
+		Several recipes made easier
+		Fixed a crash with Salt Tank
+		Rewritten the Mine Crawler
+			Wiki updated
+			The machine can accept alternative blocks for each setup
+			Improved the Assembler gui slots handling
+			Memory can be reset by placing a used card in a crafting grid (materials will be lost)
+			Fixed fluid picking/dropping/placing
+			The crawler can be turned ON/OFF clicking it with bare hands
+			Crawler mining direction can be changed anytime using a wrench on the side to turn
+			Using a wrench on top of the crawler while turned off will drop it.
+			Added the Decorator Setup (Tier 4) to wrap the path with a secondary block type
+				Decorator is dependant on Filler and Tunneler setups
+
+v1.13 changelog
+	Misc
+		More gui fixes
+		Some item fixes
+
+v1.12 changelog
+	Misc
+		Fixed some consumables possibly not being accepted in slots
+		Some gui fixes
+		Metal alloyer output increased to 9, worth a block each cast
+		Completed wiki
+
+v1.11 changelog
+	Misc
+		Chemistry Flask no longer consumed in recipes
+		Corrected and rebalanced cracked coal recipe
+
+v1.10 changelog
+	Lab Oven
+		Restored the recipe selector
+		Automatizes the input/output of the correct fluids based on the requested recipe
+		Draining Valve no longer needed
+		Tested with Extra Utility and EnderIO piping system
+	Chemical Extractor
+		Graduated cylinder got its own slot, no need to swap consumables
+	Misc
+		Code cleaning and gui fixes
+
+v1.09 changelog
+	Redstone Dekatron
+		Possible placement fix
+		Added the Pulse Timer and Steady Time functions turning redstone power level into frequency
+			Level1 = 10ticks: Level15 = 160ticks
+			Pulse Timer: Gives a pulse every cycle
+			Steady Timer: Swaps the Dekatron state every cycle
+	Misc
+		Some code cleaning
+		Missing empty beaker recipe
+		Fixed broken Petrographer Table GUI texture
+
+v1.08 changelog
+	Fluid Update (Courtesy of al132 from the AllTheMods Team)
+		Lab Oven, Mineral Analyzer and Chemical Extractor supporting fluid handling
+		Added JEI support
+	Salt production cycle
+		Fully automatized production cycle
+			Water can be pumped into the Evaporation Tank from sides/bottom or bucket from top
+			Salt can be harvested manually using a shovel on top when ready
+			Evaporation tank will produce Raw Salt needing to be cleaned
+		Added the Salt Seasoning rack
+			Automatically harvests raw salt from any Evaporation Tank on each of its sides
+			Turns Raw salt into clean salt
+			No fueling required
+	Redstone Dekatron (Experimental)
+		Added the Dekatron pulse counter.
+		Outputs a 1 sec redstone pulse or a steady power state every 10 input state changes detected
+		4 working modes (Single State, Bi-State, Single State Cycle, Bi-State Cycle, Frequency pulsing (in progress))
+		Right click with the wrench on sides to scroll through modes
+		Added the CuNiFe alloy set, CuNiFe Wire, Cathodes
+	Mine Crawler
+		Disabled the fluid picking (Absorb Setup) for tests
+	Misc
+		Mineral spawning can be now disabled setting frequency to zero
+
+v1.07 changelog
+	Machines will retain their current fuel and RF values when broken
+	Fixed some Aroma Dimension parameters
+	Added a Base Evaporation Interval to customize more the salt making process
+	Forge version used 12.18.2.2117
+	Redstone laser bridge
+		Added the Pin Tx/Rx to handle the signal vertically
+		Less iron required for recipes
+		Receiver and Pins can be hanged upside down under a block
+		Models reworked
+	Owc System
+		Fixed an eventual issue connecting pipes to the controller
+
+v1.06 changelog
+	Added the Uninspected mineral in the Aroma mining dimension with own parameters
+	Fixed the OWC yeld parameter
+	Added the Petrographer and the Petrographer Table to enhance mineral acknowledgement
+
+v1.05 changelog (Warning: this version may cause some items swapping due to the rework)
+	Massive rework to machines, refactoring and code cleaning. Thanks to al132 for the kind commit
+		Machines can take items only in the slots they belong
+	Added the OWC Energy System
+		May generate up to 900 RF/tide with variable rate
+		Min/Max tides interval is 120/360 ticks 
+		Yeld and tide interval depend on environmental factors and upgrades 
+		Right clicking the Sulfuric Acid tank will drop a beaker of acid for the recipes 
+		The controller has two switches to turn on/off the rf acquiring and extraction
+		Added an assembly table which spawns the structure right in front of it (see wiki)
+			It requires all the blocks composing the basic structure to construct
+			Must be spawned in the ocean with at least 10x10x10 water tiles around the structure 
+	Redstone Laser Bridge
+		Some placement and logic fixes
+
+v1.04 changelog
+	RedstoneFlux and ForgeEnergy support (added the CofH Api, so thanks to the CofH Team for it)
+		Rebalanced the redstone dust supply at 1:1 with each smelting time
+		Added the Induction Heating Interface item.
+			Placed in the redstone/electicity slot, converts RF into fuel power once the RF bar is full.
+			Updated guis
+
+v1.03 changelog
+	Rebalanced the redstone requirement in the machines
+	Some code cleaned, hopefully fixing some server issues
+	Alloys
+		Added the BAM Sword: Light faster sword
+	Mine Crawler
+		Gui simplified, Loader reduced to 1 slot for materials and memory
+		Added the RailMaker Setup: places rails in the path as it goes
+		Added a Tier requirement to activate the setups (indicated by green dots in each setup slot)
+
+v1.02 changelog
+	Minor gui fixes
+	Mine Crawler
+		Book updated
+		Some mining fixes
+		Simplified the Crawler Assembler GUI. All the blocks can be loaded from one slot
+		Added the Lighter Function
+			Places a torch behind when lights gets to low in the path
+			Enabled by a Setup Chip in the "L" slot
+			It requires to load the machine with torches
+	Redstone Laser Bridge
+		Reworked the placement conditions (need solid surface like repeaters, comparators...)
+		Added the Node: replicates the received signal in other directions with different modes
+		Mode selection: Right-click with the wrench from any horizontal side
+			Bender: sends the signal on one side by scrolling them
+			Splitter: sends the signal on all sides
+		Signal selection: Right-click with the wrench on the green button from top of the block
+			Steady: continuous signal
+			Pulse: the signal gets an interval
+			Sequencer: activated combining Splitter mode and Pulse signal (laggy, experimental)
+	Lab Oven
+		Added a selector to show ingredients next to their slot
+		Acid color code fix
+			Water = Dark Blue
+			Syngas = Dark Grey
+
+v1.01 changelog (Chemistry)
+	Book updated
+	Added a force smelting option to turn dusts into other mods ingots where available.
+	Cadmium as extractible element
+	Alloys
+		Added the Metal Alloyer to mix dusts into alloyed ingots
+		Alloy dusts can be obtained crushing ingots in the Mineral Sizer
+		Oredicted Blocks/Items for all the alloys
+		Decorative alloys
+			Mischmetal, Rose Gold, Green Gold, White Gold, Shibuichi, Tombak, Pewter
+		Functional Alloys
+			CuBe, ScAl, BAM, YAG, Cupronickel, Nimonic, Hastelloy
+		Alloys Applications
+			Mischmetal Block/Brick: generates sparks when walking on it while wearing boots
+			CuBe Crossbow: allows to shoot arrows at full charge faster than a normal bow
+			ScAl Long Range Bow: long range precision bow
+			ScAl Compound Bat: 5.0 damage, 4.0 attack speed
+			BAM Shears: long lasting shears. 500 uses
+			Mine Crawler
+				Mine Crawler: allows to automatically mine blocks with different modes and functions
+				Mine Crawler Assembler: Table where to assembly and configure the Mine Crawler
+				Mine Crawler item set
+				Mod wench to drop the machine
+			Redstone Laser Bridge
+				Laser TX+RX: allows to transfer as a laser beam a redstone signal up to 30 blocks away
+				Laser item set
