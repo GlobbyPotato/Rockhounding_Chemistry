@@ -1,3 +1,17 @@
+v1.09 changelog
+	Fossil woods
+		Reworked the aspect of the bog spruce deposit
+	Gypsum
+		Added extra uses for the White Sands plants
+			Strings can be made of Desert spoon fibers
+			Sotol (drink) can be made out of Desert Spoon stalks
+			Lead can be made of Soaptree Yukka fibers
+			Replaced Desert Rose with Honey Mesquite plant
+			Added some mesquire related food
+	Misc fixes
+		Some code cleaning
+		Minor fixes
+
 v1.08 changelog
 	Misc Fixes
 		Fixed a machine dropping issue
@@ -9,7 +23,7 @@ v1.07 changelog
 	Gypsum
 		Reworked the worldgen
 		White Sand beach disabled from the config (frequency = 0, still usable)
-		Added the White Sands Biome (screenshot)
+		Added the White Sands Biome
 			Biome populated by silverfish and rabbit
 			Added some specific biome vegetation
 			Added some specific biome related crops and food
