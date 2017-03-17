@@ -1,3 +1,14 @@
+v1.28 changelog
+	Machines
+		Chemical Extractor
+			Added Carbon as extractible element
+		Metal Alloyer
+			The quantity of output can be set in the recipe (scrap quantity still randomized)
+	Misc fixes
+		Some code cleaning
+		Minor fixes
+		Some models and jsons updated
+
 v1.27 changelog
 	Uninspected Mineral will generate in whitelisted dimensions
 
