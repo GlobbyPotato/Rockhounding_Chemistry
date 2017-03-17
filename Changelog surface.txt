@@ -1,3 +1,8 @@
+v1.10 changelog
+	Fixed a texture loading
+	Fixed a broken compatibility in Compost Bin
+	Minor fixes
+
 v1.09 changelog
 	Fossil woods
 		Reworked the aspect of the bog spruce deposit
