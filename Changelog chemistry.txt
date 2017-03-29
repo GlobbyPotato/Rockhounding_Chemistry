@@ -1,3 +1,16 @@
+v1.29 changelog
+	Gunpowder making
+		Added fluids and ingredients for the production
+		Path based on the main ingredient Potassium Nitrate
+	Screen smoke making
+		Added fluids and ingredients for the production
+		Placing the Titanium Tetrachloride on the ground will generate a dense cloud slowly vanishing
+		It can be crafted also as throwable flasks
+	Misc updates
+		Fake snow can be also made by tossing the Sodium Polyacrylate item in water
+		Rebalanced Lab Oven recipe quantities a for more realistic behavior
+		Added a config to set the capacity of the machine fluid tanks (make sure currently contained fluids are lower the new value to avoid issues)
+
 v1.28 changelog
 	Machines
 		Chemical Extractor
