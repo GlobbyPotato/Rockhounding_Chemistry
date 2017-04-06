@@ -1,3 +1,23 @@
+v1.30 changelog
+	OWC Energy System
+		Reworked and fixed the function for better performance
+		The System Activation switch will turn on/off the entire system saving ticks
+
+	Mineral Analyzer
+		Some fixes to the Mineral Analyzer
+		Added the Mineral Analyzer to the Rockhounding API
+
+	Chemical Extractor
+		Inhibit element/s from being extracted by the machine via the Rockhounding API
+		Hovering the gui cabinet will show inhibitions
+		Some carbon recipes reworked due to slot conflict
+
+	Misc fixes
+		Forge updated to 12.18.3.2254
+		Some JEI additions
+		Various minor fixes
+		Rockhounding API updated
+
 v1.29 changelog
 	Gunpowder making
 		Added fluids and ingredients for the production
