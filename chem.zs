@@ -72,7 +72,7 @@ mods.rockhounding_chemistry.MetalAlloyer.remove(<rockhounding_chemistry:alloyIte
 //elements = the array of the extracted elements composing the formula
 //quantities = the quantity of each ingredient being extracted
 //Notes: both elements and quantities arrays must have the same amount of elements
-//Notes: the quantity is roughly represented as a percentage of the entire mineral formula
+//Notes: the quantity is roughly represented as a percentage of the entire mineral formula where 100% is a regular dust item
 mods.rockhounding_chemistry.ChemicalExtractor.add("Enderide", <minecraft:ender_pearl>, ["copper", "arsenic", "cadmium"],[40,20,10]);
 mods.rockhounding_chemistry.ChemicalExtractor.add("Netheride", <minecraft:blaze_rod>, ["zinc", "uranium", "chromium", "boron"],[45,15,10,4]);
 
