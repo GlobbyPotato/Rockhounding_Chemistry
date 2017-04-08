@@ -55,8 +55,8 @@ mods.rockhounding_chemistry.MineralAnalyzer.remove(<rockhounding_chemistry:miner
 //scrap = the itemstack representing the waste of the alloying, usually nuggets. Can be null if not used
 //Notes: both ingredients and quantities arrays must have the same amount of elements
 //Notes: the scrap quantity will be randomized by the mod itself
-mods.rockhounding_chemistry.MetalAlloyer.add("Enderide", ["dustCopper", "dustArsenic", "dustCadmium"],[7, 4, 2], <minecraft:ender_pearl>*9, <minecraft:gold_nugget>);
-mods.rockhounding_chemistry.MetalAlloyer.add("Netheride", ["dustZinc", "dustUranium", "dustChromium", "dustBoron"],[6, 4, 2, 1], <minecraft:blaze_rod>*9, null);
+mods.rockhounding_chemistry.MetalAlloyer.add("Enderite", ["dustCopper", "dustArsenic", "dustCadmium"],[7, 4, 2], <minecraft:ender_pearl>*9, <minecraft:gold_nugget>);
+mods.rockhounding_chemistry.MetalAlloyer.add("Netherite", ["dustZinc", "dustUranium", "dustChromium", "dustBoron"],[6, 4, 2, 1], <minecraft:blaze_rod>*9, null);
 
 //Parameters = alloy
 //alloy = the itemstack representing the alloy to remove
@@ -66,7 +66,7 @@ mods.rockhounding_chemistry.MetalAlloyer.remove(<rockhounding_chemistry:alloyIte
 //----------------------------------
 //--------Chemical Extractor--------
 //----------------------------------
-//Parameters = category, elements, quantities, alloy, scrap
+//Parameters = category, elements, quantities
 //category = the name of the category that will identify the processed item
 //input = the itemstack representing the processed mineral
 //elements = the array of the extracted elements composing the formula
