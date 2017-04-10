@@ -2,8 +2,8 @@ v1.32 changelog
 	Machines
 		Rewritten the energy handling. Should detect both coFH and Forge Energy
 		Induction Heating Interface can become a permanent machine upgrade (false by default)
-			The item will be retained by the machine when added to the fuel slot
-			The fuel slot icon will change to show the permanently active upgrade, common fuel still acceped
+			The item will be retained by the machine when added to the fuel slot, freeing the slot
+			The fuel slot icon will change to show the permanently active upgrade, common fuel still accepted
 			If enabled, each machine will need its own interface
 		Minor issues, cleaning, and gui texture fixes
 
