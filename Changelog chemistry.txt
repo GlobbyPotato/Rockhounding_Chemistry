@@ -1,3 +1,18 @@
+v1.32 changelog
+	Machines
+		Rewritten the energy handling. Should detect both coFH and Forge Energy
+		Induction Heating Interface can become a permanent machine upgrade (false by default)
+			The item will be retained by the machine when added to the fuel slot
+			The fuel slot icon will change to show the permanently active upgrade, common fuel still acceped
+			If enabled, each machine will need its own interface
+		Minor issues, cleaning, and gui texture fixes
+
+v1.31 changelog
+	Misc fixes
+		Added the CraftTweaker support for all the machines
+		Increased the OWC storage capacity
+		Minor fixes and tweaks
+
 v1.30 changelog
 	OWC Energy System
 		Reworked and fixed the function for better performance
