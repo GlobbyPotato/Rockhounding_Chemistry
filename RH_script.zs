@@ -126,7 +126,7 @@ mods.rockhounding_oretiers.DryingRack.remove(<rockhounding_oretiers:tiersItems:3
 mods.rockhounding_oretiers.CoalRefiner.add(<rockhounding_oretiers:tiersItems:1>, <rockhounding_oretiers:tiersItems:0>);
 
 //Parameters = input
-//input = the input itemstack
+//input = the itemstack representing the input to remove
 mods.rockhounding_oretiers.CoalRefiner.remove(<minecraft:coal:0>);
 
 
