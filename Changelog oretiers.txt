@@ -1,3 +1,10 @@
+v1.20 changelog
+	Misc fixes
+		Forge updated to 12.18.3.2281
+		Added support to CraftTweaker
+		Models and rendering update
+		Minor fixes and cleaning
+
 v1.19 changelog
 	Some minor fixes
 
