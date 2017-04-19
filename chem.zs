@@ -6,7 +6,7 @@
 //output = the output itemstack
 mods.rockhounding_chemistry.SeasoningRack.add(<minecraft:wheat>, <minecraft:wheat_seeds>);
 
-//Parameters = input, output
+//Parameters = input
 //input = the input itemstack
 mods.rockhounding_chemistry.SeasoningRack.remove(<minecraft:rotten_flesh>);
 mods.rockhounding_chemistry.SeasoningRack.remove(<rockhounding_chemistry:chemicalItems:7>);
@@ -21,7 +21,7 @@ mods.rockhounding_chemistry.SeasoningRack.remove(<rockhounding_chemistry:chemica
 mods.rockhounding_chemistry.MineralSizer.add(<minecraft:gravel>, <minecraft:dye:6>);
 mods.rockhounding_chemistry.MineralSizer.add(<minecraft:sand>, <rockhounding_chemistry:miscItems:27>);
 
-//Parameters = input, output
+//Parameters = input
 //input = the input itemstack
 mods.rockhounding_chemistry.MineralSizer.remove(<minecraft:stone:1>);
 mods.rockhounding_chemistry.MineralSizer.remove(<rockhounding_chemistry:miscItems:25>);
@@ -101,3 +101,45 @@ mods.rockhounding_chemistry.LabOven.add(<minecraft:slime_ball>, <liquid:water>, 
 //Parameters = solution
 //solution = the fluidstack representing the solution to remove
 mods.rockhounding_chemistry.LabOven.remove(<liquid:chloromethane>);
+
+
+
+//----------------------------------
+//-----------Drying Rack------------
+//----------------------------------
+//Parameters = input, output
+//input = the input itemstack
+//output = the output itemstack
+mods.rockhounding_oretiers.DryingRack.add(<minecraft:rotten_flesh>, <minecraft:leather>);
+
+//Parameters = input
+//input = the input itemstack
+mods.rockhounding_oretiers.DryingRack.remove(<rockhounding_oretiers:tiersItems:3>);
+
+
+//----------------------------------
+//-----------Coal Refiner------------
+//----------------------------------
+//Parameters = input, output
+//input = the input itemstack
+//output = the refined output itemstack
+mods.rockhounding_oretiers.CoalRefiner.add(<rockhounding_oretiers:tiersItems:1>, <rockhounding_oretiers:tiersItems:0>);
+
+//Parameters = input
+//input = the input itemstack
+mods.rockhounding_oretiers.CoalRefiner.remove(<minecraft:coal:0>);
+
+
+//----------------------------------
+//------------Bloomery--------------
+//----------------------------------
+//Parameters = ore, molten, output
+//ore = the itemstack being smelted
+//molten = the molten fluidstack
+//moltenAmount = the resulting amount of molten
+//output = the casted output itemstack
+mods.rockhounding_oretiers.Bloomery.add(<minecraft:slime_ball>, <liquid:lava>, 500, <minecraft:magma>);
+
+//Parameters = input
+//input = the itemstack representing the input to remove
+mods.rockhounding_oretiers.Bloomery.remove(<minecraft:iron_ore>);
