@@ -105,7 +105,7 @@ mods.rockhounding_chemistry.LabOven.remove(<liquid:chloromethane>);
 
 
 //----------------------------------
-//-----------Drying Rack------------
+//----------Drying Pallet-----------
 //----------------------------------
 //Parameters = input, output
 //input = the input itemstack
