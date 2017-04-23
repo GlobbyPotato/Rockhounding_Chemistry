@@ -1,3 +1,6 @@
+v1.21 changelog
+	Fixed the Coal Refiner accidentally not finalizing the smelting
+
 v1.20 changelog
 	Misc fixes
 		Forge updated to 12.18.3.2281
