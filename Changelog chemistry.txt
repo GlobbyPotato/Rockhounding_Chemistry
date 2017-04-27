@@ -1,3 +1,37 @@
+v1.33 changelog
+	Chemistry experiments (Decorative flame test)
+		Added 10 compounds producing different fire variations
+		The compound must be used on a vanilla fire to set it
+	Deposition Chamber
+		Elements doping system to create advanced compounds
+		Uses large amount of RF as only powering supply
+	Boundary Breaker
+		Allows to slowly drill Bedrock blocks using RF (4000KRF per block)
+		Configurable Bedrock block drop
+		Can work upside down
+	Mineral Sizer
+		Custom recipes can also have a weighted array of outputs
+			If output has >4 elements there is a 25% chance of a secondary output (half quantity)
+			If output has >1 elements there is a 5% chance of a waste output (single item)
+			Multiple outputs quantity will be internally weighted by config "MaxMineralShards"
+			Single outputs will carry quantity from their recipe
+		Gui appearence updated
+	Chemical Extractor
+		Added a third solvent tank (Machine just needs to be broken before opening the gui after the update)
+		Changed the required acids into Nitric Acid, Phosphoric Acid and Sodium Cyanide
+		Gui appearence reworked
+	Mineral Analyzer
+		Machine renamed into Leaching Vat for better fitting naming
+	Lab Oven
+		Fixed a crash when piping fluids with no recipe selected
+		Fixed the handling of potentially similar recipes
+	Misc fixes
+		Reworked fluid appearence
+		Some models update
+		Some JEI addition
+		Misc cleaning and fixes
+		Updated the Rockhounding Api and the CraftTweaker sample script
+
 v1.32 changelog
 	Machines
 		Rewritten the energy handling. Should detect both coFH and Forge Energy
