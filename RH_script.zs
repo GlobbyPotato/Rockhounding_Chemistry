@@ -21,6 +21,12 @@ mods.rockhounding_chemistry.SeasoningRack.remove(<rockhounding_chemistry:chemica
 mods.rockhounding_chemistry.MineralSizer.add(<minecraft:gravel>, <minecraft:dye:6>);
 mods.rockhounding_chemistry.MineralSizer.add(<minecraft:sand>, <rockhounding_chemistry:miscItems:27>);
 
+//Parameters = input, outputs, probabilities
+//input = the input itemstack
+//outputs = the array of possible extractible itemstacks
+//probabilities = the array of probability for each output to be extracted
+mods.rockhounding_chemistry.MineralSizer.addAll(<minecraft:hardened_clay>, [<minecraft:dye:0>, <minecraft:dye:1>, <minecraft:dye:2>, <minecraft:dye:3>, <minecraft:dye:4>], [20, 20, 20, 20, 20]);
+
 //Parameters = input
 //input = the input itemstack
 mods.rockhounding_chemistry.MineralSizer.remove(<minecraft:stone:1>);
@@ -29,8 +35,14 @@ mods.rockhounding_chemistry.MineralSizer.remove(<rockhounding_chemistry:miscItem
 
 
 //----------------------------------
-//---------Mineral Analyzer---------
+//-----------Leaching Vat-----------
+//----(Formely Mineral Analyzer)----
 //----------------------------------
+//Parameters = input, output
+//input = the input itemstack
+//output = the output itemstack
+mods.rockhounding_chemistry.MineralAnalyzer.add(<minecraft:cobblestone>, <minecraft:dye:15>);
+
 //Parameters = input, output, probabilities
 //input = the input itemstack
 //output = the array of possible extractible itemstacks
@@ -101,6 +113,24 @@ mods.rockhounding_chemistry.LabOven.add(<minecraft:slime_ball>, <liquid:water>, 
 //Parameters = solution
 //solution = the fluidstack representing the solution to remove
 mods.rockhounding_chemistry.LabOven.remove(<liquid:chloromethane>);
+
+
+
+//----------------------------------
+//------Deposition Chamber----------
+//----------------------------------
+//Parameters = input, output, solvent, temperature, pressure
+//input = itemstack representing the input
+//output = itemstack representing the output
+//solvent = the fluidstack representing the solvent.
+//solventAmount = the needed amount of solvent (Max 10000).
+//temperature = the working temperature (Max 3000)
+//pressure = the working pressure (Max 32000).
+mods.rockhounding_chemistry.DepositionChamber.add(<minecraft:slime_ball>, <minecraft:slime>, <liquid:water>, 4000, 1500, 21000);
+
+//Parameters = output
+//output = the itemstack representing the output
+mods.rockhounding_chemistry.DepositionChamber.remove(<rockhounding_chemistry:alloyItems:31>);
 
 
 
