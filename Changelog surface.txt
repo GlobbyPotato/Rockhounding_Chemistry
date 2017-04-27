@@ -1,3 +1,13 @@
+v1.11 changelog
+	Machines
+		Rewritten the energy handling
+		Permanent Induction upgrade for the Wood Incubator (from Chemistry module)
+		Added support to CraftTweaker
+		Wood logs inhibited from fuel usage in the Incubator being them the input
+	Misc fixes
+		Some JEI fixes and additions
+		Minor fixes and cleaning
+
 v1.10 changelog
 	Fixed a texture loading
 	Fixed a broken compatibility in Compost Bin
