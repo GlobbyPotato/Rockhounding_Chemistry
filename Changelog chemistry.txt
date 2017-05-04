@@ -1,3 +1,18 @@
+v1.34 changelog
+	OWC System
+		Reworked some model (Deflectors may need to be broken or replaced)
+	Lab Oven / Deposition Chamber
+		Added an Activation Switch
+		While scrolling recipes it will prevent fluids jumping in and out the solvent tanks
+		Needs to be activated for the machine to process or manually accept fluids
+		Small gui appearence rework
+		Needs to break the machines before opening the gui to refresh and avoid issues
+	Redstone Laser
+		Increased distance from 30 to 32 blocks
+	Misc Fixes
+		Ingame book deprecated and hidden, pending update
+		Some minor cleanings
+
 v1.33 changelog
 	Chemistry experiments (Decorative flame test)
 		Added 10 compounds producing different fire variations
