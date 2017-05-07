@@ -1,3 +1,23 @@
+v1.12 changelog
+	Fossil Wood
+		Added the last set of fossil woods
+			Fossil Azurite Wood (Found as laying trunks in snowy hills)
+			Teredo-Bored Wood (Found underwater in beaches and shallow oceans)
+			Fossil Beech (Found as laying trunks in snowy plains)
+			Yellow Cat Redwood (Found a buried roots in coniferous biomes)
+		Added all the related wood building parts
+		Added recipes for the Wood Incubator
+			Added some composts for the new recipes
+			Added Teredo Grub (randomly drops while breaking Lily Pads)
+	Wood Incubator
+		Added an Activation Switch
+		When scrolling recipes it will prevent fluids jumping in and out the solvent tanks
+		Needs to be activated for the machine to process
+		Small gui appearence rework
+		Needs to break the machine before opening the gui to refresh and avoid issues
+	Misc fixes
+		Some minor cleanings
+
 v1.11 changelog
 	Machines
 		Rewritten the energy handling
