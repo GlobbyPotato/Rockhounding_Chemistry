@@ -203,7 +203,7 @@ mods.rockhounding_surface.WoodIncubator.remove(<rockhounding_surface:bogLogs:2>)
 
 
 //----------------------------------
-//------Rock Vending System---------
+//-------Rock Vending System--------
 //----------------------------------
 //Parameters = input, oredict, quantity
 //input = the input itemstack used as fee
