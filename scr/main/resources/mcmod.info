@@ -1,0 +1,16 @@
+[
+{
+  "modid": "rockhounding_chemistry",
+  "name": "Rockhounding Mod: Chemistry",
+  "description": "This mod runs through the processes which bring a mined mineral to become chemical elements. It includes chemistry and metallurgy features.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["GlobbyPotato"],
+  "credits": "The Forge and FML guys. MrCrayfish for the Model Creator. Fizzy81 for the JSON Model Animator. al132 from AllTheMods for code fixing and support.",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

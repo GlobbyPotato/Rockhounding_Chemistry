@@ -1,0 +1,14 @@
+{
+    "variants": {
+        "type=mischmetal": 	{"model" : "rockhounding_chemistry:alloyBBlocks_mischmetal"},
+		"type=rosegold": 	{"model" : "rockhounding_chemistry:alloyBBlocks_rosegold"},
+		"type=greengold": 	{"model" : "rockhounding_chemistry:alloyBBlocks_greengold"},
+		"type=whitegold": 	{"model" : "rockhounding_chemistry:alloyBBlocks_whitegold"},
+		"type=shibuichi": 	{"model" : "rockhounding_chemistry:alloyBBlocks_shibuichi"},
+		"type=tombak": 		{"model" : "rockhounding_chemistry:alloyBBlocks_tombak"},
+		"type=pewter": 		{"model" : "rockhounding_chemistry:alloyBBlocks_pewter"},
+		"type=corten": 		{"model" : "rockhounding_chemistry:alloyBBlocks_corten"},
+		"type=shakudo": 	{"model" : "rockhounding_chemistry:alloyBBlocks_shakudo"},
+		"type=purplegold": 	{"model" : "rockhounding_chemistry:alloyBBlocks_purplegold"}
+	}
+}

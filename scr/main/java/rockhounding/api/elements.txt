@@ -1,0 +1,55 @@
+ This is the list of the elements handled by Rockhounding Chemistry.
+ They can be used to send custom recipes to the Chemical Extractor.
+ Elements must be added to the array entirely lower case. An internal check will fix them eventually.
+ 
+    CERIUM
+    DYSPROSIUM
+    ERBIUM
+    EUROPIUM
+    GADOLINIUM
+    HOLMIUM
+    LANTHANUM
+    LUTETIUM
+    NEODYMIUM
+    PRASEODYMIUM
+    SAMARIUM
+    SCANDIUM
+    TERBIUM
+    THULIUM
+    YTTERBIUM
+    YTTRIUM
+    IRON
+    COPPER
+    TIN
+    LEAD
+    ZINC
+    CHROMIUM
+    BORON
+    SILVER
+    ALUMINUM
+    MANGANESE
+    NICKEL
+    COBALT
+    MAGNESIUM
+    TITANIUM
+    SODIUM
+    THORIUM
+    CALCIUM
+    PHOSPHORUS
+    LITHIUM
+    POTASSIUM
+    BERYLLIUM
+    SULFUR
+    BISMUTH
+    NIOBIUM
+    TANTALUM
+    ARSENIC
+    SILICON
+    URANIUM
+    PLATINUM
+    GOLD
+    TUNGSTEN
+    OSMIUM
+    IRIDIUM
+    CADMIUM
+    VANADIUM

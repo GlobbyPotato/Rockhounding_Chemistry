@@ -1,0 +1,92 @@
+{
+"forge_marker": 1,
+	"defaults": {
+		"model": "forge:fluid"
+	},
+	"variants": {
+		"sulfuric_acid": [
+			{
+				"custom": {
+					"fluid": "sulfuric_acid"
+				}
+			}
+		],
+		"hydrochloric_acid": [
+			{
+				"custom": {
+					"fluid": "hydrochloric_acid"
+				}
+			}
+		],
+		"hydrofluoric_acid": [
+			{
+				"custom": {
+					"fluid": "hydrofluoric_acid"
+				}
+			}
+		],
+		"syngas": [
+			{
+				"custom": {
+					"fluid": "syngas"
+				}
+			}
+		],
+		"acrylic_acid": [
+			{
+				"custom": {
+					"fluid": "acrylic_acid"
+				}
+			}
+		],
+		"chloromethane": [
+			{
+				"custom": {
+					"fluid": "chloromethane"
+				}
+			}
+		],
+		"silicone": [
+			{
+				"custom": {
+					"fluid": "silicone"
+				}
+			}
+		],
+		"ammonia": [
+			{
+				"custom": {
+					"fluid": "ammonia"
+				}
+			}
+		],
+		"nitric_acid": [
+			{
+				"custom": {
+					"fluid": "nitric_acid"
+				}
+			}
+		],
+		"titanium_tetrachloride": [
+			{
+				"custom": {
+					"fluid": "titanium_tetrachloride"
+				}
+			}
+		],
+		"sodium_cyanide": [
+			{
+				"custom": {
+					"fluid": "sodium_cyanide"
+				}
+			}
+		],
+		"phosphoric_acid": [
+			{
+				"custom": {
+					"fluid": "phosphoric_acid"
+				}
+			}
+		]
+	}
+}

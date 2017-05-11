@@ -1,0 +1,89 @@
+package com.globbypotato.rockhounding_chemistry.machines.container;
+
+import com.globbypotato.rockhounding_chemistry.handlers.ModRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityMetalAlloyer;
+
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.ClickType;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.SlotItemHandler;
+
+public class ContainerMetalAlloyer extends ContainerBase<TileEntityMetalAlloyer>{
+	Slot templateAlloy;
+	Slot templateDust1;
+	Slot templateDust2;
+	Slot templateDust3;
+	Slot templateDust4;
+	Slot templateDust5;
+	Slot templateDust6;
+
+	Slot templateNext;
+	Slot templatePrev;
+
+	public ContainerMetalAlloyer(IInventory playerInventory, TileEntityMetalAlloyer tile){
+		super(playerInventory,tile);
+	}
+
+	@Override
+	protected void addOwnSlots() {
+		IItemHandler input = tile.getInput();
+		IItemHandler output = tile.getOutput();
+		IItemHandler template = tile.getTemplate();
+
+		this.addSlotToContainer(new SlotItemHandler(input, 0, 8, 20));//fuel
+        for (int x = 1; x <= 6; x++){
+        	this.addSlotToContainer(new SlotItemHandler(input, x, 53 + ((x-1)*18), 56));//input dusts
+        }
+        this.addSlotToContainer(new SlotItemHandler(input, 7, 98, 93));//consumable
+
+        this.addSlotToContainer(new SlotItemHandler(output, 0, 76, 93));//output
+        this.addSlotToContainer(new SlotItemHandler(output, 1, 120, 93));//scrap
+
+        templateAlloy = this.addSlotToContainer(new SlotItemHandler(template, 0, 85,  21));//alloy template
+        templateDust1 = this.addSlotToContainer(new SlotItemHandler(template, 1, 53,  39));//dust 1
+        templateDust2 = this.addSlotToContainer(new SlotItemHandler(template, 2, 71,  39));//dust 2
+        templateDust3 = this.addSlotToContainer(new SlotItemHandler(template, 3, 89,  39));//dust 3
+        templateDust4 = this.addSlotToContainer(new SlotItemHandler(template, 4, 107, 39));//dust 4
+        templateDust5 = this.addSlotToContainer(new SlotItemHandler(template, 5, 125, 39));//dust 5
+        templateDust6 = this.addSlotToContainer(new SlotItemHandler(template, 6, 143, 39));//dust 6
+        
+        templateNext = this.addSlotToContainer(new SlotItemHandler(template, 7, 52,  21));//prev
+        templatePrev = this.addSlotToContainer(new SlotItemHandler(template, 8, 68,  21));//next
+
+	}
+
+	@Override
+	public ItemStack slotClick(int slot, int dragType, ClickType clickTypeIn, EntityPlayer player){
+    	if(slot >= 10 && slot <= 16){
+    		return null;
+    	}else if(slot == 17){ 
+    		if(this.tile.recipeIndex > -1){
+        		this.tile.recipeIndex--; 
+        		this.tile.resetGrid(); 
+        		this.tile.doScan = true;
+    		}
+        	return null;
+    	}else if(slot == 18){ 
+    		if(this.tile.recipeIndex < ModRecipes.alloyerRecipes.size() - 1){
+	    		this.tile.recipeIndex++; 
+	    		this.tile.resetGrid(); 
+	    		this.tile.doScan = true;
+        	}
+    		return null;
+    	}else{
+    		return super.slotClick(slot, dragType, clickTypeIn, player);
+    	}
+	}
+
+	@Override
+	protected boolean mergeItemStack(ItemStack stack, int startIndex, int endIndex, boolean reverseDirection){
+		if(super.mergeItemStack(stack, startIndex, 10, reverseDirection)){
+			return true;
+		}else{
+			return super.mergeItemStack(stack, 19, endIndex, reverseDirection);
+		}
+    }
+}

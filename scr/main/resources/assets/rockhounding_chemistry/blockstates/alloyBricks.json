@@ -1,0 +1,17 @@
+{
+    "variants": {
+		"type=cube": 			{"model" : "rockhounding_chemistry:alloyBricks_cube"},
+		"type=scal": 			{"model" : "rockhounding_chemistry:alloyBricks_scal"},
+		"type=bam": 			{"model" : "rockhounding_chemistry:alloyBricks_bam"},
+ 		"type=yag": 			{"model" : "rockhounding_chemistry:alloyBricks_yag"},
+		"type=cupronickel": 	{"model" : "rockhounding_chemistry:alloyBricks_cupronickel"},
+		"type=nimonic": 		{"model" : "rockhounding_chemistry:alloyBricks_nimonic"},
+		"type=hastelloy": 		{"model" : "rockhounding_chemistry:alloyBricks_hastelloy"},
+		"type=nichrome": 		{"model" : "rockhounding_chemistry:alloyBricks_nichrome"},
+		"type=cunife": 			{"model" : "rockhounding_chemistry:alloyBricks_cunife"},
+		"type=siena": 			{"model" : "rockhounding_chemistry:alloyBricks_siena"},
+		"type=carborundum": 	{"model" : "rockhounding_chemistry:alloyBricks_carborundum"},
+		"type=tinite": 			{"model" : "rockhounding_chemistry:alloyBricks_tinite"},
+		"type=hydronalium": 	{"model" : "rockhounding_chemistry:alloyBricks_hydronalium"}
+   }
+}

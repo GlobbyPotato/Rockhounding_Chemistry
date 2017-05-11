@@ -1,0 +1,10 @@
+{
+    "__comment": "Model generated using MrCrayfish's Model Creator (http://mrcrayfish.com/modelcreator/)",
+    "parent": "rockhounding_chemistry:block/baseFlame",
+    "textures": {
+        "particle": "rockhounding_chemistry:flames/baseFire_layer_0",
+        "1": "rockhounding_chemistry:flames/baseFire_layer_0",
+        "0": "rockhounding_chemistry:flames/baseFire_layer_1",
+        "2": "rockhounding_chemistry:flames/baseShade_layer_0"
+    }
+}
