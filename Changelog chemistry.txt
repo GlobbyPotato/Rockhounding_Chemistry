@@ -1,3 +1,10 @@
+v1.36 changelog
+	Leaching Vat and Chemical Extractor now eventually accept only the correct bucket in the correct slot
+	Some fix to Lab Oven possibly killing wrong solvent buckets if not active
+	Machines gui names added to localized file
+	Some fix and additions to JEI
+	Some fix to Dekatron leaving wild tile entities when broken
+
 v1.35 changelog
 	Fixed some server crash
 
