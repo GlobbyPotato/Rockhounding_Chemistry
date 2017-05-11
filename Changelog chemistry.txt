@@ -1,3 +1,110 @@
+v1.36 changelog
+	Leaching Vat and Chemical Extractor now eventually accept only the correct bucket in the correct slot
+	Some fix to Lab Oven possibly killing wrong solvent buckets if not active
+	Machines gui names added to localized file
+	Some fix and additions to JEI
+	Some fix to Dekatron leaving wild tile entities when broken
+
+v1.35 changelog
+	Fixed some server crash
+
+v1.34 changelog
+	OWC System
+		Reworked some model (Deflectors may need to be broken or replaced)
+	Lab Oven / Deposition Chamber
+		Added an Activation Switch
+		While scrolling recipes it will prevent fluids jumping in and out the solvent tanks
+		Needs to be activated for the machine to process or manually accept fluids
+		Small gui appearence rework
+		Needs to break the machines before opening the gui to refresh and avoid issues
+	Redstone Laser
+		Increased distance from 30 to 32 blocks
+	Misc Fixes
+		Ingame book deprecated and hidden, pending update
+		Some minor cleanings
+
+v1.33 changelog
+	Chemistry experiments (Decorative flame test)
+		Added 10 compounds producing different fire variations
+		The compound must be used on a vanilla fire to set it
+	Deposition Chamber
+		Elements doping system to create advanced compounds
+		Uses large amount of RF as only powering supply
+	Boundary Breaker
+		Allows to slowly drill Bedrock blocks using RF (4000KRF per block)
+		Configurable Bedrock block drop
+		Can work upside down
+	Mineral Sizer
+		Custom recipes can also have a weighted array of outputs
+			If output has >4 elements there is a 25% chance of a secondary output (half quantity)
+			If output has >1 elements there is a 5% chance of a waste output (single item)
+			Multiple outputs quantity will be internally weighted by config "MaxMineralShards"
+			Single outputs will carry quantity from their recipe
+		Gui appearence updated
+	Chemical Extractor
+		Added a third solvent tank (Machine just needs to be broken before opening the gui after the update)
+		Changed the required acids into Nitric Acid, Phosphoric Acid and Sodium Cyanide
+		Gui appearence reworked
+	Mineral Analyzer
+		Machine renamed into Leaching Vat for better fitting naming
+	Lab Oven
+		Fixed a crash when piping fluids with no recipe selected
+		Fixed the handling of potentially similar recipes
+	Misc fixes
+		Reworked fluid appearence
+		Some models update
+		Some JEI addition
+		Misc cleaning and fixes
+		Updated the Rockhounding Api and the CraftTweaker sample script
+
+v1.32 changelog
+	Machines
+		Rewritten the energy handling. Should detect both coFH and Forge Energy
+		Induction Heating Interface can become a permanent machine upgrade (false by default)
+			The item will be retained by the machine when added to the fuel slot, freeing the slot
+			The fuel slot icon will change to show the permanently active upgrade, common fuel still accepted
+			If enabled, each machine will need its own interface
+		Minor issues, cleaning, and gui texture fixes
+
+v1.31 changelog
+	Misc fixes
+		Added the CraftTweaker support for all the machines
+		Increased the OWC storage capacity
+		Minor fixes and tweaks
+
+v1.30 changelog
+	OWC Energy System
+		Reworked and fixed the function for better performance
+		The System Activation switch will turn on/off the entire system saving ticks
+
+	Mineral Analyzer
+		Some fixes to the Mineral Analyzer
+		Added the Mineral Analyzer to the Rockhounding API
+
+	Chemical Extractor
+		Inhibit element/s from being extracted by the machine via the Rockhounding API
+		Hovering the gui cabinet will show inhibitions
+		Some carbon recipes reworked due to slot conflict
+
+	Misc fixes
+		Forge updated to 12.18.3.2254
+		Some JEI additions
+		Various minor fixes
+		Rockhounding API updated
+
+v1.29 changelog
+	Gunpowder making
+		Added fluids and ingredients for the production
+		Path based on the main ingredient Potassium Nitrate
+	Screen smoke making
+		Added fluids and ingredients for the production
+		Placing the Titanium Tetrachloride on the ground will generate a dense cloud slowly vanishing
+		It can be crafted also as throwable flasks
+	Misc updates
+		Fake snow can be also made by tossing the Sodium Polyacrylate item in water
+		Rebalanced Lab Oven recipe quantities a for more realistic behavior
+		Added a config to set the capacity of the machine fluid tanks (make sure currently contained fluids are lower the new value to avoid issues)
+
 v1.28 changelog
 	Machines
 		Chemical Extractor
