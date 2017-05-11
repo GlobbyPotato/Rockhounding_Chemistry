@@ -1,0 +1,41 @@
+v1.02 changelog (Early developement. Content may change over time)
+	Reworked the energy handling
+	Some rendering update
+	Added the CraftTweaker support
+	Some JEI fixes and additions
+	Small worldgen fix
+	Minor fixes
+
+v1.01 changelog (Early developement. Content may change over time)
+	Added models for some vanilla blocks
+	Allowed whitelisted dimensions
+	Misc fixes
+
+v1.00 changelog (Early developement. Content may change over time)
+	112 rock types listed
+		Raw and polished look featured
+		3 generation modes (Clouds/Patches/Filtered)
+		Each rock configurable (enabler, frequency, biome, size, level)
+		Rocks generation turnable off
+
+	Building sets
+		Block types (Raw rocks, Plain blocks, Polished blocks, Bricks, Carved Blocks)
+		Tile types (Short Bricks, Tiles, Parquet Tiles, Debossed Tiles, Double Slabs)
+		Column types(Fluted Columns, Segmented Pillars, Tetrapylons, Doric Columns, Pedestals)
+		Extra Models (Fountains, Lanterns)
+
+	Machines
+		Rocks Vending System
+			Allows to purchase the rocks using valuable items
+			Allows to inscribe special books to identify and search each rock
+		Cutting Station
+			Allows to cut and carve the blocks
+
+	Integration
+		Aroma dimension compatible
+		Chisel&Bits required to make slabs and stairs
+
+	Rockhounding Api
+		Added the Rocks Vending System to add/remove trading items
+		Added the Cutting Station to the recipe api to add custom recipes
+		Added the recipe removal methods for all the Rockhounding machines
