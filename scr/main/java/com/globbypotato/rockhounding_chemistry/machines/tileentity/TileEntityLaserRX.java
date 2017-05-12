@@ -1,60 +1,46 @@
 package com.globbypotato.rockhounding_chemistry.machines.tileentity;
 
-import com.globbypotato.rockhounding_chemistry.ModBlocks;
 import com.globbypotato.rockhounding_chemistry.enums.EnumLaser;
-import com.globbypotato.rockhounding_chemistry.machines.LaserBeam;
 import com.globbypotato.rockhounding_chemistry.machines.LaserRX;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 
-public class TileEntityLaserRX extends TileEntity implements ITickable{
-	private int countBeam;
-	private int maxRange = 32;
-	private boolean firstObstacle;
-	private boolean[] firstObstacles = new boolean[4];
+public class TileEntityLaserRX extends TileEntityLaserStorage{
 	EnumFacing pinFacing = EnumFacing.UP;
-	public boolean isPulsing;
-	public int splitSide;
 
 	@Override
 	public void update() {
 		if(!worldObj.isRemote){
-		    IBlockState state = worldObj.getBlockState(pos);
 		    //RECEIVER
-			if(isUnpoweredRx(state)){
-				if(isReceivingLaser(state)){
-					worldObj.setBlockState(pos, ModBlocks.laserRedstoneRx.getDefaultState().withProperty(LaserRX.VARIANT, EnumLaser.values()[state.getBlock().getMetaFromState(state) + 1]));
+			if(isUnpoweredRx(state())){
+				if(isReceivingLaser(state())){
+					worldObj.setBlockState(pos, rx().getDefaultState().withProperty(LaserRX.VARIANT, EnumLaser.values()[state().getBlock().getMetaFromState(state()) + 1]));
 				}
-			}else if(isPoweredRx(state)){
-				if(!isReceivingLaser(state)){
-					worldObj.setBlockState(pos, ModBlocks.laserRedstoneRx.getDefaultState().withProperty(LaserRX.VARIANT, EnumLaser.values()[state.getBlock().getMetaFromState(state) - 1]));
+			}else if(isPoweredRx(state())){
+				if(!isReceivingLaser(state())){
+					worldObj.setBlockState(pos, rx().getDefaultState().withProperty(LaserRX.VARIANT, EnumLaser.values()[state().getBlock().getMetaFromState(state()) - 1]));
 				}
 			}
 
 			//TX PIN
-			if(isEmittingPin(state)){
-				if(state.getBlock().getMetaFromState(state) == 4){ pinFacing = EnumFacing.UP; }else if(state.getBlock().getMetaFromState(state) == 6){ pinFacing = EnumFacing.DOWN; }
+			if(isEmittingPin(state())){
+				if(state().getBlock().getMetaFromState(state()) == 4){ pinFacing = EnumFacing.UP; }else if(state().getBlock().getMetaFromState(state()) == 6){ pinFacing = EnumFacing.DOWN; }
 				firstObstacle = false;
 				if(countBeam >= maxRange){
-					if(isReceivingLaser(state)){
+					if(isReceivingLaser(state())){
 			    		for(int x = 1; x <= maxRange; x++){
 			    			BlockPos checkingPos = pos.offset(pinFacing, x);
 							IBlockState checkingState = worldObj.getBlockState(checkingPos); 
 			    			if(firstObstacle == false){
-							    if(checkingState.getBlock() == Blocks.AIR){
-									IBlockState beamState = ModBlocks.laserBeam.getDefaultState().withProperty(LaserBeam.FACING, pinFacing); 
+							    if(checkingState.getBlock() == air().getBlock()){
+									IBlockState beamState = beam().getDefaultState().withProperty(beamFacing(), pinFacing); 
 							    	worldObj.setBlockState(checkingPos, beamState);
 						    		firstObstacle = false;
-							    }else if(checkingState.getBlock() == ModBlocks.laserBeam){
-							    	if(checkingState.getValue(LaserBeam.FACING) == pinFacing ) {
+							    }else if(checkingState.getBlock() == beam()){
+							    	if(checkingState.getValue(beamFacing()) == pinFacing ) {
 							    		firstObstacle = false;
 								    }else{
 								    	firstObstacle = true;
@@ -65,8 +51,8 @@ public class TileEntityLaserRX extends TileEntity implements ITickable{
 			    			}
 			    		}
 					}else{
-				    	if(worldObj.getBlockState(pos.offset(pinFacing)).getBlock() == ModBlocks.laserBeam){
-					    	worldObj.setBlockState(pos.offset(pinFacing), Blocks.AIR.getDefaultState());
+				    	if(worldObj.getBlockState(pos.offset(pinFacing)).getBlock() == beam()){
+					    	worldObj.setBlockState(pos.offset(pinFacing), air());
 				    	}
 					}
 					countBeam = 0;
@@ -76,30 +62,34 @@ public class TileEntityLaserRX extends TileEntity implements ITickable{
 			}
 
 			//RX PIN
-			if(isReceivingPin(state)){
-				if(state.getBlock().getMetaFromState(state) == 5){ pinFacing = EnumFacing.DOWN; }else if(state.getBlock().getMetaFromState(state) == 7){ pinFacing = EnumFacing.UP; }
-				if(isReceivingLaser(state, pinFacing)){
+			if(isReceivingPin(state())){
+				if(state().getBlock().getMetaFromState(state()) == 5){ 
+					pinFacing = EnumFacing.DOWN; 
+				}else if(state().getBlock().getMetaFromState(state()) == 7){ 
+					pinFacing = EnumFacing.UP; 
+				}
+				if(isReceivingLaser(state(), pinFacing)){
 			    	if(pulseMode()){
 				    	for(int sides = 0; sides <= 3; sides++){
-			    			shutBeam(state, sides);
+			    			shutBeam(state(), sides);
 				    	}
 					}
 
 			    	for(int sides = 0; sides <= 3; sides++){
 			    		if(emittingSide() == 4){
-			    			sendBeam(state, sides);
+			    			sendBeam(state(), sides);
 			    		}
 			    		else{
 				    		if(emittingSide() == sides){
-				    			sendBeam(state, sides);
+				    			sendBeam(state(), sides);
 				    		}else{
-				    			shutBeam(state, sides);
+				    			shutBeam(state(), sides);
 				    		}
 			    		}
 			    	}
 			    }else{
 			    	for(int sides = 0; sides <= 3; sides++){
-		    			shutBeam(state, sides);
+		    			shutBeam(state(), sides);
 			    	}
 			    }
 			}
@@ -114,12 +104,12 @@ public class TileEntityLaserRX extends TileEntity implements ITickable{
     			BlockPos checkingPos = pos.offset(beamsent, x);
 				IBlockState checkingState = worldObj.getBlockState(checkingPos); 
     			if(firstObstacles[sides] == false){
-				    if(checkingState.getBlock() == Blocks.AIR){
-						IBlockState beamState = ModBlocks.laserBeam.getDefaultState().withProperty(LaserBeam.FACING, beamsent); 
+				    if(checkingState.getBlock() == air().getBlock()){
+						IBlockState beamState = beam().getDefaultState().withProperty(beamFacing(), beamsent); 
 				    	worldObj.setBlockState(checkingPos, beamState);
 				    	firstObstacles[sides] = false;
-				    }else if(checkingState.getBlock() == ModBlocks.laserBeam){
-				    	if(checkingState.getValue(LaserBeam.FACING) == beamsent ) {
+				    }else if(checkingState.getBlock() == beam()){
+				    	if(checkingState.getValue(beamFacing()) == beamsent ) {
 				    		firstObstacles[sides] = false;
 					    }else{
 					    	firstObstacles[sides] = true;
@@ -137,22 +127,14 @@ public class TileEntityLaserRX extends TileEntity implements ITickable{
 
 	private void shutBeam(IBlockState state, int sides) {
 	    EnumFacing beamsent = EnumFacing.getHorizontal(sides);
-    	if(worldObj.getBlockState(pos.offset(beamsent)).getBlock() == ModBlocks.laserBeam &&
-   		   worldObj.getBlockState(pos.offset(beamsent)).getValue(LaserBeam.FACING) == beamsent){
-    		worldObj.setBlockState(pos.offset(beamsent), Blocks.AIR.getDefaultState());
+    	if(worldObj.getBlockState(pos.offset(beamsent)).getBlock() == beam() && worldObj.getBlockState(pos.offset(beamsent)).getValue(beamFacing()) == beamsent){
+    		worldObj.setBlockState(pos.offset(beamsent), air());
     	}
 	}
 
-	public int emittingSide(){
-		return splitSide;
-	}
-
-	public boolean pulseMode(){
-		return isPulsing;
-	}
-
 	private boolean isReceivingLaser(IBlockState state, EnumFacing beamArriving) {
-		return worldObj.getBlockState(pos.offset(beamArriving.getOpposite())).getBlock() == ModBlocks.laserBeam && worldObj.getBlockState(pos.offset(beamArriving.getOpposite())).getValue(LaserBeam.FACING) == beamArriving;
+		return worldObj.getBlockState(pos.offset(beamArriving.getOpposite())).getBlock() == beam()
+			&& worldObj.getBlockState(pos.offset(beamArriving.getOpposite())).getValue(beamFacing()) == beamArriving;
 	}
 
 	private boolean isEmittingPin(IBlockState state) {
@@ -172,43 +154,10 @@ public class TileEntityLaserRX extends TileEntity implements ITickable{
 	}
 
 	private boolean isReceivingLaser(IBlockState state) {
-		return worldObj.getBlockState(pos.offset(EnumFacing.EAST)).getBlock() == ModBlocks.laserBeam ||
-			   worldObj.getBlockState(pos.offset(EnumFacing.WEST)).getBlock() == ModBlocks.laserBeam ||
-			   worldObj.getBlockState(pos.offset(EnumFacing.NORTH)).getBlock() == ModBlocks.laserBeam ||
-			   worldObj.getBlockState(pos.offset(EnumFacing.SOUTH)).getBlock() == ModBlocks.laserBeam;
+		return worldObj.getBlockState(pos.offset(EnumFacing.EAST)).getBlock() == beam() 
+			|| worldObj.getBlockState(pos.offset(EnumFacing.WEST)).getBlock() == beam() 
+			|| worldObj.getBlockState(pos.offset(EnumFacing.NORTH)).getBlock() == beam() 
+			|| worldObj.getBlockState(pos.offset(EnumFacing.SOUTH)).getBlock() == beam();
 	}
 
-    //----------------------- I/O -----------------------
-    @Override
-    public void readFromNBT(NBTTagCompound compound){
-        super.readFromNBT(compound);
-        this.splitSide = compound.getInteger("SplitSide");
-        this.isPulsing = compound.getBoolean("Pulse");
-    }
-
-    @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound compound){
-        super.writeToNBT(compound);
-        compound.setInteger("SplitSide", emittingSide());
-        compound.setBoolean("Pulse", pulseMode());
-        return compound;
-    }
-
-	@Override
-	public SPacketUpdateTileEntity getUpdatePacket() {
-		NBTTagCompound tag = new NBTTagCompound();
-		this.writeToNBT(tag);
-		return new SPacketUpdateTileEntity(pos, 0, tag);
-	}
-
-	@Override
-	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet) {
-		super.onDataPacket(net, packet);
-        readFromNBT(packet.getNbtCompound());
-	}
-
-	@Override
-	public NBTTagCompound getUpdateTag() {
-		return this.writeToNBT(new NBTTagCompound());
-	}
 }

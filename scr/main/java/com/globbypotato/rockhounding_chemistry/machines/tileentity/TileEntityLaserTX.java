@@ -1,25 +1,14 @@
 package com.globbypotato.rockhounding_chemistry.machines.tileentity;
 
-import com.globbypotato.rockhounding_chemistry.ModBlocks;
-import com.globbypotato.rockhounding_chemistry.machines.LaserBeam;
-import com.globbypotato.rockhounding_chemistry.machines.LaserTX;
-
-import net.minecraft.block.BlockRedstoneRepeater;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 
-public class TileEntityLaserTX extends TileEntity implements ITickable {
-	private int countBeam;
-	private int maxRange = 32;
-	private boolean firstObstacle;
+public class TileEntityLaserTX extends TileEntityLaserBase {
 
 	public boolean isPowered(IBlockState state, EnumFacing enumfacing) {
-	    if(worldObj.getBlockState(pos.offset(enumfacing, 1)).getBlock() == Blocks.POWERED_REPEATER  ){
-		    EnumFacing repeaterfacing = worldObj.getBlockState(pos.offset(enumfacing, 1)).getValue(BlockRedstoneRepeater.FACING);
+	    if(worldObj.getBlockState(pos.offset(enumfacing, 1)).getBlock() == repeater()  ){
+		    EnumFacing repeaterfacing = worldObj.getBlockState(pos.offset(enumfacing, 1)).getValue(repeaterFacing());
 		    if(enumfacing == repeaterfacing){
 		    	return true;
 		    }
@@ -30,22 +19,21 @@ public class TileEntityLaserTX extends TileEntity implements ITickable {
 	@Override
 	public void update() {
 		if(!worldObj.isRemote){
-		    IBlockState state = worldObj.getBlockState(pos);
-		    EnumFacing enumfacing = state.getValue(LaserTX.FACING);
+		    EnumFacing enumfacing = state().getValue(txFacing());
 		    EnumFacing beamFacing = enumfacing;
 			firstObstacle = false;
 			if(countBeam >= maxRange){
-				if(isPowered(state, enumfacing.getOpposite())){
+				if(isPowered(state(), enumfacing.getOpposite())){
 		    		for(int x = 1; x <= maxRange; x++){
 		    			BlockPos checkingPos = pos.offset(enumfacing, x);
 						IBlockState checkingState = worldObj.getBlockState(checkingPos); 
 		    			if(firstObstacle == false){
-						    if(checkingState.getBlock() == Blocks.AIR){
-								IBlockState beamState = ModBlocks.laserBeam.getDefaultState().withProperty(LaserBeam.FACING, beamFacing); 
+						    if(checkingState.getBlock() == air().getBlock()){
+								IBlockState beamState = beam().getDefaultState().withProperty(beamFacing(), beamFacing); 
 						    	worldObj.setBlockState(checkingPos, beamState);
 					    		firstObstacle = false;
-						    }else if(checkingState.getBlock() == ModBlocks.laserBeam){
-						    	if(checkingState.getValue(LaserBeam.FACING) == beamFacing ) {
+						    }else if(checkingState.getBlock() == beam()){
+						    	if(checkingState.getValue(beamFacing()) == beamFacing ) {
 						    		firstObstacle = false;
 							    }else{
 							    	firstObstacle = true;
@@ -56,10 +44,10 @@ public class TileEntityLaserTX extends TileEntity implements ITickable {
 		    			}
 		    		}
 			    }else{
-			    	if(worldObj.getBlockState(pos.offset(enumfacing)).getBlock() == ModBlocks.laserBeam){
-					    EnumFacing beamfacing = worldObj.getBlockState(pos.offset(enumfacing)).getValue(LaserTX.FACING);
+			    	if(worldObj.getBlockState(pos.offset(enumfacing)).getBlock() == beam()){
+					    EnumFacing beamfacing = worldObj.getBlockState(pos.offset(enumfacing)).getValue(txFacing());
 					    if(beamfacing == enumfacing){
-					    	worldObj.setBlockState(pos.offset(enumfacing), Blocks.AIR.getDefaultState());
+					    	worldObj.setBlockState(pos.offset(enumfacing), air());
 					    }
 			    	}
 			    }
@@ -69,4 +57,5 @@ public class TileEntityLaserTX extends TileEntity implements ITickable {
 			}
 		}
 	}
+
 }

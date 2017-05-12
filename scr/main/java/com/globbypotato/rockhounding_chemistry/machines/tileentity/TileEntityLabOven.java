@@ -24,6 +24,7 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.UniversalBucket;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerConcatenate;
 import net.minecraftforge.items.ItemStackHandler;
@@ -95,7 +96,7 @@ public class TileEntityLabOven extends TileEntityMachineEnergy implements IFluid
 				if(slot == REDSTONE_SLOT && hasRedstone(insertingStack)){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
-				if(slot == SOLUTION_SLOT && hasValidContainer(insertingStack)){
+				if(slot == SOLUTION_SLOT && ToolUtils.isBucketType(insertingStack) && isEmptyBucket(insertingStack)){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
 				return insertingStack;
@@ -168,9 +169,13 @@ public class TileEntityLabOven extends TileEntityMachineEnergy implements IFluid
 		return isValidInterval() && fluid.isFluidEqual(getRecipe().getReagent());
 	}
 
-	private boolean hasValidContainer(ItemStack insertingStack) {
-		return ItemStack.areItemsEqual(insertingStack, new ItemStack(Items.BUCKET))
-			|| (!FluidRegistry.isUniversalBucketEnabled() && ItemStack.areItemsEqual(insertingStack, new ItemStack(ModFluids.beaker)));
+	private boolean isEmptyBucket(ItemStack insertingStack) {
+		if(!FluidRegistry.isUniversalBucketEnabled() ){
+			return insertingStack.getItem() == ModFluids.beaker;
+		}else{
+			return insertingStack.getItem() == Items.BUCKET || (insertingStack.getItem() instanceof UniversalBucket & FluidUtil.getFluidContained(insertingStack).containsFluid(null));
+		}
+
 	}
 
 
@@ -214,7 +219,7 @@ public class TileEntityLabOven extends TileEntityMachineEnergy implements IFluid
 	}
 
 	private void fillContainer(int slot, FluidTank tank){
-		if(hasValidContainer(input.getStackInSlot(slot)) && outputTank.getFluid() != null && outputTank.getFluidAmount() >= 1000){
+		if(ToolUtils.isBucketType(input.getStackInSlot(slot)) && outputTank.getFluid() != null && outputTank.getFluidAmount() >= 1000){
 			if(FluidUtil.tryFillContainer(input.getStackInSlot(slot), tank, 1000, null, false) != null){
 				if(input.getStackInSlot(SOLUTION_SLOT).stackSize > 1){
 					ItemStack droppingBeaker = FluidUtil.tryFillContainer(input.getStackInSlot(slot), tank, 1000, null, true);

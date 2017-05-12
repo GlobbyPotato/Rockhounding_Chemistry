@@ -2,6 +2,7 @@ package com.globbypotato.rockhounding_chemistry.utils;
 
 import com.globbypotato.rockhounding_chemistry.ModBlocks;
 import com.globbypotato.rockhounding_chemistry.ModItems;
+import com.globbypotato.rockhounding_chemistry.fluids.ItemBeaker;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -49,7 +50,11 @@ public class ToolUtils {
 	}
 
 	public static boolean isBucketType(ItemStack insertingStack) {
-		return insertingStack.getItem() instanceof ItemBucket || insertingStack.getItem() instanceof UniversalBucket;
+		if(!FluidRegistry.isUniversalBucketEnabled() ){
+			return insertingStack != null && (insertingStack.getItem() instanceof ItemBeaker || insertingStack.getItem() instanceof ItemBucket) ;
+		}else{
+			return insertingStack != null && (insertingStack.getItem() instanceof ItemBucket || insertingStack.getItem() instanceof UniversalBucket);
+		}
 	}
 
 	public static ItemStack getBucketType(Fluid fluid, Item container) {

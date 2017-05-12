@@ -1,39 +1,28 @@
 package com.globbypotato.rockhounding_chemistry.machines.tileentity;
 
-import com.globbypotato.rockhounding_chemistry.ModBlocks;
-import com.globbypotato.rockhounding_chemistry.machines.LaserBeam;
-import com.globbypotato.rockhounding_chemistry.machines.LaserSplitter;
-import com.globbypotato.rockhounding_chemistry.machines.LaserTX;
-
-import net.minecraft.block.BlockRedstoneRepeater;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ITickable;
 
-public class TileEntityLaserBeam extends TileEntity implements ITickable {
+public class TileEntityLaserBeam extends TileEntityLaserBase {
 
 	@Override
 	public void update() {
-	    IBlockState state = worldObj.getBlockState(pos);
-	    EnumFacing enumfacing = state.getValue(LaserBeam.FACING);
-    
+	    EnumFacing enumfacing = state().getValue(beamFacing());
 	    if(!worldObj.isRemote){
-	    	if( !isSameBeamDirection(state, enumfacing) 
-	    		&& !isValidEmitter(state, enumfacing) 
-	    		&& !isValidSplitter(state, enumfacing)
-	    		&& !isValidTxPin(state, enumfacing, 4, EnumFacing.UP) 
-	    		&& !isValidTxPin(state, enumfacing, 6, EnumFacing.DOWN) 
-	    		&& !isValidRxPin(state, enumfacing)
-	    		){ worldObj.setBlockState(pos, Blocks.AIR.getDefaultState());
+	    	if( !isSameBeamDirection(state(), enumfacing) 
+	    		&& !isValidEmitter(state(), enumfacing) 
+	    		&& !isValidSplitter(state(), enumfacing)
+	    		&& !isValidTxPin(state(), enumfacing, 4, EnumFacing.UP) 
+	    		&& !isValidTxPin(state(), enumfacing, 6, EnumFacing.DOWN) 
+	    		&& !isValidRxPin(state(), enumfacing)
+	    		){ worldObj.setBlockState(pos, air());
 	    	}
 	    }
 	}
 
 	private boolean isValidRxPin(IBlockState state, EnumFacing enumfacing) {
 		IBlockState checkstate = worldObj.getBlockState(pos.offset(enumfacing.getOpposite()));
-		if(checkstate != null && checkstate.getBlock() == ModBlocks.laserRedstoneRx && (checkstate.getBlock().getMetaFromState(checkstate) == 5 || checkstate.getBlock().getMetaFromState(checkstate) == 7)){
+		if(checkstate != null && checkstate.getBlock() == rx() && (checkstate.getBlock().getMetaFromState(checkstate) == 5 || checkstate.getBlock().getMetaFromState(checkstate) == 7)){
 			return true;
 		}
 		return false;
@@ -41,7 +30,7 @@ public class TileEntityLaserBeam extends TileEntity implements ITickable {
 
 	private boolean isValidTxPin(IBlockState state, EnumFacing enumfacing, int meta, EnumFacing pinfacing) {
 		IBlockState checkstate = worldObj.getBlockState(pos.offset(enumfacing.getOpposite()));
-		if(checkstate != null && checkstate.getBlock() == ModBlocks.laserRedstoneRx && checkstate.getBlock().getMetaFromState(checkstate) == meta){
+		if(checkstate != null && checkstate.getBlock() == rx() && checkstate.getBlock().getMetaFromState(checkstate) == meta){
 			if(enumfacing == pinfacing){
 				return true;
 			}
@@ -51,8 +40,8 @@ public class TileEntityLaserBeam extends TileEntity implements ITickable {
 
 	private boolean isValidSplitter(IBlockState state, EnumFacing enumfacing){
 		IBlockState checkstate = worldObj.getBlockState(pos.offset(enumfacing.getOpposite()));
-		if(checkstate != null && checkstate.getBlock() == ModBlocks.laserSplitter){
-		    EnumFacing splitterfacing = checkstate.getValue(LaserSplitter.FACING);
+		if(checkstate != null && checkstate.getBlock() == splitter()){
+		    EnumFacing splitterfacing = checkstate.getValue(nodeFacing());
 			if(splitterfacing != enumfacing ){
 				return true;
 			}
@@ -62,12 +51,12 @@ public class TileEntityLaserBeam extends TileEntity implements ITickable {
 
 	private boolean isValidEmitter(IBlockState state, EnumFacing enumfacing) {
 		IBlockState checkstate = worldObj.getBlockState(pos.offset(enumfacing.getOpposite()));
-		if(checkstate != null && checkstate.getBlock() == ModBlocks.laserRedstoneTx){
-		    EnumFacing txfacing = checkstate.getValue(LaserTX.FACING);
+		if(checkstate != null && checkstate.getBlock() == tx()){
+		    EnumFacing txfacing = checkstate.getValue(txFacing());
 			if(txfacing == enumfacing ){
 				IBlockState repeaterstate = worldObj.getBlockState(pos.offset(enumfacing.getOpposite(), 2));
-				if(repeaterstate != null && repeaterstate.getBlock() == Blocks.POWERED_REPEATER){
-				    EnumFacing repeaterfacing = checkstate.getValue(BlockRedstoneRepeater.FACING);
+				if(repeaterstate != null && repeaterstate.getBlock() == repeater()){
+				    EnumFacing repeaterfacing = checkstate.getValue(repeaterFacing());
 					if(repeaterfacing == enumfacing ){
 						return true;
 					}
@@ -79,8 +68,8 @@ public class TileEntityLaserBeam extends TileEntity implements ITickable {
 
 	private boolean isSameBeamDirection(IBlockState state, EnumFacing enumfacing){
 		IBlockState checkstate = worldObj.getBlockState(pos.offset(enumfacing.getOpposite()));
-		if(checkstate != null && checkstate.getBlock() == ModBlocks.laserBeam){
-		    EnumFacing beamfacing = checkstate.getValue(LaserBeam.FACING);
+		if(checkstate != null && checkstate.getBlock() == beam()){
+		    EnumFacing beamfacing = checkstate.getValue(beamFacing());
 			if(beamfacing == enumfacing ){
 				return true;
 			}

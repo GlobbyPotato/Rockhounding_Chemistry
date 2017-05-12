@@ -55,7 +55,7 @@ public class TileEntitySaltMaker extends TileEntityMachineBase implements ITicka
 					setNewStage(1);
 				}
 			}
-			
+
 			//fill the tank on rain
 			if(getStage() == 0){
 				evaporateCount = -1;
@@ -63,7 +63,7 @@ public class TileEntitySaltMaker extends TileEntityMachineBase implements ITicka
 					setNewStage(1);
 				}
 			}
-			
+
 			//lose progress on rain
 			if(getStage() != 0){
 				if(canRainMelt(biome)){
@@ -88,7 +88,6 @@ public class TileEntitySaltMaker extends TileEntityMachineBase implements ITicka
 					}
 				}
 			}
-
 			this.markDirtyClient();
 		}
 	}
