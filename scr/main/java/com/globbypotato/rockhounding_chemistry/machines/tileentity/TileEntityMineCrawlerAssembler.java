@@ -119,10 +119,9 @@ public class TileEntityMineCrawlerAssembler extends TileEntityMachineInv {
     @Override
     public void update(){
     	if(!worldObj.isRemote){
-	    	if(canAssembly()){	assemblyCrawler();}
-	    	if(canDismantle()){	dismantleCrawler();}
-	    	if(canLoad()){		loadCrawler();}
-	    	this.markDirtyClient();
+	    	if(canAssembly()){	assemblyCrawler(); this.markDirtyClient();}
+	    	if(canDismantle()){	dismantleCrawler(); this.markDirtyClient();}
+	    	if(canLoad()){		loadCrawler(); this.markDirtyClient();}
     	}
     }
 

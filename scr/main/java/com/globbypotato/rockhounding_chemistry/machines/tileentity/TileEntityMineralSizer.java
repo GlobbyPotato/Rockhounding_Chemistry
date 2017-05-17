@@ -87,8 +87,8 @@ public class TileEntityMineralSizer extends TileEntityMachineEnergy {
 					cookTime = 0;
 					process();
 				}
+				this.markDirtyClient();
 			}
-			this.markDirtyClient();
 		}
 	}
 

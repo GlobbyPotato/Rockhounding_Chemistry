@@ -22,7 +22,7 @@ public class TileEntityMetalAlloyer extends TileEntityMachineEnergy {
     public static final int SLOT_CONSUMABLE = 7;
 	public static final int SLOT_SCRAP = 1;
 
-	private ItemStackHandler template = new TemplateStackHandler(9);
+	private ItemStackHandler template = new TemplateStackHandler(10);
 	public static int SLOT_FAKE[] = new int[]{0,1,2,3,4,5,6,7,8};
 
 	public TileEntityMetalAlloyer() {
@@ -31,7 +31,7 @@ public class TileEntityMetalAlloyer extends TileEntityMachineEnergy {
 		input =  new MachineStackHandler(INPUT_SLOTS,this){
 			@Override
 			public ItemStack insertItem(int slot, ItemStack insertingStack, boolean simulate){
-				if(slot >= SLOT_INPUTS[1] && slot < SLOT_INPUTS.length && isMatchingOredict(insertingStack, slot)){
+				if(slot >= SLOT_INPUTS[1] && slot < SLOT_INPUTS.length && activation && isMatchingOredict(insertingStack, slot)){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
 				if(slot == FUEL_SLOT && (FuelUtils.isItemFuel(insertingStack) || ToolUtils.hasinductor(insertingStack))){
@@ -115,12 +115,14 @@ public class TileEntityMetalAlloyer extends TileEntityMachineEnergy {
 	public void readFromNBT(NBTTagCompound compound){
 		super.readFromNBT(compound);
 		this.recipeIndex = compound.getInteger("RecipeCount");
+		this.activation = compound.getBoolean("Activation");
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound){
 		super.writeToNBT(compound);
 		compound.setInteger("RecipeCount", this.recipeIndex);
+		compound.setBoolean("Activation", this.activation);
 		return compound;
 	}
 
@@ -146,14 +148,15 @@ public class TileEntityMetalAlloyer extends TileEntityMachineEnergy {
 			if(isValidInterval()){
 				if(canAlloy(getRecipe().getDusts(), getRecipe().getQuantities())){
 					execute(getRecipe().getDusts(), getRecipe().getQuantities());
+					this.markDirtyClient();
 				}
 			}
-			this.markDirtyClient();
 		}
 	}
 
 	private boolean canAlloy(List<String> dusts, List<Integer> quantities) {
-		return isFullRecipe(dusts) 
+		return activation
+			&& isFullRecipe(dusts) 
 			&& ToolUtils.hasConsumable(ToolUtils.pattern, input.getStackInSlot(SLOT_CONSUMABLE)) 
 			&& (output.getStackInSlot(OUTPUT_SLOT) == null || canStackIngots(getRecipe().getOutput()))
 			&& (output.getStackInSlot(SLOT_SCRAP) == null || canStackScraps(getRecipe().getScrap()))

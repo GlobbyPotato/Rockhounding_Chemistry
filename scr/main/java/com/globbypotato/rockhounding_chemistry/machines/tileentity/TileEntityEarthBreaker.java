@@ -96,10 +96,10 @@ public class TileEntityEarthBreaker extends TileEntityMachineEnergy {
 		if(!worldObj.isRemote){
 			if(canDrill()){
 				process();
+				this.markDirtyClient();
 			}else{
 				handleParameters();
 			}
-			this.markDirtyClient();
 		}
 		spinState();
 	}
@@ -142,6 +142,7 @@ public class TileEntityEarthBreaker extends TileEntityMachineEnergy {
 		if(this.redstoneCount >= takenRF && this.chargeCount < this.chargeMax){
 			this.redstoneCount -= takenRF; 
 			this.chargeCount++;
+			this.markDirtyClient();
 		}
 	}
 

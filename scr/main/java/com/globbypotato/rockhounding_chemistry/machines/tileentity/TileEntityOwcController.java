@@ -111,16 +111,17 @@ public class TileEntityOwcController extends TileEntityMachineEnergy implements 
 					animateDeflectors();
 					if(this.getRedstone() < this.getChargeMax()){ 
 						powerAcquiring();
+						this.markDirtyClient();
 					}
 				}
 			}else{
 				stopDeflectors();
+				this.markDirtyClient();
 			}
 			if(isExtracting()){
 				provideEnergy();
+				this.markDirtyClient();
 			}
-
-			this.markDirtyClient();
 		}
 	}
 

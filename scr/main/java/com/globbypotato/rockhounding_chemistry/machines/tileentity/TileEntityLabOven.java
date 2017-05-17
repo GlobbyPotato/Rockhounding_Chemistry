@@ -81,7 +81,7 @@ public class TileEntityLabOven extends TileEntityMachineEnergy implements IFluid
 		input =  new MachineStackHandler(INPUT_SLOTS,this){
 			@Override
 			public ItemStack insertItem(int slot, ItemStack insertingStack, boolean simulate){
-				if(slot == INPUT_SLOT && isValidInterval() && hasRecipe(insertingStack)){
+				if(slot == INPUT_SLOT && activation && isValidInterval() && hasRecipe(insertingStack)){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
 				if(slot == FUEL_SLOT && (FuelUtils.isItemFuel(insertingStack) || ToolUtils.hasinductor(insertingStack))){
@@ -232,6 +232,7 @@ public class TileEntityLabOven extends TileEntityMachineEnergy implements IFluid
 					input.setStackInSlot(slot, FluidUtil.tryFillContainer(input.getStackInSlot(slot), tank, 1000, null, true));
 				}
 			}
+			this.markDirtyClient();
 		}
 	}
 
@@ -269,9 +270,9 @@ public class TileEntityLabOven extends TileEntityMachineEnergy implements IFluid
 			if(isValidInterval()){
 				if(canSynthesize()){
 					execute();
+					this.markDirtyClient();
 				}
 			}
-			this.markDirtyClient();
 		}
 	}
 

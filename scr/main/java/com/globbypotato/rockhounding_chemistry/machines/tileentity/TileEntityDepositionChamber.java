@@ -65,7 +65,7 @@ public class TileEntityDepositionChamber extends TileEntityMachineEnergy impleme
 		input =  new MachineStackHandler(INPUT_SLOTS,this){
 			@Override
 			public ItemStack insertItem(int slot, ItemStack insertingStack, boolean simulate){
-				if(slot == INPUT_SLOT && isValidInterval() && (hasRecipe(insertingStack) || isValidOredict(insertingStack))){
+				if(slot == INPUT_SLOT && activation && isValidInterval() && (hasRecipe(insertingStack) || isValidOredict(insertingStack))){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
 				if(slot == CASING_SLOT && ToolUtils.hasUpgrade(insertingStack)){
@@ -239,11 +239,11 @@ public class TileEntityDepositionChamber extends TileEntityMachineEnergy impleme
 
 				if(canDeposit()){
 					execute();
+					this.markDirtyClient();
 				}
 			}else{
 				handleRelaxing();
 			}
-			this.markDirtyClient();
 		}
 	}
 
@@ -282,9 +282,11 @@ public class TileEntityDepositionChamber extends TileEntityMachineEnergy impleme
 	private void handleRelaxing() {
 		if(this.getTemperature() > tempStability() && rand.nextInt(stabilityDelta()) == 0){
 			this.temperatureCount -= tempStability();
+			this.markDirtyClient();
 		}
 		if(this.getPressure() > pressStability() && rand.nextInt(stabilityDelta()) == 0){
 			this.pressureCount -= pressStability();
+			this.markDirtyClient();
 		}
 	}
 
@@ -294,12 +296,14 @@ public class TileEntityDepositionChamber extends TileEntityMachineEnergy impleme
 		if(this.redstoneCount >= takenRF && this.getTemperature() < temp && temp < this.getTemperatureMax() - tempYeld() ){
 			this.redstoneCount -= takenRF; 
 			this.temperatureCount += tempYeld();
+			this.markDirtyClient();
 		}
 
 		int press = getRecipe().getPressure();
 		if(this.getRedstone() >= takenRF && this.getPressure() < press && press < this.getPressureMax() - pressYeld()){
 			this.redstoneCount -= takenRF; 
 			this.pressureCount += pressYeld();
+			this.markDirtyClient();
 		}
 	}
 

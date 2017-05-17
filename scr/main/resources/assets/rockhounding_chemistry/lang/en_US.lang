@@ -327,6 +327,7 @@ item.rockhounding_chemistry:miscItems.siena_bearing.name=Rolling Bearing
 item.rockhounding_chemistry:miscItems.tinite_arm.name=Boundary Breaker Arm
 item.rockhounding_chemistry:miscItems.boundary_chip.name=Boundary Breaker Logic
 item.rockhounding_chemistry:miscItems.boundary_casing.name=Hydronalium Casing
+item.rockhounding_chemistry:miscItems.iron_casing.name=Iron Casing
 #consumables
 item.rockhounding_chemistry:cylinder.name=Graduated Cylinder
 item.rockhounding_chemistry:gear.name=Crushing Gear

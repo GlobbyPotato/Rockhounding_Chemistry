@@ -1,3 +1,14 @@
+v1.38 changelog
+	Metal Alloyer
+		Added an activation switch to halt the machine and input while scrolling recipes
+		Needs to break the machine before opening the gui to refresh and avoid issues
+		Small Gui arrangement change
+	Lab Oven / Deposition Chamber / Metal Alloyer
+		Solid inputs will now respect too the activation switch to improve their automation
+	Misc fixes
+		Reworked the machines recipes to require less iron
+		Various minor tweaks
+
 v1.37 changelog
 	Redstone Laser
 		Some code polishing

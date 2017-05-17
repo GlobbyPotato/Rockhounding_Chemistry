@@ -112,6 +112,7 @@ public class ModRecipes {
 	static ItemStack tiniteArm = misc(39);
 	static ItemStack boundaryChip = misc(40);
 	static ItemStack boundaryCasing = misc(41);
+	static ItemStack ironCasing = misc(42);
 
 	static ItemStack ironNuggets = new ItemStack(ModItems.miscItems,9,2);
 	static ItemStack flask = new ItemStack(ModItems.chemFlask);
@@ -135,6 +136,7 @@ public class ModRecipes {
 	static ItemStack sandPile = chemicals(16);
 	static ItemStack hastelloyCasings = new ItemStack(ModItems.miscItems, 4, 33);
 	static ItemStack boundaryCasings = new ItemStack(ModItems.miscItems, 4, 41);
+	static ItemStack ironCasings = new ItemStack(ModItems.miscItems, 8, 42);
 
 	static ItemStack platinumShard = new ItemStack(ModItems.nativeShards, 1, 17);
 	static ItemStack rutileShard = new ItemStack(ModItems.oxideShards, 1, 24);
@@ -184,19 +186,19 @@ public class ModRecipes {
 
 	private static void machineryRecipes() {
 	//lab oven
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.labOven), new Object[] { "IBI", "IGI", "IFI", 'B', flask, 'I', "ingotIron", 'F', Blocks.FURNACE, 'G', "blockGlass" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.labOven), new Object[] { "GCG", "IcI", "IGI", 'I', ironCasing, 'C', cabinet, 'c', logicChip, 'G', "blockGlass" }));
 	//mineral sizer
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.mineralSizer), new Object[] { "IHI", "GcG", "ICI", 'C', cabinet, 'I', "ingotIron", 'G', gear, 'c', logicChip, 'H', Blocks.HOPPER }));
-	//mineral analyzer
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.mineralAnalyzer), new Object[] { "ICC", "IcI", "III", 'C', cabinet, 'I', "ingotIron", 'c', logicChip }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.mineralSizer), new Object[] { "IHI", "IcI", "ICI", 'C', cabinet, 'I', ironCasing, 'c', logicChip, 'H', Blocks.HOPPER }));
+	//leaching vat
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.mineralAnalyzer), new Object[] { "IcI", "GGG", "ICI", 'C', cabinet, 'I', ironCasing, 'c', logicChip, 'G', "blockGlass" }));
 	//chemical extractor
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.chemicalExtractor), new Object[] { "CCC", "IcI", "III", 'C', cabinet, 'I', "ingotIron", 'c', logicChip }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.chemicalExtractor), new Object[] { "GCI", "GcI", "GII", 'C', cabinet, 'I', ironCasing, 'c', logicChip, 'G', "blockGlass" }));
+	//metal alloyer
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.metalAlloyer), new Object[] { "ICI", "IHI", "IcI", 'C', cabinet, 'I', ironCasing, 'H', Blocks.HOPPER, 'c', logicChip}));
 	//salt maker
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.saltMaker), new Object[] { "S S", "sss", 's', "stone", 'S', "ingotBrick" }));
 	//salt seasoner
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.saltSeasoner), new Object[] { "SSS", "SSS", "PIP", 'S', "slabWood", 'I', "ingotIron", 'P', "plankWood" }));
-	//metal alloyer
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.metalAlloyer), new Object[] { "bFb", "III", "ITI", 'I', "ingotIron", 'F', Blocks.FURNACE, 'b', Items.BOWL, 'T', Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE }));
 	//petrographer table
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.petrographerTable), new Object[] { " G ", "SSS", " P ", 'P', "plankWood", 'S', "slabWood", 'G', "blockGlass" }));
 	//cylinder
@@ -213,6 +215,8 @@ public class ModRecipes {
 		GameRegistry.addRecipe(new ShapedOreRecipe(flask, new Object[] { " G ","G G","GGG", 'G', "blockGlass"}));
 	//ingot pattern
 		GameRegistry.addRecipe(new ShapedOreRecipe(ingotPattern, new Object[] { "T","P", 'T', Blocks.IRON_TRAPDOOR, 'P', Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE}));
+	//iron Casing
+		GameRegistry.addRecipe(new ShapedOreRecipe(ironCasings, new Object[] { "NIN", "INI", "NIN", 'N', "nuggetIron", 'I', "ingotIron" }));
 	}
 
 	private static void inductionRecipes() {

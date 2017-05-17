@@ -71,6 +71,7 @@ public class TileEntitySaltSeasoner extends TileEntityMachineEnergy {
 						acquireSalt(facing, directionScan, 1 + rand.nextInt(ModConfig.saltAmount));
 						directionScan++;
 						cycleScroll = 0;
+						this.markDirtyClient();
 					}else{
 						cycleScroll++;
 					}
@@ -87,9 +88,9 @@ public class TileEntitySaltSeasoner extends TileEntityMachineEnergy {
 				if(cookTime >= getMaxCookTime()) {
 					cookTime = 0;
 					process();
+					this.markDirtyClient();
 				}
 			}
-			this.markDirtyClient();
 		}
 	}
 

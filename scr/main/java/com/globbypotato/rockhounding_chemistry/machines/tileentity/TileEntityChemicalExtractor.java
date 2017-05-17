@@ -247,9 +247,8 @@ public class TileEntityChemicalExtractor extends TileEntityMachineEnergy impleme
 				if(ToolUtils.hasConsumable(ToolUtils.cylinder, input.getStackInSlot(CYLINDER_SLOT))){
 					transferDust();
 				}
+				this.markDirtyClient();
 			}
-
-			this.markDirtyClient();
 		}
 	}
 

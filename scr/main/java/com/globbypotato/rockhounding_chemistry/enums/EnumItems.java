@@ -43,7 +43,8 @@ public enum EnumItems implements IStringSerializable {
 	SIENA_BEARING,
 	TINITE_ARM,
 	BOUNDARY_CHIP,
-	BOUNDARY_CASING;
+	BOUNDARY_CASING,
+	IRON_CASING;
 
 	@Override
 	public String getName() {
