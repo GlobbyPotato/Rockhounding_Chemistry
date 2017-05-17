@@ -66,7 +66,6 @@ public abstract class TileEntityMachineInv extends TileEntityMachineBase impleme
 		if( FluidUtil.getFluidContained(input.getStackInSlot(slot)) != null){
 			if(FluidUtil.tryEmptyContainer(input.getStackInSlot(slot), tank, 1000, null, false) != null){
 				input.setStackInSlot(slot,FluidUtil.tryEmptyContainer(input.getStackInSlot(slot), tank, 1000, null, true));
-				this.markDirtyClient();
 			}
 		}
 	}

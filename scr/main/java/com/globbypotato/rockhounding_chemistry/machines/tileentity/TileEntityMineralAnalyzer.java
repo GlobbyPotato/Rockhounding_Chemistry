@@ -211,8 +211,8 @@ public class TileEntityMineralAnalyzer extends TileEntityMachineEnergy implement
 					cookTime = 0; 
 					analyze();
 				}
-				this.markDirtyClient();
 			}
+			this.markDirtyClient();
 		}
 	}
 

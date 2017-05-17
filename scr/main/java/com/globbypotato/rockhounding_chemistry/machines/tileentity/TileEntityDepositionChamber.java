@@ -239,11 +239,11 @@ public class TileEntityDepositionChamber extends TileEntityMachineEnergy impleme
 
 				if(canDeposit()){
 					execute();
-					this.markDirtyClient();
 				}
 			}else{
 				handleRelaxing();
 			}
+			this.markDirtyClient();
 		}
 	}
 
@@ -282,11 +282,9 @@ public class TileEntityDepositionChamber extends TileEntityMachineEnergy impleme
 	private void handleRelaxing() {
 		if(this.getTemperature() > tempStability() && rand.nextInt(stabilityDelta()) == 0){
 			this.temperatureCount -= tempStability();
-			this.markDirtyClient();
 		}
 		if(this.getPressure() > pressStability() && rand.nextInt(stabilityDelta()) == 0){
 			this.pressureCount -= pressStability();
-			this.markDirtyClient();
 		}
 	}
 
@@ -296,14 +294,12 @@ public class TileEntityDepositionChamber extends TileEntityMachineEnergy impleme
 		if(this.redstoneCount >= takenRF && this.getTemperature() < temp && temp < this.getTemperatureMax() - tempYeld() ){
 			this.redstoneCount -= takenRF; 
 			this.temperatureCount += tempYeld();
-			this.markDirtyClient();
 		}
 
 		int press = getRecipe().getPressure();
 		if(this.getRedstone() >= takenRF && this.getPressure() < press && press < this.getPressureMax() - pressYeld()){
 			this.redstoneCount -= takenRF; 
 			this.pressureCount += pressYeld();
-			this.markDirtyClient();
 		}
 	}
 

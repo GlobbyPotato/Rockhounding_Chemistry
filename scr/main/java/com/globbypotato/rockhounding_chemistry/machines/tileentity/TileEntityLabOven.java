@@ -232,7 +232,6 @@ public class TileEntityLabOven extends TileEntityMachineEnergy implements IFluid
 					input.setStackInSlot(slot, FluidUtil.tryFillContainer(input.getStackInSlot(slot), tank, 1000, null, true));
 				}
 			}
-			this.markDirtyClient();
 		}
 	}
 
@@ -270,9 +269,9 @@ public class TileEntityLabOven extends TileEntityMachineEnergy implements IFluid
 			if(isValidInterval()){
 				if(canSynthesize()){
 					execute();
-					this.markDirtyClient();
 				}
 			}
+			this.markDirtyClient();
 		}
 	}
 

@@ -1,4 +1,4 @@
-v1.38 changelog
+v1.38/v1.39 changelog
 	Metal Alloyer
 		Added an activation switch to halt the machine and input while scrolling recipes
 		Needs to break the machine before opening the gui to refresh and avoid issues
