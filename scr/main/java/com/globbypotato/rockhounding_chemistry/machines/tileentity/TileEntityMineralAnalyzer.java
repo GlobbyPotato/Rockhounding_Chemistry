@@ -4,6 +4,7 @@ import com.globbypotato.rockhounding_chemistry.fluids.ModFluids;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.handlers.ModRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiMineralAnalyzer;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.MineralAnalyzerRecipe;
 import com.globbypotato.rockhounding_chemistry.utils.FuelUtils;
 import com.globbypotato.rockhounding_chemistry.utils.ProbabilityStack;
 import com.globbypotato.rockhounding_chemistry.utils.ToolUtils;
@@ -137,6 +138,10 @@ public class TileEntityMineralAnalyzer extends TileEntityMachineEnergy implement
 			&& FluidUtil.getFluidContained(insertingStack).containsFluid(new FluidStack(fluid, Fluid.BUCKET_VOLUME));
 	}
 
+	private MineralAnalyzerRecipe getRecipe (int x){
+		return ModRecipes.analyzerRecipes.get(x);
+	}
+
 
 
 	//----------------------- I/O -----------------------
@@ -228,13 +233,13 @@ public class TileEntityMineralAnalyzer extends TileEntityMachineEnergy implement
 
 	private void analyze(){
 		for(int x = 0; x < ModRecipes.analyzerRecipes.size(); x++){
-			if(ModRecipes.analyzerRecipes.get(x).getInput() != null && ItemStack.areItemsEqual(ModRecipes.analyzerRecipes.get(x).getInput(), input.getStackInSlot(INPUT_SLOT))){
-				int mix = ModRecipes.analyzerRecipes.get(x).getOutput().size();
+			if(getRecipe(x).getInput() != null && ItemStack.areItemsEqual(getRecipe(x).getInput(), input.getStackInSlot(INPUT_SLOT))){
+				int mix = getRecipe(x).getOutput().size();
 				if(mix > 1){
-					output.setStackInSlot(OUTPUT_SLOT, ProbabilityStack.calculateProbability(ModRecipes.analyzerRecipes.get(x).getProbabilityStack()).copy());
+					output.setStackInSlot(OUTPUT_SLOT, ProbabilityStack.calculateProbability(getRecipe(x).getProbabilityStack()).copy());
 					output.getStackInSlot(OUTPUT_SLOT).stackSize = rand.nextInt(ModConfig.maxMineral) + 1;
 				}else{
-					output.setStackInSlot(OUTPUT_SLOT, ModRecipes.analyzerRecipes.get(x).getOutput().get(0).copy());
+					output.setStackInSlot(OUTPUT_SLOT, getRecipe(x).getOutput().get(0).copy());
 				}
 			}
 		}

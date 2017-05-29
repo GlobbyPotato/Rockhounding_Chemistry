@@ -114,26 +114,26 @@ public class SaltMaker extends Block{
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ){
 		if (!worldIn.isRemote) {
-			if(worldIn.getTileEntity(pos) instanceof IFluidHandlingTile){
-				TileEntitySaltMaker saltMaker = (TileEntitySaltMaker)worldIn.getTileEntity(pos);
-				if (this.getStage(state) == 0 && heldItem != null && saltMaker.inputTank.getFluidAmount() < Fluid.BUCKET_VOLUME){
-					if (heldItem.getItem() instanceof ItemBucket || heldItem.getItem() instanceof UniversalBucket){
-						((IFluidHandlingTile)worldIn.getTileEntity(pos)).interactWithBucket(worldIn, pos, state, playerIn, hand, heldItem, side, hitX, hitY, hitZ);
-		  		    	worldIn.setBlockState(pos, worldIn.getBlockState(pos).withProperty(STAGE, Integer.valueOf(1)));
-		                playerIn.playSound(SoundEvents.ITEM_BUCKET_FILL, 1.0F, 1.0F);
-		                heldItem.stackSize--;
-		                if(heldItem.getItem().hasContainerItem(heldItem)){
-			                if (!playerIn.inventory.addItemStackToInventory(new ItemStack(heldItem.getItem().getContainerItem()))){
-			                	playerIn.dropItem(new ItemStack(heldItem.getItem().getContainerItem()), false);
+	    	if(side == EnumFacing.UP){
+				if(worldIn.getTileEntity(pos) instanceof IFluidHandlingTile){
+					TileEntitySaltMaker saltMaker = (TileEntitySaltMaker)worldIn.getTileEntity(pos);
+					if (this.getStage(state) == 0 && heldItem != null && saltMaker.inputTank.getFluidAmount() < Fluid.BUCKET_VOLUME){
+						if (heldItem.getItem() instanceof ItemBucket || heldItem.getItem() instanceof UniversalBucket){
+							((IFluidHandlingTile)worldIn.getTileEntity(pos)).interactWithBucket(worldIn, pos, state, playerIn, hand, heldItem, side, hitX, hitY, hitZ);
+			  		    	worldIn.setBlockState(pos, worldIn.getBlockState(pos).withProperty(STAGE, Integer.valueOf(1)));
+			                playerIn.playSound(SoundEvents.ITEM_BUCKET_FILL, 1.0F, 1.0F);
+			                heldItem.stackSize--;
+			                if(heldItem.getItem().hasContainerItem(heldItem)){
+				                if (!playerIn.inventory.addItemStackToInventory(new ItemStack(heldItem.getItem().getContainerItem()))){
+				                	playerIn.dropItem(new ItemStack(heldItem.getItem().getContainerItem()), false);
+				                }
 			                }
-		                }
-						return true;
+							return true;
+						}
 					}
 				}
 			}
-		}
 
-    	if(side == EnumFacing.UP){
     		if(getStage(state) == 6 && heldItem != null && heldItem.getItem() instanceof ItemSpade){
   		    	worldIn.setBlockState(pos, this.withStage(0));
                 playerIn.playSound(SoundEvents.BLOCK_GRAVEL_HIT, 0.5F, 1.5F);

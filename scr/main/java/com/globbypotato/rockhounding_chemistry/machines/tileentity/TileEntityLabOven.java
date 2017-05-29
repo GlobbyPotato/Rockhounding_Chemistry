@@ -29,7 +29,7 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerConcatenate;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileEntityLabOven extends TileEntityMachineEnergy implements IFluidHandlingTile{
+public class TileEntityLabOven extends TileEntityMachineEnergy implements IFluidHandlingTile {
 
 	private ItemStackHandler template = new TemplateStackHandler(3);
 
@@ -45,30 +45,30 @@ public class TileEntityLabOven extends TileEntityMachineEnergy implements IFluid
 	public TileEntityLabOven() {
 		super(6, 0, 1);
 
-		inputTank = new FluidTank(1000 + ModConfig.machineTank){
+		inputTank = new FluidTank(1000 + ModConfig.machineTank) {
 			@Override
-			public boolean canFillFluidType(FluidStack fluid){
+			public boolean canFillFluidType(FluidStack fluid) {
 				return activation && hasSolvent(fluid) && isValidInterval() && isCorrectSolvent(fluid);
 			}
 
 			@Override
-		    public boolean canDrain(){
-		        return !isValidInterval() || (isValidInterval() && isWrongSolvent(inputTank));
-		    }
+			public boolean canDrain() {
+				return !isValidInterval() || (isValidInterval() && isWrongSolvent(inputTank));
+			}
 		};
 		inputTank.setTileEntity(this);
 		inputTank.setCanFill(true);
 
-		reagentTank = new FluidTank(1000 + ModConfig.machineTank){
+		reagentTank = new FluidTank(1000 + ModConfig.machineTank) {
 			@Override
-			public boolean canFillFluidType(FluidStack fluid){
+			public boolean canFillFluidType(FluidStack fluid) {
 				return activation && hasReagent(fluid) && isValidInterval() && isCorrectReagent(fluid);
 			}
 
 			@Override
-		    public boolean canDrain(){
-		        return !isValidInterval() || (isValidInterval() && isWrongReagent(reagentTank));
-		    }
+			public boolean canDrain() {
+				return !isValidInterval() || (isValidInterval() && isWrongReagent(reagentTank));
+			}
 		};
 		reagentTank.setTileEntity(this);
 		reagentTank.setCanFill(true);
@@ -78,42 +78,43 @@ public class TileEntityLabOven extends TileEntityMachineEnergy implements IFluid
 		outputTank.setCanDrain(true);
 		outputTank.setCanFill(false);
 
-		input =  new MachineStackHandler(INPUT_SLOTS,this){
+		input = new MachineStackHandler(INPUT_SLOTS, this) {
 			@Override
-			public ItemStack insertItem(int slot, ItemStack insertingStack, boolean simulate){
-				if(slot == INPUT_SLOT && activation && isValidInterval() && hasRecipe(insertingStack)){
+			public ItemStack insertItem(int slot, ItemStack insertingStack, boolean simulate) {
+				if (slot == INPUT_SLOT && activation && isValidInterval() && hasRecipe(insertingStack)) {
 					return super.insertItem(slot, insertingStack, simulate);
 				}
-				if(slot == FUEL_SLOT && (FuelUtils.isItemFuel(insertingStack) || ToolUtils.hasinductor(insertingStack))){
+				if (slot == FUEL_SLOT
+						&& (FuelUtils.isItemFuel(insertingStack) || ToolUtils.hasinductor(insertingStack))) {
 					return super.insertItem(slot, insertingStack, simulate);
 				}
-				if(slot == SOLVENT_SLOT && activation && isValidInterval() && hasSolvent(FluidUtil.getFluidContained(insertingStack))){
+				if (slot == SOLVENT_SLOT && activation && isValidInterval()
+						&& hasSolvent(FluidUtil.getFluidContained(insertingStack))) {
 					return super.insertItem(slot, insertingStack, simulate);
 				}
-				if(slot == REAGENT_SLOT && activation && isValidInterval() && hasReagent(FluidUtil.getFluidContained(insertingStack))){
+				if (slot == REAGENT_SLOT && activation && isValidInterval()
+						&& hasReagent(FluidUtil.getFluidContained(insertingStack))) {
 					return super.insertItem(slot, insertingStack, simulate);
 				}
-				if(slot == REDSTONE_SLOT && hasRedstone(insertingStack)){
+				if (slot == REDSTONE_SLOT && hasRedstone(insertingStack)) {
 					return super.insertItem(slot, insertingStack, simulate);
 				}
-				if(slot == SOLUTION_SLOT && ToolUtils.isBucketType(insertingStack) && isEmptyBucket(insertingStack)){
+				if (slot == SOLUTION_SLOT && ToolUtils.isBucketType(insertingStack) && isEmptyBucket(insertingStack)) {
 					return super.insertItem(slot, insertingStack, simulate);
 				}
 				return insertingStack;
 			}
 		};
-		automationInput = new WrappedItemHandler(input,WriteMode.IN_OUT);
+		automationInput = new WrappedItemHandler(input, WriteMode.IN_OUT);
 		this.markDirtyClient();
 	}
 
-
-
-	//----------------------- HANDLER -----------------------
-	public ItemStackHandler getTemplate(){
+	// ----------------------- HANDLER -----------------------
+	public ItemStackHandler getTemplate() {
 		return this.template;
 	}
 
-	public int getCookTimeMax(){
+	public int getCookTimeMax() {
 		return ModConfig.speedLabOven;
 	}
 
@@ -123,42 +124,42 @@ public class TileEntityLabOven extends TileEntityMachineEnergy implements IFluid
 	}
 
 	@Override
-	public boolean hasRF(){
-		return true;	
+	public boolean hasRF() {
+		return true;
 	}
 
-
-
-	//----------------------- CUSTOM ------------------------
+	// ----------------------- CUSTOM ------------------------
 	public boolean isValidInterval() {
 		return recipeIndex >= 0 && recipeIndex <= ModRecipes.labOvenRecipes.size() - 1;
 	}
 
-	public LabOvenRecipe getRecipe(){
+	public LabOvenRecipe getRecipe() {
 		return isValidInterval() ? ModRecipes.labOvenRecipes.get(recipeIndex) : null;
 	}
 
-	private boolean hasRecipe(ItemStack stack){
+	private boolean hasRecipe(ItemStack stack) {
 		return isValidInterval() && ModRecipes.labOvenRecipes.stream().anyMatch(
 				recipe -> stack != null && recipe.getSolute() != null && stack.isItemEqual(getRecipe().getSolute()));
 	}
 
-	private boolean hasSolvent(FluidStack stack){
+	private boolean hasSolvent(FluidStack stack) {
 		return isValidInterval() && ModRecipes.labOvenRecipes.stream().anyMatch(
-				recipe -> stack != null && recipe.getSolvent()!= null && stack.isFluidEqual(getRecipe().getSolvent()));
+				recipe -> stack != null && recipe.getSolvent() != null && stack.isFluidEqual(getRecipe().getSolvent()));
 	}
 
-	private boolean hasReagent(FluidStack stack){
+	private boolean hasReagent(FluidStack stack) {
 		return isValidInterval() && ModRecipes.labOvenRecipes.stream().anyMatch(
-				recipe -> stack != null && recipe.getReagent()!= null && stack.isFluidEqual(getRecipe().getReagent()));
+				recipe -> stack != null && recipe.getReagent() != null && stack.isFluidEqual(getRecipe().getReagent()));
 	}
 
 	private boolean isWrongSolvent(FluidTank tank) {
-		return isValidInterval() && tank.getFluid() != null && !tank.getFluid().isFluidEqual(getRecipe().getSolvent()) && tank.getFluidAmount() > 0;
+		return isValidInterval() && tank.getFluid() != null && !tank.getFluid().isFluidEqual(getRecipe().getSolvent())
+				&& tank.getFluidAmount() > 0;
 	}
 
 	private boolean isWrongReagent(FluidTank tank) {
-		return isValidInterval() && tank.getFluid() != null && !tank.getFluid().isFluidEqual(getRecipe().getReagent()) && tank.getFluidAmount() > 0;
+		return isValidInterval() && tank.getFluid() != null && !tank.getFluid().isFluidEqual(getRecipe().getReagent())
+				&& tank.getFluidAmount() > 0;
 	}
 
 	private boolean isCorrectSolvent(FluidStack fluid) {
@@ -170,19 +171,18 @@ public class TileEntityLabOven extends TileEntityMachineEnergy implements IFluid
 	}
 
 	private boolean isEmptyBucket(ItemStack insertingStack) {
-		if(!FluidRegistry.isUniversalBucketEnabled() ){
+		if (!FluidRegistry.isUniversalBucketEnabled()) {
 			return insertingStack.getItem() == ModFluids.beaker;
-		}else{
-			return insertingStack.getItem() == Items.BUCKET || (insertingStack.getItem() instanceof UniversalBucket & FluidUtil.getFluidContained(insertingStack).containsFluid(null));
+		} else {
+			return insertingStack.getItem() == Items.BUCKET || (insertingStack.getItem() instanceof UniversalBucket
+					& FluidUtil.getFluidContained(insertingStack).containsFluid(null));
 		}
 
 	}
 
-
-
-	//----------------------- I/O -----------------------
+	// ----------------------- I/O -----------------------
 	@Override
-	public void readFromNBT(NBTTagCompound compound){
+	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
 		this.recipeIndex = compound.getInteger("RecipeScan");
 		this.activation = compound.getBoolean("Activation");
@@ -192,7 +192,7 @@ public class TileEntityLabOven extends TileEntityMachineEnergy implements IFluid
 	}
 
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound){
+	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		super.writeToNBT(compound);
 		compound.setInteger("RecipeScan", this.recipeIndex);
 		compound.setBoolean("Activation", this.activation);
@@ -212,24 +212,30 @@ public class TileEntityLabOven extends TileEntityMachineEnergy implements IFluid
 		return compound;
 	}
 
-	public boolean interactWithBucket(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
-		boolean didFill = FluidUtil.interactWithFluidHandler(heldItem, this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side), player);
+	public boolean interactWithBucket(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand,
+			ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+		boolean didFill = FluidUtil.interactWithFluidHandler(heldItem,
+				this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side), player);
 		this.markDirtyClient();
 		return didFill;
 	}
 
-	private void fillContainer(int slot, FluidTank tank){
-		if(ToolUtils.isBucketType(input.getStackInSlot(slot)) && outputTank.getFluid() != null && outputTank.getFluidAmount() >= 1000){
-			if(FluidUtil.tryFillContainer(input.getStackInSlot(slot), tank, 1000, null, false) != null){
-				if(input.getStackInSlot(SOLUTION_SLOT).stackSize > 1){
-					ItemStack droppingBeaker = FluidUtil.tryFillContainer(input.getStackInSlot(slot), tank, 1000, null, true);
-				    EnumFacing front = EnumFacing.getFront(getBlockMetadata());
+	private void fillContainer(int slot, FluidTank tank) {
+		if (ToolUtils.isBucketType(input.getStackInSlot(slot)) && outputTank.getFluid() != null
+				&& outputTank.getFluidAmount() >= 1000) {
+			if (FluidUtil.tryFillContainer(input.getStackInSlot(slot), tank, 1000, null, false) != null) {
+				if (input.getStackInSlot(SOLUTION_SLOT).stackSize > 1) {
+					ItemStack droppingBeaker = FluidUtil.tryFillContainer(input.getStackInSlot(slot), tank, 1000, null,
+							true);
+					EnumFacing front = EnumFacing.getFront(getBlockMetadata());
 					BlockPos frontPos = pos.offset(front.getOpposite());
-					EntityItem entityitem = new EntityItem(worldObj, frontPos.getX() + 0.5D, frontPos.getY() + 0.5D, frontPos.getZ() + 0.5D, droppingBeaker);
+					EntityItem entityitem = new EntityItem(worldObj, frontPos.getX() + 0.5D, frontPos.getY() + 0.5D,
+							frontPos.getZ() + 0.5D, droppingBeaker);
 					worldObj.spawnEntityInWorld(entityitem);
 					input.decrementSlot(SOLUTION_SLOT);
-				}else{
-					input.setStackInSlot(slot, FluidUtil.tryFillContainer(input.getStackInSlot(slot), tank, 1000, null, true));
+				} else {
+					input.setStackInSlot(slot,
+							FluidUtil.tryFillContainer(input.getStackInSlot(slot), tank, 1000, null, true));
 				}
 			}
 		}
@@ -237,8 +243,10 @@ public class TileEntityLabOven extends TileEntityMachineEnergy implements IFluid
 
 	@Override
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-		if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) return true;
-		else return super.hasCapability(capability, facing);
+		if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
+			return true;
+		else
+			return super.hasCapability(capability, facing);
 	}
 
 	@Override
@@ -248,26 +256,26 @@ public class TileEntityLabOven extends TileEntityMachineEnergy implements IFluid
 		return super.getCapability(capability, facing);
 	}
 
-	private FluidHandlerConcatenate getCombinedTank(){
+	private FluidHandlerConcatenate getCombinedTank() {
 		return new FluidHandlerConcatenate(inputTank, reagentTank, outputTank);
 	}
 
-
-
-	//----------------------- PROCESS -----------------------
+	// ----------------------- PROCESS -----------------------
 	@Override
-	public void update(){
-		if(!isValidInterval()){ recipeIndex = -1; }
+	public void update() {
+		if (!isValidInterval()) {
+			recipeIndex = -1;
+		}
 		fuelHandler(input.getStackInSlot(FUEL_SLOT));
 		redstoneHandler(REDSTONE_SLOT, this.getCookTimeMax());
 
-		if(!worldObj.isRemote){
+		if (!worldObj.isRemote) {
 			emptyContainer(SOLVENT_SLOT, inputTank);
 			emptyContainer(REAGENT_SLOT, reagentTank);
 			fillContainer(SOLUTION_SLOT, outputTank);
 
-			if(isValidInterval()){
-				if(canSynthesize()){
+			if (isValidInterval()) {
+				if (canSynthesize()) {
 					execute();
 				}
 			}
@@ -275,37 +283,47 @@ public class TileEntityLabOven extends TileEntityMachineEnergy implements IFluid
 		}
 	}
 
-	public boolean isCooking(){
+	public boolean isCooking() {
 		return getRecipe() != null && canSynthesize() && cookTime > 0;
 	}
 
-	public boolean canSynthesize(){
-		return activation
-			&& getRecipe() != null
-			&& (outputTank.getFluid() == null || (outputTank.getFluid() != null && outputTank.getFluid().containsFluid(getRecipe().getOutput()) && outputTank.getFluidAmount() <= (outputTank.getCapacity() - getRecipe().getOutput().amount) ))
-			&& ItemStack.areItemsEqual(getRecipe().getSolute(), input.getStackInSlot(INPUT_SLOT))
-			&& (inputTank.getFluid() != null && inputTank.getFluid().containsFluid(getRecipe().getSolvent()) && inputTank.getFluidAmount() >= getRecipe().getSolvent().amount)
-			&& ((reagentTank.getFluid() == null && getRecipe().getReagent() == null) || (reagentTank.getFluid() != null && reagentTank.getFluid().containsFluid(getRecipe().getReagent()) && reagentTank.getFluidAmount() >= getRecipe().getReagent().amount))
-			&& this.getRedstone() >= this.getCookTimeMax()
-			&& this.getPower() >= this.getCookTimeMax();
+	public boolean canSynthesize() {
+		return activation && getRecipe() != null
+				&& ItemStack.areItemsEqual(getRecipe().getSolute(), input.getStackInSlot(INPUT_SLOT))
+				&& (outputTank.getFluid() == null
+						|| (outputTank.getFluid() != null
+								&& outputTank.getFluid().isFluidEqual(getRecipe().getOutput())
+								&& outputTank.getFluidAmount() <= (outputTank.getCapacity()
+										- getRecipe().getOutput().amount)))
+				&& (inputTank.getFluid() != null && inputTank.getFluid().isFluidEqual(getRecipe().getSolvent())
+						&& inputTank.getFluidAmount() >= getRecipe().getSolvent().amount)
+				&& ((reagentTank.getFluid() == null && getRecipe().getReagent() == null)
+						|| (reagentTank.getFluid() != null
+								&& reagentTank.getFluid().isFluidEqual(getRecipe().getReagent())
+								&& reagentTank.getFluidAmount() >= getRecipe().getReagent().amount))
+				&& this.getRedstone() >= this.getCookTimeMax() && this.getPower() >= this.getCookTimeMax();
 	}
 
 	private void execute() {
 		cookTime++;
 		powerCount--;
-		redstoneCount--; 
-		if(cookTime >= getCookTimeMax()) {
-			cookTime = 0; 
+		redstoneCount--;
+		if (cookTime >= getCookTimeMax()) {
+			cookTime = 0;
 			handleOutput();
 		}
 	}
 
 	private void handleOutput() {
 		inputTank.getFluid().amount -= getRecipe().getSolvent().amount;
-		if(inputTank.getFluid().amount <= 0){inputTank.setFluid(null);}
-		if(reagentTank.getFluid() != null && hasReagent(reagentTank.getFluid())){
+		if (inputTank.getFluid().amount <= 0) {
+			inputTank.setFluid(null);
+		}
+		if (reagentTank.getFluid() != null && hasReagent(reagentTank.getFluid())) {
 			reagentTank.getFluid().amount -= getRecipe().getReagent().amount;
-			if(reagentTank.getFluid().amount <= 0){reagentTank.setFluid(null);}
+			if (reagentTank.getFluid().amount <= 0) {
+				reagentTank.setFluid(null);
+			}
 		}
 		outputTank.fillInternal(getRecipe().getOutput(), true);
 		input.decrementSlot(INPUT_SLOT);

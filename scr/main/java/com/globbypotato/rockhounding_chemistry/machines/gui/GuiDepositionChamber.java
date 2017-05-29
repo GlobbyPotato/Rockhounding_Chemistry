@@ -43,17 +43,19 @@ public class GuiDepositionChamber extends GuiBase {
 		//temperature
 		if(mouseX >= 8+x && mouseX <= 17+x && mouseY >= 31+y && mouseY <= 95+y){
 			String text = TextFormatting.GOLD + "Temperature: " + TextFormatting.WHITE + (30 + this.depositionChamber.getTemperature()) + " 'C";
+			String req = TextFormatting.DARK_GRAY + "Required: " + TextFormatting.WHITE + this.depositionChamber.getRecipe().getTemperature() + " 'C";
 			String info = TextFormatting.DARK_GRAY + "Charge: " + TextFormatting.WHITE + this.depositionChamber.tempYeld() +" 'C/tick";
 			String drain = TextFormatting.DARK_GRAY + "Drain: " + TextFormatting.WHITE + this.depositionChamber.takenRF + " RF/charge";
-			List<String> tooltip = Arrays.asList(text, info, drain);
+			List<String> tooltip = Arrays.asList(text, req, info, drain);
 			drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
 		}
 		//preassure
 		if(mouseX >= 23+x && mouseX <= 33+x && mouseY >= 17+y && mouseY <= 81+y){
 			String text = TextFormatting.BLUE + "Pressure: " + TextFormatting.WHITE + this.depositionChamber.getPressure() + " uPa";
+			String req = TextFormatting.DARK_GRAY + "Required: " + TextFormatting.WHITE + this.depositionChamber.getRecipe().getPressure() + " uPa";
 			String info = TextFormatting.DARK_GRAY + "Charge: " + TextFormatting.WHITE + this.depositionChamber.pressYeld() +" uPa/tick";
 			String drain = TextFormatting.DARK_GRAY + "Drain: " + TextFormatting.WHITE + this.depositionChamber.takenRF + " RF/charge";
-			List<String> tooltip = Arrays.asList(text, info, drain);
+			List<String> tooltip = Arrays.asList(text, req, info, drain);
 			drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
 		}
 		//input tank

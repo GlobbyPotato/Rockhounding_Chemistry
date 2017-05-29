@@ -13,7 +13,7 @@ import net.minecraft.item.ItemStack;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
-@ZenClass("mods.rockhounding_chemistry.MineralAnalyzer")
+@ZenClass("mods.rockhounding_chemistry.LeachingVat")
 public class AnalyzerRecipes {
 	private static String name = "Mineral Analyzer Recipe";
     @ZenMethod

@@ -41,19 +41,19 @@ mods.rockhounding_chemistry.MineralSizer.remove(<rockhounding_chemistry:miscItem
 //Parameters = input, output
 //input = the input itemstack
 //output = the output itemstack
-mods.rockhounding_chemistry.MineralAnalyzer.add(<minecraft:cobblestone>, <minecraft:dye:15>);
+mods.rockhounding_chemistry.LeachingVat.add(<minecraft:cobblestone>, <minecraft:dye:15>);
 
 //Parameters = input, output, probabilities
 //input = the input itemstack
 //output = the array of possible extractible itemstacks
 //probabilities = the array of probability for each output to be extracted
 //Notes: both output and probabilities arrays must have the same amount of elements.
-mods.rockhounding_chemistry.MineralAnalyzer.add(<minecraft:hardened_clay>, [<minecraft:dye:0>, <minecraft:dye:1>, <minecraft:dye:2>, <minecraft:dye:3>, <minecraft:dye:4>], [20, 20, 20, 20, 20]);
-mods.rockhounding_chemistry.MineralAnalyzer.add(<minecraft:sandstone>, [<minecraft:dye:15>, <minecraft:dye:14>, <minecraft:dye:13>, <minecraft:dye:12>, <minecraft:dye:11>], [20, 20, 20, 20, 20]);
+mods.rockhounding_chemistry.LeachingVat.addAll(<minecraft:hardened_clay>, [<minecraft:dye:0>, <minecraft:dye:1>, <minecraft:dye:2>, <minecraft:dye:3>, <minecraft:dye:4>], [20, 20, 20, 20, 20]);
+mods.rockhounding_chemistry.LeachingVat.addAll(<minecraft:sandstone>, [<minecraft:dye:15>, <minecraft:dye:14>, <minecraft:dye:13>, <minecraft:dye:12>, <minecraft:dye:11>], [20, 20, 20, 20, 20]);
 
 //Parameters = input
 //input = the input itemstack
-mods.rockhounding_chemistry.MineralAnalyzer.remove(<rockhounding_chemistry:mineralOres:2>);
+mods.rockhounding_chemistry.LeachingVat.remove(<rockhounding_chemistry:mineralOres:2>);
 
 
 //----------------------------------

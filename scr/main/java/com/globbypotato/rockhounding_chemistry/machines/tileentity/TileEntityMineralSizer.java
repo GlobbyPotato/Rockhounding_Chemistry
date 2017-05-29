@@ -50,6 +50,8 @@ public class TileEntityMineralSizer extends TileEntityMachineEnergy {
 		return ModConfig.speedSizer;
 	}
 
+
+
 	//----------------------- CUSTOM -----------------------
 	public boolean hasRecipe(ItemStack stack){
 		return ModRecipes.sizerRecipes.stream().anyMatch(
@@ -74,6 +76,12 @@ public class TileEntityMineralSizer extends TileEntityMachineEnergy {
 			&& output.getStackInSlot(GOOD_SLOT) == null
 			&& output.getStackInSlot(WASTE_SLOT) == null);
 	}
+
+	private MineralSizerRecipe getRecipe (int x){
+		return ModRecipes.sizerRecipes.get(x);
+	}
+
+
 
 	//----------------------- PROCESS -----------------------
 	@Override
@@ -101,23 +109,23 @@ public class TileEntityMineralSizer extends TileEntityMachineEnergy {
 
 	private void process() {
 		for(int x = 0; x < ModRecipes.sizerRecipes.size(); x++){
-			if(ModRecipes.sizerRecipes.get(x).getInput() != null && ItemStack.areItemsEqual(ModRecipes.sizerRecipes.get(x).getInput(), input.getStackInSlot(INPUT_SLOT))){
+			if(getRecipe(x).getInput() != null && ItemStack.areItemsEqual(getRecipe(x).getInput(), input.getStackInSlot(INPUT_SLOT))){
 				//calculate primary output
-				int mix = ModRecipes.sizerRecipes.get(x).getOutput().size();
+				int mix = getRecipe(x).getOutput().size();
 				if(mix > 1){
-					output.setStackInSlot(OUTPUT_SLOT, ProbabilityStack.calculateProbability(ModRecipes.sizerRecipes.get(x).getProbabilityStack()).copy());
+					output.setStackInSlot(OUTPUT_SLOT, ProbabilityStack.calculateProbability(getRecipe(x).getProbabilityStack()).copy());
 					output.getStackInSlot(OUTPUT_SLOT).stackSize = rand.nextInt(ModConfig.maxMineral) + 1;
 				}else{
-					output.setStackInSlot(OUTPUT_SLOT, ModRecipes.sizerRecipes.get(x).getOutput().get(0).copy());
+					output.setStackInSlot(OUTPUT_SLOT, getRecipe(x).getOutput().get(0).copy());
 				}
 				//calculate secondary output
 				if(rand.nextInt(100) < 25 && mix > 4){
-					output.setStackInSlot(GOOD_SLOT, ProbabilityStack.calculateProbability(ModRecipes.sizerRecipes.get(x).getProbabilityStack()).copy());
+					output.setStackInSlot(GOOD_SLOT, ProbabilityStack.calculateProbability(getRecipe(x).getProbabilityStack()).copy());
 					output.getStackInSlot(GOOD_SLOT).stackSize = rand.nextInt(ModConfig.maxMineral / 2) + 1;
 				}
 				//calculate waste output
 				if(rand.nextInt(100) < 5 && mix > 1){
-					output.setStackInSlot(WASTE_SLOT, ProbabilityStack.calculateProbability(ModRecipes.sizerRecipes.get(x).getProbabilityStack()).copy());
+					output.setStackInSlot(WASTE_SLOT, ProbabilityStack.calculateProbability(getRecipe(x).getProbabilityStack()).copy());
 					output.getStackInSlot(WASTE_SLOT).stackSize = 1;
 				}
 			}
