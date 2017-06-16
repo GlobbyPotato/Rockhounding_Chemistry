@@ -1,3 +1,13 @@
+v4.13 changelog
+	Fossil Woods
+		Backported the Wood aging tech
+			Added the Wood Incubator and related composts
+			Added the Book of incubation to the Rockypedia with info and recipes
+		Completed the set of 16 fossil woods
+		Tweaked the generation to the new woods
+	Rockypedia
+		Updated the book section with tooltips and books
+
 V4.12 changelog
 	Fixed raw rocks accidentally appearing with polished textures
 
