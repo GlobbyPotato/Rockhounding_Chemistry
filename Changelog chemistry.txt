@@ -1,3 +1,29 @@
+v1.41 changelog (Thanks to @TheMaskettaMan for the ideas)
+	Liquid Nitrogen production
+		Added the Cryogenic Distillation Plant (multiblock)
+		Produces Liquid Nitrogen by processing air
+		Tiered system involving production efficiency
+		Requires RF and refrigerant fluids (any fluid though)
+	Redstone Laser
+		Used aluminum in recipes as casing material in place of iron
+		Some recipes rebalanced
+	Electrolaser
+		Added an amplifying cascade system for the Redstone Laser to alter the effect of the laser
+		Electrolaser feeded by vaporized liquid nitrogen and powered by RF
+		The Electrolaser ray can deal 6HP/tick entity damage for each amplifying module (up to 5, 30HP/tick)
+	Lab Oven
+		Reworked some fluid recipes to be less cycling
+		Rebalanced some material recipes to be more accessible
+	Leching Vat (Formely Mineral Analyzer)
+		Added the Agitator (400 uses) as consumable in place of the Test Tube
+	All Machines
+		Output items can be extracted from any side
+	Misc fixes
+		Enabled the Universal Bucket (beakers will be automatically removed)
+		Some JEI info additions
+		Ingame wiki book totally removed
+		Some code cleaning
+
 v1.40 changelog
 	Various minor fixes
 	Some CraftTweaker tweaks (MineralAnalizer turned to LeachingVat)
