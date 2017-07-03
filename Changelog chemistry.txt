@@ -1,4 +1,39 @@
-v1.41 changelog (Thanks to @TheMaskettaMan for the ideas)
+v1.45 changelog
+	Induction Heating Interface
+		This item has been moved to Rockhounding Core
+		No longer strictly dependant on Chemistry, but craftable from Chemistry only
+		Rockhounding Core has a own configuration for Permanent Induction
+	Cryogenic Distillation Plant
+		Fixed Tier 2 recipes loosing the nbt on crafting
+		Rebalanced some recipes to be less expensinve
+	Lab Oven
+		Custom recipes can add a Catalyst condition to the solute ingredient.
+			False: a solute ingredient will be consumed in each process
+			True: the catalyst will only take damage (items with durability only must be used)
+		Ammonia and Nitric acid recipes rebalanced to be easier with catalysts (200 uses by default)
+		Some additional recipes reworked
+	Misc fixes
+		Some code cleaning
+		Minor fixing
+		Some recipe rebalanced to be less expensive
+		Some recipe error fixing
+
+v1.44 changelog
+	Cryogenic Distillation Plant
+		The refrigerant fluid is no longer consumed per tick but as a slow occasional exhaustion
+		GAN Controller gui reorganized, added a refrigerant availability indicator
+	All machines
+		Lava can be piped in as fuel
+			Refill happens if the power is low enough to host a lava bucket
+			Additional 1000mB of lava can be internally stored
+			Using lava buckets on the machine will also refill the power if possible
+	Lab Oven
+		Fixed Ammonia recipe
+	Misc fixes
+		Added some recipe ingredients alternative
+		Some code cleaning
+
+v1.41 to v1.43 changelog (Thanks to @TheMaskettaMan for the ideas)
 	Liquid Nitrogen production
 		Added the Cryogenic Distillation Plant (multiblock)
 		Produces Liquid Nitrogen by processing air

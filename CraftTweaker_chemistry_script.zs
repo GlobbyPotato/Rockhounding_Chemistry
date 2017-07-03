@@ -100,15 +100,16 @@ mods.rockhounding_chemistry.ChemicalExtractor.inhibit(["vanadium", "osmium", "ir
 //----------------------------------
 //------------Lab Oven--------------
 //----------------------------------
-//Parameters = solute, solvent, reagent, solution
+//Parameters = solute, catalyst, solvent, reagent, solution
 //solute = itemstack representing the solid ingredient of the solution
+//catalyst = if the solution will be considered a Catalyst
 //solvent = the first fluidstack representing the solvent.
 //solventAmount = the needed amount of solvent.
 //reagent = the second fluidstack representing the solvent. It can be null
 //reagentAmount = the needed amount of reagent.
 //solution = the fluidstack representing the final solution
 //solutionAmount = the resulting amount of solution.
-mods.rockhounding_chemistry.LabOven.add(<minecraft:slime_ball>, <liquid:water>, 1000, <liquid:sulfuric_acid>, 500, <liquid:silicone>, 100);
+mods.rockhounding_chemistry.LabOven.add(<minecraft:slime_ball>, false, <liquid:water>, 1000, <liquid:sulfuric_acid>, 500, <liquid:silicone>, 100);
 
 //Parameters = solution
 //solution = the fluidstack representing the solution to remove
