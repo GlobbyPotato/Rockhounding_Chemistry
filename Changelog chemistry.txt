@@ -1,3 +1,21 @@
+v1.47 changelog
+	Redstone laser / Electrolaser
+		Fixed a malfunction of the beams
+		Liquid nitrogen will be no longer consumed per tick but by chance
+	Misc fixes
+		JEI support for Petrographer Table and Flame tests
+		Minor cleaning
+
+v1.46 changelog
+	Cryogenic Distillation Plant
+		The chance to consume the refrigerant will also depend on the system tier
+	Lab Oven
+		More ingredient recipes additions and alternatives
+		Completed the solute to accept any damageable item as catalyst
+		Minor function fixes
+	OWC System
+		Rebalanced some recipes to be less expensive
+
 v1.45 changelog
 	Induction Heating Interface
 		This item has been moved to Rockhounding Core
