@@ -117,7 +117,7 @@
 		mods.rockhounding_chemistry.LabOven.add(<minecraft:slime_ball>, false, <liquid:water>, 1000, <liquid:sulfuric_acid>, 500, <liquid:silicone>, 100);
 
 	//ADD without reagent
-		mods.rockhounding_chemistry.LabOven.add(solute, catalyst, solvent, solventAmount,  solution, solutionAmount);
+		mods.rockhounding_chemistry.LabOven.add(solute, catalyst, solvent, solventAmount, solution, solutionAmount);
 		mods.rockhounding_chemistry.LabOven.add(<minecraft:slime_ball>, false, <liquid:water>, 1000, <liquid:silicone>, 100);
 
 	//REMOVE
