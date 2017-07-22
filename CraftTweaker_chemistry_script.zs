@@ -87,8 +87,8 @@
 	//percentages = the quantity of each ingredient being extracted
 
 	//ADD
-		mods.rockhounding_chemistry.ChemicalExtractor.add(category, input, [element1, element2, element3],[40,20,10]);
-		mods.rockhounding_chemistry.ChemicalExtractor.add("Netheride", <minecraft:blaze_rod>, ["zinc", "uranium", "chromium", "boron"],[percentage1,percentage2,percentage3,percentage4]);
+		mods.rockhounding_chemistry.ChemicalExtractor.add(category, input, [element1, element2, element3, element4],[percentage1, percentage2, percentage3, percentage4]);
+		mods.rockhounding_chemistry.ChemicalExtractor.add("Netheride", <minecraft:blaze_rod>, ["zinc", "uranium", "chromium", "boron"],[40,20,10,10]);
 
 	//REMOVE
 		mods.rockhounding_chemistry.ChemicalExtractor.remove(input);
