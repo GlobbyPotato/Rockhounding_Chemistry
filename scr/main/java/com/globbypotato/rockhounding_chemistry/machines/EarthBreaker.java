@@ -62,7 +62,8 @@ public class EarthBreaker extends Block{
         DOWN_SPIN,
         UP,
         UP_SPIN;
-		@Override
+
+    	@Override
 		public String getName() {
 			return toString().toLowerCase();
 		}

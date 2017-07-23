@@ -5,6 +5,7 @@ import java.util.List;
 import com.globbypotato.rockhounding_chemistry.blocks.itemblocks.CrawlerIB;
 import com.globbypotato.rockhounding_chemistry.enums.EnumCrawler;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.CrawlerUtils;
+import com.globbypotato.rockhounding_core.items.BaseArray;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -23,7 +24,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class MiscItems extends ItemArray{
+public class MiscItems extends ArrayIO{
 	static int crawlerMemoryMeta = 6;
 	static int fluidContainerMeta = 5;
 
@@ -35,7 +36,7 @@ public class MiscItems extends ItemArray{
 	public int getItemStackLimit(ItemStack stack) {
 		if(stack.getItemDamage() == 0 || stack.getItemDamage() == 6 || stack.getItemDamage() == 7 
 		|| stack.getItemDamage() == 8 || stack.getItemDamage() == 9 || stack.getItemDamage() == 10 
-		|| stack.getItemDamage() == 12 || stack.getItemDamage() == 17 || stack.getItemDamage() == 34
+		|| stack.getItemDamage() == 12 || stack.getItemDamage() == 34
 		|| stack.getItemDamage() == 35){
 			return 1;
 		}

@@ -10,15 +10,11 @@ public class TileEntityLaserStorage extends TileEntityLaserBase{
     @Override
     public void readFromNBT(NBTTagCompound compound){
         super.readFromNBT(compound);
-        this.splitSide = compound.getInteger("SplitSide");
-        this.isPulsing = compound.getBoolean("Pulse");
     }
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound){
         super.writeToNBT(compound);
-        compound.setInteger("SplitSide", emittingSide());
-        compound.setBoolean("Pulse", pulseMode());
         return compound;
     }
 

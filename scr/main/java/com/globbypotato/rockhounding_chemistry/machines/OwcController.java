@@ -2,7 +2,6 @@ package com.globbypotato.rockhounding_chemistry.machines;
 
 import javax.annotation.Nullable;
 
-import com.globbypotato.rockhounding_chemistry.blocks.BaseTileBlock;
 import com.globbypotato.rockhounding_chemistry.handlers.GuiHandler;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityOwcController;
 
@@ -19,7 +18,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class OwcController extends BaseTileBlock{
+public class OwcController extends BaseMachine{
     public OwcController(float hardness, float resistance, String name){
         super(name, Material.IRON, TileEntityOwcController.class,GuiHandler.owcControllerID);
 		setHardness(hardness); setResistance(resistance);	

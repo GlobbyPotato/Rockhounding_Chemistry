@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.globbypotato.rockhounding_chemistry.enums.EnumCrawler;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.CrawlerUtils;
+import com.globbypotato.rockhounding_core.blocks.itemblocks.BaseItemBlock;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;

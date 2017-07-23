@@ -3,18 +3,24 @@ package com.globbypotato.rockhounding_chemistry.machines.tileentity;
 import java.util.ArrayList;
 
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
-import com.globbypotato.rockhounding_chemistry.handlers.ModRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiMineralSizer;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.MachineRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.MineralSizerRecipe;
-import com.globbypotato.rockhounding_chemistry.utils.FuelUtils;
-import com.globbypotato.rockhounding_chemistry.utils.ProbabilityStack;
 import com.globbypotato.rockhounding_chemistry.utils.ToolUtils;
-import com.globbypotato.rockhounding_chemistry.utils.Utils;
+import com.globbypotato.rockhounding_core.machines.tileentity.MachineStackHandler;
+import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityMachineTank;
+import com.globbypotato.rockhounding_core.machines.tileentity.WrappedItemHandler;
+import com.globbypotato.rockhounding_core.machines.tileentity.WrappedItemHandler.WriteMode;
+import com.globbypotato.rockhounding_core.utils.CoreUtils;
+import com.globbypotato.rockhounding_core.utils.FuelUtils;
+import com.globbypotato.rockhounding_core.utils.ProbabilityStack;
+import com.globbypotato.rockhounding_core.utils.Utils;
 
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.capability.templates.FluidHandlerConcatenate;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class TileEntityMineralSizer extends TileEntityMachineEnergy {
+public class TileEntityMineralSizer extends TileEntityMachineTank {
 
 	public static final int GOOD_SLOT = 1;
 	public static final int WASTE_SLOT = 2;
@@ -28,16 +34,16 @@ public class TileEntityMineralSizer extends TileEntityMachineEnergy {
 				if(slot == INPUT_SLOT && (hasRecipe(insertingStack) || isValidOredict(insertingStack)) ){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
-				if(slot == FUEL_SLOT && (FuelUtils.isItemFuel(insertingStack) || ToolUtils.hasinductor(insertingStack))){
+				if(slot == FUEL_SLOT && CoreUtils.isPowerSource(insertingStack)){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
-				if(slot == CONSUMABLE_SLOT && ToolUtils.hasConsumable(ToolUtils.gear, insertingStack)){
+				if(slot == CONSUMABLE_SLOT && CoreUtils.hasConsumable(ToolUtils.gear, insertingStack)){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
 				return insertingStack;
 			}
 		};
-		this.automationInput = new WrappedItemHandler(input, WrappedItemHandler.WriteMode.IN_OUT);
+		this.automationInput = new WrappedItemHandler(input, WriteMode.IN);
 	}
 
 	//----------------------- HANDLER -----------------------
@@ -54,14 +60,14 @@ public class TileEntityMineralSizer extends TileEntityMachineEnergy {
 
 	//----------------------- CUSTOM -----------------------
 	public boolean hasRecipe(ItemStack stack){
-		return ModRecipes.sizerRecipes.stream().anyMatch(
+		return MachineRecipes.sizerRecipes.stream().anyMatch(
 				recipe -> stack != null && recipe.getInput() != null && stack.isItemEqual(recipe.getInput()));
 	}
 
 	public static boolean isValidOredict(ItemStack stack) {
 		if(stack != null){
 			ArrayList<Integer> inputIDs = Utils.intArrayToList(OreDictionary.getOreIDs(stack));
-			for(MineralSizerRecipe recipe: ModRecipes.sizerRecipes){
+			for(MineralSizerRecipe recipe: MachineRecipes.sizerRecipes){
 				ArrayList<Integer> recipeIDs = Utils.intArrayToList(OreDictionary.getOreIDs(recipe.getInput()));
 				for(Integer ores: recipeIDs){
 					if(inputIDs.contains(ores)) return true;
@@ -78,7 +84,15 @@ public class TileEntityMineralSizer extends TileEntityMachineEnergy {
 	}
 
 	private MineralSizerRecipe getRecipe (int x){
-		return ModRecipes.sizerRecipes.get(x);
+		return MachineRecipes.sizerRecipes.get(x);
+	}
+
+
+
+	//----------------------- I/O -----------------------
+	@Override
+	public FluidHandlerConcatenate getCombinedTank() {
+		return new FluidHandlerConcatenate(lavaTank);
 	}
 
 
@@ -87,6 +101,7 @@ public class TileEntityMineralSizer extends TileEntityMachineEnergy {
 	@Override
 	public void update(){
 		fuelHandler(input.getStackInSlot(FUEL_SLOT));
+		lavaHandler();
 		if(!worldObj.isRemote){
 			if(canProcess(input.getStackInSlot(INPUT_SLOT))){
 				cookTime++;
@@ -95,20 +110,20 @@ public class TileEntityMineralSizer extends TileEntityMachineEnergy {
 					cookTime = 0;
 					process();
 				}
-				this.markDirtyClient();
 			}
+			this.markDirtyClient();
 		}
 	}
 
 	private boolean canProcess(ItemStack stack) {
 		return allOutputsEmpty()
 			&& hasRecipe(input.getStackInSlot(INPUT_SLOT))
-			&& ToolUtils.hasConsumable(ToolUtils.gear, input.getStackInSlot(CONSUMABLE_SLOT))
+			&& CoreUtils.hasConsumable(ToolUtils.gear, input.getStackInSlot(CONSUMABLE_SLOT))
 			&& getPower() >= getMaxCookTime();
 	}
 
 	private void process() {
-		for(int x = 0; x < ModRecipes.sizerRecipes.size(); x++){
+		for(int x = 0; x < MachineRecipes.sizerRecipes.size(); x++){
 			if(getRecipe(x).getInput() != null && ItemStack.areItemsEqual(getRecipe(x).getInput(), input.getStackInSlot(INPUT_SLOT))){
 				//calculate primary output
 				int mix = getRecipe(x).getOutput().size();

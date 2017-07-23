@@ -3,11 +3,10 @@ package com.globbypotato.rockhounding_chemistry.machines.gui;
 import java.util.Arrays;
 import java.util.List;
 
-import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerMineralSizer;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityMineralSizer;
-import com.globbypotato.rockhounding_chemistry.utils.Translator;
+import com.globbypotato.rockhounding_core.utils.Translator;
 
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -61,20 +60,19 @@ public class GuiMineralSizer extends GuiBase {
         int j = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
         //power bar
-        if (this.mineralSizer.powerCount > 0){
-            int k = this.getBarScaled(50, this.mineralSizer.powerCount, this.mineralSizer.powerMax);
+        if (this.mineralSizer.getPower() > 0){
+            int k = this.getBarScaled(50, this.mineralSizer.getPower(), this.mineralSizer.getPowerMax());
             this.drawTexturedModalRect(i + 11, j + 40 + (50 - k), 176, 51, 10, k);
         }
         //smelt bar
         if (this.mineralSizer.cookTime > 0){
-            int k = this.getBarScaled(31, this.mineralSizer.cookTime, ModConfig.speedSizer);
+            int k = this.getBarScaled(31, this.mineralSizer.cookTime, this.mineralSizer.getMaxCookTime());
             this.drawTexturedModalRect(i + 65, j + 15, 176, 0, k, 31);
         }
         //inductor
         if(this.mineralSizer.hasPermanentInduction()){
             this.drawTexturedModalRect(i + 7, j + 19, 176, 103, 18, 18);
         }
-
     }
 
 }

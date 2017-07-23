@@ -2,7 +2,6 @@ package com.globbypotato.rockhounding_chemistry.machines;
 
 import javax.annotation.Nullable;
 
-import com.globbypotato.rockhounding_chemistry.blocks.BaseTileBlock;
 import com.globbypotato.rockhounding_chemistry.handlers.GuiHandler;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityDekatron;
 import com.globbypotato.rockhounding_chemistry.utils.ToolUtils;
@@ -30,7 +29,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class Dekatron extends BaseTileBlock {
+public class Dekatron extends BaseMachine {
     public static final PropertyInteger LEVEL = PropertyInteger.create("level", 0, 1);
 
     private static final AxisAlignedBB BOUNDBOX_Z = new AxisAlignedBB(0.25D, 0.0D, 0.0D, 0.75D, 1.0D, 1.0D);

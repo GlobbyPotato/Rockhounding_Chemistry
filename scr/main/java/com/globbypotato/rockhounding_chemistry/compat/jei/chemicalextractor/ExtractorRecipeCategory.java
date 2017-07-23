@@ -5,9 +5,10 @@ import javax.annotation.Nonnull;
 import com.globbypotato.rockhounding_chemistry.ModItems;
 import com.globbypotato.rockhounding_chemistry.compat.jei.RHRecipeCategory;
 import com.globbypotato.rockhounding_chemistry.compat.jei.RHRecipeUID;
+import com.globbypotato.rockhounding_chemistry.enums.EnumFluid;
 import com.globbypotato.rockhounding_chemistry.fluids.ModFluids;
+import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiChemicalExtractor;
-import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityMachineEnergy;
 
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IGuiFluidStackGroup;
@@ -57,8 +58,8 @@ public class ExtractorRecipeCategory extends RHRecipeCategory {
 		guiItemStacks.set(INPUT_SLOT, wrapper.getInputs());
 		guiItemStacks.set(TUBE_SLOT, new ItemStack(ModItems.testTube));
 		guiItemStacks.set(CYLINDER_SLOT, new ItemStack(ModItems.cylinder));
-		guiFluidStacks.set(NITR_SLOT, new FluidStack(ModFluids.NITRIC_ACID, TileEntityMachineEnergy.consumedNitr));
-		guiFluidStacks.set(PHOS_SLOT, new FluidStack(ModFluids.PHOSPHORIC_ACID, TileEntityMachineEnergy.consumedPhos));
-		guiFluidStacks.set(CYAN_SLOT, new FluidStack(ModFluids.SODIUM_CYANIDE, TileEntityMachineEnergy.consumedCyan));
+		guiFluidStacks.set(NITR_SLOT, new FluidStack(EnumFluid.pickFluid(EnumFluid.NITRIC_ACID), ModConfig.consumedNitr));
+		guiFluidStacks.set(PHOS_SLOT, new FluidStack(EnumFluid.pickFluid(EnumFluid.PHOSPHORIC_ACID), ModConfig.consumedPhos));
+		guiFluidStacks.set(CYAN_SLOT, new FluidStack(EnumFluid.pickFluid(EnumFluid.SODIUM_CYANIDE), ModConfig.consumedCyan));
 	}
 }

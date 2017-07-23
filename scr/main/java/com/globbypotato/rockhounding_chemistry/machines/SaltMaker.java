@@ -7,8 +7,8 @@ import javax.annotation.Nullable;
 import com.globbypotato.rockhounding_chemistry.ModItems;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
-import com.globbypotato.rockhounding_chemistry.machines.tileentity.IFluidHandlingTile;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntitySaltMaker;
+import com.globbypotato.rockhounding_core.machines.tileentity.IFluidHandlingTile;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;

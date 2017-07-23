@@ -3,7 +3,7 @@ package com.globbypotato.rockhounding_chemistry.machines.gui;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerPetrographerTable;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityPetrographerTable;
-import com.globbypotato.rockhounding_chemistry.utils.Translator;
+import com.globbypotato.rockhounding_core.utils.Translator;
 
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;

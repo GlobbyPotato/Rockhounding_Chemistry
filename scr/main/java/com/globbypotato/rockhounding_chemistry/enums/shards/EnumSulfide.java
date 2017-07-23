@@ -1,6 +1,8 @@
 package com.globbypotato.rockhounding_chemistry.enums.shards;
 
-public enum EnumSulfide {
+import com.globbypotato.rockhounding_chemistry.enums.BaseEnum;
+
+public enum EnumSulfide implements BaseEnum{
 
 	ABRAMOVITE,
 	AIKINITE,
@@ -22,20 +24,25 @@ public enum EnumSulfide {
 	SULVANITE,
 	PATRONITE;
 
+	//---------CUSTOM----------------
+	public static int size(){
+		return values().length;
+	}
+
+	public static String name(int index) {
+		return values()[index].getName();
+	}
+
+	//---------ENUM----------------
 	public static String[] getNames(){
 		String[] temp = new String[size()];
-		for(int i=0;i<size();i++){
+		for(int i = 0; i < size(); i++){
 			temp[i] = getName(i);
 		}
 		return temp;
 	}
 	
 	public static String getName(int index){
-		return EnumSulfide.values()[index].toString().toLowerCase();
+		return name(index);
 	}
-	
-	public static int size(){
-		return values().length;
-	}
-
 }

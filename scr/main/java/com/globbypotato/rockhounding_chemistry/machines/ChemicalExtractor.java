@@ -5,10 +5,9 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import com.globbypotato.rockhounding_chemistry.blocks.BaseTileBlock;
-import com.globbypotato.rockhounding_chemistry.enums.EnumFluidNbt;
 import com.globbypotato.rockhounding_chemistry.handlers.GuiHandler;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityChemicalExtractor;
+import com.globbypotato.rockhounding_core.enums.EnumFluidNbt;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -26,7 +25,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fluids.FluidStack;
 
-public class ChemicalExtractor extends BaseTileBlock{
+public class ChemicalExtractor extends BaseMachine{
     public ChemicalExtractor(float hardness, float resistance, String name){
         super(name, Material.IRON, TileEntityChemicalExtractor.class, GuiHandler.chemicalExtractorID);
 		setHardness(hardness); 
@@ -34,19 +33,14 @@ public class ChemicalExtractor extends BaseTileBlock{
 		setHarvestLevel("pickaxe", 0);
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
     }
-    
+
     @Override
     public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack){
+    	super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
         worldIn.setBlockState(pos, state.withProperty(FACING, placer.getHorizontalFacing()), 2);
 		if(stack.hasTagCompound()){
-        	int fuel = stack.getTagCompound().getInteger("Fuel");
-        	int energy = stack.getTagCompound().getInteger("Energy");
-        	boolean induction = stack.getTagCompound().getBoolean("Induction");
         	TileEntityChemicalExtractor te = (TileEntityChemicalExtractor) worldIn.getTileEntity(pos);
 			if(te != null){
-            	te.powerCount = fuel;
-            	te.redstoneCount = energy;
-            	te.permanentInductor = induction;
         		if(stack.getTagCompound().hasKey(EnumFluidNbt.NITR.nameTag())){
         			te.nitrTank.setFluid(FluidStack.loadFluidStackFromNBT(stack.getTagCompound().getCompoundTag(EnumFluidNbt.NITR.nameTag())));
         		}
@@ -85,13 +79,11 @@ public class ChemicalExtractor extends BaseTileBlock{
 	private void addNbt(ItemStack itemstack, TileEntity tileentity) {
 		TileEntityChemicalExtractor extractor = ((TileEntityChemicalExtractor)tileentity);
 		itemstack.setTagCompound(new NBTTagCompound());
+    	addPowerNbt(itemstack, tileentity);
 		NBTTagCompound sulf = new NBTTagCompound();
 		NBTTagCompound phos = new NBTTagCompound();
 		NBTTagCompound cyan = new NBTTagCompound();
 		NBTTagList quantityList = new NBTTagList();
-		itemstack.getTagCompound().setInteger("Fuel", extractor.powerCount);
-		itemstack.getTagCompound().setInteger("Energy", extractor.redstoneCount);
-		itemstack.getTagCompound().setBoolean("Induction", extractor.permanentInductor);
 		if(extractor.nitrTank.getFluid() != null){
 			extractor.nitrTank.getFluid().writeToNBT(sulf);
 			itemstack.getTagCompound().setTag(EnumFluidNbt.NITR.nameTag(), sulf);

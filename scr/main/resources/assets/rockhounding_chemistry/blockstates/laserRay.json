@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "facing=down":  { "model": "rockhounding_chemistry:laserRay", "x":90},
+        "facing=up":    { "model": "rockhounding_chemistry:laserRay", "x":90},
+        "facing=south": { "model": "rockhounding_chemistry:laserRay" },
+        "facing=north": { "model": "rockhounding_chemistry:laserRay", "y": 180},
+        "facing=east":  { "model": "rockhounding_chemistry:laserRay", "y": 270 },
+        "facing=west":  { "model": "rockhounding_chemistry:laserRay", "y": 90}
+    }
+}

@@ -20,6 +20,10 @@ public class MetalAlloyerRecipe {
 		this.scrap = scrap;
 	}
 
+	public MetalAlloyerRecipe(String display, List<String> dust, List<Integer> quantity, ItemStack output){
+		this(display, dust, quantity, output, null);
+	}
+
 	public ArrayList<String> getDusts() {
 		ArrayList<String> temp = new ArrayList<String>();
 		if(dusts != null){

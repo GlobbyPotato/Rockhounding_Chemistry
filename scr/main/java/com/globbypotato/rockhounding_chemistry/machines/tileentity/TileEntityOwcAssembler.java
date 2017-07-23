@@ -7,6 +7,10 @@ import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.machines.OwcAssembler;
 import com.globbypotato.rockhounding_chemistry.machines.OwcController;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiOwcAssembler;
+import com.globbypotato.rockhounding_core.machines.tileentity.MachineStackHandler;
+import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityMachineInv;
+import com.globbypotato.rockhounding_core.machines.tileentity.WrappedItemHandler;
+import com.globbypotato.rockhounding_core.machines.tileentity.WrappedItemHandler.WriteMode;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -28,7 +32,7 @@ public class TileEntityOwcAssembler extends TileEntityMachineInv {
     private static final int SLOT_GENERATOR = 5;
     private static final int SLOT_STORAGE = 6;
     private static final int SLOT_CONTROLLER = 7;
-    
+
 	ItemStack owcBulkhead = owcPart(0);
 	ItemStack owcConcrete = owcPart(1);
 	ItemStack owcDuct = owcPart(2);
@@ -71,7 +75,7 @@ public class TileEntityOwcAssembler extends TileEntityMachineInv {
 				return insertingStack;
 			}
 		};
-		this.automationInput = new WrappedItemHandler(input, WrappedItemHandler.WriteMode.IN_OUT);
+		this.automationInput = new WrappedItemHandler(input, WriteMode.IN);
 	}
 
 	private static ItemStack owcPart(int meta){

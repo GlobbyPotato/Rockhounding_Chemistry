@@ -1,0 +1,16 @@
+{
+    "variants": {
+        "type=vessel_i": 	{"model" : "rockhounding_chemistry:ganBlocks_vessel"},
+        "type=chiller_i": 	{"model" : "rockhounding_chemistry:ganBlocks_chiller"},
+		"type=condenser_i": {"model" : "rockhounding_chemistry:ganBlocks_condenser"},
+		"type=turbine_i": 	{"model" : "rockhounding_chemistry:ganBlocks_turbine"},
+		"type=tank_i": 		{"model" : "rockhounding_chemistry:ganBlocks_tank"},
+		"type=tower_i": 	{"model" : "rockhounding_chemistry:ganBlocks_tower"},
+        "type=vessel_ii": 	{"model" : "rockhounding_chemistry:ganBlocks_vessel"},
+        "type=chiller_ii": 	{"model" : "rockhounding_chemistry:ganBlocks_chiller"},
+		"type=condenser_ii":{"model" : "rockhounding_chemistry:ganBlocks_condenser"},
+		"type=turbine_ii": 	{"model" : "rockhounding_chemistry:ganBlocks_turbine"},
+		"type=tank_ii": 	{"model" : "rockhounding_chemistry:ganBlocks_tank"},
+		"type=tower_ii": 	{"model" : "rockhounding_chemistry:ganBlocks_tower"}
+    }
+}

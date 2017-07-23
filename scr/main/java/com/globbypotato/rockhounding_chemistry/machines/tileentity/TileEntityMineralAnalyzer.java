@@ -1,33 +1,27 @@
 package com.globbypotato.rockhounding_chemistry.machines.tileentity;
 
-import com.globbypotato.rockhounding_chemistry.fluids.ModFluids;
+import com.globbypotato.rockhounding_chemistry.enums.EnumFluid;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
-import com.globbypotato.rockhounding_chemistry.handlers.ModRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiMineralAnalyzer;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.MachineRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.MineralAnalyzerRecipe;
-import com.globbypotato.rockhounding_chemistry.utils.FuelUtils;
-import com.globbypotato.rockhounding_chemistry.utils.ProbabilityStack;
 import com.globbypotato.rockhounding_chemistry.utils.ToolUtils;
+import com.globbypotato.rockhounding_core.machines.tileentity.MachineStackHandler;
+import com.globbypotato.rockhounding_core.machines.tileentity.TemplateStackHandler;
+import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityMachineTank;
+import com.globbypotato.rockhounding_core.machines.tileentity.WrappedItemHandler;
+import com.globbypotato.rockhounding_core.machines.tileentity.WrappedItemHandler.WriteMode;
+import com.globbypotato.rockhounding_core.utils.CoreUtils;
+import com.globbypotato.rockhounding_core.utils.ProbabilityStack;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerConcatenate;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileEntityMineralAnalyzer extends TileEntityMachineEnergy implements IFluidHandlingTile{
+public class TileEntityMineralAnalyzer extends TileEntityMachineTank{
 
 	private ItemStackHandler template = new TemplateStackHandler(1);
 
@@ -46,7 +40,7 @@ public class TileEntityMineralAnalyzer extends TileEntityMachineEnergy implement
 		sulfTank = new FluidTank(1000 + ModConfig.machineTank){
 			@Override  
 			public boolean canFillFluidType(FluidStack fluid){
-		        return fluid.getFluid() == ModFluids.SULFURIC_ACID;
+		        return fluid.getFluid().equals(EnumFluid.pickFluid(EnumFluid.SULFURIC_ACID));
 		    }
 
 			@Override
@@ -59,7 +53,7 @@ public class TileEntityMineralAnalyzer extends TileEntityMachineEnergy implement
 		chloTank = new FluidTank(1000 + ModConfig.machineTank){
 			@Override  
 			public boolean canFillFluidType(FluidStack fluid){
-		        return fluid.getFluid() == ModFluids.HYDROCHLORIC_ACID;
+		        return fluid.getFluid().equals(EnumFluid.pickFluid(EnumFluid.HYDROCHLORIC_ACID));
 		    }
 
 			@Override
@@ -72,7 +66,7 @@ public class TileEntityMineralAnalyzer extends TileEntityMachineEnergy implement
 		fluoTank = new FluidTank(1000 + ModConfig.machineTank){
 			@Override  
 			public boolean canFillFluidType(FluidStack fluid){
-		        return fluid.getFluid() == ModFluids.HYDROFLUORIC_ACID;
+		        return fluid.getFluid().equals(EnumFluid.pickFluid(EnumFluid.HYDROFLUORIC_ACID));
 		    }
 
 			@Override
@@ -88,25 +82,25 @@ public class TileEntityMineralAnalyzer extends TileEntityMachineEnergy implement
 				if(slot == INPUT_SLOT && hasRecipe(insertingStack)){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
-				if(slot == FUEL_SLOT && (FuelUtils.isItemFuel(insertingStack) || ToolUtils.hasinductor(insertingStack))){
+				if(slot == FUEL_SLOT && CoreUtils.isPowerSource(insertingStack)){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
-				if(slot == CONSUMABLE_SLOT && ToolUtils.hasConsumable(ToolUtils.testTube, insertingStack)){
+				if(slot == CONSUMABLE_SLOT && CoreUtils.hasConsumable(ToolUtils.agitator, insertingStack)){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
-				if(slot == SULFUR_SLOT && handleBucket(insertingStack, ModFluids.SULFURIC_ACID, ModFluids.sulfuricAcidBeaker) ) {
+				if(slot == SULFUR_SLOT && handleBucket(insertingStack, EnumFluid.pickFluid(EnumFluid.SULFURIC_ACID)) ) {
 					return super.insertItem(slot, insertingStack, simulate);
 				}
-				if(slot == CHLOR_SLOT && handleBucket(insertingStack, ModFluids.HYDROCHLORIC_ACID, ModFluids.hydrochloricAcidBeaker) ){
+				if(slot == CHLOR_SLOT && handleBucket(insertingStack, EnumFluid.pickFluid(EnumFluid.HYDROCHLORIC_ACID)) ){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
-				if(slot == FLUO_SLOT && handleBucket(insertingStack, ModFluids.HYDROFLUORIC_ACID, ModFluids.hydrofluoricAcidBeaker) ){
+				if(slot == FLUO_SLOT && handleBucket(insertingStack, EnumFluid.pickFluid(EnumFluid.HYDROFLUORIC_ACID)) ){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
 				return insertingStack;
 			}
 		};
-		this.automationInput = new WrappedItemHandler(input, WrappedItemHandler.WriteMode.IN_OUT);
+		this.automationInput = new WrappedItemHandler(input, WriteMode.IN);
 	}
 
 
@@ -129,17 +123,12 @@ public class TileEntityMineralAnalyzer extends TileEntityMachineEnergy implement
 
 	//----------------------- CUSTOM -----------------------
 	public boolean hasRecipe(ItemStack stack){
-		return ModRecipes.analyzerRecipes.stream().anyMatch(
+		return MachineRecipes.analyzerRecipes.stream().anyMatch(
 				recipe -> stack != null && recipe.getInput() != null && stack.isItemEqual(recipe.getInput()));
 	}
 
-	private boolean handleBucket(ItemStack insertingStack, Fluid fluid, Item beaker){
-		return ToolUtils.isBucketType(insertingStack) 
-			&& FluidUtil.getFluidContained(insertingStack).containsFluid(new FluidStack(fluid, Fluid.BUCKET_VOLUME));
-	}
-
 	private MineralAnalyzerRecipe getRecipe (int x){
-		return ModRecipes.analyzerRecipes.get(x);
+		return MachineRecipes.analyzerRecipes.get(x);
 	}
 
 
@@ -175,28 +164,8 @@ public class TileEntityMineralAnalyzer extends TileEntityMachineEnergy implement
 	}
 
 	@Override
-	public boolean interactWithBucket(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand,
-			ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
-		boolean didFill = FluidUtil.interactWithFluidHandler(heldItem, this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side), player);
-		this.markDirtyClient();
-		return didFill;
-	}
-
-	@Override
-	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-		if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) return true;
-		else return super.hasCapability(capability, facing);
-	}
-
-	@Override
-	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-		if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
-			return (T) getCombinedTank();
-		return super.getCapability(capability, facing);
-	}
-	
 	public FluidHandlerConcatenate getCombinedTank(){
-		return new FluidHandlerConcatenate(sulfTank,chloTank,fluoTank);
+		return new FluidHandlerConcatenate(lavaTank, sulfTank, chloTank, fluoTank);
 	}
 
 
@@ -205,6 +174,7 @@ public class TileEntityMineralAnalyzer extends TileEntityMachineEnergy implement
 	@Override
 	public void update(){
 		fuelHandler(input.getStackInSlot(FUEL_SLOT));
+		lavaHandler();
 		if(!worldObj.isRemote){
 			emptyContainer(SULFUR_SLOT, sulfTank);
 			emptyContainer(CHLOR_SLOT, chloTank);
@@ -224,15 +194,15 @@ public class TileEntityMineralAnalyzer extends TileEntityMachineEnergy implement
 	private boolean canAnalyze() {
 		return output.getStackInSlot(OUTPUT_SLOT) == null
 			&& hasRecipe(input.getStackInSlot(INPUT_SLOT))
-			&& ToolUtils.hasConsumable(ToolUtils.testTube, input.getStackInSlot(CONSUMABLE_SLOT))
+			&& CoreUtils.hasConsumable(ToolUtils.agitator, input.getStackInSlot(CONSUMABLE_SLOT))
 			&& getPower() >= getCookTimeMax()
-			&& this.sulfTank.getFluidAmount() >= consumedSulf
-			&& this.chloTank.getFluidAmount() >= consumedChlo
-			&& this.fluoTank.getFluidAmount() >= consumedFluo;
+			&& this.sulfTank.getFluidAmount() >= ModConfig.consumedSulf
+			&& this.chloTank.getFluidAmount() >= ModConfig.consumedChlo
+			&& this.fluoTank.getFluidAmount() >= ModConfig.consumedFluo;
 	}
 
 	private void analyze(){
-		for(int x = 0; x < ModRecipes.analyzerRecipes.size(); x++){
+		for(int x = 0; x < MachineRecipes.analyzerRecipes.size(); x++){
 			if(getRecipe(x).getInput() != null && ItemStack.areItemsEqual(getRecipe(x).getInput(), input.getStackInSlot(INPUT_SLOT))){
 				int mix = getRecipe(x).getOutput().size();
 				if(mix > 1){
@@ -245,9 +215,9 @@ public class TileEntityMineralAnalyzer extends TileEntityMachineEnergy implement
 		}
 		input.damageSlot(CONSUMABLE_SLOT);
 		input.decrementSlot(INPUT_SLOT);
-		this.sulfTank.getFluid().amount-= consumedSulf;
-		this.chloTank.getFluid().amount-= consumedChlo;
-		this.fluoTank.getFluid().amount-= consumedFluo;
+		input.drainOrClean(sulfTank, ModConfig.consumedSulf, false);
+		input.drainOrClean(chloTank, ModConfig.consumedChlo, false);
+		input.drainOrClean(fluoTank, ModConfig.consumedFluo, false);
 	}
 
 }

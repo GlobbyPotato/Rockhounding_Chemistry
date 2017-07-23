@@ -6,7 +6,7 @@ import java.util.List;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerMetalAlloyer;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityMetalAlloyer;
-import com.globbypotato.rockhounding_chemistry.utils.Translator;
+import com.globbypotato.rockhounding_core.utils.Translator;
 
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -80,8 +80,8 @@ public class GuiMetalAlloyer extends GuiBase {
 		this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
 
         //power bar
-        if (this.metalAlloyer.powerCount > 0){
-            int k = this.getBarScaled(50, this.metalAlloyer.powerCount, this.metalAlloyer.powerMax);
+        if (this.metalAlloyer.getPower() > 0){
+            int k = this.getBarScaled(50, this.metalAlloyer.getPower(), this.metalAlloyer.getPowerMax());
             this.drawTexturedModalRect(i + 11, j + 40 + (50 - k), 176, 27, 10, k);
         }
 
@@ -96,7 +96,7 @@ public class GuiMetalAlloyer extends GuiBase {
             this.drawTexturedModalRect(i + 7, j + 19, 176, 79, 18, 18);
         }
 
-        //activayion
+		//activayion
         if(this.metalAlloyer.activation){
             this.drawTexturedModalRect(i + 34, j + 53, 176, 97, 16, 16);
         }

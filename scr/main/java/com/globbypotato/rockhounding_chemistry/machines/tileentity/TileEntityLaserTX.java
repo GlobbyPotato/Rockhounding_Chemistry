@@ -45,7 +45,7 @@ public class TileEntityLaserTX extends TileEntityLaserBase {
 		    		}
 			    }else{
 			    	if(worldObj.getBlockState(pos.offset(enumfacing)).getBlock() == beam()){
-					    EnumFacing beamfacing = worldObj.getBlockState(pos.offset(enumfacing)).getValue(txFacing());
+					    EnumFacing beamfacing = worldObj.getBlockState(pos.offset(enumfacing)).getValue(beamFacing());
 					    if(beamfacing == enumfacing){
 					    	worldObj.setBlockState(pos.offset(enumfacing), air());
 					    }

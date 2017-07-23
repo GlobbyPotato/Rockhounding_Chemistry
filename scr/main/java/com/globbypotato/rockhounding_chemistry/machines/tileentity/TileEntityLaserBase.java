@@ -1,8 +1,10 @@
 package com.globbypotato.rockhounding_chemistry.machines.tileentity;
 
 import com.globbypotato.rockhounding_chemistry.ModBlocks;
+import com.globbypotato.rockhounding_chemistry.machines.ElectroLaser;
 import com.globbypotato.rockhounding_chemistry.machines.LaserBeam;
 import com.globbypotato.rockhounding_chemistry.machines.LaserSplitter;
+import com.globbypotato.rockhounding_chemistry.machines.LaserStabilizer;
 import com.globbypotato.rockhounding_chemistry.machines.LaserTX;
 
 import net.minecraft.block.Block;
@@ -53,6 +55,10 @@ public class TileEntityLaserBase extends TileEntity implements ITickable{
 		return LaserTX.FACING;
 	}
 
+	public PropertyDirection electroFacing(){
+		return ElectroLaser.FACING;
+	}
+
 	public PropertyDirection nodeFacing(){
 		return LaserSplitter.FACING;
 	}
@@ -76,4 +82,21 @@ public class TileEntityLaserBase extends TileEntity implements ITickable{
 	public boolean pulseMode(){
 		return isPulsing;
 	}
+	
+	public Block electro(){
+		return ModBlocks.electroLaser;
+	}
+
+	public Block amplifier(){
+		return ModBlocks.laserAmplifier;
+	}
+
+	public PropertyDirection ampliFacing(){
+		return LaserStabilizer.FACING;
+	}
+
+	public Block ray(){
+		return ModBlocks.laserRay;
+	}
+
 }

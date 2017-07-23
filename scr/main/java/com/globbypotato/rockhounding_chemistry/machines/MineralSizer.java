@@ -2,13 +2,11 @@ package com.globbypotato.rockhounding_chemistry.machines;
 
 import javax.annotation.Nullable;
 
-import com.globbypotato.rockhounding_chemistry.blocks.BaseTileBlock;
 import com.globbypotato.rockhounding_chemistry.handlers.GuiHandler;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityMineralSizer;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -19,27 +17,13 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class MineralSizer extends BaseTileBlock{
+public class MineralSizer extends BaseMachine{
     public MineralSizer(float hardness, float resistance, String name){
         super(name, Material.IRON, TileEntityMineralSizer.class,GuiHandler.mineralSizerID);
 		setHardness(hardness);
 		setResistance(resistance);	
 		setHarvestLevel("pickaxe", 0);
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
-    }
-
-    @Override
-    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack){
-        worldIn.setBlockState(pos, state.withProperty(FACING, placer.getHorizontalFacing()), 2);
-		if(stack.hasTagCompound()){
-        	int fuel = stack.getTagCompound().getInteger("Fuel");
-        	boolean induction = stack.getTagCompound().getBoolean("Induction");
-        	TileEntityMineralSizer te = (TileEntityMineralSizer) worldIn.getTileEntity(pos);
-			if(te != null){
-            	te.powerCount = fuel;
-            	te.permanentInductor = induction;
-			}
-		}
     }
 
     @Override
@@ -59,7 +43,6 @@ public class MineralSizer extends BaseTileBlock{
 	private void addNbt(ItemStack itemstack, TileEntity tileentity) {
 		TileEntityMineralSizer sizer = ((TileEntityMineralSizer)tileentity);
 		itemstack.setTagCompound(new NBTTagCompound());
-		itemstack.getTagCompound().setInteger("Fuel", sizer.powerCount);
-		itemstack.getTagCompound().setBoolean("Induction", sizer.permanentInductor);
+    	addPowerNbt(itemstack, tileentity);
 	}
 }

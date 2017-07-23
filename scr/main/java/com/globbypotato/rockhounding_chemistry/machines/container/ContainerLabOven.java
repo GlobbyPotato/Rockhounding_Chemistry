@@ -1,6 +1,6 @@
 package com.globbypotato.rockhounding_chemistry.machines.container;
 
-import com.globbypotato.rockhounding_chemistry.handlers.ModRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.MachineRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityLabOven;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -46,7 +46,7 @@ public class ContainerLabOven extends ContainerBase<TileEntityLabOven> {
 			}
     		return null;
     	}else if(slot == 7){
-    		if(this.tile.recipeIndex < ModRecipes.labOvenRecipes.size() - 1){
+    		if(this.tile.recipeIndex < MachineRecipes.labOvenRecipes.size() - 1){
     			this.tile.recipeIndex++; 
     			this.tile.activation = false;
     		}

@@ -1,7 +1,8 @@
 package com.globbypotato.rockhounding_chemistry.items.tools;
 
 import com.globbypotato.rockhounding_chemistry.entities.EntitySmoke;
-import com.globbypotato.rockhounding_chemistry.items.ItemBase;
+import com.globbypotato.rockhounding_chemistry.handlers.Reference;
+import com.globbypotato.rockhounding_core.items.BaseItem;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
@@ -13,10 +14,11 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 
-public class SplashSmoke extends ItemBase{
+public class SplashSmoke extends BaseItem{
 
 	public SplashSmoke(String name) {
 		super(name);
+		setCreativeTab(Reference.RockhoundingChemistry);
 	}
 
     public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand){

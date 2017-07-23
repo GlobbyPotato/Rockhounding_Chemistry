@@ -2,8 +2,9 @@ package com.globbypotato.rockhounding_chemistry.blocks;
 
 import java.util.List;
 
-import com.globbypotato.rockhounding_chemistry.blocks.itemblocks.MetaIB;
 import com.globbypotato.rockhounding_chemistry.enums.EnumOwc;
+import com.globbypotato.rockhounding_core.blocks.BaseMetaBlock;
+import com.globbypotato.rockhounding_core.blocks.itemblocks.BaseMetaIB;
 
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -20,13 +21,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class OwcBlocks extends BaseMetaBlock {
+public class OwcBlocks extends BlockIO {
 	public static final PropertyEnum VARIANT = PropertyEnum.create("type", EnumOwc.class);
 
     public OwcBlocks(Material material, String[] array, float hardness, float resistance, String name, SoundType stepSound){
         super(material, array, hardness, resistance, name, stepSound);
-		GameRegistry.register(this);
-		GameRegistry.register(new MetaIB(this, EnumOwc.getNames()).setRegistryName(name));
+		GameRegistry.register(new BaseMetaIB(this, EnumOwc.getNames()).setRegistryName(name));
 		setHarvestLevel("pickaxe", 0);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(VARIANT, EnumOwc.values()[0]));
     }
@@ -84,5 +84,4 @@ public class OwcBlocks extends BaseMetaBlock {
 			}
 		}
 	}
-
 }

@@ -3,12 +3,11 @@ package com.globbypotato.rockhounding_chemistry.machines.gui;
 import java.util.Arrays;
 import java.util.List;
 
-import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerMineralAnalyzer;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityMineralAnalyzer;
-import com.globbypotato.rockhounding_chemistry.utils.RenderUtils;
-import com.globbypotato.rockhounding_chemistry.utils.Translator;
+import com.globbypotato.rockhounding_core.utils.RenderUtils;
+import com.globbypotato.rockhounding_core.utils.Translator;
 
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -41,7 +40,7 @@ public class GuiMineralAnalyzer extends GuiBase {
 	   int y = (this.height - this.ySize) / 2;
 	   //bars progression (fuel-redstone)
 	   if(mouseX >= 9+x && mouseX <= 18+x && mouseY >= 54+y && mouseY <= 104+y){
-		   String text = this.mineralAnalyzer.powerCount + "/" + this.mineralAnalyzer.powerMax + " ticks";
+		   String text = this.mineralAnalyzer.getPower() + "/" + this.mineralAnalyzer.getPowerMax() + " ticks";
 		   List<String> tooltip = Arrays.asList(text);
 		   drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
 	   }
@@ -107,14 +106,14 @@ public class GuiMineralAnalyzer extends GuiBase {
         int j = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
         //power bar
-        if (this.mineralAnalyzer.powerCount > 0){
-            int k = this.getBarScaled(50, this.mineralAnalyzer.powerCount, this.mineralAnalyzer.powerMax);
+        if (this.mineralAnalyzer.getPower() > 0){
+            int k = this.getBarScaled(50, this.mineralAnalyzer.getPower(), this.mineralAnalyzer.getPowerMax());
             this.drawTexturedModalRect(i + 11, j + 54 + (50 - k), 176, 51, 10, k);
         }
         //smelt bar
         if (this.mineralAnalyzer.cookTime > 0){
-            int k = this.getBarScaled(51, this.mineralAnalyzer.cookTime, ModConfig.speedAnalyzer);
-            this.drawTexturedModalRect(i + 32, j + 42, 176, 0, 27, k);
+            int k = this.getBarScaled(51, this.mineralAnalyzer.cookTime, this.mineralAnalyzer.getCookTimeMax());
+            this.drawTexturedModalRect(i + 32, j + 52, 176, 0, 27, k);
         }
         
         //valve
@@ -127,7 +126,7 @@ public class GuiMineralAnalyzer extends GuiBase {
             this.drawTexturedModalRect(i + 7, j + 33, 176, 119, 18, 18);
         }
 
-		if(mineralAnalyzer.sulfTank.getFluid() != null){
+        if(mineralAnalyzer.sulfTank.getFluid() != null){
 			FluidStack temp = mineralAnalyzer.sulfTank.getFluid();
 			int capacity = mineralAnalyzer.sulfTank.getCapacity();
 			if(temp.amount > 5){

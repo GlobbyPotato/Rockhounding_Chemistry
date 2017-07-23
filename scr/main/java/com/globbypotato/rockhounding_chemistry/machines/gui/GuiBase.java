@@ -1,7 +1,7 @@
 package com.globbypotato.rockhounding_chemistry.machines.gui;
 
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerBase;
-import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityMachineBase;
+import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityMachineBase;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.util.ResourceLocation;

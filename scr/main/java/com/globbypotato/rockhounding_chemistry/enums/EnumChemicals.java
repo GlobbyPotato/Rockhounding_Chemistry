@@ -1,8 +1,6 @@
 package com.globbypotato.rockhounding_chemistry.enums;
 
-import net.minecraft.util.IStringSerializable;
-
-public enum EnumChemicals implements IStringSerializable {
+public enum EnumChemicals implements BaseEnum {
 	ACRYLIC_COMPOST,
 	SALT,
 	SULFUR_COMPOST,
@@ -20,25 +18,26 @@ public enum EnumChemicals implements IStringSerializable {
 	CRACKED_CHARCOAL,
 	RUTILE_COMPOST;
 
-	@Override
-	public String getName() {
-		return toString().toLowerCase();
-	}
-
+	//---------CUSTOM----------------
 	public static int size(){
 		return values().length;
 	}
 
+	public static String name(int index) {
+		return values()[index].getName();
+	}
+
+	//---------ENUM----------------
 	public static String[] getNames(){
 		String[] temp = new String[size()];
-		for(int i=0;i<size();i++){
+		for(int i = 0; i < size(); i++){
 			temp[i] = getName(i);
 		}
 		return temp;
 	}
 
 	public static String getName(int index){
-		return EnumChemicals.values()[index].getName();
+		return name(index);
 	}
 
 }

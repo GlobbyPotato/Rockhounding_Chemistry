@@ -6,8 +6,8 @@ import com.globbypotato.rockhounding_chemistry.ModItems;
 import com.globbypotato.rockhounding_chemistry.compat.jei.RHRecipeCategory;
 import com.globbypotato.rockhounding_chemistry.compat.jei.RHRecipeUID;
 import com.globbypotato.rockhounding_chemistry.fluids.ModFluids;
+import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiMineralAnalyzer;
-import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityMachineEnergy;
 
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IGuiFluidStackGroup;
@@ -31,7 +31,7 @@ public class AnalyzerRecipeCategory extends RHRecipeCategory {
 	private final static ResourceLocation guiTexture = GuiMineralAnalyzer.TEXTURE_REF;
 
 	public AnalyzerRecipeCategory(IGuiHelper guiHelper) {
-		super(guiHelper.createDrawable(guiTexture, 26, 16, 140, 90), "jei.Analyzer.name");
+		super(guiHelper.createDrawable(guiTexture, 26, 16, 140, 90), "jei.analyzer.name");
 	}
 
 	@Nonnull
@@ -50,16 +50,16 @@ public class AnalyzerRecipeCategory extends RHRecipeCategory {
 		guiFluidStacks.init(CHLOR_SLOT, true, 101,10, 16, 60, 100, false, null);
 		guiFluidStacks.init(FLUO_SLOT, true, 123,10, 16, 60, 100, false, null);
 		
-		guiFluidStacks.set(SULFURIC_SLOT, new FluidStack(ModFluids.SULFURIC_ACID, TileEntityMachineEnergy.consumedSulf));
-		guiFluidStacks.set(CHLOR_SLOT, new FluidStack(ModFluids.HYDROCHLORIC_ACID, TileEntityMachineEnergy.consumedChlo));
-		guiFluidStacks.set(FLUO_SLOT, new FluidStack(ModFluids.HYDROFLUORIC_ACID, TileEntityMachineEnergy.consumedFluo));
+		guiFluidStacks.set(SULFURIC_SLOT, new FluidStack(ModFluids.SULFURIC_ACID, ModConfig.consumedSulf));
+		guiFluidStacks.set(CHLOR_SLOT, new FluidStack(ModFluids.HYDROCHLORIC_ACID, ModConfig.consumedChlo));
+		guiFluidStacks.set(FLUO_SLOT, new FluidStack(ModFluids.HYDROFLUORIC_ACID, ModConfig.consumedFluo));
 
-		guiItemStacks.init(INPUT_SLOT, true, 11, 7);
+		guiItemStacks.init(INPUT_SLOT, true, 11, 17);
 		guiItemStacks.init(OUTPUT_SLOT, false, 43, 43);
 		guiItemStacks.init(TUBE_SLOT, true, 43, 17);
 
 		guiItemStacks.set(INPUT_SLOT, wrapper.getInputs());
 		guiItemStacks.set(OUTPUT_SLOT, wrapper.getOutputs());
-		guiItemStacks.set(TUBE_SLOT, new ItemStack(ModItems.testTube));
+		guiItemStacks.set(TUBE_SLOT, new ItemStack(ModItems.agitator));
 	}
 }

@@ -7,7 +7,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import com.globbypotato.rockhounding_chemistry.compat.jei.RHRecipeWrapper;
-import com.globbypotato.rockhounding_chemistry.handlers.ModRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.MachineRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.MineralSizerRecipe;
 
 import mezz.jei.api.ingredients.IIngredients;
@@ -21,7 +21,7 @@ public class SizerRecipeWrapper extends RHRecipeWrapper<MineralSizerRecipe> {
 
 	public static List<SizerRecipeWrapper> getRecipes() {
 		List<SizerRecipeWrapper> recipes = new ArrayList<>();
-		for (MineralSizerRecipe recipe : ModRecipes.sizerRecipes) {
+		for (MineralSizerRecipe recipe : MachineRecipes.sizerRecipes) {
 			recipes.add(new SizerRecipeWrapper(recipe));
 		}
 		return recipes;

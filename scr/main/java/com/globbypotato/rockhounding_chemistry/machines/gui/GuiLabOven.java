@@ -6,8 +6,8 @@ import java.util.List;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerLabOven;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityLabOven;
-import com.globbypotato.rockhounding_chemistry.utils.RenderUtils;
-import com.globbypotato.rockhounding_chemistry.utils.Translator;
+import com.globbypotato.rockhounding_core.utils.RenderUtils;
+import com.globbypotato.rockhounding_core.utils.Translator;
 
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -39,7 +39,7 @@ public class GuiLabOven extends GuiBase {
 		int y = (this.height - this.ySize) / 2;
 
 		//fuel
-		if(mouseX >= 10+x && mouseX <= 21+x && mouseY >= 48+y && mouseY <= 99+y){
+		if(mouseX >= 10+x && mouseX <= 21+x && mouseY >= 50+y && mouseY <= 101+y){
 			String text = this.labOven.getPower() + "/" + this.labOven.getPowerMax() + " ticks";
 			List<String> tooltip = Arrays.asList(text);
 			drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
@@ -53,12 +53,12 @@ public class GuiLabOven extends GuiBase {
 		//input tank
 		if(mouseX>= 125+x && mouseX <= 146+x && mouseY >= 33+y && mouseY <= 99+y){
 			int fluidAmount = 0;
-			if(labOven.inputTank.getFluid() != null){
-				fluidAmount = this.labOven.inputTank.getFluidAmount();
+			if(labOven.solventTank.getFluid() != null){
+				fluidAmount = this.labOven.solventTank.getFluidAmount();
 			}
-			String text = fluidAmount + "/" + this.labOven.inputTank.getCapacity() + " mb ";
+			String text = fluidAmount + "/" + this.labOven.solventTank.getCapacity() + " mb ";
 			String liquid = "";
-			if(labOven.inputTank.getFluid() != null) liquid = labOven.inputTank.getFluid().getLocalizedName();
+			if(labOven.solventTank.getFluid() != null) liquid = labOven.solventTank.getFluid().getLocalizedName();
 			List<String> tooltip = Arrays.asList(text, liquid);
 			drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
 		}
@@ -125,21 +125,21 @@ public class GuiLabOven extends GuiBase {
 		int j = (this.height - this.ySize) / 2;
 		this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
         //power bar
-        if (this.labOven.powerCount > 0){
-            int k = this.getBarScaled(50, this.labOven.powerCount, this.labOven.powerMax);
-            this.drawTexturedModalRect(i + 11, j + 49 + (50 - k), 176, 27, 10, k);
+        if (this.labOven.getPower() > 0){
+            int k = this.getBarScaled(50, this.labOven.getPower(), this.labOven.getPowerMax());
+            this.drawTexturedModalRect(i + 11, j + 51 + (50 - k), 176, 27, 10, k);
         }
 		//redstone
-		if (this.labOven.redstoneCount > 0){
-			int k = this.getBarScaled(50, this.labOven.redstoneCount, this.labOven.redstoneMax);
-			this.drawTexturedModalRect(i + 32, j + 34 + (50 - k), 176, 81, 10, k);
+		if (this.labOven.getRedstone() > 0){
+			int k = this.getBarScaled(50, this.labOven.getRedstone(), this.labOven.getRedstoneMax());
+			this.drawTexturedModalRect(i + 32, j + 32 + (50 - k), 176, 81, 10, k);
 		}
 		//smelt bar
 		int k = this.getBarScaled(15, this.labOven.cookTime, this.labOven.getCookTimeMax());
 		this.drawTexturedModalRect(i + 62, j + 56, 176, 0, k, 15); //dust
 		
         //activation
-        if(this.labOven.activation){
+        if(this.labOven.isActive()){
             this.drawTexturedModalRect(i + 7, j + 121, 176, 172, 16, 16);
         }
 
@@ -153,9 +153,9 @@ public class GuiLabOven extends GuiBase {
 			this.drawTexturedModalRect(i + 7, j + 30, 176, 154, 18, 18); //inductor
 		}
 		//input fluid
-		if(labOven.inputTank.getFluid() != null){
-			FluidStack temp = labOven.inputTank.getFluid();
-			int capacity = labOven.inputTank.getCapacity();
+		if(labOven.solventTank.getFluid() != null){
+			FluidStack temp = labOven.solventTank.getFluid();
+			int capacity = labOven.solventTank.getCapacity();
 			if(temp.amount > 5){
 				RenderUtils.bindBlockTexture();
 				RenderUtils.renderGuiTank(temp,capacity, temp.amount, i + 126, j + 34, zLevel, 20, 65);

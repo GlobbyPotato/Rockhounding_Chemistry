@@ -2,17 +2,20 @@ package com.globbypotato.rockhounding_chemistry.machines.tileentity;
 
 import com.globbypotato.rockhounding_chemistry.ModBlocks;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
-import com.globbypotato.rockhounding_chemistry.handlers.ModRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.SaltMaker;
 import com.globbypotato.rockhounding_chemistry.machines.SaltSeasoner;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiSaltSeasoner;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.MachineRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.SaltSeasonerRecipe;
 import com.globbypotato.rockhounding_chemistry.utils.ToolUtils;
+import com.globbypotato.rockhounding_core.machines.tileentity.MachineStackHandler;
+import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityMachineEnergy;
+import com.globbypotato.rockhounding_core.machines.tileentity.WrappedItemHandler;
+import com.globbypotato.rockhounding_core.machines.tileentity.WrappedItemHandler.WriteMode;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -35,7 +38,7 @@ public class TileEntitySaltSeasoner extends TileEntityMachineEnergy {
 				return insertingStack;
 			}
 		};
-		this.automationInput = new WrappedItemHandler(input, WrappedItemHandler.WriteMode.IN_OUT);
+		this.automationInput = new WrappedItemHandler(input, WriteMode.IN);
 	}
 
 
@@ -54,7 +57,7 @@ public class TileEntitySaltSeasoner extends TileEntityMachineEnergy {
 
 	//----------------------- CUSTOM -----------------------
 	public boolean hasRecipe(ItemStack stack){
-		return ModRecipes.seasonerRecipes.stream().anyMatch(
+		return MachineRecipes.seasonerRecipes.stream().anyMatch(
 				recipe -> stack != null && recipe.getInput() != null && stack.isItemEqual(recipe.getInput()));
 	}
 
@@ -117,7 +120,7 @@ public class TileEntitySaltSeasoner extends TileEntityMachineEnergy {
 					input.setStackInSlot(INPUT_SLOT, ToolUtils.rawSalt); 
 					input.getStackInSlot(INPUT_SLOT).stackSize = num;
 				}else{
-					if(canStackSalt()){
+					if(input.canStack(input.getStackInSlot(INPUT_SLOT), ToolUtils.rawSalt)){
 						for(int x = 0; x < num; x++){
 							if(input.getStackInSlot(INPUT_SLOT).stackSize < input.getStackInSlot(INPUT_SLOT).getMaxStackSize()){
 								input.getStackInSlot(INPUT_SLOT).stackSize++;
@@ -142,18 +145,11 @@ public class TileEntitySaltSeasoner extends TileEntityMachineEnergy {
 	}
 
 	private boolean canInput(){
-		return input.getStackInSlot(INPUT_SLOT) == null || canStackSalt();
-	}
-
-	private boolean canStackSalt() {
-		return input.getStackInSlot(INPUT_SLOT) != null 
-			&& input.getStackInSlot(INPUT_SLOT).isItemEqual(ToolUtils.rawSalt) 
-			&& input.getStackInSlot(INPUT_SLOT).stackSize < input.getStackInSlot(INPUT_SLOT).getMaxStackSize();
+		return input.canSetOrStack(input.getStackInSlot(INPUT_SLOT), ToolUtils.rawSalt);
 	}
 
 	private boolean canOutput(ItemStack stack) {
-		return stack == null 
-			|| (stack != null && stack.isItemEqual(getRecipeOutput(input.getStackInSlot(INPUT_SLOT))) && stack.stackSize < stack.getMaxStackSize());
+		return output.canSetOrStack(output.getStackInSlot(OUTPUT_SLOT), getRecipeOutput(input.getStackInSlot(INPUT_SLOT)));
 	}
 
 	public ItemStack getRecipeOutput(ItemStack inputStack){
@@ -161,7 +157,7 @@ public class TileEntitySaltSeasoner extends TileEntityMachineEnergy {
 			return ToolUtils.saltStack;
 		}else{
 			if(inputStack != null){
-				for(SaltSeasonerRecipe recipe: ModRecipes.seasonerRecipes){
+				for(SaltSeasonerRecipe recipe: MachineRecipes.seasonerRecipes){
 					if(recipe.getInput() != null && ItemStack.areItemsEqual(recipe.getInput(), inputStack)){
 						return recipe.getOutput();
 					}

@@ -7,6 +7,7 @@ import com.globbypotato.rockhounding_chemistry.ModItems;
 import com.globbypotato.rockhounding_chemistry.blocks.FireBlock;
 import com.globbypotato.rockhounding_chemistry.items.tools.Petrographer;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.ChemicalExtractorRecipe;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.MachineRecipes;
 import com.globbypotato.rockhounding_chemistry.utils.ToolUtils;
 
 import net.minecraft.block.Block;
@@ -44,25 +45,25 @@ public class GlobbyEventHandler {
 		ItemStack itemstack = event.getItemStack();
 		if(itemstack != null){
 
-	    	for(int x = 0; x < ModRecipes.sizerRecipes.size(); x++){
-	    		if(ModRecipes.sizerRecipes.get(x).getOutput().size() > 1){
-			    	for(int y = 0; y < ModRecipes.sizerRecipes.get(x).getOutput().size(); y++){
-						if(ItemStack.areItemsEqual(ModRecipes.sizerRecipes.get(x).getOutput().get(y), itemstack)){
-							event.getToolTip().add(TextFormatting.DARK_GRAY + "Sizing Chance: " + TextFormatting.GOLD + ModRecipes.sizerRecipes.get(x).getProbability().get(y).intValue() + "%");
+	    	for(int x = 0; x < MachineRecipes.sizerRecipes.size(); x++){
+	    		if(MachineRecipes.sizerRecipes.get(x).getOutput().size() > 1){
+			    	for(int y = 0; y < MachineRecipes.sizerRecipes.get(x).getOutput().size(); y++){
+						if(ItemStack.areItemsEqual(MachineRecipes.sizerRecipes.get(x).getOutput().get(y), itemstack)){
+							event.getToolTip().add(TextFormatting.DARK_GRAY + "Sizing Chance: " + TextFormatting.GOLD + MachineRecipes.sizerRecipes.get(x).getProbability().get(y).intValue() + "%");
 						}
 					}
 	    		}
 	    	}
 
-	    	for(int x = 0; x < ModRecipes.analyzerRecipes.size(); x++){
-		    	for(int y = 0; y < ModRecipes.analyzerRecipes.get(x).getOutput().size(); y++){
-					if(ItemStack.areItemsEqual(ModRecipes.analyzerRecipes.get(x).getOutput().get(y), itemstack)){
-						event.getToolTip().add(TextFormatting.DARK_GRAY + "Leaching Chance: " + TextFormatting.RED + ModRecipes.analyzerRecipes.get(x).getProbability().get(y).intValue() + "%");
+	    	for(int x = 0; x < MachineRecipes.analyzerRecipes.size(); x++){
+		    	for(int y = 0; y < MachineRecipes.analyzerRecipes.get(x).getOutput().size(); y++){
+					if(ItemStack.areItemsEqual(MachineRecipes.analyzerRecipes.get(x).getOutput().get(y), itemstack)){
+						event.getToolTip().add(TextFormatting.DARK_GRAY + "Leaching Chance: " + TextFormatting.RED + MachineRecipes.analyzerRecipes.get(x).getProbability().get(y).intValue() + "%");
 					}
 				}
 	    	}
 
-	    	for(ChemicalExtractorRecipe recipe: ModRecipes.extractorRecipes){
+	    	for(ChemicalExtractorRecipe recipe: MachineRecipes.extractorRecipes){
 				if(recipe.getInput() != null && itemstack.isItemEqual(recipe.getInput())){
 					event.getToolTip().add(TextFormatting.DARK_GRAY + "Category: " + TextFormatting.YELLOW + recipe.getCategory());
 					for(int x = 0; x < recipe.getElements().size(); x++){

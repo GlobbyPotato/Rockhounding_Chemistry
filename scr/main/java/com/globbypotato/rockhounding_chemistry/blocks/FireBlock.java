@@ -4,8 +4,9 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import com.globbypotato.rockhounding_chemistry.blocks.itemblocks.MetaIB;
 import com.globbypotato.rockhounding_chemistry.enums.EnumFires;
+import com.globbypotato.rockhounding_core.blocks.BaseMetaBlock;
+import com.globbypotato.rockhounding_core.blocks.itemblocks.BaseMetaIB;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -32,15 +33,14 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class FireBlock extends BaseMetaBlock{
+public class FireBlock extends BlockIO{
 	public static final PropertyEnum VARIANT = PropertyEnum.create("type", EnumFires.class);
     private static final AxisAlignedBB BOUNDBOX = new AxisAlignedBB(0.3D, 0.0D, 0.3D, 0.7D, 0.3D, 0.7D);
     Random rand = new Random();
 
 	public FireBlock(Material material, String[] array, float hardness, float resistance, String name, SoundType stepSound) {
         super(material, array, hardness, resistance, name, stepSound);
-		GameRegistry.register(this);
-		GameRegistry.register(new MetaIB(this, EnumFires.getNames()).setRegistryName(name));
+		GameRegistry.register(new BaseMetaIB(this, EnumFires.getNames()).setRegistryName(name));
 		setLightLevel(1F);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(VARIANT, EnumFires.values()[0]));
         disableStats();

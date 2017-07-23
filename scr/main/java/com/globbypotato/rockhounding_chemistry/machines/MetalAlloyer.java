@@ -2,13 +2,11 @@ package com.globbypotato.rockhounding_chemistry.machines;
 
 import javax.annotation.Nullable;
 
-import com.globbypotato.rockhounding_chemistry.blocks.BaseTileBlock;
 import com.globbypotato.rockhounding_chemistry.handlers.GuiHandler;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityMetalAlloyer;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -19,27 +17,13 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class MetalAlloyer extends BaseTileBlock{
+public class MetalAlloyer extends BaseMachine{
 	public MetalAlloyer(float hardness, float resistance, String name){
 		super(name, Material.IRON, TileEntityMetalAlloyer.class,GuiHandler.metalAlloyerID);
 		setHardness(hardness); setResistance(resistance);	
 		setHarvestLevel("pickaxe", 0);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
 	}
-	
-    @Override
-    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack){
-        worldIn.setBlockState(pos, state.withProperty(FACING, placer.getHorizontalFacing()), 2);
-		if(stack.hasTagCompound()){
-        	int fuel = stack.getTagCompound().getInteger("Fuel");
-        	boolean induction = stack.getTagCompound().getBoolean("Induction");
-        	TileEntityMetalAlloyer te = (TileEntityMetalAlloyer) worldIn.getTileEntity(pos);
-			if(te != null){
-            	te.powerCount = fuel;
-            	te.permanentInductor = induction;
-			}
-		}
-    }
 
     @Override
     public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, @Nullable ItemStack stack){
@@ -58,8 +42,7 @@ public class MetalAlloyer extends BaseTileBlock{
 	private void addNbt(ItemStack itemstack, TileEntity tileentity) {
 		TileEntityMetalAlloyer alloyer = ((TileEntityMetalAlloyer)tileentity);
 		itemstack.setTagCompound(new NBTTagCompound());
-		itemstack.getTagCompound().setInteger("Fuel", alloyer.powerCount);
-		itemstack.getTagCompound().setBoolean("Induction", alloyer.permanentInductor);
+    	addPowerNbt(itemstack, tileentity);
 	}
 
 }

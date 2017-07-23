@@ -4,8 +4,6 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import com.globbypotato.rockhounding_chemistry.handlers.Reference;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

@@ -7,22 +7,22 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import com.globbypotato.rockhounding_chemistry.compat.jei.RHRecipeWrapper;
-import com.globbypotato.rockhounding_chemistry.handlers.ModRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.DepositionChamberRecipe;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.MachineRecipes;
 
 import mezz.jei.api.ingredients.IIngredients;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
 public class DepositionRecipeWrapper extends RHRecipeWrapper<DepositionChamberRecipe> {
-	
+
 	public DepositionRecipeWrapper(@Nonnull DepositionChamberRecipe recipe) {
 		super(recipe);
 	}
 
 	public static List<DepositionRecipeWrapper> getRecipes() {
 		List<DepositionRecipeWrapper> recipes = new ArrayList<>();
-		for (DepositionChamberRecipe recipe : ModRecipes.depositionRecipes) {
+		for (DepositionChamberRecipe recipe : MachineRecipes.depositionRecipes) {
 			recipes.add(new DepositionRecipeWrapper(recipe));
 		}
 		return recipes;

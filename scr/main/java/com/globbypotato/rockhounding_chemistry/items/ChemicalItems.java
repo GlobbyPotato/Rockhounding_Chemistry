@@ -3,6 +3,7 @@ package com.globbypotato.rockhounding_chemistry.items;
 import java.util.Random;
 
 import com.globbypotato.rockhounding_chemistry.utils.ToolUtils;
+import com.globbypotato.rockhounding_core.items.BaseArray;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCauldron;
@@ -22,7 +23,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class ChemicalItems extends ItemArray {
+public class ChemicalItems extends ArrayIO {
 	public ChemicalItems(String name, String[] array) {
 		super(name, array);
 	}

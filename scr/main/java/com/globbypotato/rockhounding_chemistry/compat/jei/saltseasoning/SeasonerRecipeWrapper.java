@@ -7,21 +7,21 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import com.globbypotato.rockhounding_chemistry.compat.jei.RHRecipeWrapper;
-import com.globbypotato.rockhounding_chemistry.handlers.ModRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.MachineRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.SaltSeasonerRecipe;
 
 import mezz.jei.api.ingredients.IIngredients;
 import net.minecraft.item.ItemStack;
 
 public class SeasonerRecipeWrapper extends RHRecipeWrapper<SaltSeasonerRecipe> {
-	
+
 	public SeasonerRecipeWrapper(@Nonnull SaltSeasonerRecipe recipe) {
 		super(recipe);
 	}
 
 	public static List<SeasonerRecipeWrapper> getRecipes() {
 		List<SeasonerRecipeWrapper> recipes = new ArrayList<>();
-		for (SaltSeasonerRecipe recipe : ModRecipes.seasonerRecipes) {
+		for (SaltSeasonerRecipe recipe : MachineRecipes.seasonerRecipes) {
 			recipes.add(new SeasonerRecipeWrapper(recipe));
 		}
 		return recipes;

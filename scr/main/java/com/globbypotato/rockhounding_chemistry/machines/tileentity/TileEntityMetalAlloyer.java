@@ -3,19 +3,25 @@ package com.globbypotato.rockhounding_chemistry.machines.tileentity;
 import java.util.List;
 
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
-import com.globbypotato.rockhounding_chemistry.handlers.ModRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiMetalAlloyer;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.MachineRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.MetalAlloyerRecipe;
-import com.globbypotato.rockhounding_chemistry.machines.tileentity.WrappedItemHandler.WriteMode;
-import com.globbypotato.rockhounding_chemistry.utils.FuelUtils;
 import com.globbypotato.rockhounding_chemistry.utils.ToolUtils;
+import com.globbypotato.rockhounding_core.machines.tileentity.MachineStackHandler;
+import com.globbypotato.rockhounding_core.machines.tileentity.TemplateStackHandler;
+import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityMachineTank;
+import com.globbypotato.rockhounding_core.machines.tileentity.WrappedItemHandler;
+import com.globbypotato.rockhounding_core.machines.tileentity.WrappedItemHandler.WriteMode;
+import com.globbypotato.rockhounding_core.utils.CoreUtils;
+import com.globbypotato.rockhounding_core.utils.FuelUtils;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.fluids.capability.templates.FluidHandlerConcatenate;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class TileEntityMetalAlloyer extends TileEntityMachineEnergy {
+public class TileEntityMetalAlloyer extends TileEntityMachineTank {
 
     public boolean doScan;
     public static final int SLOT_INPUTS[] = new int[]{0,1,2,3,4,5,6};
@@ -28,22 +34,22 @@ public class TileEntityMetalAlloyer extends TileEntityMachineEnergy {
 	public TileEntityMetalAlloyer() {
 		super(10, 2, 0);
 
-		input =  new MachineStackHandler(INPUT_SLOTS,this){
+		input =  new MachineStackHandler(INPUT_SLOTS, this){
 			@Override
 			public ItemStack insertItem(int slot, ItemStack insertingStack, boolean simulate){
 				if(slot >= SLOT_INPUTS[1] && slot < SLOT_INPUTS.length && activation && isMatchingOredict(insertingStack, slot)){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
-				if(slot == FUEL_SLOT && (FuelUtils.isItemFuel(insertingStack) || ToolUtils.hasinductor(insertingStack))){
+				if(slot == FUEL_SLOT && CoreUtils.isPowerSource(insertingStack)){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
-				if(slot == SLOT_CONSUMABLE && ToolUtils.hasConsumable(ToolUtils.pattern, insertingStack)){
+				if(slot == SLOT_CONSUMABLE && CoreUtils.hasConsumable(ToolUtils.pattern, insertingStack)){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
 				return insertingStack;
 			}
 		};
-		automationInput = new WrappedItemHandler(input,WriteMode.IN_OUT);
+		automationInput = new WrappedItemHandler(input, WriteMode.IN);
 	}
 
 
@@ -70,18 +76,14 @@ public class TileEntityMetalAlloyer extends TileEntityMachineEnergy {
 			int[] oreIDs = OreDictionary.getOreIDs(stack);
 			if(oreIDs.length > 0) {
 				for(int i = 0; i < oreIDs.length; i++) {
-					if(oreIDs[i] > -1) {
-						String oreName = OreDictionary.getOreName(oreIDs[i]);
-						if(template.getStackInSlot(slot) != null){
-							int[] tempIDs = OreDictionary.getOreIDs(template.getStackInSlot(slot));
-							if(tempIDs.length > 0) {
-								for(int j = 0; j < tempIDs.length; j++) {
-									if(tempIDs[j] > -1) {
-										String tempName = OreDictionary.getOreName(tempIDs[j]);
-										if(oreName != null && tempName != null && oreName.matches(tempName)){
-											return true;
-										}
-									}
+					String oreName = OreDictionary.getOreName(oreIDs[i]);
+					if(template.getStackInSlot(slot) != null){
+						int[] tempIDs = OreDictionary.getOreIDs(template.getStackInSlot(slot));
+						if(tempIDs.length > 0) {
+							for(int j = 0; j < tempIDs.length; j++) {
+								String tempName = OreDictionary.getOreName(tempIDs[j]);
+								if(oreName != null && tempName != null && oreName.matches(tempName)){
+									return true;
 								}
 							}
 						}
@@ -97,7 +99,7 @@ public class TileEntityMetalAlloyer extends TileEntityMachineEnergy {
 	}
 
 	public boolean isValidInterval() {
-		return countRecipes() >= 0 && countRecipes() <= ModRecipes.alloyerRecipes.size() - 1;
+		return countRecipes() >= 0 && countRecipes() <= MachineRecipes.alloyerRecipes.size() - 1;
 	}
 
 	public void resetGrid(){
@@ -105,9 +107,12 @@ public class TileEntityMetalAlloyer extends TileEntityMachineEnergy {
 	}
 
 	public MetalAlloyerRecipe getRecipe(){
-		return isValidInterval() ? ModRecipes.alloyerRecipes.get(countRecipes()) : null;
+		return isValidInterval() ? MachineRecipes.alloyerRecipes.get(countRecipes()) : null;
 	}
 
+	private ItemStack demoAlloy(int slot){
+		return template.getStackInSlot(SLOT_FAKE[slot]);
+	}
 
 
 	//----------------------- I/O -----------------------
@@ -126,38 +131,42 @@ public class TileEntityMetalAlloyer extends TileEntityMachineEnergy {
 		return compound;
 	}
 
+	@Override
+	public FluidHandlerConcatenate getCombinedTank() {
+		return new FluidHandlerConcatenate(lavaTank);
+	}
 
 	
 	//----------------------- PROCESS -----------------------
 	@Override
 	public void update(){
 		fuelHandler(input.getStackInSlot(FUEL_SLOT));
+		lavaHandler();
 		if(!worldObj.isRemote){
 			//show alloy
 			if(!isValidInterval()){recipeIndex = -1;}
 			showAlloy();
-			if(( isValidInterval() && doScan)
-				|| (!doScan && countRecipes() >= 0 && template.getStackInSlot(SLOT_FAKE[0]) != null && template.getStackInSlot(SLOT_FAKE[1]) == null) ){ 
+			if(( isValidInterval() && doScan) || (!doScan && countRecipes() >= 0 && demoAlloy(0) != null && demoAlloy(1) == null) ){ 
 				showIngredients();
 			}
 			//reset grid
-			if(countRecipes() < 0 && template.getStackInSlot(SLOT_FAKE[0]) != null){
+			if(countRecipes() < 0 && demoAlloy(0) != null){
 				resetGrid();
 			}
 			//cast alloy
 			if(isValidInterval()){
 				if(canAlloy(getRecipe().getDusts(), getRecipe().getQuantities())){
 					execute(getRecipe().getDusts(), getRecipe().getQuantities());
-					this.markDirtyClient();
 				}
 			}
+			this.markDirtyClient();
 		}
 	}
 
 	private boolean canAlloy(List<String> dusts, List<Integer> quantities) {
 		return activation
 			&& isFullRecipe(dusts) 
-			&& ToolUtils.hasConsumable(ToolUtils.pattern, input.getStackInSlot(SLOT_CONSUMABLE)) 
+			&& CoreUtils.hasConsumable(ToolUtils.pattern, input.getStackInSlot(SLOT_CONSUMABLE)) 
 			&& (output.getStackInSlot(OUTPUT_SLOT) == null || canStackIngots(getRecipe().getOutput()))
 			&& (output.getStackInSlot(SLOT_SCRAP) == null || canStackScraps(getRecipe().getScrap()))
 			&& getPower() >= getMaxCookTime();
@@ -173,7 +182,12 @@ public class TileEntityMetalAlloyer extends TileEntityMachineEnergy {
 
 	private void handleOutput(List<String> dusts, List<Integer> quantities) {
 		//decrease input 
-		for (int x = 0; x < dusts.size(); x++){input.getStackInSlot(x + 1).stackSize -= quantities.get(x); if(input.getStackInSlot(x + 1).stackSize <= 0) { input.setStackInSlot(x + 1, null); }}
+		for (int x = 0; x < dusts.size(); x++){
+			input.getStackInSlot(x + 1).stackSize -= quantities.get(x); 
+			if(input.getStackInSlot(x + 1).stackSize <= 0) { 
+				input.setStackInSlot(x + 1, null); 
+			}
+		}
 		//decrease consumable
 		input.damageSlot(SLOT_CONSUMABLE);
 		//add output
@@ -201,11 +215,18 @@ public class TileEntityMetalAlloyer extends TileEntityMachineEnergy {
 	}
 
 	private boolean canStackIngots(ItemStack outputStack){
-		return output.getStackInSlot(OUTPUT_SLOT) != null && template.getStackInSlot(SLOT_FAKE[0]) != null && output.getStackInSlot(OUTPUT_SLOT).isItemEqual(template.getStackInSlot(SLOT_FAKE[0])) && output.getStackInSlot(OUTPUT_SLOT).stackSize <= output.getStackInSlot(OUTPUT_SLOT).getMaxStackSize() - outputStack.stackSize;
+		ItemStack outputSlot = output.getStackInSlot(OUTPUT_SLOT);
+		return outputSlot != null 
+			&& demoAlloy(0) != null 
+			&& outputSlot.isItemEqual(demoAlloy(0)) 
+			&& outputSlot.stackSize <= outputSlot.getMaxStackSize() - outputStack.stackSize;
 	}
 
 	private boolean canStackScraps(ItemStack outputScrap){
-		return output.getStackInSlot(SLOT_SCRAP) != null && output.getStackInSlot(SLOT_SCRAP).isItemEqual(outputScrap) && output.getStackInSlot(SLOT_SCRAP).stackSize <= output.getStackInSlot(SLOT_SCRAP).getMaxStackSize() - 4;
+		ItemStack scrapSlot = output.getStackInSlot(SLOT_SCRAP);
+		return scrapSlot != null 
+			&& scrapSlot.isItemEqual(outputScrap) 
+			&& scrapSlot.stackSize <= scrapSlot.getMaxStackSize() - 4;
 	}
 
 	private boolean isComparableOredict(int x, int j, List<String> dusts) {

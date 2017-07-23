@@ -9,16 +9,26 @@ public class LabOvenRecipe {
 	private final FluidStack solvent;
 	private final FluidStack reagent;
 	private final FluidStack output;
+	private boolean catalyst;
 
-	public LabOvenRecipe(ItemStack solute, FluidStack solvent, FluidStack reagent, FluidStack output){
+	public LabOvenRecipe(ItemStack solute, boolean catalyst, FluidStack solvent, FluidStack reagent, FluidStack output){
 		this.solute = solute;
 		this.solvent = solvent;
 		this.reagent = reagent;
 		this.output = output;
+		this.catalyst = catalyst;
+	}
+
+	public LabOvenRecipe(ItemStack solute, boolean catalyst, FluidStack solvent, FluidStack output){
+		this(solute, catalyst, solvent, null, output);
 	}
 
 	public ItemStack getSolute(){
 		return this.solute.copy();
+	}
+	
+	public boolean isCatalyst(){
+		return this.catalyst;
 	}
 
 	public FluidStack getSolvent(){

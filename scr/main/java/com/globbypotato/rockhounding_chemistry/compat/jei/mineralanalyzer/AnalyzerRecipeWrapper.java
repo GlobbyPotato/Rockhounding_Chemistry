@@ -7,10 +7,11 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import com.globbypotato.rockhounding_chemistry.compat.jei.RHRecipeWrapper;
+import com.globbypotato.rockhounding_chemistry.enums.EnumFluid;
 import com.globbypotato.rockhounding_chemistry.fluids.ModFluids;
-import com.globbypotato.rockhounding_chemistry.handlers.ModRecipes;
+import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.MachineRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.MineralAnalyzerRecipe;
-import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityMachineEnergy;
 
 import mezz.jei.api.ingredients.IIngredients;
 import net.minecraft.item.ItemStack;
@@ -24,7 +25,7 @@ public class AnalyzerRecipeWrapper extends RHRecipeWrapper<MineralAnalyzerRecipe
 	
 	public static List<AnalyzerRecipeWrapper> getRecipes() {
 		List<AnalyzerRecipeWrapper> recipes = new ArrayList<>();
-		for (MineralAnalyzerRecipe recipe : ModRecipes.analyzerRecipes) {
+		for (MineralAnalyzerRecipe recipe : MachineRecipes.analyzerRecipes) {
 			recipes.add(new AnalyzerRecipeWrapper(recipe));
 		}
 		return recipes;
@@ -47,9 +48,9 @@ public class AnalyzerRecipeWrapper extends RHRecipeWrapper<MineralAnalyzerRecipe
 	@Override
 	public List<FluidStack> getFluidInputs(){
 		ArrayList<FluidStack> stacks = new ArrayList<FluidStack>();
-		stacks.add(new FluidStack(ModFluids.SULFURIC_ACID, TileEntityMachineEnergy.consumedSulf));
-		stacks.add(new FluidStack(ModFluids.HYDROCHLORIC_ACID, TileEntityMachineEnergy.consumedChlo));
-		stacks.add(new FluidStack(ModFluids.HYDROFLUORIC_ACID, TileEntityMachineEnergy.consumedFluo));
+		stacks.add(new FluidStack(EnumFluid.pickFluid(EnumFluid.SULFURIC_ACID), ModConfig.consumedSulf));
+		stacks.add(new FluidStack(EnumFluid.pickFluid(EnumFluid.HYDROCHLORIC_ACID), ModConfig.consumedChlo));
+		stacks.add(new FluidStack(EnumFluid.pickFluid(EnumFluid.HYDROFLUORIC_ACID), ModConfig.consumedFluo));
 		return stacks;
 	}
 

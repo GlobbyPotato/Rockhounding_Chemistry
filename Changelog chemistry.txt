@@ -1,3 +1,9 @@
+v1.48 changelog
+	Rockhounding Core updated to v1.02 
+		[Request] Added a Fuel Blend option inspired by ATM:Expert, configurable from the Core config
+		Reworked and uniformed the CraftTweaker/RH_API recipes having optional ingredients, for easier integration (example script)
+		Some code cleaning and maintenance
+
 v1.47 changelog
 	Redstone laser / Electrolaser
 		Fixed a malfunction of the beams

@@ -5,6 +5,10 @@ import com.globbypotato.rockhounding_chemistry.items.MineralShards;
 import com.globbypotato.rockhounding_chemistry.items.tools.Petrographer;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiPetrographerTable;
 import com.globbypotato.rockhounding_chemistry.utils.ToolUtils;
+import com.globbypotato.rockhounding_core.machines.tileentity.MachineStackHandler;
+import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityMachineInv;
+import com.globbypotato.rockhounding_core.machines.tileentity.WrappedItemHandler;
+import com.globbypotato.rockhounding_core.machines.tileentity.WrappedItemHandler.WriteMode;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -32,7 +36,7 @@ public class TileEntityPetrographerTable extends TileEntityMachineInv {
 				return insertingStack;
 			}
 		};
-		this.automationInput = new WrappedItemHandler(input, WrappedItemHandler.WriteMode.IN_OUT);
+		this.automationInput = new WrappedItemHandler(input, WriteMode.IN);
 	}
 
 	@Override

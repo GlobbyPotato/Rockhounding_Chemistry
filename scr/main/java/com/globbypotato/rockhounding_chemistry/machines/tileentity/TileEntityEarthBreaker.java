@@ -1,6 +1,8 @@
 package com.globbypotato.rockhounding_chemistry.machines.tileentity;
 
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiEarthBreaker;
+import com.globbypotato.rockhounding_core.machines.tileentity.TemplateStackHandler;
+import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityMachineEnergy;
 
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;

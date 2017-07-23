@@ -1,7 +1,6 @@
 package com.globbypotato.rockhounding_chemistry.enums;
 
-import net.minecraft.util.IStringSerializable;
-public enum EnumItems implements IStringSerializable {
+public enum EnumItems implements BaseEnum {
 	LOGIC_CHIP,
 	CABINET,
 	IRON_NUGGET,
@@ -19,7 +18,7 @@ public enum EnumItems implements IStringSerializable {
 	YAG_ROD,
 	RESONATOR,
 	HEATER,
-	INDUCTOR,
+	PLATINUM_INGOT,
 	CUPRONICKEL_FOIL,
 	COPPER_COIL,
 	STATOR,
@@ -30,7 +29,7 @@ public enum EnumItems implements IStringSerializable {
 	COPPER_INGOT,
 	ENERGY_CELL,
 	LEAD_INGOT,
-	OWC_CASING,
+	NIMONIC_CASING,
 	NICHROME_ROD,
 	CUNIFE_WIRE,
 	CATHODE,
@@ -44,27 +43,34 @@ public enum EnumItems implements IStringSerializable {
 	TINITE_ARM,
 	BOUNDARY_CHIP,
 	BOUNDARY_CASING,
-	IRON_CASING;
+	IRON_CASING,
+	COMPRESSOR,
+	SPIRAL,
+	CUPRONICKEL_CASING,
+	ALUMINUM_INGOT,
+	ALUMINUM_NUGGET,
+	ALUMINUM_CASING;
 
-	@Override
-	public String getName() {
-		return toString().toLowerCase();
-	}
-
+	//---------CUSTOM----------------
 	public static int size(){
 		return values().length;
 	}
 
+	public static String name(int index) {
+		return values()[index].getName();
+	}
+
+	//---------ENUM----------------
 	public static String[] getNames(){
 		String[] temp = new String[size()];
-		for(int i=0;i<size();i++){
+		for(int i = 0; i < size(); i++){
 			temp[i] = getName(i);
 		}
 		return temp;
 	}
 
 	public static String getName(int index){
-		return EnumItems.values()[index].getName();
+		return name(index);
 	}
 
 }

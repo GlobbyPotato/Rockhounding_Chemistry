@@ -7,7 +7,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import com.globbypotato.rockhounding_chemistry.compat.jei.RHRecipeWrapper;
-import com.globbypotato.rockhounding_chemistry.handlers.ModRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.MachineRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.MetalAlloyerRecipe;
 
 import mezz.jei.api.ingredients.IIngredients;
@@ -21,7 +21,7 @@ public class AlloyerRecipeWrapper extends RHRecipeWrapper<MetalAlloyerRecipe> {
 
 	public static List<AlloyerRecipeWrapper> getRecipes() {
 		List<AlloyerRecipeWrapper> recipes = new ArrayList<>();
-		for (MetalAlloyerRecipe recipe : ModRecipes.alloyerRecipes) {
+		for (MetalAlloyerRecipe recipe : MachineRecipes.alloyerRecipes) {
 			recipes.add(new AlloyerRecipeWrapper(recipe));
 		}
 		return recipes;

@@ -5,7 +5,11 @@ import com.globbypotato.rockhounding_chemistry.blocks.OwcBlocks;
 import com.globbypotato.rockhounding_chemistry.enums.EnumOwc;
 import com.globbypotato.rockhounding_chemistry.machines.OwcController;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiOwcController;
-import com.globbypotato.rockhounding_chemistry.machines.tileentity.WrappedItemHandler.WriteMode;
+import com.globbypotato.rockhounding_core.machines.tileentity.MachineStackHandler;
+import com.globbypotato.rockhounding_core.machines.tileentity.TemplateStackHandler;
+import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityMachineEnergy;
+import com.globbypotato.rockhounding_core.machines.tileentity.WrappedItemHandler;
+import com.globbypotato.rockhounding_core.machines.tileentity.WrappedItemHandler.WriteMode;
 
 import cofh.api.energy.IEnergyProvider;
 import cofh.api.energy.IEnergyReceiver;
@@ -44,7 +48,7 @@ public class TileEntityOwcController extends TileEntityMachineEnergy implements 
 				return insertingStack;
 			}
 		};
-		automationInput = new WrappedItemHandler(input,WriteMode.IN_OUT);
+		automationInput = new WrappedItemHandler(input, WriteMode.IN);
 		this.markDirtyClient();
 	}
 
@@ -111,17 +115,15 @@ public class TileEntityOwcController extends TileEntityMachineEnergy implements 
 					animateDeflectors();
 					if(this.getRedstone() < this.getChargeMax()){ 
 						powerAcquiring();
-						this.markDirtyClient();
 					}
 				}
 			}else{
 				stopDeflectors();
-				this.markDirtyClient();
 			}
 			if(isExtracting()){
 				provideEnergy();
-				this.markDirtyClient();
 			}
+			this.markDirtyClient();
 		}
 	}
 

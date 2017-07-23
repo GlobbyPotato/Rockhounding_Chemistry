@@ -1,11 +1,28 @@
 package com.globbypotato.rockhounding_chemistry.machines.tileentity;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 
 public class TileEntityLaserSplitter extends TileEntityLaserStorage {
 	
+    //----------------------- I/O -----------------------
+    @Override
+    public void readFromNBT(NBTTagCompound compound){
+        super.readFromNBT(compound);
+        this.splitSide = compound.getInteger("SplitSide");
+        this.isPulsing = compound.getBoolean("Pulse");
+    }
+
+    @Override
+    public NBTTagCompound writeToNBT(NBTTagCompound compound){
+        super.writeToNBT(compound);
+        compound.setInteger("SplitSide", emittingSide());
+        compound.setBoolean("Pulse", pulseMode());
+        return compound;
+    }
+
 	@Override
 	public void update() {
 		if(!worldObj.isRemote){
@@ -23,11 +40,8 @@ public class TileEntityLaserSplitter extends TileEntityLaserStorage {
 
 		    	for(int sides = 0; sides <= 3; sides++){
 		    		if(emittingSide() == 4){
-			    		if(sides != state().getValue(nodeFacing()).getHorizontalIndex()){
-			    			sendBeam(state(), enumfacing, sides);
-			    		}
-		    		}
-		    		else{
+		    			sendBeam(state(), enumfacing, sides);
+		    		}else{
 			    		if(sides != state().getValue(nodeFacing()).getHorizontalIndex()){
 				    		if(emittingSide() == sides){
 				    			sendBeam(state(), enumfacing, sides);

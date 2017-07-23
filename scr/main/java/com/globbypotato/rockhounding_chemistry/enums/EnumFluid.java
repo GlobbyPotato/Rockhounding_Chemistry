@@ -1,5 +1,8 @@
 package com.globbypotato.rockhounding_chemistry.enums;
 
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
+
 public enum EnumFluid {
 
 	SULFURIC_ACID("Sulfuric Acid", "sulfuric_acid"),
@@ -13,7 +16,8 @@ public enum EnumFluid {
 	NITRIC_ACID("Nitric Acid", "nitric_acid"),
 	TITANIUM_TETRACHLORIDE("Titanium Tetrachloride", "titanium_tetrachloride"),
 	SODIUM_CYANIDE("Sodium Cyanide", "sodium_cyanide"),
-	PHOSPHORIC_ACID("Phosphoric Acid", "phosphoric_acid");
+	PHOSPHORIC_ACID("Phosphoric Acid", "phosphoric_acid"),
+	LIQUID_NITROGEN("Liquid Nitrogen", "liquid_nitrogen");
 
 	private String name;
 	private String fluidName;
@@ -29,6 +33,10 @@ public enum EnumFluid {
 
 	public String getFluidName(){
 		return this.fluidName;
+	}
+
+	public static Fluid pickFluid(EnumFluid fluid){
+		return FluidRegistry.getFluid(fluid.getFluidName());
 	}
 
 }

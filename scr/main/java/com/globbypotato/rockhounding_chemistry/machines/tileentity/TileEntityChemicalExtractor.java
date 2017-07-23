@@ -2,34 +2,28 @@ package com.globbypotato.rockhounding_chemistry.machines.tileentity;
 
 import com.globbypotato.rockhounding_chemistry.ModItems;
 import com.globbypotato.rockhounding_chemistry.enums.EnumElement;
-import com.globbypotato.rockhounding_chemistry.fluids.ModFluids;
+import com.globbypotato.rockhounding_chemistry.enums.EnumFluid;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
-import com.globbypotato.rockhounding_chemistry.handlers.ModRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiChemicalExtractor;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.ChemicalExtractorRecipe;
-import com.globbypotato.rockhounding_chemistry.machines.tileentity.WrappedItemHandler.WriteMode;
-import com.globbypotato.rockhounding_chemistry.utils.FuelUtils;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.MachineRecipes;
 import com.globbypotato.rockhounding_chemistry.utils.ToolUtils;
+import com.globbypotato.rockhounding_core.machines.tileentity.MachineStackHandler;
+import com.globbypotato.rockhounding_core.machines.tileentity.TemplateStackHandler;
+import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityMachineTank;
+import com.globbypotato.rockhounding_core.machines.tileentity.WrappedItemHandler;
+import com.globbypotato.rockhounding_core.machines.tileentity.WrappedItemHandler.WriteMode;
+import com.globbypotato.rockhounding_core.utils.CoreUtils;
+import com.globbypotato.rockhounding_core.utils.FuelUtils;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerConcatenate;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileEntityChemicalExtractor extends TileEntityMachineEnergy implements IFluidHandlingTile{
+public class TileEntityChemicalExtractor extends TileEntityMachineTank{
 
 	public int[] elementList = new int[56];
 
@@ -56,9 +50,9 @@ public class TileEntityChemicalExtractor extends TileEntityMachineEnergy impleme
 		nitrTank = new FluidTank(1000 + ModConfig.machineTank){
 			@Override  
 			public boolean canFillFluidType(FluidStack fluid){
-				return fluid.getFluid() == ModFluids.NITRIC_ACID;
+				return fluid.getFluid().equals(EnumFluid.pickFluid(EnumFluid.NITRIC_ACID));
 			}
-			
+
 			@Override
 		    public boolean canDrain(){
 		        return drainValve;
@@ -70,9 +64,9 @@ public class TileEntityChemicalExtractor extends TileEntityMachineEnergy impleme
 		phosTank = new FluidTank(1000 + ModConfig.machineTank){
 			@Override  
 			public boolean canFillFluidType(FluidStack fluid){
-				return fluid.getFluid() == ModFluids.PHOSPHORIC_ACID;
+				return fluid.getFluid().equals(EnumFluid.pickFluid(EnumFluid.PHOSPHORIC_ACID));
 			}
-			
+
 			@Override
 		    public boolean canDrain(){
 		        return drainValve;
@@ -84,9 +78,9 @@ public class TileEntityChemicalExtractor extends TileEntityMachineEnergy impleme
 		cyanTank = new FluidTank(1000 + ModConfig.machineTank){
 			@Override  
 			public boolean canFillFluidType(FluidStack fluid){
-				return fluid.getFluid() == ModFluids.SODIUM_CYANIDE;
+				return fluid.getFluid().equals(EnumFluid.pickFluid(EnumFluid.SODIUM_CYANIDE));
 			}
-			
+
 			@Override
 		    public boolean canDrain(){
 		        return drainValve;
@@ -101,32 +95,32 @@ public class TileEntityChemicalExtractor extends TileEntityMachineEnergy impleme
 				if(slot == INPUT_SLOT && hasRecipe(insertingStack)){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
-				if(slot == FUEL_SLOT && (FuelUtils.isItemFuel(insertingStack) || ToolUtils.hasinductor(insertingStack))){
+				if(slot == FUEL_SLOT && CoreUtils.isPowerSource(insertingStack)){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
 				if(slot == REDSTONE_SLOT && hasRedstone(insertingStack)){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
-				if(slot == CONSUMABLE_SLOT && ToolUtils.hasConsumable(ToolUtils.testTube, insertingStack)){
+				if(slot == CONSUMABLE_SLOT && CoreUtils.hasConsumable(ToolUtils.testTube, insertingStack)){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
-				if(slot == NITR_SLOT && handleBucket(insertingStack, ModFluids.NITRIC_ACID, ModFluids.nitricAcidBeaker)) {
+				if(slot == CYLINDER_SLOT && CoreUtils.hasConsumable(ToolUtils.cylinder, insertingStack)){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
-				if(slot == PHOS_SLOT && handleBucket(insertingStack, ModFluids.PHOSPHORIC_ACID, ModFluids.phosphoricAcidBeaker)){
+				if(slot == NITR_SLOT && handleBucket(insertingStack, EnumFluid.pickFluid(EnumFluid.NITRIC_ACID))) {
 					return super.insertItem(slot, insertingStack, simulate);
 				}
-				if(slot == CYAN_SLOT && handleBucket(insertingStack, ModFluids.SODIUM_CYANIDE, ModFluids.sodiumCyanideBeaker)){
+				if(slot == PHOS_SLOT && handleBucket(insertingStack, EnumFluid.pickFluid(EnumFluid.PHOSPHORIC_ACID))){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
-				if(slot == CYLINDER_SLOT && ToolUtils.hasConsumable(ToolUtils.cylinder, insertingStack)){
+				if(slot == CYAN_SLOT && handleBucket(insertingStack, EnumFluid.pickFluid(EnumFluid.SODIUM_CYANIDE))){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
 				return insertingStack;
 			}
 
 		};
-		automationInput = new WrappedItemHandler(input, WriteMode.IN_OUT);
+		automationInput = new WrappedItemHandler(input, WriteMode.IN);
 	}
 
 
@@ -158,13 +152,8 @@ public class TileEntityChemicalExtractor extends TileEntityMachineEnergy impleme
 
 	//----------------------- CUSTOM -----------------------
 	public boolean hasRecipe(ItemStack stack){
-		return ModRecipes.extractorRecipes.stream().anyMatch(
+		return MachineRecipes.extractorRecipes.stream().anyMatch(
 				recipe -> stack != null && recipe.getInput() != null && stack.isItemEqual(recipe.getInput()));
-	}
-
-	private boolean handleBucket(ItemStack insertingStack, Fluid fluid, Item beaker){
-		return ToolUtils.isBucketType(insertingStack) 
-			&& FluidUtil.getFluidContained(insertingStack).containsFluid(new FluidStack(fluid, Fluid.BUCKET_VOLUME));
 	}
 
 
@@ -206,27 +195,8 @@ public class TileEntityChemicalExtractor extends TileEntityMachineEnergy impleme
 	}
 
 	@Override
-	public boolean interactWithBucket(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
-		boolean didFill = FluidUtil.interactWithFluidHandler(heldItem, this.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side), player);
-		this.markDirtyClient();
-		return didFill;
-	}
-	
-	@Override
-	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-		if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) return true;
-		else return super.hasCapability(capability, facing);
-	}
-
-	@Override
-	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-		if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
-			return (T) getCombinedTank();
-		return super.getCapability(capability, facing);
-	}
-
 	public FluidHandlerConcatenate getCombinedTank(){
-		return new FluidHandlerConcatenate(nitrTank,phosTank,cyanTank);
+		return new FluidHandlerConcatenate(lavaTank, nitrTank, phosTank, cyanTank);
 	}
 
 
@@ -236,6 +206,7 @@ public class TileEntityChemicalExtractor extends TileEntityMachineEnergy impleme
 	public void update(){
 		fuelHandler(input.getStackInSlot(FUEL_SLOT));
 		redstoneHandler(REDSTONE_SLOT, this.getCookTimeMax());
+		lavaHandler();
 
 		if(!worldObj.isRemote){
 			emptyContainer(NITR_SLOT, nitrTank);
@@ -244,7 +215,7 @@ public class TileEntityChemicalExtractor extends TileEntityMachineEnergy impleme
 
 			if(canExtractElements()){
 				execute();
-				if(ToolUtils.hasConsumable(ToolUtils.cylinder, input.getStackInSlot(CYLINDER_SLOT))){
+				if(CoreUtils.hasConsumable(ToolUtils.cylinder, input.getStackInSlot(CYLINDER_SLOT))){
 					transferDust();
 				}
 			}
@@ -269,8 +240,8 @@ public class TileEntityChemicalExtractor extends TileEntityMachineEnergy impleme
 					for(int y = 0; y < EnumElement.size(); y++){
 						if(currentRecipe.getElements().get(x).toLowerCase().matches(EnumElement.getName(y).toLowerCase())){
 							isInhibited = false;
-							for(int ix = 0; ix < ModRecipes.inhibitedElements.size(); ix++){
-								if(currentRecipe.getElements().get(x).toLowerCase().matches(ModRecipes.inhibitedElements.get(ix).toLowerCase())){
+							for(int ix = 0; ix < MachineRecipes.inhibitedElements.size(); ix++){
+								if(currentRecipe.getElements().get(x).toLowerCase().matches(MachineRecipes.inhibitedElements.get(ix).toLowerCase())){
 									isInhibited = true;
 								}
 							}
@@ -286,7 +257,7 @@ public class TileEntityChemicalExtractor extends TileEntityMachineEnergy impleme
 	}
 
 	private boolean isFullRecipe() {
-		for(ChemicalExtractorRecipe recipe: ModRecipes.extractorRecipes){
+		for(ChemicalExtractorRecipe recipe: MachineRecipes.extractorRecipes){
 			if(ItemStack.areItemsEqual(recipe.getInput(), input.getStackInSlot(INPUT_SLOT))){
 				if(recipe.getElements().size() == recipe.getQuantities().size()){
 					int formula = 0;
@@ -310,27 +281,27 @@ public class TileEntityChemicalExtractor extends TileEntityMachineEnergy impleme
 	private void handleOutput() {
 		input.decrementSlot(INPUT_SLOT);
 		input.damageSlot(CONSUMABLE_SLOT);
-		nitrTank.getFluid().amount-= consumedNitr;
-		phosTank.getFluid().amount-= consumedPhos;
-		cyanTank.getFluid().amount-= consumedCyan;
+		input.drainOrClean(nitrTank, ModConfig.consumedNitr, false);
+		input.drainOrClean(phosTank, ModConfig.consumedPhos, false);
+		input.drainOrClean(cyanTank, ModConfig.consumedCyan, false);
 		currentRecipe = null;
 	}
 
 	private boolean canExtractElements() {
 		return hasRecipe(input.getStackInSlot(INPUT_SLOT))
 			&& isFullRecipe()
-			&& ToolUtils.hasConsumable(ToolUtils.testTube, input.getStackInSlot(CONSUMABLE_SLOT))
-			&& ToolUtils.hasConsumable(ToolUtils.cylinder, input.getStackInSlot(CYLINDER_SLOT))
+			&& CoreUtils.hasConsumable(ToolUtils.testTube, input.getStackInSlot(CONSUMABLE_SLOT))
+			&& CoreUtils.hasConsumable(ToolUtils.cylinder, input.getStackInSlot(CYLINDER_SLOT))
 			&& getPower() >= getCookTimeMax()
 			&& getRedstone() >= getCookTimeMax()
-			&& nitrTank.getFluidAmount() >= consumedNitr
-			&& phosTank.getFluidAmount() >= consumedPhos
-			&& cyanTank.getFluidAmount() >= consumedCyan;
+			&& nitrTank.getFluidAmount() >= ModConfig.consumedNitr
+			&& phosTank.getFluidAmount() >= ModConfig.consumedPhos
+			&& cyanTank.getFluidAmount() >= ModConfig.consumedCyan;
 	}
 
 	private void transferDust() {
 		for(int i=0;i<output.getSlots();i++){
-			if(ToolUtils.hasConsumable(ToolUtils.cylinder, input.getStackInSlot(CYLINDER_SLOT))){
+			if(CoreUtils.hasConsumable(ToolUtils.cylinder, input.getStackInSlot(CYLINDER_SLOT))){
 				if(elementList[i] >= getExtractingFactor()){
 					elementList[i]-= getExtractingFactor();
 					output.setOrIncrement(i, new ItemStack(ModItems.chemicalDusts,1,i));

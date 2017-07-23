@@ -3,10 +3,10 @@ package com.globbypotato.rockhounding_chemistry.utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.globbypotato.rockhounding_chemistry.handlers.ModRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.ChemicalExtractorRecipe;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.DepositionChamberRecipe;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.LabOvenRecipe;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.MachineRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.MetalAlloyerRecipe;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.MineralAnalyzerRecipe;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.MineralSizerRecipe;
@@ -52,9 +52,9 @@ public class IMCUtils {
 			        		solution = FluidStack.loadFluidStackFromNBT(tag.getCompoundTag("Solution"));
 		        		}
 		        		if(solution != null){
-		        			for(int x = 0; x < ModRecipes.labOvenRecipes.size(); x++){
-		        				if(ModRecipes.labOvenRecipes.get(x).getOutput().getFluid() == solution.getFluid()){
-		        					ModRecipes.labOvenRecipes.remove(x);
+		        			for(int x = 0; x < MachineRecipes.labOvenRecipes.size(); x++){
+		        				if(MachineRecipes.labOvenRecipes.get(x).getOutput().getFluid() == solution.getFluid()){
+		        					MachineRecipes.labOvenRecipes.remove(x);
 		        				}
 		        			}
 		        		}
@@ -64,9 +64,9 @@ public class IMCUtils {
 		        			seasIn = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("Input"));
 		        		}
 		        		if(seasIn != null){
-		        			for(int x = 0; x < ModRecipes.seasonerRecipes.size(); x++){
-		        				if(ModRecipes.seasonerRecipes.get(x).getInput().isItemEqual(seasIn)){
-		        					ModRecipes.seasonerRecipes.remove(x);
+		        			for(int x = 0; x < MachineRecipes.seasonerRecipes.size(); x++){
+		        				if(MachineRecipes.seasonerRecipes.get(x).getInput().isItemEqual(seasIn)){
+		        					MachineRecipes.seasonerRecipes.remove(x);
 		        				}
 		        			}
 		        		}
@@ -76,9 +76,9 @@ public class IMCUtils {
 		        			alloy = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("Ingot"));
 		        		}
 		        		if(alloy != null){
-		        			for(int x = 0; x < ModRecipes.alloyerRecipes.size(); x++){
-		        				if(ModRecipes.alloyerRecipes.get(x).getOutput().isItemEqual(alloy)){
-		        					ModRecipes.alloyerRecipes.remove(x);
+		        			for(int x = 0; x < MachineRecipes.alloyerRecipes.size(); x++){
+		        				if(MachineRecipes.alloyerRecipes.get(x).getOutput().isItemEqual(alloy)){
+		        					MachineRecipes.alloyerRecipes.remove(x);
 		        				}
 		        			}
 		        		}
@@ -88,9 +88,9 @@ public class IMCUtils {
 		        			crush = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("Input"));
 		        		}
 		        		if(crush != null){
-		        			for(int x = 0; x < ModRecipes.sizerRecipes.size(); x++){
-		        				if(ModRecipes.sizerRecipes.get(x).getInput().isItemEqual(crush)){
-		        					ModRecipes.sizerRecipes.remove(x);
+		        			for(int x = 0; x < MachineRecipes.sizerRecipes.size(); x++){
+		        				if(MachineRecipes.sizerRecipes.get(x).getInput().isItemEqual(crush)){
+		        					MachineRecipes.sizerRecipes.remove(x);
 		        				}
 		        			}
 		        		}
@@ -100,9 +100,9 @@ public class IMCUtils {
 		        			analyzed = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("Input"));
 		        		}
 		        		if(analyzed != null){
-		        			for(int x = 0; x < ModRecipes.analyzerRecipes.size(); x++){
-		        				if(ModRecipes.analyzerRecipes.get(x).getInput().isItemEqual(analyzed)){
-		        					ModRecipes.analyzerRecipes.remove(x);
+		        			for(int x = 0; x < MachineRecipes.analyzerRecipes.size(); x++){
+		        				if(MachineRecipes.analyzerRecipes.get(x).getInput().isItemEqual(analyzed)){
+		        					MachineRecipes.analyzerRecipes.remove(x);
 		        				}
 		        			}
 		        		}
@@ -118,7 +118,7 @@ public class IMCUtils {
 		        		if(dusts.size() > 0){
 			        		for(int x = 0; x < dusts.size(); x++){
 			        			if(!dusts.get(x).matches("")){
-			        				ModRecipes.inhibitedElements.add(dusts.get(x));
+			        				MachineRecipes.inhibitedElements.add(dusts.get(x));
 			        			}
 			        		}
 		        		}
@@ -128,9 +128,9 @@ public class IMCUtils {
 		        			output = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("Output"));
 		        		}
 		        		if(output != null){
-		        			for(int x = 0; x < ModRecipes.depositionRecipes.size(); x++){
-		        				if(ModRecipes.depositionRecipes.get(x).getOutput().isItemEqual(output)){
-		        					ModRecipes.depositionRecipes.remove(x);
+		        			for(int x = 0; x < MachineRecipes.depositionRecipes.size(); x++){
+		        				if(MachineRecipes.depositionRecipes.get(x).getOutput().isItemEqual(output)){
+		        					MachineRecipes.depositionRecipes.remove(x);
 		        				}
 		        			}
 		        		}
@@ -162,7 +162,7 @@ public class IMCUtils {
 		        			  }
 		        		}
 		        		if(input != null && elements.size() > 0 && quantities.size() > 0 && elements.size() == quantities.size()){
-		        			ModRecipes.analyzerRecipes.add(new MineralAnalyzerRecipe(input, elements, quantities));
+		        			MachineRecipes.analyzerRecipes.add(new MineralAnalyzerRecipe(input, elements, quantities));
 		        		}
 		    		}else if(message.key.equalsIgnoreCase(EXTRACTOR_KEY)){
 		    			ItemStack input = null;
@@ -190,15 +190,19 @@ public class IMCUtils {
 		        			  }
 		        		}
 		        		if(input != null && dusts.size() > 0 && quantities.size() > 0 && dusts.size() == quantities.size()){
-		        			ModRecipes.extractorRecipes.add(new ChemicalExtractorRecipe(display, input, dusts, quantities));
+		        			MachineRecipes.extractorRecipes.add(new ChemicalExtractorRecipe(display, input, dusts, quantities));
 		        		}
 					}else if(message.key.equalsIgnoreCase(OVEN_KEY)){
 						ItemStack solute = null;
+						boolean isCatalyst = false;
 						FluidStack solvent1 = null;
 						FluidStack solvent2 = null;
 						FluidStack solution = null;
 						if(tag.hasKey("Solute")){
 		        			solute = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("Solute"));
+		        		}
+						if(tag.hasKey("Catalyst")){
+							isCatalyst = tag.getBoolean("Catalyst");
 		        		}
 		        		if(tag.hasKey("Solvent1")){
 		        			solvent1 = FluidStack.loadFluidStackFromNBT(tag.getCompoundTag("Solvent1"));
@@ -212,7 +216,7 @@ public class IMCUtils {
 			        		solution = FluidStack.loadFluidStackFromNBT(tag.getCompoundTag("Solution"));
 		        		}
 		        		if(solute != null && solvent1.getFluid() != null && (!tag.hasKey("Solvent2") || (tag.hasKey("Solvent2") && solvent2.getFluid() != null)) && solution.getFluid() != null){
-		        			ModRecipes.labOvenRecipes.add(new LabOvenRecipe(solute, solvent1, solvent2,	solution));
+		        			MachineRecipes.labOvenRecipes.add(new LabOvenRecipe(solute, isCatalyst, solvent1, solvent2,	solution));
 		        		}
 					}else if(message.key.equalsIgnoreCase(SIZER_KEY)){
 		    			ItemStack input = null;
@@ -236,7 +240,7 @@ public class IMCUtils {
 		        			  }
 		        		}
 		        		if(input != null && elements.size() > 0 && quantities.size() > 0 && elements.size() == quantities.size()){
-		        			ModRecipes.sizerRecipes.add(new MineralSizerRecipe(input, elements, quantities));
+		        			MachineRecipes.sizerRecipes.add(new MineralSizerRecipe(input, elements, quantities));
 		        		}
 		        	}else if(message.key.equalsIgnoreCase(SEASONER_KEY)){
 		    			ItemStack input = null;
@@ -248,7 +252,7 @@ public class IMCUtils {
 		        			output = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("Output"));
 		        		}
 		        		if(input != null && output != null){
-		        			ModRecipes.seasonerRecipes.add(new SaltSeasonerRecipe(input, output));
+		        			MachineRecipes.seasonerRecipes.add(new SaltSeasonerRecipe(input, output));
 		        		}
 					}else if(message.key.equalsIgnoreCase(ALLOYER_KEY)){
 						String display = "";
@@ -282,7 +286,7 @@ public class IMCUtils {
 		        			  }
 		        		}
 		        		if(!display.matches("") && ingot != null && dusts.size() > 0 && quantities.size() > 0 && dusts.size() == quantities.size()){
-		        			ModRecipes.alloyerRecipes.add(new MetalAlloyerRecipe(display, dusts, quantities, ingot, scrap));
+		        			MachineRecipes.alloyerRecipes.add(new MetalAlloyerRecipe(display, dusts, quantities, ingot, scrap));
 		        		}
 					}else if(message.key.equalsIgnoreCase(DEPOSITION_KEY)){
 						ItemStack input = null;
@@ -306,7 +310,7 @@ public class IMCUtils {
 		        			pressure = tag.getInteger("Pressure");
 		        		}
 		        		if(input != null && solvent.getFluid() != null && output != null && temperature > 0 && pressure > 0){
-		        			ModRecipes.depositionRecipes.add(new DepositionChamberRecipe(input, output, solvent, temperature, pressure));
+		        			MachineRecipes.depositionRecipes.add(new DepositionChamberRecipe(input, output, solvent, temperature, pressure));
 		        		}
 					}
 				}catch (Exception e){

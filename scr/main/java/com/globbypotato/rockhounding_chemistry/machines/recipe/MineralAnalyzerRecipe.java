@@ -3,7 +3,7 @@ package com.globbypotato.rockhounding_chemistry.machines.recipe;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.globbypotato.rockhounding_chemistry.utils.ProbabilityStack;
+import com.globbypotato.rockhounding_core.utils.ProbabilityStack;
 
 import net.minecraft.item.ItemStack;
 

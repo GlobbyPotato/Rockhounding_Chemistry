@@ -2,6 +2,8 @@ package com.globbypotato.rockhounding_chemistry.machines.tileentity;
 
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.machines.SaltMaker;
+import com.globbypotato.rockhounding_core.machines.tileentity.IFluidHandlingTile;
+import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityMachineBase;
 
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;

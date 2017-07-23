@@ -1,12 +1,9 @@
 package com.globbypotato.rockhounding_chemistry.machines.gui;
 
-import java.util.Arrays;
-import java.util.List;
-
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerSaltSeasoner;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntitySaltSeasoner;
-import com.globbypotato.rockhounding_chemistry.utils.Translator;
+import com.globbypotato.rockhounding_core.utils.Translator;
 
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;

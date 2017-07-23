@@ -6,11 +6,11 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import com.globbypotato.rockhounding_chemistry.ModBlocks;
-import com.globbypotato.rockhounding_chemistry.blocks.itemblocks.MetaIB;
 import com.globbypotato.rockhounding_chemistry.enums.EnumLaser;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityLaserRX;
 import com.globbypotato.rockhounding_chemistry.utils.ToolUtils;
+import com.globbypotato.rockhounding_core.blocks.itemblocks.BaseMetaIB;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -46,7 +46,7 @@ public class LaserRX extends Block{
 		setRegistryName(name);
 		setUnlocalizedName(getRegistryName().toString());
 		GameRegistry.register(this);
-		GameRegistry.register(new MetaIB(this, EnumLaser.getNames()).setRegistryName(name));
+		GameRegistry.register(new BaseMetaIB(this, EnumLaser.getNames()).setRegistryName(name));
 		setHardness(hardness); setResistance(resistance);	
 		setHarvestLevel("pickaxe", 0);
 		setCreativeTab(Reference.RockhoundingChemistry);

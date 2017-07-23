@@ -1,9 +1,8 @@
 package com.globbypotato.rockhounding_chemistry.enums;
 
 import net.minecraft.block.material.MapColor;
-import net.minecraft.util.IStringSerializable;
 
-public enum EnumFires implements IStringSerializable {
+public enum EnumFires implements BaseEnum {
 	GREEN(0x5CB25A, MapColor.EMERALD),
 	BLUE(0x5A8AB2, MapColor.LAPIS),
 	CYAN(0x4FD5AA, MapColor.CYAN),
@@ -23,13 +22,13 @@ public enum EnumFires implements IStringSerializable {
 		this.mapcolor = mapcolor;
 	}
 
-	@Override
-	public String getName() {
-		return toString().toLowerCase();
-	}
-
+	//---------CUSTOM----------------
 	public static int size(){
 		return values().length;
+	}
+
+	public static String name(int index) {
+		return values()[index].getName();
 	}
 
 	public int colorTag(){
@@ -40,40 +39,41 @@ public enum EnumFires implements IStringSerializable {
 		return this.mapcolor;
 	}
 
+	//---------ENUM----------------
 	public static String[] getNames(){
 		String[] temp = new String[size()];
-		for(int i=0;i<size();i++){
+		for(int i = 0; i < size(); i++){
 			temp[i] = getName(i);
 		}
 		return temp;
 	}
 
 	public static String getName(int index){
-		return EnumFires.values()[index].getName();
+		return name(index);
 	}
 
 	public static int[] getColors(){
 		int[] temp = new int[size()];
-		for(int i=0;i<size();i++){
+		for(int i = 0; i < size(); i++){
 			temp[i] = getColor(i);
 		}
 		return temp;
 	}
 
 	public static int getColor(int index){
-		return EnumFires.values()[index].colorTag();
+		return values()[index].colorTag();
 	}
 
 	public static MapColor[] getMapColors(){
 		MapColor[] temp = new MapColor[size()];
-		for(int i=0;i<size();i++){
+		for(int i = 0; i < size(); i++){
 			temp[i] = getMapColor(i);
 		}
 		return temp;
 	}
 
 	public static MapColor getMapColor(int index){
-		return EnumFires.values()[index].mapColorTag();
+		return values()[index].mapColorTag();
 	}
 
 }

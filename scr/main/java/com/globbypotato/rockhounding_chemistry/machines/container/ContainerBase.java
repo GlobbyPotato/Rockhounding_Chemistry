@@ -2,7 +2,7 @@ package com.globbypotato.rockhounding_chemistry.machines.container;
 
 import javax.annotation.Nullable;
 
-import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityMachineInv;
+import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityMachineInv;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;

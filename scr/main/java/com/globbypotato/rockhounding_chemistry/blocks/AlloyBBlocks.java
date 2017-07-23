@@ -2,8 +2,9 @@ package com.globbypotato.rockhounding_chemistry.blocks;
 
 import java.util.Random;
 
-import com.globbypotato.rockhounding_chemistry.blocks.itemblocks.MetaIB;
 import com.globbypotato.rockhounding_chemistry.enums.EnumAlloyB;
+import com.globbypotato.rockhounding_core.blocks.BaseMetaBlock;
+import com.globbypotato.rockhounding_core.blocks.itemblocks.BaseMetaIB;
 
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -19,14 +20,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class AlloyBBlocks extends BaseMetaBlock {
+public class AlloyBBlocks extends BlockIO {
 	public static final PropertyEnum VARIANT = PropertyEnum.create("type", EnumAlloyB.class);
 	Random rand = new Random();
 
     public AlloyBBlocks(Material material, String[] array, float hardness, float resistance, String name, SoundType stepSound){
         super(material, array, hardness, resistance, name, stepSound);
-		GameRegistry.register(this);
-		GameRegistry.register(new MetaIB(this, EnumAlloyB.getAlloys()).setRegistryName(name));
+		GameRegistry.register(new BaseMetaIB(this, EnumAlloyB.getAlloys()).setRegistryName(name));
 		setHarvestLevel("pickaxe", 1);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(VARIANT, EnumAlloyB.values()[0]));
     }

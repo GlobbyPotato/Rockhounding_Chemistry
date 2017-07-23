@@ -2,10 +2,9 @@ package com.globbypotato.rockhounding_chemistry.machines;
 
 import javax.annotation.Nullable;
 
-import com.globbypotato.rockhounding_chemistry.blocks.BaseTileBlock;
-import com.globbypotato.rockhounding_chemistry.enums.EnumFluidNbt;
 import com.globbypotato.rockhounding_chemistry.handlers.GuiHandler;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityDepositionChamber;
+import com.globbypotato.rockhounding_core.enums.EnumFluidNbt;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -23,7 +22,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 
-public class DepositionChamber extends BaseTileBlock{
+public class DepositionChamber extends BaseMachine{
     private static final AxisAlignedBB BOUNDBOX = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 1.3D, 1.0D);
 
     public DepositionChamber(float hardness, float resistance, String name){
@@ -46,14 +45,11 @@ public class DepositionChamber extends BaseTileBlock{
 
     @Override
     public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack){
+    	super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
         worldIn.setBlockState(pos, state.withProperty(FACING, placer.getHorizontalFacing()), 2);
 		if(stack.hasTagCompound()){
         	TileEntityDepositionChamber te = (TileEntityDepositionChamber) worldIn.getTileEntity(pos);
 			if(te != null){
-	        	int recipe = stack.getTagCompound().getInteger("Recipe");
-        		if(stack.getTagCompound().hasKey("Recipe")){
-        			te.recipeIndex = recipe;
-        		}
         		if(stack.getTagCompound().hasKey(EnumFluidNbt.SOLVENT.nameTag())){
         			te.inputTank.setFluid(FluidStack.loadFluidStackFromNBT(stack.getTagCompound().getCompoundTag(EnumFluidNbt.SOLVENT.nameTag())));
         		}
@@ -78,10 +74,8 @@ public class DepositionChamber extends BaseTileBlock{
 	private void addNbt(ItemStack itemstack, TileEntity tileentity) {
 		TileEntityDepositionChamber chamber = ((TileEntityDepositionChamber)tileentity);
 		itemstack.setTagCompound(new NBTTagCompound());
+    	addPowerNbt(itemstack, tileentity);
 		NBTTagCompound solvent = new NBTTagCompound(); 
-		if(chamber.recipeIndex >= 0){
-			itemstack.getTagCompound().setInteger("Recipe", chamber.recipeIndex);
-		}
 		if(chamber.inputTank.getFluid() != null){
 			chamber.inputTank.getFluid().writeToNBT(solvent);
 			itemstack.getTagCompound().setTag(EnumFluidNbt.SOLVENT.nameTag(), solvent);

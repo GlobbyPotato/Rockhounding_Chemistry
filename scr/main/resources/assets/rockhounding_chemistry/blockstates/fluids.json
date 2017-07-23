@@ -87,6 +87,13 @@
 					"fluid": "phosphoric_acid"
 				}
 			}
+		],
+		"liquid_nitrogen": [
+			{
+				"custom": {
+					"fluid": "liquid_nitrogen"
+				}
+			}
 		]
 	}
 }

@@ -4,12 +4,28 @@ import com.globbypotato.rockhounding_chemistry.enums.EnumLaser;
 import com.globbypotato.rockhounding_chemistry.machines.LaserRX;
 
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 
 public class TileEntityLaserRX extends TileEntityLaserStorage{
 	EnumFacing pinFacing = EnumFacing.UP;
+
+    //----------------------- I/O -----------------------
+    @Override
+    public void readFromNBT(NBTTagCompound compound){
+        super.readFromNBT(compound);
+        this.splitSide = compound.getInteger("SplitSide");
+        this.isPulsing = compound.getBoolean("Pulse");
+    }
+
+    @Override
+    public NBTTagCompound writeToNBT(NBTTagCompound compound){
+        super.writeToNBT(compound);
+        compound.setInteger("SplitSide", emittingSide());
+        compound.setBoolean("Pulse", pulseMode());
+        return compound;
+    }
 
 	@Override
 	public void update() {
@@ -27,7 +43,11 @@ public class TileEntityLaserRX extends TileEntityLaserStorage{
 
 			//TX PIN
 			if(isEmittingPin(state())){
-				if(state().getBlock().getMetaFromState(state()) == 4){ pinFacing = EnumFacing.UP; }else if(state().getBlock().getMetaFromState(state()) == 6){ pinFacing = EnumFacing.DOWN; }
+				if(state().getBlock().getMetaFromState(state()) == 4){ 
+					pinFacing = EnumFacing.UP; 
+				}else if(state().getBlock().getMetaFromState(state()) == 6){ 
+					pinFacing = EnumFacing.DOWN; 
+				}
 				firstObstacle = false;
 				if(countBeam >= maxRange){
 					if(isReceivingLaser(state())){

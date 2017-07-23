@@ -6,7 +6,7 @@ import java.util.List;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerEarthBreaker;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityEarthBreaker;
-import com.globbypotato.rockhounding_chemistry.utils.Translator;
+import com.globbypotato.rockhounding_core.utils.Translator;
 
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;

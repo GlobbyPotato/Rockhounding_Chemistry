@@ -2,7 +2,6 @@ package com.globbypotato.rockhounding_chemistry.machines;
 
 import javax.annotation.Nullable;
 
-import com.globbypotato.rockhounding_chemistry.blocks.BaseTileBlock;
 import com.globbypotato.rockhounding_chemistry.handlers.GuiHandler;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityPetrographerTable;
 
@@ -17,7 +16,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class PetrographerTable extends BaseTileBlock{
+public class PetrographerTable extends BaseMachine{
     private static final AxisAlignedBB BOUNDBOX = new AxisAlignedBB(0.2D, 0.0D, 0.2D, 0.8D, 0.7D, 0.8D);
 
     public PetrographerTable(float hardness, float resistance, String name){

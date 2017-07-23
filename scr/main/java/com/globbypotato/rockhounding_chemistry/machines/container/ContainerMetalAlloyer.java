@@ -1,6 +1,6 @@
 package com.globbypotato.rockhounding_chemistry.machines.container;
 
-import com.globbypotato.rockhounding_chemistry.handlers.ModRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.MachineRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityMetalAlloyer;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -71,7 +71,7 @@ public class ContainerMetalAlloyer extends ContainerBase<TileEntityMetalAlloyer>
     		}
         	return null;
     	}else if(slot == 18){ 
-    		if(this.tile.recipeIndex < ModRecipes.alloyerRecipes.size() - 1){
+    		if(this.tile.recipeIndex < MachineRecipes.alloyerRecipes.size() - 1){
 	    		this.tile.recipeIndex++; 
 	    		this.tile.resetGrid(); 
 	    		this.tile.doScan = true;

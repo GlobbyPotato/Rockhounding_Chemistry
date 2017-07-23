@@ -23,7 +23,7 @@ public class ContainerMineralAnalyzer extends ContainerBase<TileEntityMineralAna
 		IItemHandler output = tile.getOutput();
 		IItemHandler template = tile.getTemplate();
 
-		this.addSlotToContainer(new SlotItemHandler(input, 0, 38, 24));//input
+		this.addSlotToContainer(new SlotItemHandler(input, 0, 38, 34));//input
 		this.addSlotToContainer(new SlotItemHandler(input, 1, 8, 34));//fuel
 		this.addSlotToContainer(new SlotItemHandler(input, 2, 70, 34));//consumable
 		this.addSlotToContainer(new SlotItemHandler(input, 3, 105, 88));//sulf

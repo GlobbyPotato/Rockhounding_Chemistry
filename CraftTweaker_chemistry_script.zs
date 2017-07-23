@@ -55,6 +55,7 @@
 		mods.rockhounding_chemistry.LeachingVat.remove(<rockhounding_chemistry:mineralOres:2>);
 
 
+
 //----------------------------------
 //----------Metal Alloyer----------
 //----------------------------------
@@ -87,8 +88,8 @@
 	//percentages = the quantity of each ingredient being extracted
 
 	//ADD
-		mods.rockhounding_chemistry.ChemicalExtractor.add(category, input, [element1, element2, element3],[40,20,10]);
-		mods.rockhounding_chemistry.ChemicalExtractor.add("Netheride", <minecraft:blaze_rod>, ["zinc", "uranium", "chromium", "boron"],[percentage1,percentage2,percentage3,percentage4]);
+		mods.rockhounding_chemistry.ChemicalExtractor.add(category, input, [element1, element2, element3, element4],[percentage1, percentage2, percentage3, percentage4]);
+		mods.rockhounding_chemistry.ChemicalExtractor.add("Netheride", <minecraft:blaze_rod>, ["zinc", "uranium", "chromium", "boron"],[40, 20, 10, 10]);
 
 	//REMOVE
 		mods.rockhounding_chemistry.ChemicalExtractor.remove(input);
@@ -117,7 +118,7 @@
 		mods.rockhounding_chemistry.LabOven.add(<minecraft:slime_ball>, false, <liquid:water>, 1000, <liquid:sulfuric_acid>, 500, <liquid:silicone>, 100);
 
 	//ADD without reagent
-		mods.rockhounding_chemistry.LabOven.add(solute, catalyst, solvent, solventAmount,  solution, solutionAmount);
+		mods.rockhounding_chemistry.LabOven.add(solute, catalyst, solvent, solventAmount, solution, solutionAmount);
 		mods.rockhounding_chemistry.LabOven.add(<minecraft:slime_ball>, false, <liquid:water>, 1000, <liquid:silicone>, 100);
 
 	//REMOVE

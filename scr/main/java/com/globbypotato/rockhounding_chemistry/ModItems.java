@@ -16,23 +16,21 @@ import com.globbypotato.rockhounding_chemistry.enums.shards.EnumPhosphate;
 import com.globbypotato.rockhounding_chemistry.enums.shards.EnumSilicate;
 import com.globbypotato.rockhounding_chemistry.enums.shards.EnumSulfate;
 import com.globbypotato.rockhounding_chemistry.enums.shards.EnumSulfide;
-import com.globbypotato.rockhounding_chemistry.fluids.ModFluids;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
-import com.globbypotato.rockhounding_chemistry.items.ChemBook;
+import com.globbypotato.rockhounding_chemistry.items.ArrayIO;
 import com.globbypotato.rockhounding_chemistry.items.ChemicalFires;
 import com.globbypotato.rockhounding_chemistry.items.ChemicalItems;
-import com.globbypotato.rockhounding_chemistry.items.ItemArray;
-import com.globbypotato.rockhounding_chemistry.items.ItemConsumable;
-import com.globbypotato.rockhounding_chemistry.items.ItemUtils;
+import com.globbypotato.rockhounding_chemistry.items.ConsumableIO;
 import com.globbypotato.rockhounding_chemistry.items.MineralShards;
 import com.globbypotato.rockhounding_chemistry.items.MiscItems;
-import com.globbypotato.rockhounding_chemistry.items.SiliconeCartridge;
+import com.globbypotato.rockhounding_chemistry.items.UtilIO;
 import com.globbypotato.rockhounding_chemistry.items.tools.BamShears;
 import com.globbypotato.rockhounding_chemistry.items.tools.BamSword;
 import com.globbypotato.rockhounding_chemistry.items.tools.CubeCrossbow;
 import com.globbypotato.rockhounding_chemistry.items.tools.Petrographer;
 import com.globbypotato.rockhounding_chemistry.items.tools.ScalBat;
 import com.globbypotato.rockhounding_chemistry.items.tools.ScalBow;
+import com.globbypotato.rockhounding_chemistry.items.tools.SiliconeCartridge;
 import com.globbypotato.rockhounding_chemistry.items.tools.SplashSmoke;
 
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -40,7 +38,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.util.EnumHelper;
-import net.minecraftforge.fluids.FluidRegistry;
 
 public class ModItems {
 
@@ -57,18 +54,20 @@ public class ModItems {
 	public static Item chemicalDusts;
 	public static Item chemicalFires;
 
-	public static Item chemBook;
 	public static Item chemicalItems;
 	public static Item miscItems;
 	public static Item alloyItems;
 	public static Item alloyBItems;
 
-	public static ItemConsumable gear;
-	public static ItemConsumable testTube;
-	public static ItemConsumable cylinder;
-	public static ItemConsumable ingotPattern;
+	public static ConsumableIO gear;
+	public static ConsumableIO testTube;
+	public static ConsumableIO cylinder;
+	public static ConsumableIO ingotPattern;
+	public static ConsumableIO agitator;
+	public static ConsumableIO feCatalyst;
+	public static ConsumableIO ptCatalyst;
 	public static SiliconeCartridge siliconeCartridge;
-	public static ItemUtils chemFlask;
+	public static UtilIO chemFlask;
 
 	public static Item cubeCrossbow;
 	public static Item scalBow;
@@ -92,19 +91,21 @@ public class ModItems {
 		silicateShards = new MineralShards("silicateShards", EnumSilicate.getNames());
 		sulfateShards = new MineralShards("sulfateShards", EnumSulfate.getNames());
 		sulfideShards = new MineralShards("sulfideShards", EnumSulfide.getNames());
-		chemicalDusts = new ItemArray("chemicalDusts", EnumElement.getNames());
+		chemicalDusts = new ArrayIO("chemicalDusts", EnumElement.getNames());
 		chemicalItems = new ChemicalItems("chemicalItems", EnumChemicals.getNames());										
 		miscItems = new MiscItems("miscItems", EnumItems.getNames());
-		chemBook = new ChemBook("chemBook");
-		alloyItems = new ItemArray("alloyItems", EnumAlloy.getItemNames());	
-		alloyBItems = new ItemArray("alloyBItems", EnumAlloyB.getItemNames());	
+		alloyItems = new ArrayIO("alloyItems", EnumAlloy.getItemNames());	
+		alloyBItems = new ArrayIO("alloyBItems", EnumAlloyB.getItemNames());	
 		chemicalFires = new ChemicalFires("chemicalFires", EnumFires.getNames());										
 
-		gear = new ItemConsumable("gear", ModConfig.gearUses);
-		testTube = new ItemConsumable("testTube", ModConfig.tubeUses);
-		cylinder = new ItemConsumable("cylinder", ModConfig.tubeUses);
-		ingotPattern = new ItemConsumable("ingotPattern", ModConfig.patternUses);
-		chemFlask = new ItemUtils("chemFlask");
+		gear = new ConsumableIO("gear", ModConfig.gearUses);
+		testTube = new ConsumableIO("testTube", ModConfig.tubeUses);
+		cylinder = new ConsumableIO("cylinder", ModConfig.tubeUses);
+		ingotPattern = new ConsumableIO("ingotPattern", ModConfig.patternUses);
+		agitator = new ConsumableIO("agitator", ModConfig.agitatorUses);
+		feCatalyst = new ConsumableIO("feCatalyst", ModConfig.catalystUses);
+		ptCatalyst = new ConsumableIO("ptCatalyst", ModConfig.catalystUses);
+		chemFlask = new UtilIO("chemFlask");
 		splashSmoke = new SplashSmoke("splashSmoke");
 
 		//tools
@@ -135,7 +136,6 @@ public class ModItems {
 		for(int i = 0; i < EnumAlloy.getItemNames().length; i++){	registerMetaItemRender(alloyItems, i, EnumAlloy.getItemName(i));		}
 		for(int i = 0; i < EnumAlloyB.getItemNames().length; i++){	registerMetaItemRender(alloyBItems, i, EnumAlloyB.getItemName(i));		}
 		for(int i = 0; i < EnumFires.size(); i++){					registerMetaItemRender(chemicalFires, i, EnumFires.getName(i));			}
-		registerSimpleItemRender(chemBook, 0, "chemBook");
 		registerSimpleItemRender(cubeCrossbow, 0, "cubeCrossbow");
 		registerSimpleItemRender(scalBow, 0, "scalBow");
 		registerSimpleItemRender(scalBat, 0, "scalBat");
@@ -146,31 +146,16 @@ public class ModItems {
 		testTube.initModel();
 		cylinder.initModel();
 		ingotPattern.initModel();
+		agitator.initModel();
+		feCatalyst.initModel();
+		ptCatalyst.initModel();
 		chemFlask.initModel();
 		splashSmoke.initModel();
 		siliconeCartridge.initModel();
-
-		if( !FluidRegistry.isUniversalBucketEnabled() ){
-			registerSimpleItemRender(ModFluids.beaker, 0, "beaker");
-			registerSimpleItemRender(ModFluids.waterBeaker, 0, "waterBeaker");
-			registerSimpleItemRender(ModFluids.lavaBeaker, 0, "lavaBeaker");
-			registerSimpleItemRender(ModFluids.sulfuricAcidBeaker, 0, "sulfuricAcidBeaker");
-			registerSimpleItemRender(ModFluids.hydrochloricAcidBeaker, 0, "hydrochloricAcidBeaker");
-			registerSimpleItemRender(ModFluids.hydrofluoricAcidBeaker, 0, "hydrofluoricAcidBeaker");
-			registerSimpleItemRender(ModFluids.syngasBeaker, 0, "syngasBeaker");
-			registerSimpleItemRender(ModFluids.acrylicAcidBeaker, 0, "acrylicAcidBeaker");
-			registerSimpleItemRender(ModFluids.chloromethaneBeaker, 0, "chloromethaneBeaker");
-			registerSimpleItemRender(ModFluids.siliconeBeaker, 0, "siliconeBeaker");
-			registerSimpleItemRender(ModFluids.ammoniaBeaker, 0, "ammoniaBeaker");
-			registerSimpleItemRender(ModFluids.nitricAcidBeaker, 0, "nitricAcidBeaker");
-			registerSimpleItemRender(ModFluids.titaniumTetrachlorideBeaker, 0, "titaniumTetrachlorideBeaker");
-			registerSimpleItemRender(ModFluids.sodiumCyanideBeaker, 0, "sodiumCyanideBeaker");
-			registerSimpleItemRender(ModFluids.phosphoricAcidBeaker, 0, "phosphoricAcidBeaker");
-		}
-
 	}
-	
-	
+
+
+
 	//render meta item
 	public static void registerMetaItemRender(Item item, int meta, String fileName){
 		ModelResourceLocation model = new ModelResourceLocation(item.getRegistryName() + "_" + fileName, "inventory");

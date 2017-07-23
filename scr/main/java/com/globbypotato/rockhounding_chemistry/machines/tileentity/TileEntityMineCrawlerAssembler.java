@@ -5,6 +5,10 @@ import com.globbypotato.rockhounding_chemistry.ModItems;
 import com.globbypotato.rockhounding_chemistry.enums.EnumCrawler;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiMineCrawlerAssembler;
+import com.globbypotato.rockhounding_core.machines.tileentity.MachineStackHandler;
+import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityMachineInv;
+import com.globbypotato.rockhounding_core.machines.tileentity.WrappedItemHandler;
+import com.globbypotato.rockhounding_core.machines.tileentity.WrappedItemHandler.WriteMode;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBreakable;
@@ -100,7 +104,7 @@ public class TileEntityMineCrawlerAssembler extends TileEntityMachineInv {
 				return insertingStack;
 			}
 		};
-		this.automationInput = new WrappedItemHandler(input, WrappedItemHandler.WriteMode.IN_OUT);
+		this.automationInput = new WrappedItemHandler(input, WriteMode.IN);
 	}
 
 	private static ItemStack crawlerPart(int meta){

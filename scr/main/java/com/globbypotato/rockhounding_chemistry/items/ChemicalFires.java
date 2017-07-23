@@ -1,6 +1,7 @@
 package com.globbypotato.rockhounding_chemistry.items;
 
 import com.globbypotato.rockhounding_chemistry.ModBlocks;
+import com.globbypotato.rockhounding_core.items.BaseArray;
 
 import net.minecraft.block.BlockFire;
 import net.minecraft.block.state.IBlockState;
@@ -12,7 +13,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class ChemicalFires extends ItemArray {
+public class ChemicalFires extends ArrayIO {
 	public ChemicalFires(String name, String[] array) {
 		super(name, array);
 	}

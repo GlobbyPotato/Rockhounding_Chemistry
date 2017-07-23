@@ -5,12 +5,12 @@ import java.util.List;
 
 import com.globbypotato.rockhounding_chemistry.enums.EnumElement;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
-import com.globbypotato.rockhounding_chemistry.handlers.ModRecipes;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerChemicalExtractor;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.MachineRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityChemicalExtractor;
-import com.globbypotato.rockhounding_chemistry.utils.RenderUtils;
-import com.globbypotato.rockhounding_chemistry.utils.Translator;
+import com.globbypotato.rockhounding_core.utils.RenderUtils;
+import com.globbypotato.rockhounding_core.utils.Translator;
 
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -44,13 +44,13 @@ public class GuiChemicalExtractor extends GuiBase {
 	   int y = (this.height - this.ySize) / 2;
 	   //fuel
 	   if(mouseX >= 11+x && mouseX <= 21+x && mouseY >= 28+y && mouseY <= 78+y){
-		   String text = this.chemicalExtractor.powerCount + "/" + this.chemicalExtractor.powerMax + " ticks";
+		   String text = this.chemicalExtractor.getPower() + "/" + this.chemicalExtractor.getPowerMax() + " ticks";
 		   List<String> tooltip = Arrays.asList(text);
 		   drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
 	   }
 	   //redstone
 	   if(mouseX >= 31+x && mouseX <= 41+x && mouseY >= 28+y && mouseY <= 78+y){
-		   String text = this.chemicalExtractor.redstoneCount + "/" + this.chemicalExtractor.redstoneMax + " RF";
+		   String text = this.chemicalExtractor.getRedstone() + "/" + this.chemicalExtractor.getRedstoneMax() + " RF";
 		   List<String> tooltip = Arrays.asList(text);
 		   drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
 	   }
@@ -104,8 +104,8 @@ public class GuiChemicalExtractor extends GuiBase {
 				   int enumDust = (row * 8) + col;
 				   if(enumDust < EnumElement.size()){
 					   String inhibit = "";
-					   for(int ix = 0; ix < ModRecipes.inhibitedElements.size(); ix++){
-						   if(EnumElement.getName((row * 8) + col).toLowerCase().matches(ModRecipes.inhibitedElements.get(ix).toLowerCase())){
+					   for(int ix = 0; ix < MachineRecipes.inhibitedElements.size(); ix++){
+						   if(EnumElement.getName((row * 8) + col).toLowerCase().matches(MachineRecipes.inhibitedElements.get(ix).toLowerCase())){
 							   inhibit = " - (Inhibited)";
 						   }
 					   }
@@ -131,13 +131,13 @@ public class GuiChemicalExtractor extends GuiBase {
         int j = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
         //fuel bar
-        if (this.chemicalExtractor.powerCount > 0){
-	        int k = this.getBarScaled(50, this.chemicalExtractor.powerCount, this.chemicalExtractor.powerMax);
+        if (this.chemicalExtractor.getPower() > 0){
+	        int k = this.getBarScaled(50, this.chemicalExtractor.getPower(), this.chemicalExtractor.getPowerMax());
             this.drawTexturedModalRect(i + 11, j + 28 + (50 - k), 225, 0, 10, k);
         }
         //redstone bar
-        if (this.chemicalExtractor.redstoneCount > 0){
-	        int k = this.getBarScaled(50, this.chemicalExtractor.redstoneCount, this.chemicalExtractor.redstoneMax);
+        if (this.chemicalExtractor.getRedstone() > 0){
+	        int k = this.getBarScaled(50, this.chemicalExtractor.getRedstone(), this.chemicalExtractor.getRedstoneMax());
             this.drawTexturedModalRect(i + 31, j + 28 + (50 - k), 225, 109, 10, k);
         }
         //smelt bar

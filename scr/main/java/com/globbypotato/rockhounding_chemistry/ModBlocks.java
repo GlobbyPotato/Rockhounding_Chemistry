@@ -5,12 +5,14 @@ import com.globbypotato.rockhounding_chemistry.blocks.AlloyBBricks;
 import com.globbypotato.rockhounding_chemistry.blocks.AlloyBlocks;
 import com.globbypotato.rockhounding_chemistry.blocks.AlloyBricks;
 import com.globbypotato.rockhounding_chemistry.blocks.FireBlock;
+import com.globbypotato.rockhounding_chemistry.blocks.GanBlocks;
 import com.globbypotato.rockhounding_chemistry.blocks.MineralOres;
 import com.globbypotato.rockhounding_chemistry.blocks.OwcBlocks;
 import com.globbypotato.rockhounding_chemistry.blocks.SmokeBlock;
 import com.globbypotato.rockhounding_chemistry.enums.EnumAlloy;
 import com.globbypotato.rockhounding_chemistry.enums.EnumAlloyB;
 import com.globbypotato.rockhounding_chemistry.enums.EnumFires;
+import com.globbypotato.rockhounding_chemistry.enums.EnumGan;
 import com.globbypotato.rockhounding_chemistry.enums.EnumLaser;
 import com.globbypotato.rockhounding_chemistry.enums.EnumOres;
 import com.globbypotato.rockhounding_chemistry.enums.EnumOwc;
@@ -19,10 +21,15 @@ import com.globbypotato.rockhounding_chemistry.machines.CrawlerAssembler;
 import com.globbypotato.rockhounding_chemistry.machines.Dekatron;
 import com.globbypotato.rockhounding_chemistry.machines.DepositionChamber;
 import com.globbypotato.rockhounding_chemistry.machines.EarthBreaker;
+import com.globbypotato.rockhounding_chemistry.machines.ElectroLaser;
+import com.globbypotato.rockhounding_chemistry.machines.GanController;
 import com.globbypotato.rockhounding_chemistry.machines.LabOven;
+import com.globbypotato.rockhounding_chemistry.machines.LaserAmplifier;
 import com.globbypotato.rockhounding_chemistry.machines.LaserBeam;
 import com.globbypotato.rockhounding_chemistry.machines.LaserRX;
+import com.globbypotato.rockhounding_chemistry.machines.LaserRay;
 import com.globbypotato.rockhounding_chemistry.machines.LaserSplitter;
+import com.globbypotato.rockhounding_chemistry.machines.LaserStabilizer;
 import com.globbypotato.rockhounding_chemistry.machines.LaserTX;
 import com.globbypotato.rockhounding_chemistry.machines.MetalAlloyer;
 import com.globbypotato.rockhounding_chemistry.machines.MineCrawler;
@@ -68,12 +75,19 @@ public class ModBlocks {
 
 	public static Block laserRedstoneTx;
 	public static Block laserRedstoneRx;
-	public static Block laserBeam;
 	public static Block laserSplitter;
+	public static Block laserAmplifier;
+	public static Block laserStabilizer;
+	public static Block electroLaser;
+	public static Block laserBeam;
+	public static Block laserRay;
 
 	public static Block owcBlocks;
 	public static Block owcAssembler;
 	public static Block owcController;
+
+	public static Block ganBlocks;
+	public static Block ganController;
 
 	//initialize the block
 	public static void init() {
@@ -105,11 +119,19 @@ public class ModBlocks {
 		laserRedstoneTx = new LaserTX(3.0F, 5.0F,"laserRedstoneTx");
 		laserRedstoneRx = new LaserRX(3.0F, 5.0F,"laserRedstoneRx", EnumLaser.getNames());
 		laserSplitter = new LaserSplitter(3.0F, 5.0F,"laserSplitter");
+		laserAmplifier = new LaserAmplifier(3.0F, 5.0F,"laserAmplifier");
+		laserStabilizer = new LaserStabilizer(3.0F, 5.0F,"laserStabilizer");
+		electroLaser = new ElectroLaser(3.0F, 5.0F,"electroLaser");
 		laserBeam = new LaserBeam("laserBeam");
+		laserRay = new LaserRay("laserRay");
 
-		owcAssembler = new OwcAssembler(3.0F, 5.0F, "owcAssembler");
 		owcBlocks = new OwcBlocks(Material.IRON, EnumOwc.getNames(), 4.0F, 7.0F, "owcBlocks", SoundType.METAL);
+		owcAssembler = new OwcAssembler(3.0F, 5.0F, "owcAssembler");
 		owcController = new OwcController(3.0F, 5.0F, "owcController");
+		
+		ganBlocks = new GanBlocks(Material.IRON, EnumGan.getNames(), 4.0F, 7.0F, "ganBlocks", SoundType.METAL);
+		ganController = new GanController(3.0F, 5.0F, "ganController");
+
 	}
 
 	//recall the renders
@@ -122,6 +144,7 @@ public class ModBlocks {
 		for(int i = 0; i < EnumAlloyB.size(); i++){	registerMetaBlockRender(alloyBBricks, i, EnumAlloyB.getAlloy(i));	}
 		for(int i = 0; i < EnumLaser.size(); i++){	registerMetaBlockRender(laserRedstoneRx, i, EnumLaser.getName(i));	}
 		for(int i = 0; i < EnumOwc.size(); i++){	registerMetaBlockRender(owcBlocks, i, EnumOwc.getName(i));			}
+		for(int i = 0; i < EnumGan.size(); i++){	registerMetaBlockRender(ganBlocks, i, EnumGan.getName(i));			}
 		for(int i = 0; i < EnumFires.size(); i++){	registerMetaBlockRender(fireBlock, i, EnumFires.getName(i));		}
 		registerSingleBlockRender(saltMaker, 0, "saltMaker");
 		registerSingleBlockRender(saltSeasoner, 0, "saltSeasoner");
@@ -134,7 +157,11 @@ public class ModBlocks {
 		registerSingleBlockRender(metalAlloyer, 0, "metalAlloyer");
 		registerSingleBlockRender(depositionChamber, 0, "depositionChamber");
 		registerSingleBlockRender(laserRedstoneTx, 0, "laserRedstoneTx");
+		registerSingleBlockRender(laserAmplifier, 0, "laserAmplifier");
+		registerSingleBlockRender(laserStabilizer, 0, "laserStabilizer");
+		registerSingleBlockRender(electroLaser, 0, "electroLaser");
 		registerSingleBlockRender(laserBeam, 0, "laserBeam");
+		registerSingleBlockRender(laserRay, 0, "laserRay");
 		registerSingleBlockRender(laserSplitter, 0, "laserSplitter");
 		registerSingleBlockRender(owcAssembler, 0, "owcAssembler");
 		registerSingleBlockRender(owcController, 0, "owcController");
@@ -142,6 +169,7 @@ public class ModBlocks {
 		registerSingleBlockRender(dekatron, 0, "dekatron");
 		registerSingleBlockRender(earthBreaker, 0, "earthBreaker");
 		registerSingleBlockRender(smokeBlock, 0, "smokeBlock");
+		registerSingleBlockRender(ganController, 0, "ganController");
 	}
 
 	//render meta block

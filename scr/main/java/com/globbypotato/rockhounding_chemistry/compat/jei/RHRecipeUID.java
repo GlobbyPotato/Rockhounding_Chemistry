@@ -8,4 +8,7 @@ public class RHRecipeUID {
 	public static final String LAB_OVEN = "rockhounding.lab_oven";
 	public static final String SALT_SEASONER = "rockhounding.salt_seasoner";
 	public static final String VAPOR_DEPOSITION = "rockhounding.vapor_deposition";
+	public static final String DISTILLATION_TOWER = "rockhounding.distillation_tower";
+	public static final String PETROGRAPHER = "rockhounding.petrographer";
+	public static final String FLAME_TEST = "rockhounding.flametest";
 }

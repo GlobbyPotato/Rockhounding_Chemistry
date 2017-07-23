@@ -183,7 +183,6 @@ public class TileEntityDekatron extends TileEntity implements ITickable {
 		}
 	}
 
-
 	private void enableDeka() {
 		worldObj.setBlockState(pos, getLevel(1));
 	}
@@ -253,19 +252,26 @@ public class TileEntityDekatron extends TileEntity implements ITickable {
 
 	@Override
 	public SPacketUpdateTileEntity getUpdatePacket() {
-		NBTTagCompound tag = new NBTTagCompound();
+		NBTTagCompound tag = getUpdateTag();
 		this.writeToNBT(tag);
-		return new SPacketUpdateTileEntity(pos, 0, tag);
+		return new SPacketUpdateTileEntity(pos, getBlockMetadata(), tag);
 	}
 
 	@Override
 	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet) {
-		super.onDataPacket(net, packet);
-        readFromNBT(packet.getNbtCompound());
+	    NBTTagCompound tag = packet.getNbtCompound();
+	    handleUpdateTag(tag);
 	}
 
 	@Override
 	public NBTTagCompound getUpdateTag() {
-		return this.writeToNBT(new NBTTagCompound());
+		NBTTagCompound nbtTagCompound = new NBTTagCompound();
+		writeToNBT(nbtTagCompound);
+		return nbtTagCompound;
+	}
+
+	@Override
+	public void handleUpdateTag(NBTTagCompound tag){
+		this.readFromNBT(tag);
 	}
 }

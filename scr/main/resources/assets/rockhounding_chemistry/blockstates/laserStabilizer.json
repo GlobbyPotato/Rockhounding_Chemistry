@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "facing=down":  { "model": "rockhounding_chemistry:laserStabilizer"	},
+        "facing=up":    { "model": "rockhounding_chemistry:laserStabilizer" },
+        "facing=south": { "model": "rockhounding_chemistry:laserStabilizer", "y": 180},
+        "facing=north": { "model": "rockhounding_chemistry:laserStabilizer"},
+        "facing=east":  { "model": "rockhounding_chemistry:laserStabilizer", "y": 90  },
+        "facing=west":  { "model": "rockhounding_chemistry:laserStabilizer", "y": 270 }
+    }
+}

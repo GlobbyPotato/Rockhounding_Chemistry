@@ -1,7 +1,6 @@
 package com.globbypotato.rockhounding_chemistry.handlers;
 
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityEarthBreaker;
-import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityMachineEnergy;
 import com.globbypotato.rockhounding_chemistry.world.ChemOresGenerator;
 
 import net.minecraftforge.common.config.Configuration;
@@ -29,6 +28,8 @@ public class ModConfig {
 	public static int gearUses;
 	public static int tubeUses;
 	public static int patternUses;
+	public static int agitatorUses;
+	public static int catalystUses;
 
 	public static boolean enableRainRefill;
 	public static int evaporationBase;
@@ -36,6 +37,14 @@ public class ModConfig {
     public static int saltAmount;
 
 	public static boolean forceSilicone;
+
+	public static int consumedSulf = 10;
+	public static int consumedChlo = 30;
+	public static int consumedFluo = 20;
+
+	public static int consumedNitr = 10;
+	public static int consumedPhos = 30;
+	public static int consumedCyan = 20;
 
 	public static int[] dimensions = new int[]{};
 
@@ -67,19 +76,20 @@ public class ModConfig {
 		config.addCustomCategoryComment("Tools", "These settings handle the settings of machines and tools.");
 		speedLabOven = config.get(									CATEGORY_TOOLS, "SpeedLabOven", 			200,	"Ticks required to produce acids in the Lab Oven").getInt();
 		speedSizer = config.get(									CATEGORY_TOOLS, "SpeedMineralSizer", 		300,	"Ticks required to crush minerals in the Mineral Sizer").getInt();
-		speedAnalyzer = config.get(									CATEGORY_TOOLS, "SpeedMineralAnalyzer", 	300,	"Ticks required to analyze minerals in the Mineral Analyzer").getInt();
+		speedAnalyzer = config.get(									CATEGORY_TOOLS, "SpeedMineralAnalyzer", 	300,	"Ticks required to analyze minerals in the Leaching Vat").getInt();
 		speedExtractor = config.get(								CATEGORY_TOOLS, "SpeedChemicalExtractor", 	400,	"Ticks required to extract elements in the Chemical Extractor").getInt();
 		speedAssembling = config.get(								CATEGORY_TOOLS, "SpeedAssemblyTables", 		100,	"Ticks required to assembly Devices in their Assembly Tables").getInt();
 		alloyingSpeed = config.get(									CATEGORY_TOOLS, "SpeedMetalAlloyer", 		200,	"Ticks required to cast an alloy in the Metal Alloyer").getInt();
 		speedSeasoner = config.get(									CATEGORY_TOOLS, "SpeedSaltSeasoner", 		600,	"Ticks required to finalize salt in the Salt Seasoning Rack").getInt();
 		speedDeposition = config.get(								CATEGORY_TOOLS, "SpeedDepositionChamber",	800,	"Ticks required to process in the Deposition Chamber").getInt();
 		factorExtractor = config.get(								CATEGORY_TOOLS, "ExtractingFactor", 		100,	"Percentage of element required to produce one regular dust").getInt();
-		gearUses = config.get(										CATEGORY_TOOLS, "UsesGear", 				200,	"Max uses for the Crushing Gear in the Mineral Sizer").getInt();
-		tubeUses = config.get(										CATEGORY_TOOLS, "UsesTube", 				300,	"Max uses for the Test Tube in the Mineral Analyzer").getInt();
+		gearUses = config.get(										CATEGORY_TOOLS, "UsesGear", 				250,	"Max uses for the Crushing Gear in the Mineral Sizer").getInt();
+		tubeUses = config.get(										CATEGORY_TOOLS, "UsesTube", 				300,	"Max uses for the Test Tube in the Chemical Extractor").getInt();
+		agitatorUses = config.get(									CATEGORY_TOOLS, "UsesAgitator", 			400,	"Max uses for the Agitator in the Leaching Vat").getInt();
 		patternUses = config.get(									CATEGORY_TOOLS, "UsesPattern", 				200,	"Max uses for the Ingot Pattern in the Metal Alloyer").getInt();
+		catalystUses = config.get(									CATEGORY_TOOLS, "UsesCatalyst", 			200,	"Max uses for any Catalyst in the Lab Oven").getInt();
 		maxMineral = config.get(									CATEGORY_TOOLS, "MaxMineralShards", 		4,		"Max amount of mineral shards obtainable from the Mineral Analyzer").getInt();
 		machineTank = config.get(									CATEGORY_TOOLS, "MachineTankCapacity", 		9000,	"Max capacity for machine fluid tanks. This value is increased by 1000 by default").getInt();
-		TileEntityMachineEnergy.allowInductor = config.get(			CATEGORY_TOOLS, "PermanentInduction",		false,	"Make the Induction Heating Interface a machine permanent upgrade").getBoolean();
 		TileEntityEarthBreaker.dropBedrock = config.get(			CATEGORY_TOOLS, "DropBedrock",				false,	"Allow the Boundary Breaker to drop the mined bedrock").getBoolean();
 
         if (config.hasChanged()) {

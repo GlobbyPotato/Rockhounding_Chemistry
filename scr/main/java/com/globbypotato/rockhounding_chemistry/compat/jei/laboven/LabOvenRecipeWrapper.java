@@ -7,8 +7,8 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import com.globbypotato.rockhounding_chemistry.compat.jei.RHRecipeWrapper;
-import com.globbypotato.rockhounding_chemistry.handlers.ModRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.LabOvenRecipe;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.MachineRecipes;
 
 import mezz.jei.api.ingredients.IIngredients;
 import net.minecraft.item.ItemStack;
@@ -22,7 +22,7 @@ public class LabOvenRecipeWrapper extends RHRecipeWrapper<LabOvenRecipe> {
 
 	public static List<LabOvenRecipeWrapper> getRecipes() {
 		List<LabOvenRecipeWrapper> recipes = new ArrayList<>();
-		for (LabOvenRecipe recipe : ModRecipes.labOvenRecipes) {
+		for (LabOvenRecipe recipe : MachineRecipes.labOvenRecipes) {
 			recipes.add(new LabOvenRecipeWrapper(recipe));
 		}
 		return recipes;

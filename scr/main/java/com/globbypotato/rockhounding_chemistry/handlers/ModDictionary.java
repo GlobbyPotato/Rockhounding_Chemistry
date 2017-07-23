@@ -19,11 +19,14 @@ public class ModDictionary {
 		OreDictionary.registerOre("itemFluorite", new ItemStack(ModItems.halideShards, 1, 4));	
 		OreDictionary.registerOre("itemPyrite", new ItemStack(ModItems.sulfideShards, 1, 6));	
 		OreDictionary.registerOre("nuggetIron", new ItemStack(ModItems.miscItems, 1, 2));	
+		OreDictionary.registerOre("ingotPlatinum", new ItemStack(ModItems.miscItems, 1, 17));	
 		OreDictionary.registerOre("ingotCopper", new ItemStack(ModItems.miscItems, 1, 25));	
 		OreDictionary.registerOre("ingotLead", new ItemStack(ModItems.miscItems, 1, 27));	
 		OreDictionary.registerOre("ingotTitanium", new ItemStack(ModItems.miscItems, 1, 36));	
 		OreDictionary.registerOre("slimeball", new ItemStack(ModItems.siliconeCartridge, 1, OreDictionary.WILDCARD_VALUE));	
-
+		OreDictionary.registerOre("ingotAluminum", new ItemStack(ModItems.miscItems, 1, 46));	
+		OreDictionary.registerOre("nuggetAluminum", new ItemStack(ModItems.miscItems, 1, 47));	
+		OreDictionary.registerOre("itemNichromeHeater", new ItemStack(ModItems.miscItems, 1, 16));	
 
 		for(int x = 0; x < EnumAlloy.size(); x++){
 			OreDictionary.registerOre(EnumAlloy.getBlock(x), new ItemStack(ModBlocks.alloyBlocks, 1, x));
