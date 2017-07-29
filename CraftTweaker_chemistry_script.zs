@@ -89,11 +89,7 @@
 
 	//ADD
 		mods.rockhounding_chemistry.ChemicalExtractor.add(category, input, [element1, element2, element3, element4],[percentage1, percentage2, percentage3, percentage4]);
-<<<<<<< HEAD
 		mods.rockhounding_chemistry.ChemicalExtractor.add("Netheride", <minecraft:blaze_rod>, ["zinc", "uranium", "chromium", "boron"],[40, 20, 10, 10]);
-=======
-		mods.rockhounding_chemistry.ChemicalExtractor.add("Netheride", <minecraft:blaze_rod>, ["zinc", "uranium", "chromium", "boron"],[40,20,10,10]);
->>>>>>> origin/master
 
 	//REMOVE
 		mods.rockhounding_chemistry.ChemicalExtractor.remove(input);
