@@ -43,11 +43,17 @@ public class ContainerDepositionChamber extends ContainerBase<TileEntityDepositi
 			if(this.tile.recipeIndex >= 0){
 	    		this.tile.recipeIndex--; 
 	    		this.tile.activation = false;
+	    	}else{
+	    		this.tile.recipeIndex = MachineRecipes.depositionRecipes.size() - 1;
+	    		this.tile.activation = false;
 	    	}
     		return null;
     	}else if(slot == 6){
     		if(this.tile.recipeIndex < MachineRecipes.depositionRecipes.size() - 1){
     			this.tile.recipeIndex++; 
+	    		this.tile.activation = false;
+    		}else{
+    			this.tile.recipeIndex = -1; 
 	    		this.tile.activation = false;
     		}
     		return null;

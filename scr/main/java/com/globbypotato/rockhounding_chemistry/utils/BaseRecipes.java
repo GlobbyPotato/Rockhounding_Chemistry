@@ -18,40 +18,40 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 public class BaseRecipes {
-	protected static String getText(int i) {return EnumOres.getName(i).toUpperCase().substring(0, 1) + EnumOres.getName(i).substring(1);}
+	public static String getText(int i) {return EnumOres.getName(i).toUpperCase().substring(0, 1) + EnumOres.getName(i).substring(1);}
 
-	protected static ItemStack arsenateStack(EnumArsenate mineral) {	return new ItemStack(ModItems.arsenateShards, 1, mineral.ordinal());}
-	protected static ItemStack borateStack(EnumBorate mineral) {		return new ItemStack(ModItems.borateShards, 1, mineral.ordinal());}
-	protected static ItemStack carbonateStack(EnumCarbonate mineral) {	return new ItemStack(ModItems.carbonateShards, 1, mineral.ordinal());}
-	protected static ItemStack halideStack(EnumHalide mineral) {		return new ItemStack(ModItems.halideShards, 1, mineral.ordinal());}
-	protected static ItemStack nativeStack(EnumNative mineral) {		return new ItemStack(ModItems.nativeShards, 1, mineral.ordinal());}
-	protected static ItemStack oxideStack(EnumOxide mineral) {			return new ItemStack(ModItems.oxideShards, 1, mineral.ordinal());}
-	protected static ItemStack posphateStack(EnumPhosphate mineral) {	return new ItemStack(ModItems.phosphateShards, 1, mineral.ordinal());}
-	protected static ItemStack silicateStack(EnumSilicate mineral) {	return new ItemStack(ModItems.silicateShards, 1, mineral.ordinal());}
-	protected static ItemStack sulfateStack(EnumSulfate mineral) {		return new ItemStack(ModItems.sulfateShards, 1, mineral.ordinal());}
-	protected static ItemStack sulfideStack(EnumSulfide mineral) {		return new ItemStack(ModItems.sulfideShards, 1, mineral.ordinal());}
+	public static ItemStack arsenateStack(EnumArsenate mineral) {	return new ItemStack(ModItems.arsenateShards, 1, mineral.ordinal());}
+	public static ItemStack borateStack(EnumBorate mineral) {		return new ItemStack(ModItems.borateShards, 1, mineral.ordinal());}
+	public static ItemStack carbonateStack(EnumCarbonate mineral) {	return new ItemStack(ModItems.carbonateShards, 1, mineral.ordinal());}
+	public static ItemStack halideStack(EnumHalide mineral) {		return new ItemStack(ModItems.halideShards, 1, mineral.ordinal());}
+	public static ItemStack nativeStack(EnumNative mineral) {		return new ItemStack(ModItems.nativeShards, 1, mineral.ordinal());}
+	public static ItemStack oxideStack(EnumOxide mineral) {			return new ItemStack(ModItems.oxideShards, 1, mineral.ordinal());}
+	public static ItemStack posphateStack(EnumPhosphate mineral) {	return new ItemStack(ModItems.phosphateShards, 1, mineral.ordinal());}
+	public static ItemStack silicateStack(EnumSilicate mineral) {	return new ItemStack(ModItems.silicateShards, 1, mineral.ordinal());}
+	public static ItemStack sulfateStack(EnumSulfate mineral) {		return new ItemStack(ModItems.sulfateShards, 1, mineral.ordinal());}
+	public static ItemStack sulfideStack(EnumSulfide mineral) {		return new ItemStack(ModItems.sulfideShards, 1, mineral.ordinal());}
 
-	protected static ItemStack miscs(int num, int meta){		return new ItemStack(ModItems.miscItems, num, meta);}
-	protected static ItemStack chemicals(int num, int meta){	return new ItemStack(ModItems.chemicalItems, num, meta);}
-	protected static ItemStack elements(int num, int meta){		return new ItemStack(ModItems.chemicalDusts, num, meta);}
-	protected static ItemStack alloys(int num, int meta){		return new ItemStack(ModItems.alloyItems, num, meta);}
-	protected static ItemStack alloysB(int num, int meta){		return new ItemStack(ModItems.alloyBItems, num, meta);}
-	protected static ItemStack owc(int num, int meta){			return new ItemStack(ModBlocks.owcBlocks, num, meta);}
-	protected static ItemStack gan(int meta){					return new ItemStack(ModBlocks.ganBlocks, 1, meta);}
-	protected static ItemStack fires(int num, int meta) {		return new ItemStack(ModItems.chemicalFires, num, meta);}
-	protected static ItemStack minerals(int type){				return new ItemStack(ModBlocks.mineralOres,1,type);}
+	public static ItemStack miscs(int num, int meta){				return new ItemStack(ModItems.miscItems, num, meta);}
+	public static ItemStack chemicals(int num, int meta){			return new ItemStack(ModItems.chemicalItems, num, meta);}
+	public static ItemStack elements(int num, int meta){			return new ItemStack(ModItems.chemicalDusts, num, meta);}
+	public static ItemStack alloys(int num, int meta){				return new ItemStack(ModItems.alloyItems, num, meta);}
+	public static ItemStack alloysB(int num, int meta){				return new ItemStack(ModItems.alloyBItems, num, meta);}
+	public static ItemStack owc(int num, int meta){					return new ItemStack(ModBlocks.owcBlocks, num, meta);}
+	public static ItemStack gan(int meta){							return new ItemStack(ModBlocks.ganBlocks, 1, meta);}
+	public static ItemStack fires(int num, int meta) {				return new ItemStack(ModItems.chemicalFires, num, meta);}
+	public static ItemStack minerals(int type){						return new ItemStack(ModBlocks.mineralOres,1,type);}
 
-	protected static ItemStack arsenateShards(int i) {	return new ItemStack(ModItems.arsenateShards,1,i);}
-	protected static ItemStack borateShards(int i) {	return new ItemStack(ModItems.borateShards,1,i);}
-	protected static ItemStack carbonateShards(int i) {	return new ItemStack(ModItems.carbonateShards,1,i);}
-	protected static ItemStack halideShards(int i) {	return new ItemStack(ModItems.halideShards,1,i);}
-	protected static ItemStack nativeShards(int i) {	return new ItemStack(ModItems.nativeShards,1,i);}
-	protected static ItemStack oxideShards(int i) {		return new ItemStack(ModItems.oxideShards,1,i);}
-	protected static ItemStack phosphateShards(int i) {	return new ItemStack(ModItems.phosphateShards,1,i);}
-	protected static ItemStack silicateShards(int i) {	return new ItemStack(ModItems.silicateShards,1,i);}
-	protected static ItemStack sulfateShards(int i) {	return new ItemStack(ModItems.sulfateShards,1,i);}
-	protected static ItemStack sulfideShards(int i) {	return new ItemStack(ModItems.sulfideShards,1,i);}
-	protected static ItemStack dyeShards(int i) {		return new ItemStack(Items.DYE,1,i);}
+	public static ItemStack arsenateShards(int i) {					return new ItemStack(ModItems.arsenateShards,1,i);}
+	public static ItemStack borateShards(int i) {					return new ItemStack(ModItems.borateShards,1,i);}
+	public static ItemStack carbonateShards(int i) {				return new ItemStack(ModItems.carbonateShards,1,i);}
+	public static ItemStack halideShards(int i) {					return new ItemStack(ModItems.halideShards,1,i);}
+	public static ItemStack nativeShards(int i) {					return new ItemStack(ModItems.nativeShards,1,i);}
+	public static ItemStack oxideShards(int i) {					return new ItemStack(ModItems.oxideShards,1,i);}
+	public static ItemStack phosphateShards(int i) {				return new ItemStack(ModItems.phosphateShards,1,i);}
+	public static ItemStack silicateShards(int i) {					return new ItemStack(ModItems.silicateShards,1,i);}
+	public static ItemStack sulfateShards(int i) {					return new ItemStack(ModItems.sulfateShards,1,i);}
+	public static ItemStack sulfideShards(int i) {					return new ItemStack(ModItems.sulfideShards,1,i);}
+	public static ItemStack dyeShards(int i) {						return new ItemStack(Items.DYE,1,i);}
 
 	public static ItemStack logicChip = miscs(1,0);
 	public static ItemStack cabinet = miscs(1,1);

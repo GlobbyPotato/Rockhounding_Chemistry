@@ -1,12 +1,8 @@
 package com.globbypotato.rockhounding_chemistry.machines.gui;
 
-import java.util.Arrays;
-import java.util.List;
-
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerGanController;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityGanController;
-import com.globbypotato.rockhounding_core.utils.Translator;
 
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -32,6 +28,7 @@ public class GuiGanController extends GuiBase {
         this.playerInventory = playerInv;
 		this.xSize = WIDTH;
 		this.ySize = HEIGHT;
+		this.containerName = "container.ganController";
     }
 
     @Override
@@ -60,14 +57,13 @@ public class GuiGanController extends GuiBase {
 
 	   //RF area
 	   if((mouseX >= 85+x && mouseX <= 107+x && mouseY >= 17+y && mouseY <= 76+y)){
-		   List<String> tooltip = Arrays.asList(multiString);
-		   drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
+			drawMultiLabel(multiString, mouseX, mouseY);
 	   }
+
 	   //Tier
 	   if(mouseX >= 7+x && mouseX <= 24+x && mouseY >= 33+y && mouseY <= 50+y){
 		   String text = "Tier: " +  this.ganController.getTierName();
-		   List<String> tooltip = Arrays.asList(text);
-		   drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
+			drawButtonLabel(text, mouseX, mouseY);
 	   }
 
 	   //coolant
@@ -76,15 +72,7 @@ public class GuiGanController extends GuiBase {
 		   if(this.ganController.hasRefrigerant()){
 			   text = "Refrigerant: Available";
 	       }
-		   List<String> tooltip = Arrays.asList(text);
-		   drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
-	   }
-
-	   //activation
-	   if(mouseX >= 110+x && mouseX <= 125+x && mouseY >= 16+y && mouseY <= 31+y){
-		   String text = "System Activation";
-		   List<String> tooltip = Arrays.asList(text);
-		   drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
+			drawButtonLabel(text, mouseX, mouseY);
 	   }
 
 	   //compress tooltip
@@ -92,24 +80,18 @@ public class GuiGanController extends GuiBase {
 		   String modeIn = "";
 		   if(this.ganController.compressKey){ modeIn = "Producing Nitrogen"; }else{ modeIn = "Compressing air"; }
 		   String text = "Mode Selected: " + modeIn;
-		   List<String> tooltip = Arrays.asList(text);
-		   drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
+			drawButtonLabel(text, mouseX, mouseY);
+	   }
+
+	   //activation
+	   if(mouseX >= 110+x && mouseX <= 125+x && mouseY >= 16+y && mouseY <= 31+y){
+			drawButtonLabel("Activation", mouseX, mouseY);
 	   }
 
 	   //Sanity check
 	   if(mouseX >= 7+x && mouseX <= 70+x && mouseY >= 16+y && mouseY <= 30+y){
-		   String text = "Sanity Check";
-		   List<String> tooltip = Arrays.asList(text);
-		   drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
+			drawButtonLabel("Sanity Check", mouseX, mouseY);
 	   }
-    }
-
-    @Override
-    public void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
-    	super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-		
-        String device = Translator.translateToLocal("container.ganController");
-        this.fontRendererObj.drawString(device, this.xSize / 2 - this.fontRendererObj.getStringWidth(device) / 2, 6, 4210752);
     }
 
     @Override

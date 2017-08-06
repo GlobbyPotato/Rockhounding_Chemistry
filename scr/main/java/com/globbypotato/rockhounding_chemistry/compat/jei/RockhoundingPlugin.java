@@ -100,7 +100,8 @@ public class RockhoundingPlugin extends BlankModPlugin{
 		registry.addRecipeClickArea(GuiMineralAnalyzer.class, 27, 52, 33, 60, RHRecipeUID.ANALYZER);
 		registry.addRecipeClickArea(GuiLabOven.class, 64, 57, 14, 15, RHRecipeUID.LAB_OVEN);
 		registry.addRecipeClickArea(GuiSaltSeasoner.class, 72, 23, 32, 52, RHRecipeUID.SALT_SEASONER);
-		registry.addRecipeClickArea(GuiMetalAlloyer.class, 99, 74, 14, 17, RHRecipeUID.ALLOYER);
+		registry.addRecipeClickArea(GuiMetalAlloyer.class, 41, 53, 128, 13, RHRecipeUID.ALLOYER);
+		registry.addRecipeClickArea(GuiMetalAlloyer.class, 40, 66, 18, 13, RHRecipeUID.ALLOYER);
 		registry.addRecipeClickArea(GuiChemicalExtractor.class, 49, 47, 14, 32, RHRecipeUID.EXTRACTOR);
 		registry.addRecipeClickArea(GuiDepositionChamber.class, 57, 56, 62, 14, RHRecipeUID.VAPOR_DEPOSITION);
 		registry.addRecipeClickArea(GuiPetrographerTable.class, 68, 45, 40, 27, RHRecipeUID.PETROGRAPHER);

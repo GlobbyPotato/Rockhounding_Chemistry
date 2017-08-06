@@ -266,7 +266,7 @@ public class TileEntityLabOven extends TileEntityMachineTank {
 			&& input.canSetOrFill(outputTank, outputFluid(), getRecipe().getOutput()) 
 			&& input.hasEnoughFluid(solventFluid(), getRecipe().getSolvent())
 			&& (noReagentUsed() || input.hasEnoughFluid(reagentFluid(), getRecipe().getReagent()))
-			&& this.getRedstone() >= this.getCookTimeMax() 
+			&& isRedstoneRequired(this.getCookTimeMax()) 
 			&& this.getPower() >= this.getCookTimeMax();
 	}
 
@@ -281,7 +281,7 @@ public class TileEntityLabOven extends TileEntityMachineTank {
 	private void execute() {
 		cookTime++;
 		powerCount--;
-		redstoneCount--;
+		if(!this.hasFuelBlend()){ redstoneCount--; }
 		if (cookTime >= getCookTimeMax()) {
 			cookTime = 0;
 			handleOutput();

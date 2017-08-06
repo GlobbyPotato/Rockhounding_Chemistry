@@ -89,72 +89,78 @@ public class GlobbyEventHandler {
 			    	int nSpecimen = petroStack.getTagCompound().getInteger("nSpecimen");
 			    	int nFortune = petroStack.getTagCompound().getInteger("nFortune");
 			    	int nFinds = petroStack.getTagCompound().getInteger("nFinds");
+			    	
 					if(isMineral(event, event.getState().getBlock())){
 						if(rand.nextInt(24) < nFortune){
-							if(nFinds > 0){
-								if(nFlavor > 0){
-									int validFortune = 0;
-									int validFinds = 0;
-									if(fortuneLevel > 3){ validFortune = 3; }else{ validFortune = fortuneLevel; }
-									if(validFortune > 0){
-										validFinds = 1 + rand.nextInt(validFortune);
-									}else{
-										validFinds = 1;
-									}
-									mineralStack = new ItemStack(ModBlocks.mineralOres, validFinds, nFlavor);
+							if(nFlavor > 0){
+								//handle item drops
+								int validFortune = fortuneLevel;
+								int validFinds = 0;
+								if(fortuneLevel > 3){ 
+									validFortune = 3; 
+								}
+								if(validFortune > 0){
+									validFinds = 1 + rand.nextInt(validFortune);
+								}else{
+									validFinds = 1;
+								}
+								mineralStack = new ItemStack(ModBlocks.mineralOres, validFinds, nFlavor);
 
-									//handle skill and finds
+								//handle skill and finds
+								if(nFortune <= 16){
 									nFinds -= validFinds;
+									if(nFinds < 0) nFinds = 0;
 									if(nFinds <= 0){ 
 										if(nFortune < 16){
 											nFortune++;
 											int totFinds = Petrographer.baseFinds + ((nFortune-1) * Petrographer.baseFinds);
 											nFinds = totFinds;   
-											player.worldObj.playSound(player, player.getPosition(), SoundEvents.ENTITY_PLAYER_LEVELUP, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+											player.worldObj.playSound(player, player.getPosition(), SoundEvents.ENTITY_PLAYER_LEVELUP, SoundCategory.PLAYERS, 1.0F, 1.0F);
 											petroStack.getTagCompound().setInteger("nFortune", nFortune);
 										}
 									}
 									petroStack.getTagCompound().setInteger("nFinds", nFinds);
+								}
 
-									//handle xp and level
-									player.worldObj.playSound(player, player.getPosition(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+								//handle xp and level
+								if(nLevel <= 20){
 									int getXp = 0; int newLevelUp = 0;
+									player.worldObj.playSound(player, player.getPosition(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1.0F, 1.0F);
 									if(validFortune > 0){
 										newLevelUp = nLevelUp - (1 + rand.nextInt(validFortune));
 									}else{
 										newLevelUp = nLevelUp - 1;
 									}
-									if(newLevelUp <= 0){ 
-										if(nLevel < 20){
+									if(newLevelUp < 0) newLevelUp = 0;
+									if(nLevel < 20){
+										if(newLevelUp <= 0){
 											nLevel++;
 											int totLevelUp = Petrographer.baseLevelUp + (nLevel * Petrographer.baseLevelUp);
-											newLevelUp = totLevelUp;  
-											player.worldObj.playSound(player, player.getPosition(), SoundEvents.ENTITY_PLAYER_LEVELUP, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+											newLevelUp = totLevelUp;
+											player.worldObj.playSound(player, player.getPosition(), SoundEvents.ENTITY_PLAYER_LEVELUP, SoundCategory.PLAYERS, 1.0F, 1.0F);
 											petroStack.getTagCompound().setInteger("nLevel", nLevel);
 										}
 									}
 									petroStack.getTagCompound().setInteger("nLevelUp", newLevelUp);
+								}
 
-									//handle specimen
-									if(nLevel > 16){
-										if(nFortune > 10){
-											if(nFlavor > 0){
-												if(nSpecimen > -1){
-													if(rand.nextInt(32) < nFortune){
-														mineralStack = new ItemStack(ToolUtils.specimenList[nFlavor], validFinds, nSpecimen);
-													}
+								//handle specimen
+								if(nLevel > 16){
+									if(nFortune > 10){
+										if(nFlavor > 0){
+											if(nSpecimen > -1){
+												if(rand.nextInt(32) < nFortune){
+													mineralStack = new ItemStack(ToolUtils.specimenList[nFlavor], validFinds, nSpecimen);
 												}
 											}
 										}
 									}
+								}
 
-									//handle drop exp
-									for (int i = 0; i < (nLevel / 2) + 1; i++){
-										double fx = this.rand.nextFloat(); double fy = this.rand.nextFloat(); double fz = this.rand.nextFloat();
-										if(!player.worldObj.isRemote){ player.worldObj.spawnEntityInWorld(new EntityXPOrb(player.worldObj, player.posX + (fx - 0.5), player.posY + fy, player.posZ + (fz - 0.5), 1)); }
-									}
-								}else{
-									mineralStack = new ItemStack(ModBlocks.mineralOres, 1, 0);
+								//handle drop exp
+								for (int i = 0; i < (nLevel / 2) + 1; i++){
+									double fx = this.rand.nextFloat(); double fy = this.rand.nextFloat(); double fz = this.rand.nextFloat();
+									if(!player.worldObj.isRemote){ player.worldObj.spawnEntityInWorld(new EntityXPOrb(player.worldObj, player.posX + (fx - 0.5), player.posY + fy, player.posZ + (fz - 0.5), 1)); }
 								}
 							}else{
 								mineralStack = new ItemStack(ModBlocks.mineralOres, 1, 0);

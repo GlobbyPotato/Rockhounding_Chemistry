@@ -13,7 +13,6 @@ import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityMachineT
 import com.globbypotato.rockhounding_core.machines.tileentity.WrappedItemHandler;
 import com.globbypotato.rockhounding_core.machines.tileentity.WrappedItemHandler.WriteMode;
 import com.globbypotato.rockhounding_core.utils.CoreUtils;
-import com.globbypotato.rockhounding_core.utils.FuelUtils;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -27,17 +26,21 @@ public class TileEntityMetalAlloyer extends TileEntityMachineTank {
     public static final int SLOT_INPUTS[] = new int[]{0,1,2,3,4,5,6};
     public static final int SLOT_CONSUMABLE = 7;
 	public static final int SLOT_SCRAP = 1;
+	public static final int SLOT_LOADER = 8;
 
 	private ItemStackHandler template = new TemplateStackHandler(10);
 	public static int SLOT_FAKE[] = new int[]{0,1,2,3,4,5,6,7,8};
 
 	public TileEntityMetalAlloyer() {
-		super(10, 2, 0);
+		super(11, 2, 0);
 
 		input =  new MachineStackHandler(INPUT_SLOTS, this){
 			@Override
 			public ItemStack insertItem(int slot, ItemStack insertingStack, boolean simulate){
 				if(slot >= SLOT_INPUTS[1] && slot < SLOT_INPUTS.length && activation && isMatchingOredict(insertingStack, slot)){
+					return super.insertItem(slot, insertingStack, simulate);
+				}
+				if(slot == SLOT_LOADER && activation && canEqualize() && isMatchingIngredient(insertingStack)){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
 				if(slot == FUEL_SLOT && CoreUtils.isPowerSource(insertingStack)){
@@ -68,6 +71,10 @@ public class TileEntityMetalAlloyer extends TileEntityMachineTank {
 		return GuiMetalAlloyer.HEIGHT;
 	}
 
+	public boolean canEqualize(){
+		return ModConfig.ingredientEqualizer;
+	}
+
 
 
 	//----------------------- CUSTOM -----------------------
@@ -84,6 +91,31 @@ public class TileEntityMetalAlloyer extends TileEntityMachineTank {
 								String tempName = OreDictionary.getOreName(tempIDs[j]);
 								if(oreName != null && tempName != null && oreName.matches(tempName)){
 									return true;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	private boolean isMatchingIngredient(ItemStack stack) {
+		if(stack != null){
+			int[] oreIDs = OreDictionary.getOreIDs(stack);
+			if(oreIDs.length > 0){
+				for(int i = 0; i < oreIDs.length; i++) {
+					String oreName = OreDictionary.getOreName(oreIDs[i]);
+					for(int k = 1; k <= 6; k++) {
+						if(input.getStackInSlot(k) != null){
+							int[] tempIDs = OreDictionary.getOreIDs(input.getStackInSlot(k));
+							if(tempIDs.length > 0){
+								for(int j = 0; j < tempIDs.length; j++) {
+									String tempName = OreDictionary.getOreName(tempIDs[j]);
+									if(oreName != null && tempName != null && oreName.matches(tempName)){
+										return true;
+									}
 								}
 							}
 						}
@@ -143,16 +175,24 @@ public class TileEntityMetalAlloyer extends TileEntityMachineTank {
 		fuelHandler(input.getStackInSlot(FUEL_SLOT));
 		lavaHandler();
 		if(!worldObj.isRemote){
-			//show alloy
 			if(!isValidInterval()){recipeIndex = -1;}
+
+			//show alloy
 			showAlloy();
 			if(( isValidInterval() && doScan) || (!doScan && countRecipes() >= 0 && demoAlloy(0) != null && demoAlloy(1) == null) ){ 
 				showIngredients();
 			}
+			
+			// equalize oredict
+			if(isValidInterval() && canEqualize()){
+				equalizeOredict();
+			}
+			
 			//reset grid
 			if(countRecipes() < 0 && demoAlloy(0) != null){
 				resetGrid();
 			}
+			
 			//cast alloy
 			if(isValidInterval()){
 				if(canAlloy(getRecipe().getDusts(), getRecipe().getQuantities())){
@@ -266,6 +306,28 @@ public class TileEntityMetalAlloyer extends TileEntityMachineTank {
 	    			template.setStackInSlot(x + 1, dust);
 	    			template.getStackInSlot(x + 1).stackSize = quantities.get(x);
 	    		}
+			}
+		}
+	}
+
+	private void equalizeOredict() {
+		ItemStack loaderStack = input.getStackInSlot(SLOT_LOADER);
+		if(loaderStack != null){
+			for(int x = 1; x <= 6; x++){
+				if(isMatchingOredict(loaderStack, x)){
+					if(input.getStackInSlot(x) != null){
+						if(input.canIncrementSlot(input.getStackInSlot(x))){
+							input.getStackInSlot(x).stackSize++;
+							loaderStack.stackSize--;
+							if(loaderStack.stackSize <= 0){
+								input.setStackInSlot(SLOT_LOADER, null);
+							}
+						}
+					}else{
+						input.setStackInSlot(x, loaderStack);
+						input.setStackInSlot(SLOT_LOADER, null);
+					}
+				}
 			}
 		}
 	}

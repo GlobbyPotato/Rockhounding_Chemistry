@@ -1,12 +1,8 @@
 package com.globbypotato.rockhounding_chemistry.machines.gui;
 
-import java.util.Arrays;
-import java.util.List;
-
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerMetalAlloyer;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityMetalAlloyer;
-import com.globbypotato.rockhounding_core.utils.Translator;
 
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -28,6 +24,7 @@ public class GuiMetalAlloyer extends GuiBase {
 		this.metalAlloyer = tile;
 		this.xSize = WIDTH;
 		this.ySize = HEIGHT;
+		this.containerName = "container.metalAlloyer";
 	}
 
 	@Override
@@ -35,42 +32,41 @@ public class GuiMetalAlloyer extends GuiBase {
 		super.drawScreen(mouseX, mouseY, f);
 		int x = (this.width - this.xSize) / 2;
 		int y = (this.height - this.ySize) / 2;
-		   //prev
-		   if(mouseX >= 137+x && mouseX <= 152+x && mouseY >= 15+y && mouseY <= 30+y){
-			   List<String> tooltip = Arrays.asList("Previous Recipe");
-			   drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
-		   }
-		   //next
-		   if(mouseX >= 153+x && mouseX <= 168+x && mouseY >= 15+y && mouseY <= 30+y){
-			   List<String> tooltip = Arrays.asList("Next Recipe");
-			   drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
-		   }
-		   //activation
-		   if(mouseX >= 34+x && mouseX <= 50+x && mouseY >= 53+y && mouseY <= 68+y){
-			   List<String> tooltip = Arrays.asList("Activation Switch");
-			   drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
-		   }
-		   //bars progression (fuel)
-		   if(mouseX >= 11+x && mouseX <= 20+x && mouseY >= 40+y && mouseY <= 89+y){
-			   String text = this.metalAlloyer.getPower() + "/" + this.metalAlloyer.getPowerMax() + " ticks";
-			   List<String> tooltip = Arrays.asList(text);
-			   drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
-		   }
+		//fuel
+		if(mouseX >= 11+x && mouseX <= 20+x && mouseY >= 40+y && mouseY <= 89+y){
+			drawPowerInfo("ticks", this.metalAlloyer.getPower(), this.metalAlloyer.getPowerMax(), mouseX, mouseY);
+		}
+		//prev
+		if(mouseX >= 137+x && mouseX <= 153+x && mouseY >= 98+y && mouseY <= 114+y){
+			drawButtonLabel("Previous Recipe", mouseX, mouseY);
+		}
+		//next
+		if(mouseX >= 154+x && mouseX <= 168+x && mouseY >= 98+y && mouseY <= 114+y){
+			drawButtonLabel("Next Recipe", mouseX, mouseY);
+		}
+		//activation
+		if(mouseX >= 7+x && mouseX <= 23+x && mouseY >= 98+y && mouseY <= 114+y){
+			drawButtonLabel("Activation", mouseX, mouseY);
+		}
+		//activation
+        if(!this.metalAlloyer.canEqualize()){
+    		if(mouseX >= 41+x && mouseX <= 58+x && mouseY >= 36+y && mouseY <= 52+y){
+    			drawButtonLabel("Disabled", mouseX, mouseY);
+			}
+        }
+		if(mouseX >= 41+x && mouseX <= 58+x && mouseY >= 21+y && mouseY <= 34+y){
+			drawButtonLabel("Ingredient Equalizer", mouseX, mouseY);
+		}
 	}
 
 	public void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
     	super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 
-        String device = Translator.translateToLocal("container.metalAlloyer");
-        this.fontRendererObj.drawString(device, this.xSize / 2 - this.fontRendererObj.getStringWidth(device) / 2, 5, 4210752);
-
-		String name = "";
+		String name = "No Recipe";
 		if(this.metalAlloyer.isValidInterval()){
 			name = this.metalAlloyer.getRecipe().getAlloyName();
-		}else{
-			name = "No Recipe";
 		}
-        this.fontRendererObj.drawString(name, 52, 19, 4210752);
+        this.fontRendererObj.drawString(name, 26, 102, 4210752);
 	}
 
 	public void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY){
@@ -87,8 +83,8 @@ public class GuiMetalAlloyer extends GuiBase {
 
         //smelt bar
         if (this.metalAlloyer.cookTime > 0){
-            int k = this.getBarScaled(17, this.metalAlloyer.cookTime, this.metalAlloyer.getMaxCookTime());
-            this.drawTexturedModalRect(i + 99, j + 71, 176, 0, 14, k);
+            int k = this.getBarScaled(13, this.metalAlloyer.cookTime, this.metalAlloyer.getMaxCookTime());
+            this.drawTexturedModalRect(i + 41, j + 66, 176, 0, 16, k);
         }
         
         //inductor
@@ -98,7 +94,12 @@ public class GuiMetalAlloyer extends GuiBase {
 
 		//activayion
         if(this.metalAlloyer.activation){
-            this.drawTexturedModalRect(i + 34, j + 53, 176, 97, 16, 16);
+            this.drawTexturedModalRect(i + 7, j + 98, 176, 97, 16, 16);
+        }
+
+		//equalizer
+        if(!this.metalAlloyer.canEqualize()){
+            this.drawTexturedModalRect(i + 43, j + 37, 176, 13, 14, 14);
         }
 
 	}

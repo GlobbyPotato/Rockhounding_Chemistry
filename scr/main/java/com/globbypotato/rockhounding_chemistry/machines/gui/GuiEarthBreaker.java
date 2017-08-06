@@ -1,12 +1,8 @@
 package com.globbypotato.rockhounding_chemistry.machines.gui;
 
-import java.util.Arrays;
-import java.util.List;
-
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerEarthBreaker;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityEarthBreaker;
-import com.globbypotato.rockhounding_core.utils.Translator;
 
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -30,6 +26,7 @@ public class GuiEarthBreaker extends GuiBase {
         this.playerInventory = playerInv;
 		this.xSize = WIDTH;
 		this.ySize = HEIGHT;
+		this.containerName = "container.earthBreaker";
     }
    
     @Override
@@ -40,25 +37,14 @@ public class GuiEarthBreaker extends GuiBase {
 	   
 		//redstone
 		if(mouseX >= 7+x && mouseX <= 18+x && mouseY >= 21+y && mouseY <= 83+y){
-			String text = this.earthBreaker.chargeCount + "/" + this.earthBreaker.chargeMax + " KRF";
-			List<String> tooltip = Arrays.asList(text);
-			drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
+		   drawPowerInfo("KRF", this.earthBreaker.chargeCount, this.earthBreaker.chargeMax, mouseX, mouseY);
 		}
 
-		//drain
+		//activation
 		if(mouseX >= 158+x && mouseX <= 168+x && mouseY >= 74+y && mouseY <= 91+y){
-			List<String> tooltip = Arrays.asList("Activation");
-			drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
+			drawButtonLabel("Activation", mouseX, mouseY);
 		}
 
-    }
-
-    @Override
-    public void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
-    	super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-
-        String device = Translator.translateToLocal("container.earthBreaker");
-        this.fontRendererObj.drawString(device, this.xSize / 2 - this.fontRendererObj.getStringWidth(device) / 2, 6, 4210752);
     }
 
     @Override

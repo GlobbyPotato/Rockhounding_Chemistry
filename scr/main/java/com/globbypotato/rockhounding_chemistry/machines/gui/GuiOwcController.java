@@ -6,7 +6,6 @@ import java.util.List;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerOwcController;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityOwcController;
-import com.globbypotato.rockhounding_core.utils.Translator;
 
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -16,10 +15,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class GuiOwcController extends GuiBase {
-	
-	 public static ResourceLocation TEXTURE_REF = 
-			 new ResourceLocation(Reference.MODID + ":textures/gui/guiowccontroller.png");
-    
+	public static ResourceLocation TEXTURE_REF = new ResourceLocation(Reference.MODID + ":textures/gui/guiowccontroller.png");
     private final InventoryPlayer playerInventory;
     private final TileEntityOwcController owcController;
 	public static final int WIDTH = 176;
@@ -32,6 +28,7 @@ public class GuiOwcController extends GuiBase {
         this.playerInventory = playerInv;
 		this.xSize = WIDTH;
 		this.ySize = HEIGHT;
+		this.containerName = "container.owcController";
     }
    
     @Override
@@ -58,66 +55,50 @@ public class GuiOwcController extends GuiBase {
 		   List<String> tooltip = Arrays.asList(multiString);
 		   drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
 	   }
+
 	   //Tide area
 	   if((mouseX >= 144+x && mouseX <= 150+x && mouseY >= 16+y && mouseY <= 77+y)){
-		   List<String> tooltip = Arrays.asList(waterString);
-		   drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
+			drawButtonLabel(waterString, mouseX, mouseY);
 	   }
+
 	   //Yeld area
 	   if((mouseX >= 160+x && mouseX <= 166+x && mouseY >= 16+y && mouseY <= 77+y)){
-		   List<String> tooltip = Arrays.asList(yeldString);
-		   drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
+			drawButtonLabel(yeldString, mouseX, mouseY);
 	   }
 
 	   //Conveyor
 	   if(mouseX >= 121+x && mouseX <= 138+x && mouseY >= 38+y && mouseY <= 55+y){
 		   int cf = 3 - this.owcController.conveyorMultiplier();
 		   String text = "Conveyor Upgrade x" + cf;
-		   List<String> tooltip = Arrays.asList(text);
-		   drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
+		   drawButtonLabel(text, mouseX, mouseY);
 	   }
+
 	   //Efficiency
 	   if(mouseX >= 121+x && mouseX <= 138+x && mouseY >= 60+y && mouseY <= 77+y){
-		   String text = "Efficiency Upgrade x" + (this.owcController.efficiencyMultiplier()-1);
-		   List<String> tooltip = Arrays.asList(text);
-		   drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
+		   String text = "Efficiency Upgrade x" + (this.owcController.efficiencyMultiplier() - 1);
+			drawButtonLabel(text, mouseX, mouseY);
 	   }
+
 	   //Duality
 	   if(mouseX >= 121+x && mouseX <= 138+x && mouseY >= 16+y && mouseY <= 33+y){
-		   String text = "Duality Upgrade";
-		   List<String> tooltip = Arrays.asList(text);
-		   drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
+			drawButtonLabel("Duality Upgrade", mouseX, mouseY);
 	   }
 
 	   //Activation tooltip
 	   if(mouseX >= 73+x && mouseX <= 91+x && mouseY >= 16+y && mouseY <= 34+y){
-		   String text = "System Activation";
-		   List<String> tooltip = Arrays.asList(text);
-		   drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
+			drawButtonLabel("Activation", mouseX, mouseY);
 	   }
 
 	   //Extraction tooltip
 	   if(mouseX >= 73+x && mouseX <= 91+x && mouseY >= 38+y && mouseY <= 56+y){
-		   String text = "Extract RF";
-		   List<String> tooltip = Arrays.asList(text);
-		   drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
+			drawButtonLabel("Extract RF", mouseX, mouseY);
 	   }
 	   
 	   //Sanity check
 	   if(mouseX >= 7+x && mouseX <= 70+x && mouseY >= 16+y && mouseY <= 77+y){
-		   String text = "Sanity Check";
-		   List<String> tooltip = Arrays.asList(text);
-		   drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
+			drawButtonLabel("Sanity Check", mouseX, mouseY);
 	   }
 
-    }
-
-    @Override
-    public void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
-    	super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-		
-        String device = Translator.translateToLocal("container.owcController");
-        this.fontRendererObj.drawString(device, this.xSize / 2 - this.fontRendererObj.getStringWidth(device) / 2, 6, 4210752);
     }
 
     @Override

@@ -37,48 +37,62 @@ public class ContainerMetalAlloyer extends ContainerBase<TileEntityMetalAlloyer>
 
 		this.addSlotToContainer(new SlotItemHandler(input, 0, 8, 20));//fuel
         for (int x = 1; x <= 6; x++){
-        	this.addSlotToContainer(new SlotItemHandler(input, x, 53 + ((x-1)*18), 53));//input dusts
+        	this.addSlotToContainer(new SlotItemHandler(input, x, 62 + ((x-1)*18), 36));//input dusts
         }
-        this.addSlotToContainer(new SlotItemHandler(input, 7, 98, 90));//consumable
+        this.addSlotToContainer(new SlotItemHandler(input, 7, 41, 80));//consumable
+        this.addSlotToContainer(new SlotItemHandler(input, 8, 42, 36));//loader
 
-        this.addSlotToContainer(new SlotItemHandler(output, 0, 76, 90));//output
-        this.addSlotToContainer(new SlotItemHandler(output, 1, 120, 90));//scrap
+        this.addSlotToContainer(new SlotItemHandler(output, 0, 63, 80));//output
+        this.addSlotToContainer(new SlotItemHandler(output, 1, 85, 80));//scrap
 
-        templateAlloy = this.addSlotToContainer(new SlotItemHandler(template, 0, 33,  15));//alloy template
-        templateDust1 = this.addSlotToContainer(new SlotItemHandler(template, 1, 53,  35));//dust 1
-        templateDust2 = this.addSlotToContainer(new SlotItemHandler(template, 2, 71,  35));//dust 2
-        templateDust3 = this.addSlotToContainer(new SlotItemHandler(template, 3, 89,  35));//dust 3
-        templateDust4 = this.addSlotToContainer(new SlotItemHandler(template, 4, 107, 35));//dust 4
-        templateDust5 = this.addSlotToContainer(new SlotItemHandler(template, 5, 125, 35));//dust 5
-        templateDust6 = this.addSlotToContainer(new SlotItemHandler(template, 6, 143, 35));//dust 6
+
+        templateAlloy = this.addSlotToContainer(new SlotItemHandler(template, 0, 120,  98));//alloy template
+        templateDust1 = this.addSlotToContainer(new SlotItemHandler(template, 1, 62,  18));//dust 1
+        templateDust2 = this.addSlotToContainer(new SlotItemHandler(template, 2, 80,  18));//dust 2
+        templateDust3 = this.addSlotToContainer(new SlotItemHandler(template, 3, 98,  18));//dust 3
+        templateDust4 = this.addSlotToContainer(new SlotItemHandler(template, 4, 116, 18));//dust 4
+        templateDust5 = this.addSlotToContainer(new SlotItemHandler(template, 5, 134, 18));//dust 5
+        templateDust6 = this.addSlotToContainer(new SlotItemHandler(template, 6, 152, 18));//dust 6
         
-        templateNext = this.addSlotToContainer(new SlotItemHandler(template, 7, 137,  15));//prev
-        templatePrev = this.addSlotToContainer(new SlotItemHandler(template, 8, 153,  15));//next
-        activation = this.addSlotToContainer(new SlotItemHandler(template, 9, 34,  53));//activation
+        templateNext = this.addSlotToContainer(new SlotItemHandler(template, 7, 137,  98));//prev
+        templatePrev = this.addSlotToContainer(new SlotItemHandler(template, 8, 153,  98));//next
+        activation = this.addSlotToContainer(new SlotItemHandler(template, 9, 7,  98));//activation
+
+
 
 	}
 
 	@Override
 	public ItemStack slotClick(int slot, int dragType, ClickType clickTypeIn, EntityPlayer player){
-    	if(slot >= 10 && slot <= 16){
+    	if(slot >= 11 && slot <= 17){
     		return null;
-    	}else if(slot == 17){ 
-    		if(this.tile.recipeIndex > -1){
+    	}else if(slot == 18){ 
+    		if(this.tile.recipeIndex >= 0){
         		this.tile.recipeIndex--; 
+        		this.tile.resetGrid(); 
+        		this.tile.doScan = true;
+    			this.tile.activation = false;
+    		}else{
+    			this.tile.recipeIndex = MachineRecipes.alloyerRecipes.size() - 1;
         		this.tile.resetGrid(); 
         		this.tile.doScan = true;
     			this.tile.activation = false;
     		}
         	return null;
-    	}else if(slot == 18){ 
+    	}else if(slot == 19){ 
     		if(this.tile.recipeIndex < MachineRecipes.alloyerRecipes.size() - 1){
 	    		this.tile.recipeIndex++; 
 	    		this.tile.resetGrid(); 
 	    		this.tile.doScan = true;
     			this.tile.activation = false;
+        	}else{
+        		this.tile.recipeIndex = -1;
+	    		this.tile.resetGrid(); 
+	    		this.tile.doScan = true;
+    			this.tile.activation = false;
         	}
     		return null;
-    	}else if(slot == 19){
+    	}else if(slot == 20){
    			this.tile.activation = !this.tile.activation; 
     		return null;
     	}else{
@@ -88,10 +102,10 @@ public class ContainerMetalAlloyer extends ContainerBase<TileEntityMetalAlloyer>
 
 	@Override
 	protected boolean mergeItemStack(ItemStack stack, int startIndex, int endIndex, boolean reverseDirection){
-		if(super.mergeItemStack(stack, startIndex, 10, reverseDirection)){
+		if(super.mergeItemStack(stack, startIndex, 11, reverseDirection)){
 			return true;
 		}else{
-			return super.mergeItemStack(stack, 20, endIndex, reverseDirection);
+			return super.mergeItemStack(stack, 21, endIndex, reverseDirection);
 		}
     }
 }

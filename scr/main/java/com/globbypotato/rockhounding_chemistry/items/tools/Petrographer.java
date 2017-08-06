@@ -63,8 +63,16 @@ public class Petrographer extends ItemPickaxe {
 	    	specStack = new ItemStack(ToolUtils.specimenList[nFlavor], 1, nSpecimen);
 
 	    	tooltip.add(TextFormatting.DARK_GRAY + " ");
-	    	tooltip.add(TextFormatting.DARK_GRAY + "Level: " + TextFormatting.AQUA + nLevel + TextFormatting.DARK_GRAY + " | " + TextFormatting.WHITE + nLevelUp + "/" + totLevelUp + " xp to levelup");
-	    	tooltip.add(TextFormatting.DARK_GRAY + "Fortune: " + TextFormatting.AQUA + (nFortune) + TextFormatting.DARK_GRAY + " | " + TextFormatting.YELLOW + ((100 / 32) * (nFortune)) + "%" + TextFormatting.DARK_GRAY + " | " + TextFormatting.WHITE + nFinds + "/" + totFinds + " to find");
+	    	if(nLevel < 20){
+	    		tooltip.add(TextFormatting.DARK_GRAY + "Level: " + TextFormatting.AQUA + nLevel + TextFormatting.DARK_GRAY + " | " + TextFormatting.WHITE + nLevelUp + "/" + totLevelUp + " xp to levelup");
+	    	}else{
+	    		tooltip.add(TextFormatting.DARK_GRAY + "Level: " + TextFormatting.AQUA + nLevel);
+	    	}
+	    	if(nFortune < 16){
+	    		tooltip.add(TextFormatting.DARK_GRAY + "Fortune: " + TextFormatting.AQUA + nFortune + TextFormatting.DARK_GRAY + " | " + TextFormatting.YELLOW + ((100 / 32) * nFortune) + "%" + TextFormatting.DARK_GRAY + " | " + TextFormatting.WHITE + nFinds + "/" + totFinds + " to find");
+	    	}else{
+	    		tooltip.add(TextFormatting.DARK_GRAY + "Fortune: " + TextFormatting.AQUA + nFortune + TextFormatting.DARK_GRAY + " | " + TextFormatting.YELLOW + ((100 / 32) * nFortune) + "%");
+	    	}
 	    	tooltip.add(TextFormatting.DARK_GRAY + " ");
 
 	    	tooltip.add(TextFormatting.DARK_GRAY + "Mineral Flavor: " + TextFormatting.WHITE + new ItemStack(ModBlocks.mineralOres, 1, nFlavor).getDisplayName() );

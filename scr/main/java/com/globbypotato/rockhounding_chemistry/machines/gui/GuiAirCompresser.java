@@ -1,12 +1,8 @@
 package com.globbypotato.rockhounding_chemistry.machines.gui;
 
-import java.util.Arrays;
-import java.util.List;
-
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerAirCompresser;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityAirCompresser;
-import com.globbypotato.rockhounding_core.utils.Translator;
 
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -28,6 +24,7 @@ public class GuiAirCompresser extends GuiBase {
 		this.airCompresser = tile;
 		this.xSize = WIDTH;
 		this.ySize = HEIGHT;
+		this.containerName = "container.airCompresser";
 	}
 
 	@Override
@@ -42,20 +39,11 @@ public class GuiAirCompresser extends GuiBase {
 			String name = "Compressed Air";
 			String text = airAmount + "/" + this.airCompresser.getAirMax() + " units";
 			String[] multistring = {name, text};
-			List<String> tooltip = Arrays.asList(multistring);
-			drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
+			drawMultiLabel(multistring, mouseX, mouseY);
 		}
 	}
 
-	 @Override
-	public void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
-		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-
-        String device = Translator.translateToLocal("container.airCompresser");
-		this.fontRendererObj.drawString(device, this.xSize / 2 - this.fontRendererObj.getStringWidth(device) / 2, 4, 4210752);
-	}
-
-	 @Override
+	@Override
 	public void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY){
 		super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
 		int i = (this.width - this.xSize) / 2;

@@ -1,12 +1,12 @@
 package com.globbypotato.rockhounding_chemistry.machines.tileentity;
 
-import com.globbypotato.rockhounding_chemistry.ModItems;
 import com.globbypotato.rockhounding_chemistry.enums.EnumElement;
 import com.globbypotato.rockhounding_chemistry.enums.EnumFluid;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiChemicalExtractor;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.ChemicalExtractorRecipe;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.MachineRecipes;
+import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 import com.globbypotato.rockhounding_chemistry.utils.ToolUtils;
 import com.globbypotato.rockhounding_core.machines.tileentity.MachineStackHandler;
 import com.globbypotato.rockhounding_core.machines.tileentity.TemplateStackHandler;
@@ -14,7 +14,6 @@ import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityMachineT
 import com.globbypotato.rockhounding_core.machines.tileentity.WrappedItemHandler;
 import com.globbypotato.rockhounding_core.machines.tileentity.WrappedItemHandler.WriteMode;
 import com.globbypotato.rockhounding_core.utils.CoreUtils;
-import com.globbypotato.rockhounding_core.utils.FuelUtils;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -121,6 +120,7 @@ public class TileEntityChemicalExtractor extends TileEntityMachineTank{
 
 		};
 		automationInput = new WrappedItemHandler(input, WriteMode.IN);
+		this.markDirtyClient();
 	}
 
 
@@ -226,7 +226,7 @@ public class TileEntityChemicalExtractor extends TileEntityMachineTank{
 	private void execute() {
 		cookTime++;
 		powerCount--;
-		redstoneCount--;
+		if(!this.hasFuelBlend()){ redstoneCount--; }
 		if(cookTime >= getCookTimeMax()) {
 			cookTime = 0; 
 			extractElements();
@@ -293,19 +293,22 @@ public class TileEntityChemicalExtractor extends TileEntityMachineTank{
 			&& CoreUtils.hasConsumable(ToolUtils.testTube, input.getStackInSlot(CONSUMABLE_SLOT))
 			&& CoreUtils.hasConsumable(ToolUtils.cylinder, input.getStackInSlot(CYLINDER_SLOT))
 			&& getPower() >= getCookTimeMax()
-			&& getRedstone() >= getCookTimeMax()
+			&& isRedstoneRequired(this.getCookTimeMax()) 
 			&& nitrTank.getFluidAmount() >= ModConfig.consumedNitr
 			&& phosTank.getFluidAmount() >= ModConfig.consumedPhos
 			&& cyanTank.getFluidAmount() >= ModConfig.consumedCyan;
 	}
 
 	private void transferDust() {
-		for(int i=0;i<output.getSlots();i++){
+		for(int i = 0; i < output.getSlots(); i++){
 			if(CoreUtils.hasConsumable(ToolUtils.cylinder, input.getStackInSlot(CYLINDER_SLOT))){
-				if(elementList[i] >= getExtractingFactor()){
-					elementList[i]-= getExtractingFactor();
-					output.setOrIncrement(i, new ItemStack(ModItems.chemicalDusts,1,i));
-					input.damageSlot(CYLINDER_SLOT);
+				ItemStack elementStack = BaseRecipes.elements(1, i);
+				if(output.canSetOrStack(output.getStackInSlot(i), elementStack)){
+					if(elementList[i] >= getExtractingFactor()){
+						elementList[i]-= getExtractingFactor();
+						output.setOrIncrement(i, elementStack);
+						input.damageSlot(CYLINDER_SLOT);
+					}
 				}
 			}
 		}

@@ -1,12 +1,8 @@
 package com.globbypotato.rockhounding_chemistry.machines.gui;
 
-import java.util.Arrays;
-import java.util.List;
-
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerLaserAmplifier;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityLaserAmplifier;
-import com.globbypotato.rockhounding_core.utils.Translator;
 
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -29,6 +25,7 @@ public class GuiLaserAmplifier extends GuiBase {
 		this.laserAmplifier = tile;
 		this.xSize = WIDTH;
 		this.ySize = HEIGHT;
+		this.containerName = "container.laserAmplifier";
 	}
 
 	@Override
@@ -43,17 +40,8 @@ public class GuiLaserAmplifier extends GuiBase {
 			String text = TextFormatting.DARK_GRAY + "Storage: " + TextFormatting.WHITE + this.laserAmplifier.getRedstone() + "/" + this.laserAmplifier.getRedstoneMax() + " RF";
 			String info = TextFormatting.DARK_GRAY + "Energy used: " + TextFormatting.RED +  this.laserAmplifier.redstoneCost() + " RF/tick";
 			String[] multistring = {text, info};
-			List<String> tooltip = Arrays.asList(multistring);
-			drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
+			drawMultiLabel(multistring, mouseX, mouseY);
 		}
-	}
-
-	 @Override
-	public void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
-		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-
-        String device = Translator.translateToLocal("container.laserAmplifier");
-		this.fontRendererObj.drawString(device, this.xSize / 2 - this.fontRendererObj.getStringWidth(device) / 2, 4, 4210752);
 	}
 
 	 @Override

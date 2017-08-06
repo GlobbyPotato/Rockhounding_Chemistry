@@ -1,17 +1,12 @@
 package com.globbypotato.rockhounding_chemistry.machines.gui;
 
-import java.util.Arrays;
-import java.util.List;
-
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerLabOven;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityLabOven;
-import com.globbypotato.rockhounding_core.utils.RenderUtils;
-import com.globbypotato.rockhounding_core.utils.Translator;
 
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -22,6 +17,9 @@ public class GuiLabOven extends GuiBase {
 	public static final int WIDTH = 176;
 	public static final int HEIGHT = 224;
 	public static final ResourceLocation TEXTURE_REF =  new ResourceLocation(Reference.MODID + ":textures/gui/guilaboven.png");
+	private FluidTank solventTank;
+	private FluidTank reagentTank;
+	private FluidTank outputTank;
 
 	public GuiLabOven(InventoryPlayer playerInv, TileEntityLabOven tile){
 		super(tile,new ContainerLabOven(playerInv, tile));
@@ -30,6 +28,10 @@ public class GuiLabOven extends GuiBase {
 		this.labOven = tile;
 		this.xSize = WIDTH;
 		this.ySize = HEIGHT;
+		this.solventTank = this.labOven.solventTank;
+		this.reagentTank = this.labOven.reagentTank;
+		this.outputTank = this.labOven.outputTank;
+		this.containerName = "container.labOven";
 	}
 
 	@Override
@@ -40,80 +42,54 @@ public class GuiLabOven extends GuiBase {
 
 		//fuel
 		if(mouseX >= 10+x && mouseX <= 21+x && mouseY >= 50+y && mouseY <= 101+y){
-			String text = this.labOven.getPower() + "/" + this.labOven.getPowerMax() + " ticks";
-			List<String> tooltip = Arrays.asList(text);
-			drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
+			drawPowerInfo("ticks", this.labOven.getPower(), this.labOven.getPowerMax(), mouseX, mouseY);
 		}
+
 		//redstone
-		if(mouseX >= 31+x && mouseX <= 42+x && mouseY >= 33+y && mouseY <= 84+y){
-			String text = this.labOven.getRedstone() + "/" + this.labOven.getRedstoneMax() + " RF";
-			List<String> tooltip = Arrays.asList(text);
-			drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
-		}
-		//input tank
-		if(mouseX>= 125+x && mouseX <= 146+x && mouseY >= 33+y && mouseY <= 99+y){
-			int fluidAmount = 0;
-			if(labOven.solventTank.getFluid() != null){
-				fluidAmount = this.labOven.solventTank.getFluidAmount();
+		if(!this.labOven.hasFuelBlend()){
+			if(mouseX >= 31+x && mouseX <= 42+x && mouseY >= 33+y && mouseY <= 84+y){
+				drawPowerInfo("RF", this.labOven.getRedstone(), this.labOven.getRedstoneMax(), mouseX, mouseY);
 			}
-			String text = fluidAmount + "/" + this.labOven.solventTank.getCapacity() + " mb ";
-			String liquid = "";
-			if(labOven.solventTank.getFluid() != null) liquid = labOven.solventTank.getFluid().getLocalizedName();
-			List<String> tooltip = Arrays.asList(text, liquid);
-			drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
 		}
+
+		//solvent tank
+		if(mouseX>= 125+x && mouseX <= 146+x && mouseY >= 33+y && mouseY <= 99+y){
+			drawTankInfo(this.solventTank, mouseX, mouseY);
+		}
+
 		//reagent tank
 		if(mouseX>= 147+x && mouseX <= 169+x && mouseY >= 33+y && mouseY <= 99+y){
-			int fluidAmount = 0;
-			if(labOven.reagentTank.getFluid() != null){
-				fluidAmount = this.labOven.reagentTank.getFluidAmount();
-			}
-			String text = fluidAmount + "/" + this.labOven.reagentTank.getCapacity() + " mb ";
-			String liquid = "";
-			if(labOven.reagentTank.getFluid() != null) liquid = labOven.reagentTank.getFluid().getLocalizedName();
-			List<String> tooltip = Arrays.asList(text, liquid);
-			drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
+			drawTankInfo(this.reagentTank, mouseX, mouseY);
 		}
+
 		//output tank
 		if(mouseX>= 84+x && mouseX <= 104+x && mouseY >= 33+y && mouseY <= 99+y){
-			int fluidAmount = 0;
-			if(labOven.outputTank.getFluid() != null){
-				fluidAmount = this.labOven.outputTank.getFluidAmount();
-			}
-			String text = fluidAmount + "/" + this.labOven.outputTank.getCapacity() + " mb ";
-			String liquid = "";
-			if(labOven.outputTank.getFluid() != null){liquid = labOven.outputTank.getFluid().getLocalizedName();}
-			List<String> tooltip = Arrays.asList(text, liquid);
-			drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
+			drawTankInfo(this.outputTank, mouseX, mouseY);
 		}
+
 		//prev
 		if(mouseX >= 137+x && mouseX <= 153+x && mouseY >= 121+y && mouseY <= 137+y){
-			List<String> tooltip = Arrays.asList("Previous Recipe");
-			drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
+			drawButtonLabel("Previous Recipe", mouseX, mouseY);
 		}
+
 		//next
 		if(mouseX >= 154+x && mouseX <= 168+x && mouseY >= 121+y && mouseY <= 137+y){
-			List<String> tooltip = Arrays.asList("Next Recipe");
-			drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
+			drawButtonLabel("Next Recipe", mouseX, mouseY);
 		}
+
 		//activation
 		if(mouseX >= 7+x && mouseX <= 23+x && mouseY >= 121+y && mouseY <= 137+y){
-			List<String> tooltip = Arrays.asList("Activation");
-			drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
+			drawButtonLabel("Activation", mouseX, mouseY);
 		}
 	}
 
-	 @Override
+	@Override
 	public void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 
-        String device = Translator.translateToLocal("container.labOven");
-		this.fontRendererObj.drawString(device, this.xSize / 2 - this.fontRendererObj.getStringWidth(device) / 2, 4, 4210752);
-		String recipeLabel = "";
+		String recipeLabel = "No Recipe";
 		if(this.labOven.isValidInterval()){
 			recipeLabel = this.labOven.getRecipe().getOutput().getLocalizedName();
-		}else{
-			recipeLabel = "No Recipe";
 		}
 		this.fontRendererObj.drawString(recipeLabel, 26, 126, 4210752);
 	}
@@ -124,16 +100,21 @@ public class GuiLabOven extends GuiBase {
 		int i = (this.width - this.xSize) / 2;
 		int j = (this.height - this.ySize) / 2;
 		this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
-        //power bar
+
+		//power bar
         if (this.labOven.getPower() > 0){
             int k = this.getBarScaled(50, this.labOven.getPower(), this.labOven.getPowerMax());
             this.drawTexturedModalRect(i + 11, j + 51 + (50 - k), 176, 27, 10, k);
         }
+
 		//redstone
-		if (this.labOven.getRedstone() > 0){
-			int k = this.getBarScaled(50, this.labOven.getRedstone(), this.labOven.getRedstoneMax());
-			this.drawTexturedModalRect(i + 32, j + 32 + (50 - k), 176, 81, 10, k);
+		if(!this.labOven.hasFuelBlend()){
+			if (this.labOven.getRedstone() > 0){
+				int k = this.getBarScaled(50, this.labOven.getRedstone(), this.labOven.getRedstoneMax());
+				this.drawTexturedModalRect(i + 32, j + 32 + (50 - k), 176, 81, 10, k);
+			}
 		}
+
 		//smelt bar
 		int k = this.getBarScaled(15, this.labOven.cookTime, this.labOven.getCookTimeMax());
 		this.drawTexturedModalRect(i + 62, j + 56, 176, 0, k, 15); //dust
@@ -148,36 +129,30 @@ public class GuiLabOven extends GuiBase {
 			this.drawTexturedModalRect(i + 88, j + 102, 176, 131, 12, 14); //fire
 			this.drawTexturedModalRect(i + 108, j + 61, 176, 145, 15, 9); //fluid drop
 		}
+
 		//induction icons
 		if(this.labOven.hasPermanentInduction()){
 			this.drawTexturedModalRect(i + 7, j + 30, 176, 154, 18, 18); //inductor
 		}
-		//input fluid
-		if(labOven.solventTank.getFluid() != null){
-			FluidStack temp = labOven.solventTank.getFluid();
-			int capacity = labOven.solventTank.getCapacity();
-			if(temp.amount > 5){
-				RenderUtils.bindBlockTexture();
-				RenderUtils.renderGuiTank(temp,capacity, temp.amount, i + 126, j + 34, zLevel, 20, 65);
-			}
+
+		//blend fix
+		if(this.labOven.hasFuelBlend()){
+			this.drawTexturedModalRect(i + 25, j + 14, 208, 0, 21, 89); //blend
 		}
+
+		//solvent fluid
+		if(this.solventTank.getFluid() != null){
+			renderFluidBar(this.solventTank.getFluid(), this.solventTank.getCapacity(), i + 126, j + 34, 20, 65);
+		}
+
 		//reagent fluid
-		if(labOven.reagentTank.getFluid() != null){
-			FluidStack temp = labOven.reagentTank.getFluid();
-			int capacity = labOven.reagentTank.getCapacity();
-			if(temp.amount > 5){
-				RenderUtils.bindBlockTexture();
-				RenderUtils.renderGuiTank(temp,capacity, temp.amount, i + 148, j + 34, zLevel, 20, 65);
-			}
+		if(this.reagentTank.getFluid() != null){
+			renderFluidBar(this.reagentTank.getFluid(), this.reagentTank.getCapacity(), i + 148, j + 34, 20, 65);
 		}
+
 		//output fluid
-		if(labOven.outputTank.getFluid() != null){
-			FluidStack temp = labOven.outputTank.getFluid();
-			int capacity = labOven.outputTank.getCapacity();
-			if(temp.amount > 5){
-				RenderUtils.bindBlockTexture();
-				RenderUtils.renderGuiTank(temp,capacity, temp.amount, i + 84, j + 34, zLevel, 20, 65);
-			}
+		if(this.outputTank.getFluid() != null){
+			renderFluidBar(this.outputTank.getFluid(), this.outputTank.getCapacity(), i + 84, j + 34, 20, 65);
 		}
 	}
 

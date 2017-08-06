@@ -185,9 +185,9 @@ public class TileEntityOwcController extends TileEntityMachineEnergy implements 
 				if(checkTile != null){
 					if(checkTile instanceof TileEntityMachineEnergy){
 						TileEntityMachineEnergy rhTile = (TileEntityMachineEnergy)checkTile;
-						if((rhTile.canInduct() && rhTile.hasRF() && rhTile.isFullRedstone()) || (rhTile.canInduct() && !rhTile.hasRF())){
+						if(rhTile.isRedstoneFilled() || rhTile.canRefillOnlyPower()){
 							energyExtracted = Math.min(this.getChargeMax() - this.getRedstone(), rfTransfer());
-						}else if(rhTile.hasRF()){
+						}else if(rhTile.redstoneIsRefillable()){
 							energyExtracted = Math.min(this.getChargeMax() - this.getRedstone(), rfTransfer());
 						}
 						rhTile.receiveEnergy(facing, energyExtracted, false);

@@ -1,12 +1,8 @@
 package com.globbypotato.rockhounding_chemistry.machines.gui;
 
-import java.util.Arrays;
-import java.util.List;
-
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerMineralSizer;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityMineralSizer;
-import com.globbypotato.rockhounding_core.utils.Translator;
 
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -30,6 +26,7 @@ public class GuiMineralSizer extends GuiBase {
         this.playerInventory = playerInv;
 		this.xSize = WIDTH;
 		this.ySize = HEIGHT;
+		this.containerName = "container.mineralSizer";
     }
 
     @Override
@@ -37,20 +34,11 @@ public class GuiMineralSizer extends GuiBase {
        super.drawScreen(mouseX, mouseY, f);
 	   int x = (this.width - this.xSize) / 2;
 	   int y = (this.height - this.ySize) / 2;
-	   //bars progression (fuel-redstone)
-	   if(mouseX >= 11+x && mouseX <= 20+x && mouseY >= 40+y && mouseY <= 89+y){
-		   String text = mineralSizer.powerCount + "/" + this.mineralSizer.powerMax + " ticks";
-		   List<String> tooltip = Arrays.asList(text);
-		   drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
-	   }
-    }
 
-    @Override
-    public void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
-    	super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-        String device = Translator.translateToLocal("container.mineralSizer");
-        this.fontRendererObj.drawString(device, this.xSize / 2 - this.fontRendererObj.getStringWidth(device) / 2, 6, 4210752);
-        this.fontRendererObj.drawString(this.playerInventory.getDisplayName().getUnformattedText(), 8, this.ySize - 96 + 2, 4210752);
+	   //fuel
+	   if(mouseX >= 11+x && mouseX <= 20+x && mouseY >= 40+y && mouseY <= 89+y){
+		   drawPowerInfo("ticks", this.mineralSizer.getPower(), this.mineralSizer.getPowerMax(), mouseX, mouseY);
+	   }
     }
 
     @Override
@@ -59,6 +47,7 @@ public class GuiMineralSizer extends GuiBase {
         int i = (this.width - this.xSize) / 2;
         int j = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
+
         //power bar
         if (this.mineralSizer.getPower() > 0){
             int k = this.getBarScaled(50, this.mineralSizer.getPower(), this.mineralSizer.getPowerMax());

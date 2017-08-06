@@ -3,7 +3,6 @@ package com.globbypotato.rockhounding_chemistry.machines.gui;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerSaltSeasoner;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntitySaltSeasoner;
-import com.globbypotato.rockhounding_core.utils.Translator;
 
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -25,21 +24,7 @@ public class GuiSaltSeasoner extends GuiBase {
         this.playerInventory = playerInv;
 		this.xSize = WIDTH;
 		this.ySize = HEIGHT;
-    }
-
-    @Override
-    public void drawScreen(int mouseX, int mouseY, float f) {
-       super.drawScreen(mouseX, mouseY, f);
-	   int x = (this.width - this.xSize) / 2;
-	   int y = (this.height - this.ySize) / 2;
-    }
-
-    @Override
-    public void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
-    	super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-
-        String device = Translator.translateToLocal("container.seasoningRack");
-        this.fontRendererObj.drawString(device, this.xSize / 2 - this.fontRendererObj.getStringWidth(device) / 2, 6, 4210752);
+		this.containerName = "container.seasoningRack";
     }
 
     @Override

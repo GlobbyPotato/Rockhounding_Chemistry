@@ -37,6 +37,7 @@ public class ModConfig {
     public static int saltAmount;
 
 	public static boolean forceSilicone;
+	public static boolean ingredientEqualizer;
 
 	public static int consumedSulf = 10;
 	public static int consumedChlo = 30;
@@ -55,6 +56,7 @@ public class ModConfig {
 	//GENERIC
 		config.addCustomCategoryComment("Miscellaneous", "Generic parameters settings.");
 		forceSilicone = config.get(									CATEGORY_MISC, "SlimeFromSilicone",			true,	"Obtain slime balls from the silicone cartridge instead to use the cartridge itself").getBoolean();
+		ingredientEqualizer = config.get(							CATEGORY_MISC, "IngredientEqualizer",		false,	"Allows to uniform oredicted dusts from different mods into a single type when inserted in the Metal Alloyer").getBoolean();
 
 	//ORES
 		config.addCustomCategoryComment("Mineral", "These settings handle the Mineral spawning parameters.");

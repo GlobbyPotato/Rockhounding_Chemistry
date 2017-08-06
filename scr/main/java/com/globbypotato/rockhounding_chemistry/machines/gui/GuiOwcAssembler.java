@@ -3,7 +3,6 @@ package com.globbypotato.rockhounding_chemistry.machines.gui;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerOwcAssembler;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityOwcAssembler;
-import com.globbypotato.rockhounding_core.utils.Translator;
 
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -26,13 +25,7 @@ public class GuiOwcAssembler extends GuiBase {
         this.playerInventory = playerInv;
 		this.xSize = WIDTH;
 		this.ySize = HEIGHT;
-    }
-
-    @Override
-    public void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
-    	super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-        String device = Translator.translateToLocal("container.owcAssembler");
-        this.fontRendererObj.drawString(device, this.xSize / 2 - this.fontRendererObj.getStringWidth(device) / 2, 6, 4210752);
+		this.containerName = "container.owcAssembler";
     }
 
     @Override
@@ -41,7 +34,8 @@ public class GuiOwcAssembler extends GuiBase {
 		int i = (this.width - this.xSize) / 2;
 		int j = (this.height - this.ySize) / 2;
 		this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
-        //smelt bar
+
+		//smelt bar
         int k = this.getBarScaled(54, this.owcAssembler.cookTime, this.owcAssembler.getMaxCookTime());
         this.drawTexturedModalRect(i + 61, j + 94, 176, 0, k, 5);
     }

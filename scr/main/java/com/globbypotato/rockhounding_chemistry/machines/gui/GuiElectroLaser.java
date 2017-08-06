@@ -1,18 +1,13 @@
 package com.globbypotato.rockhounding_chemistry.machines.gui;
 
-import java.util.Arrays;
-import java.util.List;
-
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerElectroLaser;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityElectroLaser;
-import com.globbypotato.rockhounding_core.utils.RenderUtils;
-import com.globbypotato.rockhounding_core.utils.Translator;
 
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -23,6 +18,7 @@ public class GuiElectroLaser extends GuiBase {
 	public static final int WIDTH = 176;
 	public static final int HEIGHT = 183;
 	public static final ResourceLocation TEXTURE_REF =  new ResourceLocation(Reference.MODID + ":textures/gui/guielectrolaser.png");
+	private FluidTank inputTank;
 
 	public GuiElectroLaser(InventoryPlayer playerInv, TileEntityElectroLaser tile){
 		super(tile,new ContainerElectroLaser(playerInv, tile));
@@ -31,6 +27,8 @@ public class GuiElectroLaser extends GuiBase {
 		this.electroLaser = tile;
 		this.xSize = WIDTH;
 		this.ySize = HEIGHT;
+		this.inputTank = this.electroLaser.inputTank;
+		this.containerName = "container.electroLaser";
 	}
 
 	@Override
@@ -47,32 +45,13 @@ public class GuiElectroLaser extends GuiBase {
 			String power = TextFormatting.DARK_GRAY + "Ray Power: " + TextFormatting.AQUA +  (this.electroLaser.getStage() + 1) + "x";
 			String damage = TextFormatting.DARK_GRAY + "Damage: " + TextFormatting.GOLD +  this.electroLaser.getDamage() + "HP/tick";
 			String[] multistring = {text, info, nitro, power, damage};
-			List<String> tooltip = Arrays.asList(multistring);
-			drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
+			drawMultiLabel(multistring, mouseX, mouseY);
 		}
 
-		//add details about power 
-		
 		//input tank
 		if(mouseX>= 145+x && mouseX <= 167+x && mouseY >= 17+y && mouseY <= 76+y){
-			int fluidAmount = 0;
-			if(electroLaser.inputTank.getFluid() != null){
-				fluidAmount = this.electroLaser.inputTank.getFluidAmount();
-			}
-			String text = fluidAmount + "/" + this.electroLaser.inputTank.getCapacity() + " mb ";
-			String liquid = "";
-			if(electroLaser.inputTank.getFluid() != null) liquid = electroLaser.inputTank.getFluid().getLocalizedName();
-			List<String> tooltip = Arrays.asList(text, liquid);
-			drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
+			drawTankInfo(this.inputTank, mouseX, mouseY);
 		}
-	}
-
-	 @Override
-	public void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
-		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-
-        String device = Translator.translateToLocal("container.electroLaser");
-		this.fontRendererObj.drawString(device, this.xSize / 2 - this.fontRendererObj.getStringWidth(device) / 2, 4, 4210752);
 	}
 
 	 @Override
@@ -99,13 +78,8 @@ public class GuiElectroLaser extends GuiBase {
         }
 
 		//input fluid
-		if(electroLaser.inputTank.getFluid() != null){
-			FluidStack temp = electroLaser.inputTank.getFluid();
-			int capacity = electroLaser.inputTank.getCapacity();
-			if(temp.amount > 5){
-				RenderUtils.bindBlockTexture();
-				RenderUtils.renderGuiTank(temp,capacity, temp.amount, i + 145, j + 17, zLevel, 23, 60);
-			}
+		if(this.inputTank.getFluid() != null){
+			renderFluidBar(this.inputTank.getFluid(), this.inputTank.getCapacity(), i + 145, j + 17, 23, 60);
 		}
 	}
 

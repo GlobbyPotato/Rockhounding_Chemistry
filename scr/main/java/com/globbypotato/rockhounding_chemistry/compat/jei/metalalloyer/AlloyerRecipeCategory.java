@@ -31,7 +31,7 @@ public class AlloyerRecipeCategory extends RHRecipeCategory {
 	private final static ResourceLocation guiTexture = GuiMetalAlloyer.TEXTURE_REF;
 
 	public AlloyerRecipeCategory(IGuiHelper guiHelper) {
-		super(guiHelper.createDrawable(guiTexture, 33, 51, 128, 57), "jei.alloyer.name");
+		super(guiHelper.createDrawable(guiTexture, 40, 35, 130, 62), "jei.alloyer.name");
 	}
 
 	@Nonnull
@@ -45,15 +45,15 @@ public class AlloyerRecipeCategory extends RHRecipeCategory {
 		IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
 		AlloyerRecipeWrapper wrapper = (AlloyerRecipeWrapper) recipeWrapper;	
 
-		guiItemStacks.init(INPUT_SLOT_1, true, 19, 1);
-		guiItemStacks.init(INPUT_SLOT_2, true, 37, 1);
-		guiItemStacks.init(INPUT_SLOT_3, true, 55, 1);
-		guiItemStacks.init(INPUT_SLOT_4, true, 73, 1);
-		guiItemStacks.init(INPUT_SLOT_5, true, 91, 1);
-		guiItemStacks.init(INPUT_SLOT_6, true, 109,1);
-		guiItemStacks.init(PATTERN_SLOT, true, 64, 38);
-		guiItemStacks.init(OUTPUT_SLOT, true, 42, 38);
-		guiItemStacks.init(SCRAP_SLOT, false, 86, 38);
+		guiItemStacks.init(INPUT_SLOT_1, true, 21, 0);
+		guiItemStacks.init(INPUT_SLOT_2, true, 39, 0);
+		guiItemStacks.init(INPUT_SLOT_3, true, 57, 0);
+		guiItemStacks.init(INPUT_SLOT_4, true, 75, 0);
+		guiItemStacks.init(INPUT_SLOT_5, true, 93, 0);
+		guiItemStacks.init(INPUT_SLOT_6, true, 111,0);
+		guiItemStacks.init(PATTERN_SLOT, true, 0, 44);
+		guiItemStacks.init(OUTPUT_SLOT, true, 22, 44);
+		guiItemStacks.init(SCRAP_SLOT, false, 44, 44);
 
 		for(String dict : OreDictionary.getOreNames()){
 			for (int x = 0; x < wrapper.getElements().size(); x++){
