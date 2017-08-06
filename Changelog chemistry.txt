@@ -1,3 +1,21 @@
+v1.49/v1.50 changelog
+	Petrographer
+		Fixed a bug when levels are maxed
+	All Machines
+		If Fuel Blend is enabled, Lab Oven and Chemical Extractor no longer need a secondary redstone supply
+		Recipe Selector scrolling made continous once reached the limits
+		Added more gui tooltips
+	Metal Alloyer
+		Added an Ingredient Equalizer optional slot
+			Turns matching dusts from different mods into the same one already placed as ingredient
+			Can be turned on/off from the config, disabled by default
+			Reworked the gui appearence
+			Requires to break and place again the machine right after the update
+	Misc fixes
+		Some localized names uniformed 
+		Code cleaning
+		Core updated and synced to v1.04
+
 v1.48 changelog
 	Rockhounding Core updated to v1.02 
 		[Request] Added a Fuel Blend option inspired by ATM:Expert, configurable from the Core config
