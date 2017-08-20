@@ -144,3 +144,42 @@
 	//REMOVE
 		mods.rockhounding_chemistry.DepositionChamber.remove(output);
 		mods.rockhounding_chemistry.DepositionChamber.remove(<rockhounding_chemistry:alloyItems:31>);
+
+
+		
+//----------------------------------
+//------------Lab Blender-----------
+//----------------------------------
+	//input = array of itemstacks representing the ingredient itemstacks, including quantities (max 9)
+	//oredict = array of strings representing the ingredients oredicts (max 9)
+	//quantities = the quantity of each ingredient required
+	//output = itemstack representing the output
+
+	//ADD with itemstacks
+		mods.rockhounding_chemistry.LabBlender.add([input1, input2, input3], output);
+		mods.rockhounding_chemistry.LabBlender.add([<minecraft:redstone>*9, <minecraft:gunpowder>*4, <minecraft:glowstone>*2], <rockhounding_core:fuel_blend>*9);
+
+	//ADD with oredicts
+		mods.rockhounding_chemistry.LabBlender.add([oredict1, oredict2, oredict3], [quantity1, quantity2, quantity3], output);
+		mods.rockhounding_chemistry.LabBlender.add(["dustRedstone", "dustGunpowder", "dustGlowstone"], [9,4,2], <rockhounding_core:fuel_blend>*9);
+
+	//REMOVE
+		mods.rockhounding_chemistry.LabBlender.remove(output);
+		mods.rockhounding_chemistry.LabBlender.remove(<rockhounding_core:fuel_blend>);
+
+
+
+//----------------------------------
+//----------Casting Bench-----------
+//----------------------------------
+	//oredict = string representing the ingredient oredict
+	//output = itemstack representing the output
+
+	//ADD with itemstacks
+		mods.rockhounding_chemistry.CastingBench.add(oredict, output);
+		mods.rockhounding_chemistry.CastingBench.add("blockIron", <minecraft:iron_ingot>*9);
+
+	//REMOVE
+		mods.rockhounding_chemistry.CastingBench.remove(output);
+		mods.rockhounding_chemistry.CastingBench.remove(<minecraft:iron_ingot>);
+
