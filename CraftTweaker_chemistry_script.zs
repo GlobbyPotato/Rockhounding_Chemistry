@@ -176,7 +176,7 @@
 	//output = itemstack representing the output
 	//pattern = the used pattern ( 0:COIL, 1:ROD, 2:FOIL, 3:ARM, 4:CASING, 5:CUSTOM )
 
-	//ADD with itemstacks
+	//ADD
 		mods.rockhounding_chemistry.CastingBench.add(oredict, output, pattern);
 		mods.rockhounding_chemistry.CastingBench.add("blockIron", <minecraft:iron_ingot>*9, 0);
 
