@@ -6,6 +6,7 @@ import com.globbypotato.rockhounding_chemistry.ModBlocks;
 import com.globbypotato.rockhounding_chemistry.ModItems;
 import com.globbypotato.rockhounding_chemistry.entities.EntitySmoke;
 import com.globbypotato.rockhounding_chemistry.enums.EnumFires;
+import com.globbypotato.rockhounding_chemistry.handlers.ModRenderers;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 
 import net.minecraft.block.Block;
@@ -38,6 +39,7 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void preInit(FMLPreInitializationEvent e){
 		super.preInit(e);
+		// Register Contents
 		ModBlocks.initClient();
 		ModItems.initClient();
 	}
@@ -68,6 +70,8 @@ public class ClientProxy extends CommonProxy {
 		final RenderManager renderManager = minecraft.getRenderManager();
         final RenderItem renderItem = minecraft.getRenderItem();
         RenderingRegistry.registerEntityRenderingHandler(EntitySmoke.class, new RenderSnowball(renderManager, ModItems.splashSmoke, renderItem));
+        
+		ModRenderers.specialRenders();
 	}
 
 	@Override

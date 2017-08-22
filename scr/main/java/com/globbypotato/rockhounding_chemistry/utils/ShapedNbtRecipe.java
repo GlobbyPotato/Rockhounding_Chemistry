@@ -5,6 +5,8 @@ import com.globbypotato.rockhounding_chemistry.blocks.GanBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.RecipeSorter;
+import net.minecraftforge.oredict.RecipeSorter.Category;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
 public class ShapedNbtRecipe extends ShapedOreRecipe{
@@ -12,6 +14,10 @@ public class ShapedNbtRecipe extends ShapedOreRecipe{
     public ShapedNbtRecipe(ItemStack result, Object[] recipe) {
 		super(result, recipe);
 	}
+
+    public static void register(){
+    	RecipeSorter.register("rockhounding_chemistry:shapednbtrecipe",  ShapedNbtRecipe.class, Category.SHAPED, "after:forge:shapedore");
+    }
 
     @Override
     public ItemStack getCraftingResult(InventoryCrafting var1){ 

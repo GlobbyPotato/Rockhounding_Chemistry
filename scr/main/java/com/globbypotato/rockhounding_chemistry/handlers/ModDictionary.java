@@ -5,6 +5,7 @@ import com.globbypotato.rockhounding_chemistry.ModItems;
 import com.globbypotato.rockhounding_chemistry.enums.EnumAlloy;
 import com.globbypotato.rockhounding_chemistry.enums.EnumAlloyB;
 import com.globbypotato.rockhounding_chemistry.enums.EnumElement;
+import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
@@ -13,20 +14,24 @@ public class ModDictionary {
 
 	public static void loadDictionary()  {
 		for(int x = 0; x < EnumElement.size(); x++){
-			OreDictionary.registerOre(EnumElement.getDust(x), new ItemStack(ModItems.chemicalDusts, 1, x));	
+			OreDictionary.registerOre(EnumElement.getDust(x), BaseRecipes.elements(1, x));	
 		}
-		OreDictionary.registerOre("dustSalt", new ItemStack(ModItems.chemicalItems, 1, 1));	
-		OreDictionary.registerOre("itemFluorite", new ItemStack(ModItems.halideShards, 1, 4));	
-		OreDictionary.registerOre("itemPyrite", new ItemStack(ModItems.sulfideShards, 1, 6));	
-		OreDictionary.registerOre("nuggetIron", new ItemStack(ModItems.miscItems, 1, 2));	
-		OreDictionary.registerOre("ingotPlatinum", new ItemStack(ModItems.miscItems, 1, 17));	
-		OreDictionary.registerOre("ingotCopper", new ItemStack(ModItems.miscItems, 1, 25));	
-		OreDictionary.registerOre("ingotLead", new ItemStack(ModItems.miscItems, 1, 27));	
-		OreDictionary.registerOre("ingotTitanium", new ItemStack(ModItems.miscItems, 1, 36));	
 		OreDictionary.registerOre("slimeball", new ItemStack(ModItems.siliconeCartridge, 1, OreDictionary.WILDCARD_VALUE));	
-		OreDictionary.registerOre("ingotAluminum", new ItemStack(ModItems.miscItems, 1, 46));	
-		OreDictionary.registerOre("nuggetAluminum", new ItemStack(ModItems.miscItems, 1, 47));	
-		OreDictionary.registerOre("itemNichromeHeater", new ItemStack(ModItems.miscItems, 1, 16));	
+
+		OreDictionary.registerOre("dustSalt", BaseRecipes.saltStack);	
+		OreDictionary.registerOre("itemFluorite", BaseRecipes.fluorite);	
+		OreDictionary.registerOre("itemPyrite", BaseRecipes.pyrite);	
+		OreDictionary.registerOre("nuggetIron", BaseRecipes.ironNugget);	
+		OreDictionary.registerOre("ingotPlatinum", BaseRecipes.platinumIngot);	
+		OreDictionary.registerOre("ingotCopper", BaseRecipes.copperIngot);	
+		OreDictionary.registerOre("ingotLead", BaseRecipes.leadIngot);	
+		OreDictionary.registerOre("ingotTitanium", BaseRecipes.titaniumIngot);	
+		OreDictionary.registerOre("ingotAluminum", BaseRecipes.aluminumIngot);	
+		OreDictionary.registerOre("nuggetAluminum", BaseRecipes.aluminumNugget);	
+		OreDictionary.registerOre("itemNichromeHeater", BaseRecipes.heatingElement);	
+		OreDictionary.registerOre("dustLeadDioxide", BaseRecipes.leadDioxide);	
+		OreDictionary.registerOre("ingotCarbon", BaseRecipes.carbonIngot);	
+		OreDictionary.registerOre("itemFusedGlass", BaseRecipes.fusedGlass);	
 
 		for(int x = 0; x < EnumAlloy.size(); x++){
 			OreDictionary.registerOre(EnumAlloy.getBlock(x), new ItemStack(ModBlocks.alloyBlocks, 1, x));
@@ -36,14 +41,14 @@ public class ModDictionary {
 		}
 
 		for(int x = 0; x < EnumAlloy.size(); x++){
-			OreDictionary.registerOre(EnumAlloy.getDust(x),   new ItemStack(ModItems.alloyItems, 1, (x*3)));	
-			OreDictionary.registerOre(EnumAlloy.getIngot(x),  new ItemStack(ModItems.alloyItems, 1, (x*3) + 1));	
-			OreDictionary.registerOre(EnumAlloy.getNugget(x), new ItemStack(ModItems.alloyItems, 1, (x*3) + 2));	
+			OreDictionary.registerOre(EnumAlloy.getDust(x),   BaseRecipes.alloys(1, (x*3)));	
+			OreDictionary.registerOre(EnumAlloy.getIngot(x),  BaseRecipes.alloys(1, (x*3) + 1));	
+			OreDictionary.registerOre(EnumAlloy.getNugget(x), BaseRecipes.alloys(1, (x*3) + 2));	
 		}
 		for(int x = 0; x < EnumAlloyB.size(); x++){
-			OreDictionary.registerOre(EnumAlloyB.getDust(x),   new ItemStack(ModItems.alloyBItems, 1, (x*3)));	
-			OreDictionary.registerOre(EnumAlloyB.getIngot(x),  new ItemStack(ModItems.alloyBItems, 1, (x*3) + 1));	
-			OreDictionary.registerOre(EnumAlloyB.getNugget(x), new ItemStack(ModItems.alloyBItems, 1, (x*3) + 2));	
+			OreDictionary.registerOre(EnumAlloyB.getDust(x),   BaseRecipes.alloysB(1, (x*3)));	
+			OreDictionary.registerOre(EnumAlloyB.getIngot(x),  BaseRecipes.alloysB(1, (x*3) + 1));	
+			OreDictionary.registerOre(EnumAlloyB.getNugget(x), BaseRecipes.alloysB(1, (x*3) + 2));	
 		}
 	}
 }

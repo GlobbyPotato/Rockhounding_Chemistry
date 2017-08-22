@@ -14,7 +14,7 @@ import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
 @ZenClass("mods.rockhounding_chemistry.LeachingVat")
-public class AnalyzerRecipes {
+public class AnalyzerRecipes extends CTSupport{
 	private static String name = "Mineral Analyzer Recipe";
     @ZenMethod
     public static void add(IItemStack input, IItemStack output) {
@@ -23,10 +23,10 @@ public class AnalyzerRecipes {
         ArrayList<ItemStack> outputs = new ArrayList<ItemStack>();
         ArrayList<Integer> probabilities = new ArrayList<Integer>();
 
-       	outputs.add(CTSupport.toStack(output));
+       	outputs.add(toStack(output));
        	probabilities.add(100);
 
-        MineTweakerAPI.apply(new AddToAnalyzer(new MineralAnalyzerRecipe(CTSupport.toStack(input), outputs, probabilities)));
+        MineTweakerAPI.apply(new AddToAnalyzer(new MineralAnalyzerRecipe(toStack(input), outputs, probabilities)));
     }
     @ZenMethod
     public static void add(IItemStack input, IItemStack[] output, int[] probability) {
@@ -36,11 +36,11 @@ public class AnalyzerRecipes {
         ArrayList<Integer> probabilities = new ArrayList<Integer>();
 
         for(int x = 0; x < output.length; x++){
-        	outputs.add(CTSupport.toStack(output[x]));
+        	outputs.add(toStack(output[x]));
         	probabilities.add(probability[x]);
         }
 
-        MineTweakerAPI.apply(new AddToAnalyzer(new MineralAnalyzerRecipe(CTSupport.toStack(input), outputs, probabilities)));
+        MineTweakerAPI.apply(new AddToAnalyzer(new MineralAnalyzerRecipe(toStack(input), outputs, probabilities)));
     }
 		    private static class AddToAnalyzer implements IUndoableAction {
 		    	private MineralAnalyzerRecipe recipe;
@@ -77,7 +77,7 @@ public class AnalyzerRecipes {
     @ZenMethod
     public static void remove(IItemStack input) {
         if(input == null) {MineTweakerAPI.logError(name + ": Invalid recipe."); return;}
-        MineTweakerAPI.apply(new RemoveFromAnalyzer(CTSupport.toStack(input)));    
+        MineTweakerAPI.apply(new RemoveFromAnalyzer(toStack(input)));    
     }
 		    private static class RemoveFromAnalyzer implements IUndoableAction {
 		    	private ItemStack input;

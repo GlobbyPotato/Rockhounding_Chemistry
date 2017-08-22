@@ -2,8 +2,7 @@ package com.globbypotato.rockhounding_chemistry.items;
 
 import java.util.Random;
 
-import com.globbypotato.rockhounding_chemistry.utils.ToolUtils;
-import com.globbypotato.rockhounding_core.items.BaseArray;
+import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCauldron;
@@ -55,7 +54,7 @@ public class ChemicalItems extends ArrayIO {
         if(block == Blocks.CAULDRON){
             int i = ((Integer)iblockstate.getValue(BlockCauldron.LEVEL)).intValue();
             if(i == 3){
-	        	if(playerIn.getHeldItem(EnumHand.MAIN_HAND) != null && playerIn.getHeldItemMainhand().isItemEqual(ToolUtils.polymer)){
+	        	if(playerIn.getHeldItem(EnumHand.MAIN_HAND) != null && playerIn.getHeldItemMainhand().isItemEqual(BaseRecipes.polymer)){
 	                if (!worldIn.isRemote){
                         if (!playerIn.inventory.addItemStackToInventory(new ItemStack(Blocks.SNOW))){
                         	playerIn.dropItem(new ItemStack(Blocks.SNOW), false);

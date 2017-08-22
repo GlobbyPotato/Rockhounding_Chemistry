@@ -48,7 +48,7 @@ public class GuiGanController extends GuiBase {
 	   //air
 	   String airString = TextFormatting.DARK_GRAY + "Compressed Air: " + TextFormatting.AQUA + this.ganController.getAirAmount() + " unit/tick";
 	   //refrigerant
-	   String refrigerantString = TextFormatting.DARK_GRAY + "Refrigerant: " + TextFormatting.DARK_AQUA + this.ganController.getRefrigerantAmount() + " mB/tick";
+	   String refrigerantString = TextFormatting.DARK_GRAY + "Refrigerant: " + TextFormatting.DARK_AQUA + this.ganController.getRefrigerantAmount() + " mB/tick" + TextFormatting.WHITE + " - (" + this.ganController.getTemperature() + "K)";
 	   //nitrogen
 	   String nitrogenString = TextFormatting.DARK_GRAY + "Liquid Nitrogen: " + TextFormatting.WHITE + this.ganController.getNitrogenAmount() + " mB/tick";
 
@@ -68,9 +68,13 @@ public class GuiGanController extends GuiBase {
 
 	   //coolant
 	   if(mouseX >= 7+x && mouseX <= 24+x && mouseY >= 53+y && mouseY <= 70+y){
-		   String text = "Refrigerant: Not Available";
+		   String text = TextFormatting.GRAY + "Refrigerant:" + TextFormatting.GOLD + " Not Available";
 		   if(this.ganController.hasRefrigerant()){
-			   text = "Refrigerant: Available";
+			   if(this.ganController.isValidTemperature()){
+				   text = TextFormatting.GRAY + "Refrigerant: " + TextFormatting.GREEN + this.ganController.getChillerTank().getFluid().getLocalizedName() + TextFormatting.WHITE + " - (" + this.ganController.getTemperature() + "K)";
+			   }else{
+				   text = TextFormatting.GRAY + "Refrigerant:" + TextFormatting.RED  +" Invalid. High temperature";
+			   }
 	       }
 			drawButtonLabel(text, mouseX, mouseY);
 	   }
@@ -127,7 +131,7 @@ public class GuiGanController extends GuiBase {
 	        }
 
 	        //coolant
-	        if(this.ganController.hasRefrigerant()){
+	        if(this.ganController.hasRefrigerant() && this.ganController.isValidTemperature()){
 	            this.drawTexturedModalRect(i + 7, j + 53, 194, 5, 18, 18);
 	        }
         }

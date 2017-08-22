@@ -11,4 +11,6 @@ public class RHRecipeUID {
 	public static final String DISTILLATION_TOWER = "rockhounding.distillation_tower";
 	public static final String PETROGRAPHER = "rockhounding.petrographer";
 	public static final String FLAME_TEST = "rockhounding.flametest";
+	public static final String CASTING = "rockhounding.casting_bench";
+	public static final String BLENDER = "rockhounding.lab_blender";
 }

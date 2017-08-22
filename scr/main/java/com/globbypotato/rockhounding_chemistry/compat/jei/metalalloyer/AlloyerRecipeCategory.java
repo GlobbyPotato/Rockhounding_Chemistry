@@ -52,7 +52,7 @@ public class AlloyerRecipeCategory extends RHRecipeCategory {
 		guiItemStacks.init(INPUT_SLOT_5, true, 93, 0);
 		guiItemStacks.init(INPUT_SLOT_6, true, 111,0);
 		guiItemStacks.init(PATTERN_SLOT, true, 0, 44);
-		guiItemStacks.init(OUTPUT_SLOT, true, 22, 44);
+		guiItemStacks.init(OUTPUT_SLOT, false, 22, 44);
 		guiItemStacks.init(SCRAP_SLOT, false, 44, 44);
 
 		for(String dict : OreDictionary.getOreNames()){

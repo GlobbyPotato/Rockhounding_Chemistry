@@ -32,7 +32,7 @@ public abstract class GuiBase extends GuiContainer{
 	public void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
         String device = Translator.translateToLocal(containerName);
-		this.fontRendererObj.drawString(device, this.xSize / 2 - this.fontRendererObj.getStringWidth(device) / 2, 4, 4210752);
+		this.fontRendererObj.drawString(device, this.xSize / 2 - this.fontRendererObj.getStringWidth(device) / 2, 5, 4210752);
 	}
 
 	protected void drawPowerInfo(String unit, int power, int powerMax, int mouseX, int mouseY) {

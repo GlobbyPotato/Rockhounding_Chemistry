@@ -140,6 +140,11 @@ public class TileEntityChemicalExtractor extends TileEntityMachineTank{
 		return true;	
 	}
 
+	@Override
+	public boolean isRFGatedByBlend(){
+		return true;
+	}
+
 	public int getExtractingFactor(){
 		return ModConfig.factorExtractor;
 	}

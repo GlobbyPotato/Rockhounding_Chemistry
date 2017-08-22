@@ -63,7 +63,7 @@ public class TileEntityMetalAlloyer extends TileEntityMachineTank {
 	}
 
 	public int getMaxCookTime(){
-		return ModConfig.alloyingSpeed;
+		return ModConfig.speedAlloyer;
 	}
 
 	@Override

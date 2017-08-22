@@ -37,12 +37,7 @@ public class GanIB extends BaseItemBlock {
 		}
 		return this.getItemStackLimit();
 	}
-/*
-	@Override
-    public void onCreated(ItemStack itemstack, World world, EntityPlayer player) {
-		setItemNbt(itemstack);
-    }
-*/
+
     private static void setItemNbt(ItemStack itemstack) {
 		int meta = itemstack.getItemDamage();
     	if(GanBlocks.isActiveMeta(meta)){
@@ -82,8 +77,6 @@ public class GanIB extends BaseItemBlock {
         			}
         		}
         	}
-        }else{
-        	setItemNbt(itemstack);
         }
     }
 

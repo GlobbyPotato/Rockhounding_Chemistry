@@ -11,7 +11,7 @@ public enum EnumElement implements BaseEnum{
 	LUTETIUM,
 	NEODYMIUM,
 	PRASEODYMIUM,
-	SAMARIUM,
+	SAMARIUM,//10
 	SCANDIUM,
 	TERBIUM,
 	THULIUM,
@@ -21,7 +21,7 @@ public enum EnumElement implements BaseEnum{
 	COPPER,
 	TIN,
 	LEAD,
-	ZINC,
+	ZINC,//20
 	CHROMIUM,
 	BORON,
 	SILVER,
@@ -31,7 +31,7 @@ public enum EnumElement implements BaseEnum{
 	COBALT,
 	MAGNESIUM,
 	TITANIUM,
-	SODIUM,
+	SODIUM,//30
 	THORIUM,
 	CALCIUM,
 	PHOSPHORUS,
@@ -41,7 +41,7 @@ public enum EnumElement implements BaseEnum{
 	SULFUR,
 	BISMUTH,
 	NIOBIUM,
-	TANTALUM,
+	TANTALUM,//40
 	ARSENIC,
 	SILICON,
 	URANIUM,
@@ -51,7 +51,7 @@ public enum EnumElement implements BaseEnum{
 	OSMIUM,
 	IRIDIUM,
 	CADMIUM,
-	VANADIUM,
+	VANADIUM,//50
 	CARBON;
 
 	//---------CUSTOM----------------

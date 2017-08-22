@@ -6,15 +6,11 @@ import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityDep
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerDepositionChamber extends ContainerBase<TileEntityDepositionChamber> {
-	Slot tPrev;
-	Slot tNext;
-	Slot activation;
 
 	public ContainerDepositionChamber(IInventory playerInventory, TileEntityDepositionChamber tile){
 		super(playerInventory,tile);
@@ -32,9 +28,9 @@ public class ContainerDepositionChamber extends ContainerBase<TileEntityDepositi
 		this.addSlotToContainer(new SlotItemHandler(input, 3, 68, 93));//upgrade
 		this.addSlotToContainer(new SlotItemHandler(output, 0, 80, 71));//output
 
-		tPrev = this.addSlotToContainer(new SlotItemHandler(template, 0, 137,  111));//prev
-		tNext = this.addSlotToContainer(new SlotItemHandler(template, 1, 153,  111));//next
-		activation = this.addSlotToContainer(new SlotItemHandler(template, 1, 7,  111));//activation
+		this.addSlotToContainer(new SlotItemHandler(template, 0, 137,  111));//prev
+		this.addSlotToContainer(new SlotItemHandler(template, 1, 153,  111));//next
+		this.addSlotToContainer(new SlotItemHandler(template, 1, 7,  111));//activation
 	}
 
 	@Override

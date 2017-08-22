@@ -13,23 +13,23 @@ import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
 @ZenClass("mods.rockhounding_chemistry.LabOven")
-public class OvenRecipes {
+public class OvenRecipes extends CTSupport{
 	private static String name = "Lab Oven Recipe";
 
     @ZenMethod
     public static void add(IItemStack solute, boolean catalyst, ILiquidStack solvent, int solventAmount, ILiquidStack reagent, int reagentAmount, ILiquidStack solution, int solutionAmount) {
         if(solute == null || solvent == null || solution == null) {MineTweakerAPI.logError(name + ": Invalid recipe."); return;}
-        FluidStack solventStack = CTSupport.getFluid(solvent, solventAmount);
-        FluidStack reagentStack = CTSupport.getFluid(reagent, reagentAmount);
-        FluidStack solutionStack = CTSupport.getFluid(solution, solutionAmount);
-        MineTweakerAPI.apply(new AddToOven(new LabOvenRecipe(CTSupport.toStack(solute), catalyst, solventStack, reagentStack, solutionStack)));
+        FluidStack solventStack = getFluid(solvent, solventAmount);
+        FluidStack reagentStack = getFluid(reagent, reagentAmount);
+        FluidStack solutionStack = getFluid(solution, solutionAmount);
+        MineTweakerAPI.apply(new AddToOven(new LabOvenRecipe(toStack(solute), catalyst, solventStack, reagentStack, solutionStack)));
     }
     @ZenMethod
     public static void add(IItemStack solute, boolean catalyst, ILiquidStack solvent, int solventAmount, ILiquidStack solution, int solutionAmount) {
         if(solute == null || solvent == null || solution == null) {MineTweakerAPI.logError(name + ": Invalid recipe."); return;}
-        FluidStack solventStack = CTSupport.getFluid(solvent, solventAmount);
-        FluidStack solutionStack = CTSupport.getFluid(solution, solutionAmount);
-        MineTweakerAPI.apply(new AddToOven(new LabOvenRecipe(CTSupport.toStack(solute), catalyst, solventStack, null, solutionStack)));
+        FluidStack solventStack = getFluid(solvent, solventAmount);
+        FluidStack solutionStack = getFluid(solution, solutionAmount);
+        MineTweakerAPI.apply(new AddToOven(new LabOvenRecipe(toStack(solute), catalyst, solventStack, null, solutionStack)));
     }
 		    private static class AddToOven implements IUndoableAction {
 		    	private LabOvenRecipe recipe;
@@ -66,7 +66,7 @@ public class OvenRecipes {
     @ZenMethod
     public static void remove(ILiquidStack solution) {
         if(solution == null) {MineTweakerAPI.logError(name + ": Invalid recipe."); return;}
-        MineTweakerAPI.apply(new RemoveFromOven(CTSupport.toFluid(solution)));    
+        MineTweakerAPI.apply(new RemoveFromOven(toFluid(solution)));    
     }
 		    private static class RemoveFromOven implements IUndoableAction {
 		    	private FluidStack solution;

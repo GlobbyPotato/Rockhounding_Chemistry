@@ -2,6 +2,7 @@ package com.globbypotato.rockhounding_chemistry.handlers;
 
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityAirChiller;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityAirCompresser;
+import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityDisposer;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityEarthBreaker;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityElectroLaser;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityLaserAmplifier;
@@ -14,6 +15,7 @@ import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityLas
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityMineCrawler;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityNitrogenTank;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntitySaltMaker;
+import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityUltraBattery;
 
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -38,5 +40,9 @@ public class ModTileEntities {
 		GameRegistry.registerTileEntity(TileEntityNitrogenTank.class, "RH_NitrogenTank");
 		GameRegistry.registerTileEntity(TileEntityAirCompresser.class, "RH_AirCompresser");
 		GameRegistry.registerTileEntity(TileEntityAirChiller.class, "RH_AirChiller");
+
+		GameRegistry.registerTileEntity(TileEntityUltraBattery.class, "RH_UltraBattery");
+
+		GameRegistry.registerTileEntity(TileEntityDisposer.class, "RH_Disposer");
 	}
 }

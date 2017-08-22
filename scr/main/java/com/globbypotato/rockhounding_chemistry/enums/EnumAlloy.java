@@ -13,7 +13,8 @@ public enum EnumAlloy implements BaseEnum{
 	SIENA,
 	CARBORUNDUM,
 	TINITE,
-	HYDRONALIUM;
+	HYDRONALIUM,
+	VANASTEEL;
 
 	//---------CUSTOM----------------
 	public static int size(){

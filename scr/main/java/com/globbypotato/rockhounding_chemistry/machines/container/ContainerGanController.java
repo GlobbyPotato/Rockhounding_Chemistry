@@ -5,14 +5,11 @@ import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityGan
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerGanController extends ContainerBase<TileEntityGanController>{
-	Slot activation;
-	Slot acquire;
 
 	public ContainerGanController(IInventory playerInventory, TileEntityGanController te) {
 		super(playerInventory,te);
@@ -24,8 +21,8 @@ public class ContainerGanController extends ContainerBase<TileEntityGanControlle
 		IItemHandler template = tile.getTemplate();
 
 		this.addSlotToContainer(new SlotItemHandler(input, 0, 152, 80));//matrix 
-		activation = this.addSlotToContainer(new SlotItemHandler(template, 0, 110,  16));//activation
-		acquire = this.addSlotToContainer(new SlotItemHandler(template, 1, 54,  34));//acquiring
+		this.addSlotToContainer(new SlotItemHandler(template, 0, 110,  16));//activation
+		this.addSlotToContainer(new SlotItemHandler(template, 1, 54,  34));//acquiring
 	}
 
 	@Override

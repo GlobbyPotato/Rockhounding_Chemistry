@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "facing=down":  { "model": "rockhounding_chemistry:labBlender"	},
+        "facing=up":    { "model": "rockhounding_chemistry:labBlender" 	},
+        "facing=south": { "model": "rockhounding_chemistry:labBlender", "y": 180},
+        "facing=north": { "model": "rockhounding_chemistry:labBlender" },
+        "facing=east":  { "model": "rockhounding_chemistry:labBlender", "y": 90  },
+        "facing=west":  { "model": "rockhounding_chemistry:labBlender", "y": 270 }
+    }
+}

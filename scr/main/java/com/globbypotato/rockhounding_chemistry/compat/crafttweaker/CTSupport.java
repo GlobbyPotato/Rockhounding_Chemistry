@@ -23,6 +23,8 @@ public class CTSupport {
         MineTweakerAPI.registerClass(ExtractorRecipes.class);
         MineTweakerAPI.registerClass(OvenRecipes.class);
         MineTweakerAPI.registerClass(DepositionRecipes.class);
+        MineTweakerAPI.registerClass(CastingRecipes.class);
+        MineTweakerAPI.registerClass(LabBlenderRecipes.class);
     }
 
     public static ItemStack toStack(IItemStack iStack){

@@ -14,7 +14,7 @@ import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
 @ZenClass("mods.rockhounding_chemistry.MetalAlloyer")
-public class AlloyerRecipes {
+public class AlloyerRecipes extends CTSupport{
 	private static String name = "Metal Alloyer Recipe";
 
     @ZenMethod
@@ -29,7 +29,7 @@ public class AlloyerRecipes {
         	quantities.add(quantity[x]);
         }
 
-        MineTweakerAPI.apply(new AddToAlloyer(new MetalAlloyerRecipe(displayName, ingredients, quantities, CTSupport.toStack(alloy), CTSupport.toStack(sracp))));
+        MineTweakerAPI.apply(new AddToAlloyer(new MetalAlloyerRecipe(displayName, ingredients, quantities, toStack(alloy), toStack(sracp))));
     }
     @ZenMethod
     public static void add(String displayName, String[] ingredient, int[] quantity, IItemStack alloy) {
@@ -43,7 +43,7 @@ public class AlloyerRecipes {
         	quantities.add(quantity[x]);
         }
 
-        MineTweakerAPI.apply(new AddToAlloyer(new MetalAlloyerRecipe(displayName, ingredients, quantities, CTSupport.toStack(alloy), null)));
+        MineTweakerAPI.apply(new AddToAlloyer(new MetalAlloyerRecipe(displayName, ingredients, quantities, toStack(alloy), null)));
     }
 		    private static class AddToAlloyer implements IUndoableAction {
 		    	private MetalAlloyerRecipe recipe;
@@ -80,7 +80,7 @@ public class AlloyerRecipes {
     @ZenMethod
     public static void remove(IItemStack alloy) {
         if(alloy == null) {MineTweakerAPI.logError(name + ": Invalid recipe."); return;}
-        MineTweakerAPI.apply(new RemoveFromAlloyer(CTSupport.toStack(alloy)));    
+        MineTweakerAPI.apply(new RemoveFromAlloyer(toStack(alloy)));    
     }
 		    private static class RemoveFromAlloyer implements IUndoableAction {
 		    	private ItemStack alloy;

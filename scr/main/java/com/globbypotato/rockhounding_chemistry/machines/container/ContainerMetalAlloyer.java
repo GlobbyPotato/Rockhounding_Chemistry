@@ -6,24 +6,11 @@ import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityMet
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerMetalAlloyer extends ContainerBase<TileEntityMetalAlloyer>{
-	Slot templateAlloy;
-	Slot templateDust1;
-	Slot templateDust2;
-	Slot templateDust3;
-	Slot templateDust4;
-	Slot templateDust5;
-	Slot templateDust6;
-
-	Slot templateNext;
-	Slot templatePrev;
-
-	Slot activation;
 
 	public ContainerMetalAlloyer(IInventory playerInventory, TileEntityMetalAlloyer tile){
 		super(playerInventory,tile);
@@ -45,20 +32,17 @@ public class ContainerMetalAlloyer extends ContainerBase<TileEntityMetalAlloyer>
         this.addSlotToContainer(new SlotItemHandler(output, 0, 63, 80));//output
         this.addSlotToContainer(new SlotItemHandler(output, 1, 85, 80));//scrap
 
-
-        templateAlloy = this.addSlotToContainer(new SlotItemHandler(template, 0, 120,  98));//alloy template
-        templateDust1 = this.addSlotToContainer(new SlotItemHandler(template, 1, 62,  18));//dust 1
-        templateDust2 = this.addSlotToContainer(new SlotItemHandler(template, 2, 80,  18));//dust 2
-        templateDust3 = this.addSlotToContainer(new SlotItemHandler(template, 3, 98,  18));//dust 3
-        templateDust4 = this.addSlotToContainer(new SlotItemHandler(template, 4, 116, 18));//dust 4
-        templateDust5 = this.addSlotToContainer(new SlotItemHandler(template, 5, 134, 18));//dust 5
-        templateDust6 = this.addSlotToContainer(new SlotItemHandler(template, 6, 152, 18));//dust 6
+        this.addSlotToContainer(new SlotItemHandler(template, 0, 120,  98));//alloy template
+        this.addSlotToContainer(new SlotItemHandler(template, 1, 62,  18));//dust 1
+        this.addSlotToContainer(new SlotItemHandler(template, 2, 80,  18));//dust 2
+        this.addSlotToContainer(new SlotItemHandler(template, 3, 98,  18));//dust 3
+        this.addSlotToContainer(new SlotItemHandler(template, 4, 116, 18));//dust 4
+        this.addSlotToContainer(new SlotItemHandler(template, 5, 134, 18));//dust 5
+        this.addSlotToContainer(new SlotItemHandler(template, 6, 152, 18));//dust 6
         
-        templateNext = this.addSlotToContainer(new SlotItemHandler(template, 7, 137,  98));//prev
-        templatePrev = this.addSlotToContainer(new SlotItemHandler(template, 8, 153,  98));//next
-        activation = this.addSlotToContainer(new SlotItemHandler(template, 9, 7,  98));//activation
-
-
+        this.addSlotToContainer(new SlotItemHandler(template, 7, 137,  98));//prev
+        this.addSlotToContainer(new SlotItemHandler(template, 8, 153,  98));//next
+        this.addSlotToContainer(new SlotItemHandler(template, 9, 7,  98));//activation
 
 	}
 

@@ -3,7 +3,6 @@ package com.globbypotato.rockhounding_chemistry.machines.recipe;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import com.globbypotato.rockhounding_chemistry.ModBlocks;
 import com.globbypotato.rockhounding_chemistry.ModItems;
 import com.globbypotato.rockhounding_chemistry.enums.EnumAlloy;
 import com.globbypotato.rockhounding_chemistry.enums.EnumAlloyB;
@@ -20,7 +19,9 @@ import com.globbypotato.rockhounding_chemistry.enums.shards.EnumPhosphate;
 import com.globbypotato.rockhounding_chemistry.enums.shards.EnumSilicate;
 import com.globbypotato.rockhounding_chemistry.enums.shards.EnumSulfate;
 import com.globbypotato.rockhounding_chemistry.enums.shards.EnumSulfide;
+import com.globbypotato.rockhounding_chemistry.integration.ModIntegration;
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
+import com.globbypotato.rockhounding_chemistry.utils.ToolUtils;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -53,74 +54,78 @@ public class MachineRecipes extends BaseRecipes {
 	public static ArrayList<DepositionChamberRecipe> depositionRecipes = new ArrayList<DepositionChamberRecipe>();
 	public static ArrayList<DistillationTowerRecipe> distillationRecipes = new ArrayList<DistillationTowerRecipe>();
 	public static ArrayList<FlameTestRecipe> flamesRecipes = new ArrayList<FlameTestRecipe>();
+	public static ArrayList<CastingRecipe> castingRecipes = new ArrayList<CastingRecipe>();
+	public static ArrayList<LabBlenderRecipe> blenderRecipes = new ArrayList<LabBlenderRecipe>();
 
 	public static ArrayList<String> inhibitedElements = new ArrayList<String>();
 
 	public static void machineRecipes(){
 		sizerRecipes.add(new MineralSizerRecipe(minerals(0), 								Arrays.asList(minerals(1), minerals(2), minerals(3), minerals(4), minerals(5), minerals(6), minerals(7), minerals(8), minerals(9), minerals(10)), 		Arrays.asList(4, 7, 7, 5, 11, 20, 11, 10, 9, 16)));
-		sizerRecipes.add(new MineralSizerRecipe(ironIngot, 									Arrays.asList(elements(1,16)), 																															Arrays.asList(100))); //iron dust
-		sizerRecipes.add(new MineralSizerRecipe(goldIngot, 									Arrays.asList(elements(1,45)), 																															Arrays.asList(100))); //gold dust
-		sizerRecipes.add(new MineralSizerRecipe(copperIngot, 								Arrays.asList(elements(1,17)), 																															Arrays.asList(100))); //copper dust
-		sizerRecipes.add(new MineralSizerRecipe(leadIngot, 									Arrays.asList(elements(1,19)), 																															Arrays.asList(100))); //lead dust
-		sizerRecipes.add(new MineralSizerRecipe(titaniumIngot, 								Arrays.asList(elements(1,29)), 																															Arrays.asList(100))); //titanium dust
-		sizerRecipes.add(new MineralSizerRecipe(aluminumIngot, 								Arrays.asList(elements(1,24)), 																															Arrays.asList(100))); //aluminum dust
-		sizerRecipes.add(new MineralSizerRecipe(platinumIngot, 								Arrays.asList(elements(1,44)), 																															Arrays.asList(100))); //platinum dust
-		sizerRecipes.add(new MineralSizerRecipe(new ItemStack(Blocks.STONE,1,1), 			Arrays.asList(chemicals(1,4)), 																															Arrays.asList(100))); //fuorite dust
+		sizerRecipes.add(new MineralSizerRecipe(ironIngot, 									elements(1,16))); //iron dust
+		sizerRecipes.add(new MineralSizerRecipe(goldIngot, 									elements(1,45))); //gold dust
+		sizerRecipes.add(new MineralSizerRecipe(copperIngot, 								elements(1,17))); //copper dust
+		sizerRecipes.add(new MineralSizerRecipe(leadIngot, 									elements(1,19))); //lead dust
+		sizerRecipes.add(new MineralSizerRecipe(titaniumIngot, 								elements(1,29))); //titanium dust
+		sizerRecipes.add(new MineralSizerRecipe(aluminumIngot, 								elements(1,24))); //aluminum dust
+		sizerRecipes.add(new MineralSizerRecipe(platinumIngot, 								elements(1,44))); //platinum dust
+		sizerRecipes.add(new MineralSizerRecipe(new ItemStack(Blocks.STONE,1,1), 			fluorite)); //fuorite
 		for(int i = 0; i <= EnumAlloy.getItemNames().length - 2; i++){
 			if((i - 1) % 3 == 0 || i == 1){
-				sizerRecipes.add(new MineralSizerRecipe(alloys(1, i), 	Arrays.asList(alloys(1, i - 1)), Arrays.asList(100)));
+				sizerRecipes.add(new MineralSizerRecipe(alloys(1, i), 						alloys(1, i - 1)));
 			}
 		}
 		for(int i = 0; i <= EnumAlloyB.getItemNames().length - 2; i++){
 			if((i - 1) % 3 == 0 || i == 1){
-				sizerRecipes.add(new MineralSizerRecipe(alloysB(1, i), 	Arrays.asList(alloysB(1, i - 1)), Arrays.asList(100)));
+				sizerRecipes.add(new MineralSizerRecipe(alloysB(1, i), 						alloysB(1, i - 1)));
 			}
 		}
 
-		labOvenRecipes.add(new LabOvenRecipe(chemicals(1,2),  					 	false,		new FluidStack(FluidRegistry.WATER,1000), 								null,														new FluidStack(EnumFluid.pickFluid(EnumFluid.SULFURIC_ACID),500)));
-		labOvenRecipes.add(new LabOvenRecipe(chemicals(1,3),  					 	false,	 	new FluidStack(EnumFluid.pickFluid(EnumFluid.SULFURIC_ACID), 500), 		null,														new FluidStack(EnumFluid.pickFluid(EnumFluid.HYDROCHLORIC_ACID),300)));
-		labOvenRecipes.add(new LabOvenRecipe(chemicals(1,4),  					 	false,		new FluidStack(EnumFluid.pickFluid(EnumFluid.SULFURIC_ACID),500), 		null,														new FluidStack(EnumFluid.pickFluid(EnumFluid.HYDROFLUORIC_ACID),300)));
-		labOvenRecipes.add(new LabOvenRecipe(chemicals(1,4),  					 	false,		new FluidStack(EnumFluid.pickFluid(EnumFluid.SULFURIC_ACID),500), 		new FluidStack(FluidRegistry.WATER,1000),					new FluidStack(EnumFluid.pickFluid(EnumFluid.PHOSPHORIC_ACID),400)));
-		labOvenRecipes.add(new LabOvenRecipe(chemicals(1,3),  					 	false,		new FluidStack(EnumFluid.pickFluid(EnumFluid.AMMONIA),500), 			new FluidStack(EnumFluid.pickFluid(EnumFluid.SYNGAS),500),	new FluidStack(EnumFluid.pickFluid(EnumFluid.SODIUM_CYANIDE),300)));
-		labOvenRecipes.add(new LabOvenRecipe(new ItemStack(ModItems.ptCatalyst),	true, 		new FluidStack(EnumFluid.pickFluid(EnumFluid.AMMONIA),750), 			new FluidStack(FluidRegistry.WATER,1000),					new FluidStack(EnumFluid.pickFluid(EnumFluid.NITRIC_ACID),400)));
-		labOvenRecipes.add(new LabOvenRecipe(chemicals(1,5),  					 	false,		new FluidStack(FluidRegistry.WATER,1000), 								null,														new FluidStack(EnumFluid.pickFluid(EnumFluid.SYNGAS),400)));
-		labOvenRecipes.add(new LabOvenRecipe(new ItemStack(ModItems.feCatalyst),	true,		new FluidStack(EnumFluid.pickFluid(EnumFluid.LIQUID_NITROGEN),500), 	new FluidStack(EnumFluid.pickFluid(EnumFluid.SYNGAS),300),	new FluidStack(EnumFluid.pickFluid(EnumFluid.AMMONIA),300)));
-		labOvenRecipes.add(new LabOvenRecipe(chemicals(1,3),  						false,		new FluidStack(EnumFluid.pickFluid(EnumFluid.SULFURIC_ACID),750), 		new FluidStack(EnumFluid.pickFluid(EnumFluid.SYNGAS),500),	new FluidStack(EnumFluid.pickFluid(EnumFluid.CHLOROMETHANE),300)));
-		labOvenRecipes.add(new LabOvenRecipe(chemicals(1,6),  						false,		new FluidStack(FluidRegistry.WATER,1000), 								null,														new FluidStack(EnumFluid.pickFluid(EnumFluid.ACRYLIC_ACID),250)));
-		labOvenRecipes.add(new LabOvenRecipe(chemicals(1,8),  						false,		new FluidStack(EnumFluid.pickFluid(EnumFluid.CHLOROMETHANE),500),		new FluidStack(FluidRegistry.WATER,1000),					new FluidStack(EnumFluid.pickFluid(EnumFluid.SILICONE),200)));
-		labOvenRecipes.add(new LabOvenRecipe(chemicals(1,15), 						false,		new FluidStack(EnumFluid.pickFluid(EnumFluid.CHLOROMETHANE),1000),		null,														new FluidStack(EnumFluid.pickFluid(EnumFluid.TITANIUM_TETRACHLORIDE),100)));
+		labOvenRecipes.add(new LabOvenRecipe(chemicals(1,2),  				 	false,		new FluidStack(FluidRegistry.WATER,1000), 								null,														new FluidStack(EnumFluid.pickFluid(EnumFluid.SULFURIC_ACID),500)));
+		labOvenRecipes.add(new LabOvenRecipe(chemicals(1,3),  				 	false,	 	new FluidStack(EnumFluid.pickFluid(EnumFluid.SULFURIC_ACID), 500), 		null,														new FluidStack(EnumFluid.pickFluid(EnumFluid.HYDROCHLORIC_ACID),300)));
+		labOvenRecipes.add(new LabOvenRecipe(chemicals(1,4),  				 	false,		new FluidStack(EnumFluid.pickFluid(EnumFluid.SULFURIC_ACID),500), 		null,														new FluidStack(EnumFluid.pickFluid(EnumFluid.HYDROFLUORIC_ACID),300)));
+		labOvenRecipes.add(new LabOvenRecipe(chemicals(1,4),  				 	false,		new FluidStack(EnumFluid.pickFluid(EnumFluid.SULFURIC_ACID),500), 		new FluidStack(FluidRegistry.WATER,1000),					new FluidStack(EnumFluid.pickFluid(EnumFluid.PHOSPHORIC_ACID),400)));
+		labOvenRecipes.add(new LabOvenRecipe(chemicals(1,3),  				 	false,		new FluidStack(EnumFluid.pickFluid(EnumFluid.AMMONIA),500), 			new FluidStack(EnumFluid.pickFluid(EnumFluid.SYNGAS),500),	new FluidStack(EnumFluid.pickFluid(EnumFluid.SODIUM_CYANIDE),300)));
+		labOvenRecipes.add(new LabOvenRecipe(ToolUtils.ptCatalyst,				true, 		new FluidStack(EnumFluid.pickFluid(EnumFluid.AMMONIA),750), 			new FluidStack(FluidRegistry.WATER,1000),					new FluidStack(EnumFluid.pickFluid(EnumFluid.NITRIC_ACID),400)));
+		labOvenRecipes.add(new LabOvenRecipe(chemicals(1,5),  				 	false,		new FluidStack(FluidRegistry.WATER,1000), 								null,														new FluidStack(EnumFluid.pickFluid(EnumFluid.SYNGAS),400)));
+		labOvenRecipes.add(new LabOvenRecipe(ToolUtils.feCatalyst,				true,		new FluidStack(EnumFluid.pickFluid(EnumFluid.LIQUID_NITROGEN),500), 	new FluidStack(EnumFluid.pickFluid(EnumFluid.SYNGAS),300),	new FluidStack(EnumFluid.pickFluid(EnumFluid.AMMONIA),300)));
+		labOvenRecipes.add(new LabOvenRecipe(chemicals(1,3),  					false,		new FluidStack(EnumFluid.pickFluid(EnumFluid.SULFURIC_ACID),750), 		new FluidStack(EnumFluid.pickFluid(EnumFluid.SYNGAS),500),	new FluidStack(EnumFluid.pickFluid(EnumFluid.CHLOROMETHANE),300)));
+		labOvenRecipes.add(new LabOvenRecipe(chemicals(1,6),  					false,		new FluidStack(FluidRegistry.WATER,1000), 								null,														new FluidStack(EnumFluid.pickFluid(EnumFluid.ACRYLIC_ACID),250)));
+		labOvenRecipes.add(new LabOvenRecipe(chemicals(1,8),  					false,		new FluidStack(EnumFluid.pickFluid(EnumFluid.CHLOROMETHANE),500),		new FluidStack(FluidRegistry.WATER,1000),					new FluidStack(EnumFluid.pickFluid(EnumFluid.SILICONE),200)));
+		labOvenRecipes.add(new LabOvenRecipe(chemicals(1,15), 					false,		new FluidStack(EnumFluid.pickFluid(EnumFluid.CHLOROMETHANE),1000),		null,														new FluidStack(EnumFluid.pickFluid(EnumFluid.TITANIUM_TETRACHLORIDE),100)));
 
-		analyzerRecipes.add(new MineralAnalyzerRecipe(minerals(1),  Arrays.asList(arsenateShards(0), arsenateShards(1), arsenateShards(2), arsenateShards(3), arsenateShards(4)), Arrays.asList(40,10,25,15,10)));
-		analyzerRecipes.add(new MineralAnalyzerRecipe(minerals(2),  Arrays.asList(borateShards(0), borateShards(1), borateShards(2), borateShards(3), borateShards(4), borateShards(5)), Arrays.asList(36,15,10,15,11,13)));
-		analyzerRecipes.add(new MineralAnalyzerRecipe(minerals(3),  Arrays.asList(carbonateShards(0), carbonateShards(1), carbonateShards(2), carbonateShards(3), carbonateShards(4), carbonateShards(5), carbonateShards(6)), Arrays.asList(42,14,16,8, 5, 9, 6)));
-		analyzerRecipes.add(new MineralAnalyzerRecipe(minerals(4),  Arrays.asList(halideShards(0), halideShards(1), halideShards(2), halideShards(3), halideShards(4), halideShards(5), halideShards(6)), Arrays.asList(9, 14,7, 12,36,13,9)));
-		analyzerRecipes.add(new MineralAnalyzerRecipe(minerals(5),  Arrays.asList(nativeShards(0), nativeShards(1), nativeShards(2), nativeShards(3), nativeShards(4), nativeShards(5), nativeShards(6), nativeShards(7), nativeShards(8), nativeShards(9), nativeShards(10), nativeShards(11), nativeShards(12), nativeShards(13), nativeShards(14), nativeShards(15), nativeShards(16), nativeShards(17)), Arrays.asList(3, 8, 9, 3, 7, 9, 5, 3, 5, 4, 6, 5, 4, 6, 4, 4, 7, 7)));
-		analyzerRecipes.add(new MineralAnalyzerRecipe(minerals(6),  Arrays.asList(oxideShards(0), oxideShards(1), oxideShards(2), oxideShards(3), oxideShards(4), oxideShards(5), oxideShards(6), oxideShards(7), oxideShards(8), oxideShards(9), oxideShards(10), oxideShards(11), oxideShards(12), oxideShards(13), oxideShards(14), oxideShards(15), oxideShards(16), oxideShards(17), oxideShards(18), oxideShards(19), oxideShards(20), oxideShards(21), oxideShards(22), oxideShards(23), oxideShards(24), oxideShards(25)), Arrays.asList(7, 2, 4, 3, 2, 3, 8, 8, 5, 3, 5, 3, 4, 3, 4, 3, 2, 4, 2, 3, 4, 2, 4, 3, 5, 4)));
-		analyzerRecipes.add(new MineralAnalyzerRecipe(minerals(7),  Arrays.asList(phosphateShards(0), phosphateShards(1), phosphateShards(2), phosphateShards(3), phosphateShards(4), phosphateShards(5), phosphateShards(6), phosphateShards(7), phosphateShards(8), phosphateShards(9), phosphateShards(10), phosphateShards(11), phosphateShards(12), phosphateShards(13)), Arrays.asList(7, 5, 12,9, 6, 8, 10,6, 9, 7, 4, 7, 5, 5)));
-		analyzerRecipes.add(new MineralAnalyzerRecipe(minerals(8),  Arrays.asList(silicateShards(0), silicateShards(1), silicateShards(2), silicateShards(3), silicateShards(4), silicateShards(5), silicateShards(6), silicateShards(7), silicateShards(8), silicateShards(9), silicateShards(10), silicateShards(11), silicateShards(12)), Arrays.asList(8, 7, 9, 11,9, 8, 6, 5, 8, 9, 5, 9, 6)));
-		analyzerRecipes.add(new MineralAnalyzerRecipe(minerals(9),  Arrays.asList(sulfateShards(0), sulfateShards(1), sulfateShards(2), sulfateShards(3), sulfateShards(4), sulfateShards(5), sulfateShards(6), sulfateShards(7), sulfateShards(8), sulfateShards(9), sulfateShards(10), sulfateShards(11)), Arrays.asList(9, 6, 9, 11,6, 10,8, 11,6, 8, 9, 7)));
-		analyzerRecipes.add(new MineralAnalyzerRecipe(minerals(10), Arrays.asList(sulfideShards(0), sulfideShards(1), sulfideShards(2), sulfideShards(3), sulfideShards(4), sulfideShards(5), sulfideShards(6), sulfideShards(7), sulfideShards(8), sulfideShards(9), sulfideShards(10), sulfideShards(11), sulfideShards(12), sulfideShards(13), sulfideShards(14), sulfideShards(15), sulfideShards(16), sulfideShards(17), sulfideShards(18)), Arrays.asList(4, 6, 4, 9, 3, 8, 9, 4, 5, 6, 5, 3, 6, 3, 5, 6, 6, 4, 4)));
+		analyzerRecipes.add(new MineralAnalyzerRecipe(minerals(1),  Arrays.asList(arsenateShards(1,0), arsenateShards(1,1), arsenateShards(1,2), arsenateShards(1,3), arsenateShards(1,4)), Arrays.asList(40,10,25,15,10)));
+		analyzerRecipes.add(new MineralAnalyzerRecipe(minerals(2),  Arrays.asList(borateShards(1,0), borateShards(1,1), borateShards(1,2), borateShards(1,3), borateShards(1,4), borateShards(1,5)), Arrays.asList(36,15,10,15,11,13)));
+		analyzerRecipes.add(new MineralAnalyzerRecipe(minerals(3),  Arrays.asList(carbonateShards(1,0), carbonateShards(1,1), carbonateShards(1,2), carbonateShards(1,3), carbonateShards(1,4), carbonateShards(1,5), carbonateShards(1,6)), Arrays.asList(42,14,16,8, 5, 9, 6)));
+		analyzerRecipes.add(new MineralAnalyzerRecipe(minerals(4),  Arrays.asList(halideShards(1,0), halideShards(1,1), halideShards(1,2), halideShards(1,3), halideShards(1,4), halideShards(1,5), halideShards(1,6)), Arrays.asList(9, 14,7, 12,36,13,9)));
+		analyzerRecipes.add(new MineralAnalyzerRecipe(minerals(5),  Arrays.asList(nativeShards(1,0), nativeShards(1,1), nativeShards(1,2), nativeShards(1,3), nativeShards(1,4), nativeShards(1,5), nativeShards(1,6), nativeShards(1,7), nativeShards(1,8), nativeShards(1,9), nativeShards(1,10), nativeShards(1,11), nativeShards(1,12), nativeShards(1,13), nativeShards(1,14), nativeShards(1,15), nativeShards(1,16), nativeShards(1,17)), Arrays.asList(3, 8, 9, 3, 7, 9, 5, 3, 5, 4, 6, 5, 4, 6, 4, 4, 7, 7)));
+		analyzerRecipes.add(new MineralAnalyzerRecipe(minerals(6),  Arrays.asList(oxideShards(1,0), oxideShards(1,1), oxideShards(1,2), oxideShards(1,3), oxideShards(1,4), oxideShards(1,5), oxideShards(1,6), oxideShards(1,7), oxideShards(1,8), oxideShards(1,9), oxideShards(1,10), oxideShards(1,11), oxideShards(1,12), oxideShards(1,13), oxideShards(1,14), oxideShards(1,15), oxideShards(1,16), oxideShards(1,17), oxideShards(1,18), oxideShards(1,19), oxideShards(1,20), oxideShards(1,21), oxideShards(1,22), oxideShards(1,23), oxideShards(1,24), oxideShards(1,25)), Arrays.asList(7, 2, 4, 3, 2, 3, 8, 8, 5, 3, 5, 3, 4, 3, 4, 3, 2, 4, 2, 3, 4, 2, 4, 3, 5, 4)));
+		analyzerRecipes.add(new MineralAnalyzerRecipe(minerals(7),  Arrays.asList(phosphateShards(1,0), phosphateShards(1,1), phosphateShards(1,2), phosphateShards(1,3), phosphateShards(1,4), phosphateShards(1,5), phosphateShards(1,6), phosphateShards(1,7), phosphateShards(1,8), phosphateShards(1,9), phosphateShards(1,10), phosphateShards(1,11), phosphateShards(1,12), phosphateShards(1,13)), Arrays.asList(7, 5, 12,9, 6, 8, 10,6, 9, 7, 4, 7, 5, 5)));
+		analyzerRecipes.add(new MineralAnalyzerRecipe(minerals(8),  Arrays.asList(silicateShards(1,0), silicateShards(1,1), silicateShards(1,2), silicateShards(1,3), silicateShards(1,4), silicateShards(1,5), silicateShards(1,6), silicateShards(1,7), silicateShards(1,8), silicateShards(1,9), silicateShards(1,10), silicateShards(1,11), silicateShards(1,12)), Arrays.asList(8, 7, 9, 11,9, 8, 6, 5, 8, 9, 5, 9, 6)));
+		analyzerRecipes.add(new MineralAnalyzerRecipe(minerals(9),  Arrays.asList(sulfateShards(1,0), sulfateShards(1,1), sulfateShards(1,2), sulfateShards(1,3), sulfateShards(1,4), sulfateShards(1,5), sulfateShards(1,6), sulfateShards(1,7), sulfateShards(1,8), sulfateShards(1,9), sulfateShards(1,10), sulfateShards(1,11)), Arrays.asList(9, 6, 9, 11,6, 10,8, 11,6, 8, 9, 7)));
+		analyzerRecipes.add(new MineralAnalyzerRecipe(minerals(10), Arrays.asList(sulfideShards(1,0), sulfideShards(1,1), sulfideShards(1,2), sulfideShards(1,3), sulfideShards(1,4), sulfideShards(1,5), sulfideShards(1,6), sulfideShards(1,7), sulfideShards(1,8), sulfideShards(1,9), sulfideShards(1,10), sulfideShards(1,11), sulfideShards(1,12), sulfideShards(1,13), sulfideShards(1,14), sulfideShards(1,15), sulfideShards(1,16), sulfideShards(1,17), sulfideShards(1,18)), Arrays.asList(4, 6, 4, 9, 3, 8, 9, 4, 5, 6, 5, 3, 6, 3, 5, 6, 6, 4, 4)));
 
-		alloyerRecipes.add(new MetalAlloyerRecipe("CuBe", 				Arrays.asList("dustCopper", "dustBeryllium"), 																Arrays.asList(7, 2), 				alloys(9, 1), 	alloys(1, 2)));  //cube
-		alloyerRecipes.add(new MetalAlloyerRecipe("ScAl", 				Arrays.asList("dustAluminum", "dustScandium"), 																Arrays.asList(7, 2), 				alloys(9, 4), 	alloys(1, 5)));  //scal
-		alloyerRecipes.add(new MetalAlloyerRecipe("BAM", 				Arrays.asList("dustBoron", "dustAluminum", "dustMagnesium"), 												Arrays.asList(6, 2, 1), 			alloys(9, 7), 	alloys(1, 8)));  //bam
-		alloyerRecipes.add(new MetalAlloyerRecipe("YAG", 				Arrays.asList("dustYttrium", "dustAluminum", "dustNeodymium", "dustChromium"), 								Arrays.asList(4, 2, 2, 1), 			alloys(9, 10), 	alloys(1, 11))); //yag
-		alloyerRecipes.add(new MetalAlloyerRecipe("Cupronickel",		Arrays.asList("dustCopper", "dustNickel", "dustManganese", "dustIron"), 									Arrays.asList(5, 2, 1, 1), 			alloys(9, 13), 	alloys(1, 14))); //Cupronickel
-		alloyerRecipes.add(new MetalAlloyerRecipe("Nimonic",			Arrays.asList("dustNickel", "dustCobalt", "dustChromium"), 													Arrays.asList(5, 2, 2), 			alloys(9, 16), 	alloys(1, 17))); //Nimonic
-		alloyerRecipes.add(new MetalAlloyerRecipe("Hastelloy",			Arrays.asList("dustIron", "dustNickel", "dustChromium"), 													Arrays.asList(5, 3, 1), 			alloys(9, 19), 	alloys(1, 20))); //Hastelloy
-		alloyerRecipes.add(new MetalAlloyerRecipe("Nichrome",			Arrays.asList("dustNickel", "dustChromium", "dustIron"), 													Arrays.asList(6, 2, 1), 			alloys(9, 22), 	alloys(1, 23))); //Nichrome
-		alloyerRecipes.add(new MetalAlloyerRecipe("CuNiFe",				Arrays.asList("dustCopper", "dustNickel", "dustIron", "dustCobalt"), 										Arrays.asList(5, 2, 2, 1), 			alloys(9, 25), 	alloys(1, 26))); //CuNiFe
-		alloyerRecipes.add(new MetalAlloyerRecipe("Hydronalium",		Arrays.asList("dustAluminum", "dustMagnesium", "dustManganese"), 											Arrays.asList(6, 2, 1), 			alloys(9, 37), 	alloys(1, 38))); //hydronalium
-		alloyerRecipes.add(new MetalAlloyerRecipe("Mischmetall",		Arrays.asList("dustCerium", "dustLanthanum", "dustNeodymium", "dustPraseodymium", "dustIron"), 				Arrays.asList(4, 2, 1, 1, 1), 		new ItemStack(ModItems.alloyBItems,9, 1), 	new ItemStack(ModItems.alloyBItems,1, 2)));  //Mischmetall
-		alloyerRecipes.add(new MetalAlloyerRecipe("Rose Gold",			Arrays.asList("dustGold", "dustCopper", "dustSilver"), 														Arrays.asList(5, 3, 1), 			new ItemStack(ModItems.alloyBItems,9, 4), 	new ItemStack(ModItems.alloyBItems,1, 5)));  //Rose Gold
-		alloyerRecipes.add(new MetalAlloyerRecipe("Green Gold",			Arrays.asList("dustGold", "dustSilver", "dustCopper", "dustCadmium"),										Arrays.asList(5, 2, 1, 1), 			new ItemStack(ModItems.alloyBItems,9, 7), 	new ItemStack(ModItems.alloyBItems,1, 8)));  //Green Gold
-		alloyerRecipes.add(new MetalAlloyerRecipe("White Gold",			Arrays.asList("dustGold", "dustSilver", "dustCopper", "dustManganese"),										Arrays.asList(5, 2, 1, 1), 			new ItemStack(ModItems.alloyBItems,9, 10), 	new ItemStack(ModItems.alloyBItems,1, 11))); //White Gold
-		alloyerRecipes.add(new MetalAlloyerRecipe("Shibuichi",			Arrays.asList("dustCopper", "dustSilver", "dustGold"),														Arrays.asList(7, 2, 1), 			new ItemStack(ModItems.alloyBItems,9, 13), 	new ItemStack(ModItems.alloyBItems,1, 14))); //Shibuichi
-		alloyerRecipes.add(new MetalAlloyerRecipe("Tombak",				Arrays.asList("dustCopper", "dustZinc", "dustArsenic"),														Arrays.asList(6, 2, 1), 			new ItemStack(ModItems.alloyBItems,9, 16), 	new ItemStack(ModItems.alloyBItems,1, 17))); //tombak
-		alloyerRecipes.add(new MetalAlloyerRecipe("Pewter",				Arrays.asList("dustTin", "dustCopper", "dustBismuth", "dustLead"),											Arrays.asList(5, 1, 1, 1), 			new ItemStack(ModItems.alloyBItems,9, 19), 	new ItemStack(ModItems.alloyBItems,1, 20))); //Pewter
-		alloyerRecipes.add(new MetalAlloyerRecipe("Corten Steel",		Arrays.asList("dustNickel", "dustSilicon", "dustChromium", "dustPhosphorus", "dustManganese", "dustCopper"),Arrays.asList(2, 2, 2, 1, 1, 1), 	new ItemStack(ModItems.alloyBItems,9, 22), 	new ItemStack(ModItems.alloyBItems,1, 23))); //Corten Steel
-		alloyerRecipes.add(new MetalAlloyerRecipe("Shakudo",			Arrays.asList("dustCopper", "dustGold"),																	Arrays.asList(8, 1), 				new ItemStack(ModItems.alloyBItems,9, 25), 	new ItemStack(ModItems.alloyBItems,1, 26))); //shakudo
-		alloyerRecipes.add(new MetalAlloyerRecipe("Purple Gold",		Arrays.asList("dustGold", "dustAluminum"),																	Arrays.asList(7, 2), 				new ItemStack(ModItems.alloyBItems,9, 28), 	new ItemStack(ModItems.alloyBItems,1, 29))); //purple gold
+		alloyerRecipes.add(new MetalAlloyerRecipe("CuBe", 				Arrays.asList("dustCopper", "dustBeryllium"), 																Arrays.asList(7, 2), 				alloys(9, 1), 	alloys(1, 2)));   //cube
+		alloyerRecipes.add(new MetalAlloyerRecipe("ScAl", 				Arrays.asList("dustAluminum", "dustScandium"), 																Arrays.asList(7, 2), 				alloys(9, 4), 	alloys(1, 5)));   //scal
+		alloyerRecipes.add(new MetalAlloyerRecipe("BAM", 				Arrays.asList("dustBoron", "dustAluminum", "dustMagnesium"), 												Arrays.asList(6, 2, 1), 			alloys(9, 7), 	alloys(1, 8)));   //bam
+		alloyerRecipes.add(new MetalAlloyerRecipe("YAG", 				Arrays.asList("dustYttrium", "dustAluminum", "dustNeodymium", "dustChromium"), 								Arrays.asList(4, 2, 2, 1), 			alloys(9, 10), 	alloys(1, 11)));  //yag
+		alloyerRecipes.add(new MetalAlloyerRecipe("Cupronickel",		Arrays.asList("dustCopper", "dustNickel", "dustManganese", "dustIron"), 									Arrays.asList(5, 2, 1, 1), 			alloys(9, 13), 	alloys(1, 14)));  //Cupronickel
+		alloyerRecipes.add(new MetalAlloyerRecipe("Nimonic",			Arrays.asList("dustNickel", "dustCobalt", "dustChromium"), 													Arrays.asList(5, 2, 2), 			alloys(9, 16), 	alloys(1, 17)));  //Nimonic
+		alloyerRecipes.add(new MetalAlloyerRecipe("Hastelloy",			Arrays.asList("dustIron", "dustNickel", "dustChromium"), 													Arrays.asList(5, 3, 1), 			alloys(9, 19), 	alloys(1, 20)));  //Hastelloy
+		alloyerRecipes.add(new MetalAlloyerRecipe("Nichrome",			Arrays.asList("dustNickel", "dustChromium", "dustIron"), 													Arrays.asList(6, 2, 1), 			alloys(9, 22), 	alloys(1, 23)));  //Nichrome
+		alloyerRecipes.add(new MetalAlloyerRecipe("CuNiFe",				Arrays.asList("dustCopper", "dustNickel", "dustIron", "dustCobalt"), 										Arrays.asList(5, 2, 2, 1), 			alloys(9, 25), 	alloys(1, 26)));  //CuNiFe
+		alloyerRecipes.add(new MetalAlloyerRecipe("Hydronalium",		Arrays.asList("dustAluminum", "dustMagnesium", "dustManganese"), 											Arrays.asList(6, 2, 1), 			alloys(9, 37), 	alloys(1, 38)));  //hydronalium
+		alloyerRecipes.add(new MetalAlloyerRecipe("Vanasteel",			Arrays.asList("dustIron", "dustCarbon", "dustVanadium", "dustChromium", "dustTungsten"), 					Arrays.asList(4, 2, 1, 1, 1), 		alloys(9, 40), 	alloys(1, 41)));  //vanasteel
+		alloyerRecipes.add(new MetalAlloyerRecipe("Mischmetall",		Arrays.asList("dustCerium", "dustLanthanum", "dustNeodymium", "dustPraseodymium", "dustIron"), 				Arrays.asList(4, 2, 1, 1, 1), 		alloysB(9, 1), 	alloysB(1, 2)));  //Mischmetall
+		alloyerRecipes.add(new MetalAlloyerRecipe("Rose Gold",			Arrays.asList("dustGold", "dustCopper", "dustSilver"), 														Arrays.asList(5, 3, 1), 			alloysB(9, 4), 	alloysB(1, 5)));  //Rose Gold
+		alloyerRecipes.add(new MetalAlloyerRecipe("Green Gold",			Arrays.asList("dustGold", "dustSilver", "dustCopper", "dustCadmium"),										Arrays.asList(5, 2, 1, 1), 			alloysB(9, 7), 	alloysB(1, 8)));  //Green Gold
+		alloyerRecipes.add(new MetalAlloyerRecipe("White Gold",			Arrays.asList("dustGold", "dustSilver", "dustCopper", "dustManganese"),										Arrays.asList(5, 2, 1, 1), 			alloysB(9, 10), alloysB(1, 11))); //White Gold
+		alloyerRecipes.add(new MetalAlloyerRecipe("Shibuichi",			Arrays.asList("dustCopper", "dustSilver", "dustGold"),														Arrays.asList(7, 2, 1), 			alloysB(9, 13), alloysB(1, 14))); //Shibuichi
+		alloyerRecipes.add(new MetalAlloyerRecipe("Tombak",				Arrays.asList("dustCopper", "dustZinc", "dustArsenic"),														Arrays.asList(6, 2, 1), 			alloysB(9, 16), alloysB(1, 17))); //tombak
+		alloyerRecipes.add(new MetalAlloyerRecipe("Pewter",				Arrays.asList("dustTin", "dustCopper", "dustBismuth", "dustLead"),											Arrays.asList(5, 1, 1, 1), 			alloysB(9, 19), alloysB(1, 20))); //Pewter
+		alloyerRecipes.add(new MetalAlloyerRecipe("Corten Steel",		Arrays.asList("dustNickel", "dustSilicon", "dustChromium", "dustPhosphorus", "dustManganese", "dustCopper"),Arrays.asList(2, 2, 2, 1, 1, 1), 	alloysB(9, 22), alloysB(1, 23))); //Corten Steel
+		alloyerRecipes.add(new MetalAlloyerRecipe("Shakudo",			Arrays.asList("dustCopper", "dustGold"),																	Arrays.asList(8, 1), 				alloysB(9, 25), alloysB(1, 26))); //shakudo
+		alloyerRecipes.add(new MetalAlloyerRecipe("Purple Gold",		Arrays.asList("dustGold", "dustAluminum"),																	Arrays.asList(7, 2), 				alloysB(9, 28), alloysB(1, 29))); //purple gold
+		alloyerRecipes.add(new MetalAlloyerRecipe("Carbon Ingot",		Arrays.asList("dustCarbon"),																				Arrays.asList(4), 					miscs(4,55))); 					  //carbon ingot
 
 		extractorRecipes.add(new ChemicalExtractorRecipe(getText(1), arsenateStack(EnumArsenate.AGARDITE), Arrays.asList(EnumElement.COPPER.name().toLowerCase(), EnumElement.ARSENIC.name().toLowerCase(), EnumElement.LEAD.name().toLowerCase(), EnumElement.DYSPROSIUM.name().toLowerCase(), EnumElement.YTTRIUM.name().toLowerCase(), EnumElement.CERIUM.name().toLowerCase(), EnumElement.LANTHANUM.name().toLowerCase(), EnumElement.NEODYMIUM.name().toLowerCase(), EnumElement.CALCIUM.name().toLowerCase(), EnumElement.EUROPIUM.name().toLowerCase(), EnumElement.GADOLINIUM.name().toLowerCase(), EnumElement.SAMARIUM.name().toLowerCase(), EnumElement.SILICON.name().toLowerCase()), Arrays.asList(36,22,6,5,4,4,3,3,2,1,1,1,1)));
 		extractorRecipes.add(new ChemicalExtractorRecipe(getText(1), arsenateStack(EnumArsenate.FORNACITE), Arrays.asList(EnumElement.LEAD.name().toLowerCase(), EnumElement.ARSENIC.name().toLowerCase(), EnumElement.COPPER.name().toLowerCase(), EnumElement.CHROMIUM.name().toLowerCase()), Arrays.asList(55,10,9,7)));
@@ -249,21 +254,100 @@ public class MachineRecipes extends BaseRecipes {
 		extractorRecipes.add(new ChemicalExtractorRecipe(getText(10), sulfideStack(EnumSulfide.SULVANITE), Arrays.asList(EnumElement.COPPER.name().toLowerCase(), EnumElement.SULFUR.name().toLowerCase(), EnumElement.VANADIUM.name().toLowerCase()), Arrays.asList(51,35,14)));
 		extractorRecipes.add(new ChemicalExtractorRecipe(getText(10), sulfideStack(EnumSulfide.PATRONITE), Arrays.asList(EnumElement.SULFUR.name().toLowerCase(), EnumElement.VANADIUM.name().toLowerCase()), Arrays.asList(71,28)));
 
-		extractorRecipes.add(new ChemicalExtractorRecipe("Silicate", new ItemStack(Items.DYE, 1, 4), Arrays.asList(EnumElement.SILICON.name().toLowerCase(), EnumElement.ALUMINUM.name().toLowerCase(), EnumElement.SODIUM.name().toLowerCase(), EnumElement.CALCIUM.name().toLowerCase(), EnumElement.SULFUR.name().toLowerCase()), Arrays.asList(17,16,14,8,6)));
-		extractorRecipes.add(new ChemicalExtractorRecipe("Carbon", chemicals(1,6), Arrays.asList(EnumElement.CARBON.name().toLowerCase()), Arrays.asList(50)));
+		extractorRecipes.add(new ChemicalExtractorRecipe("Silicate", lapis, Arrays.asList(EnumElement.SILICON.name().toLowerCase(), EnumElement.ALUMINUM.name().toLowerCase(), EnumElement.SODIUM.name().toLowerCase(), EnumElement.CALCIUM.name().toLowerCase(), EnumElement.SULFUR.name().toLowerCase()), Arrays.asList(17,16,14,8,6)));
+		extractorRecipes.add(new ChemicalExtractorRecipe("Fossil", crackedCoal, Arrays.asList(EnumElement.CARBON.name().toLowerCase()), Arrays.asList(50)));
 
-		seasonerRecipes.add(new SaltSeasonerRecipe(new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.LEATHER)));
+		seasonerRecipes.add(new SaltSeasonerRecipe(BaseRecipes.saltRaw, BaseRecipes.saltStack));
+		seasonerRecipes.add(new SaltSeasonerRecipe(rottenFlesh, leather));
 
-		depositionRecipes.add(new DepositionChamberRecipe(elements(1,42), 	alloys(1, 28), 	new FluidStack(EnumFluid.pickFluid(EnumFluid.AMMONIA), 5000),	1600, 10000));
-		depositionRecipes.add(new DepositionChamberRecipe(elements(1,42), 	alloys(1, 31), 	new FluidStack(EnumFluid.pickFluid(EnumFluid.SYNGAS), 8000), 	2200, 24000));
-		depositionRecipes.add(new DepositionChamberRecipe(titaniumIngot, 	alloys(1, 34), 	new FluidStack(EnumFluid.pickFluid(EnumFluid.AMMONIA), 4000), 	1200, 30000));
+		depositionRecipes.add(new DepositionChamberRecipe(elements(1,42), 	alloys(1, 28), 	new FluidStack(EnumFluid.pickFluid(EnumFluid.AMMONIA),	 			5000),	1600, 	10000));
+		depositionRecipes.add(new DepositionChamberRecipe(elements(1,42), 	alloys(1, 31), 	new FluidStack(EnumFluid.pickFluid(EnumFluid.SYNGAS), 				8000), 	2200, 	24000));
+		depositionRecipes.add(new DepositionChamberRecipe(titaniumIngot, 	alloys(1, 34), 	new FluidStack(EnumFluid.pickFluid(EnumFluid.AMMONIA), 				4000), 	1200, 	30000));
+		depositionRecipes.add(new DepositionChamberRecipe(elements(1,19), 	leadDioxide, 	new FluidStack(EnumFluid.pickFluid(EnumFluid.HYDROCHLORIC_ACID), 	1000), 	500, 	4000));
 
 		distillationRecipes.add(new DistillationTowerRecipe(chemicals(1,10), new FluidStack(EnumFluid.pickFluid(EnumFluid.LIQUID_NITROGEN), 100)));
-		
+
 		for(int x = 0; x < EnumFires.size(); x++){
-			flamesRecipes.add(new FlameTestRecipe(new ItemStack(ModItems.chemicalFires, 1, x), new ItemStack(ModBlocks.fireBlock, 1, x)));
+			flamesRecipes.add(new FlameTestRecipe(fires(1, x), fireBlocks(1, x)));
 		}
 
-	}
+		//coils
+		castingRecipes.add(new CastingRecipe("ingotCopper", 		miscs(4, 19), 0));
+		castingRecipes.add(new CastingRecipe("ingotCunife", 		miscs(4, 30), 0));
+		//rods
+		castingRecipes.add(new CastingRecipe("ingotNichrome", 		miscs(2, 29), 1));
+		castingRecipes.add(new CastingRecipe("ingotYag", 			miscs(2, 14), 1));
+		castingRecipes.add(new CastingRecipe("ingotCarbon", 		miscs(2, 50), 1));
+		//foils
+		castingRecipes.add(new CastingRecipe("ingotCupronickel", 	miscs(3, 18), 2));
+		castingRecipes.add(new CastingRecipe("ingotHastelloy", 		miscs(3, 13), 2));
+		castingRecipes.add(new CastingRecipe("ingotNimonic", 		miscs(3, 24), 2));
+		castingRecipes.add(new CastingRecipe("itemFusedGlass", 		fiberglass, 2));
+		//arms
+		castingRecipes.add(new CastingRecipe("ingotNimonic", 		nimonicArm, 3));
+		castingRecipes.add(new CastingRecipe("ingotHastelloy", 		hastelloyArm, 3));
+		castingRecipes.add(new CastingRecipe("ingotCupronickel", 	cupronickelArm, 3));
+		//casings
+		castingRecipes.add(new CastingRecipe("blockNimonic", 		miscs(8, 28), 4));
+		castingRecipes.add(new CastingRecipe("blockAluminum", 		miscs(8, 48), 4));
+		castingRecipes.add(new CastingRecipe("blockCupronickel", 	miscs(8, 45), 4));
+		castingRecipes.add(new CastingRecipe("blockHastelloy", 		miscs(8, 33), 4));
+		castingRecipes.add(new CastingRecipe("blockHydronalium", 	miscs(8, 41), 4));
+		castingRecipes.add(new CastingRecipe("blockIron", 			miscs(8, 42), 4));
+		//generic
+		castingRecipes.add(new CastingRecipe("dustLeadDioxide", 	leadElectrode, 5));
+		castingRecipes.add(new CastingRecipe("ingotVanasteel", 		vanaGear, 5));
 
+
+		//sulfur compound
+		blenderRecipes.add(new LabBlenderRecipe(Arrays.asList("dustSulfur"), 										Arrays.asList(3),  		chemicals(8,2)));
+		blenderRecipes.add(new LabBlenderRecipe(Arrays.asList("itemPyrite"),	 									Arrays.asList(3), 	 	chemicals(4,2)));
+		blenderRecipes.add(new LabBlenderRecipe(Arrays.asList(coalBlock(1,0)), 													  			chemicals(3,2)));
+		blenderRecipes.add(new LabBlenderRecipe(Arrays.asList("blockAnthracite"), 									Arrays.asList(1),  		chemicals(4,2)));
+		blenderRecipes.add(new LabBlenderRecipe(Arrays.asList("blockBituminous"), 									Arrays.asList(1),  		chemicals(3,2)));
+		blenderRecipes.add(new LabBlenderRecipe(Arrays.asList("blockFuelCoke"), 									Arrays.asList(1),  		chemicals(4,2)));
+		//fluorite compound
+		blenderRecipes.add(new LabBlenderRecipe(Arrays.asList("itemFluorite"), 										Arrays.asList(3),		chemicals(4,4)));
+		blenderRecipes.add(new LabBlenderRecipe(Arrays.asList("gemApatite"), 										Arrays.asList(3),		chemicals(4,4)));
+		blenderRecipes.add(new LabBlenderRecipe(Arrays.asList("dustApatite"), 										Arrays.asList(3),		chemicals(4,4)));
+		//salt compound
+		blenderRecipes.add(new LabBlenderRecipe(Arrays.asList("dustSalt"), 											Arrays.asList(3),		chemicals(4,3)));
+		//cracked coal
+		blenderRecipes.add(new LabBlenderRecipe(Arrays.asList(coalItem(3,0)), 													  			chemicals(2,6)));
+		blenderRecipes.add(new LabBlenderRecipe(Arrays.asList("itemAnthracite"), 									Arrays.asList(2),  		chemicals(3,6)));
+		blenderRecipes.add(new LabBlenderRecipe(Arrays.asList("itemBituminous"), 									Arrays.asList(3),  		chemicals(2,6)));
+		blenderRecipes.add(new LabBlenderRecipe(Arrays.asList("itemLignite"), 										Arrays.asList(4),  		chemicals(1,6)));
+		blenderRecipes.add(new LabBlenderRecipe(Arrays.asList("dustCoal"), 											Arrays.asList(3),  		chemicals(2,6)));
+		//carbon compost
+		blenderRecipes.add(new LabBlenderRecipe(Arrays.asList("dustCarbon"), 										Arrays.asList(3),  		chemicals(2,5)));
+		blenderRecipes.add(new LabBlenderRecipe(Arrays.asList(chemicals(4,6)), 													  			chemicals(1,5)));
+		blenderRecipes.add(new LabBlenderRecipe(Arrays.asList("fuelCoke"), 											Arrays.asList(2),  		chemicals(1,5)));
+		blenderRecipes.add(new LabBlenderRecipe(Arrays.asList("dustCoke"), 											Arrays.asList(2),  		chemicals(1,5)));
+		//silicon compost
+		blenderRecipes.add(new LabBlenderRecipe(Arrays.asList("dustSilicon"), 										Arrays.asList(3),  		chemicals(4,8)));
+		blenderRecipes.add(new LabBlenderRecipe(Arrays.asList("itemSilicon"), 										Arrays.asList(3),  		chemicals(4,8)));
+		//platinum compost
+		blenderRecipes.add(new LabBlenderRecipe(Arrays.asList(nativeShards(4,17)), 													  		chemicals(3,10)));
+		blenderRecipes.add(new LabBlenderRecipe(Arrays.asList(nativeShards(3,6)), 													  		chemicals(2,10)));
+		blenderRecipes.add(new LabBlenderRecipe(Arrays.asList(nativeShards(3,7)), 													 		chemicals(2,10)));
+		blenderRecipes.add(new LabBlenderRecipe(Arrays.asList(sulfideShards(3,14)), 												  		chemicals(1,10)));
+		//cracked charcoal
+		blenderRecipes.add(new LabBlenderRecipe(Arrays.asList(coalItem(3,1)), 														 		chemicals(2,14)));
+		blenderRecipes.add(new LabBlenderRecipe(Arrays.asList("dustCharcoal"), 										Arrays.asList(3),  		chemicals(2,14)));
+		//ash compost
+		blenderRecipes.add(new LabBlenderRecipe(Arrays.asList(chemicals(3,14)), 										  					chemicals(1,11)));
+		//rutile compost
+		blenderRecipes.add(new LabBlenderRecipe(Arrays.asList(oxideShards(3,24)), 															chemicals(2,15)));
+		//fire composts
+		blenderRecipes.add(new LabBlenderRecipe(Arrays.asList("dustArsenic"), 										Arrays.asList(8),  		fires(8, 1)));
+		blenderRecipes.add(new LabBlenderRecipe(Arrays.asList("dustAluminum"), 										Arrays.asList(8),  		fires(8, 3)));
+		blenderRecipes.add(new LabBlenderRecipe(Arrays.asList(chemicals(4,3)), 														  		fires(8, 4)));
+		//misc
+		blenderRecipes.add(new LabBlenderRecipe(Arrays.asList(chemicals(6,13), chemicals(2,14), chemicals(1,2)),					  		new ItemStack(Items.GUNPOWDER, 9)));
+
+		if(ModIntegration.railcraftLoaded()){
+			//carbon compost
+			blenderRecipes.add(new LabBlenderRecipe(Arrays.asList(ModIntegration.railCokeBlock()), 											chemicals(1,5)));
+		}
+	}
 }

@@ -40,7 +40,7 @@ public class PetroRecipeCategory extends RHRecipeCategory {
 
 		guiItemStacks.init(INPUT_SLOT, true, 3, 39);
 		guiItemStacks.init(OUTPUT_SLOT, false, 75, 39);
-		guiItemStacks.init(PETRO_SLOT, true, 39, 3);
+		guiItemStacks.init(PETRO_SLOT, false, 39, 3);
 
 		guiItemStacks.set(INPUT_SLOT, wrapper.getInputs());
 		guiItemStacks.set(OUTPUT_SLOT, wrapper.getOutputs());

@@ -1,0 +1,8 @@
+{
+    "variants": {
+		"facing=south":{ "model": "rockhounding_chemistry:castingBench", "y": 180	},
+        "facing=north":{ "model": "rockhounding_chemistry:castingBench"},
+		"facing=east": { "model": "rockhounding_chemistry:castingBench", "y": 90	},
+		"facing=west": { "model": "rockhounding_chemistry:castingBench", "y": 270	}
+    }
+}

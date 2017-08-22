@@ -4,12 +4,14 @@ import java.util.List;
 
 import com.globbypotato.rockhounding_chemistry.blocks.itemblocks.CrawlerIB;
 import com.globbypotato.rockhounding_chemistry.enums.EnumCrawler;
+import com.globbypotato.rockhounding_chemistry.enums.EnumItems;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.CrawlerUtils;
-import com.globbypotato.rockhounding_core.items.BaseArray;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumActionResult;
@@ -42,13 +44,22 @@ public class MiscItems extends ArrayIO{
 		}
 		return this.getItemStackLimit();
 	}
-
+	
 	@Override
     public void onCreated(ItemStack itemstack, World world, EntityPlayer player) {
 		if(itemstack.getItemDamage() == crawlerMemoryMeta){
 			setItemNbt(itemstack);
 		}
     }
+
+	@Override
+    public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> subItems){
+		for(int i = 0; i < EnumItems.size(); i++){
+			if( i != 53 && i != 54){
+				subItems.add(new ItemStack(itemIn, 1, i));
+			}
+		}
+	}
 
     private static void setItemNbt(ItemStack itemstack) {
     	if(itemstack.getItemDamage() == crawlerMemoryMeta){

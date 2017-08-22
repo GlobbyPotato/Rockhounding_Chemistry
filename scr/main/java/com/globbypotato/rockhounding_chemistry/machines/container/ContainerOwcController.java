@@ -1,19 +1,15 @@
 package com.globbypotato.rockhounding_chemistry.machines.container;
 
-import com.globbypotato.rockhounding_chemistry.handlers.ModRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityOwcController;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerOwcController extends ContainerBase<TileEntityOwcController>{
-	Slot acquire;
-	Slot extract;
 
 	public ContainerOwcController(IInventory playerInventory, TileEntityOwcController te) {
 		super(playerInventory,te);
@@ -24,8 +20,8 @@ public class ContainerOwcController extends ContainerBase<TileEntityOwcControlle
 		IItemHandler input = tile.getInput();
 		IItemHandler template = tile.getTemplate();
 
-		acquire = this.addSlotToContainer(new SlotItemHandler(template, 0, 74,  17));//acquiring
-		extract = this.addSlotToContainer(new SlotItemHandler(template, 1, 74,  39));//extraction
+		this.addSlotToContainer(new SlotItemHandler(template, 0, 74,  17));//acquiring
+		this.addSlotToContainer(new SlotItemHandler(template, 1, 74,  39));//extraction
 	}
 
 	@Override

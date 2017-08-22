@@ -49,11 +49,11 @@ public class ExtractorRecipeCategory extends RHRecipeCategory {
 		ExtractorRecipeWrapper wrapper = (ExtractorRecipeWrapper) recipeWrapper;	
 
 		guiItemStacks.init(INPUT_SLOT, true, 0, 0);
-		guiItemStacks.init(TUBE_SLOT, false, 0, 20);
+		guiItemStacks.init(TUBE_SLOT, true, 0, 20);
 		guiItemStacks.init(CYLINDER_SLOT, true, 103, 55);
 		guiFluidStacks.init(NITR_SLOT, true,  23, 1, 16, 60, 100, false, null);
-		guiFluidStacks.init(PHOS_SLOT, false, 43, 1, 16, 60, 100, false, null);
-		guiFluidStacks.init(CYAN_SLOT, false, 63, 1, 16, 60, 100, false, null);
+		guiFluidStacks.init(PHOS_SLOT, true, 43, 1, 16, 60, 100, false, null);
+		guiFluidStacks.init(CYAN_SLOT, true, 63, 1, 16, 60, 100, false, null);
 
 		guiItemStacks.set(INPUT_SLOT, wrapper.getInputs());
 		guiItemStacks.set(TUBE_SLOT, new ItemStack(ModItems.testTube));

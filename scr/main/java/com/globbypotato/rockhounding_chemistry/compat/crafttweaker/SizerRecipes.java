@@ -14,7 +14,7 @@ import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
 @ZenClass("mods.rockhounding_chemistry.MineralSizer")
-public class SizerRecipes {
+public class SizerRecipes extends CTSupport{
 	private static String name = "Mineral Sizer Recipe";
 
     @ZenMethod
@@ -24,10 +24,10 @@ public class SizerRecipes {
         ArrayList<ItemStack> outputs = new ArrayList<ItemStack>();
         ArrayList<Integer> probabilities = new ArrayList<Integer>();
 
-       	outputs.add(CTSupport.toStack(output));
+       	outputs.add(toStack(output));
        	probabilities.add(100);
 
-        MineTweakerAPI.apply(new AddToSizer(new MineralSizerRecipe(CTSupport.toStack(input), outputs, probabilities)));
+        MineTweakerAPI.apply(new AddToSizer(new MineralSizerRecipe(toStack(input), outputs, probabilities)));
     }
     @ZenMethod
     public static void add(IItemStack input, IItemStack[] output, int[] probability) {
@@ -37,11 +37,11 @@ public class SizerRecipes {
         ArrayList<Integer> probabilities = new ArrayList<Integer>();
 
         for(int x = 0; x < output.length; x++){
-        	outputs.add(CTSupport.toStack(output[x]));
+        	outputs.add(toStack(output[x]));
         	probabilities.add(probability[x]);
         }
 
-        MineTweakerAPI.apply(new AddToSizer(new MineralSizerRecipe(CTSupport.toStack(input), outputs, probabilities)));
+        MineTweakerAPI.apply(new AddToSizer(new MineralSizerRecipe(toStack(input), outputs, probabilities)));
     }
 		    private static class AddToSizer implements IUndoableAction {
 		    	private MineralSizerRecipe recipe;
@@ -78,7 +78,7 @@ public class SizerRecipes {
     @ZenMethod
     public static void remove(IItemStack input) {
         if(input == null) {MineTweakerAPI.logError(name + ": Invalid recipe."); return;}
-        MineTweakerAPI.apply(new RemoveFromSizer(CTSupport.toStack(input)));    
+        MineTweakerAPI.apply(new RemoveFromSizer(toStack(input)));    
     }
 		    private static class RemoveFromSizer implements IUndoableAction {
 		    	private ItemStack input;

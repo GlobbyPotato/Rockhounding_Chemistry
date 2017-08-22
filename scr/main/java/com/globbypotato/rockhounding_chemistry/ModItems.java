@@ -2,6 +2,7 @@ package com.globbypotato.rockhounding_chemistry;
 
 import com.globbypotato.rockhounding_chemistry.enums.EnumAlloy;
 import com.globbypotato.rockhounding_chemistry.enums.EnumAlloyB;
+import com.globbypotato.rockhounding_chemistry.enums.EnumCasting;
 import com.globbypotato.rockhounding_chemistry.enums.EnumChemicals;
 import com.globbypotato.rockhounding_chemistry.enums.EnumElement;
 import com.globbypotato.rockhounding_chemistry.enums.EnumFires;
@@ -23,6 +24,7 @@ import com.globbypotato.rockhounding_chemistry.items.ChemicalItems;
 import com.globbypotato.rockhounding_chemistry.items.ConsumableIO;
 import com.globbypotato.rockhounding_chemistry.items.MineralShards;
 import com.globbypotato.rockhounding_chemistry.items.MiscItems;
+import com.globbypotato.rockhounding_chemistry.items.PatternItems;
 import com.globbypotato.rockhounding_chemistry.items.UtilIO;
 import com.globbypotato.rockhounding_chemistry.items.tools.BamShears;
 import com.globbypotato.rockhounding_chemistry.items.tools.BamSword;
@@ -79,6 +81,8 @@ public class ModItems {
 	public static Item petrographer;
 	public static SplashSmoke splashSmoke;
 
+	public static Item patternItems;
+
 	public static void init(){
 		//items
 		arsenateShards = new MineralShards("arsenateShards", EnumArsenate.getNames());
@@ -116,6 +120,10 @@ public class ModItems {
 		bamSword = new BamSword(bamMaterial, "bamSword");
 		petrographer = new Petrographer(ToolMaterial.DIAMOND, "petrographer");
 		siliconeCartridge = new SiliconeCartridge("siliconeCartridge", 100);
+		
+		//dummy
+		patternItems = new PatternItems("patternItems", EnumCasting.getNames());										
+
 	}
 
 	public static void initClient(){
@@ -136,6 +144,7 @@ public class ModItems {
 		for(int i = 0; i < EnumAlloy.getItemNames().length; i++){	registerMetaItemRender(alloyItems, i, EnumAlloy.getItemName(i));		}
 		for(int i = 0; i < EnumAlloyB.getItemNames().length; i++){	registerMetaItemRender(alloyBItems, i, EnumAlloyB.getItemName(i));		}
 		for(int i = 0; i < EnumFires.size(); i++){					registerMetaItemRender(chemicalFires, i, EnumFires.getName(i));			}
+		for(int i = 0; i < EnumCasting.size(); i++){				registerMetaItemRender(patternItems, i, EnumCasting.getName(i));			}
 		registerSimpleItemRender(cubeCrossbow, 0, "cubeCrossbow");
 		registerSimpleItemRender(scalBow, 0, "scalBow");
 		registerSimpleItemRender(scalBat, 0, "scalBat");

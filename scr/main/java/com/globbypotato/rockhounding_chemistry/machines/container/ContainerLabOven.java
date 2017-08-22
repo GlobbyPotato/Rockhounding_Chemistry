@@ -6,15 +6,11 @@ import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityLab
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerLabOven extends ContainerBase<TileEntityLabOven> {
-	Slot tPrev;
-	Slot tNext;
-	Slot activation;
 
 	public ContainerLabOven(IInventory playerInventory, TileEntityLabOven tile){
 		super(playerInventory,tile);
@@ -32,9 +28,9 @@ public class ContainerLabOven extends ContainerBase<TileEntityLabOven> {
 		this.addSlotToContainer(new SlotItemHandler(input, 4, 29, 86));//input redstone
 		this.addSlotToContainer(new SlotItemHandler(input, 5, 150, 15));//input solvent
 
-		tPrev = this.addSlotToContainer(new SlotItemHandler(template, 0, 137,  121));//prev
-		tNext = this.addSlotToContainer(new SlotItemHandler(template, 1, 153,  121));//next
-		activation = this.addSlotToContainer(new SlotItemHandler(template, 2, 7,  121));//activation
+		this.addSlotToContainer(new SlotItemHandler(template, 0, 137,  121));//prev
+		this.addSlotToContainer(new SlotItemHandler(template, 1, 153,  121));//next
+		this.addSlotToContainer(new SlotItemHandler(template, 2, 7,  121));//activation
 	}
 
 	@Override

@@ -5,13 +5,11 @@ import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityChe
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerChemicalExtractor extends ContainerBase<TileEntityChemicalExtractor>{
-	Slot drain;
 
     public ContainerChemicalExtractor(IInventory playerInventory, TileEntityChemicalExtractor tile){
     	super(playerInventory,tile);
@@ -40,7 +38,7 @@ public class ContainerChemicalExtractor extends ContainerBase<TileEntityChemical
 			}
 		}
 		
-		drain = this.addSlotToContainer(new SlotItemHandler(template, 0, 201,  158));//drain
+		this.addSlotToContainer(new SlotItemHandler(template, 0, 201,  158));//drain
 	}
 	
 	@Override

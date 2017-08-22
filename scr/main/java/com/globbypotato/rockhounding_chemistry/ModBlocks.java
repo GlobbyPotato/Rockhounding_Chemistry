@@ -11,18 +11,22 @@ import com.globbypotato.rockhounding_chemistry.blocks.OwcBlocks;
 import com.globbypotato.rockhounding_chemistry.blocks.SmokeBlock;
 import com.globbypotato.rockhounding_chemistry.enums.EnumAlloy;
 import com.globbypotato.rockhounding_chemistry.enums.EnumAlloyB;
+import com.globbypotato.rockhounding_chemistry.enums.EnumBattery;
 import com.globbypotato.rockhounding_chemistry.enums.EnumFires;
 import com.globbypotato.rockhounding_chemistry.enums.EnumGan;
 import com.globbypotato.rockhounding_chemistry.enums.EnumLaser;
 import com.globbypotato.rockhounding_chemistry.enums.EnumOres;
 import com.globbypotato.rockhounding_chemistry.enums.EnumOwc;
+import com.globbypotato.rockhounding_chemistry.machines.CastingBench;
 import com.globbypotato.rockhounding_chemistry.machines.ChemicalExtractor;
 import com.globbypotato.rockhounding_chemistry.machines.CrawlerAssembler;
 import com.globbypotato.rockhounding_chemistry.machines.Dekatron;
 import com.globbypotato.rockhounding_chemistry.machines.DepositionChamber;
+import com.globbypotato.rockhounding_chemistry.machines.Disposer;
 import com.globbypotato.rockhounding_chemistry.machines.EarthBreaker;
 import com.globbypotato.rockhounding_chemistry.machines.ElectroLaser;
 import com.globbypotato.rockhounding_chemistry.machines.GanController;
+import com.globbypotato.rockhounding_chemistry.machines.LabBlender;
 import com.globbypotato.rockhounding_chemistry.machines.LabOven;
 import com.globbypotato.rockhounding_chemistry.machines.LaserAmplifier;
 import com.globbypotato.rockhounding_chemistry.machines.LaserBeam;
@@ -40,6 +44,7 @@ import com.globbypotato.rockhounding_chemistry.machines.OwcController;
 import com.globbypotato.rockhounding_chemistry.machines.PetrographerTable;
 import com.globbypotato.rockhounding_chemistry.machines.SaltMaker;
 import com.globbypotato.rockhounding_chemistry.machines.SaltSeasoner;
+import com.globbypotato.rockhounding_chemistry.machines.UltraBattery;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -66,6 +71,8 @@ public class ModBlocks {
 	public static Block petrographerTable;
 	public static Block dekatron;
 	public static Block earthBreaker;
+	public static Block castingBench;
+	public static Block labBlender;
 
 	public static Block saltMaker;
 	public static Block saltSeasoner;
@@ -89,6 +96,10 @@ public class ModBlocks {
 	public static Block ganBlocks;
 	public static Block ganController;
 
+	public static Block ultraBattery;
+
+	public static Block disposer;
+
 	//initialize the block
 	public static void init() {
 		//blocks
@@ -109,6 +120,8 @@ public class ModBlocks {
 		petrographerTable = new PetrographerTable(3.0F, 5.0F, "petrographerTable");
 		dekatron = new Dekatron(3.0F, 5.0F, "dekatron");
 		earthBreaker = new EarthBreaker(3.0F, 5.0F, "earthBreaker");
+		castingBench = new CastingBench(3.0F, 5.0F, "castingBench");
+		labBlender = new LabBlender(3.0F, 5.0F, "labBlender");
 
 		saltMaker = new SaltMaker(3.0F, 5.0F, "saltMaker");
 		saltSeasoner = new SaltSeasoner(3.0F, 5.0F, "saltSeasoner");
@@ -132,20 +145,25 @@ public class ModBlocks {
 		ganBlocks = new GanBlocks(Material.IRON, EnumGan.getNames(), 4.0F, 7.0F, "ganBlocks", SoundType.METAL);
 		ganController = new GanController(3.0F, 5.0F, "ganController");
 
+		ultraBattery = new UltraBattery(Material.IRON, EnumBattery.getNames(), 2.0F, 7.0F, "ultraBattery", SoundType.METAL);
+
+		disposer = new Disposer(2.0F, 7.0F, "disposer", SoundType.METAL);
+
 	}
 
 	//recall the renders
 	public static void initClient(){
 		//blocks
-		for(int i = 0; i < EnumOres.size(); i++){	registerMetaBlockRender(mineralOres, i, EnumOres.getName(i));		}
-		for(int i = 0; i < EnumAlloy.size(); i++){	registerMetaBlockRender(alloyBlocks, i, EnumAlloy.getAlloy(i));		}
-		for(int i = 0; i < EnumAlloyB.size(); i++){	registerMetaBlockRender(alloyBBlocks, i, EnumAlloyB.getAlloy(i));	}
-		for(int i = 0; i < EnumAlloy.size(); i++){	registerMetaBlockRender(alloyBricks, i, EnumAlloy.getAlloy(i));		}
-		for(int i = 0; i < EnumAlloyB.size(); i++){	registerMetaBlockRender(alloyBBricks, i, EnumAlloyB.getAlloy(i));	}
-		for(int i = 0; i < EnumLaser.size(); i++){	registerMetaBlockRender(laserRedstoneRx, i, EnumLaser.getName(i));	}
-		for(int i = 0; i < EnumOwc.size(); i++){	registerMetaBlockRender(owcBlocks, i, EnumOwc.getName(i));			}
-		for(int i = 0; i < EnumGan.size(); i++){	registerMetaBlockRender(ganBlocks, i, EnumGan.getName(i));			}
-		for(int i = 0; i < EnumFires.size(); i++){	registerMetaBlockRender(fireBlock, i, EnumFires.getName(i));		}
+		for(int i = 0; i < EnumOres.size(); i++){		registerMetaBlockRender(mineralOres, i, EnumOres.getName(i));		}
+		for(int i = 0; i < EnumAlloy.size(); i++){		registerMetaBlockRender(alloyBlocks, i, EnumAlloy.getAlloy(i));		}
+		for(int i = 0; i < EnumAlloyB.size(); i++){		registerMetaBlockRender(alloyBBlocks, i, EnumAlloyB.getAlloy(i));	}
+		for(int i = 0; i < EnumAlloy.size(); i++){		registerMetaBlockRender(alloyBricks, i, EnumAlloy.getAlloy(i));		}
+		for(int i = 0; i < EnumAlloyB.size(); i++){		registerMetaBlockRender(alloyBBricks, i, EnumAlloyB.getAlloy(i));	}
+		for(int i = 0; i < EnumLaser.size(); i++){		registerMetaBlockRender(laserRedstoneRx, i, EnumLaser.getName(i));	}
+		for(int i = 0; i < EnumOwc.size(); i++){		registerMetaBlockRender(owcBlocks, i, EnumOwc.getName(i));			}
+		for(int i = 0; i < EnumGan.size(); i++){		registerMetaBlockRender(ganBlocks, i, EnumGan.getName(i));			}
+		for(int i = 0; i < EnumFires.size(); i++){		registerMetaBlockRender(fireBlock, i, EnumFires.getName(i));		}
+		for(int i = 0; i < EnumBattery.size(); i++){	registerMetaBlockRender(ultraBattery, i, EnumBattery.getName(i));	}
 		registerSingleBlockRender(saltMaker, 0, "saltMaker");
 		registerSingleBlockRender(saltSeasoner, 0, "saltSeasoner");
 		registerSingleBlockRender(labOven, 0, "labOven");
@@ -170,6 +188,9 @@ public class ModBlocks {
 		registerSingleBlockRender(earthBreaker, 0, "earthBreaker");
 		registerSingleBlockRender(smokeBlock, 0, "smokeBlock");
 		registerSingleBlockRender(ganController, 0, "ganController");
+		registerSingleBlockRender(castingBench, 0, "castingBench");
+		registerSingleBlockRender(labBlender, 0, "labBlender");
+		registerSingleBlockRender(disposer, 0, "disposer");
 	}
 
 	//render meta block

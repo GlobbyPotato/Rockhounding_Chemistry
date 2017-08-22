@@ -43,7 +43,7 @@ public class DepositionRecipeCategory extends RHRecipeCategory {
 
 		guiItemStacks.init(INPUT_SLOT, true, 54, 17);
 		guiFluidStacks.init(SOLVENT_SLOT, true,  100, 15, 20, 65, 10000, false, null);
-		guiItemStacks.init(OUTPUT_SLOT, true, 54, 54);
+		guiItemStacks.init(OUTPUT_SLOT, false, 54, 54);
 
 		guiItemStacks.set(INPUT_SLOT, wrapper.getInputs());
 		guiFluidStacks.set(SOLVENT_SLOT, wrapper.getFluidInputs().get(0));

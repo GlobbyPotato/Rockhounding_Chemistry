@@ -7,7 +7,7 @@ import com.globbypotato.rockhounding_chemistry.machines.SaltSeasoner;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiSaltSeasoner;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.MachineRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.SaltSeasonerRecipe;
-import com.globbypotato.rockhounding_chemistry.utils.ToolUtils;
+import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 import com.globbypotato.rockhounding_core.machines.tileentity.MachineStackHandler;
 import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityMachineEnergy;
 import com.globbypotato.rockhounding_core.machines.tileentity.WrappedItemHandler;
@@ -32,7 +32,7 @@ public class TileEntitySaltSeasoner extends TileEntityMachineEnergy {
 		input =  new MachineStackHandler(INPUT_SLOTS,this){
 			@Override
 			public ItemStack insertItem(int slot, ItemStack insertingStack, boolean simulate){
-				if(slot == INPUT_SLOT && hasRecipe(insertingStack) || ItemStack.areItemsEqual(insertingStack, ToolUtils.rawSalt) ){
+				if(slot == INPUT_SLOT && hasRecipe(insertingStack) || ItemStack.areItemsEqual(insertingStack, BaseRecipes.saltRaw) ){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
 				return insertingStack;
@@ -97,13 +97,13 @@ public class TileEntitySaltSeasoner extends TileEntityMachineEnergy {
 	}
 
 	private boolean canProcess() {
-		return (hasRecipe(input.getStackInSlot(INPUT_SLOT)) || ItemStack.areItemsEqual(input.getStackInSlot(INPUT_SLOT), ToolUtils.rawSalt))
+		return (hasRecipe(input.getStackInSlot(INPUT_SLOT)) || ItemStack.areItemsEqual(input.getStackInSlot(INPUT_SLOT), BaseRecipes.saltRaw))
 			&& canOutput(output.getStackInSlot(OUTPUT_SLOT));
 	}
 
 	private void process() {
-		if(input.getStackInSlot(INPUT_SLOT).isItemEqual(ToolUtils.rawSalt)){
-			output.setOrIncrement(OUTPUT_SLOT, ToolUtils.saltStack);
+		if(input.getStackInSlot(INPUT_SLOT).isItemEqual(BaseRecipes.saltRaw)){
+			output.setOrIncrement(OUTPUT_SLOT, BaseRecipes.saltStack);
 		}else{
 			ItemStack recipeOutput = getRecipeOutput(input.getStackInSlot(INPUT_SLOT));
 			output.setOrStack(OUTPUT_SLOT, recipeOutput);
@@ -117,21 +117,21 @@ public class TileEntitySaltSeasoner extends TileEntityMachineEnergy {
 	    if(checkState == ModBlocks.saltMaker.getDefaultState().withProperty(SaltMaker.STAGE, Integer.valueOf(6))){
 			if(canInput()){
 				if(input.getStackInSlot(INPUT_SLOT) == null){
-					input.setStackInSlot(INPUT_SLOT, ToolUtils.rawSalt); 
+					input.setStackInSlot(INPUT_SLOT, BaseRecipes.saltRaw); 
 					input.getStackInSlot(INPUT_SLOT).stackSize = num;
 				}else{
-					if(input.canStack(input.getStackInSlot(INPUT_SLOT), ToolUtils.rawSalt)){
+					if(input.canStack(input.getStackInSlot(INPUT_SLOT), BaseRecipes.saltRaw)){
 						for(int x = 0; x < num; x++){
 							if(input.getStackInSlot(INPUT_SLOT).stackSize < input.getStackInSlot(INPUT_SLOT).getMaxStackSize()){
 								input.getStackInSlot(INPUT_SLOT).stackSize++;
 							}else{
-								dropItemStack(worldObj, ToolUtils.rawSalt, tankPos, num);
+								dropItemStack(worldObj, BaseRecipes.saltRaw, tankPos, num);
 							}
 						}
 					}
 				}
 			}else{
-				dropItemStack(worldObj, ToolUtils.rawSalt, tankPos, num);
+				dropItemStack(worldObj, BaseRecipes.saltRaw, tankPos, num);
 			}
 			worldObj.setBlockState(tankPos, checkState.withProperty(SaltMaker.STAGE, Integer.valueOf(0)));
 	    }
@@ -145,7 +145,7 @@ public class TileEntitySaltSeasoner extends TileEntityMachineEnergy {
 	}
 
 	private boolean canInput(){
-		return input.canSetOrStack(input.getStackInSlot(INPUT_SLOT), ToolUtils.rawSalt);
+		return input.canSetOrStack(input.getStackInSlot(INPUT_SLOT), BaseRecipes.saltRaw);
 	}
 
 	private boolean canOutput(ItemStack stack) {
@@ -153,8 +153,8 @@ public class TileEntitySaltSeasoner extends TileEntityMachineEnergy {
 	}
 
 	public ItemStack getRecipeOutput(ItemStack inputStack){
-		if(input.getStackInSlot(INPUT_SLOT).isItemEqual(ToolUtils.rawSalt)){
-			return ToolUtils.saltStack;
+		if(input.getStackInSlot(INPUT_SLOT).isItemEqual(BaseRecipes.saltRaw)){
+			return BaseRecipes.saltStack;
 		}else{
 			if(inputStack != null){
 				for(SaltSeasonerRecipe recipe: MachineRecipes.seasonerRecipes){

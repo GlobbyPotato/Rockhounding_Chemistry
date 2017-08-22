@@ -5,17 +5,13 @@ import com.globbypotato.rockhounding_chemistry.blocks.OwcBlocks;
 import com.globbypotato.rockhounding_chemistry.enums.EnumOwc;
 import com.globbypotato.rockhounding_chemistry.machines.OwcController;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiOwcController;
-import com.globbypotato.rockhounding_core.machines.tileentity.MachineStackHandler;
 import com.globbypotato.rockhounding_core.machines.tileentity.TemplateStackHandler;
 import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityMachineEnergy;
-import com.globbypotato.rockhounding_core.machines.tileentity.WrappedItemHandler;
-import com.globbypotato.rockhounding_core.machines.tileentity.WrappedItemHandler.WriteMode;
 
 import cofh.api.energy.IEnergyProvider;
 import cofh.api.energy.IEnergyReceiver;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -41,15 +37,6 @@ public class TileEntityOwcController extends TileEntityMachineEnergy implements 
 
 	public TileEntityOwcController() {
 		super(0, 0, 0);
-		
-		input =  new MachineStackHandler(INPUT_SLOTS,this){
-			@Override
-			public ItemStack insertItem(int slot, ItemStack insertingStack, boolean simulate){
-				return insertingStack;
-			}
-		};
-		automationInput = new WrappedItemHandler(input, WriteMode.IN);
-		this.markDirtyClient();
 	}
 
 
@@ -77,10 +64,17 @@ public class TileEntityOwcController extends TileEntityMachineEnergy implements 
 
 
 	//----------------------- CUSTOM -----------------------
-	public boolean isExtracting(){
+	public boolean canProvide(){
 		return extractionKey && this.hasRedstone();
 	}
 
+	public boolean isActive(){
+		return activationKey;
+	}
+
+	public boolean isExtracting(){
+		return extractionKey;
+	}
 
 
 	//----------------------- I/O -----------------------
@@ -108,9 +102,8 @@ public class TileEntityOwcController extends TileEntityMachineEnergy implements 
 	public void update(){
 		if(!worldObj.isRemote){
 			performSanityCheck();
-			if(redstoneCount > this.getChargeMax()){redstoneCount = this.getChargeMax();}
 
-			if(activationKey){
+			if(isActive()){
 				if(sanityCheckPassed()){
 					animateDeflectors();
 					if(this.getRedstone() < this.getChargeMax()){ 
@@ -129,7 +122,7 @@ public class TileEntityOwcController extends TileEntityMachineEnergy implements 
 
 	//Perform maintenance
 	private void performSanityCheck() {
-		if(activationKey){
+		if(isActive()){
 			if(rand.nextInt(this.sanityCheckChance() * 2) == 0){
 				checkDevices();
 				checkConduit();
@@ -163,8 +156,11 @@ public class TileEntityOwcController extends TileEntityMachineEnergy implements 
 		tideInterval++;
 		if(tideInterval >= maxTideInterval()) {
 			tideInterval = 0;
-			yeldCount = (accumulations() * efficiencyMultiplier()) + (rand.nextInt(36) + 5);
+			yeldCount = (accumulations() * efficiencyMultiplier()) + (rand.nextInt(351) + 50);
 			redstoneCount += yeldCount;
+			if(this.getRedstone() > this.getChargeMax()){
+				redstoneCount = this.getChargeMax();
+			}
 		}
 	}
 	private int maxTideInterval() {
@@ -175,37 +171,68 @@ public class TileEntityOwcController extends TileEntityMachineEnergy implements 
 
 // Extract energy
 	private void provideEnergy() {
-		int energyExtracted = 0;
+		int possibleEnergy = 0;
 	    IBlockState state = worldObj.getBlockState(pos);
-	    EnumFacing front = EnumFacing.getFront(getBlockMetadata());
-		for(int side = 0; side < 6; side++){
+	    for(EnumFacing facing: EnumFacing.values()){
 			if(this.getRedstone() >= rfTransfer()){
-			    EnumFacing facing = front.getFront(side);
 				TileEntity checkTile = this.worldObj.getTileEntity(pos.offset(facing));
 				if(checkTile != null){
-					if(checkTile instanceof TileEntityMachineEnergy){
-						TileEntityMachineEnergy rhTile = (TileEntityMachineEnergy)checkTile;
-						if(rhTile.isRedstoneFilled() || rhTile.canRefillOnlyPower()){
-							energyExtracted = Math.min(this.getChargeMax() - this.getRedstone(), rfTransfer());
-						}else if(rhTile.redstoneIsRefillable()){
-							energyExtracted = Math.min(this.getChargeMax() - this.getRedstone(), rfTransfer());
+					if(checkTile instanceof TileEntityUltraBattery){
+						TileEntityUltraBattery battery = (TileEntityUltraBattery)checkTile;
+						if(battery.sideStatus[6]){
+							if(!battery.isFullRedstone()){
+								possibleEnergy = Math.min(battery.getRedstoneMax() - battery.getRedstone(), rfTransfer());
+							}
+							if(possibleEnergy > 0){
+								for(int x = 0; x < possibleEnergy; x++){
+									battery.receiveEnergy(facing, 1, false);
+									this.redstoneCount--;
+								}
+							}
 						}
-						rhTile.receiveEnergy(facing, energyExtracted, false);
-						this.redstoneCount -= energyExtracted;
 					}else{
-						if(checkTile instanceof IEnergyReceiver) {
-							IEnergyReceiver te = (IEnergyReceiver) checkTile;
-							if (te.getEnergyStored(facing) < te.getMaxEnergyStored(facing)) {
-								energyExtracted = Math.min(this.getChargeMax() - this.getRedstone(), rfTransfer());
-								te.receiveEnergy(facing.getOpposite(), energyExtracted, false);
-								this.redstoneCount -= energyExtracted;
+						if(checkTile instanceof TileEntityMachineEnergy){
+							TileEntityMachineEnergy rhTile = (TileEntityMachineEnergy)checkTile;
+							if(rhTile.isRedstoneFilled() || rhTile.canRefillOnlyPower()){
+								if(!rhTile.isFullPower()){
+									possibleEnergy = Math.min(rhTile.getPowerMax() - rhTile.getPower(), rfTransfer());
+								}
+							}else if(rhTile.redstoneIsRefillable()){
+								if(!rhTile.isFullRedstone()){
+									possibleEnergy = Math.min(rhTile.getRedstoneMax() - rhTile.getRedstone(), rfTransfer());
+								}
+							}
+							if(possibleEnergy > 0){
+								for(int x = 0; x < possibleEnergy; x++){
+									rhTile.receiveEnergy(facing, 1, false);
+									this.redstoneCount--;
+								}
 							}
 						}else{
-							if(checkTile.hasCapability(CapabilityEnergy.ENERGY, facing)){
-								if(checkTile.getCapability(CapabilityEnergy.ENERGY, facing).getEnergyStored() < checkTile.getCapability(CapabilityEnergy.ENERGY, facing).getMaxEnergyStored()){
-									energyExtracted = Math.min(this.getChargeMax() - this.getRedstone(), rfTransfer());
-									checkTile.getCapability(CapabilityEnergy.ENERGY, facing).receiveEnergy(energyExtracted, false);
-									this.redstoneCount -= energyExtracted;
+							if(checkTile.hasCapability(CapabilityEnergy.ENERGY, facing) && checkTile.getCapability(CapabilityEnergy.ENERGY, facing).canReceive()){
+								possibleEnergy = Math.min(checkTile.getCapability(CapabilityEnergy.ENERGY, facing).getMaxEnergyStored() - checkTile.getCapability(CapabilityEnergy.ENERGY, facing).getEnergyStored(), rfTransfer());
+								if(possibleEnergy > 0){
+									for(int x = 0; x < possibleEnergy; x++){
+										if(checkTile.getCapability(CapabilityEnergy.ENERGY, facing).getMaxEnergyStored() - checkTile.getCapability(CapabilityEnergy.ENERGY, facing).getEnergyStored() > 0){
+											checkTile.getCapability(CapabilityEnergy.ENERGY, facing.getOpposite()).receiveEnergy(1, false);
+											this.redstoneCount--;
+										}
+									}
+								}
+							}else{
+								if(checkTile instanceof IEnergyReceiver) {
+									IEnergyReceiver te = (IEnergyReceiver) checkTile;
+									if(te.canConnectEnergy(facing)){
+										possibleEnergy = Math.min(te.getMaxEnergyStored(facing) - te.getEnergyStored(facing), rfTransfer());
+										if(possibleEnergy > 0){
+											for(int x = 0; x < possibleEnergy; x++){
+												if(te.getMaxEnergyStored(facing) - te.getEnergyStored(facing) > 0){
+													te.receiveEnergy(facing.getOpposite(), 1, false);
+													this.redstoneCount--;
+												}
+											}
+										}
+									}
 								}
 							}
 						}
@@ -217,53 +244,53 @@ public class TileEntityOwcController extends TileEntityMachineEnergy implements 
 
 
 
-// Calculate yeld
+	// Calculate yeld
     @Override
 	public int getChargeMax() { 
 		return chargeMax * this.dualityBonus();
 	}
 
 	public int accumulations(){			//	MAX		MIN
-		return    biomeTicks() 			//	20		0
-				+ moonTicks() 			//	40		5
-				+ weatherTicks() 		//	40		10
-				+ conveyorTicks()  		//	30		10
-				+ dualityTicks() 		//	20		10
-				+ efficiencyTicks() 	//	30		10
-				+ scaledVolumeForce()	//	50		1
-				+ scaledTideForce();	//	30		1
-			//  + random factor				40		5
-										//	300		47
+		return    biomeTicks() 			//	200		0
+				+ moonTicks() 			//	400		50
+				+ weatherTicks() 		//	400		100
+				+ conveyorTicks()  		//	300		100
+				+ dualityTicks() 		//	200		100
+				+ efficiencyTicks() 	//	300		100
+				+ scaledVolumeForce()	//	500		10
+				+ scaledTideForce();	//	300		10
+			//  + random factor				400		50
+										//	3000	520
 	}
 
 	private int scaledVolumeForce() {
-        return this.actualVolume() > 0 && this.totalVolume() > 0 ? (this.actualVolume() * 49 / this.totalVolume()) + 1 : 1;
+        return this.actualVolume() > 0 && this.totalVolume() > 0 ? (this.actualVolume() * 499 / this.totalVolume()) + 1 : 10;
 	}
 	private int scaledTideForce() {
-        return this.actualTide() > 0 && this.totalTide() > 0 ? (this.actualTide() * 29 / this.totalTide()) + 1 : 1;
+        return this.actualTide() > 0 && this.totalTide() > 0 ? (this.actualTide() * 299 / this.totalTide()) + 1 : 10;
 	}
 	private int efficiencyTicks() {
-		return 10 * this.efficiencyMultiplier();
+		return 100 * this.efficiencyMultiplier();
 	}
 	private int dualityTicks() {
-		return 10 * this.dualityBonus();
+		return 100 * this.dualityBonus();
 	}
 	private int conveyorTicks() {
-		return 15 * this.conveyorBonus();
+		return 100 * this.conveyorBonus();
 	}
 	private int weatherTicks() {
-		return worldObj.isRaining() ? 40 : 10;
+		return worldObj.isRaining() ? 400 : 100;
 	}
 	private int moonTicks() {
-		int phase = 40 - (int) (((worldObj.getWorldTime()/24000)%8) * 5);
+		int phase = 400 - (int) (((worldObj.getWorldTime()/24000)%8) * 50);
 		return phase;
 	}
 	private int biomeTicks() {
 		Biome biome = worldObj.getBiome(pos);
 		if(BiomeDictionary.isBiomeOfType(biome, Type.OCEAN)){
-			return 20;
+			return 200;
 		}else if(BiomeDictionary.isBiomeOfType(biome, Type.RIVER) || BiomeDictionary.isBiomeOfType(biome, Type.BEACH)){
-			return 10;
+			return 100;
 		}else{
 			return 0;
 		}
@@ -586,7 +613,7 @@ public class TileEntityOwcController extends TileEntityMachineEnergy implements 
 
 	@Override
 	public boolean canExtract() {
-		return isExtracting();
+		return canProvide();
 	}
 
 	@Override

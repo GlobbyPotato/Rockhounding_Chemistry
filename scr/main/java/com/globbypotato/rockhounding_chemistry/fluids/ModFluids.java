@@ -61,7 +61,7 @@ public class ModFluids {
 		fluid -> fluid.setDensity(1000).setViscosity(1000).canBePlacedInWorld(),
 		fluid -> new BlockFluidClassic(fluid, new MaterialLiquid(MapColor.SNOW)));
 	public static final Fluid CHLOROMETHANE = createFluid(EnumFluid.CHLOROMETHANE.getFluidName(), true, 0xFFC8C8C8,
-		fluid -> fluid.setDensity(1000).setViscosity(1000).canBePlacedInWorld(),
+		fluid -> fluid.setDensity(1000).setViscosity(1000).setTemperature(290).canBePlacedInWorld(),
 		fluid -> new BlockFluidClassic(fluid, new MaterialLiquid(MapColor.SILVER)));
 	public static final Fluid SILICONE = createFluid(EnumFluid.SILICONE.getFluidName(), true, 0xFF98A6B3,
 		fluid -> fluid.setDensity(90000).setViscosity(90000).canBePlacedInWorld(),
@@ -103,7 +103,7 @@ public class ModFluids {
 		fluid -> fluid.setDensity(1000).setViscosity(1000).canBePlacedInWorld(),
 		fluid -> new BlockFluidClassic(fluid, new MaterialLiquid(MapColor.SNOW)));
 	public static final Fluid LIQUID_NITROGEN = createFluid(EnumFluid.LIQUID_NITROGEN.getFluidName(), true, 0xFFDCDCDC,
-		fluid -> fluid.setDensity(1000).setViscosity(1000).canBePlacedInWorld(),
+		fluid -> fluid.setDensity(1000).setViscosity(1000).setTemperature(60).canBePlacedInWorld(),
 		fluid -> new BlockFluidClassic(fluid, new MaterialLiquid(MapColor.SNOW)){
 			@Override
 		    public void updateTick(World world, BlockPos pos, IBlockState state, Random rand){

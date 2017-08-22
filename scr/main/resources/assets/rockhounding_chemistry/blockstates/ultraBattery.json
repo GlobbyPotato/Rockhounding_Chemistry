@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "type=low": 	{"model" : "rockhounding_chemistry:ultraBattery_low"},
+        "type=medium": 	{"model" : "rockhounding_chemistry:ultraBattery_medium"},
+		"type=high": 	{"model" : "rockhounding_chemistry:ultraBattery_high"},
+		"type=huge": 	{"model" : "rockhounding_chemistry:ultraBattery_huge"}
+    }
+}

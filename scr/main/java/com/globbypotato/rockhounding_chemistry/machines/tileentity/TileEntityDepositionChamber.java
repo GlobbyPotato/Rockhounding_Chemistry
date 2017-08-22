@@ -120,7 +120,11 @@ public class TileEntityDepositionChamber extends TileEntityMachineTank{
 			for(DepositionChamberRecipe recipe: MachineRecipes.depositionRecipes){
 				ArrayList<Integer> recipeIDs = Utils.intArrayToList(OreDictionary.getOreIDs(recipe.getInput()));
 				for(Integer ores: recipeIDs){
-					if(inputIDs.equals(ores)) return true;
+					String recipeName = OreDictionary.getOreName(ores);
+					for(Integer inputs: inputIDs){
+						String inputName = OreDictionary.getOreName(inputs);
+						if(inputName.matches(recipeName)) return true;
+					}
 				}
 			}
 		}
@@ -220,7 +224,7 @@ public class TileEntityDepositionChamber extends TileEntityMachineTank{
 	public boolean canDeposit(){
 		return activation
 			&& getRecipe() != null
-			&& ItemStack.areItemsEqual(getRecipe().getInput(), input.getStackInSlot(INPUT_SLOT))
+			&& (hasRecipe(input.getStackInSlot(INPUT_SLOT)) || isValidOredict(input.getStackInSlot(INPUT_SLOT)))
 			&& input.hasEnoughFluid(inputTank.getFluid(), getRecipe().getSolvent())
 			&& this.getTemperature() >= getRecipe().getTemperature()
 			&& this.getPressure() >= getRecipe().getPressure()

@@ -131,14 +131,14 @@ public class TileEntityGanController extends TileEntityMachineEnergy {
 	}
 
 	public int getChillingCost() {
-		if(airChillerTE() != null && getRefrigerant() != null){
-			if(isRefrigerant(EnumFluid.CHLOROMETHANE.getFluidName())){
-				return 50;
-			}else if(isRefrigerant("cryotheum")){
-				return 10;
-			}
+		if(getChillerTank() != null && getRefrigerant() != null){
+			return 1 + (getTemperature() / 3);
 		}
-		return 100;
+		return 110;
+	}
+
+	public int getTemperature() {
+		return getRefrigerant().getFluid().getTemperature();
 	}
 
 	public int getRedstoneCost() {
@@ -192,11 +192,11 @@ public class TileEntityGanController extends TileEntityMachineEnergy {
 		return null;
 	}
 
-	private FluidTank getChillerTank(){
+	public FluidTank getChillerTank(){
 		return airChillerTE() != null ? airChillerTE().inputTank : null;
 	}
 
-	private FluidStack getRefrigerant() {
+	public FluidStack getRefrigerant() {
 		return getChillerTank().getFluid();
 	}
 
@@ -204,8 +204,8 @@ public class TileEntityGanController extends TileEntityMachineEnergy {
 		return getChillerTank() != null && getChillerTank().getFluid() != null && getChillerTank().getFluidAmount() >= getRefrigerantAmount();
 	}
 
-	private boolean isRefrigerant(String liquid) {
-		return getChillFluid(liquid) != null && getRefrigerant().isFluidEqual(getChillFluid(liquid)) && getChillerTank().getFluidAmount() >= getRefrigerantAmount();
+	public boolean isValidTemperature(){
+		return  getChillerTank().getFluid().getFluid().getTemperature() <= 300;
 	}
 
 	private FluidStack getChillFluid(String fluid) {
@@ -238,7 +238,7 @@ public class TileEntityGanController extends TileEntityMachineEnergy {
 	}
 
 	private boolean canCompress() {
-		return hasRefrigerant()
+		return (hasRefrigerant() && isValidTemperature())
 			&& this.getRedstone() >= getChillingCost()
 			&& (airCompressorTE() != null && getCompressedAir() <= airCompressorTE().getAirMax() - getAirAmount());
 	}
@@ -248,12 +248,16 @@ public class TileEntityGanController extends TileEntityMachineEnergy {
 		if(airCompressorTE() != null) {
 			airCompressorTE().airCount += getAirAmount();
 		}
-		if(rand.nextInt(30 * getTier()) == 0){
+		if(rand.nextInt((10 * getTier()) + tempCoeff()) == 0){
 			getChillerTank().getFluid().amount -= getRefrigerantAmount();
 			if(getChillerTank().getFluidAmount() <= 0){
 				getChillerTank().setFluid(null);
 			}
 		}
+	}
+
+	private int tempCoeff() {
+		return 300 - getChillerTank().getFluid().getFluid().getTemperature();
 	}
 
 	private boolean canProcess() {

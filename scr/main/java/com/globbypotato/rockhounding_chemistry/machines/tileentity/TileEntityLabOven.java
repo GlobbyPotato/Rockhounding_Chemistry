@@ -118,6 +118,10 @@ public class TileEntityLabOven extends TileEntityMachineTank {
 		return true;
 	}
 
+	@Override
+	public boolean isRFGatedByBlend(){
+		return true;
+	}
 
 
 	// ----------------------- CUSTOM ------------------------

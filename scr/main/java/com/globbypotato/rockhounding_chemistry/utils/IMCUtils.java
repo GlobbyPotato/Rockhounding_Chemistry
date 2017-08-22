@@ -3,8 +3,10 @@ package com.globbypotato.rockhounding_chemistry.utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.globbypotato.rockhounding_chemistry.machines.recipe.CastingRecipe;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.ChemicalExtractorRecipe;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.DepositionChamberRecipe;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.LabBlenderRecipe;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.LabOvenRecipe;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.MachineRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.MetalAlloyerRecipe;
@@ -34,6 +36,10 @@ public class IMCUtils {
 	public static String SEASONER_KEY_REMOVER = "removeFromSeasoner";
 	public static String ALLOYER_KEY = "addToAlloyer";
 	public static String ALLOYER_KEY_REMOVER = "removeFromAlloyer";
+	public static String CASTING_KEY = "addToCasting";
+	public static String CASTING_KEY_REMOVER = "removeFromCasting";
+	public static String BLENDER_KEY = "addToBlender";
+	public static String BLENDER_KEY_REMOVER = "removeFromBlender";
 	static List<ItemStack> elements;
 	static List<String> dusts;
 	static List<Integer> quantities;
@@ -131,6 +137,30 @@ public class IMCUtils {
 		        			for(int x = 0; x < MachineRecipes.depositionRecipes.size(); x++){
 		        				if(MachineRecipes.depositionRecipes.get(x).getOutput().isItemEqual(output)){
 		        					MachineRecipes.depositionRecipes.remove(x);
+		        				}
+		        			}
+		        		}
+		    		}else if(message.key.equalsIgnoreCase(CASTING_KEY_REMOVER)){
+		    			ItemStack output = null;
+		        		if(tag.hasKey("Output")){
+		        			output = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("Output"));
+		        		}
+		        		if(output != null){
+		        			for(int x = 0; x < MachineRecipes.castingRecipes.size(); x++){
+		        				if(MachineRecipes.castingRecipes.get(x).getOutput().isItemEqual(output)){
+		        					MachineRecipes.castingRecipes.remove(x);
+		        				}
+		        			}
+		        		}
+		    		}else if(message.key.equalsIgnoreCase(BLENDER_KEY_REMOVER)){
+		    			ItemStack output = null;
+		        		if(tag.hasKey("Output")){
+		        			output = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("Output"));
+		        		}
+		        		if(output != null){
+		        			for(int x = 0; x < MachineRecipes.blenderRecipes.size(); x++){
+		        				if(MachineRecipes.blenderRecipes.get(x).getOutput().isItemEqual(output)){
+		        					MachineRecipes.blenderRecipes.remove(x);
 		        				}
 		        			}
 		        		}
@@ -311,6 +341,38 @@ public class IMCUtils {
 		        		}
 		        		if(input != null && solvent.getFluid() != null && output != null && temperature > 0 && pressure > 0){
 		        			MachineRecipes.depositionRecipes.add(new DepositionChamberRecipe(input, output, solvent, temperature, pressure));
+		        		}
+					}else if(message.key.equalsIgnoreCase(CASTING_KEY)){
+						String input = "";
+						ItemStack output = null;
+						int pattern = 0;
+						if(tag.hasKey("Input")){
+							input = tag.getString("Input");
+		        		}
+		        		if(tag.hasKey("Output")){
+							output = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("Output"));
+		        		}
+		        		if(tag.hasKey("Pattern")){
+		        			pattern = tag.getInteger("Pattern");
+		        		}
+		        		if(input != null && output != null){
+		        			MachineRecipes.castingRecipes.add(new CastingRecipe(input, output, pattern));
+		        		}
+					}else if(message.key.equalsIgnoreCase(BLENDER_KEY)){
+						ItemStack output = null;
+		        		if(tag.hasKey("Elements")){
+		        			  NBTTagList dustList = tag.getTagList("Elements", Constants.NBT.TAG_COMPOUND);
+		        			  elements = new ArrayList<ItemStack>();
+		        			  for(int i = 0; i < dustList.tagCount(); i++){
+		        				  NBTTagCompound getDusts = dustList.getCompoundTagAt(i);
+		        				  elements.add(ItemStack.loadItemStackFromNBT(getDusts));
+		        			  }
+		        		}
+		        		if(tag.hasKey("Output")){
+							output = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("Output"));
+		        		}
+		        		if(elements.size() > 0 && output != null){
+		        			MachineRecipes.blenderRecipes.add(new LabBlenderRecipe(elements, output));
 		        		}
 					}
 				}catch (Exception e){

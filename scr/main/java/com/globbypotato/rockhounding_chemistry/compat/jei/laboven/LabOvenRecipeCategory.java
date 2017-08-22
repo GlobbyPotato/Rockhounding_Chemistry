@@ -41,7 +41,7 @@ public class LabOvenRecipeCategory extends RHRecipeCategory {
 
 		guiItemStacks.init(INPUT_SLOT, true, 1, 1);
 		guiFluidStacks.init(SOLVENT_SLOT, true,  66, 2, 20, 65, 1000, false, null);
-		guiFluidStacks.init(REAGENT_SLOT, false, 88, 2, 20, 65, 1000, false, null);
+		guiFluidStacks.init(REAGENT_SLOT, true, 88, 2, 20, 65, 1000, false, null);
 		guiFluidStacks.init(OUTPUT_SLOT,  false, 24, 2, 20, 65, 1000, false, null);
 
 		guiItemStacks.set(INPUT_SLOT, wrapper.getInputs());

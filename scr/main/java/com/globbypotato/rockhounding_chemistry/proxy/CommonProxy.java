@@ -4,6 +4,7 @@ import com.globbypotato.rockhounding_chemistry.ModBlocks;
 import com.globbypotato.rockhounding_chemistry.ModItems;
 import com.globbypotato.rockhounding_chemistry.Rhchemistry;
 import com.globbypotato.rockhounding_chemistry.compat.crafttweaker.CTSupport;
+import com.globbypotato.rockhounding_chemistry.compat.waila.WailaCompat;
 import com.globbypotato.rockhounding_chemistry.entities.EntitySmoke;
 import com.globbypotato.rockhounding_chemistry.fluids.ModFluids;
 import com.globbypotato.rockhounding_chemistry.handlers.GlobbyEventHandler;
@@ -15,6 +16,7 @@ import com.globbypotato.rockhounding_chemistry.handlers.ModTileEntities;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.MachineRecipes;
 import com.globbypotato.rockhounding_chemistry.utils.IMCUtils;
+import com.globbypotato.rockhounding_chemistry.utils.ShapedNbtRecipe;
 import com.globbypotato.rockhounding_chemistry.world.ChemOresGenerator;
 
 import net.minecraft.block.Block;
@@ -52,19 +54,22 @@ public class CommonProxy {
 
 		// Register oreDictionary
 		ModDictionary.loadDictionary();
+
+		// Waila compatilbility
+        WailaCompat.init();
 	}
 
 	public void init(FMLInitializationEvent e){
 		// Register Recipes
 		ModRecipes.init();
 		MachineRecipes.machineRecipes();
+		ShapedNbtRecipe.register();
 
 		// Register Guis
 		NetworkRegistry.INSTANCE.registerGuiHandler(Reference.MODID, new GuiHandler());
 
 		// Register entities
         EntityRegistry.registerModEntity(EntitySmoke.class, "Screen Smoke", 0, Rhchemistry.instance, 64, 10, true);
-        
 	}
 
 	public void imcInit(IMCEvent event) {

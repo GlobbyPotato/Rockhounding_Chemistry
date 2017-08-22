@@ -1,8 +1,5 @@
 package com.globbypotato.rockhounding_chemistry.machines.gui;
 
-import java.util.Arrays;
-import java.util.List;
-
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerOwcController;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityOwcController;
@@ -43,17 +40,18 @@ public class GuiOwcController extends GuiBase {
 	   String waterString = TextFormatting.DARK_GRAY + "Water: " + TextFormatting.AQUA + this.owcController.actualWater() + "/" + this.owcController.totalWater() + " tiles";
 	   //Yeld label
 	   String yeldString = TextFormatting.DARK_GRAY + "Yeld: " + TextFormatting.YELLOW + this.owcController.getYeld() + "/" + this.owcController.getYeldMax() + " RF/tide";
+	   //tide average yeld
+	   String averageyeldString = TextFormatting.DARK_GRAY + "Average: " + TextFormatting.RED + this.owcController.getYeld() / this.owcController.tideChance() + " RF/tick";
 	   //interval label
 	   int tideInterval = this.owcController.tideChance() * this.owcController.conveyorMultiplier();
 	   String intervalString = TextFormatting.DARK_GRAY + "Tides: " + TextFormatting.GRAY + tideInterval + " ticks";
 
 	   //main string
-	   String multiString[] = new String[]{rfString, "", waterString, yeldString, intervalString};
+	   String multiString[] = new String[]{rfString, "", yeldString, averageyeldString, waterString, intervalString};
 
 	   //RF area
 	   if((mouseX >= 93+x && mouseX <= 117+x && mouseY >= 16+y && mouseY <= 77+y)){
-		   List<String> tooltip = Arrays.asList(multiString);
-		   drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
+		   drawMultiLabel(multiString, mouseX, mouseY);
 	   }
 
 	   //Tide area
@@ -113,7 +111,7 @@ public class GuiOwcController extends GuiBase {
             int k = this.getBarScaled(60, this.owcController.getRedstone(), this.owcController.getChargeMax());
             this.drawTexturedModalRect(i + 94, j + 17 + (60 - k), 176, 59, 23, k);
         }
-        if(this.owcController.activationKey){
+        if(this.owcController.isActive()){
 	        //tide bar
 	        if (this.owcController.actualWater() > 0){
 	            int k = this.getBarScaled(60, this.owcController.actualWater(), this.owcController.totalWater());
@@ -161,7 +159,7 @@ public class GuiOwcController extends GuiBase {
         }
 
         //extract
-        if(this.owcController.extractionKey){
+        if(this.owcController.isExtracting()){
             this.drawTexturedModalRect(i + 73, j + 38, 194, 23, 18, 18);
         }
 

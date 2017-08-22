@@ -14,13 +14,8 @@ public class MineralSizerRecipe {
 	private List<Integer> probability;
 	private ArrayList<ProbabilityStack> probabilityOutputs;
 
-	private static List<ItemStack> fakeStack = new ArrayList<ItemStack>();
-	private static List<Integer> fakeProb = new ArrayList<Integer>();
-	
 	public MineralSizerRecipe(ItemStack input, ItemStack output){
-		this(input, fakeStack, fakeProb);
-		fakeProb.add(100);
-		fakeStack.add(output);
+		this(input, fakeStack(output), fakeProb(100));
 	}
 
 	public MineralSizerRecipe(ItemStack input, List<ItemStack> output, List<Integer> probability){
@@ -31,6 +26,18 @@ public class MineralSizerRecipe {
 		for(int i = 0; i < output.size(); i++){
 			this.probabilityOutputs.add(new ProbabilityStack(new ItemStack(output.get(i).getItem(), 1, output.get(i).getItemDamage()), probability.get(i).intValue()));
 		}
+	}
+
+	private static ArrayList<ItemStack> fakeStack(ItemStack output) {
+		ArrayList<ItemStack> temp = new ArrayList<ItemStack>();
+		temp.add(output);
+		return temp;
+	}
+
+	private static ArrayList<Integer> fakeProb( int prob) {
+		ArrayList<Integer> temp = new ArrayList<Integer>();
+		temp.add(prob);
+		return temp;
 	}
 
 	public ItemStack getInput(){

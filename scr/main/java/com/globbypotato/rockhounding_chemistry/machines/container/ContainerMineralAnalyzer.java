@@ -5,13 +5,11 @@ import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityMin
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerMineralAnalyzer extends ContainerBase<TileEntityMineralAnalyzer>{
-	Slot drain;
 
 	public ContainerMineralAnalyzer(IInventory playerInventory, TileEntityMineralAnalyzer tile){
 		super(playerInventory, tile);
@@ -32,7 +30,7 @@ public class ContainerMineralAnalyzer extends ContainerBase<TileEntityMineralAna
 
 		this.addSlotToContainer(new SlotItemHandler(output, 0, 70, 60));//output
 		
-		drain = this.addSlotToContainer(new SlotItemHandler(template, 0, 84,  88));//drain
+		this.addSlotToContainer(new SlotItemHandler(template, 0, 84,  88));//drain
 
 	}
 	

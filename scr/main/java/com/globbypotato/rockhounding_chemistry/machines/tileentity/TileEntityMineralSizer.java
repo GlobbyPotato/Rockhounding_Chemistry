@@ -1,7 +1,5 @@
 package com.globbypotato.rockhounding_chemistry.machines.tileentity;
 
-import java.util.ArrayList;
-
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiMineralSizer;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.MachineRecipes;
@@ -12,13 +10,10 @@ import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityMachineT
 import com.globbypotato.rockhounding_core.machines.tileentity.WrappedItemHandler;
 import com.globbypotato.rockhounding_core.machines.tileentity.WrappedItemHandler.WriteMode;
 import com.globbypotato.rockhounding_core.utils.CoreUtils;
-import com.globbypotato.rockhounding_core.utils.FuelUtils;
 import com.globbypotato.rockhounding_core.utils.ProbabilityStack;
-import com.globbypotato.rockhounding_core.utils.Utils;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerConcatenate;
-import net.minecraftforge.oredict.OreDictionary;
 
 public class TileEntityMineralSizer extends TileEntityMachineTank {
 
@@ -31,7 +26,7 @@ public class TileEntityMineralSizer extends TileEntityMachineTank {
 		input =  new MachineStackHandler(INPUT_SLOTS,this){
 			@Override
 			public ItemStack insertItem(int slot, ItemStack insertingStack, boolean simulate){
-				if(slot == INPUT_SLOT && (hasRecipe(insertingStack) || isValidOredict(insertingStack)) ){
+				if(slot == INPUT_SLOT && hasRecipe(insertingStack) ){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
 				if(slot == FUEL_SLOT && CoreUtils.isPowerSource(insertingStack)){
@@ -45,6 +40,8 @@ public class TileEntityMineralSizer extends TileEntityMachineTank {
 		};
 		this.automationInput = new WrappedItemHandler(input, WriteMode.IN);
 	}
+
+
 
 	//----------------------- HANDLER -----------------------
 	@Override
@@ -62,19 +59,6 @@ public class TileEntityMineralSizer extends TileEntityMachineTank {
 	public boolean hasRecipe(ItemStack stack){
 		return MachineRecipes.sizerRecipes.stream().anyMatch(
 				recipe -> stack != null && recipe.getInput() != null && stack.isItemEqual(recipe.getInput()));
-	}
-
-	public static boolean isValidOredict(ItemStack stack) {
-		if(stack != null){
-			ArrayList<Integer> inputIDs = Utils.intArrayToList(OreDictionary.getOreIDs(stack));
-			for(MineralSizerRecipe recipe: MachineRecipes.sizerRecipes){
-				ArrayList<Integer> recipeIDs = Utils.intArrayToList(OreDictionary.getOreIDs(recipe.getInput()));
-				for(Integer ores: recipeIDs){
-					if(inputIDs.contains(ores)) return true;
-				}
-			}
-		}
-		return false;
 	}
 
 	private boolean allOutputsEmpty(){

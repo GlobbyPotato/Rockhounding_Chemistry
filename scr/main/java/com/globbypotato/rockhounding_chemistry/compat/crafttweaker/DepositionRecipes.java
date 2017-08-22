@@ -14,14 +14,14 @@ import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
 @ZenClass("mods.rockhounding_chemistry.DepositionChamber")
-public class DepositionRecipes {
+public class DepositionRecipes extends CTSupport{
 	private static String name = "Deposition Chamber Recipe";
 
     @ZenMethod
     public static void add(IItemStack input, IItemStack output, ILiquidStack solvent, int solventAmount, int temperature, int pressure) {
         if(input == null || solvent == null || output == null || temperature == 0 || pressure == 0) {MineTweakerAPI.logError(name + ": Invalid recipe."); return;}
-        FluidStack solventStack = CTSupport.getFluid(solvent, solventAmount);
-        MineTweakerAPI.apply(new AddToDeposition(new DepositionChamberRecipe(CTSupport.toStack(input), CTSupport.toStack(output), solventStack, temperature, pressure)));
+        FluidStack solventStack = getFluid(solvent, solventAmount);
+        MineTweakerAPI.apply(new AddToDeposition(new DepositionChamberRecipe(toStack(input), toStack(output), solventStack, temperature, pressure)));
     }
 		    private static class AddToDeposition implements IUndoableAction {
 		    	private DepositionChamberRecipe recipe;
@@ -58,7 +58,7 @@ public class DepositionRecipes {
     @ZenMethod
     public static void remove(IItemStack output) {
         if(output == null) {MineTweakerAPI.logError(name + ": Invalid recipe."); return;}
-        MineTweakerAPI.apply(new RemoveFromDeposition(CTSupport.toStack(output)));    
+        MineTweakerAPI.apply(new RemoveFromDeposition(toStack(output)));    
     }
 		    private static class RemoveFromDeposition implements IUndoableAction {
 		    	private ItemStack output;

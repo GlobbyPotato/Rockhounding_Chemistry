@@ -2,11 +2,14 @@ package com.globbypotato.rockhounding_chemistry.handlers;
 
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerAirChiller;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerAirCompresser;
+import com.globbypotato.rockhounding_chemistry.machines.container.ContainerCastingBench;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerChemicalExtractor;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerDepositionChamber;
+import com.globbypotato.rockhounding_chemistry.machines.container.ContainerDisposer;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerEarthBreaker;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerElectroLaser;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerGanController;
+import com.globbypotato.rockhounding_chemistry.machines.container.ContainerLabBlender;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerLabOven;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerLaserAmplifier;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerMetalAlloyer;
@@ -18,13 +21,17 @@ import com.globbypotato.rockhounding_chemistry.machines.container.ContainerOwcAs
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerOwcController;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerPetrographerTable;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerSaltSeasoner;
+import com.globbypotato.rockhounding_chemistry.machines.container.ContainerUltraBattery;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiAirChiller;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiAirCompresser;
+import com.globbypotato.rockhounding_chemistry.machines.gui.GuiCastingBench;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiChemicalExtractor;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiDepositionChamber;
+import com.globbypotato.rockhounding_chemistry.machines.gui.GuiDisposer;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiEarthBreaker;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiElectroLaser;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiGanController;
+import com.globbypotato.rockhounding_chemistry.machines.gui.GuiLabBlender;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiLabOven;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiLaserAmplifier;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiMetalAlloyer;
@@ -36,13 +43,17 @@ import com.globbypotato.rockhounding_chemistry.machines.gui.GuiOwcAssembler;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiOwcController;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiPetrographerTable;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiSaltSeasoner;
+import com.globbypotato.rockhounding_chemistry.machines.gui.GuiUltraBattery;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityAirChiller;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityAirCompresser;
+import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityCastingBench;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityChemicalExtractor;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityDepositionChamber;
+import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityDisposer;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityEarthBreaker;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityElectroLaser;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityGanController;
+import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityLabBlender;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityLabOven;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityLaserAmplifier;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityMetalAlloyer;
@@ -54,6 +65,7 @@ import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityOwc
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityOwcController;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityPetrographerTable;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntitySaltSeasoner;
+import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityUltraBattery;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -82,6 +94,10 @@ public class GuiHandler implements IGuiHandler {
 	public static final int airChillerID = 16;
 	public static final int laserAmplifierID = 17;
 	public static final int electroLaserID = 18;
+	public static final int ultraBatteryID = 19;
+	public static final int castingBenchID = 20;
+	public static final int labBlenderID = 21;
+	public static final int disposerID = 22;
 
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -124,6 +140,14 @@ public class GuiHandler implements IGuiHandler {
 				if (entity != null && entity instanceof TileEntityLaserAmplifier){return new ContainerLaserAmplifier(player.inventory, (TileEntityLaserAmplifier) entity);}
 			case electroLaserID:
 				if (entity != null && entity instanceof TileEntityElectroLaser){return new ContainerElectroLaser(player.inventory, (TileEntityElectroLaser) entity);}
+			case ultraBatteryID:
+				if (entity != null && entity instanceof TileEntityUltraBattery){return new ContainerUltraBattery(player.inventory, (TileEntityUltraBattery) entity);}
+			case castingBenchID:
+				if (entity != null && entity instanceof TileEntityCastingBench){return new ContainerCastingBench(player.inventory, (TileEntityCastingBench) entity);}
+			case labBlenderID:
+				if (entity != null && entity instanceof TileEntityLabBlender){return new ContainerLabBlender(player.inventory, (TileEntityLabBlender) entity);}
+			case disposerID:
+				if (entity != null && entity instanceof TileEntityDisposer){return new ContainerDisposer(player.inventory, (TileEntityDisposer) entity);}
 		}
         return null;
 	}
@@ -169,6 +193,14 @@ public class GuiHandler implements IGuiHandler {
 				if (entity != null && entity instanceof TileEntityLaserAmplifier){return new GuiLaserAmplifier(player.inventory, (TileEntityLaserAmplifier) entity);}
 			case electroLaserID:
 				if (entity != null && entity instanceof TileEntityElectroLaser){return new GuiElectroLaser(player.inventory, (TileEntityElectroLaser) entity);}
+			case ultraBatteryID:
+				if (entity != null && entity instanceof TileEntityUltraBattery){return new GuiUltraBattery(player.inventory, (TileEntityUltraBattery) entity);}
+			case castingBenchID:
+				if (entity != null && entity instanceof TileEntityCastingBench){return new GuiCastingBench(player.inventory, (TileEntityCastingBench) entity);}
+			case labBlenderID:
+				if (entity != null && entity instanceof TileEntityLabBlender){return new GuiLabBlender(player.inventory, (TileEntityLabBlender) entity);}
+			case disposerID:
+				if (entity != null && entity instanceof TileEntityDisposer){return new GuiDisposer(player.inventory, (TileEntityDisposer) entity);}
 		}
         return null;
 	}

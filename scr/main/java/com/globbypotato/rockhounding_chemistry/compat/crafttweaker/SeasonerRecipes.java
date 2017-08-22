@@ -12,13 +12,13 @@ import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
 @ZenClass("mods.rockhounding_chemistry.SeasoningRack")
-public class SeasonerRecipes {
+public class SeasonerRecipes extends CTSupport{
 	private static String name = "Seasoning Rack Recipe";
 
     @ZenMethod
     public static void add(IItemStack input, IItemStack output) {
         if(input == null || output == null) {MineTweakerAPI.logError(name + ": Invalid recipe."); return;}
-        MineTweakerAPI.apply(new AddToSeasoner(new SaltSeasonerRecipe(CTSupport.toStack(input), CTSupport.toStack(output))));
+        MineTweakerAPI.apply(new AddToSeasoner(new SaltSeasonerRecipe(toStack(input), toStack(output))));
     }
 		    private static class AddToSeasoner implements IUndoableAction {
 		    	private SaltSeasonerRecipe recipe;
@@ -55,7 +55,7 @@ public class SeasonerRecipes {
     @ZenMethod
     public static void remove(IItemStack input) {
         if(input == null) {MineTweakerAPI.logError(name + ": Invalid recipe."); return;}
-        MineTweakerAPI.apply(new RemoveFromSeasoner(CTSupport.toStack(input)));    
+        MineTweakerAPI.apply(new RemoveFromSeasoner(toStack(input)));    
     }
 		    private static class RemoveFromSeasoner implements IUndoableAction {
 		    	private ItemStack input;

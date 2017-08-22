@@ -14,7 +14,7 @@ import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
 @ZenClass("mods.rockhounding_chemistry.ChemicalExtractor")
-public class ExtractorRecipes {
+public class ExtractorRecipes extends CTSupport{
 	private static String name = "Chemical Extractor Recipe";
 
     @ZenMethod
@@ -29,7 +29,7 @@ public class ExtractorRecipes {
         	quantities.add(quantity[x]);
         }
 
-        MineTweakerAPI.apply(new AddToExtractor(new ChemicalExtractorRecipe(category, CTSupport.toStack(input), ingredients, quantities)));
+        MineTweakerAPI.apply(new AddToExtractor(new ChemicalExtractorRecipe(category, toStack(input), ingredients, quantities)));
     }
 		    private static class AddToExtractor implements IUndoableAction {
 		    	private ChemicalExtractorRecipe recipe;
@@ -66,7 +66,7 @@ public class ExtractorRecipes {
     @ZenMethod
     public static void remove(IItemStack input) {
         if(input == null) {MineTweakerAPI.logError(name + ": Invalid recipe."); return;}
-        MineTweakerAPI.apply(new RemoveFromExtractor(CTSupport.toStack(input)));    
+        MineTweakerAPI.apply(new RemoveFromExtractor(toStack(input)));    
     }
 		    private static class RemoveFromExtractor implements IUndoableAction {
 		    	private ItemStack input;

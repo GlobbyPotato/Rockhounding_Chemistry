@@ -18,10 +18,11 @@ public class ModConfig {
 	public static int factorExtractor;
 	public static int speedAnalyzer;
 	public static int speedSizer;
-    public static int alloyingSpeed;
+    public static int speedAlloyer;
     public static int speedSeasoner;
     public static int speedAssembling;
 	public static int speedDeposition;
+	public static int speedBlender;
     public static int machineTank;
 
 	public static int maxMineral;
@@ -81,9 +82,10 @@ public class ModConfig {
 		speedAnalyzer = config.get(									CATEGORY_TOOLS, "SpeedMineralAnalyzer", 	300,	"Ticks required to analyze minerals in the Leaching Vat").getInt();
 		speedExtractor = config.get(								CATEGORY_TOOLS, "SpeedChemicalExtractor", 	400,	"Ticks required to extract elements in the Chemical Extractor").getInt();
 		speedAssembling = config.get(								CATEGORY_TOOLS, "SpeedAssemblyTables", 		100,	"Ticks required to assembly Devices in their Assembly Tables").getInt();
-		alloyingSpeed = config.get(									CATEGORY_TOOLS, "SpeedMetalAlloyer", 		200,	"Ticks required to cast an alloy in the Metal Alloyer").getInt();
+		speedAlloyer = config.get(									CATEGORY_TOOLS, "SpeedMetalAlloyer", 		200,	"Ticks required to cast an alloy in the Metal Alloyer").getInt();
 		speedSeasoner = config.get(									CATEGORY_TOOLS, "SpeedSaltSeasoner", 		600,	"Ticks required to finalize salt in the Salt Seasoning Rack").getInt();
 		speedDeposition = config.get(								CATEGORY_TOOLS, "SpeedDepositionChamber",	800,	"Ticks required to process in the Deposition Chamber").getInt();
+		speedBlender = config.get(									CATEGORY_TOOLS, "SpeedLabBlender",			30,		"Ticks required to process in the Lab Blender").getInt();
 		factorExtractor = config.get(								CATEGORY_TOOLS, "ExtractingFactor", 		100,	"Percentage of element required to produce one regular dust").getInt();
 		gearUses = config.get(										CATEGORY_TOOLS, "UsesGear", 				250,	"Max uses for the Crushing Gear in the Mineral Sizer").getInt();
 		tubeUses = config.get(										CATEGORY_TOOLS, "UsesTube", 				300,	"Max uses for the Test Tube in the Chemical Extractor").getInt();

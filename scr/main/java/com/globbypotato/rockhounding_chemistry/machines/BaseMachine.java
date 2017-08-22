@@ -131,7 +131,9 @@ public class BaseMachine extends BaseBlock {
 					}
 				}
 			}
-			player.openGui(Rhchemistry.instance, guiID, world, pos.getX(), pos.getY(), pos.getZ());
+			if(guiID > -1){
+				player.openGui(Rhchemistry.instance, guiID, world, pos.getX(), pos.getY(), pos.getZ());
+			}
 		}
 		return true;
 	}
