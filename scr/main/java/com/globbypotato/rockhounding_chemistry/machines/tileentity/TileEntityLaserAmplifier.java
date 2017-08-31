@@ -47,6 +47,7 @@ public class TileEntityLaserAmplifier extends TileEntityMachineEnergy {
 	// ----------------------- PROCESS -----------------------
 	@Override
 	public void update() {
+		acceptEnergy();
 		if(!worldObj.isRemote){
 			
 			if(isPowered()){

@@ -209,6 +209,7 @@ public class TileEntityChemicalExtractor extends TileEntityMachineTank{
 	//----------------------- PROCESS -----------------------
 	@Override
 	public void update(){
+		acceptEnergy();
 		fuelHandler(input.getStackInSlot(FUEL_SLOT));
 		redstoneHandler(REDSTONE_SLOT, this.getCookTimeMax());
 		lavaHandler();

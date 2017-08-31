@@ -20,18 +20,25 @@ public class ContainerGanController extends ContainerBase<TileEntityGanControlle
 		IItemHandler input = tile.getInput();
 		IItemHandler template = tile.getTemplate();
 
-		this.addSlotToContainer(new SlotItemHandler(input, 0, 152, 80));//matrix 
-		this.addSlotToContainer(new SlotItemHandler(template, 0, 110,  16));//activation
-		this.addSlotToContainer(new SlotItemHandler(template, 1, 54,  34));//acquiring
+		this.addSlotToContainer(new SlotItemHandler(template, 0, 110, 33));//cycle 
+		this.addSlotToContainer(new SlotItemHandler(template, 1, 110,  16));//activation
+		this.addSlotToContainer(new SlotItemHandler(template, 2, 54,  34));//acquiring
 	}
 
 	@Override
 	public ItemStack slotClick(int slot, int dragType, ClickType clickTypeIn, EntityPlayer player){
-		if(slot == 1){
+		if(slot == 0){
+			if(this.tile.activationKey){
+				this.tile.cycleKey = !this.tile.cycleKey;
+			}
+    		return null;
+		}else if(slot == 1){
     		this.tile.activationKey = !this.tile.activationKey;
     		return null;
 		}else if(slot == 2){
-    		this.tile.compressKey = !this.tile.compressKey;
+			if(!this.tile.cycleKey){
+				this.tile.compressKey = !this.tile.compressKey;
+			}
     		return null;
     	}else{
     		return super.slotClick(slot, dragType, clickTypeIn, player);

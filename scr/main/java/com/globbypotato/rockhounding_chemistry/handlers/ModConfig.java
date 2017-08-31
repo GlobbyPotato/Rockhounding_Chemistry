@@ -92,7 +92,7 @@ public class ModConfig {
 		agitatorUses = config.get(									CATEGORY_TOOLS, "UsesAgitator", 			400,	"Max uses for the Agitator in the Leaching Vat").getInt();
 		patternUses = config.get(									CATEGORY_TOOLS, "UsesPattern", 				200,	"Max uses for the Ingot Pattern in the Metal Alloyer").getInt();
 		catalystUses = config.get(									CATEGORY_TOOLS, "UsesCatalyst", 			200,	"Max uses for any Catalyst in the Lab Oven").getInt();
-		maxMineral = config.get(									CATEGORY_TOOLS, "MaxMineralShards", 		4,		"Max amount of mineral shards obtainable from the Mineral Analyzer").getInt();
+		maxMineral = config.get(									CATEGORY_TOOLS, "MaxMineralShards", 		4,		"Max amount of mineral shards obtainable from the Leaching Vat").getInt();
 		machineTank = config.get(									CATEGORY_TOOLS, "MachineTankCapacity", 		9000,	"Max capacity for machine fluid tanks. This value is increased by 1000 by default").getInt();
 		TileEntityEarthBreaker.dropBedrock = config.get(			CATEGORY_TOOLS, "DropBedrock",				false,	"Allow the Boundary Breaker to drop the mined bedrock").getBoolean();
 

@@ -41,9 +41,9 @@ public class GuiDepositionChamber extends GuiBase {
 		if(this.depositionChamber.isValidInterval()){
 			//temperature
 			if(mouseX >= 8+x && mouseX <= 17+x && mouseY >= 31+y && mouseY <= 95+y){
-				String text = TextFormatting.GOLD + "Temperature: " + TextFormatting.WHITE + (30 + this.depositionChamber.getTemperature()) + " 'C";
-				String req = TextFormatting.DARK_GRAY + "Required: " + TextFormatting.WHITE + this.depositionChamber.getRecipe().getTemperature() + " 'C";
-				String info = TextFormatting.DARK_GRAY + "Charge: " + TextFormatting.WHITE + this.depositionChamber.tempYeld() +" 'C/tick";
+				String text = TextFormatting.GOLD + "Temperature: " + TextFormatting.WHITE + (30 + this.depositionChamber.getTemperature()) + "K";
+				String req = TextFormatting.DARK_GRAY + "Required: " + TextFormatting.WHITE + this.depositionChamber.getRecipe().getTemperature() + "K";
+				String info = TextFormatting.DARK_GRAY + "Charge: " + TextFormatting.WHITE + this.depositionChamber.tempYeld() +" K/tick";
 				String drain = TextFormatting.DARK_GRAY + "Drain: " + TextFormatting.WHITE + this.depositionChamber.takenRF + " RF/charge";
 				String[] multistring = {text, req, info, drain};
 				drawMultiLabel(multistring, mouseX, mouseY);

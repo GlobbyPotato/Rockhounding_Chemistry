@@ -1,0 +1,62 @@
+{
+    "__comment": "Model generated using MrCrayfish's Model Creator (http://mrcrayfish.com/modelcreator/)",
+    "parent": "block/cube_all",
+    "textures": {
+        "particle": "rockhounding_chemistry:models/ganBlocks_chiller",
+        "0": "rockhounding_chemistry:models/ganBlocks_chiller"
+    },
+    "elements": [
+        {
+            "name": "tank",
+            "from": [ 2.0, -0.20000000298023224, 2.0 ], 
+            "to": [ 14.0, 14.0, 14.0 ], 
+            "faces": {
+                "north": { "texture": "#0", "uv": [ 8.0, 0.0, 16.0, 8.0 ] },
+                "east": { "texture": "#0", "uv": [ 8.0, 0.0, 16.0, 8.0 ] },
+                "south": { "texture": "#0", "uv": [ 8.0, 0.0, 16.0, 8.0 ] },
+                "west": { "texture": "#0", "uv": [ 8.0, 0.0, 16.0, 8.0 ] },
+                "up": { "texture": "#0", "uv": [ 0.0, 0.0, 8.0, 8.0 ] },
+                "down": { "texture": "#0", "uv": [ 0.0, 0.0, 8.0, 8.0 ] }
+            }
+        },
+        {
+            "name": "ring",
+            "from": [ 1.0, 11.100000001490116, 1.0 ], 
+            "to": [ 15.0, 13.100000001490116, 15.0 ], 
+            "faces": {
+                "north": { "texture": "#0", "uv": [ 0.0, 9.0, 8.0, 9.5 ] },
+                "east": { "texture": "#0", "uv": [ 0.0, 13.0, 8.0, 13.5 ] },
+                "south": { "texture": "#0", "uv": [ 0.0, 12.0, 8.0, 12.5 ] },
+                "west": { "texture": "#0", "uv": [ 0.0, 11.0, 8.0, 11.5 ] },
+                "up": { "texture": "#0", "uv": [ 0.0, 8.0, 8.0, 16.0 ] },
+                "down": { "texture": "#0", "uv": [ 0.0, 8.0, 8.0, 16.0 ] }
+            }
+        },
+        {
+            "name": "cap",
+            "from": [ 5.499999992549419, 14.0, 5.499999992549419 ], 
+            "to": [ 10.49999999254942, 16.0, 10.49999999254942 ], 
+            "faces": {
+                "north": { "texture": "#0", "uv": [ 8.0, 0.0, 10.0, 0.5 ] },
+                "east": { "texture": "#0", "uv": [ 8.0, 0.0, 10.0, 0.5 ] },
+                "south": { "texture": "#0", "uv": [ 8.0, 0.0, 10.0, 0.5 ] },
+                "west": { "texture": "#0", "uv": [ 8.0, 0.0, 10.0, 0.5 ] },
+                "up": { "texture": "#0", "uv": [ 0.0, 0.0, 8.0, 8.0 ] },
+                "down": { "texture": "#0", "uv": [ 8.0, 0.0, 16.0, 8.0 ] }
+            }
+        },
+        {
+            "name": "ring",
+            "from": [ 1.0, 0.0, 1.0 ], 
+            "to": [ 15.0, 1.0, 15.0 ], 
+            "faces": {
+                "north": { "texture": "#0", "uv": [ 0.0, 9.0, 8.0, 9.5 ] },
+                "east": { "texture": "#0", "uv": [ 0.0, 13.0, 8.0, 13.5 ] },
+                "south": { "texture": "#0", "uv": [ 0.0, 12.0, 8.0, 12.5 ] },
+                "west": { "texture": "#0", "uv": [ 0.0, 11.0, 8.0, 11.5 ] },
+                "up": { "texture": "#0", "uv": [ 0.0, 8.0, 8.0, 16.0 ] },
+                "down": { "texture": "#0", "uv": [ 0.0, 8.0, 8.0, 16.0 ] }
+            }
+        }
+    ]
+}

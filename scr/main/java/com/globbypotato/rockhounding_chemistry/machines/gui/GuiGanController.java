@@ -82,14 +82,27 @@ public class GuiGanController extends GuiBase {
 	   //compress tooltip
 	   if(mouseX >= 54+x && mouseX <= 70+x && mouseY >= 33+y && mouseY <= 50+y){
 		   String modeIn = "";
-		   if(this.ganController.compressKey){ modeIn = "Producing Nitrogen"; }else{ modeIn = "Compressing air"; }
-		   String text = "Mode Selected: " + modeIn;
-			drawButtonLabel(text, mouseX, mouseY);
+		   if(this.ganController.isCycling()){
+			   modeIn = "Process Override"; 
+		   }else{
+			   if(this.ganController.isProducing()){ 
+				   modeIn = "Producing Nitrogen"; 
+			   }else{ 
+				   modeIn = "Compressing air"; 
+			   }
+		   }
+		   String text = "Current Mode: " + modeIn;
+		   drawButtonLabel(text, mouseX, mouseY);
 	   }
 
 	   //activation
 	   if(mouseX >= 110+x && mouseX <= 125+x && mouseY >= 16+y && mouseY <= 31+y){
 			drawButtonLabel("Activation", mouseX, mouseY);
+	   }
+
+	   //cycle
+	   if(mouseX >= 110+x && mouseX <= 125+x && mouseY >= 33+y && mouseY <= 48+y){
+			drawButtonLabel("Automated Production", mouseX, mouseY);
 	   }
 
 	   //Sanity check
@@ -111,9 +124,14 @@ public class GuiGanController extends GuiBase {
             this.drawTexturedModalRect(i + 85, j + 17 + (60 - k), 176, 59, 23, k);
         }
         
-        if(this.ganController.isProducing()){
-	        //production
-            this.drawTexturedModalRect(i + 53, j + 33, 176, 23, 18, 18);
+        if(this.ganController.isCycling()){
+        	//override
+            this.drawTexturedModalRect(i + 53, j + 33, 194, 23, 18, 18);
+        }else{
+	        if(this.ganController.isProducing()){
+		        //production
+	            this.drawTexturedModalRect(i + 53, j + 33, 176, 23, 18, 18);
+	        }
         }
 
         if(this.ganController.isActivated()){
@@ -125,6 +143,11 @@ public class GuiGanController extends GuiBase {
 	        //activation
             this.drawTexturedModalRect(i + 110, j + 16, 176, 41, 16, 16);
             
+	        //cycle
+	        if(this.ganController.isCycling()){
+	            this.drawTexturedModalRect(i + 110, j + 33, 192, 41, 16, 16);
+	        }
+
 	        //upgrades
 	        if(this.ganController.checkTier()){
 	            this.drawTexturedModalRect(i + 7, j + 33, 176, 5, 18, 18);

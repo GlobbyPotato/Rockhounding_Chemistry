@@ -61,7 +61,10 @@ public enum EnumItems implements BaseEnum {
 	FUSED_GLASS,
 	BLENDING_UNIT,
 	VANASTEEL_GEAR,
-	VANASTEEL_PART;
+	VANASTEEL_PART,
+	WIDIA_FOIL,
+	WIDIA_CASING,
+	LEAD_DIOXIDE_INGOT;
 
 	//---------CUSTOM----------------
 	public static int size(){

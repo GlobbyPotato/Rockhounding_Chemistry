@@ -6,13 +6,9 @@ import com.globbypotato.rockhounding_chemistry.enums.EnumFluid;
 import com.globbypotato.rockhounding_chemistry.enums.EnumGan;
 import com.globbypotato.rockhounding_chemistry.machines.GanController;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiGanController;
-import com.globbypotato.rockhounding_core.machines.tileentity.MachineStackHandler;
 import com.globbypotato.rockhounding_core.machines.tileentity.TemplateStackHandler;
 import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityMachineEnergy;
-import com.globbypotato.rockhounding_core.machines.tileentity.WrappedItemHandler;
-import com.globbypotato.rockhounding_core.machines.tileentity.WrappedItemHandler.WriteMode;
 
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -24,27 +20,20 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileEntityGanController extends TileEntityMachineEnergy {
 
-	private ItemStackHandler template = new TemplateStackHandler(2);
+	private ItemStackHandler template = new TemplateStackHandler(3);
 
-	public static final int MATRIX_SLOT = 0;
     public boolean activationKey;
+    public boolean cycleKey;
     public boolean compressKey;
     public int tier;
 
 	BlockPos.MutableBlockPos checkPos = new BlockPos.MutableBlockPos(); 
 
 	public TileEntityGanController() {
-		super(1,0,0);
-
-		input =  new MachineStackHandler(INPUT_SLOTS,this){
-			@Override
-			public ItemStack insertItem(int slot, ItemStack insertingStack, boolean simulate){
-				// TODO matrix slot
-				return insertingStack;
-			}
-		};
-		this.automationInput = new WrappedItemHandler(input, WriteMode.IN);
+		super(0,0,0);
 	}
+
+
 
 	//----------------------- HANDLER -----------------------
 	@Override
@@ -69,12 +58,19 @@ public class TileEntityGanController extends TileEntityMachineEnergy {
 		return compressKey;
 	}
 
+	public boolean isCycling(){
+		return cycleKey;
+	}
+
+
+
 	//----------------------- I/O -----------------------
 	@Override
 	public void readFromNBT(NBTTagCompound compound){
 		super.readFromNBT(compound);
         this.activationKey = compound.getBoolean("Activation");
         this.compressKey = compound.getBoolean("Production");
+        this.cycleKey = compound.getBoolean("Cycling");
         this.tier = compound.getInteger("Tier");
 	}
 
@@ -83,6 +79,7 @@ public class TileEntityGanController extends TileEntityMachineEnergy {
 		super.writeToNBT(compound);
         compound.setBoolean("Activation", this.activationKey);
         compound.setBoolean("Production", this.compressKey);
+        compound.setBoolean("Cycling", this.cycleKey);
         compound.setInteger("Tier", this.tier);
 		return compound;
 	}
@@ -107,7 +104,7 @@ public class TileEntityGanController extends TileEntityMachineEnergy {
 	}
 
 	public int getTier(){
-		return this.tier == 18 ? 2 : 1;
+		return this.tier == 17 ? 2 : 1;
 	}
 
 	public boolean checkTier() {
@@ -138,7 +135,7 @@ public class TileEntityGanController extends TileEntityMachineEnergy {
 	}
 
 	public int getTemperature() {
-		return getRefrigerant().getFluid().getTemperature();
+		return getRefrigerant() != null ? getRefrigerant().getFluid().getTemperature() : 0;
 	}
 
 	public int getRedstoneCost() {
@@ -176,7 +173,7 @@ public class TileEntityGanController extends TileEntityMachineEnergy {
 	}
 
 	private FluidStack getNitrogen(){
-		return getNitrogenTank().getFluid();
+		return getNitrogenTank() != null && getNitrogenTank().getFluid() != null ? getNitrogenTank().getFluid() : null;
 	}
 
 	private FluidStack getProduct(){
@@ -197,7 +194,7 @@ public class TileEntityGanController extends TileEntityMachineEnergy {
 	}
 
 	public FluidStack getRefrigerant() {
-		return getChillerTank().getFluid();
+		return getChillerTank() != null && getChillerTank().getFluid() != null ? getChillerTank().getFluid() : null;
 	}
 
 	public boolean hasRefrigerant() {
@@ -205,7 +202,7 @@ public class TileEntityGanController extends TileEntityMachineEnergy {
 	}
 
 	public boolean isValidTemperature(){
-		return  getChillerTank().getFluid().getFluid().getTemperature() <= 300;
+		return getChillerTank().getFluid().getFluid().getTemperature() <= 300;
 	}
 
 	private FluidStack getChillFluid(String fluid) {
@@ -217,18 +214,28 @@ public class TileEntityGanController extends TileEntityMachineEnergy {
 	//----------------------- PROCESS -----------------------
 	@Override
 	public void update(){
+		acceptEnergy();
 		if(!worldObj.isRemote){
 			if(isActivated()){
 				performSanityCheck();
 
 				if(checkDevices()){
-					if(!isProducing()){
-						if(canCompress()){
-							compress();
+					if(!isCycling()){
+						if(!isProducing()){
+							if(canCompress()){
+								compress();
+							}
+						}else{
+							if(canProcess()){
+								process();
+							}
 						}
 					}else{
 						if(canProcess()){
 							process();
+						}
+						if(canCompress()){
+							compress();
 						}
 					}
 				}
@@ -308,12 +315,18 @@ public class TileEntityGanController extends TileEntityMachineEnergy {
 			this.tier += getGanTier(checkPos);
 		}
 
-		for(int x = 0; x < 4; x++){
+		for(int x = 0; x < 3; x++){
 			checkPos.setPos(getNewX(), pos.getY() + x, getNewZ()); // tower
 			if(isGanStructure(checkPos, 5) || isGanStructure(checkPos, 11)){ 
 				devices++;
 				this.tier += getGanTier(checkPos);
 			}
+		}
+
+		checkPos.setPos(getNewX(), pos.getY() + 3, getNewZ()); // tower cap
+		if(isGanStructure(checkPos, 15)){ 
+			devices++;
+			this.tier += 1;
 		}
 
 		checkPos.setPos(pos.offset(getGanFacing().fromAngle(getGanFacing().getHorizontalAngle() + 270)));
@@ -334,13 +347,12 @@ public class TileEntityGanController extends TileEntityMachineEnergy {
 			devices++;
 			this.tier += getGanTier(checkPos);
 		}
-
 		return devices == 9;
 	}
 
 	private int getGanTier(MutableBlockPos checkPos) {
 		int meta = worldObj.getBlockState(checkPos).getBlock().getMetaFromState(worldObj.getBlockState(checkPos));
-		return  meta > 5 ? 2 : 1;
+		return  meta > 5  && meta < 12 ? 2 : 1;
 	}
 
 	private boolean isGanStructure(BlockPos checkPos, int i) {

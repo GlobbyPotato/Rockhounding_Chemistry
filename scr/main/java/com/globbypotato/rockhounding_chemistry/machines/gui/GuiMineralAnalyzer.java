@@ -6,6 +6,7 @@ import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityMin
 
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -44,6 +45,28 @@ public class GuiMineralAnalyzer extends GuiBase {
 	   if(mouseX >= 9+x && mouseX <= 18+x && mouseY >= 54+y && mouseY <= 104+y){
 		   drawPowerInfo("ticks", this.mineralAnalyzer.getPower(), this.mineralAnalyzer.getPowerMax(), mouseX, mouseY);
 	   }
+
+		//fuel status
+		if(this.mineralAnalyzer.getInput().getStackInSlot(this.mineralAnalyzer.FUEL_SLOT) == null){
+			   	//fuel
+				String fuelString = TextFormatting.DARK_GRAY + "Fuel Type: " + TextFormatting.GOLD + "Common";
+				String indString = TextFormatting.DARK_GRAY + "Induction: " + TextFormatting.RED + "OFF";
+				String permaString = "";
+				if(this.mineralAnalyzer.hasFuelBlend()){
+					fuelString = TextFormatting.DARK_GRAY + "Fuel Type: " + TextFormatting.GOLD + "Blend";
+				}
+				if(this.mineralAnalyzer.canInduct()){
+					indString = TextFormatting.DARK_GRAY + "Induction: " + TextFormatting.RED + "ON";
+					permaString = TextFormatting.DARK_GRAY + "Status: " + TextFormatting.DARK_GREEN + "Mobile";
+					if(this.mineralAnalyzer.hasPermanentInduction()){
+						permaString = TextFormatting.DARK_GRAY + "Status: " + TextFormatting.DARK_RED + "Permanent";
+					}
+				}
+				String multiString[] = new String[]{fuelString, "", indString, permaString};
+			if(mouseX >= 7+x && mouseX <= 24+x && mouseY >= 33+y && mouseY <= 50+y){
+				   drawMultiLabel(multiString, mouseX, mouseY);
+			}
+		}
 
 		//sulf tank
 		if(mouseX>= 105+x && mouseX <= 121+x && mouseY >= 26+y && mouseY <= 86+y){

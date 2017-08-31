@@ -240,6 +240,7 @@ public class TileEntityLabOven extends TileEntityMachineTank {
 		if (!isValidInterval()) {
 			recipeIndex = -1;
 		}
+		acceptEnergy();
 		fuelHandler(input.getStackInSlot(FUEL_SLOT));
 		redstoneHandler(REDSTONE_SLOT, this.getCookTimeMax());
 		lavaHandler();

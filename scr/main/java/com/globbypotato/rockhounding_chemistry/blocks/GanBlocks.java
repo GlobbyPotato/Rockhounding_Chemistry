@@ -1,6 +1,7 @@
 package com.globbypotato.rockhounding_chemistry.blocks;
 
 import java.util.List;
+import java.util.Random;
 
 import javax.annotation.Nullable;
 
@@ -11,11 +12,11 @@ import com.globbypotato.rockhounding_chemistry.handlers.GuiHandler;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityAirChiller;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityAirCompresser;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityNitrogenTank;
-import com.globbypotato.rockhounding_core.blocks.BaseMetaBlock;
 import com.globbypotato.rockhounding_core.enums.EnumFluidNbt;
 import com.globbypotato.rockhounding_core.machines.tileentity.IFluidHandlingTile;
 import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityMachineInv;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -37,6 +38,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
@@ -98,9 +100,14 @@ public class GanBlocks extends BlockIO {
 		return false;
 	}
 
+	@Override
+    public Item getItemDropped(IBlockState state, Random rand, int fortune){
+		return isTopBlock(state, state.getBlock().getMetaFromState(state)) ? null : Item.getItemFromBlock(this);
+	}
+
     @Override
     public int damageDropped(IBlockState state){
-    	return getMetaFromState(state) ;
+		return getMetaFromState(state);
     }
 
     @Override
@@ -116,40 +123,54 @@ public class GanBlocks extends BlockIO {
 	@Override
 	public void getSubBlocks(Item itemIn, CreativeTabs tab, List list) {
 		for (int i = 0; i < this.array.length; i++){
-			list.add(new ItemStack(itemIn, 1, i));
+			if(!GanIB.isTopBlock(i)){
+				list.add(new ItemStack(itemIn, 1, i));
+			}
 		}
 	}
 
 	@Override
 	public boolean hasTileEntity(IBlockState state) {
 		int meta = getMetaFromState(state);
-		return isActiveMeta(meta);
+		return isActiveMeta(state, meta);
 	}
 
-	public static boolean isActiveMeta(int meta) {
-		return meta == 0 || meta == 1 || meta == 4 || meta == 6 || meta == 7 || meta == 10;
+	public static boolean isActiveMeta(IBlockState state, int meta) {
+		return state.getBlock() instanceof GanBlocks && (meta == 0 || meta == 1 || meta == 4 || meta == 6 || meta == 7 || meta == 10);
 	}
 
-	public static boolean isVessel(int meta) {
-		return meta == 0 || meta == 6;
+	public static boolean isVessel(IBlockState state, int meta) {
+		return state.getBlock() instanceof GanBlocks && (meta == 0 || meta == 6);
 	}
 
-	public static boolean isChiller(int meta) {
-		return meta == 1 || meta == 7;
+	public static boolean isChiller(IBlockState state, int meta) {
+		return state.getBlock() instanceof GanBlocks && (meta == 1 || meta == 7);
 	}
 
-	public static boolean isTank(int meta) {
-		return meta == 4 || meta == 10;
+	public static boolean isTurbine(IBlockState state, int meta) {
+		return state.getBlock() instanceof GanBlocks && (meta == 3 || meta == 9);
+	}
+
+	public static boolean isTopBlock(IBlockState state, int meta) {
+		return state.getBlock() instanceof GanBlocks && (meta == 12 || meta == 13 || meta == 14);
+	}
+
+	public static boolean isTank(IBlockState state, int meta) {
+		return state.getBlock() instanceof GanBlocks && (meta == 4 || meta == 10);
+	}
+
+	public static boolean isTower(IBlockState state, int meta) {
+		return state.getBlock() instanceof GanBlocks && (meta == 5 || meta == 11 || meta == 15);
 	}
 
 	@Override
 	public TileEntity createTileEntity(World world, IBlockState state) {
 		int meta = EnumGan.values()[getMetaFromState(state)].ordinal();
-		if(isTank(meta)){
+		if(isTank(state, meta)){
 			return new TileEntityNitrogenTank();
-		}else if(isVessel(meta)){
+		}else if(isVessel(state, meta)){
 			return new TileEntityAirCompresser();
-		}else if(isChiller(meta)){
+		}else if(isChiller(state, meta)){
 			return new TileEntityAirChiller();
 		}
 		return null;
@@ -167,12 +188,21 @@ public class GanBlocks extends BlockIO {
 					}
 				}
 			}
-			if(isTank(meta)){
+			if(isTank(state, meta)){
 				player.openGui(Rhchemistry.instance, GuiHandler.nitrogenTankID, world, pos.getX(), pos.getY(), pos.getZ());
-			}else if(isVessel(meta)){
+			
+			}else if(isVessel(state, meta)){
 				player.openGui(Rhchemistry.instance, GuiHandler.airCompresserID, world, pos.getX(), pos.getY(), pos.getZ());
-			}else if(isChiller(meta)){
+			
+			}else if(meta == EnumGan.VESSEL_TOP.ordinal()){
+				player.openGui(Rhchemistry.instance, GuiHandler.airCompresserID, world, pos.getX(), pos.getY() - 1, pos.getZ());
+			
+			}else if(isChiller(state, meta)){
 				player.openGui(Rhchemistry.instance, GuiHandler.airChillerID, world, pos.getX(), pos.getY(), pos.getZ());
+			
+			}else if(meta == EnumGan.CHILLER_TOP.ordinal()){
+				player.openGui(Rhchemistry.instance, GuiHandler.airChillerID, world, pos.getX(), pos.getY() - 1, pos.getZ());
+			
 			}else{
 				return false;
 			}
@@ -183,7 +213,7 @@ public class GanBlocks extends BlockIO {
 	@Override
 	public void breakBlock(World world, BlockPos pos, IBlockState state){
 		int meta = world.getBlockState(pos).getBlock().getMetaFromState(world.getBlockState(pos));
-		if(isActiveMeta(meta)){
+		if(isActiveMeta(state, meta)){
 			TileEntity te = world.getTileEntity(pos);
 			if (te instanceof TileEntityMachineInv){
 				if(te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY,null)){
@@ -200,9 +230,71 @@ public class GanBlocks extends BlockIO {
 		super.breakBlock(world, pos, state);
 	}
 
+	@Override
+	public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
+		checkFullBlocks(world, world.getBlockState(pos), world.getBlockState(pos.up()), world.getBlockState(pos.down()), pos);
+		world.scheduleUpdate(pos, this, 1);
+	}
+
+	@Override
+    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn){
+		checkFullBlocks(world, world.getBlockState(pos), world.getBlockState(pos.up()), world.getBlockState(pos.down()), pos);
+	}
+
+    private void checkFullBlocks(World world, IBlockState state, IBlockState stateUp, IBlockState stateDown, BlockPos pos) {
+		int meta = world.getBlockState(pos).getBlock().getMetaFromState(world.getBlockState(pos));
+		int metabase = stateDown.getBlock().getMetaFromState(stateDown);
+		if(isVessel(state, meta)){  checkOrDropBlock(world, state, stateUp, pos, EnumGan.VESSEL_TOP); }
+		if(isChiller(state, meta)){ checkOrDropBlock(world, state, stateUp, pos, EnumGan.CHILLER_TOP); }
+		if(isTurbine(state, meta)){ checkOrDropBlock(world, state, stateUp, pos, EnumGan.TURBINE_TOP); }
+
+		if(isTopBlock(state, meta)){
+			if(meta == EnumGan.CHILLER_TOP.ordinal()){ if(!isChiller(stateDown, metabase)){ world.setBlockToAir(pos); } }
+			if(meta == EnumGan.TURBINE_TOP.ordinal()){ if(!isTurbine(stateDown, metabase)){ world.setBlockToAir(pos); } }
+			if(meta == EnumGan.VESSEL_TOP.ordinal()){  if(!isVessel(stateDown, metabase)){  world.setBlockToAir(pos); } }
+		}
+	}
+
+	private void checkOrDropBlock(World world, IBlockState state, IBlockState stateUp, BlockPos pos, EnumGan topBlock) {
+		if(stateUp != state.withProperty(VARIANT, topBlock)){
+			int meta = world.getBlockState(pos).getBlock().getMetaFromState(world.getBlockState(pos));
+			ItemStack itemstack = this.createStackedBlock(state);
+			TileEntity te = world.getTileEntity(pos);
+	        handleTileNBT(te, itemstack);
+	        spawnAsEntity(world, pos, itemstack);
+	        world.setBlockToAir(pos);
+		}
+	}
+
+    private void setOrDropBlock(World world, IBlockState state, BlockPos pos, EnumGan topBlock) {
+		if(world.getBlockState(pos.up()).getBlock().isAir(world.getBlockState(pos.up()), world, pos)){
+			world.setBlockState(pos.up(), state.withProperty(VARIANT, topBlock));
+		}else{
+            this.dropBlockAsItem(world, pos, state, 0);
+            world.setBlockToAir(pos);
+		}
+	}
+
+    @Override
+    public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
+		int meta = world.getBlockState(pos).getBlock().getMetaFromState(world.getBlockState(pos));
+		IBlockState basestate = world.getBlockState(pos.down());
+		if(isTopBlock(state, meta)){
+			return new ItemStack(state.getBlock(), 1, basestate.getBlock().getMetaFromState(basestate));
+		}else{
+			return super.getPickBlock(state, target, world, pos, player);
+		}
+    }
+
     @Override
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack){
-		if(stack.hasTagCompound()){
+        world.setBlockState(pos, state.withProperty(VARIANT, EnumGan.values()[stack.getItemDamage()]), 2);
+		int meta = world.getBlockState(pos).getBlock().getMetaFromState(world.getBlockState(pos));
+		if(isVessel(state, meta)){  setOrDropBlock(world, state, pos, EnumGan.VESSEL_TOP); }
+		if(isChiller(state, meta)){ setOrDropBlock(world, state, pos, EnumGan.CHILLER_TOP); }
+		if(isTurbine(state, meta)){ setOrDropBlock(world, state, pos, EnumGan.TURBINE_TOP); }
+
+    	if(stack.hasTagCompound()){
 			TileEntity tile = world.getTileEntity(pos);
 			if(tile != null){
 				if(tile instanceof TileEntityAirCompresser){
@@ -228,12 +320,22 @@ public class GanBlocks extends BlockIO {
 		}
     }
 
-    @Override
+	@Override
     public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, @Nullable ItemStack stack){
         player.addStat(StatList.getBlockStats(this));
         player.addExhaustion(0.025F);
         java.util.List<ItemStack> items = new java.util.ArrayList<ItemStack>();
-        ItemStack itemstack = this.createStackedBlock(state);
+        ItemStack itemstack = null;
+        if(!isTopBlock(state, state.getBlock().getMetaFromState(state))){
+        	itemstack = this.createStackedBlock(state);
+        }
+        handleTileNBT(te, itemstack);
+        if (itemstack != null){ items.add(itemstack); }
+        net.minecraftforge.event.ForgeEventFactory.fireBlockHarvesting(items, worldIn, pos, state, 0, 1.0f, true, player);
+        for (ItemStack item : items){ spawnAsEntity(worldIn, pos, item); }
+    }
+
+	private void handleTileNBT(TileEntity te, ItemStack itemstack) {
         if(te != null){
         	if(te instanceof TileEntityAirCompresser){
       			addVesselNbt(itemstack, te);
@@ -245,10 +347,7 @@ public class GanBlocks extends BlockIO {
       			addChillerNbt(itemstack, te);
         	}
         }
-        if (itemstack != null){ items.add(itemstack); }
-        net.minecraftforge.event.ForgeEventFactory.fireBlockHarvesting(items, worldIn, pos, state, 0, 1.0f, true, player);
-        for (ItemStack item : items){ spawnAsEntity(worldIn, pos, item); }
-    }
+	}
 
 	private void addVesselNbt(ItemStack itemstack, TileEntity tileentity) {
 		TileEntityAirCompresser compresser = ((TileEntityAirCompresser)tileentity);

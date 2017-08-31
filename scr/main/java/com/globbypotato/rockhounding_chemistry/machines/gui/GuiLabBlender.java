@@ -6,6 +6,7 @@ import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityLab
 
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -38,6 +39,28 @@ public class GuiLabBlender extends GuiBase {
 		//fuel
 		if(mouseX >= 10+x && mouseX <= 21+x && mouseY >= 39+y && mouseY <= 90+y){
 			drawPowerInfo("ticks", this.labBlender.getPower(), this.labBlender.getPowerMax(), mouseX, mouseY);
+		}
+
+		//fuel status
+		if(this.labBlender.getInput().getStackInSlot(this.labBlender.FUEL_SLOT) == null){
+			   	//fuel
+				String fuelString = TextFormatting.DARK_GRAY + "Fuel Type: " + TextFormatting.GOLD + "Common";
+				String indString = TextFormatting.DARK_GRAY + "Induction: " + TextFormatting.RED + "OFF";
+				String permaString = "";
+				if(this.labBlender.hasFuelBlend()){
+					fuelString = TextFormatting.DARK_GRAY + "Fuel Type: " + TextFormatting.GOLD + "Blend";
+				}
+				if(this.labBlender.canInduct()){
+					indString = TextFormatting.DARK_GRAY + "Induction: " + TextFormatting.RED + "ON";
+					permaString = TextFormatting.DARK_GRAY + "Status: " + TextFormatting.DARK_GREEN + "Mobile";
+					if(this.labBlender.hasPermanentInduction()){
+						permaString = TextFormatting.DARK_GRAY + "Status: " + TextFormatting.DARK_RED + "Permanent";
+					}
+				}
+				String multiString[] = new String[]{fuelString, "", indString, permaString};
+			if(mouseX >= 7+x && mouseX <= 24+x && mouseY >= 19+y && mouseY <= 36+y){
+				   drawMultiLabel(multiString, mouseX, mouseY);
+			}
 		}
 
 		//activation

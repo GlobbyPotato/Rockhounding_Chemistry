@@ -13,6 +13,7 @@
 		"type=carborundum": 	{"model" : "rockhounding_chemistry:alloyBricks_carborundum"},
 		"type=tinite": 			{"model" : "rockhounding_chemistry:alloyBricks_tinite"},
 		"type=hydronalium": 	{"model" : "rockhounding_chemistry:alloyBricks_hydronalium"},
-		"type=vanasteel": 		{"model" : "rockhounding_chemistry:alloyBricks_vanasteel"}
+		"type=vanasteel": 		{"model" : "rockhounding_chemistry:alloyBricks_vanasteel"},
+		"type=widia": 			{"model" : "rockhounding_chemistry:alloyBricks_widia"}
    }
 }

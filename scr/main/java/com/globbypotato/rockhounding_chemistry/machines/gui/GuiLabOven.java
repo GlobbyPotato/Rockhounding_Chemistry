@@ -6,6 +6,7 @@ import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityLab
 
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -43,6 +44,28 @@ public class GuiLabOven extends GuiBase {
 		//fuel
 		if(mouseX >= 10+x && mouseX <= 21+x && mouseY >= 50+y && mouseY <= 101+y){
 			drawPowerInfo("ticks", this.labOven.getPower(), this.labOven.getPowerMax(), mouseX, mouseY);
+		}
+
+		//fuel status
+		if(this.labOven.getInput().getStackInSlot(this.labOven.FUEL_SLOT) == null){
+			   	//fuel
+				String fuelString = TextFormatting.DARK_GRAY + "Fuel Type: " + TextFormatting.GOLD + "Common";
+				String indString = TextFormatting.DARK_GRAY + "Induction: " + TextFormatting.RED + "OFF";
+				String permaString = "";
+				if(this.labOven.hasFuelBlend()){
+					fuelString = TextFormatting.DARK_GRAY + "Fuel Type: " + TextFormatting.GOLD + "Blend";
+				}
+				if(this.labOven.canInduct()){
+					indString = TextFormatting.DARK_GRAY + "Induction: " + TextFormatting.RED + "ON";
+					permaString = TextFormatting.DARK_GRAY + "Status: " + TextFormatting.DARK_GREEN + "Mobile";
+					if(this.labOven.hasPermanentInduction()){
+						permaString = TextFormatting.DARK_GRAY + "Status: " + TextFormatting.DARK_RED + "Permanent";
+					}
+				}
+				String multiString[] = new String[]{fuelString, "", indString, permaString};
+			if(mouseX >= 7+x && mouseX <= 24+x && mouseY >= 30+y && mouseY <= 47+y){
+				   drawMultiLabel(multiString, mouseX, mouseY);
+			}
 		}
 
 		//redstone

@@ -1,18 +1,22 @@
 package com.globbypotato.rockhounding_chemistry.enums;
 
 public enum EnumGan implements BaseEnum {
-	VESSEL_I(2.0F),
-	CHILLER_I(2.0F),
+	VESSEL_I(1.0F),
+	CHILLER_I(1.0F),
 	CONDENSER_I(1.0F),
-	TURBINE_I(1.3F),
+	TURBINE_I(1.0F),
 	TANK_I(1.0F),
 	TOWER_I(1.0F),
-	VESSEL_II(2.0F),
-	CHILLER_II(2.0F),
+	VESSEL_II(1.0F),
+	CHILLER_II(1.0F),
 	CONDENSER_II(1.0F),
-	TURBINE_II(1.3F),
+	TURBINE_II(1.0F),
 	TANK_II(1.0F),
-	TOWER_II(1.0F);
+	TOWER_II(1.0F),
+	VESSEL_TOP(1.0F),
+	CHILLER_TOP(1.0F),
+	TURBINE_TOP(1.0F),
+	TOWER_TOP(1.0F);
 
 	private float height;
 	EnumGan(float height){

@@ -1,3 +1,70 @@
+v1.54 changelog
+	Cryogenic Distillation Tower
+		Added an "Automated Production" switch to make the two phases continous
+		Models fix
+		Upper Distillation Tower block replaced by a Distillation Tower Top (not tier dependant)(see wiki)
+		Requires to break and place again the various parts to refresh the structure 
+		Some crafting recipes made less expensive
+		Updated the wiki
+	Evaporation Tank
+		Fixed a crash with Immersive Enginering fluid pipes.
+
+v1.53 changelog - hotfix
+	Fixed a crash with the GAN Controller
+
+v1.52 changelog
+	Ultrabattery/OWC Energy
+		Fixed some energy handling and compatibility issues 
+		Fused glass recipe moved to Metal Alloyer to avoid furnace conflicts
+	Mine Crawler
+		Replaced Hastelloy parts with Tungsten Carbide parts 
+		Some recipes rebalanced
+	Casting Bench
+		Some more crafting recipes moved here 
+		Added an Ingot Pattern 
+		Added a Gear Pattern 
+		Added a Generic Pattern for uncategorized recipes
+	Misc fixes
+		Various fixes and tweaks
+		More gui tooltip and fixes
+		Core updated to v1.06
+
+v1.51 changelog
+	UltraBattery (experimental)
+		Portable energy storage system
+		4 tiered capacities available (500K, 2M, 8M, 32M) 
+		Switches between Charge Mode and Provide Mode
+	Casting Bench
+		Automatic machine to cast metal furnitures for the mod 
+		Left click to scroll patterns. Right-click to handle ingredients 
+		Replaced the related crafting recipes with machine recipes
+	Lab Blender
+		Refines and blends solid ingredients into mixtures used by the mod 
+		Mixtures can have up to 9 ingredients (shaped grid)
+		Can customize with items or oredicts 
+		Replaced the dust mixtures crafting recipes with machine recipes
+	Disposer
+		Drops 1 item from each of its 9 slots every amount of ticks 
+		Configurable interval 
+		Lockable inputs for automation
+	Machines
+		Fixed Deposition Chamber and Boundary Breaker being accidentally gated by the Fuel Blend 
+		Fixed some tooltips potentially messing with custom recipes
+	Deposition Chamber
+		Fixed oredicted input not being accepted
+		Distillation tower
+		Filtered valid refrigerant fluids by temperature <= 300K (ambient) to avoid oddities 
+		Chilling cost (RF) set to 1/3 of the refrigerant temperature value
+	OWC Energy System
+		Increased 10x the energy production rate 
+		Improved gui tooltips
+	Misc fixes
+		Added some Waila/Hwyla support for some machines 
+		Some recipes rebalanced and uniformed 
+		Some registration fix 
+		Various fixes 
+		Core updated to v1.05
+
 v1.49/v1.50 changelog
 	Petrographer
 		Fixed a bug when levels are maxed

@@ -129,6 +129,7 @@ public class TileEntityElectroLaser extends TileEntityMachineTank {
 	// ----------------------- PROCESS -----------------------
 	@Override
 	public void update() {
+		acceptEnergy();
 		if (!worldObj.isRemote) {
 			emptyContainer(SOLUTION_SLOT, inputTank);
 			placeRay();

@@ -9,7 +9,6 @@ import com.globbypotato.rockhounding_core.machines.tileentity.TemplateStackHandl
 import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityMachineEnergy;
 
 import cofh.api.energy.IEnergyProvider;
-import cofh.api.energy.IEnergyReceiver;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
@@ -20,7 +19,6 @@ import net.minecraft.util.math.BlockPos.MutableBlockPos;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
-import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class TileEntityOwcController extends TileEntityMachineEnergy implements IEnergyProvider{
@@ -171,74 +169,16 @@ public class TileEntityOwcController extends TileEntityMachineEnergy implements 
 
 // Extract energy
 	private void provideEnergy() {
-		int possibleEnergy = 0;
-	    IBlockState state = worldObj.getBlockState(pos);
-	    for(EnumFacing facing: EnumFacing.values()){
-			if(this.getRedstone() >= rfTransfer()){
-				TileEntity checkTile = this.worldObj.getTileEntity(pos.offset(facing));
-				if(checkTile != null){
-					if(checkTile instanceof TileEntityUltraBattery){
-						TileEntityUltraBattery battery = (TileEntityUltraBattery)checkTile;
-						if(battery.sideStatus[6]){
-							if(!battery.isFullRedstone()){
-								possibleEnergy = Math.min(battery.getRedstoneMax() - battery.getRedstone(), rfTransfer());
-							}
-							if(possibleEnergy > 0){
-								for(int x = 0; x < possibleEnergy; x++){
-									battery.receiveEnergy(facing, 1, false);
-									this.redstoneCount--;
-								}
-							}
-						}
-					}else{
-						if(checkTile instanceof TileEntityMachineEnergy){
-							TileEntityMachineEnergy rhTile = (TileEntityMachineEnergy)checkTile;
-							if(rhTile.isRedstoneFilled() || rhTile.canRefillOnlyPower()){
-								if(!rhTile.isFullPower()){
-									possibleEnergy = Math.min(rhTile.getPowerMax() - rhTile.getPower(), rfTransfer());
-								}
-							}else if(rhTile.redstoneIsRefillable()){
-								if(!rhTile.isFullRedstone()){
-									possibleEnergy = Math.min(rhTile.getRedstoneMax() - rhTile.getRedstone(), rfTransfer());
-								}
-							}
-							if(possibleEnergy > 0){
-								for(int x = 0; x < possibleEnergy; x++){
-									rhTile.receiveEnergy(facing, 1, false);
-									this.redstoneCount--;
-								}
-							}
-						}else{
-							if(checkTile.hasCapability(CapabilityEnergy.ENERGY, facing) && checkTile.getCapability(CapabilityEnergy.ENERGY, facing).canReceive()){
-								possibleEnergy = Math.min(checkTile.getCapability(CapabilityEnergy.ENERGY, facing).getMaxEnergyStored() - checkTile.getCapability(CapabilityEnergy.ENERGY, facing).getEnergyStored(), rfTransfer());
-								if(possibleEnergy > 0){
-									for(int x = 0; x < possibleEnergy; x++){
-										if(checkTile.getCapability(CapabilityEnergy.ENERGY, facing).getMaxEnergyStored() - checkTile.getCapability(CapabilityEnergy.ENERGY, facing).getEnergyStored() > 0){
-											checkTile.getCapability(CapabilityEnergy.ENERGY, facing.getOpposite()).receiveEnergy(1, false);
-											this.redstoneCount--;
-										}
-									}
-								}
-							}else{
-								if(checkTile instanceof IEnergyReceiver) {
-									IEnergyReceiver te = (IEnergyReceiver) checkTile;
-									if(te.canConnectEnergy(facing)){
-										possibleEnergy = Math.min(te.getMaxEnergyStored(facing) - te.getEnergyStored(facing), rfTransfer());
-										if(possibleEnergy > 0){
-											for(int x = 0; x < possibleEnergy; x++){
-												if(te.getMaxEnergyStored(facing) - te.getEnergyStored(facing) > 0){
-													te.receiveEnergy(facing.getOpposite(), 1, false);
-													this.redstoneCount--;
-												}
-											}
-										}
-									}
-								}
-							}
-						}
+		if(!worldObj.isRemote){
+		    IBlockState state = worldObj.getBlockState(pos);
+		    for(EnumFacing facing: EnumFacing.values()){
+				if(this.getRedstone() >= rfTransfer()){
+					TileEntity checkTile = this.worldObj.getTileEntity(pos.offset(facing));
+					if(checkTile != null){
+						sendEnergy(checkTile, facing);
 					}
 				}
-			}
+		    }
 		}
 	}
 

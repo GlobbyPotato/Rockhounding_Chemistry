@@ -1,12 +1,14 @@
 package com.globbypotato.rockhounding_chemistry.enums;
 
 public enum EnumCasting implements BaseEnum {
+	GENERIC,
 	COIL,
 	ROD,
 	FOIL,
 	ARM,
 	CASING,
-	CUSTOM;
+	GEAR,
+	INGOT;
 
 	//---------CUSTOM----------------
 	public static int size(){

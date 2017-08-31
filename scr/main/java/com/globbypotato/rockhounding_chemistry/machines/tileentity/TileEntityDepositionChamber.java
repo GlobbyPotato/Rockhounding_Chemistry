@@ -203,6 +203,7 @@ public class TileEntityDepositionChamber extends TileEntityMachineTank{
 	//----------------------- PROCESS -----------------------
 	@Override
 	public void update(){
+		acceptEnergy();
 		if(!isValidInterval()){ recipeIndex = -1; }
 
 		if(!worldObj.isRemote){

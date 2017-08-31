@@ -2,7 +2,6 @@ package com.globbypotato.rockhounding_chemistry.blocks.itemblocks;
 
 import java.util.List;
 
-import com.globbypotato.rockhounding_chemistry.blocks.GanBlocks;
 import com.globbypotato.rockhounding_core.blocks.itemblocks.BaseItemBlock;
 import com.globbypotato.rockhounding_core.enums.EnumFluidNbt;
 
@@ -32,20 +31,40 @@ public class GanIB extends BaseItemBlock {
 
 	@Override
 	public int getItemStackLimit(ItemStack stack) {
-		if(GanBlocks.isActiveMeta(stack.getItemDamage())){
+		if(isActiveMeta(stack.getItemDamage())){
 			return 1;
 		}
 		return this.getItemStackLimit();
 	}
 
-    private static void setItemNbt(ItemStack itemstack) {
+    private void setItemNbt(ItemStack itemstack) {
 		int meta = itemstack.getItemDamage();
-    	if(GanBlocks.isActiveMeta(meta)){
+    	if(isActiveMeta(meta)){
         	itemstack.setTagCompound(new NBTTagCompound());
-        	if(GanBlocks.isVessel(meta)){
+        	if(isVessel(meta)){
             	itemstack.getTagCompound().setInteger("Air", 0);
         	}
     	}
+	}
+
+	public static boolean isActiveMeta(int meta) {
+		return meta == 0 || meta == 1 || meta == 4 || meta == 6 || meta == 7 || meta == 10;
+	}
+
+	public static boolean isVessel(int meta) {
+		return meta == 0 || meta == 6;
+	}
+
+	public static boolean isChiller(int meta) {
+		return meta == 1 || meta == 7;
+	}
+
+	public static boolean isTank(int meta) {
+		return meta == 4 || meta == 10;
+	}
+
+	public static boolean isTopBlock(int meta) {
+		return meta == 12 || meta == 13 || meta == 14;
 	}
 
 	@Override
@@ -53,13 +72,13 @@ public class GanIB extends BaseItemBlock {
     public void addInformation(ItemStack itemstack, EntityPlayer player, List<String> tooltip, boolean held) {
 		int meta = itemstack.getItemDamage();
         if(itemstack.hasTagCompound()) {
-        	if(GanBlocks.isVessel(meta)){
+        	if(isVessel(meta)){
             	int air = itemstack.getTagCompound().getInteger("Air");
 	        	if(air > 0){
 	        		tooltip.add(TextFormatting.DARK_GRAY + "Compressed Air: " + TextFormatting.AQUA + air + " units");
 	        	}
         	}
-        	if(GanBlocks.isTank(meta)){
+        	if(isTank(meta)){
         		String getTag = EnumFluidNbt.SOLVENT.nameTag();
         		if(itemstack.getTagCompound().hasKey(getTag)){
         			FluidStack fluid = FluidStack.loadFluidStackFromNBT(itemstack.getTagCompound().getCompoundTag(getTag));
@@ -68,7 +87,7 @@ public class GanIB extends BaseItemBlock {
         			}
         		}
         	}
-        	if(GanBlocks.isChiller(meta)){
+        	if(isChiller(meta)){
         		String getTag = EnumFluidNbt.SOLVENT.nameTag();
         		if(itemstack.getTagCompound().hasKey(getTag)){
         			FluidStack fluid = FluidStack.loadFluidStackFromNBT(itemstack.getTagCompound().getCompoundTag(getTag));

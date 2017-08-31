@@ -172,6 +172,7 @@ public class TileEntityMetalAlloyer extends TileEntityMachineTank {
 	//----------------------- PROCESS -----------------------
 	@Override
 	public void update(){
+		acceptEnergy();
 		fuelHandler(input.getStackInSlot(FUEL_SLOT));
 		lavaHandler();
 		if(!worldObj.isRemote){
@@ -295,17 +296,16 @@ public class TileEntityMetalAlloyer extends TileEntityMachineTank {
 	}
 
 	private void showIngredients() {
-		countIngredients(countRecipes(), getRecipe().getDusts(), getRecipe().getQuantities());
+		countIngredients(getRecipe().getDusts(), getRecipe().getQuantities());
 		doScan = false;
 	}
 
-    private void countIngredients(int countRecipes, List<String> dusts, List<Integer> quantities) {
+    private void countIngredients(List<String> dusts, List<Integer> quantities) {
 		for(int x = 0; x < dusts.size(); x++){
-			for(ItemStack dust : OreDictionary.getOres(dusts.get(x))) {
-	    		if(dust != null){
-	    			template.setStackInSlot(x + 1, dust);
-	    			template.getStackInSlot(x + 1).stackSize = quantities.get(x);
-	    		}
+			List<ItemStack> dustList = OreDictionary.getOres(dusts.get(x));
+			if(dustList.size() > 0){
+    			template.setStackInSlot(x + 1, dustList.get(0));
+    			template.getStackInSlot(x + 1).stackSize = quantities.get(x);
 			}
 		}
 	}

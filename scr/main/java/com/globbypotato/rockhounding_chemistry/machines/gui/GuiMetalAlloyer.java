@@ -6,6 +6,7 @@ import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityMet
 
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -32,28 +33,57 @@ public class GuiMetalAlloyer extends GuiBase {
 		super.drawScreen(mouseX, mouseY, f);
 		int x = (this.width - this.xSize) / 2;
 		int y = (this.height - this.ySize) / 2;
+
 		//fuel
 		if(mouseX >= 11+x && mouseX <= 20+x && mouseY >= 40+y && mouseY <= 89+y){
 			drawPowerInfo("ticks", this.metalAlloyer.getPower(), this.metalAlloyer.getPowerMax(), mouseX, mouseY);
 		}
+
+		//fuel status
+		if(this.metalAlloyer.getInput().getStackInSlot(this.metalAlloyer.FUEL_SLOT) == null){
+			   	//fuel
+				String fuelString = TextFormatting.DARK_GRAY + "Fuel Type: " + TextFormatting.GOLD + "Common";
+				String indString = TextFormatting.DARK_GRAY + "Induction: " + TextFormatting.RED + "OFF";
+				String permaString = "";
+				if(this.metalAlloyer.hasFuelBlend()){
+					fuelString = TextFormatting.DARK_GRAY + "Fuel Type: " + TextFormatting.GOLD + "Blend";
+				}
+				if(this.metalAlloyer.canInduct()){
+					indString = TextFormatting.DARK_GRAY + "Induction: " + TextFormatting.RED + "ON";
+					permaString = TextFormatting.DARK_GRAY + "Status: " + TextFormatting.DARK_GREEN + "Mobile";
+					if(this.metalAlloyer.hasPermanentInduction()){
+						permaString = TextFormatting.DARK_GRAY + "Status: " + TextFormatting.DARK_RED + "Permanent";
+					}
+				}
+				String multiString[] = new String[]{fuelString, "", indString, permaString};
+			if(mouseX >= 7+x && mouseX <= 24+x && mouseY >= 18+y && mouseY <= 36+y){
+				   drawMultiLabel(multiString, mouseX, mouseY);
+			}
+		}
+
 		//prev
 		if(mouseX >= 137+x && mouseX <= 153+x && mouseY >= 98+y && mouseY <= 114+y){
 			drawButtonLabel("Previous Recipe", mouseX, mouseY);
 		}
+
 		//next
 		if(mouseX >= 154+x && mouseX <= 168+x && mouseY >= 98+y && mouseY <= 114+y){
 			drawButtonLabel("Next Recipe", mouseX, mouseY);
 		}
+
 		//activation
 		if(mouseX >= 7+x && mouseX <= 23+x && mouseY >= 98+y && mouseY <= 114+y){
 			drawButtonLabel("Activation", mouseX, mouseY);
 		}
+
 		//activation
         if(!this.metalAlloyer.canEqualize()){
     		if(mouseX >= 41+x && mouseX <= 58+x && mouseY >= 36+y && mouseY <= 52+y){
     			drawButtonLabel("Disabled", mouseX, mouseY);
 			}
         }
+
+        //equalizer
 		if(mouseX >= 41+x && mouseX <= 58+x && mouseY >= 21+y && mouseY <= 34+y){
 			drawButtonLabel("Ingredient Equalizer", mouseX, mouseY);
 		}

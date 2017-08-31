@@ -44,7 +44,7 @@ public class ModRecipes extends BaseRecipes {
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.castingBench), new Object[] { "IPI", "I I", "SSS", 'I', "ingotIron", 'S', stoneSlab, 'P', piston }));
 		// lab blender
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.labBlender), new Object[] { "PIU", "C  ", "SSS", 'C', cabinet, 'I', "ingotIron", 'S', stoneSlab, 'U', blendUnit, 'P', piston }));
-		//blend unit
+		// blend unit
 		GameRegistry.addRecipe(new ShapedOreRecipe(blendUnit, new Object[] { "GCG","CRC","GCG", 'C', ironCasing, 'G', "blockGlass" , 'R', ToolUtils.gear }));
 	}
 
@@ -54,8 +54,6 @@ public class ModRecipes extends BaseRecipes {
 		GameRegistry.addRecipe(new ShapedOreRecipe(battery(1), new Object[] { 	"BCB", "CcC", "BCB", 'B', battery(0), 'c', ironCasing, 'C', copperCoil }));
 		GameRegistry.addRecipe(new ShapedOreRecipe(battery(2), new Object[] { 	"BCB", "CcC", "BCB", 'B', battery(1), 'c', ironCasing, 'C', copperCoil }));
 		GameRegistry.addRecipe(new ShapedOreRecipe(battery(3), new Object[] { 	"BCB", "CcC", "BCB", 'B', battery(2), 'c', ironCasing, 'C', copperCoil }));
-		//fused glass
-		GameRegistry.addSmelting(glassBlock, fusedGlass, 1.0F);
 	}
 
 	private static void disposerRecipes() {
@@ -86,10 +84,12 @@ public class ModRecipes extends BaseRecipes {
  		GameRegistry.addRecipe(new ShapedOreRecipe(gan(4), new Object[] { "GcG", "G G", "GcG", 'G', "blockGlass", 'c', ironCasing }));
  		GameRegistry.addRecipe(new ShapedNbtRecipe(gan(10),new Object[] { "cSc", "cOc", "ccc", 'S', spiral, 'c', hydronaliumCasing, 'O', gan(4) }));
 		//tower
- 		GameRegistry.addRecipe(new ShapedOreRecipe(gan(5), new Object[] { "c c", "c c", "c c", 'c', ironCasing }));
- 		GameRegistry.addRecipe(new ShapedNbtRecipe(gan(11),new Object[] { "cSc", "cOc", "cSc", 'c', nimonicCasing, 'S', spiral, 'O', gan(5) }));
+ 		GameRegistry.addRecipe(new ShapedOreRecipe(gan(5), new Object[] { "cGc", "xGx", "cGc", 'c', ironCasing, 'x', copperCoil, 'G', "blockGlass" }));
+ 		GameRegistry.addRecipe(new ShapedNbtRecipe(gan(11),new Object[] { "cSc", "xOx", "cSc", 'c', nimonicCasing, 'S', spiral, 'O', gan(5), 'x', copperCoil }));
  		//controller
  		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.ganController),new Object[] { "XFX", "FLF", "FCF", 'L', advancedChip, 'F', ironCasing, 'C', comparator, 'X', logicChip }));
+		//tower cap
+ 		GameRegistry.addRecipe(new ShapedOreRecipe(gan(15),new Object[] { "cCc", "xGx", "cGc", 'c', ironCasing, 'C', compressor, 'G', "blockGlass", 'x', copperCoil }));
 	}
 
 	private static void metallurgyRecipes() {
@@ -136,22 +136,18 @@ public class ModRecipes extends BaseRecipes {
 		GameRegistry.addRecipe(new ShapedOreRecipe(cabinet, new Object[] { "GGG","GIG","GGG", 'I', "ingotIron", 'G', "blockGlass" }));
 	//logic chip
 		GameRegistry.addRecipe(new ShapelessOreRecipe(logicChip, new Object[] { "ingotIron", "ingotIron", "nuggetGold", "dustRedstone" }));
+	//advanced chip
+		GameRegistry.addRecipe(new ShapelessOreRecipe(advancedChip, new Object[] { logicChip, "gemQuartz", "nuggetGold", "dustRedstone" }));
 	//flask
 		GameRegistry.addRecipe(new ShapedOreRecipe(ToolUtils.flask, new Object[] { " G ","G G","GGG", 'G', "blockGlass"}));
 	//cylinder
 		GameRegistry.addRecipe(new ShapedOreRecipe(ToolUtils.cylinder, new Object[] { " G "," G ","GGG", 'G', "blockGlass" }));
-	//gear
-		GameRegistry.addRecipe(new ShapedOreRecipe(ToolUtils.gear, new Object[] { " N ","NIN"," N ", 'I', "ingotIron", 'N', "nuggetIron" }));
 	//test tube
 		GameRegistry.addRecipe(new ShapedOreRecipe(ToolUtils.testTube, new Object[] { "  G"," G ","N  ", 'N', "nuggetIron", 'G', "blockGlass" }));
 	//ingot pattern
 		GameRegistry.addRecipe(new ShapedOreRecipe(ToolUtils.pattern, new Object[] { "T","P", 'T', Blocks.IRON_TRAPDOOR, 'P', Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE}));
 	//agitator
 		GameRegistry.addRecipe(new ShapedOreRecipe(ToolUtils.agitator, new Object[] { " I ","NIN","NIN", 'I', "ingotIron", 'N', "nuggetIron" }));
-	//feCatalyst
-		GameRegistry.addRecipe(new ShapedOreRecipe(ToolUtils.feCatalyst, new Object[] { "  N"," II","NII", 'I', "ingotIron", 'N', "nuggetIron" }));
-	//ptCatalyst
-		GameRegistry.addRecipe(new ShapedOreRecipe(ToolUtils.ptCatalyst, new Object[] { "  N"," II","NII", 'I', "ingotPlatinum", 'N', "nuggetIron" }));
 	}
 
 	private static void inductionRecipes() {
@@ -181,8 +177,11 @@ public class ModRecipes extends BaseRecipes {
    	//aluminum ingot
    		GameRegistry.addSmelting(elements(1,24), aluminumIngot, 1.0F);
 		GameRegistry.addRecipe(new ShapedOreRecipe(aluminumIngot, new Object[] { "NNN","NNN","NNN", 'N', "nuggetAluminum" }));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(aluminumIngots, new Object[] { "blockAluminum" }));
    	//aluminum nugget
 		GameRegistry.addRecipe(new ShapelessOreRecipe(aluminumNuggets, new Object[] { "ingotAluminum" }));
+   	//aluminum block
+		GameRegistry.addRecipe(new ShapedOreRecipe(aluminumBlock, new Object[] { "NNN","NNN","NNN", 'N', "ingotAluminum" }));
 	//platinum ingot
 		GameRegistry.addSmelting(chemicals(1,10), platinumIngot, 1.0F);
 	}
@@ -252,18 +251,16 @@ public class ModRecipes extends BaseRecipes {
 
 	private static void crawlerRecipes() {
 	//crawler assembler
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.crawlerAssembler), new Object[] {" I ", "ICI", " I ", 'C', "workbench", 'I', hastelloyFoil }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.crawlerAssembler), new Object[] {" I ", "ICI", " I ", 'C', "workbench", 'I', widiaFoil }));
 	//memory chip
-		GameRegistry.addRecipe(new ShapedOreRecipe(crawlerMemory, new Object[] { "FIF","GCG","FIF", 'C', logicChip, 'I', "ingotIron", 'G', "nuggetGold", 'F', hastelloyFoil }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(crawlerMemory, new Object[] { "FIF","GCG","FIF", 'C', logicChip, 'I', "ingotIron", 'G', "nuggetGold", 'F', widiaFoil }));
 		GameRegistry.addRecipe(new ShapelessOreRecipe(crawlerMemory, new Object[] { crawlerMemory }));
-	//advanced chip
-		GameRegistry.addRecipe(new ShapelessOreRecipe(advancedChip, new Object[] { logicChip, "gemQuartz", "nuggetGold", "dustRedstone" }));
 	//setup chip
-		GameRegistry.addRecipe(new ShapedOreRecipe(setupChip, new Object[] { "III","NCN","III", 'C', advancedChip, 'I', hastelloyFoil, 'N', "nuggetGold" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(setupChip, new Object[] { "III","NCN","III", 'C', advancedChip, 'I', widiaFoil, 'N', "nuggetGold" }));
 	//crawler casing
-		GameRegistry.addRecipe(new ShapedOreRecipe(crawlerCasing, new Object[] { "RFR","FCF","IBI", 'C', crawlerMemory, 'I', "ingotHastelloy", 'B', "blockHastelloy", 'F', hastelloyFoil, 'R', "dustRedstone" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(crawlerCasing, new Object[] { "LFL","FCF","FFF", 'C', crawlerMemory, 'F', widiaCasing, 'L', logicChip }));
 	//crawler head
-		GameRegistry.addRecipe(new ShapedOreRecipe(crawlerHead, new Object[] { "III", "FPF", 'P', Blocks.STICKY_PISTON, 'I', "ingotHastelloy", 'F', hastelloyFoil }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(crawlerHead, new Object[] { "CPC", "CCC", 'P', Blocks.STICKY_PISTON, 'C', widiaFoil }));
 	}
 
 	private static void chemicalRecipes() {

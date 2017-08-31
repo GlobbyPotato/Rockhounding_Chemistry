@@ -7,6 +7,7 @@ import com.globbypotato.rockhounding_chemistry.blocks.AlloyBricks;
 import com.globbypotato.rockhounding_chemistry.blocks.FireBlock;
 import com.globbypotato.rockhounding_chemistry.blocks.GanBlocks;
 import com.globbypotato.rockhounding_chemistry.blocks.MineralOres;
+import com.globbypotato.rockhounding_chemistry.blocks.MiscBlocks;
 import com.globbypotato.rockhounding_chemistry.blocks.OwcBlocks;
 import com.globbypotato.rockhounding_chemistry.blocks.SmokeBlock;
 import com.globbypotato.rockhounding_chemistry.enums.EnumAlloy;
@@ -15,6 +16,7 @@ import com.globbypotato.rockhounding_chemistry.enums.EnumBattery;
 import com.globbypotato.rockhounding_chemistry.enums.EnumFires;
 import com.globbypotato.rockhounding_chemistry.enums.EnumGan;
 import com.globbypotato.rockhounding_chemistry.enums.EnumLaser;
+import com.globbypotato.rockhounding_chemistry.enums.EnumMiscBlocks;
 import com.globbypotato.rockhounding_chemistry.enums.EnumOres;
 import com.globbypotato.rockhounding_chemistry.enums.EnumOwc;
 import com.globbypotato.rockhounding_chemistry.machines.CastingBench;
@@ -61,6 +63,7 @@ public class ModBlocks {
 	public static Block alloyBBricks;
 	public static Block smokeBlock;
 	public static Block fireBlock;
+	public static Block miscBlocks;
 
 	public static Block labOven;
 	public static Block mineralSizer;
@@ -110,6 +113,7 @@ public class ModBlocks {
 		alloyBBricks = new AlloyBBricks(Material.IRON, EnumAlloyB.getAlloys(), 3.0F, 5.0F, "alloyBBricks", SoundType.METAL);
 		smokeBlock = new SmokeBlock("smokeBlock");
 		fireBlock = new FireBlock(Material.FIRE, EnumFires.getNames(), 0.0F, 0.0F, "fireBlock", SoundType.SAND);
+		miscBlocks = new MiscBlocks(Material.IRON, EnumMiscBlocks.getNames(), 3.0F, 5.0F, "miscBlocks", SoundType.METAL);
 
 		labOven = new LabOven(3.0F, 5.0F, "labOven");
 		mineralSizer = new MineralSizer(3.0F, 5.0F, "mineralSizer");
@@ -164,6 +168,7 @@ public class ModBlocks {
 		for(int i = 0; i < EnumGan.size(); i++){		registerMetaBlockRender(ganBlocks, i, EnumGan.getName(i));			}
 		for(int i = 0; i < EnumFires.size(); i++){		registerMetaBlockRender(fireBlock, i, EnumFires.getName(i));		}
 		for(int i = 0; i < EnumBattery.size(); i++){	registerMetaBlockRender(ultraBattery, i, EnumBattery.getName(i));	}
+		for(int i = 0; i < EnumMiscBlocks.size(); i++){	registerMetaBlockRender(miscBlocks, i, EnumMiscBlocks.getName(i));	}
 		registerSingleBlockRender(saltMaker, 0, "saltMaker");
 		registerSingleBlockRender(saltSeasoner, 0, "saltSeasoner");
 		registerSingleBlockRender(labOven, 0, "labOven");

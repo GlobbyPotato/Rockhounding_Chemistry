@@ -54,6 +54,28 @@ public class GuiChemicalExtractor extends GuiBase {
 		   drawPowerInfo("ticks", this.chemicalExtractor.getPower(), this.chemicalExtractor.getPowerMax(), mouseX, mouseY);
 	   }
 
+		//fuel status
+		if(this.chemicalExtractor.getInput().getStackInSlot(this.chemicalExtractor.FUEL_SLOT) == null){
+			   	//fuel
+				String fuelString = TextFormatting.DARK_GRAY + "Fuel Type: " + TextFormatting.GOLD + "Common";
+				String indString = TextFormatting.DARK_GRAY + "Induction: " + TextFormatting.RED + "OFF";
+				String permaString = "";
+				if(this.chemicalExtractor.hasFuelBlend()){
+					fuelString = TextFormatting.DARK_GRAY + "Fuel Type: " + TextFormatting.GOLD + "Blend";
+				}
+				if(this.chemicalExtractor.canInduct()){
+					indString = TextFormatting.DARK_GRAY + "Induction: " + TextFormatting.RED + "ON";
+					permaString = TextFormatting.DARK_GRAY + "Status: " + TextFormatting.DARK_GREEN + "Mobile";
+					if(this.chemicalExtractor.hasPermanentInduction()){
+						permaString = TextFormatting.DARK_GRAY + "Status: " + TextFormatting.DARK_RED + "Permanent";
+					}
+				}
+				String multiString[] = new String[]{fuelString, "", indString, permaString};
+			if(mouseX >= 7+x && mouseX <= 24+x && mouseY >= 7+y && mouseY <= 24+y){
+				   drawMultiLabel(multiString, mouseX, mouseY);
+			}
+		}
+
 	   //redstone
 	   if(!this.chemicalExtractor.hasFuelBlend()){
 		   if(mouseX >= 31+x && mouseX <= 41+x && mouseY >= 28+y && mouseY <= 78+y){

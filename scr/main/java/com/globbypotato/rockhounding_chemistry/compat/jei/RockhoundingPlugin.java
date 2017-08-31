@@ -174,14 +174,15 @@ public class RockhoundingPlugin extends BlankModPlugin{
 				+ "TCV\n"
 				+ "\n"
 				+ "X = TurboExchanger\n"
-				+ "T = Distillation Tower x4\n"
+				+ "T = Tower x3 + Top element\n"
 				+ "E = Heat Exchanger\n"
 				+ "V = Pressure Vessel\n"
 				+ "T = Condenser + Tank above it\n"
 				+ "C = GAN Controller\n"
-				+ "The Heat Exchanger accepts any liquid and allows to reduce the energy required for the air processing in the Compression phase. By default the energy cost is 100RF/tick. By using Chloromethane (from this mod), the cost will be cut to 50RF/tick. By using Gelid Cryotheum (from Thermal Expansion) the energy cost will be only 10RF/tick.\n"
+				+ "The Heat Exchanger accepts any liquid having a Temperature not higher than 300K and allows to reduce the energy required for the air processing in the Compression phase. The temperature of the liquid will determine the amount of RF required to cool down the air.\n"
 				+ "The Structure has two tiers, one allowing to build it straight away with basic materials, another to reinforce it with stronger materials. The Iron Tier acquires 1 unit of air per tick and produces 10mB of liquid nitrogen per tick. The Reinforced Tier allows to increase ten times these values.\n"
 				+ "The system can work in two separated phases, selected by a switch in the controller. The first phase consists in acquiring and compressing the air, the second phase consists in producing the liquid nitrogen from the stored air. It is also available a general switch to turn on/off the structure and a Sanity Check telling if the system is correctly assembled.\n"
+				+ "An addituinal function allows to perform a continous production alternating both phases. This function requires of course more energy.\n"
 				+ "The liquid nitrogen can be extracted by connecting any fluid transport system to the Nitrogen tank. The system consumes 50RF/tick when at Iron Tier and 20RF/tick when at Reinforced Tier");
 		registry.addDescription(new ItemStack(ModBlocks.castingBench), "This is an automatic machine used to trim some of the metal furnitures used by the mod. The purpose of this machine is to get rid of many little crafting recipes that could be redundant or possibly conflicting with others. It has different types of cuts and can be automated with pipes or manually interacted, no gui is available. Punching the machine with bare hand, it will scroll through the various cuts and the selected one will be indicated by a label in front of it. Using a valid recipe ingredient on it, will place the item inside the machine to start operating. Right-clicking again the machine will take out the ingredient or the processed output.");
 
@@ -194,6 +195,9 @@ public class RockhoundingPlugin extends BlankModPlugin{
 		for(int i=0;i<EnumCasting.size();i++){
 			itemBlacklist.addIngredientToBlacklist(BaseRecipes.patterns(1,i));
 		}
+		itemBlacklist.addIngredientToBlacklist(BaseRecipes.gan(12));
+		itemBlacklist.addIngredientToBlacklist(BaseRecipes.gan(13));
+		itemBlacklist.addIngredientToBlacklist(BaseRecipes.gan(14));
 
 	}
 }

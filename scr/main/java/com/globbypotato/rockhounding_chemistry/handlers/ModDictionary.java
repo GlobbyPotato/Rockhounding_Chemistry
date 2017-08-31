@@ -7,6 +7,7 @@ import com.globbypotato.rockhounding_chemistry.enums.EnumAlloyB;
 import com.globbypotato.rockhounding_chemistry.enums.EnumElement;
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -32,6 +33,10 @@ public class ModDictionary {
 		OreDictionary.registerOre("dustLeadDioxide", BaseRecipes.leadDioxide);	
 		OreDictionary.registerOre("ingotCarbon", BaseRecipes.carbonIngot);	
 		OreDictionary.registerOre("itemFusedGlass", BaseRecipes.fusedGlass);	
+		OreDictionary.registerOre("ingotLeadDioxide", BaseRecipes.leadDioxideIngot);	
+		OreDictionary.registerOre("blockSand", new ItemStack(Blocks.SAND,1,0));	
+		OreDictionary.registerOre("blockSand", new ItemStack(Blocks.SAND,1,1));	
+		OreDictionary.registerOre("blockAluminum", BaseRecipes.aluminumBlock);	
 
 		for(int x = 0; x < EnumAlloy.size(); x++){
 			OreDictionary.registerOre(EnumAlloy.getBlock(x), new ItemStack(ModBlocks.alloyBlocks, 1, x));

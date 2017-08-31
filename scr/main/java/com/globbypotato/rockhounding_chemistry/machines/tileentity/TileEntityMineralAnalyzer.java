@@ -173,6 +173,7 @@ public class TileEntityMineralAnalyzer extends TileEntityMachineTank{
 	//----------------------- PROCESS -----------------------
 	@Override
 	public void update(){
+		acceptEnergy();
 		fuelHandler(input.getStackInSlot(FUEL_SLOT));
 		lavaHandler();
 		if(!worldObj.isRemote){

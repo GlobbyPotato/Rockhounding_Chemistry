@@ -1,0 +1,5 @@
+{
+    "variants": {
+		"type=aluminum": 			{"model" : "rockhounding_chemistry:miscBlocks_aluminum"}
+    }
+}

@@ -95,6 +95,7 @@ public class TileEntityEarthBreaker extends TileEntityMachineEnergy {
 	//----------------------- PROCESS -----------------------
 	@Override
 	public void update(){
+		acceptEnergy();
 		if(!worldObj.isRemote){
 			if(canDrill()){
 				process();

@@ -123,6 +123,7 @@ public class TileEntityDisposer extends TileEntityMachineEnergy {
 	//----------------------- PROCESS -----------------------
 	@Override
 	public void update(){
+		acceptEnergy();
 		if(lockList.size() < 1) {resetLock(); }
 		if(!worldObj.isRemote){
 			if(isActive()){

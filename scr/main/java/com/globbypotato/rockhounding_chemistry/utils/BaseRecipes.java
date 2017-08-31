@@ -33,6 +33,7 @@ public class BaseRecipes {
 	public static ItemStack sulfideStack(EnumSulfide mineral) {		return new ItemStack(ModItems.sulfideShards, 1, mineral.ordinal());}
 
 	public static ItemStack miscs(int num, int meta){				return new ItemStack(ModItems.miscItems, num, meta);}
+	public static ItemStack miscBlock(int num, int meta){			return new ItemStack(ModBlocks.miscBlocks, num, meta);}
 	public static ItemStack chemicals(int num, int meta){			return new ItemStack(ModItems.chemicalItems, num, meta);}
 	public static ItemStack elements(int num, int meta){			return new ItemStack(ModItems.chemicalDusts, num, meta);}
 	public static ItemStack alloys(int num, int meta){				return new ItemStack(ModItems.alloyItems, num, meta);}
@@ -121,9 +122,13 @@ public class BaseRecipes {
 	public static ItemStack blendUnit = miscs(1,58);
 	public static ItemStack vanaGear = miscs(1,59);
 	public static ItemStack clockwork = miscs(1,60);
+	public static ItemStack widiaFoil = miscs(1,61);
+	public static ItemStack widiaCasing = miscs(1,62);
+	public static ItemStack leadDioxideIngot = miscs(1,63);
 
 	public static ItemStack ironNuggets = miscs(9,2);
 	public static ItemStack aluminumNuggets = miscs(9,47);
+	public static ItemStack aluminumIngots = miscs(9,46);
 
 	public static ItemStack spirals = miscs(4,44);
 
@@ -144,7 +149,6 @@ public class BaseRecipes {
 	public static ItemStack goldIngot = new ItemStack(Items.GOLD_INGOT);
 	public static ItemStack ironIngot = new ItemStack(Items.IRON_INGOT);
 	public static ItemStack stoneSlab = new ItemStack(Blocks.STONE_SLAB);
-	public static ItemStack glassBlock = new ItemStack(Blocks.GLASS);
 	public static ItemStack lapis = new ItemStack(Items.DYE, 1, 4);
 	public static ItemStack rottenFlesh = new ItemStack(Items.ROTTEN_FLESH);
 	public static ItemStack leather = new ItemStack(Items.LEATHER);
@@ -154,4 +158,6 @@ public class BaseRecipes {
 	public static ItemStack repeater = new ItemStack(Items.REPEATER);
 	public static ItemStack piston = new ItemStack(Blocks.PISTON);
 	public static ItemStack hopper = new ItemStack(Blocks.HOPPER);
+
+	public static ItemStack aluminumBlock = miscBlock(1, 0);
 }

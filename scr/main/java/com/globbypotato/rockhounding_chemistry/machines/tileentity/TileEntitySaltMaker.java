@@ -162,16 +162,19 @@ public class TileEntitySaltMaker extends TileEntityMachineBase implements ITicka
 
 	@Override
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-		if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) return true;
-		else return super.hasCapability(capability, facing);
+		if(capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY){
+			return getStage() == 0 && facing != EnumFacing.UP;
+		}
+		return super.hasCapability(capability, facing);
 	}
 
 	@Override
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-		if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
+		if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY){
 			if(getStage() == 0 && facing != EnumFacing.UP){
 				return (T) inputTank;
 			}
+		}
 		return super.getCapability(capability, facing);
 	}
 

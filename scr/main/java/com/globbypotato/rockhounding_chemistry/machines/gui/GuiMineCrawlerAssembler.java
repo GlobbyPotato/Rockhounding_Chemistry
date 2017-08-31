@@ -53,7 +53,7 @@ public class GuiMineCrawlerAssembler extends GuiBase {
 		//Filler Setup
 		nameString = TextFormatting.DARK_GRAY + "Name: " + TextFormatting.GOLD + "Filler Setup";
 		tierString = TextFormatting.DARK_GRAY + "Tier: " + TextFormatting.AQUA + "2";
-		descrString = TextFormatting.GRAY + "Prevents fluids or gravity block from invading the path";
+		descrString = TextFormatting.GRAY + "Prevents fluids or gravity blocks to invade the path";
 		multiString = new String[]{nameString, tierString, descrString};
 		if(mouseX >= 88+x && mouseX <= 106+x && mouseY >= 16+y && mouseY <= 33+y){
 			drawMultiLabel(multiString, mouseX, mouseY);
@@ -98,7 +98,7 @@ public class GuiMineCrawlerAssembler extends GuiBase {
 		//Decorator Setup
 		nameString = TextFormatting.DARK_GRAY + "Name: " + TextFormatting.GOLD + "Decorator Setup";
 		tierString = TextFormatting.DARK_GRAY + "Tier: " + TextFormatting.AQUA + "4";
-		descrString = TextFormatting.GRAY + "Decorate the tunnel with a secondary block";
+		descrString = TextFormatting.GRAY + "Decorates the tunnel with a secondary block";
 		multiString = new String[]{nameString, tierString, descrString};
 		if(mouseX >= 110+x && mouseX <= 128+x && mouseY >= 38+y && mouseY <= 55+y){
 			drawMultiLabel(multiString, mouseX, mouseY);
