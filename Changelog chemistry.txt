@@ -1,3 +1,12 @@
+v1.55 changelog
+	Cryogenic Distillation Plant
+		Gui cleaning
+		JEI tab for assembling
+	Machines
+		Added TheOneProbe support for machines 
+		More Waila tooltips 
+		Minor tweaks
+
 v1.54 changelog
 	Cryogenic Distillation Tower
 		Added an "Automated Production" switch to make the two phases continous

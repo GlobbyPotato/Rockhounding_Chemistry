@@ -21,8 +21,8 @@ public class ContainerGanController extends ContainerBase<TileEntityGanControlle
 		IItemHandler template = tile.getTemplate();
 
 		this.addSlotToContainer(new SlotItemHandler(template, 0, 110, 33));//cycle 
-		this.addSlotToContainer(new SlotItemHandler(template, 1, 110,  16));//activation
-		this.addSlotToContainer(new SlotItemHandler(template, 2, 54,  34));//acquiring
+		this.addSlotToContainer(new SlotItemHandler(template, 1, 110, 16));//activation
+		this.addSlotToContainer(new SlotItemHandler(template, 2, 110, 60));//acquiring
 	}
 
 	@Override

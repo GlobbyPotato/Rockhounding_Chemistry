@@ -8,15 +8,19 @@ import java.util.function.Function;
 
 import com.globbypotato.rockhounding_chemistry.ModBlocks;
 import com.globbypotato.rockhounding_chemistry.enums.EnumFluid;
+import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.MaterialLiquid;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -47,31 +51,76 @@ public class ModFluids {
 
 	public static final Fluid SULFURIC_ACID = createFluid(EnumFluid.SULFURIC_ACID.getFluidName(), true, 0xFFFFFFFF,
 		fluid -> fluid.setDensity(1000).setViscosity(1000).canBePlacedInWorld(),
-		fluid -> new BlockFluidClassic(fluid, new MaterialLiquid(MapColor.SILVER)));
+		fluid -> new BlockFluidClassic(fluid, new MaterialLiquid(MapColor.SILVER)){
+			@Override
+		    public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn){
+				applyDamage(entityIn);
+			}
+		});
 	public static final Fluid HYDROCHLORIC_ACID = createFluid(EnumFluid.HYDROCHLORIC_ACID.getFluidName(), true, 0xFFBBE7EE,
 		fluid -> fluid.setDensity(1000).setViscosity(1000).canBePlacedInWorld(),
-		fluid -> new BlockFluidClassic(fluid, new MaterialLiquid(MapColor.ICE)));
+		fluid -> new BlockFluidClassic(fluid, new MaterialLiquid(MapColor.ICE)){
+			@Override
+		    public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn){
+				applyDamage(entityIn);
+			}
+		});
 	public static final Fluid HYDROFLUORIC_ACID = createFluid(EnumFluid.HYDROFLUORIC_ACID.getFluidName(), true, 0xFFEBEEBB,
 		fluid -> fluid.setDensity(1600).setViscosity(1000).canBePlacedInWorld(),
-		fluid -> new BlockFluidClassic(fluid, new MaterialLiquid(MapColor.YELLOW)));
+		fluid -> new BlockFluidClassic(fluid, new MaterialLiquid(MapColor.YELLOW)){
+			@Override
+		    public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn){
+				applyDamage(entityIn);
+			}
+		});
 	public static final Fluid SYNGAS = createFluid(EnumFluid.SYNGAS.getFluidName(), true, 0xFF484848,
 		fluid -> fluid.setDensity(1000).setViscosity(1000).canBePlacedInWorld(),
-		fluid -> new BlockFluidClassic(fluid, new MaterialLiquid(MapColor.GRAY)));
+		fluid -> new BlockFluidClassic(fluid, new MaterialLiquid(MapColor.GRAY)){
+			@Override
+		    public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn){
+				applyDamage(entityIn);
+			}
+		});
 	public static final Fluid ACRYLIC_ACID = createFluid(EnumFluid.ACRYLIC_ACID.getFluidName(), true, 0xFF919191,
 		fluid -> fluid.setDensity(1000).setViscosity(1000).canBePlacedInWorld(),
-		fluid -> new BlockFluidClassic(fluid, new MaterialLiquid(MapColor.SNOW)));
+		fluid -> new BlockFluidClassic(fluid, new MaterialLiquid(MapColor.SNOW)){
+			@Override
+		    public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn){
+				applyDamage(entityIn);
+			}
+		});
 	public static final Fluid CHLOROMETHANE = createFluid(EnumFluid.CHLOROMETHANE.getFluidName(), true, 0xFFC8C8C8,
 		fluid -> fluid.setDensity(1000).setViscosity(1000).setTemperature(290).canBePlacedInWorld(),
-		fluid -> new BlockFluidClassic(fluid, new MaterialLiquid(MapColor.SILVER)));
+		fluid -> new BlockFluidClassic(fluid, new MaterialLiquid(MapColor.SILVER)){
+			@Override
+		    public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn){
+				applyDamage(entityIn);
+			}
+		});
 	public static final Fluid SILICONE = createFluid(EnumFluid.SILICONE.getFluidName(), true, 0xFF98A6B3,
 		fluid -> fluid.setDensity(90000).setViscosity(90000).canBePlacedInWorld(),
-		fluid -> new BlockFluidClassic(fluid, new MaterialLiquid(MapColor.CLAY)));
+		fluid -> new BlockFluidClassic(fluid, new MaterialLiquid(MapColor.CLAY)){
+			@Override
+		    public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn){
+				applyDamage(entityIn);
+			}
+		});
 	public static final Fluid AMMONIA = createFluid(EnumFluid.AMMONIA.getFluidName(), true, 0xFFC7DEC7,
 		fluid -> fluid.setDensity(1000).setViscosity(1000).canBePlacedInWorld(),
-		fluid -> new BlockFluidClassic(fluid, new MaterialLiquid(MapColor.EMERALD)));
+		fluid -> new BlockFluidClassic(fluid, new MaterialLiquid(MapColor.EMERALD)){
+			@Override
+		    public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn){
+				applyDamage(entityIn);
+			}
+		});
 	public static final Fluid NITRIC_ACID = createFluid(EnumFluid.NITRIC_ACID.getFluidName(), true, 0xFFDED6C7,
 		fluid -> fluid.setDensity(1000).setViscosity(1000).canBePlacedInWorld(),
-		fluid -> new BlockFluidClassic(fluid, new MaterialLiquid(MapColor.YELLOW)));
+		fluid -> new BlockFluidClassic(fluid, new MaterialLiquid(MapColor.YELLOW)){
+			@Override
+		    public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn){
+				applyDamage(entityIn);
+			}
+		});
 	public static final Fluid TITANIUM_TETRACHLORIDE = createFluid(EnumFluid.TITANIUM_TETRACHLORIDE.getFluidName(), true, 0xFFE9FDBF,
 		fluid -> fluid.setDensity(1000).setViscosity(1000).canBePlacedInWorld(),
 		fluid -> new BlockFluidClassic(fluid, new MaterialLiquid(MapColor.LIME)){
@@ -95,13 +144,27 @@ public class ModFluids {
 		    	}
 		        world.scheduleBlockUpdate(pos, this, 1, 0);
 		    }
+			@Override
+		    public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn){
+				applyDamage(entityIn);
+			}
 	});
 	public static final Fluid SODIUM_CYANIDE = createFluid(EnumFluid.SODIUM_CYANIDE.getFluidName(), true, 0xFFDCDCDC,
 		fluid -> fluid.setDensity(1000).setViscosity(1000).canBePlacedInWorld(),
-		fluid -> new BlockFluidClassic(fluid, new MaterialLiquid(MapColor.SNOW)));
+		fluid -> new BlockFluidClassic(fluid, new MaterialLiquid(MapColor.SNOW)){
+			@Override
+		    public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn){
+				applyDamage(entityIn);
+			}
+		});
 	public static final Fluid PHOSPHORIC_ACID = createFluid(EnumFluid.PHOSPHORIC_ACID.getFluidName(), true, 0xFFDCDCDC,
 		fluid -> fluid.setDensity(1000).setViscosity(1000).canBePlacedInWorld(),
-		fluid -> new BlockFluidClassic(fluid, new MaterialLiquid(MapColor.SNOW)));
+		fluid -> new BlockFluidClassic(fluid, new MaterialLiquid(MapColor.SNOW)){
+			@Override
+		    public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn){
+				applyDamage(entityIn);
+			}
+		});
 	public static final Fluid LIQUID_NITROGEN = createFluid(EnumFluid.LIQUID_NITROGEN.getFluidName(), true, 0xFFDCDCDC,
 		fluid -> fluid.setDensity(1000).setViscosity(1000).setTemperature(60).canBePlacedInWorld(),
 		fluid -> new BlockFluidClassic(fluid, new MaterialLiquid(MapColor.SNOW)){
@@ -123,7 +186,19 @@ public class ModFluids {
 		            worldIn.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, d0, d1, d2, 0.0D, 0.0D, 0.0D, new int[0]);
 		        }
 		    }
+			@Override
+		    public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn){
+				applyDamage(entityIn);
+			}
 	});
+
+	private static void applyDamage(Entity entityIn) {
+		if(entityIn instanceof EntityLivingBase){
+			if(ModConfig.poisonFluid){
+				((EntityLivingBase)entityIn).attackEntityFrom(DamageSource.generic, 6.0F);
+			}
+		}
+	}
 
 	/**
 	 * Create a {@link Fluid} and its {@link IFluidBlock}, or use the existing ones if a fluid has already been registered with the same name.

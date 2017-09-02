@@ -8,12 +8,13 @@ jei.alloyer.name=Metal Alloyer
 jei.lab_oven.name=Lab Oven
 jei.seasoner.name=Seasoning Rack
 jei.extractor.name=Chemical Extractor
-jei.deposition_chamber.name=Deposition Chamber
-jei.distillation_tower.name=Distillation Tower
+jei.deposition_chamber.name=Vapor Deposition Chamber
+jei.distillation_tower.name=Cryogenic Distillation Plant
 jei.petrographer.name=Petrographer Table
 jei.flametest.name=Flame Tests
 jei.casting_bench.name=Casting Bench
 jei.lab_blender.name=Lab Blender
+jei.guigan.name=Cryogenic Distillation Plant
 
 #### CHEMISTRY ####
 #machines
@@ -45,7 +46,7 @@ tile.rockhounding_chemistry:petrographerTable.name=Petrographer Table
 tile.rockhounding_chemistry:saltMaker.name=Evaporation Tank
 tile.rockhounding_chemistry:saltSeasoner.name=Seasoning Rack
 tile.rockhounding_chemistry:dekatron.name=Dekatron
-tile.rockhounding_chemistry:depositionChamber.name=Deposition Chamber
+tile.rockhounding_chemistry:depositionChamber.name=Vapor Deposition Chamber
 tile.rockhounding_chemistry:earthBreaker.name=Boundary Breaker
 tile.rockhounding_chemistry:ganController.name=GAN Controller
 tile.rockhounding_chemistry:nitrogenTank.name=Nitrogen Tank
@@ -59,7 +60,7 @@ tile.rockhounding_chemistry:labBlender.name=Lab Blender
 tile.rockhounding_chemistry:disposer.name=Disposer
 #containers
 container.chemicalExtractor=Chemical Extractor
-container.depositionChamber=Deposition Chamber
+container.depositionChamber=Vapor Deposition Chamber
 container.earthBreaker=Boundary Breaker
 container.labOven=Lab Oven
 container.metalAlloyer=Metal Alloyer

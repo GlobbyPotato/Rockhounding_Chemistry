@@ -8,6 +8,7 @@ import com.globbypotato.rockhounding_chemistry.blocks.FireBlock;
 import com.globbypotato.rockhounding_chemistry.items.tools.Petrographer;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.ChemicalExtractorRecipe;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.MachineRecipes;
+import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 import com.globbypotato.rockhounding_chemistry.utils.ToolUtils;
 
 import net.minecraft.block.Block;
@@ -172,9 +173,9 @@ public class GlobbyEventHandler {
 						event.getDrops().add(mineralStack.copy());
 					}else if(isStone(event, event.getState().getBlock())){
 						if(nLevel > 0 && nFortune > 0){
-							if(rand.nextInt(16) < nLevel){
-								if(rand.nextInt(16) < nFortune){
-									mineralStack = new ItemStack(ModBlocks.mineralOres, 1, 0);
+							if(rand.nextInt(24) < nLevel){
+								if(rand.nextInt(24) < nFortune){
+									mineralStack = BaseRecipes.oreStack;
 									player.worldObj.playSound(player, player.getPosition(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1.0F, 1.0F);
 									event.getDrops().clear();
 									event.getDrops().add(mineralStack.copy());

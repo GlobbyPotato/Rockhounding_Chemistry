@@ -14,6 +14,9 @@ import com.globbypotato.rockhounding_chemistry.compat.jei.distillationtower.Dist
 import com.globbypotato.rockhounding_chemistry.compat.jei.flametest.FlameRecipeCategory;
 import com.globbypotato.rockhounding_chemistry.compat.jei.flametest.FlameRecipeHandler;
 import com.globbypotato.rockhounding_chemistry.compat.jei.flametest.FlameRecipeWrapper;
+import com.globbypotato.rockhounding_chemistry.compat.jei.gan.GanRecipeCategory;
+import com.globbypotato.rockhounding_chemistry.compat.jei.gan.GanRecipeHandler;
+import com.globbypotato.rockhounding_chemistry.compat.jei.gan.GanRecipeWrapper;
 import com.globbypotato.rockhounding_chemistry.compat.jei.labblender.BlenderRecipeCategory;
 import com.globbypotato.rockhounding_chemistry.compat.jei.labblender.BlenderRecipeHandler;
 import com.globbypotato.rockhounding_chemistry.compat.jei.labblender.BlenderRecipeWrapper;
@@ -59,6 +62,7 @@ import mezz.jei.api.IModRegistry;
 import mezz.jei.api.JEIPlugin;
 import mezz.jei.api.ingredients.IIngredientBlacklist;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
 
 @JEIPlugin
 public class RockhoundingPlugin extends BlankModPlugin{
@@ -83,7 +87,8 @@ public class RockhoundingPlugin extends BlankModPlugin{
 				new PetroRecipeCategory(guiHelper),
 				new FlameRecipeCategory(guiHelper),
 				new CastingRecipeCategory(guiHelper),
-				new BlenderRecipeCategory(guiHelper));
+				new BlenderRecipeCategory(guiHelper),
+				new GanRecipeCategory(guiHelper));
 
 		registry.addRecipeHandlers(
 				new SizerRecipeHandler(),
@@ -97,7 +102,8 @@ public class RockhoundingPlugin extends BlankModPlugin{
 				new PetroRecipeHandler(),
 				new FlameRecipeHandler(),
 				new CastingRecipeHandler(),
-				new BlenderRecipeHandler());
+				new BlenderRecipeHandler(),
+				new GanRecipeHandler());
 
 		registry.addRecipes(SizerRecipeWrapper.getRecipes());
 		registry.addRecipes(AnalyzerRecipeWrapper.getRecipes());
@@ -111,6 +117,7 @@ public class RockhoundingPlugin extends BlankModPlugin{
 		registry.addRecipes(FlameRecipeWrapper.getRecipes());
 		registry.addRecipes(CastingRecipeWrapper.getRecipes());
 		registry.addRecipes(BlenderRecipeWrapper.getRecipes());
+		registry.addRecipes(GanRecipeWrapper.getRecipes());
 
 		registry.addRecipeClickArea(GuiMineralSizer.class, 65, 15, 31, 31, RHRecipeUID.SIZER);
 		registry.addRecipeClickArea(GuiMineralAnalyzer.class, 27, 52, 33, 60, RHRecipeUID.ANALYZER);
@@ -137,6 +144,8 @@ public class RockhoundingPlugin extends BlankModPlugin{
 		registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.fireBlock), RHRecipeUID.FLAME_TEST);
 		registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.castingBench), RHRecipeUID.CASTING);
 		registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.labBlender), RHRecipeUID.BLENDER);
+		registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.ganController), RHRecipeUID.GAN);
+		registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.ganBlocks, 1, OreDictionary.WILDCARD_VALUE), RHRecipeUID.GAN);
 
 		for(int i=0;i<EnumElement.size();i++){
 			registry.addDescription(BaseRecipes.elements(1, i), "Dusts are produced inside the Chemical Extractor by processing shards. All the elements composing a shard will be collected and when a cabinet bar will fill up, a dust will be produced. To operate, the machine needs two conumables to be placed in their related slots: a Test Tube and a Graduated Cylinder.");
@@ -168,17 +177,7 @@ public class RockhoundingPlugin extends BlankModPlugin{
 				+ "- = The laser beams\n"
 				+ "\n"
 				+ "All the elements must face the same direction. The Stabilizer is not powered, while in each Amplifier added in the row and in the Electrolaser it must be supplied RF. To the Electrolaser must be also connected a tank with Liquid nitrogen. A gui will give informations about the resources being supplied and about the current state of the devices.");
-		registry.addDescription(new ItemStack(ModBlocks.ganController), "The Cryogenic Distillation Plant is a multiblock structure that allows to extract elements by cooling down and processing air. It is composed by various parts, some of which have a gui to show what their work is about. The main block is the GAN Controller which is delegated to control the entire system and acquire the RF used to keep the structure working. The Pressure Vessel is the component acquiring and compressing the air. The Heat Exchanger cools down the air to be processed by using refrigerant liquids. The Nitrogen Tank is the final container where the produced nitrogen will be stored. These are the active blocks, the other ones complete the structure.\n"
-				+ "This is a scheme as seen from top, of how to assembly the structure:\n"
-				+ "XTE\n"
-				+ "TCV\n"
-				+ "\n"
-				+ "X = TurboExchanger\n"
-				+ "T = Tower x3 + Top element\n"
-				+ "E = Heat Exchanger\n"
-				+ "V = Pressure Vessel\n"
-				+ "T = Condenser + Tank above it\n"
-				+ "C = GAN Controller\n"
+		registry.addDescription(new ItemStack(ModBlocks.ganController), "The Cryogenic Distillation Plant is a multiblock structure that allows to extract elements by cooling down and processing air. It is composed by various parts, some of which have a gui to show what their work is about. The main block is the GAN Controller which is delegated to control the entire system and acquire the RF used to keep the structure working. The Pressure Vessel is the component acquiring and compressing the air. The Heat Exchanger cools down the air to be processed by using refrigerant liquids. The Nitrogen Tank is the final container where the produced nitrogen will be stored. A JAI tab will show how to place the various blocks.\n"
 				+ "The Heat Exchanger accepts any liquid having a Temperature not higher than 300K and allows to reduce the energy required for the air processing in the Compression phase. The temperature of the liquid will determine the amount of RF required to cool down the air.\n"
 				+ "The Structure has two tiers, one allowing to build it straight away with basic materials, another to reinforce it with stronger materials. The Iron Tier acquires 1 unit of air per tick and produces 10mB of liquid nitrogen per tick. The Reinforced Tier allows to increase ten times these values.\n"
 				+ "The system can work in two separated phases, selected by a switch in the controller. The first phase consists in acquiring and compressing the air, the second phase consists in producing the liquid nitrogen from the stored air. It is also available a general switch to turn on/off the structure and a Sanity Check telling if the system is correctly assembled.\n"

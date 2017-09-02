@@ -4,6 +4,7 @@ import com.globbypotato.rockhounding_chemistry.ModBlocks;
 import com.globbypotato.rockhounding_chemistry.ModItems;
 import com.globbypotato.rockhounding_chemistry.Rhchemistry;
 import com.globbypotato.rockhounding_chemistry.compat.crafttweaker.CTSupport;
+import com.globbypotato.rockhounding_chemistry.compat.top.TopCompat;
 import com.globbypotato.rockhounding_chemistry.compat.waila.WailaCompat;
 import com.globbypotato.rockhounding_chemistry.entities.EntitySmoke;
 import com.globbypotato.rockhounding_chemistry.fluids.ModFluids;
@@ -57,6 +58,7 @@ public class CommonProxy {
 
 		// Waila compatilbility
         WailaCompat.init();
+        TopCompat.init();
 	}
 
 	public void init(FMLInitializationEvent e){

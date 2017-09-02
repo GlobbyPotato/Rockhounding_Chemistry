@@ -61,13 +61,13 @@ public class GuiGanController extends GuiBase {
 	   }
 
 	   //Tier
-	   if(mouseX >= 7+x && mouseX <= 24+x && mouseY >= 33+y && mouseY <= 50+y){
-		   String text = "Tier: " +  this.ganController.getTierName();
+	   if(mouseX >= 7+x && mouseX <= 24+x && mouseY >= 38+y && mouseY <= 55+y){
+		   String text = TextFormatting.GRAY + "Tier: " + TextFormatting.WHITE + this.ganController.getTierName();
 			drawButtonLabel(text, mouseX, mouseY);
 	   }
 
 	   //coolant
-	   if(mouseX >= 7+x && mouseX <= 24+x && mouseY >= 53+y && mouseY <= 70+y){
+	   if(mouseX >= 7+x && mouseX <= 24+x && mouseY >= 60+y && mouseY <= 77+y){
 		   String text = TextFormatting.GRAY + "Refrigerant:" + TextFormatting.GOLD + " Not Available";
 		   if(this.ganController.hasRefrigerant()){
 			   if(this.ganController.isValidTemperature()){
@@ -80,7 +80,7 @@ public class GuiGanController extends GuiBase {
 	   }
 
 	   //compress tooltip
-	   if(mouseX >= 54+x && mouseX <= 70+x && mouseY >= 33+y && mouseY <= 50+y){
+	   if(mouseX >= 110+x && mouseX <= 127+x && mouseY >= 60+y && mouseY <= 77+y){
 		   String modeIn = "";
 		   if(this.ganController.isCycling()){
 			   modeIn = "Process Override"; 
@@ -106,8 +106,12 @@ public class GuiGanController extends GuiBase {
 	   }
 
 	   //Sanity check
-	   if(mouseX >= 7+x && mouseX <= 70+x && mouseY >= 16+y && mouseY <= 30+y){
-			drawButtonLabel("Sanity Check", mouseX, mouseY);
+	   String sanity = TextFormatting.GRAY + "Sanity Chek: " + TextFormatting.RED + "Failed";
+	   if(this.ganController.checkDevices()){
+		   sanity = TextFormatting.GRAY + "Sanity Check: " + TextFormatting.GREEN + "Passed";
+	   }
+	   if(mouseX >= 7+x && mouseX <= 24+x && mouseY >= 16+y && mouseY <= 33+y){
+			drawButtonLabel(sanity, mouseX, mouseY);
 	   }
     }
 
@@ -126,18 +130,18 @@ public class GuiGanController extends GuiBase {
         
         if(this.ganController.isCycling()){
         	//override
-            this.drawTexturedModalRect(i + 53, j + 33, 194, 23, 18, 18);
+            this.drawTexturedModalRect(i + 110, j + 60, 194, 23, 18, 18);
         }else{
 	        if(this.ganController.isProducing()){
 		        //production
-	            this.drawTexturedModalRect(i + 53, j + 33, 176, 23, 18, 18);
+	            this.drawTexturedModalRect(i + 110, j + 60, 176, 23, 18, 18);
 	        }
         }
 
         if(this.ganController.isActivated()){
 	        //sanity check
 	        if(this.ganController.checkDevices()){
-	            this.drawTexturedModalRect(i + 10, j + 22, 176, 0, 7, 5);
+	            this.drawTexturedModalRect(i + 7, j + 16, 212, 5, 18, 18);
 	        }
 	        
 	        //activation
@@ -150,12 +154,12 @@ public class GuiGanController extends GuiBase {
 
 	        //upgrades
 	        if(this.ganController.checkTier()){
-	            this.drawTexturedModalRect(i + 7, j + 33, 176, 5, 18, 18);
+	            this.drawTexturedModalRect(i + 7, j + 38, 176, 5, 18, 18);
 	        }
 
 	        //coolant
 	        if(this.ganController.hasRefrigerant() && this.ganController.isValidTemperature()){
-	            this.drawTexturedModalRect(i + 7, j + 53, 194, 5, 18, 18);
+	            this.drawTexturedModalRect(i + 7, j + 60, 194, 5, 18, 18);
 	        }
         }
 

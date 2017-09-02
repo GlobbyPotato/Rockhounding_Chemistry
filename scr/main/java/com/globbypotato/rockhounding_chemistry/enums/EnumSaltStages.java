@@ -1,13 +1,18 @@
 package com.globbypotato.rockhounding_chemistry.enums;
 
 public enum EnumSaltStages implements BaseEnum {
-	EMPTY,
-	WATER,
-	STEPA,
-	STEPB,
-	STEPC,
-	STEPD,
-	SALT;
+	EMPTY("Empty"),
+	WATER("Virgin Water"),
+	STEPA("Brine"),
+	STEPB("Precipitation"),
+	STEPC("Evaporation"),
+	STEPD("Mother Liquor"),
+	SALT( "Raw Salt");
+
+	private String stageName;
+	EnumSaltStages(String stageName){
+		this.stageName = stageName;
+	}
 
 	//---------CUSTOM----------------
 	public static int size(){
@@ -29,5 +34,21 @@ public enum EnumSaltStages implements BaseEnum {
 	
 	public static String getName(int index){
 		return name(index);
+	}
+	
+	public static String[] getStageNames(){
+		String[] temp = new String[size()];
+		for(int i = 0; i < size(); i++){
+			temp[i] = getStageName(i);
+		}
+		return temp;
+	}
+	
+	public static String getStageName(int index){
+		return values()[index].stageName();
+	}
+
+	public String stageName(){
+		return this.stageName;
 	}
 }

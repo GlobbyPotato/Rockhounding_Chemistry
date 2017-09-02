@@ -13,4 +13,5 @@ public class RHRecipeUID {
 	public static final String FLAME_TEST = "rockhounding.flametest";
 	public static final String CASTING = "rockhounding.casting_bench";
 	public static final String BLENDER = "rockhounding.lab_blender";
+	public static final String GAN = "rockhounding.gan";
 }

@@ -10,6 +10,8 @@ public class WailaCompat {
 		FMLInterModComms.sendMessage("Waila", "register", part1 + "WailaUltraBattery" + part2);
 		FMLInterModComms.sendMessage("Waila", "register", part1 + "WailaOWCController" + part2);
 		FMLInterModComms.sendMessage("Waila", "register", part1 + "WailaCastingBench" + part2);
+		FMLInterModComms.sendMessage("Waila", "register", part1 + "WailaSaltTank" + part2);
+		FMLInterModComms.sendMessage("Waila", "register", part1 + "WailaGAN" + part2);
 	}
 
 }
