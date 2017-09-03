@@ -156,7 +156,7 @@ public class TileEntityLabBlender extends TileEntityMachineTank {
 	private boolean canProcess() {
 		return isActive()
 			&& getPower() >= getMaxCookTime()
-			&& getRecipe() != null
+			&& getRecipe() != null && isFullRecipe()
 			&& output.canSetOrStack(output.getStackInSlot(OUTPUT_SLOT), getRecipe().getOutput());
 	}
 

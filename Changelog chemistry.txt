@@ -1,4 +1,4 @@
-v1.55 changelog
+v1.55 / 1.56 changelog
 	Cryogenic Distillation Plant
 		Gui cleaning
 		JEI tab for assembling
