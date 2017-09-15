@@ -21,9 +21,14 @@
 	//output = the extractible itemstack/s
 	//probability = the probability for each output to be extracted
 
-	//ADD with weighted output
+	//ADD with random output
 		mods.rockhounding_chemistry.MineralSizer.add(input, [output1, output2, output3, output4, output5], [probability1, probability2, probability3, probability4, probability5]);
 		mods.rockhounding_chemistry.MineralSizer.add(<minecraft:hardened_clay>, [<minecraft:dye:0>, <minecraft:dye:1>, <minecraft:dye:2>, <minecraft:dye:3>, <minecraft:dye:4>], [20, 20, 20, 20, 20]);
+
+	//ADD with leveled output
+	//output items must be sorted from the easiest to hardest to crush
+		mods.rockhounding_chemistry.MineralSizer.add(input, [output1, output2, output3, output4, output5]);
+		mods.rockhounding_chemistry.MineralSizer.add(<minecraft:hardened_clay>, [<minecraft:dye:0>, <minecraft:dye:1>, <minecraft:dye:2>, <minecraft:dye:3>, <minecraft:dye:4>]);
 
 	//ADD with single output
 		mods.rockhounding_chemistry.MineralSizer.add(input, output);
@@ -41,10 +46,15 @@
 	//input = the input itemstack
 	//output = the extractible itemstack/s
 	//probability = the probability for each output to be extracted
+	//gravity = specific gravity of each element multiplied x100 (i.e. 1.55 must be written as 155) 
 
-	//ADD with weighted output
+	//ADD with random output
 		mods.rockhounding_chemistry.LeachingVat.add(input, [output1, output2, output3, output4, output5], [probability1, probability2, probability3, probability4, probability5]);
 		mods.rockhounding_chemistry.LeachingVat.add(<minecraft:sandstone>, [<minecraft:dye:15>, <minecraft:dye:14>, <minecraft:dye:13>, <minecraft:dye:12>, <minecraft:dye:11>], [20, 20, 20, 20, 20]);
+
+	//ADD with density-wise output
+		mods.rockhounding_chemistry.LeachingVat.add(input, [output1, output2, output3, output4, output5], [gravity1, gravity2, gravity3, gravity4, gravity5], true);
+		mods.rockhounding_chemistry.LeachingVat.add(<minecraft:sandstone>, [<minecraft:dye:15>, <minecraft:dye:14>, <minecraft:dye:13>, <minecraft:dye:12>, <minecraft:dye:11>], [330, 218, 1400, 774, 158], true);
 
 	//ADD with single output
 		mods.rockhounding_chemistry.LeachingVat.add(input, output);
