@@ -6,6 +6,7 @@ import com.globbypotato.rockhounding_chemistry.ModItems;
 import com.globbypotato.rockhounding_chemistry.compat.jei.RHRecipeCategory;
 import com.globbypotato.rockhounding_chemistry.compat.jei.RHRecipeUID;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiMineralSizer;
+import com.globbypotato.rockhounding_chemistry.utils.ToolUtils;
 
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IGuiItemStackGroup;
@@ -24,7 +25,7 @@ public class SizerRecipeCategory extends RHRecipeCategory {
 	private final static ResourceLocation guiTexture = GuiMineralSizer.TEXTURE_REF;
 
 	public SizerRecipeCategory(IGuiHelper guiHelper) {
-		super(guiHelper.createDrawable(guiTexture, 40, 15, 114, 81), "jei.sizer.name");
+		super(guiHelper.createDrawable(guiTexture, 32, 19, 67, 77), "jei.sizer.name");
 	}
 
 	@Nonnull
@@ -38,12 +39,12 @@ public class SizerRecipeCategory extends RHRecipeCategory {
 		IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
 		SizerRecipeWrapper wrapper = (SizerRecipeWrapper) recipeWrapper;	
 
-		guiItemStacks.init(INPUT_SLOT, true, 3, 6);
-		guiItemStacks.init(OUTPUT_SLOT, false, 32, 35);
-		guiItemStacks.init(GEAR_SLOT, true, 60, 6);
+		guiItemStacks.init(INPUT_SLOT, true, 27, 0);
+		guiItemStacks.init(GEAR_SLOT, true, 0, 27);
+		guiItemStacks.init(OUTPUT_SLOT, false, 27, 55);
 
-		guiItemStacks.set(GEAR_SLOT, new ItemStack(ModItems.gear));
 		guiItemStacks.set(INPUT_SLOT, wrapper.getInputs());
+		guiItemStacks.set(GEAR_SLOT, ToolUtils.gear);
 		guiItemStacks.set(OUTPUT_SLOT, wrapper.getOutputs());
 	}
 }

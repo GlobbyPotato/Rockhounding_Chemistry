@@ -1,8 +1,12 @@
 package com.globbypotato.rockhounding_chemistry.machines.container;
 
+import com.globbypotato.rockhounding_chemistry.machines.recipe.MachineRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityMineralSizer;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
@@ -15,13 +19,51 @@ public class ContainerMineralSizer extends ContainerBase<TileEntityMineralSizer>
 	protected void addOwnSlots() {
 		IItemHandler input = tile.getInput();
 		IItemHandler output = tile.getOutput();
+		IItemHandler template = tile.getTemplate();
 
-		this.addSlotToContainer(new SlotItemHandler(input, 0, 44, 22));//input
-		this.addSlotToContainer(new SlotItemHandler(input, 1, 8, 20));//fuel
-		this.addSlotToContainer(new SlotItemHandler(input, 2, 101, 22));//consumable
-		this.addSlotToContainer(new SlotItemHandler(output, 0, 73, 51));//output
-		this.addSlotToContainer(new SlotItemHandler(output, 1, 115, 51));//secondary
-		this.addSlotToContainer(new SlotItemHandler(output, 2, 109, 79));//waste
+		this.addSlotToContainer(new SlotItemHandler(input, 0, 60, 20));//input
+		this.addSlotToContainer(new SlotItemHandler(input, 1, 8, 8));//fuel
+		this.addSlotToContainer(new SlotItemHandler(input, 2, 33, 47));//consumable
+		this.addSlotToContainer(new SlotItemHandler(output, 0, 60, 75));//output
+		this.addSlotToContainer(new SlotItemHandler(output, 1, 38, 99));//secondary
+		this.addSlotToContainer(new SlotItemHandler(output, 2, 82, 99));//waste
+
+		this.addSlotToContainer(new SlotItemHandler(template, 0, 153, 7));//hi
+		this.addSlotToContainer(new SlotItemHandler(template, 1, 153, 100));//lo
+		this.addSlotToContainer(new SlotItemHandler(template, 2, 39, 26));//activation
+
 	}
-	
+
+	@Override
+	public ItemStack slotClick(int slot, int dragType, ClickType clickTypeIn, EntityPlayer player){
+    	if(slot == 6){
+    		if(this.tile.slider < 10){
+    			this.tile.slider++;
+    		}
+			doClickSound(player, tile.getWorld(), tile.getPos());
+    		return null;
+    	}else if(slot == 7){ 
+    		if(this.tile.slider > 0){
+    			this.tile.slider--;
+    		}
+			doClickSound(player, tile.getWorld(), tile.getPos());
+        	return null;
+    	}else if(slot == 8){ 
+   			this.tile.activation = !this.tile.activation;
+			doClickSound(player, tile.getWorld(), tile.getPos());
+        	return null;
+    	}else{
+    		return super.slotClick(slot, dragType, clickTypeIn, player);
+    	}
+	}
+
+	@Override
+	protected boolean mergeItemStack(ItemStack stack, int startIndex, int endIndex, boolean reverseDirection){
+		if(super.mergeItemStack(stack, startIndex, 6, reverseDirection)){
+			return true;
+		}else{
+			return super.mergeItemStack(stack, 9, endIndex, reverseDirection);
+		}
+    }
+
 }

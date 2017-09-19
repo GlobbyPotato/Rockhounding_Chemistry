@@ -26,10 +26,10 @@ public class AnalyzerRecipes extends CTSupport{
        	outputs.add(toStack(output));
        	probabilities.add(100);
 
-        MineTweakerAPI.apply(new AddToAnalyzer(new MineralAnalyzerRecipe(toStack(input), outputs, probabilities)));
+        MineTweakerAPI.apply(new AddToAnalyzer(new MineralAnalyzerRecipe(toStack(input), outputs, probabilities, false)));
     }
     @ZenMethod
-    public static void add(IItemStack input, IItemStack[] output, int[] probability) {
+    public static void add(IItemStack input, IItemStack[] output, int[] probability, boolean hasGravity) {
         if(input == null || output == null || probability == null || output.length != probability.length) {MineTweakerAPI.logError(name + ": Invalid recipe."); return;}
 
         ArrayList<ItemStack> outputs = new ArrayList<ItemStack>();
@@ -40,7 +40,7 @@ public class AnalyzerRecipes extends CTSupport{
         	probabilities.add(probability[x]);
         }
 
-        MineTweakerAPI.apply(new AddToAnalyzer(new MineralAnalyzerRecipe(toStack(input), outputs, probabilities)));
+        MineTweakerAPI.apply(new AddToAnalyzer(new MineralAnalyzerRecipe(toStack(input), outputs, probabilities, hasGravity)));
     }
 		    private static class AddToAnalyzer implements IUndoableAction {
 		    	private MineralAnalyzerRecipe recipe;

@@ -72,6 +72,7 @@ public class CommonProxy {
 
 		// Register entities
         EntityRegistry.registerModEntity(EntitySmoke.class, "Screen Smoke", 0, Rhchemistry.instance, 64, 10, true);
+        
 	}
 
 	public void imcInit(IMCEvent event) {

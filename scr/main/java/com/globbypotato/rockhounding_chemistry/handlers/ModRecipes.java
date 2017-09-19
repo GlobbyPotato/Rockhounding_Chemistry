@@ -37,6 +37,18 @@ public class ModRecipes extends BaseRecipes {
 		machineryRecipes();
 		metallurgyRecipes();
 		ganRecipes();
+		pipeRecipes();
+	}
+
+	private static void pipeRecipes() {
+		//duct
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.pipelineDuct, 4), new Object[] { "IGI", "IGI", "IGI", 'I', ironFoil, 'G', "blockGlass" }));
+		//pump
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.pipelinePump), new Object[] { "IGI", "FDF", "IPI", 'F', ironFoil, 'I', ironCasing, 'G', "blockGlass", 'D', pipeline, 'P', piston }));
+		//valve
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.pipelineValve), new Object[] { "IDI", "FGF", "IDI", 'F', ironFoil, 'I', ironCasing, 'G', "blockGlass", 'D', pipeline }));
+		//pipeline upgrade
+		GameRegistry.addRecipe(new ShapedOreRecipe(pipelineUpgrade, new Object[] { "XCX", "DPD", "XCX", 'X', hastelloyCasing, 'D', pump, 'C', compressor, 'P', pipeline }));
 	}
 
 	private static void profilersRecipes() {
@@ -65,7 +77,7 @@ public class ModRecipes extends BaseRecipes {
 
 	private static void ganRecipes() {
 		//compessor
- 		GameRegistry.addRecipe(new ShapedOreRecipe(compressor, new Object[] { "cPc", "c c", "cRc", 'R', "dustRedstone", 'P', piston, 'c', ironCasing }));
+ 		GameRegistry.addRecipe(new ShapedOreRecipe(compressor, new Object[] { "cPc", "cLc", "cRc", 'R', "dustRedstone", 'P', piston, 'c', ironCasing, 'L', logicChip }));
  		//spiral
  		GameRegistry.addRecipe(new ShapedOreRecipe(spirals, new Object[] { "CCC", "C C", "I I", 'I', "ingotIron", 'C', "ingotCopper" }));
 		//vessel

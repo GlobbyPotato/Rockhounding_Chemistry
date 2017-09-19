@@ -28,9 +28,11 @@ public class ContainerOwcController extends ContainerBase<TileEntityOwcControlle
 	public ItemStack slotClick(int slot, int dragType, ClickType clickTypeIn, EntityPlayer player){
 		if(slot == 0){
     		this.tile.activationKey = !this.tile.activationKey;
+			doClickSound(player, tile.getWorld(), tile.getPos());
     		return null;
     	}else if(slot == 1){
     		this.tile.extractionKey = !this.tile.extractionKey;
+			doClickSound(player, tile.getWorld(), tile.getPos());
     		return null;
     	}else{
     		return super.slotClick(slot, dragType, clickTypeIn, player);

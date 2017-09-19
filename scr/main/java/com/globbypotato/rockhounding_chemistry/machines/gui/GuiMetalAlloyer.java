@@ -35,8 +35,8 @@ public class GuiMetalAlloyer extends GuiBase {
 		int y = (this.height - this.ySize) / 2;
 
 		//fuel
-		if(mouseX >= 11+x && mouseX <= 20+x && mouseY >= 40+y && mouseY <= 89+y){
-			drawPowerInfo("ticks", this.metalAlloyer.getPower(), this.metalAlloyer.getPowerMax(), mouseX, mouseY);
+	   if(mouseX >= 10+x && mouseX <= 21+x && mouseY >= 27+y && mouseY <= 78+y){
+			drawPowerInfo("ticks", this.metalAlloyer.getMaxCookTime(), this.metalAlloyer.getPower(), this.metalAlloyer.getPowerMax(), mouseX, mouseY);
 		}
 
 		//fuel status
@@ -56,7 +56,7 @@ public class GuiMetalAlloyer extends GuiBase {
 					}
 				}
 				String multiString[] = new String[]{fuelString, "", indString, permaString};
-			if(mouseX >= 7+x && mouseX <= 24+x && mouseY >= 18+y && mouseY <= 36+y){
+			if(mouseX >= 7+x && mouseX <= 24+x && mouseY >= 7+y && mouseY <= 24+y){
 				   drawMultiLabel(multiString, mouseX, mouseY);
 			}
 		}
@@ -76,7 +76,7 @@ public class GuiMetalAlloyer extends GuiBase {
 			drawButtonLabel("Activation", mouseX, mouseY);
 		}
 
-		//activation
+		//equalizer
         if(!this.metalAlloyer.canEqualize()){
     		if(mouseX >= 41+x && mouseX <= 58+x && mouseY >= 36+y && mouseY <= 52+y){
     			drawButtonLabel("Disabled", mouseX, mouseY);
@@ -85,7 +85,7 @@ public class GuiMetalAlloyer extends GuiBase {
 
         //equalizer
 		if(mouseX >= 41+x && mouseX <= 58+x && mouseY >= 21+y && mouseY <= 34+y){
-			drawButtonLabel("Ingredient Equalizer", mouseX, mouseY);
+			drawButtonLabel("Ingredient Unifier", mouseX, mouseY);
 		}
 	}
 
@@ -108,7 +108,7 @@ public class GuiMetalAlloyer extends GuiBase {
         //power bar
         if (this.metalAlloyer.getPower() > 0){
             int k = this.getBarScaled(50, this.metalAlloyer.getPower(), this.metalAlloyer.getPowerMax());
-            this.drawTexturedModalRect(i + 11, j + 40 + (50 - k), 176, 27, 10, k);
+            this.drawTexturedModalRect(i + 11, j + 28 + (50 - k), 176, 27, 10, k);
         }
 
         //smelt bar
@@ -119,7 +119,7 @@ public class GuiMetalAlloyer extends GuiBase {
         
         //inductor
         if(this.metalAlloyer.hasPermanentInduction()){
-            this.drawTexturedModalRect(i + 7, j + 19, 176, 79, 18, 18);
+            this.drawTexturedModalRect(i + 7, j + 7, 176, 79, 18, 18);
         }
 
 		//activayion

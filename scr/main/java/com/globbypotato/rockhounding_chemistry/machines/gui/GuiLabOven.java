@@ -42,8 +42,8 @@ public class GuiLabOven extends GuiBase {
 		int y = (this.height - this.ySize) / 2;
 
 		//fuel
-		if(mouseX >= 10+x && mouseX <= 21+x && mouseY >= 50+y && mouseY <= 101+y){
-			drawPowerInfo("ticks", this.labOven.getPower(), this.labOven.getPowerMax(), mouseX, mouseY);
+		if(mouseX >= 10+x && mouseX <= 21+x && mouseY >= 27+y && mouseY <= 78+y){
+			drawPowerInfo("ticks", this.labOven.getCookTimeMax(), this.labOven.getPower(), this.labOven.getPowerMax(), mouseX, mouseY);
 		}
 
 		//fuel status
@@ -63,15 +63,15 @@ public class GuiLabOven extends GuiBase {
 					}
 				}
 				String multiString[] = new String[]{fuelString, "", indString, permaString};
-			if(mouseX >= 7+x && mouseX <= 24+x && mouseY >= 30+y && mouseY <= 47+y){
+			if(mouseX >= 7+x && mouseX <= 24+x && mouseY >= 7+y && mouseY <= 24+y){
 				   drawMultiLabel(multiString, mouseX, mouseY);
 			}
 		}
 
 		//redstone
 		if(!this.labOven.hasFuelBlend()){
-			if(mouseX >= 31+x && mouseX <= 42+x && mouseY >= 33+y && mouseY <= 84+y){
-				drawPowerInfo("RF", this.labOven.getRedstone(), this.labOven.getRedstoneMax(), mouseX, mouseY);
+			if(mouseX >= 31+x && mouseX <= 42+x && mouseY >= 27+y && mouseY <= 78+y){
+				drawEnergyInfo("RF", this.labOven.getRedstone(), this.labOven.getRedstoneMax(), mouseX, mouseY);
 			}
 		}
 
@@ -127,14 +127,14 @@ public class GuiLabOven extends GuiBase {
 		//power bar
         if (this.labOven.getPower() > 0){
             int k = this.getBarScaled(50, this.labOven.getPower(), this.labOven.getPowerMax());
-            this.drawTexturedModalRect(i + 11, j + 51 + (50 - k), 176, 27, 10, k);
+            this.drawTexturedModalRect(i + 11, j + 28 + (50 - k), 176, 27, 10, k);
         }
 
 		//redstone
 		if(!this.labOven.hasFuelBlend()){
 			if (this.labOven.getRedstone() > 0){
 				int k = this.getBarScaled(50, this.labOven.getRedstone(), this.labOven.getRedstoneMax());
-				this.drawTexturedModalRect(i + 32, j + 32 + (50 - k), 176, 81, 10, k);
+				this.drawTexturedModalRect(i + 32, j + 28 + (50 - k), 176, 81, 10, k);
 			}
 		}
 
@@ -155,12 +155,12 @@ public class GuiLabOven extends GuiBase {
 
 		//induction icons
 		if(this.labOven.hasPermanentInduction()){
-			this.drawTexturedModalRect(i + 7, j + 30, 176, 154, 18, 18); //inductor
+			this.drawTexturedModalRect(i + 7, j + 7, 176, 154, 18, 18); //inductor
 		}
 
 		//blend fix
 		if(this.labOven.hasFuelBlend()){
-			this.drawTexturedModalRect(i + 25, j + 14, 208, 0, 21, 89); //blend
+			this.drawTexturedModalRect(i + 25, j + 7, 224, 0, 21, 92); //blend
 		}
 
 		//solvent fluid

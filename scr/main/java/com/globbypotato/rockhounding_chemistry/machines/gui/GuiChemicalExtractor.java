@@ -51,7 +51,7 @@ public class GuiChemicalExtractor extends GuiBase {
 
 	   //fuel
 	   if(mouseX >= 11+x && mouseX <= 21+x && mouseY >= 28+y && mouseY <= 78+y){
-		   drawPowerInfo("ticks", this.chemicalExtractor.getPower(), this.chemicalExtractor.getPowerMax(), mouseX, mouseY);
+		   drawPowerInfo("ticks", this.chemicalExtractor.getCookTimeMax(), this.chemicalExtractor.getPower(), this.chemicalExtractor.getPowerMax(), mouseX, mouseY);
 	   }
 
 		//fuel status
@@ -79,28 +79,28 @@ public class GuiChemicalExtractor extends GuiBase {
 	   //redstone
 	   if(!this.chemicalExtractor.hasFuelBlend()){
 		   if(mouseX >= 31+x && mouseX <= 41+x && mouseY >= 28+y && mouseY <= 78+y){
-			   drawPowerInfo("RF", this.chemicalExtractor.getRedstone(), this.chemicalExtractor.getRedstoneMax(), mouseX, mouseY);
+			   drawEnergyInfo("RF", this.chemicalExtractor.getRedstone(), this.chemicalExtractor.getRedstoneMax(), mouseX, mouseY);
 		   }
 	   }
 
 	   //nitric tank
 	   if(mouseX>= 8+x && mouseX <= 23+x && mouseY >= 85+y && mouseY <= 144+y){
-		   drawTankInfo(this.nitrTank, mouseX, mouseY);
+		   drawTankInfoWithConsume(this.nitrTank, ModConfig.consumedNitr, mouseX, mouseY);
 	   }
 
 	   //phos tank
 	   if(mouseX>= 28+x && mouseX <= 43+x && mouseY >= 85+y && mouseY <= 144+y){
-		   drawTankInfo(this.phosTank, mouseX, mouseY);
+		   drawTankInfoWithConsume(this.phosTank, ModConfig.consumedPhos, mouseX, mouseY);
 	   }
 
 	   //cyan tank
 	   if(mouseX>= 48+x && mouseX <= 63+x && mouseY >= 85+y && mouseY <= 144+y){
-		   drawTankInfo(this.cyanTank, mouseX, mouseY);
+		   drawTankInfoWithConsume(this.cyanTank, ModConfig.consumedCyan, mouseX, mouseY);
 	   }
 
 	   //drain
 	   if(mouseX>= 200+x && mouseX <= 217+x && mouseY >= 157+y && mouseY <= 174+y){
-		   drawButtonLabel("Drain Valve", mouseX, mouseY);
+		   drawButtonLabel("Drain Fluids. Pipe out fluids if unused", mouseX, mouseY);
 	   }
 		
 	   //elements

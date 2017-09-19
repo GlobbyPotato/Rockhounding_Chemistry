@@ -38,26 +38,31 @@ public class ContainerDisposer extends ContainerBase<TileEntityDisposer>{
 	public ItemStack slotClick(int slot, int dragType, ClickType clickTypeIn, EntityPlayer player){
 		if(slot == 9){
     		this.tile.activation = !this.tile.activation;
+			doClickSound(player, tile.getWorld(), tile.getPos());
     		return null;
 		}else if(slot == 10){
 			if(this.tile.interval >= 2){
 				this.tile.interval -= 2;
 			}
+			doClickSound(player, tile.getWorld(), tile.getPos());
     		return null;
 		}else if(slot == 11){
 			if(this.tile.interval <= 1198){
 				this.tile.interval += 2;
 			}
+			doClickSound(player, tile.getWorld(), tile.getPos());
     		return null;
 		}else if(slot == 12){
 			if(this.tile.interval >= 10){
 				this.tile.interval -= 10;
 			}
+			doClickSound(player, tile.getWorld(), tile.getPos());
     		return null;
 		}else if(slot == 13){
 			if(this.tile.interval <= 1190){
 				this.tile.interval += 10;
 			}
+			doClickSound(player, tile.getWorld(), tile.getPos());
     		return null;
 		}else if(slot == 14){
     		this.tile.lock = !this.tile.lock;

@@ -4,19 +4,24 @@ import com.globbypotato.rockhounding_chemistry.enums.BaseEnum;
 
 public enum EnumSilicate implements BaseEnum{
 
-	AXINITE,
-	BIOTITE,
-	GADOLINITE,
-	IRANITE,
-	JERVISITE,
-	MAGBASITE,
-	MOSKVINITE,
-	EUCRYPTITE,
-	STEACYITE,
-	MANANDONITE,
-	VISTEPITE,
-	KHRISTOVITE,
-	CAVANSITE;
+	AXINITE(328),
+	BIOTITE(309),
+	GADOLINITE(420),
+	IRANITE(580),
+	JERVISITE(322),
+	MAGBASITE(341),
+	MOSKVINITE(291),
+	EUCRYPTITE(267),
+	STEACYITE(295),
+	MANANDONITE(289),
+	VISTEPITE(367),
+	KHRISTOVITE(408),
+	CAVANSITE(225);
+
+	private int gravity;
+	private EnumSilicate(int gravity) {
+		this.gravity = gravity;
+	}
 
 	//---------CUSTOM----------------
 	public static int size(){
@@ -39,4 +44,21 @@ public enum EnumSilicate implements BaseEnum{
 	public static String getName(int index){
 		return name(index);
 	}
+	
+	public static int[] getGravities(){
+		int[] temp = new int[size()];
+		for(int i = 0; i < size(); i++){
+			temp[i] = getGravity(i);
+		}
+		return temp;
+	}
+	
+	public static int getGravity(int index){
+		return values()[index].gravity;
+	}
+
+	public int gravity(){
+		return this.gravity;
+	}
+
 }

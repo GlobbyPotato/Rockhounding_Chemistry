@@ -22,7 +22,7 @@ public class ContainerMetalAlloyer extends ContainerBase<TileEntityMetalAlloyer>
 		IItemHandler output = tile.getOutput();
 		IItemHandler template = tile.getTemplate();
 
-		this.addSlotToContainer(new SlotItemHandler(input, 0, 8, 20));//fuel
+		this.addSlotToContainer(new SlotItemHandler(input, 0, 8, 8));//fuel
         for (int x = 1; x <= 6; x++){
         	this.addSlotToContainer(new SlotItemHandler(input, x, 62 + ((x-1)*18), 36));//input dusts
         }
@@ -62,6 +62,7 @@ public class ContainerMetalAlloyer extends ContainerBase<TileEntityMetalAlloyer>
         		this.tile.doScan = true;
     			this.tile.activation = false;
     		}
+			doClickSound(player, tile.getWorld(), tile.getPos());
         	return null;
     	}else if(slot == 19){ 
     		if(this.tile.recipeIndex < MachineRecipes.alloyerRecipes.size() - 1){
@@ -75,9 +76,11 @@ public class ContainerMetalAlloyer extends ContainerBase<TileEntityMetalAlloyer>
 	    		this.tile.doScan = true;
     			this.tile.activation = false;
         	}
+			doClickSound(player, tile.getWorld(), tile.getPos());
     		return null;
     	}else if(slot == 20){
    			this.tile.activation = !this.tile.activation; 
+			doClickSound(player, tile.getWorld(), tile.getPos());
     		return null;
     	}else{
     		return super.slotClick(slot, dragType, clickTypeIn, player);

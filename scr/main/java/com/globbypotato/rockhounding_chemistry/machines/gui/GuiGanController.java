@@ -15,7 +15,7 @@ public class GuiGanController extends GuiBase {
 
 	public static ResourceLocation TEXTURE_REF = new ResourceLocation(Reference.MODID + ":textures/gui/guigancontroller.png");
 	public static ResourceLocation TEXTURE_JEI = new ResourceLocation(Reference.MODID + ":textures/gui/guigancontrollerjei.png");
-    
+
     private final InventoryPlayer playerInventory;
     private final TileEntityGanController ganController;
 	public static final int WIDTH = 176;
@@ -106,9 +106,13 @@ public class GuiGanController extends GuiBase {
 	   }
 
 	   //Sanity check
-	   String sanity = TextFormatting.GRAY + "Sanity Chek: " + TextFormatting.RED + "Failed";
-	   if(this.ganController.checkDevices()){
-		   sanity = TextFormatting.GRAY + "Sanity Check: " + TextFormatting.GREEN + "Passed";
+	   String sanity = TextFormatting.GRAY + "Sanity Check: " + TextFormatting.GOLD + "Activate to check";
+	   if(this.ganController.isActivated()){
+		   if(this.ganController.checkDevices()){
+			   sanity = TextFormatting.GRAY + "Sanity Check: " + TextFormatting.GREEN + "Passed";
+		   }else{
+			   sanity = TextFormatting.GRAY + "Sanity Check: " + TextFormatting.RED + "Failed";
+		   }
 	   }
 	   if(mouseX >= 7+x && mouseX <= 24+x && mouseY >= 16+y && mouseY <= 33+y){
 			drawButtonLabel(sanity, mouseX, mouseY);
@@ -127,7 +131,7 @@ public class GuiGanController extends GuiBase {
             int k = this.getBarScaled(60, this.ganController.getRedstone(), this.ganController.getRedstoneMax());
             this.drawTexturedModalRect(i + 85, j + 17 + (60 - k), 176, 59, 23, k);
         }
-        
+
         if(this.ganController.isCycling()){
         	//override
             this.drawTexturedModalRect(i + 110, j + 60, 194, 23, 18, 18);
@@ -143,10 +147,10 @@ public class GuiGanController extends GuiBase {
 	        if(this.ganController.checkDevices()){
 	            this.drawTexturedModalRect(i + 7, j + 16, 212, 5, 18, 18);
 	        }
-	        
+
 	        //activation
             this.drawTexturedModalRect(i + 110, j + 16, 176, 41, 16, 16);
-            
+
 	        //cycle
 	        if(this.ganController.isCycling()){
 	            this.drawTexturedModalRect(i + 110, j + 33, 192, 41, 16, 16);

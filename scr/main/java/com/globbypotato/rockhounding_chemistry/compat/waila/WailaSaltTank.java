@@ -38,7 +38,7 @@ public class WailaSaltTank implements IWailaDataProvider{
 		TileEntity te = world.getTileEntity(pos);
 		if(te != null && te instanceof TileEntitySaltMaker){
 			TileEntitySaltMaker tank = (TileEntitySaltMaker)te;
-	    	currenttip.add(TextFormatting.GRAY + "current Stage: " + TextFormatting.AQUA + EnumSaltStages.getStageName(tank.getBlockMetadata()));
+	    	currenttip.add(TextFormatting.GRAY + "Stage: " + TextFormatting.AQUA + EnumSaltStages.getStageName(tank.getBlockMetadata()));
 		}
 		return currenttip;
 	}

@@ -57,6 +57,17 @@ public class BaseRecipes {
 	public static ItemStack sulfateShards(int num, int meta) {		return new ItemStack(ModItems.sulfateShards,num,meta);}
 	public static ItemStack sulfideShards(int num, int meta) {		return new ItemStack(ModItems.sulfideShards,num,meta);}
 	
+	public static int arsenateGravity(int meta){					return EnumArsenate.values()[meta].gravity();} 
+	public static int borateGravity(int meta){						return EnumBorate.values()[meta].gravity();} 
+	public static int carbonateGravity(int meta){					return EnumCarbonate.values()[meta].gravity();} 
+	public static int halideGravity(int meta){						return EnumHalide.values()[meta].gravity();} 
+	public static int nativeGravity(int meta){						return EnumNative.values()[meta].gravity();} 
+	public static int oxideGravity(int meta){						return EnumOxide.values()[meta].gravity();} 
+	public static int phosphateGravity(int meta){					return EnumPhosphate.values()[meta].gravity();} 
+	public static int silicateGravity(int meta){					return EnumSilicate.values()[meta].gravity();} 
+	public static int sulfateGravity(int meta){						return EnumSulfate.values()[meta].gravity();} 
+	public static int sulfideGravity(int meta){						return EnumSulfide.values()[meta].gravity();} 
+
 	public static ItemStack dyeShards(int i) {						return new ItemStack(Items.DYE,1,i);}
 	public static ItemStack coalItem(int num, int meta) {			return new ItemStack(Items.COAL,num,meta);}
 	public static ItemStack coalBlock(int num, int meta) {			return new ItemStack(Blocks.COAL_BLOCK,num,meta);}
@@ -125,6 +136,8 @@ public class BaseRecipes {
 	public static ItemStack widiaFoil = miscs(1,61);
 	public static ItemStack widiaCasing = miscs(1,62);
 	public static ItemStack leadDioxideIngot = miscs(1,63);
+	public static ItemStack ironFoil = miscs(1,64);
+	public static ItemStack pipelineUpgrade = miscs(1,65);
 
 	public static ItemStack ironNuggets = miscs(9,2);
 	public static ItemStack aluminumNuggets = miscs(9,47);
@@ -160,4 +173,8 @@ public class BaseRecipes {
 	public static ItemStack hopper = new ItemStack(Blocks.HOPPER);
 
 	public static ItemStack aluminumBlock = miscBlock(1, 0);
+	
+	public static ItemStack pipeline = new ItemStack(ModBlocks.pipelineDuct);
+	public static ItemStack pump = new ItemStack(ModBlocks.pipelinePump);
+
 }

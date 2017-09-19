@@ -27,10 +27,10 @@ public class SizerRecipes extends CTSupport{
        	outputs.add(toStack(output));
        	probabilities.add(100);
 
-        MineTweakerAPI.apply(new AddToSizer(new MineralSizerRecipe(toStack(input), outputs, probabilities)));
+        MineTweakerAPI.apply(new AddToSizer(new MineralSizerRecipe(toStack(input), outputs, probabilities, false)));
     }
     @ZenMethod
-    public static void add(IItemStack input, IItemStack[] output, int[] probability) {
+    public static void add(IItemStack input, IItemStack[] output, int[] probability, boolean comminution) {
         if(input == null || output == null || probability == null || output.length != probability.length) {MineTweakerAPI.logError(name + ": Invalid recipe."); return;}
 
         ArrayList<ItemStack> outputs = new ArrayList<ItemStack>();
@@ -41,7 +41,21 @@ public class SizerRecipes extends CTSupport{
         	probabilities.add(probability[x]);
         }
 
-        MineTweakerAPI.apply(new AddToSizer(new MineralSizerRecipe(toStack(input), outputs, probabilities)));
+        MineTweakerAPI.apply(new AddToSizer(new MineralSizerRecipe(toStack(input), outputs, probabilities, false)));
+    }
+    @ZenMethod
+    public static void add(IItemStack input, IItemStack[] output) {
+        if(input == null || output == null) {MineTweakerAPI.logError(name + ": Invalid recipe."); return;}
+
+        ArrayList<ItemStack> outputs = new ArrayList<ItemStack>();
+        ArrayList<Integer> probabilities = new ArrayList<Integer>();
+
+        for(int x = 0; x < output.length; x++){
+        	outputs.add(toStack(output[x]));
+        	probabilities.add(x+1);
+        }
+
+        MineTweakerAPI.apply(new AddToSizer(new MineralSizerRecipe(toStack(input), outputs, probabilities, true)));
     }
 		    private static class AddToSizer implements IUndoableAction {
 		    	private MineralSizerRecipe recipe;

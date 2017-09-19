@@ -44,9 +44,9 @@ public class ModConfig {
 
 	public static boolean enableTOP;
 
-	public static int consumedSulf = 10;
-	public static int consumedChlo = 30;
-	public static int consumedFluo = 20;
+	public static int consumedSulf = 30;
+	public static int consumedChlo = 20;
+	public static int consumedFluo = 10;
 
 	public static int consumedNitr = 10;
 	public static int consumedPhos = 30;

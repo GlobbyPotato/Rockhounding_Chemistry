@@ -18,7 +18,7 @@ public class GuiLabBlender extends GuiBase {
     private final InventoryPlayer playerInventory;
     private final TileEntityLabBlender labBlender;
 	public static final int WIDTH = 176;
-	public static final int HEIGHT = 201;
+	public static final int HEIGHT = 181;
 
     public GuiLabBlender(InventoryPlayer playerInv, TileEntityLabBlender tile){
         super(tile, new ContainerLabBlender(playerInv,tile));
@@ -37,8 +37,8 @@ public class GuiLabBlender extends GuiBase {
 	   int y = (this.height - this.ySize) / 2;
 
 		//fuel
-		if(mouseX >= 10+x && mouseX <= 21+x && mouseY >= 39+y && mouseY <= 90+y){
-			drawPowerInfo("ticks", this.labBlender.getPower(), this.labBlender.getPowerMax(), mouseX, mouseY);
+	    if(mouseX >= 10+x && mouseX <= 21+x && mouseY >= 27+y && mouseY <= 78+y){
+			drawPowerInfo("ticks", this.labBlender.getMaxCookTime(), this.labBlender.getPower(), this.labBlender.getPowerMax(), mouseX, mouseY);
 		}
 
 		//fuel status
@@ -58,7 +58,7 @@ public class GuiLabBlender extends GuiBase {
 					}
 				}
 				String multiString[] = new String[]{fuelString, "", indString, permaString};
-			if(mouseX >= 7+x && mouseX <= 24+x && mouseY >= 19+y && mouseY <= 36+y){
+			if(mouseX >= 7+x && mouseX <= 24+x && mouseY >= 7+y && mouseY <= 24+y){
 				   drawMultiLabel(multiString, mouseX, mouseY);
 			}
 		}
@@ -80,7 +80,7 @@ public class GuiLabBlender extends GuiBase {
         //power bar
         if (this.labBlender.getPower() > 0){
             int k = this.getBarScaled(50, this.labBlender.getPower(), this.labBlender.getPowerMax());
-            this.drawTexturedModalRect(i + 11, j + 40 + (50 - k), 176, 31, 10, k);
+            this.drawTexturedModalRect(i + 11, j + 28 + (50 - k), 176, 31, 10, k);
         }
 
         //smelt bar
@@ -91,7 +91,7 @@ public class GuiLabBlender extends GuiBase {
 
         //inductor
         if(this.labBlender.hasPermanentInduction()){
-            this.drawTexturedModalRect(i + 7, j + 19, 176, 81, 18, 18);
+            this.drawTexturedModalRect(i + 7, j + 7, 176, 81, 18, 18);
         }
         
         //activation

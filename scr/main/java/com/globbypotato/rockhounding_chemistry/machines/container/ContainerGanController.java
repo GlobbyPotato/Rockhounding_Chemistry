@@ -31,14 +31,17 @@ public class ContainerGanController extends ContainerBase<TileEntityGanControlle
 			if(this.tile.activationKey){
 				this.tile.cycleKey = !this.tile.cycleKey;
 			}
+			doClickSound(player, tile.getWorld(), tile.getPos());
     		return null;
 		}else if(slot == 1){
     		this.tile.activationKey = !this.tile.activationKey;
+			doClickSound(player, tile.getWorld(), tile.getPos());
     		return null;
 		}else if(slot == 2){
 			if(!this.tile.cycleKey){
 				this.tile.compressKey = !this.tile.compressKey;
 			}
+			doClickSound(player, tile.getWorld(), tile.getPos());
     		return null;
     	}else{
     		return super.slotClick(slot, dragType, clickTypeIn, player);

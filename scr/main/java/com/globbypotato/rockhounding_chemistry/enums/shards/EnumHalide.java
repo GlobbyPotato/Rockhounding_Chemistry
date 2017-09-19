@@ -3,13 +3,18 @@ package com.globbypotato.rockhounding_chemistry.enums.shards;
 import com.globbypotato.rockhounding_chemistry.enums.BaseEnum;
 
 public enum EnumHalide implements BaseEnum{
-	BOLEITE,
-	CARNALLITE,
-	RINNEITE,
-	GRICEITE,
-	FLUORITE,
-	HEKLAITE,
-	CREEDITE;
+	BOLEITE(494),
+	CARNALLITE(160),
+	RINNEITE(230),
+	GRICEITE(262),
+	FLUORITE(313),
+	HEKLAITE(269),
+	CREEDITE(271);
+
+	private int gravity;
+	private EnumHalide(int gravity) {
+		this.gravity = gravity;
+	}
 
 	//---------CUSTOM----------------
 	public static int size(){
@@ -32,4 +37,21 @@ public enum EnumHalide implements BaseEnum{
 	public static String getName(int index){
 		return name(index);
 	}
+	
+	public static int[] getGravities(){
+		int[] temp = new int[size()];
+		for(int i = 0; i < size(); i++){
+			temp[i] = getGravity(i);
+		}
+		return temp;
+	}
+	
+	public static int getGravity(int index){
+		return values()[index].gravity;
+	}
+
+	public int gravity(){
+		return this.gravity;
+	}
+
 }

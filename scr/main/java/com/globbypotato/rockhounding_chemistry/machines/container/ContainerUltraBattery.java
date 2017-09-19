@@ -35,12 +35,14 @@ public class ContainerUltraBattery extends ContainerBase<TileEntityUltraBattery>
 			if(this.tile.sideStatus[slot]){
 				this.tile.sideStatus[6] = false; 
 			}
+			doClickSound(player, tile.getWorld(), tile.getPos());
     		return null;
 		}else if(slot == 6){
 			this.tile.sideStatus[slot] = !this.tile.sideStatus[slot];
 			for(int x = 0; x < 6; x++){
 				this.tile.sideStatus[x] = false; 
 			}
+			doClickSound(player, tile.getWorld(), tile.getPos());
     		return null;
     	}else{
     		return super.slotClick(slot, dragType, clickTypeIn, player);

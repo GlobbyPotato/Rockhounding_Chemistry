@@ -1,5 +1,8 @@
 package com.globbypotato.rockhounding_chemistry.machines.gui;
 
+import java.util.Arrays;
+import java.util.List;
+
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerMineralAnalyzer;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityMineralAnalyzer;
@@ -16,7 +19,7 @@ public class GuiMineralAnalyzer extends GuiBase {
     private final InventoryPlayer playerInventory;
     private final TileEntityMineralAnalyzer mineralAnalyzer;
 	public static final int WIDTH = 176;
-	public static final int HEIGHT = 191;
+	public static final int HEIGHT = 193;
 	public static final ResourceLocation TEXTURE_REF = new ResourceLocation(Reference.MODID + ":textures/gui/guimineralanalyzer.png");
 	private FluidTank sulfTank;
 	private FluidTank chloTank;
@@ -42,8 +45,8 @@ public class GuiMineralAnalyzer extends GuiBase {
 	   int y = (this.height - this.ySize) / 2;
 
 	   //fuel
-	   if(mouseX >= 9+x && mouseX <= 18+x && mouseY >= 54+y && mouseY <= 104+y){
-		   drawPowerInfo("ticks", this.mineralAnalyzer.getPower(), this.mineralAnalyzer.getPowerMax(), mouseX, mouseY);
+	   if(mouseX >= 10+x && mouseX <= 21+x && mouseY >= 27+y && mouseY <= 78+y){
+		   drawPowerInfo("ticks", this.mineralAnalyzer.getCookTimeMax(), this.mineralAnalyzer.getPower(), this.mineralAnalyzer.getPowerMax(), mouseX, mouseY);
 	   }
 
 		//fuel status
@@ -63,32 +66,88 @@ public class GuiMineralAnalyzer extends GuiBase {
 					}
 				}
 				String multiString[] = new String[]{fuelString, "", indString, permaString};
-			if(mouseX >= 7+x && mouseX <= 24+x && mouseY >= 33+y && mouseY <= 50+y){
+			if(mouseX >= 7+x && mouseX <= 24+x && mouseY >= 7+y && mouseY <= 24+y){
 				   drawMultiLabel(multiString, mouseX, mouseY);
 			}
 		}
 
 		//sulf tank
-		if(mouseX>= 105+x && mouseX <= 121+x && mouseY >= 26+y && mouseY <= 86+y){
-			drawTankInfo(this.sulfTank, mouseX, mouseY);
+		if(mouseX>= 114+x && mouseX <= 130+x && mouseY >= 25+y && mouseY <= 86+y){
+			drawTankInfoWithConsume(this.sulfTank, this.mineralAnalyzer.modSulf(), mouseX, mouseY);
 		}
-		
+
 		//chlo tank
-		if(mouseX>= 127+x && mouseX <= 143+x && mouseY >= 26+y && mouseY <= 86+y){
-			drawTankInfo(this.chloTank, mouseX, mouseY);
+		if(mouseX>= 132+x && mouseX <= 150+x && mouseY >= 25+y && mouseY <= 86+y){
+			drawTankInfoWithConsume(this.chloTank, this.mineralAnalyzer.modChlo(), mouseX, mouseY);
 		}
-		
+
 		//fluo tank
-		if(mouseX>= 149+x && mouseX <= 165+x && mouseY >= 26+y && mouseY <= 86+y){
-			drawTankInfo(this.fluoTank, mouseX, mouseY);
+		if(mouseX>= 151+x && mouseX <= 170+x && mouseY >= 25+y && mouseY <= 86+y){
+			drawTankInfoWithConsume(this.fluoTank, this.mineralAnalyzer.modFluo(), mouseX, mouseY);
 		}
 
 		//drain
-		if(mouseX >= 83+x && mouseX <= 101+x && mouseY >= 87+y && mouseY <= 105+y){
-			drawButtonLabel("Drain Valve", mouseX, mouseY);
+		if(mouseX >= 96+x && mouseX <= 109+x && mouseY >= 88+y && mouseY <= 103+y){
+		   drawButtonLabel("Drain Fluids. Pipe out fluids if unused", mouseX, mouseY);
+		}
+
+		//lo
+		if(mouseX >= 25+x && mouseX <= 40+x && mouseY >= 88+y && mouseY <= 103+y){
+			drawButtonLabel("Decrease Gravity Reference (-0.5)", mouseX, mouseY);
+		}
+
+		//hi
+		if(mouseX >= 63+x && mouseX <= 78+x && mouseY >= 88+y && mouseY <= 103+y){
+			drawButtonLabel("Increase Gravity Reference (+0.5)", mouseX, mouseY);
+		}
+
+		//activation
+		if(mouseX >= 7+x && mouseX <= 22+x && mouseY >= 88+y && mouseY <= 103+y){
+			drawButtonLabel("Activation", mouseX, mouseY);
+		}
+
+		//gravity fail
+		if(this.mineralAnalyzer.hasGravity() && !this.mineralAnalyzer.isValidRange()){
+			if(mouseX >= 80+x && mouseX <= 82+x && mouseY >= 90+y && mouseY <= 101+y){
+				String failstring = TextFormatting.RED + "No output expected for this level of gravity";
+				drawButtonLabel(failstring, mouseX, mouseY);
+			}
+		}
+
+		//gravity
+		if(mouseX >= 41+x && mouseX <= 62+x && mouseY >= 90+y && mouseY <= 101+y){
+			String name = TextFormatting.WHITE + "Specific Gravity";
+			String descr = TextFormatting.DARK_GRAY + "Filtered interval: " + TextFormatting.LIGHT_PURPLE + "from " + (this.mineralAnalyzer.getGravity() - 0.5F) + " to " + (this.mineralAnalyzer.getGravity() + 0.5F);
+			String[] multistring = new String[]{name, descr};
+			drawMultiLabel(multistring, mouseX, mouseY);
+		}
+
+		String alertstring = TextFormatting.RED + "Not enough solvent";
+		if(mouseX >= 113+x && mouseX <= 121+x && mouseY >= 16+y && mouseY <= 24+y){
+			if(this.sulfTank.getFluid() != null && this.mineralAnalyzer.modSulf() > this.sulfTank.getFluidAmount()){
+				drawButtonLabel(alertstring, mouseX, mouseY);
+			}
+		}
+
+		if(mouseX >= 132+x && mouseX <= 140+x && mouseY >= 16+y && mouseY <= 24+y){
+			if(this.chloTank.getFluid() != null && this.mineralAnalyzer.modChlo() > this.chloTank.getFluidAmount()){
+				drawButtonLabel(alertstring, mouseX, mouseY);
+			}
+		}
+
+		if(mouseX >= 151+x && mouseX <= 159+x && mouseY >= 16+y && mouseY <= 24+y){
+			if(this.fluoTank.getFluid() != null && this.mineralAnalyzer.modFluo() > this.fluoTank.getFluidAmount()){
+				drawButtonLabel(alertstring, mouseX, mouseY);
+			}
 		}
 
     }
+
+	@Override
+	public void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
+		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+		this.fontRendererObj.drawString(String.valueOf(this.mineralAnalyzer.getGravity()), 42, 92, 4210752);
+	}
 
     @Override
     public void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY){
@@ -96,37 +155,62 @@ public class GuiMineralAnalyzer extends GuiBase {
         int i = (this.width - this.xSize) / 2;
         int j = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
+
         //power bar
         if (this.mineralAnalyzer.getPower() > 0){
             int k = this.getBarScaled(50, this.mineralAnalyzer.getPower(), this.mineralAnalyzer.getPowerMax());
-            this.drawTexturedModalRect(i + 11, j + 54 + (50 - k), 176, 51, 10, k);
+            this.drawTexturedModalRect(i + 11, j + 28 + (50 - k), 176, 51, 10, k);
         }
+
         //smelt bar
         if (this.mineralAnalyzer.cookTime > 0){
-            int k = this.getBarScaled(51, this.mineralAnalyzer.cookTime, this.mineralAnalyzer.getCookTimeMax());
-            this.drawTexturedModalRect(i + 32, j + 52, 176, 0, 27, k);
+            int k = this.getBarScaled(22, this.mineralAnalyzer.cookTime, this.mineralAnalyzer.getCookTimeMax());
+            this.drawTexturedModalRect(i + 73, j + 29, 176, 0, 22, k);
         }
-        
+
         //valve
         if(this.mineralAnalyzer.drainValve){
-            this.drawTexturedModalRect(i + 83, j + 87, 176, 101, 18, 18);
+            this.drawTexturedModalRect(i + 96, j + 88, 176, 101, 16, 16);
         }
 
         //inductor
         if(this.mineralAnalyzer.hasPermanentInduction()){
-            this.drawTexturedModalRect(i + 7, j + 33, 176, 119, 18, 18);
+            this.drawTexturedModalRect(i + 7, j + 7, 176, 119, 18, 18);
         }
 
+        //inductor
+        if(this.mineralAnalyzer.isActive()){
+            this.drawTexturedModalRect(i + 7, j + 88, 176, 153, 16, 16);
+        }
+
+        if(this.mineralAnalyzer.hasGravity() && !this.mineralAnalyzer.isValidRange()){
+            this.drawTexturedModalRect(i + 80, j + 90, 177, 139, 3, 12);
+        }
+
+        //fluid alerts
+		if(this.sulfTank.getFluid() != null && this.mineralAnalyzer.modSulf() > this.sulfTank.getFluidAmount()){
+            this.drawTexturedModalRect(i + 113, j + 16, 176, 30, 9, 9);
+		}
+
+		if(this.chloTank.getFluid() != null && this.mineralAnalyzer.modChlo() > this.chloTank.getFluidAmount()){
+            this.drawTexturedModalRect(i + 132, j + 16, 176, 30, 9, 9);
+		}
+
+		if(this.fluoTank.getFluid() != null && this.mineralAnalyzer.modFluo() > this.fluoTank.getFluidAmount()){
+            this.drawTexturedModalRect(i + 151, j + 16, 176, 30, 9, 9);
+		}
+
+        //tanks
         if(this.sulfTank.getFluid() != null){
-			renderFluidBar(this.sulfTank.getFluid(), this.sulfTank.getCapacity(), i + 105, j + 26, 16, 60);
+			renderFluidBar(this.sulfTank.getFluid(), this.sulfTank.getCapacity(), i + 114, j + 26, 16, 60);
 		}
-		
+
 		if(this.chloTank.getFluid() != null){
-			renderFluidBar(this.chloTank.getFluid(), this.chloTank.getCapacity(), i + 127, j + 26, 16, 60);
+			renderFluidBar(this.chloTank.getFluid(), this.chloTank.getCapacity(), i + 133, j + 26, 16, 60);
 		}
-		
+
 		if(this.fluoTank.getFluid() != null){
-			renderFluidBar(this.fluoTank.getFluid(), this.fluoTank.getCapacity(), i + 149, j + 26, 16, 60);
+			renderFluidBar(this.fluoTank.getFluid(), this.fluoTank.getCapacity(), i + 152, j + 26, 16, 60);
 		}
 
     }

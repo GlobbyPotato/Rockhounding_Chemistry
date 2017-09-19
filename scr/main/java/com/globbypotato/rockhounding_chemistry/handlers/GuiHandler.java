@@ -20,6 +20,7 @@ import com.globbypotato.rockhounding_chemistry.machines.container.ContainerNitro
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerOwcAssembler;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerOwcController;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerPetrographerTable;
+import com.globbypotato.rockhounding_chemistry.machines.container.ContainerPipelineValve;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerSaltSeasoner;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerUltraBattery;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiAirChiller;
@@ -42,6 +43,7 @@ import com.globbypotato.rockhounding_chemistry.machines.gui.GuiNitrogenTank;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiOwcAssembler;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiOwcController;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiPetrographerTable;
+import com.globbypotato.rockhounding_chemistry.machines.gui.GuiPipelineValve;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiSaltSeasoner;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiUltraBattery;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityAirChiller;
@@ -64,6 +66,7 @@ import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityNit
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityOwcAssembler;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityOwcController;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityPetrographerTable;
+import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityPipelineValve;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntitySaltSeasoner;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityUltraBattery;
 
@@ -98,6 +101,7 @@ public class GuiHandler implements IGuiHandler {
 	public static final int castingBenchID = 20;
 	public static final int labBlenderID = 21;
 	public static final int disposerID = 22;
+	public static final int pipelineValveID = 23;
 
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -148,6 +152,8 @@ public class GuiHandler implements IGuiHandler {
 				if (entity != null && entity instanceof TileEntityLabBlender){return new ContainerLabBlender(player.inventory, (TileEntityLabBlender) entity);}
 			case disposerID:
 				if (entity != null && entity instanceof TileEntityDisposer){return new ContainerDisposer(player.inventory, (TileEntityDisposer) entity);}
+			case pipelineValveID:
+				if (entity != null && entity instanceof TileEntityPipelineValve){return new ContainerPipelineValve(player.inventory, (TileEntityPipelineValve) entity);}
 		}
         return null;
 	}
@@ -201,6 +207,8 @@ public class GuiHandler implements IGuiHandler {
 				if (entity != null && entity instanceof TileEntityLabBlender){return new GuiLabBlender(player.inventory, (TileEntityLabBlender) entity);}
 			case disposerID:
 				if (entity != null && entity instanceof TileEntityDisposer){return new GuiDisposer(player.inventory, (TileEntityDisposer) entity);}
+			case pipelineValveID:
+				if (entity != null && entity instanceof TileEntityPipelineValve){return new GuiPipelineValve(player.inventory, (TileEntityPipelineValve) entity);}
 		}
         return null;
 	}

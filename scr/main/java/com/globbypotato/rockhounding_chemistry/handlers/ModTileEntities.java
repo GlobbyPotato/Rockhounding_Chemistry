@@ -14,6 +14,8 @@ import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityLas
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityLaserTX;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityMineCrawler;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityNitrogenTank;
+import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityPipelinePump;
+import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityPipelineValve;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntitySaltMaker;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityUltraBattery;
 
@@ -44,5 +46,9 @@ public class ModTileEntities {
 		GameRegistry.registerTileEntity(TileEntityUltraBattery.class, "RH_UltraBattery");
 
 		GameRegistry.registerTileEntity(TileEntityDisposer.class, "RH_Disposer");
+		
+		GameRegistry.registerTileEntity(TileEntityPipelinePump.class, "RH_PipelinePump");
+		GameRegistry.registerTileEntity(TileEntityPipelineValve.class, "RH_PipelineValve");
+
 	}
 }

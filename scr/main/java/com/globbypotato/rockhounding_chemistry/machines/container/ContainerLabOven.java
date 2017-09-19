@@ -22,10 +22,10 @@ public class ContainerLabOven extends ContainerBase<TileEntityLabOven> {
 		IItemHandler template = tile.getTemplate();
 
 		this.addSlotToContainer(new SlotItemHandler(input, 0, 62, 34));//input solute
-		this.addSlotToContainer(new SlotItemHandler(input, 1, 8, 31));//fuel
+		this.addSlotToContainer(new SlotItemHandler(input, 1, 8, 8));//fuel
 		this.addSlotToContainer(new SlotItemHandler(input, 2, 128, 15));//input solvent
 		this.addSlotToContainer(new SlotItemHandler(input, 3, 62, 83));//output
-		this.addSlotToContainer(new SlotItemHandler(input, 4, 29, 86));//input redstone
+		this.addSlotToContainer(new SlotItemHandler(input, 4, 29, 82));//input redstone
 		this.addSlotToContainer(new SlotItemHandler(input, 5, 150, 15));//input solvent
 
 		this.addSlotToContainer(new SlotItemHandler(template, 0, 137,  121));//prev
@@ -43,6 +43,7 @@ public class ContainerLabOven extends ContainerBase<TileEntityLabOven> {
 				this.tile.recipeIndex = MachineRecipes.labOvenRecipes.size() - 1;
     			this.tile.activation = false;
 			}
+			doClickSound(player, tile.getWorld(), tile.getPos());
     		return null;
     	}else if(slot == 7){
     		if(this.tile.recipeIndex < MachineRecipes.labOvenRecipes.size() - 1){
@@ -52,9 +53,11 @@ public class ContainerLabOven extends ContainerBase<TileEntityLabOven> {
 	    		this.tile.recipeIndex = -1; 
     			this.tile.activation = false;
     		}
+			doClickSound(player, tile.getWorld(), tile.getPos());
     		return null;
     	}else if(slot == 8){
    			this.tile.activation = !this.tile.activation; 
+			doClickSound(player, tile.getWorld(), tile.getPos());
     		return null;
     	}else{
     		return super.slotClick(slot, dragType, clickTypeIn, player);

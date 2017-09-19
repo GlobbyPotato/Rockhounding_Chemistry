@@ -44,6 +44,9 @@ import com.globbypotato.rockhounding_chemistry.machines.MineralSizer;
 import com.globbypotato.rockhounding_chemistry.machines.OwcAssembler;
 import com.globbypotato.rockhounding_chemistry.machines.OwcController;
 import com.globbypotato.rockhounding_chemistry.machines.PetrographerTable;
+import com.globbypotato.rockhounding_chemistry.machines.PipelineDuct;
+import com.globbypotato.rockhounding_chemistry.machines.PipelinePump;
+import com.globbypotato.rockhounding_chemistry.machines.PipelineValve;
 import com.globbypotato.rockhounding_chemistry.machines.SaltMaker;
 import com.globbypotato.rockhounding_chemistry.machines.SaltSeasoner;
 import com.globbypotato.rockhounding_chemistry.machines.UltraBattery;
@@ -102,6 +105,10 @@ public class ModBlocks {
 	public static Block ultraBattery;
 
 	public static Block disposer;
+	
+	public static Block pipelineDuct;
+	public static Block pipelinePump;
+	public static Block pipelineValve;
 
 	//initialize the block
 	public static void init() {
@@ -145,13 +152,17 @@ public class ModBlocks {
 		owcBlocks = new OwcBlocks(Material.IRON, EnumOwc.getNames(), 4.0F, 7.0F, "owcBlocks", SoundType.METAL);
 		owcAssembler = new OwcAssembler(3.0F, 5.0F, "owcAssembler");
 		owcController = new OwcController(3.0F, 5.0F, "owcController");
-		
+
 		ganBlocks = new GanBlocks(Material.IRON, EnumGan.getNames(), 4.0F, 7.0F, "ganBlocks", SoundType.METAL);
 		ganController = new GanController(3.0F, 5.0F, "ganController");
 
 		ultraBattery = new UltraBattery(Material.IRON, EnumBattery.getNames(), 2.0F, 7.0F, "ultraBattery", SoundType.METAL);
 
 		disposer = new Disposer(2.0F, 7.0F, "disposer", SoundType.METAL);
+
+		pipelineDuct = new PipelineDuct(1.0F, 1.0F, "pipelineDuct");
+		pipelinePump = new PipelinePump(1.0F, 1.0F, "pipelinePump");
+		pipelineValve = new PipelineValve(1.0F, 1.0F, "pipelineValve");
 
 	}
 
@@ -196,6 +207,9 @@ public class ModBlocks {
 		registerSingleBlockRender(castingBench, 0, "castingBench");
 		registerSingleBlockRender(labBlender, 0, "labBlender");
 		registerSingleBlockRender(disposer, 0, "disposer");
+		registerSingleBlockRender(pipelineDuct, 0, "pipelineDuct");
+		registerSingleBlockRender(pipelinePump, 0, "pipelinePump");
+		registerSingleBlockRender(pipelineValve, 0, "pipelineValve");
 	}
 
 	//render meta block

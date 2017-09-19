@@ -62,11 +62,3 @@ public class RendererUltraBattery extends TileEntitySpecialRenderer<TileEntityUl
 		}
 	}
 }
-
-/*
-GlStateManager.translate(x, y, z);
-GlStateManager.rotate(90F, 1, 0, 0);
-GlStateManager.translate(0.54, 0.15, -0.754);
-GlStateManager.scale(0.8, 0.8, 0.5);
-Minecraft.getMinecraft().getRenderManager().doRenderEntity(plugEntity, 0, 0, 0, 0F, 0F, false);
-*/

@@ -26,7 +26,7 @@ public class ContainerLabBlender extends ContainerBase<TileEntityLabBlender>{
             }
         }
 
-		this.addSlotToContainer(new SlotItemHandler(input, 9, 8, 20));//fuel
+		this.addSlotToContainer(new SlotItemHandler(input, 9, 8, 8));//fuel
 		this.addSlotToContainer(new SlotItemHandler(output, 0, 116, 75));//output
 		this.addSlotToContainer(new SlotItemHandler(template, 0, 115,  19));//activation
 	}
@@ -35,6 +35,7 @@ public class ContainerLabBlender extends ContainerBase<TileEntityLabBlender>{
 	public ItemStack slotClick(int slot, int dragType, ClickType clickTypeIn, EntityPlayer player){
 		if(slot == 11){
     		this.tile.activation = !this.tile.activation;
+			doClickSound(player, tile.getWorld(), tile.getPos());
     		return null;
     	}else{
     		return super.slotClick(slot, dragType, clickTypeIn, player);

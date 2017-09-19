@@ -43,6 +43,7 @@ public class ContainerDepositionChamber extends ContainerBase<TileEntityDepositi
 	    		this.tile.recipeIndex = MachineRecipes.depositionRecipes.size() - 1;
 	    		this.tile.activation = false;
 	    	}
+			doClickSound(player, tile.getWorld(), tile.getPos());
     		return null;
     	}else if(slot == 6){
     		if(this.tile.recipeIndex < MachineRecipes.depositionRecipes.size() - 1){
@@ -52,9 +53,11 @@ public class ContainerDepositionChamber extends ContainerBase<TileEntityDepositi
     			this.tile.recipeIndex = -1; 
 	    		this.tile.activation = false;
     		}
+			doClickSound(player, tile.getWorld(), tile.getPos());
     		return null;
     	}else if(slot == 7){
    			this.tile.activation = !this.tile.activation; 
+			doClickSound(player, tile.getWorld(), tile.getPos());
     		return null;
     	}else{
     		return super.slotClick(slot, dragType, clickTypeIn, player);

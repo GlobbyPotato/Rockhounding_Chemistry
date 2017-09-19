@@ -7,14 +7,17 @@ import net.minecraftforge.fml.common.event.FMLInterModComms;
 
 public class TopCompat{
 	private static String TOPID = "theoneprobe";
+	private static String modpath = "com.globbypotato.rockhounding_chemistry.compat.top.";
 
 	public static void init(){
         if (ModConfig.enableTOP && Loader.isModLoaded(TOPID)) {
-            FMLInterModComms.sendFunctionMessage(TOPID, "getTheOneProbe", "com.globbypotato.rockhounding_chemistry.compat.top.TopCastingBench$getTOP");
-            FMLInterModComms.sendFunctionMessage(TOPID, "getTheOneProbe", "com.globbypotato.rockhounding_chemistry.compat.top.TopSaltTank$getTOP");
-            FMLInterModComms.sendFunctionMessage(TOPID, "getTheOneProbe", "com.globbypotato.rockhounding_chemistry.compat.top.TopUltraBattery$getTOP");
-            FMLInterModComms.sendFunctionMessage(TOPID, "getTheOneProbe", "com.globbypotato.rockhounding_chemistry.compat.top.TopGAN$getTOP");
-            FMLInterModComms.sendFunctionMessage(TOPID, "getTheOneProbe", "com.globbypotato.rockhounding_chemistry.compat.top.TopMachines$getTOP");
+            FMLInterModComms.sendFunctionMessage(TOPID, "getTheOneProbe", modpath + "TopCastingBench$getTOP");
+            FMLInterModComms.sendFunctionMessage(TOPID, "getTheOneProbe", modpath + "TopSaltTank$getTOP");
+            FMLInterModComms.sendFunctionMessage(TOPID, "getTheOneProbe", modpath + "TopUltraBattery$getTOP");
+            FMLInterModComms.sendFunctionMessage(TOPID, "getTheOneProbe", modpath + "TopGAN$getTOP");
+            FMLInterModComms.sendFunctionMessage(TOPID, "getTheOneProbe", modpath + "TopMachines$getTOP");
+            FMLInterModComms.sendFunctionMessage(TOPID, "getTheOneProbe", modpath + "TopPipelinePump$getTOP");
+            FMLInterModComms.sendFunctionMessage(TOPID, "getTheOneProbe", modpath + "TopPipelineValve$getTOP");
         }
 	}
 

@@ -3,13 +3,18 @@ package com.globbypotato.rockhounding_chemistry.enums.shards;
 import com.globbypotato.rockhounding_chemistry.enums.BaseEnum;
 
 public enum EnumCarbonate implements BaseEnum{
-	ANKERITE,
-	GASPEITE,
-	ROSASITE,
-	PARISITE,
-	OTAVITE,
-	SMITHSONITE,
-	HUNTITE;
+	ANKERITE(305),
+	GASPEITE(371),
+	ROSASITE(409),
+	PARISITE(436),
+	OTAVITE(503),
+	SMITHSONITE(445),
+	HUNTITE(269);
+
+	private int gravity;
+	private EnumCarbonate(int gravity) {
+		this.gravity = gravity;
+	}
 
 	//---------CUSTOM----------------
 	public static int size(){
@@ -32,4 +37,21 @@ public enum EnumCarbonate implements BaseEnum{
 	public static String getName(int index){
 		return name(index);
 	}
+	
+	public static int[] getGravities(){
+		int[] temp = new int[size()];
+		for(int i = 0; i < size(); i++){
+			temp[i] = getGravity(i);
+		}
+		return temp;
+	}
+	
+	public static int getGravity(int index){
+		return values()[index].gravity;
+	}
+
+	public int gravity(){
+		return this.gravity;
+	}
+
 }

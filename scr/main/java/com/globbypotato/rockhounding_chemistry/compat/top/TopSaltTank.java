@@ -30,7 +30,7 @@ public class TopSaltTank implements IProbeInfoProvider{
         final TileEntity te = world.getTileEntity(data.getPos());
         if (te instanceof TileEntitySaltMaker) {
         	TileEntitySaltMaker tank = (TileEntitySaltMaker)te;
-        	String stage = TextFormatting.GRAY + "Current Stage: " + TextFormatting.AQUA + EnumSaltStages.getStageName(tank.getBlockMetadata());
+        	String stage = TextFormatting.GRAY + "Stage: " + TextFormatting.AQUA + EnumSaltStages.getStageName(tank.getBlockMetadata());
 
             probeInfo.text(stage);
         }

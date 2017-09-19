@@ -1,5 +1,7 @@
 package com.globbypotato.rockhounding_chemistry.machines.tileentity;
 
+import java.util.ArrayList;
+
 import com.globbypotato.rockhounding_chemistry.enums.EnumFluid;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiMineralAnalyzer;
@@ -23,8 +25,7 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileEntityMineralAnalyzer extends TileEntityMachineTank{
 
-	private ItemStackHandler template = new TemplateStackHandler(1);
-
+	private ItemStackHandler template = new TemplateStackHandler(4);
 	private static final int SULFUR_SLOT = 3;
 	private static final int CHLOR_SLOT = 4;
 	private static final int FLUO_SLOT = 5;
@@ -32,7 +33,10 @@ public class TileEntityMineralAnalyzer extends TileEntityMachineTank{
 	public FluidTank sulfTank;
 	public FluidTank chloTank;
 	public FluidTank fluoTank;
+
 	public boolean drainValve;
+	public float gravity = 8.00F;
+	ArrayList<ItemStack> pickedShards = new ArrayList<ItemStack>();
 
 	public TileEntityMineralAnalyzer() {
 		super(6,1,1);
@@ -131,6 +135,27 @@ public class TileEntityMineralAnalyzer extends TileEntityMachineTank{
 		return MachineRecipes.analyzerRecipes.get(x);
 	}
 
+	public float getGravity(){
+		return gravity;
+	}
+
+	public boolean isActive(){
+		return this.activation;
+	}
+
+	public MineralAnalyzerRecipe getRecipe(){
+		for(int x = 0; x < MachineRecipes.analyzerRecipes.size(); x++){
+			if(getRecipe(x).getInput() != null && ItemStack.areItemsEqual(getRecipe(x).getInput(), input.getStackInSlot(INPUT_SLOT))){
+				return getRecipe(x);
+			}
+		}
+		return null;
+	}
+
+	public boolean hasGravity(){
+		return getRecipe() != null ? getRecipe().hasGravity() : false; 
+	}
+
 
 
 	//----------------------- I/O -----------------------
@@ -138,6 +163,8 @@ public class TileEntityMineralAnalyzer extends TileEntityMachineTank{
 	public void readFromNBT(NBTTagCompound compound){
 		super.readFromNBT(compound);
 		this.drainValve = compound.getBoolean("Drain");
+		this.activation = compound.getBoolean("Activation");
+		this.gravity = compound.getFloat("Gravity");
 		this.sulfTank.readFromNBT(compound.getCompoundTag("SulfTank"));
 		this.chloTank.readFromNBT(compound.getCompoundTag("ChloTank"));
 		this.fluoTank.readFromNBT(compound.getCompoundTag("FluoTank"));
@@ -147,6 +174,8 @@ public class TileEntityMineralAnalyzer extends TileEntityMachineTank{
 	public NBTTagCompound writeToNBT(NBTTagCompound compound){
 		super.writeToNBT(compound);
 		compound.setBoolean("Drain", this.drainValve);
+		compound.setBoolean("Activation", this.activation);
+		compound.setFloat("Gravity", this.gravity);
 
 		NBTTagCompound sulfTankNBT = new NBTTagCompound();
 		this.sulfTank.writeToNBT(sulfTankNBT);
@@ -193,32 +222,74 @@ public class TileEntityMineralAnalyzer extends TileEntityMachineTank{
 	}
 
 	private boolean canAnalyze() {
-		return output.getStackInSlot(OUTPUT_SLOT) == null
+		return isActive()
+			&& output.getStackInSlot(OUTPUT_SLOT) == null
+			&& isValidRange()
 			&& hasRecipe(input.getStackInSlot(INPUT_SLOT))
 			&& CoreUtils.hasConsumable(ToolUtils.agitator, input.getStackInSlot(CONSUMABLE_SLOT))
 			&& getPower() >= getCookTimeMax()
-			&& this.sulfTank.getFluidAmount() >= ModConfig.consumedSulf
-			&& this.chloTank.getFluidAmount() >= ModConfig.consumedChlo
-			&& this.fluoTank.getFluidAmount() >= ModConfig.consumedFluo;
+			&& this.sulfTank.getFluidAmount() >= modSulf()
+			&& this.chloTank.getFluidAmount() >= modChlo()
+			&& this.fluoTank.getFluidAmount() >= modFluo();
 	}
 
+	public int modSulf() { return hasGravity() ? ModConfig.consumedSulf + ((int)getGravity()*2) : ModConfig.consumedSulf; }
+	public int modChlo() { return hasGravity() ? ModConfig.consumedChlo + ((int)getGravity()*2) : ModConfig.consumedChlo; }
+	public int modFluo() { return hasGravity() ? ModConfig.consumedFluo + ((int)getGravity()*2) : ModConfig.consumedFluo; }
+
 	private void analyze(){
-		for(int x = 0; x < MachineRecipes.analyzerRecipes.size(); x++){
-			if(getRecipe(x).getInput() != null && ItemStack.areItemsEqual(getRecipe(x).getInput(), input.getStackInSlot(INPUT_SLOT))){
-				int mix = getRecipe(x).getOutput().size();
-				if(mix > 1){
-					output.setStackInSlot(OUTPUT_SLOT, ProbabilityStack.calculateProbability(getRecipe(x).getProbabilityStack()).copy());
-					output.getStackInSlot(OUTPUT_SLOT).stackSize = rand.nextInt(ModConfig.maxMineral) + 1;
+		if(getRecipe()!= null){
+			if(getRecipe().getInput() != null && ItemStack.areItemsEqual(getRecipe().getInput(), input.getStackInSlot(INPUT_SLOT))){
+				int mix = getRecipe().getOutput().size();
+				if(!hasGravity()){
+					if(mix > 1){
+						output.setStackInSlot(OUTPUT_SLOT, ProbabilityStack.calculateProbability(getRecipe().getProbabilityStack()).copy());
+						output.getStackInSlot(OUTPUT_SLOT).stackSize = rand.nextInt(ModConfig.maxMineral) + 1;
+					}else{
+						output.setStackInSlot(OUTPUT_SLOT, getRecipe().getOutput().get(0).copy());
+					}
 				}else{
-					output.setStackInSlot(OUTPUT_SLOT, getRecipe(x).getOutput().get(0).copy());
+					if(isValidRange()){
+						output.setStackInSlot(OUTPUT_SLOT, pickedShards.get(rand.nextInt(pickedShards.size())).copy());
+						output.getStackInSlot(OUTPUT_SLOT).stackSize = rand.nextInt(ModConfig.maxMineral) + 1;
+					}
 				}
 			}
 		}
+
 		input.damageSlot(CONSUMABLE_SLOT);
 		input.decrementSlot(INPUT_SLOT);
-		input.drainOrClean(sulfTank, ModConfig.consumedSulf, false);
-		input.drainOrClean(chloTank, ModConfig.consumedChlo, false);
-		input.drainOrClean(fluoTank, ModConfig.consumedFluo, false);
+		input.drainOrClean(sulfTank, modSulf(), false);
+		input.drainOrClean(chloTank, modChlo(), false);
+		input.drainOrClean(fluoTank, modFluo(), false);
+	}
+	
+	public boolean isValidRange() {
+		if(hasGravity()){
+			pickShards();
+		}
+		return !hasGravity() || (hasGravity() && !pickedShards.isEmpty() && pickedShards.size() > 0);
 	}
 
+	public void pickShards() {
+		pickedShards = new ArrayList<ItemStack>();
+		if(getRecipe()!= null){
+			if(getRecipe().getInput() != null && ItemStack.areItemsEqual(getRecipe().getInput(), input.getStackInSlot(INPUT_SLOT))){
+				int mix = getRecipe().getOutput().size();
+				if(hasGravity()){
+					if(mix > 1){
+						for(int y = 0; y < mix; y++){
+							if(currentGravity(y) >= minGravity() && currentGravity(y) <= maxGravity()){
+								pickedShards.add(getRecipe().getOutput().get(y));
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	private float minGravity(){return getGravity() - 0.5F;}
+	private float maxGravity(){return getGravity() + 0.5F;}
+	private float currentGravity(int y){return (float)getRecipe().getProbability().get(y).intValue() / 100;}
 }

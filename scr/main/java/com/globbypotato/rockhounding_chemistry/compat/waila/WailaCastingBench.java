@@ -38,7 +38,7 @@ public class WailaCastingBench implements IWailaDataProvider{
 		TileEntity te = world.getTileEntity(pos);
 		if(te != null && te instanceof TileEntityCastingBench){
 			TileEntityCastingBench casting = (TileEntityCastingBench)te;
-	    	currenttip.add(TextFormatting.GRAY + "Casting Pattern: " + TextFormatting.AQUA + EnumCasting.getFormalName(casting.currentCast));
+	    	currenttip.add(TextFormatting.GRAY + "Pattern: " + TextFormatting.AQUA + EnumCasting.getFormalName(casting.currentCast));
 		}
 		return currenttip;
 	}

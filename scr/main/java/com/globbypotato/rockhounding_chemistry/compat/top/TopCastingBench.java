@@ -48,7 +48,7 @@ public class TopCastingBench implements IProbeInfoProvider{
         final TileEntity te = world.getTileEntity(data.getPos());
         if (te instanceof TileEntityCastingBench) {
         	TileEntityCastingBench bench = (TileEntityCastingBench)te;
-        	String pattern = TextFormatting.GRAY + "Casting Pattern: " + TextFormatting.AQUA + EnumCasting.getFormalName(bench.currentCast);
+        	String pattern = TextFormatting.GRAY + "Pattern: " + TextFormatting.AQUA + EnumCasting.getFormalName(bench.currentCast);
 
             probeInfo.text(pattern);
         }

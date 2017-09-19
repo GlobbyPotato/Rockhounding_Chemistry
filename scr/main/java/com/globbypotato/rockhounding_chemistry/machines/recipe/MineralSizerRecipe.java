@@ -13,19 +13,33 @@ public class MineralSizerRecipe {
 	private List<ItemStack> output;
 	private List<Integer> probability;
 	private ArrayList<ProbabilityStack> probabilityOutputs;
+	boolean comminution;
 
-	public MineralSizerRecipe(ItemStack input, ItemStack output){
-		this(input, fakeStack(output), fakeProb(100));
-	}
-
-	public MineralSizerRecipe(ItemStack input, List<ItemStack> output, List<Integer> probability){
+	public MineralSizerRecipe(ItemStack input, List<ItemStack> output, List<Integer> probability, boolean comminution){
 		this.input = input;
 		this.output = output;
 		this.probability = probability;
 		this.probabilityOutputs = new ArrayList<ProbabilityStack>();
+		this.comminution = comminution;
 		for(int i = 0; i < output.size(); i++){
 			this.probabilityOutputs.add(new ProbabilityStack(new ItemStack(output.get(i).getItem(), 1, output.get(i).getItemDamage()), probability.get(i).intValue()));
 		}
+	}
+
+	public MineralSizerRecipe(ItemStack input, ItemStack output){
+		this(input, fakeStack(output), fakeProb(100), false);
+	}
+
+	public MineralSizerRecipe(ItemStack input, List<ItemStack> output){
+		this(input, output, sliders(output), true);
+	}
+
+	private static List<Integer> sliders(List<ItemStack> output) {
+		ArrayList<Integer> temp = new ArrayList<Integer>();
+		for(int x = 1; x <= output.size(); x++){
+			temp.add(x);
+		}
+		return temp;
 	}
 
 	private static ArrayList<ItemStack> fakeStack(ItemStack output) {
@@ -42,6 +56,10 @@ public class MineralSizerRecipe {
 
 	public ItemStack getInput(){
 		return this.input.copy();
+	}
+
+	public boolean getComminution(){
+		return this.comminution;
 	}
 
 	public ArrayList<ItemStack> getOutput() {

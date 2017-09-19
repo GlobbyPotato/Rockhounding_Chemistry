@@ -10,6 +10,7 @@ import com.globbypotato.rockhounding_core.utils.Translator;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 
@@ -35,8 +36,15 @@ public abstract class GuiBase extends GuiContainer{
 		this.fontRendererObj.drawString(device, this.xSize / 2 - this.fontRendererObj.getStringWidth(device) / 2, 5, 4210752);
 	}
 
-	protected void drawPowerInfo(String unit, int power, int powerMax, int mouseX, int mouseY) {
-	   String text = power + "/" + powerMax + " " + unit;
+	protected void drawPowerInfo(String unit, int cooktime, int power, int powerMax, int mouseX, int mouseY) {
+	   String counter = TextFormatting.DARK_GRAY + "Storage: " + TextFormatting.GOLD + power + "/" + powerMax + " " + unit;
+	   String cooking = TextFormatting.DARK_GRAY + "Process: " + TextFormatting.YELLOW + cooktime + " ticks";
+	   List<String> tooltip = Arrays.asList(counter, cooking);
+	   drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
+	}
+
+	protected void drawEnergyInfo(String unit, int power, int powerMax, int mouseX, int mouseY) {
+	   String text = TextFormatting.DARK_GRAY + "Storage: " + TextFormatting.RED +  power + "/" + powerMax + " " + unit;
 	   List<String> tooltip = Arrays.asList(text);
 	   drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
 	}
@@ -61,12 +69,26 @@ public abstract class GuiBase extends GuiContainer{
 				fluidAmount = tank.getFluidAmount();
 			}
 			String quantity = fluidAmount + "/" + tank.getCapacity() + " mb ";
-			String liquid = "Empty";
+			String liquid = TextFormatting.GRAY + "Empty";
 			if(tank.getFluid() != null){
-				liquid = tank.getFluid().getLocalizedName();
+				liquid = TextFormatting.BOLD + tank.getFluid().getLocalizedName();
 			}
 			List<String> tooltip = Arrays.asList(liquid, quantity);
 			drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
+	}
+
+	protected void drawTankInfoWithConsume(FluidTank tank, int consumes, int mouseX, int mouseY) {
+		int fluidAmount = 0;
+		if(tank.getFluid() != null){fluidAmount = tank.getFluidAmount();}
+		String quantity = fluidAmount + "/" + tank.getCapacity() + " mb ";
+		String liquid = TextFormatting.GRAY + "Empty";
+		String cons = "";
+		if(tank.getFluid() != null){liquid = TextFormatting.BOLD + tank.getFluid().getLocalizedName();}
+		if(consumes > 0){
+			cons = TextFormatting.YELLOW + "Consumes " + consumes + "mB";
+		}
+		List<String> tooltip = Arrays.asList(liquid, quantity, cons);
+		drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
 	}
 
 	protected void renderFluidBar(FluidStack fluid, int capacity, int i, int j, int w, int h) {

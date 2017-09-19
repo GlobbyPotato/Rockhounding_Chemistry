@@ -5,10 +5,14 @@ import javax.annotation.Nullable;
 import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityMachineInv;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 public abstract class ContainerBase<T extends TileEntityMachineInv> extends Container {
 
@@ -64,4 +68,9 @@ public abstract class ContainerBase<T extends TileEntityMachineInv> extends Cont
 	public boolean canInteractWith(EntityPlayer playerIn) {
 		return tile.canInteractWith(playerIn);
 	}
+	
+	protected void doClickSound(EntityPlayer player, World world, BlockPos pos) {
+		world.playSound(player, pos, SoundEvents.UI_BUTTON_CLICK, SoundCategory.AMBIENT, 0.3F, 1.0F);
+	}
+
 }

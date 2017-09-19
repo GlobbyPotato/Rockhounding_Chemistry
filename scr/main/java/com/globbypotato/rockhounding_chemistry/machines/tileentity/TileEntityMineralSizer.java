@@ -6,6 +6,7 @@ import com.globbypotato.rockhounding_chemistry.machines.recipe.MachineRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.MineralSizerRecipe;
 import com.globbypotato.rockhounding_chemistry.utils.ToolUtils;
 import com.globbypotato.rockhounding_core.machines.tileentity.MachineStackHandler;
+import com.globbypotato.rockhounding_core.machines.tileentity.TemplateStackHandler;
 import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityMachineTank;
 import com.globbypotato.rockhounding_core.machines.tileentity.WrappedItemHandler;
 import com.globbypotato.rockhounding_core.machines.tileentity.WrappedItemHandler.WriteMode;
@@ -13,12 +14,16 @@ import com.globbypotato.rockhounding_core.utils.CoreUtils;
 import com.globbypotato.rockhounding_core.utils.ProbabilityStack;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerConcatenate;
+import net.minecraftforge.items.ItemStackHandler;
 
 public class TileEntityMineralSizer extends TileEntityMachineTank {
 
 	public static final int GOOD_SLOT = 1;
 	public static final int WASTE_SLOT = 2;
+	public int slider;
+	private ItemStackHandler template = new TemplateStackHandler(3);
 
 	public TileEntityMineralSizer() {
 		super(3,3,1);
@@ -44,13 +49,17 @@ public class TileEntityMineralSizer extends TileEntityMachineTank {
 
 
 	//----------------------- HANDLER -----------------------
+	public ItemStackHandler getTemplate(){
+		return this.template;
+	}
+
 	@Override
 	public int getGUIHeight() {
 		return GuiMineralSizer.HEIGHT;
 	}
 
 	public int getMaxCookTime(){
-		return ModConfig.speedSizer;
+		return getRecipe() != null && getRecipe().getComminution() && getRecipe().getOutput().size() > 1 ? ModConfig.speedSizer + (getSlider() * 30) : ModConfig.speedSizer;
 	}
 
 
@@ -71,9 +80,58 @@ public class TileEntityMineralSizer extends TileEntityMachineTank {
 		return MachineRecipes.sizerRecipes.get(x);
 	}
 
+	public int getSlider(){
+		return slider;
+	}
+
+	public boolean isActive(){
+		return activation;
+	}
+
+	public boolean isCorrectRange(){
+		if(getRecipe() != null){
+			if(getRecipe().getComminution()){
+				if(getSlider() > 0 && getSlider() <= getRecipe().getOutput().size()){
+					return true;
+				}
+			}else{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public MineralSizerRecipe getRecipe(){
+		for(int x = 0; x < MachineRecipes.sizerRecipes.size(); x++){
+			if(getRecipe(x).getInput() != null && ItemStack.areItemsEqual(getRecipe(x).getInput(), input.getStackInSlot(INPUT_SLOT))){
+				return getRecipe(x);
+			}
+		}
+		return null;
+	}
+
+	public boolean hasComminution(){
+		return getRecipe() != null && getRecipe().getComminution();
+	}
+
 
 
 	//----------------------- I/O -----------------------
+	@Override
+	public void readFromNBT(NBTTagCompound compound){
+		super.readFromNBT(compound);
+		this.activation = compound.getBoolean("Activation");
+		this.slider = compound.getInteger("Slider");
+	}
+
+	@Override
+	public NBTTagCompound writeToNBT(NBTTagCompound compound){
+		super.writeToNBT(compound);
+		compound.setBoolean("Activation", this.activation);
+		compound.setInteger("Slider", this.slider);
+		return compound;
+	}
+
 	@Override
 	public FluidHandlerConcatenate getCombinedTank() {
 		return new FluidHandlerConcatenate(lavaTank);
@@ -101,37 +159,77 @@ public class TileEntityMineralSizer extends TileEntityMachineTank {
 	}
 
 	private boolean canProcess(ItemStack stack) {
-		return allOutputsEmpty()
+		return isActive()
+			&& allOutputsEmpty()
 			&& hasRecipe(input.getStackInSlot(INPUT_SLOT))
-			&& CoreUtils.hasConsumable(ToolUtils.gear, input.getStackInSlot(CONSUMABLE_SLOT))
+			&& handleConsumable()
+			&& isCorrectRange()
 			&& getPower() >= getMaxCookTime();
 	}
 
 	private void process() {
-		for(int x = 0; x < MachineRecipes.sizerRecipes.size(); x++){
-			if(getRecipe(x).getInput() != null && ItemStack.areItemsEqual(getRecipe(x).getInput(), input.getStackInSlot(INPUT_SLOT))){
+		if(getRecipe()!= null){
+			int mix = getRecipe().getOutput().size();
+			if(!getRecipe().getComminution()){
 				//calculate primary output
-				int mix = getRecipe(x).getOutput().size();
 				if(mix > 1){
-					output.setStackInSlot(OUTPUT_SLOT, ProbabilityStack.calculateProbability(getRecipe(x).getProbabilityStack()).copy());
+					output.setStackInSlot(OUTPUT_SLOT, ProbabilityStack.calculateProbability(getRecipe().getProbabilityStack()).copy());
 					output.getStackInSlot(OUTPUT_SLOT).stackSize = rand.nextInt(ModConfig.maxMineral) + 1;
 				}else{
-					output.setStackInSlot(OUTPUT_SLOT, getRecipe(x).getOutput().get(0).copy());
+					output.setStackInSlot(OUTPUT_SLOT, getRecipe().getOutput().get(0).copy());
 				}
 				//calculate secondary output
 				if(rand.nextInt(100) < 25 && mix > 4){
-					output.setStackInSlot(GOOD_SLOT, ProbabilityStack.calculateProbability(getRecipe(x).getProbabilityStack()).copy());
+					output.setStackInSlot(GOOD_SLOT, ProbabilityStack.calculateProbability(getRecipe().getProbabilityStack()).copy());
 					output.getStackInSlot(GOOD_SLOT).stackSize = rand.nextInt(ModConfig.maxMineral / 2) + 1;
 				}
 				//calculate waste output
 				if(rand.nextInt(100) < 5 && mix > 1){
-					output.setStackInSlot(WASTE_SLOT, ProbabilityStack.calculateProbability(getRecipe(x).getProbabilityStack()).copy());
+					output.setStackInSlot(WASTE_SLOT, ProbabilityStack.calculateProbability(getRecipe().getProbabilityStack()).copy());
+					output.getStackInSlot(WASTE_SLOT).stackSize = 1;
+				}
+			}else{
+				//calculate primary output
+				output.setStackInSlot(OUTPUT_SLOT, getRecipe().getOutput().get(getSlider() - 1).copy());
+				output.getStackInSlot(OUTPUT_SLOT).stackSize = rand.nextInt(ModConfig.maxMineral) + 1;
+				//calculate secondary output
+				if(rand.nextInt(100) < 25 && mix > 1){
+					int extra = rand.nextInt(mix);
+					output.setStackInSlot(GOOD_SLOT, getRecipe().getOutput().get(extra).copy());
+					output.getStackInSlot(GOOD_SLOT).stackSize = rand.nextInt(ModConfig.maxMineral / 2) + 1;
+				}
+				//calculate waste output
+				if(rand.nextInt(100) < 5 && mix > 1){
+					int extra = rand.nextInt(mix);
+					output.setStackInSlot(WASTE_SLOT, getRecipe().getOutput().get(extra).copy());
 					output.getStackInSlot(WASTE_SLOT).stackSize = 1;
 				}
 			}
 		}
-		input.damageSlot(CONSUMABLE_SLOT);
+		handleConsumableDamage();
 		input.decrementSlot(INPUT_SLOT);
+	}
+
+	private void handleConsumableDamage() {
+		if(getRecipe() != null){
+			if(getRecipe().getComminution()){
+				input.damageSlot(CONSUMABLE_SLOT, getSlider());
+			}else{
+				input.damageSlot(CONSUMABLE_SLOT);
+			}
+		}
+	}
+
+	private boolean handleConsumable() {
+		return getRecipe() != null && getRecipe().getOutput().size() > 1 && getRecipe().getComminution() ? CoreUtils.hasConsumable(ToolUtils.gear, input.getStackInSlot(CONSUMABLE_SLOT), getSlider()) : CoreUtils.hasConsumable(ToolUtils.gear, input.getStackInSlot(CONSUMABLE_SLOT));
+	}
+
+	public boolean canConsumableHandleComminution(){
+		return !hasComminution() || (couldProcess() && hasComminution() && CoreUtils.hasConsumable(ToolUtils.gear, input.getStackInSlot(CONSUMABLE_SLOT), getSlider()));
+	}
+	
+	public boolean couldProcess() {
+		return input.getStackInSlot(INPUT_SLOT) != null && input.getStackInSlot(CONSUMABLE_SLOT) != null;
 	}
 
 }

@@ -37,7 +37,7 @@ public class GuiEarthBreaker extends GuiBase {
 	   
 		//redstone
 		if(mouseX >= 7+x && mouseX <= 18+x && mouseY >= 21+y && mouseY <= 83+y){
-		   drawPowerInfo("KRF", this.earthBreaker.chargeCount, this.earthBreaker.chargeMax, mouseX, mouseY);
+		   drawEnergyInfo("KRF", this.earthBreaker.chargeCount, this.earthBreaker.chargeMax, mouseX, mouseY);
 		}
 
 		//activation

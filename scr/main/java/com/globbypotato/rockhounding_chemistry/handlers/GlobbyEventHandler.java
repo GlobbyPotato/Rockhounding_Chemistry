@@ -5,6 +5,7 @@ import java.util.Random;
 import com.globbypotato.rockhounding_chemistry.ModBlocks;
 import com.globbypotato.rockhounding_chemistry.ModItems;
 import com.globbypotato.rockhounding_chemistry.blocks.FireBlock;
+import com.globbypotato.rockhounding_chemistry.blocks.OwcBlocks;
 import com.globbypotato.rockhounding_chemistry.items.tools.Petrographer;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.ChemicalExtractorRecipe;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.MachineRecipes;
@@ -46,29 +47,49 @@ public class GlobbyEventHandler {
 		ItemStack itemstack = event.getItemStack();
 		if(itemstack != null){
 
+			Block owcBlocks = Block.getBlockFromItem(itemstack.getItem());
+			if(owcBlocks instanceof OwcBlocks){
+				event.getToolTip().add(TextFormatting.YELLOW + "Element of the OWC multiblock energy system");
+			}
+			
 	    	for(int x = 0; x < MachineRecipes.sizerRecipes.size(); x++){
 	    		if(MachineRecipes.sizerRecipes.get(x).getOutput().size() > 1){
 			    	for(int y = 0; y < MachineRecipes.sizerRecipes.get(x).getOutput().size(); y++){
-						if(ItemStack.areItemsEqual(MachineRecipes.sizerRecipes.get(x).getOutput().get(y), itemstack)){
-							event.getToolTip().add(TextFormatting.DARK_GRAY + "Sizing Chance: " + TextFormatting.GOLD + MachineRecipes.sizerRecipes.get(x).getProbability().get(y).intValue() + "%");
-						}
+			    		if(MachineRecipes.sizerRecipes.get(x).getComminution()){
+							if(ItemStack.areItemsEqual(MachineRecipes.sizerRecipes.get(x).getOutput().get(y), itemstack)){
+								event.getToolTip().add(TextFormatting.GRAY + "Comminution Level: " + TextFormatting.GREEN + MachineRecipes.sizerRecipes.get(x).getProbability().get(y).intValue());
+							}
+			    		}else{
+							if(ItemStack.areItemsEqual(MachineRecipes.sizerRecipes.get(x).getOutput().get(y), itemstack)){
+								event.getToolTip().add(TextFormatting.GRAY + "Sizing Chance: " + TextFormatting.GREEN + MachineRecipes.sizerRecipes.get(x).getProbability().get(y).intValue());
+							}
+			    		}
 					}
 	    		}
 	    	}
 
 	    	for(int x = 0; x < MachineRecipes.analyzerRecipes.size(); x++){
-		    	for(int y = 0; y < MachineRecipes.analyzerRecipes.get(x).getOutput().size(); y++){
-					if(ItemStack.areItemsEqual(MachineRecipes.analyzerRecipes.get(x).getOutput().get(y), itemstack)){
-						event.getToolTip().add(TextFormatting.DARK_GRAY + "Leaching Chance: " + TextFormatting.RED + MachineRecipes.analyzerRecipes.get(x).getProbability().get(y).intValue() + "%");
+	    		if(MachineRecipes.analyzerRecipes.get(x).getOutput().size() > 1){
+			    	for(int y = 0; y < MachineRecipes.analyzerRecipes.get(x).getOutput().size(); y++){
+			    		if(MachineRecipes.analyzerRecipes.get(x).hasGravity()){
+							if(ItemStack.areItemsEqual(MachineRecipes.analyzerRecipes.get(x).getOutput().get(y), itemstack)){
+								float realgravity = (float)MachineRecipes.analyzerRecipes.get(x).getProbability().get(y).intValue() / 100;
+								event.getToolTip().add(TextFormatting.GRAY + "Specific Gravity: " + TextFormatting.LIGHT_PURPLE + realgravity);
+							}
+			    		}else{
+							if(ItemStack.areItemsEqual(MachineRecipes.analyzerRecipes.get(x).getOutput().get(y), itemstack)){
+								event.getToolTip().add(TextFormatting.GRAY + "Leaching Chance: " + TextFormatting.LIGHT_PURPLE + MachineRecipes.analyzerRecipes.get(x).getProbability().get(y).intValue() + "%");
+							}
+			    		}
 					}
-				}
+	    		}
 	    	}
 
 	    	for(ChemicalExtractorRecipe recipe: MachineRecipes.extractorRecipes){
 				if(recipe.getInput() != null && itemstack.isItemEqual(recipe.getInput())){
-					event.getToolTip().add(TextFormatting.DARK_GRAY + "Category: " + TextFormatting.YELLOW + recipe.getCategory());
+					event.getToolTip().add(TextFormatting.GRAY + "Category: " + TextFormatting.YELLOW + recipe.getCategory());
 					for(int x = 0; x < recipe.getElements().size(); x++){
-						event.getToolTip().add(TextFormatting.DARK_GRAY + recipe.getElements().get(x).substring(0, 1).toUpperCase() + recipe.getElements().get(x).substring(1) + ": " + TextFormatting.WHITE + recipe.getQuantities().get(x) + "%");
+						event.getToolTip().add(TextFormatting.DARK_GRAY + recipe.getElements().get(x).substring(0, 1).toUpperCase() + recipe.getElements().get(x).substring(1) + " - " + TextFormatting.WHITE + TextFormatting.BOLD + recipe.getQuantities().get(x) + "%");
 					}
 				}
 	    	}

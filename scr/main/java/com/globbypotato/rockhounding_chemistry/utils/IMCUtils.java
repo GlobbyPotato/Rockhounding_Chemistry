@@ -172,6 +172,7 @@ public class IMCUtils {
 		    		 */
 		    		}else if(message.key.equalsIgnoreCase(ANALYZER_KEY)){
 		    			ItemStack input = null;
+		    			boolean hasGravity = false;
 		        		if(tag.hasKey("Input")){
 		        			input = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("Input"));
 		        		}
@@ -191,8 +192,11 @@ public class IMCUtils {
 		        				  quantities.add(getQuantities.getInteger("Probability" + i));
 		        			  }
 		        		}
+		        		if(tag.hasKey("Gravity")){
+		        			hasGravity = tag.getBoolean("Gravity");
+		        		}
 		        		if(input != null && elements.size() > 0 && quantities.size() > 0 && elements.size() == quantities.size()){
-		        			MachineRecipes.analyzerRecipes.add(new MineralAnalyzerRecipe(input, elements, quantities));
+		        			MachineRecipes.analyzerRecipes.add(new MineralAnalyzerRecipe(input, elements, quantities, hasGravity));
 		        		}
 		    		}else if(message.key.equalsIgnoreCase(EXTRACTOR_KEY)){
 		    			ItemStack input = null;
@@ -250,6 +254,7 @@ public class IMCUtils {
 		        		}
 					}else if(message.key.equalsIgnoreCase(SIZER_KEY)){
 		    			ItemStack input = null;
+		    			boolean comminution = false;
 		        		if(tag.hasKey("Input")){
 		        			input = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("Input"));
 		        		}
@@ -269,8 +274,11 @@ public class IMCUtils {
 		        				  quantities.add(getQuantities.getInteger("Probability" + i));
 		        			  }
 		        		}
+		        		if(tag.hasKey("Comminution")){
+		        			comminution = tag.getBoolean("Comminution");
+		        		}
 		        		if(input != null && elements.size() > 0 && quantities.size() > 0 && elements.size() == quantities.size()){
-		        			MachineRecipes.sizerRecipes.add(new MineralSizerRecipe(input, elements, quantities));
+		        			MachineRecipes.sizerRecipes.add(new MineralSizerRecipe(input, elements, quantities, comminution));
 		        		}
 		        	}else if(message.key.equalsIgnoreCase(SEASONER_KEY)){
 		    			ItemStack input = null;
