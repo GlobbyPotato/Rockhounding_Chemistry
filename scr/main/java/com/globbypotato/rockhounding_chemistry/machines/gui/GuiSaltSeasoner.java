@@ -24,7 +24,7 @@ public class GuiSaltSeasoner extends GuiBase {
         this.playerInventory = playerInv;
 		this.xSize = WIDTH;
 		this.ySize = HEIGHT;
-		this.containerName = "container.seasoningRack";
+		this.containerName = "container.seasoning_rack";
     }
 
     @Override

@@ -75,7 +75,7 @@ public class TileEntityLabOven extends TileEntityMachineTank {
 				if (slot == INPUT_SLOT && isActive() && isValidInterval() && hasRecipe(insertingStack)) {
 					return super.insertItem(slot, insertingStack, simulate);
 				}
-				if (slot == FUEL_SLOT && CoreUtils.isPowerSource(insertingStack)){
+				if (slot == FUEL_SLOT && isGatedPowerSource(insertingStack)){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
 				if (slot == SOLVENT_SLOT && isActive() && isValidInterval() && hasSolvent(FluidUtil.getFluidContained(insertingStack))) {
@@ -127,10 +127,6 @@ public class TileEntityLabOven extends TileEntityMachineTank {
 	// ----------------------- CUSTOM ------------------------
 	public boolean isValidInterval() {
 		return recipeIndex >= 0 && recipeIndex <= MachineRecipes.labOvenRecipes.size() - 1;
-	}
-
-	public boolean isActive(){
-		return activation;
 	}
 
 	public LabOvenRecipe getRecipe() {
@@ -200,7 +196,6 @@ public class TileEntityLabOven extends TileEntityMachineTank {
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
 		this.recipeIndex = compound.getInteger("RecipeScan");
-		this.activation = compound.getBoolean("Activation");
 		this.solventTank.readFromNBT(compound.getCompoundTag("InputTank"));
 		this.reagentTank.readFromNBT(compound.getCompoundTag("ReagentTank"));
 		this.outputTank.readFromNBT(compound.getCompoundTag("OutputTank"));
@@ -210,7 +205,6 @@ public class TileEntityLabOven extends TileEntityMachineTank {
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		super.writeToNBT(compound);
 		compound.setInteger("RecipeScan", this.recipeIndex);
-		compound.setBoolean("Activation", this.activation);
 
 		NBTTagCompound solventTankNBT = new NBTTagCompound();
 		this.solventTank.writeToNBT(solventTankNBT);

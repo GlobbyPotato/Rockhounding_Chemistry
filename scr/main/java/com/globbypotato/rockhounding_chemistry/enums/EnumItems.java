@@ -66,7 +66,8 @@ public enum EnumItems implements BaseEnum {
 	WIDIA_CASING,
 	LEAD_DIOXIDE_INGOT,
 	IRON_FOIL,
-	PIPELINE_UPGRADE;
+	PIPELINE_UPGRADE,
+	WIDIA_ARM;
 
 	//---------CUSTOM----------------
 	public static int size(){

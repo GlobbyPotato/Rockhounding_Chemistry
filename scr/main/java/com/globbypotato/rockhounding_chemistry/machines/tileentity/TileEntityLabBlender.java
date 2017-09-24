@@ -1,6 +1,7 @@
 package com.globbypotato.rockhounding_chemistry.machines.tileentity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiLabBlender;
@@ -11,11 +12,11 @@ import com.globbypotato.rockhounding_core.machines.tileentity.TemplateStackHandl
 import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityMachineTank;
 import com.globbypotato.rockhounding_core.machines.tileentity.WrappedItemHandler;
 import com.globbypotato.rockhounding_core.machines.tileentity.WrappedItemHandler.WriteMode;
-import com.globbypotato.rockhounding_core.utils.CoreUtils;
 import com.globbypotato.rockhounding_core.utils.Utils;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerConcatenate;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.oredict.OreDictionary;
@@ -23,8 +24,10 @@ import net.minecraftforge.oredict.OreDictionary;
 public class TileEntityLabBlender extends TileEntityMachineTank {
 	public static final int INPUT_SLOT[] = new int[]{0,1,2,3,4,5,6,7,8,};
 	LabBlenderRecipe currentRecipe;
-	private ItemStackHandler template = new TemplateStackHandler(1);
-    
+	public List<ItemStack> lockList = new ArrayList<ItemStack>();
+	private ItemStackHandler template = new TemplateStackHandler(2);
+	public boolean lock;
+
 	public TileEntityLabBlender() {
 		super(11,1,1);
 		FUEL_SLOT = 9;
@@ -32,10 +35,10 @@ public class TileEntityLabBlender extends TileEntityMachineTank {
 		input =  new MachineStackHandler(INPUT_SLOTS,this){
 			@Override
 			public ItemStack insertItem(int slot, ItemStack insertingStack, boolean simulate){
-				if(slot >= INPUT_SLOT[0] && slot <= INPUT_SLOT.length && (isValidIngredient(insertingStack) || isValidOredict(insertingStack)) ){
+				if(slot >= INPUT_SLOT[0] && slot <= INPUT_SLOT.length && isActive() && handleInputs(slot, insertingStack) ){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
-				if(slot == FUEL_SLOT && CoreUtils.isPowerSource(insertingStack)){
+				if(slot == FUEL_SLOT && isGatedPowerSource(insertingStack)){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
 				return insertingStack;
@@ -63,10 +66,6 @@ public class TileEntityLabBlender extends TileEntityMachineTank {
 
 
 	//----------------------- CUSTOM -----------------------
-	public boolean isActive(){
-		return activation;
-	}
-
 	private LabBlenderRecipe recipe(int x){
 		return MachineRecipes.blenderRecipes.get(x);
 	}
@@ -111,20 +110,72 @@ public class TileEntityLabBlender extends TileEntityMachineTank {
 		return false;
 	}
 
+	public void resetLock(){
+		for(Integer slot : INPUT_SLOT){
+			lockList.add(null);
+		}
+	}
+
+	public boolean isLocked(){
+		return lock;
+	}
+
+	private boolean handleInputs(int slot, ItemStack insertingStack) {
+		if(isLocked()){
+			return isMatchingIngredient(slot, insertingStack);
+		}else{
+			return isValidIngredient(insertingStack) || isValidOredict(insertingStack);
+		}
+	}
+
+	private boolean isMatchingIngredient(int slot, ItemStack insertingStack){
+		if(slot < lockList.size()){
+			if(insertingStack != null && lockList.get(slot) != null){
+				if(insertingStack.isItemEqual(lockList.get(slot))){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 
 
 	//----------------------- I/O -----------------------
 	@Override
 	public void readFromNBT(NBTTagCompound compound){
 		super.readFromNBT(compound);
-		this.activation = compound.getBoolean("Activation");
+		this.lock = compound.getBoolean("Lock");
+
+		NBTTagList nbttaglist = compound.getTagList("Locked", 10);
+        lockList = new ArrayList<ItemStack>();
+        resetLock();
+        for (int i = 0; i < nbttaglist.tagCount(); ++i){
+            NBTTagCompound nbttagcompound = nbttaglist.getCompoundTagAt(i);
+            int j = nbttagcompound.getByte("Slot");
+            if (j >= 0 && j < lockList.size()){
+            	lockList.add(j, ItemStack.loadItemStackFromNBT(nbttagcompound));
+            }
+        }
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound){
 		super.writeToNBT(compound);
-		compound.setBoolean("Activation", this.activation);
-		return compound;
+		compound.setBoolean("Lock", this.lock);
+
+        NBTTagList nbttaglist = new NBTTagList();
+        for (int i = 0; i < lockList.size(); ++i){
+            if (lockList.get(i) != null){
+                NBTTagCompound nbttagcompound = new NBTTagCompound();
+                nbttagcompound.setByte("Slot", (byte)i);
+                lockList.get(i).writeToNBT(nbttagcompound);
+                nbttaglist.appendTag(nbttagcompound);
+            }
+        }
+        compound.setTag("Locked", nbttaglist);
+
+        return compound;
 	}
 
 	@Override
@@ -140,6 +191,7 @@ public class TileEntityLabBlender extends TileEntityMachineTank {
 		acceptEnergy();
 		fuelHandler(input.getStackInSlot(FUEL_SLOT));
 		lavaHandler();
+		if(lockList.size() < 1) {resetLock(); }
 		if(!worldObj.isRemote){
 			if(canProcess()){
 				cookTime++;

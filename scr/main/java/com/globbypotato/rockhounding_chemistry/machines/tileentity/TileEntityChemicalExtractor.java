@@ -94,7 +94,7 @@ public class TileEntityChemicalExtractor extends TileEntityMachineTank{
 				if(slot == INPUT_SLOT && hasRecipe(insertingStack)){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
-				if(slot == FUEL_SLOT && CoreUtils.isPowerSource(insertingStack)){
+				if(slot == FUEL_SLOT && isGatedPowerSource(insertingStack)){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
 				if(slot == REDSTONE_SLOT && hasRedstone(insertingStack)){

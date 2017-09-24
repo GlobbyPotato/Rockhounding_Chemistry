@@ -28,7 +28,7 @@ public class GuiGanController extends GuiBase {
         this.playerInventory = playerInv;
 		this.xSize = WIDTH;
 		this.ySize = HEIGHT;
-		this.containerName = "container.ganController";
+		this.containerName = "container.gan_controller";
     }
 
     @Override
@@ -107,7 +107,7 @@ public class GuiGanController extends GuiBase {
 
 	   //Sanity check
 	   String sanity = TextFormatting.GRAY + "Sanity Check: " + TextFormatting.GOLD + "Activate to check";
-	   if(this.ganController.isActivated()){
+	   if(this.ganController.isActive()){
 		   if(this.ganController.checkDevices()){
 			   sanity = TextFormatting.GRAY + "Sanity Check: " + TextFormatting.GREEN + "Passed";
 		   }else{
@@ -142,7 +142,7 @@ public class GuiGanController extends GuiBase {
 	        }
         }
 
-        if(this.ganController.isActivated()){
+        if(this.ganController.isActive()){
 	        //sanity check
 	        if(this.ganController.checkDevices()){
 	            this.drawTexturedModalRect(i + 7, j + 16, 212, 5, 18, 18);

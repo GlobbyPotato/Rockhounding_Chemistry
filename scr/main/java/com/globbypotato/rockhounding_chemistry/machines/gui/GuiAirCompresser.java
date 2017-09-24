@@ -24,7 +24,7 @@ public class GuiAirCompresser extends GuiBase {
 		this.airCompresser = tile;
 		this.xSize = WIDTH;
 		this.ySize = HEIGHT;
-		this.containerName = "container.airCompresser";
+		this.containerName = "container.air_compresser";
 	}
 
 	@Override

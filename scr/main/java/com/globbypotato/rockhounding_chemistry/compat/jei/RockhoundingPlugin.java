@@ -156,7 +156,15 @@ public class RockhoundingPlugin extends BlankModPlugin{
 				+"Raw salt can be harvested from the tank manually by right clicking the top if the tank with a shovel.\n"
 				+"The entire process can be automatized by piping water into the tank from any side, excluding the top. Then, placing next to the tank a Seasoning Rack, it will extract the raw salt smelting it into salt.");
 		registry.addDescription(BaseRecipes.saltRaw, "This is the raw for of the salt as it is produced by the evaporation tank. It must be placed inside the Seasoning rack to be dried or let the block acquire it itself as per the salt automation process.");
-		registry.addDescription(new ItemStack(ModBlocks.mineCrawler), "This device can be created inside the Mine Crawler Assembly Table. It can automatically mine paths up to a 3x2 grid with additional features. It uses the mod wrench to change the mining direction and be quickly removed from the ground.");
+		String crawlerText = "The Mine Crawler is a mining device that can automatically mine paths up to a 3x2 grid with additional features. It is an automatic machine, hence no power is required and can be created inside the Mine Crawler Assembly Table out of the various parts composing it. It uses the mod wrench to change the mining direction and to be quickly removed from the ground.\n"
+				+ "Inside the assembly table is possible to define the amount of mined blocks by setting a tier. The tier depends on the placements of the mining heads on the grid.\n"
+				+ "This is the list of tiers.\n"
+				+ "The 'X' represents a mining head on the grid:\n" 		
+				+ "T 1 - T 2  - T 3  - T 4\n"
+				+ "OOO - OXO - OOO - XXX\n"
+				+ "OXO - OXO - XXX - XXX\n";
+		registry.addDescription(new ItemStack(ModBlocks.mineCrawler), crawlerText);
+		registry.addDescription(new ItemStack(ModBlocks.crawlerAssembler), crawlerText);
 		registry.addDescription(new ItemStack(ModBlocks.saltSeasoner), "This device allows to acquire and turn the raw salt pruduced by the Evaporation Tank into the final salt used by recipes. It can handle up to four tanks placed on its sides. It can be also used as generic item processor.");
 		registry.addDescription(new ItemStack(ModItems.petrographer), "This tools allows to improve the mineral mining by spotting the desired mineral category and specimen out of the undefined mineral. It has a leveling system which will increase its discovery ability. To set the tool it requires the Petrographer table where to put the items to learn. It is also required to enchant the tool as soon as possible with Fortune to make it work efficiently. When enchanted, the tool has also a chance to spot undefined minerals while mining stone.");
 		registry.addDescription(new ItemStack(ModBlocks.mineralAnalyzer), "This device allows to clean and expose shards of minerals from the gangues containing them. To operate it requires three acids (sulfuric acid, hydrochloric acid and hydrofluoric acid) and a Slurry Agitator to keep the processed slurry suspended in the solvent. Since a gangue may contain many specimen, it is possible to restrict the filter and capture only the specimens having a specific range of density. This will require a variable amount of solvents to perform the process.");
@@ -196,6 +204,7 @@ public class RockhoundingPlugin extends BlankModPlugin{
 		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.laserBeam));
 		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.laserRay));
 		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.smokeBlock));
+		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.depositionChamberTop));
 		itemBlacklist.addIngredientToBlacklist(BaseRecipes.miscs(1,53));
 		itemBlacklist.addIngredientToBlacklist(BaseRecipes.miscs(1,54));
 		for(int i=0;i<EnumCasting.size();i++){

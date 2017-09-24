@@ -72,7 +72,7 @@ public class TileEntityPipelineValve extends TileEntityMachineInv{
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound){
 		super.writeToNBT(compound);
-        compound.setBoolean("Activation", this.activation);
+        compound.setBoolean("Activation", isActive());
 
         NBTTagCompound lockList = new NBTTagCompound();
 		for(int i = 0; i < sideStatus.length; i++){

@@ -34,7 +34,7 @@ public class TileEntityMineralSizer extends TileEntityMachineTank {
 				if(slot == INPUT_SLOT && hasRecipe(insertingStack) ){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
-				if(slot == FUEL_SLOT && CoreUtils.isPowerSource(insertingStack)){
+				if(slot == FUEL_SLOT && isGatedPowerSource(insertingStack)){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
 				if(slot == CONSUMABLE_SLOT && CoreUtils.hasConsumable(ToolUtils.gear, insertingStack)){
@@ -84,10 +84,6 @@ public class TileEntityMineralSizer extends TileEntityMachineTank {
 		return slider;
 	}
 
-	public boolean isActive(){
-		return activation;
-	}
-
 	public boolean isCorrectRange(){
 		if(getRecipe() != null){
 			if(getRecipe().getComminution()){
@@ -120,14 +116,12 @@ public class TileEntityMineralSizer extends TileEntityMachineTank {
 	@Override
 	public void readFromNBT(NBTTagCompound compound){
 		super.readFromNBT(compound);
-		this.activation = compound.getBoolean("Activation");
 		this.slider = compound.getInteger("Slider");
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound){
 		super.writeToNBT(compound);
-		compound.setBoolean("Activation", this.activation);
 		compound.setInteger("Slider", this.slider);
 		return compound;
 	}

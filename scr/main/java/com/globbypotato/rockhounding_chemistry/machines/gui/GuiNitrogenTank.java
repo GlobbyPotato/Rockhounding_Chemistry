@@ -27,7 +27,7 @@ public class GuiNitrogenTank extends GuiBase {
 		this.xSize = WIDTH;
 		this.ySize = HEIGHT;
 		this.inputTank = this.nitrogenTank.inputTank;
-		this.containerName = "container.nitrogenTank";
+		this.containerName = "container.nitrogen_tank";
 	}
 
 	@Override

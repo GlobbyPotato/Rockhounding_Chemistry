@@ -25,7 +25,7 @@ public class GuiLaserAmplifier extends GuiBase {
 		this.laserAmplifier = tile;
 		this.xSize = WIDTH;
 		this.ySize = HEIGHT;
-		this.containerName = "container.laserAmplifier";
+		this.containerName = "container.laser_amplifier";
 	}
 
 	@Override

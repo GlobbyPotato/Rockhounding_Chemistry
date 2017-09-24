@@ -6,7 +6,6 @@ import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityLab
 
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -27,7 +26,7 @@ public class GuiLabBlender extends GuiBase {
         this.playerInventory = playerInv;
 		this.xSize = WIDTH;
 		this.ySize = HEIGHT;
-		this.containerName = "container.labBlender";
+		this.containerName = "container.lab_blender";
     }
 
     @Override
@@ -42,31 +41,35 @@ public class GuiLabBlender extends GuiBase {
 		}
 
 		//fuel status
-		if(this.labBlender.getInput().getStackInSlot(this.labBlender.FUEL_SLOT) == null){
-			   	//fuel
-				String fuelString = TextFormatting.DARK_GRAY + "Fuel Type: " + TextFormatting.GOLD + "Common";
-				String indString = TextFormatting.DARK_GRAY + "Induction: " + TextFormatting.RED + "OFF";
-				String permaString = "";
-				if(this.labBlender.hasFuelBlend()){
-					fuelString = TextFormatting.DARK_GRAY + "Fuel Type: " + TextFormatting.GOLD + "Blend";
-				}
-				if(this.labBlender.canInduct()){
-					indString = TextFormatting.DARK_GRAY + "Induction: " + TextFormatting.RED + "ON";
-					permaString = TextFormatting.DARK_GRAY + "Status: " + TextFormatting.DARK_GREEN + "Mobile";
-					if(this.labBlender.hasPermanentInduction()){
-						permaString = TextFormatting.DARK_GRAY + "Status: " + TextFormatting.DARK_RED + "Permanent";
-					}
-				}
-				String multiString[] = new String[]{fuelString, "", indString, permaString};
-			if(mouseX >= 7+x && mouseX <= 24+x && mouseY >= 7+y && mouseY <= 24+y){
-				   drawMultiLabel(multiString, mouseX, mouseY);
-			}
+		String[] fuelstatusString = handleFuelStatus(this.labBlender.isFuelGated(), this.labBlender.hasFuelBlend(), this.labBlender.canInduct(), this.labBlender.allowPermanentInduction());
+		if(mouseX >= 7+x && mouseX <= 24+x && mouseY >= 7+y && mouseY <= 24+y){
+			drawMultiLabel(fuelstatusString, mouseX, mouseY);
 		}
 
 		//activation
 		if(mouseX >= 115+x && mouseX <= 130+x && mouseY >= 19+y && mouseY <= 34+y){
 			drawButtonLabel("Activation", mouseX, mouseY);
 		}
+
+		//lock
+		if(mouseX >= 69+x && mouseX <= 84+x && mouseY >= 75+y && mouseY <= 90+y){
+			if(this.labBlender.isLocked()){
+				drawButtonLabel("Locked", mouseX, mouseY);
+			}else{
+				drawButtonLabel("Unlocked", mouseX, mouseY);
+			}
+		}
+
+		//lock stacks
+        for (int i = 0; i < 3; ++i){
+            for (int j = 0; j < 3; ++j){
+        		if(mouseX >= 50 + x + (18*j) && mouseX <= 67 + x + (18*j) && mouseY >= 19 + y + (18*i) && mouseY <= 36 + y + (18*i)){
+        			if(this.labBlender.lockList.get((j + i * 3)) != null){
+        				drawButtonLabel(this.labBlender.lockList.get((j + i * 3)).getDisplayName(), mouseX, mouseY);
+        			}
+        		}
+            }
+        }
 
     }
 
@@ -98,6 +101,21 @@ public class GuiLabBlender extends GuiBase {
         if(this.labBlender.isActive()){
             this.drawTexturedModalRect(i + 115, j + 19, 176, 99, 16, 16);
         }
+        
+        //lock
+        if(this.labBlender.isLocked()){
+            this.drawTexturedModalRect(i + 69, j + 75, 176, 115, 16, 16);
+
+            //locked
+            for (int col = 0; col < 3; ++col){
+                for (int row = 0; row < 3; ++row){
+        			if(this.labBlender.lockList.get((col + row * 3)) != null){
+        	            this.drawTexturedModalRect(i + 51 + (18*col), j + 20 + (18*row), 176, 131, 16, 16);
+        			}
+                }
+            }
+        }
+
     }
 
 }

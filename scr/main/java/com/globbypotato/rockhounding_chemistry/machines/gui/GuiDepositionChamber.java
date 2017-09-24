@@ -29,7 +29,7 @@ public class GuiDepositionChamber extends GuiBase {
 		this.xSize = WIDTH;
 		this.ySize = HEIGHT;
 		this.inputTank = this.depositionChamber.inputTank;
-		this.containerName = "container.depositionChamber";
+		this.containerName = "container.deposition_chamber";
 	}
 
 	@Override

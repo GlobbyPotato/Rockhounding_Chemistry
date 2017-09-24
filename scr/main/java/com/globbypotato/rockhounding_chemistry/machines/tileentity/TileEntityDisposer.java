@@ -58,6 +58,7 @@ public class TileEntityDisposer extends TileEntityMachineEnergy {
 
 
 	//----------------------- CUSTOM -----------------------
+	@Override
 	public boolean isActive(){
 		return activation || worldObj.isBlockPowered(pos);
 	}
@@ -81,9 +82,8 @@ public class TileEntityDisposer extends TileEntityMachineEnergy {
 	@Override
 	public void readFromNBT(NBTTagCompound compound){
 		super.readFromNBT(compound);
-		this.activation = compound.getBoolean("Activation");
 		this.interval = compound.getInteger("Interval");
-		this.lock = compound.getBoolean("Lock");
+		this.lock = compound.getBoolean("Locked");
 		
         NBTTagList nbttaglist = compound.getTagList("Items", 10);
         lockList = new ArrayList<ItemStack>();
@@ -100,9 +100,8 @@ public class TileEntityDisposer extends TileEntityMachineEnergy {
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound){
 		super.writeToNBT(compound);
-		compound.setBoolean("Activation", this.activation);
 		compound.setInteger("Interval", this.interval);
-		compound.setBoolean("Lock", this.lock);
+		compound.setBoolean("Locked", this.lock);
 		
         NBTTagList nbttaglist = new NBTTagList();
         for (int i = 0; i < lockList.size(); ++i){

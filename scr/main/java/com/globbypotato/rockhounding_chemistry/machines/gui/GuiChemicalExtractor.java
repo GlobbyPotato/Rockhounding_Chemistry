@@ -55,25 +55,9 @@ public class GuiChemicalExtractor extends GuiBase {
 	   }
 
 		//fuel status
-		if(this.chemicalExtractor.getInput().getStackInSlot(this.chemicalExtractor.FUEL_SLOT) == null){
-			   	//fuel
-				String fuelString = TextFormatting.DARK_GRAY + "Fuel Type: " + TextFormatting.GOLD + "Common";
-				String indString = TextFormatting.DARK_GRAY + "Induction: " + TextFormatting.RED + "OFF";
-				String permaString = "";
-				if(this.chemicalExtractor.hasFuelBlend()){
-					fuelString = TextFormatting.DARK_GRAY + "Fuel Type: " + TextFormatting.GOLD + "Blend";
-				}
-				if(this.chemicalExtractor.canInduct()){
-					indString = TextFormatting.DARK_GRAY + "Induction: " + TextFormatting.RED + "ON";
-					permaString = TextFormatting.DARK_GRAY + "Status: " + TextFormatting.DARK_GREEN + "Mobile";
-					if(this.chemicalExtractor.hasPermanentInduction()){
-						permaString = TextFormatting.DARK_GRAY + "Status: " + TextFormatting.DARK_RED + "Permanent";
-					}
-				}
-				String multiString[] = new String[]{fuelString, "", indString, permaString};
-			if(mouseX >= 7+x && mouseX <= 24+x && mouseY >= 7+y && mouseY <= 24+y){
-				   drawMultiLabel(multiString, mouseX, mouseY);
-			}
+		String[] fuelstatusString = handleFuelStatus(this.chemicalExtractor.isFuelGated(), this.chemicalExtractor.hasFuelBlend(), this.chemicalExtractor.canInduct(), this.chemicalExtractor.allowPermanentInduction());
+		if(mouseX >= 7+x && mouseX <= 24+x && mouseY >= 7+y && mouseY <= 24+y){
+			drawMultiLabel(fuelstatusString, mouseX, mouseY);
 		}
 
 	   //redstone
@@ -129,7 +113,7 @@ public class GuiChemicalExtractor extends GuiBase {
 	@Override
     public void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
     	super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-        String device = Translator.translateToLocal("container.chemicalExtractor");
+        String device = Translator.translateToLocal("container.chemical_extractor");
         this.fontRendererObj.drawString(device, 8 + this.xSize / 2 - this.fontRendererObj.getStringWidth(device) / 2, this.chemicalExtractor.getGUIHeight() - 95, 4210752);
     }
 
@@ -139,6 +123,7 @@ public class GuiChemicalExtractor extends GuiBase {
         int i = (this.width - this.xSize) / 2;
         int j = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
+
         //fuel bar
         if (this.chemicalExtractor.getPower() > 0){
 	        int k = this.getBarScaled(50, this.chemicalExtractor.getPower(), this.chemicalExtractor.getPowerMax());

@@ -25,7 +25,7 @@ public class GuiCastingBench extends GuiBase {
         this.playerInventory = playerInv;
 		this.xSize = WIDTH;
 		this.ySize = HEIGHT;
-		this.containerName = "container.castingBench";
+		this.containerName = "container.casting_bench";
     }
 
 	@Override

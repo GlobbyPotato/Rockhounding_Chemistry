@@ -10,6 +10,7 @@ import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityEar
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityElectroLaser;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityLabBlender;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityLabOven;
+import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityMetalAlloyer;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityMineralAnalyzer;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityMineralSizer;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntitySaltSeasoner;
@@ -51,6 +52,7 @@ public class TopMachines implements IProbeInfoProvider{
 			|| te instanceof TileEntityMineralAnalyzer
 			|| te instanceof TileEntityLabOven
 			|| te instanceof TileEntityChemicalExtractor
+			|| te instanceof TileEntityMetalAlloyer
 			|| te instanceof TileEntityElectroLaser
 			|| te instanceof TileEntityDepositionChamber
 			|| te instanceof TileEntityDisposer
@@ -86,6 +88,11 @@ public class TopMachines implements IProbeInfoProvider{
 				TileEntityElectroLaser tank = (TileEntityElectroLaser)te;
 				probeInfo.progress(tank.getRedstone(), tank.getRedstoneMax(), probeInfo.defaultProgressStyle().suffix("RF").filledColor(0xFFFF0000).alternateFilledColor(0xFF5A0303).borderColor(0x000000).numberFormat(NumberFormat.COMPACT));
 				probeInfo.progress(tank.inputTank.getFluidAmount(), tank.inputTank.getCapacity(), probeInfo.defaultProgressStyle().suffix(" mB").filledColor(0xFFFFFFFF).alternateFilledColor(0xFFC5C5C5).borderColor(0x000000).numberFormat(NumberFormat.FULL));
+			}
+
+			if(te instanceof TileEntityMetalAlloyer){
+				TileEntityMetalAlloyer tank = (TileEntityMetalAlloyer)te;
+				probeInfo.progress(tank.getPower(), tank.getPowerMax(), probeInfo.defaultProgressStyle().suffix(" ticks").filledColor(0xFFFFB400).alternateFilledColor(0xFFFF7200).borderColor(0x000000).numberFormat(NumberFormat.FULL));
 			}
 
 			if(te instanceof TileEntityDepositionChamber){

@@ -28,7 +28,7 @@ public class GuiElectroLaser extends GuiBase {
 		this.xSize = WIDTH;
 		this.ySize = HEIGHT;
 		this.inputTank = this.electroLaser.inputTank;
-		this.containerName = "container.electroLaser";
+		this.containerName = "container.electrolaser";
 	}
 
 	@Override

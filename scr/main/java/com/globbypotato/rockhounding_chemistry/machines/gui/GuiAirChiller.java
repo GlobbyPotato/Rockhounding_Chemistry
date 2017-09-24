@@ -27,7 +27,7 @@ public class GuiAirChiller extends GuiBase {
 		this.xSize = WIDTH;
 		this.ySize = HEIGHT;
 		this.inputTank = this.airChiller.inputTank;
-		this.containerName = "container.airChiller";
+		this.containerName = "container.air_chiller";
 	}
 
 	@Override

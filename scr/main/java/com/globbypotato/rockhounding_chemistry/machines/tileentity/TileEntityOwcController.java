@@ -27,7 +27,6 @@ public class TileEntityOwcController extends TileEntityMachineEnergy implements 
 	
 	private ItemStackHandler template = new TemplateStackHandler(2);
 
-    public boolean activationKey;
     public boolean extractionKey;
     private int tideInterval;
 
@@ -66,10 +65,6 @@ public class TileEntityOwcController extends TileEntityMachineEnergy implements 
 		return extractionKey && this.hasRedstone();
 	}
 
-	public boolean isActive(){
-		return activationKey;
-	}
-
 	public boolean isExtracting(){
 		return extractionKey;
 	}
@@ -80,7 +75,6 @@ public class TileEntityOwcController extends TileEntityMachineEnergy implements 
 	public void readFromNBT(NBTTagCompound compound){
 		super.readFromNBT(compound);
         this.tideInterval = compound.getInteger("TideInterval");
-        this.activationKey = compound.getBoolean("Activation");
         this.extractionKey = compound.getBoolean("Extraction");
 		this.yeldCount = compound.getInteger("YeldCount");
 	}
@@ -88,7 +82,6 @@ public class TileEntityOwcController extends TileEntityMachineEnergy implements 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound){
 		super.writeToNBT(compound);
-        compound.setBoolean("Activation", this.activationKey);
         compound.setBoolean("Extraction", this.extractionKey);
         compound.setInteger("TideInterval", this.tideInterval);
 		compound.setInteger("YeldCount", this.yeldCount);

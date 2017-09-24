@@ -22,7 +22,6 @@ public class TileEntityGanController extends TileEntityMachineEnergy {
 
 	private ItemStackHandler template = new TemplateStackHandler(3);
 
-    public boolean activationKey;
     public boolean cycleKey;
     public boolean compressKey;
     public int tier;
@@ -50,10 +49,6 @@ public class TileEntityGanController extends TileEntityMachineEnergy {
 		return true;
 	}
 
-	public boolean isActivated(){
-		return activationKey;
-	}
-
 	public boolean isProducing(){
 		return compressKey;
 	}
@@ -68,7 +63,6 @@ public class TileEntityGanController extends TileEntityMachineEnergy {
 	@Override
 	public void readFromNBT(NBTTagCompound compound){
 		super.readFromNBT(compound);
-        this.activationKey = compound.getBoolean("Activation");
         this.compressKey = compound.getBoolean("Production");
         this.cycleKey = compound.getBoolean("Cycling");
         this.tier = compound.getInteger("Tier");
@@ -77,7 +71,6 @@ public class TileEntityGanController extends TileEntityMachineEnergy {
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound){
 		super.writeToNBT(compound);
-        compound.setBoolean("Activation", this.activationKey);
         compound.setBoolean("Production", this.compressKey);
         compound.setBoolean("Cycling", this.cycleKey);
         compound.setInteger("Tier", this.tier);
@@ -216,7 +209,7 @@ public class TileEntityGanController extends TileEntityMachineEnergy {
 	public void update(){
 		acceptEnergy();
 		if(!worldObj.isRemote){
-			if(isActivated()){
+			if(isActive()){
 				performSanityCheck();
 
 				if(checkDevices()){

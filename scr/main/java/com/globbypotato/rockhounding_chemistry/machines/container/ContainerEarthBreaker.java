@@ -24,7 +24,7 @@ public class ContainerEarthBreaker extends ContainerBase<TileEntityEarthBreaker>
 	@Override
 	public ItemStack slotClick(int slot, int dragType, ClickType clickTypeIn, EntityPlayer player){
 		if(slot == 0){
-    		this.tile.activator = !this.tile.activator; 
+    		this.tile.activation = !this.tile.activation; 
 			doClickSound(player, tile.getWorld(), tile.getPos());
     		return null;
     	}else{

@@ -150,10 +150,10 @@ public class Disposer extends Block {
         if(worldIn.getTileEntity(pos) != null && worldIn.getTileEntity(pos) instanceof TileEntityDisposer){
         	TileEntityDisposer disposer = (TileEntityDisposer) worldIn.getTileEntity(pos);
 			if(stack.hasTagCompound() && disposer != null){
-        		if(stack.getTagCompound().hasKey("Lock")){
-        			disposer.lock = stack.getTagCompound().getBoolean("Locked");
-        			disposer.interval = stack.getTagCompound().getInteger("Interval");
-			        NBTTagList nbttaglist = stack.getTagCompound().getTagList("Lock", 10);
+    			disposer.lock = stack.getTagCompound().getBoolean("Locked");
+    			disposer.interval = stack.getTagCompound().getInteger("Interval");
+        		if(stack.getTagCompound().hasKey("Items")){
+			        NBTTagList nbttaglist = stack.getTagCompound().getTagList("Items", 10);
         			disposer.lockList = new ArrayList<ItemStack>();
         			disposer.resetLock();
 			        for (int i = 0; i < nbttaglist.tagCount(); ++i){
@@ -197,7 +197,7 @@ public class Disposer extends Block {
                 nbttaglist.appendTag(nbttagcompound);
             }
         }
-        itemstack.getTagCompound().setTag("Lock", nbttaglist);
+        itemstack.getTagCompound().setTag("Items", nbttaglist);
 
 	}
 

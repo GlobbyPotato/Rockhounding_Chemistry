@@ -1,3 +1,27 @@
+v1.58 changelog
+	Lab Blender
+		Slots can be locked to accept only the desired ingredients in the correct order
+	Misc fixes
+		Various fixes, tweaks and cleanings 
+		Various model fixes
+
+v1.57 changelog
+	Mineral Sizer (Process overhaul)
+		Output no longer randomized 
+		3 customized recipe types possible 
+		More GUI tooltips
+		Crafttweaker script updated
+		Updated wiki
+	Leaching Vat (Process overhaul)
+		Output randomness massively reduced 
+		3 customized recipe types possible 
+		More GUI tooltips
+		Crafttweaker script updated
+		Updated wiki
+	Misc fixes
+		Several GUIs cleaning 
+		Minor tweaks
+
 v1.55 / 1.56 changelog
 	Cryogenic Distillation Plant
 		Gui cleaning

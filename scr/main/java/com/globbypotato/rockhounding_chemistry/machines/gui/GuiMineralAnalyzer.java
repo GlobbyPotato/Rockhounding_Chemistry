@@ -1,8 +1,5 @@
 package com.globbypotato.rockhounding_chemistry.machines.gui;
 
-import java.util.Arrays;
-import java.util.List;
-
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerMineralAnalyzer;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityMineralAnalyzer;
@@ -35,7 +32,7 @@ public class GuiMineralAnalyzer extends GuiBase {
 		this.sulfTank = this.mineralAnalyzer.sulfTank;
 		this.chloTank = this.mineralAnalyzer.chloTank;
 		this.fluoTank = this.mineralAnalyzer.fluoTank;
-		this.containerName = "container.mineralAnalyzer";
+		this.containerName = "container.mineral_analyzer";
     }
 
     @Override
@@ -50,25 +47,9 @@ public class GuiMineralAnalyzer extends GuiBase {
 	   }
 
 		//fuel status
-		if(this.mineralAnalyzer.getInput().getStackInSlot(this.mineralAnalyzer.FUEL_SLOT) == null){
-			   	//fuel
-				String fuelString = TextFormatting.DARK_GRAY + "Fuel Type: " + TextFormatting.GOLD + "Common";
-				String indString = TextFormatting.DARK_GRAY + "Induction: " + TextFormatting.RED + "OFF";
-				String permaString = "";
-				if(this.mineralAnalyzer.hasFuelBlend()){
-					fuelString = TextFormatting.DARK_GRAY + "Fuel Type: " + TextFormatting.GOLD + "Blend";
-				}
-				if(this.mineralAnalyzer.canInduct()){
-					indString = TextFormatting.DARK_GRAY + "Induction: " + TextFormatting.RED + "ON";
-					permaString = TextFormatting.DARK_GRAY + "Status: " + TextFormatting.DARK_GREEN + "Mobile";
-					if(this.mineralAnalyzer.hasPermanentInduction()){
-						permaString = TextFormatting.DARK_GRAY + "Status: " + TextFormatting.DARK_RED + "Permanent";
-					}
-				}
-				String multiString[] = new String[]{fuelString, "", indString, permaString};
-			if(mouseX >= 7+x && mouseX <= 24+x && mouseY >= 7+y && mouseY <= 24+y){
-				   drawMultiLabel(multiString, mouseX, mouseY);
-			}
+		String[] fuelstatusString = handleFuelStatus(this.mineralAnalyzer.isFuelGated(), this.mineralAnalyzer.hasFuelBlend(), this.mineralAnalyzer.canInduct(), this.mineralAnalyzer.allowPermanentInduction());
+		if(mouseX >= 7+x && mouseX <= 24+x && mouseY >= 7+y && mouseY <= 24+y){
+			drawMultiLabel(fuelstatusString, mouseX, mouseY);
 		}
 
 		//sulf tank

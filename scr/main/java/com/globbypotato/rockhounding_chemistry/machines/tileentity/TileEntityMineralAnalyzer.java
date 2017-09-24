@@ -49,7 +49,7 @@ public class TileEntityMineralAnalyzer extends TileEntityMachineTank{
 
 			@Override
 		    public boolean canDrain(){
-		        return drainValve;
+		        return canDrainAcids();
 		    }
 		};
 		sulfTank.setTileEntity(this);
@@ -62,7 +62,7 @@ public class TileEntityMineralAnalyzer extends TileEntityMachineTank{
 
 			@Override
 		    public boolean canDrain(){
-		        return drainValve;
+		        return canDrainAcids();
 		    }
 		};
 		chloTank.setTileEntity(this);
@@ -75,7 +75,7 @@ public class TileEntityMineralAnalyzer extends TileEntityMachineTank{
 
 			@Override
 		    public boolean canDrain(){
-		        return drainValve;
+		        return canDrainAcids();
 		    }
 		};
 		fluoTank.setTileEntity(this);
@@ -86,7 +86,7 @@ public class TileEntityMineralAnalyzer extends TileEntityMachineTank{
 				if(slot == INPUT_SLOT && hasRecipe(insertingStack)){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
-				if(slot == FUEL_SLOT && CoreUtils.isPowerSource(insertingStack)){
+				if(slot == FUEL_SLOT && isGatedPowerSource(insertingStack)){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
 				if(slot == CONSUMABLE_SLOT && CoreUtils.hasConsumable(ToolUtils.agitator, insertingStack)){
@@ -139,8 +139,8 @@ public class TileEntityMineralAnalyzer extends TileEntityMachineTank{
 		return gravity;
 	}
 
-	public boolean isActive(){
-		return this.activation;
+	public boolean canDrainAcids(){
+		return drainValve;
 	}
 
 	public MineralAnalyzerRecipe getRecipe(){
@@ -163,7 +163,6 @@ public class TileEntityMineralAnalyzer extends TileEntityMachineTank{
 	public void readFromNBT(NBTTagCompound compound){
 		super.readFromNBT(compound);
 		this.drainValve = compound.getBoolean("Drain");
-		this.activation = compound.getBoolean("Activation");
 		this.gravity = compound.getFloat("Gravity");
 		this.sulfTank.readFromNBT(compound.getCompoundTag("SulfTank"));
 		this.chloTank.readFromNBT(compound.getCompoundTag("ChloTank"));
@@ -173,8 +172,7 @@ public class TileEntityMineralAnalyzer extends TileEntityMachineTank{
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound){
 		super.writeToNBT(compound);
-		compound.setBoolean("Drain", this.drainValve);
-		compound.setBoolean("Activation", this.activation);
+		compound.setBoolean("Drain", canDrainAcids());
 		compound.setFloat("Gravity", this.gravity);
 
 		NBTTagCompound sulfTankNBT = new NBTTagCompound();
@@ -263,7 +261,7 @@ public class TileEntityMineralAnalyzer extends TileEntityMachineTank{
 		input.drainOrClean(chloTank, modChlo(), false);
 		input.drainOrClean(fluoTank, modFluo(), false);
 	}
-	
+
 	public boolean isValidRange() {
 		if(hasGravity()){
 			pickShards();

@@ -15,7 +15,6 @@ import net.minecraftforge.items.ItemStackHandler;
 public class TileEntityEarthBreaker extends TileEntityMachineEnergy {
 
 	private ItemStackHandler template = new TemplateStackHandler(1);
-	public boolean activator;
 	public int takenRF = 1000;
     public boolean spinning;
 	public int chargeCount = 0;
@@ -48,10 +47,6 @@ public class TileEntityEarthBreaker extends TileEntityMachineEnergy {
 		return 2000;
 	}
 
-	public boolean isActive(){
-		return activator;
-	}
-
 	public boolean isSpinning(){
 		return isActive() && canDrill() && cookTime > 0;
 	}
@@ -65,14 +60,12 @@ public class TileEntityEarthBreaker extends TileEntityMachineEnergy {
 	@Override
 	public void readFromNBT(NBTTagCompound compound){
 		super.readFromNBT(compound);
-		this.activator = compound.getBoolean("Activator");
 		this.chargeCount = compound.getInteger("ChargeCount");
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound){
 		super.writeToNBT(compound);
-		compound.setBoolean("Activator", this.activator);
 		compound.setInteger("ChargeCount", this.chargeCount);
 		return compound;
 	}
@@ -142,7 +135,7 @@ public class TileEntityEarthBreaker extends TileEntityMachineEnergy {
 	}
 
 	private void handleParameters() {
-		if(this.redstoneCount >= takenRF && this.chargeCount < this.chargeMax){
+		if(this.getRedstone() >= takenRF && this.chargeCount < this.chargeMax){
 			this.redstoneCount -= takenRF; 
 			this.chargeCount++;
 			this.markDirtyClient();

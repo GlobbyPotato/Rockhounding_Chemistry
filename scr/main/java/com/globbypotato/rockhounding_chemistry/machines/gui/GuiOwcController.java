@@ -25,7 +25,7 @@ public class GuiOwcController extends GuiBase {
         this.playerInventory = playerInv;
 		this.xSize = WIDTH;
 		this.ySize = HEIGHT;
-		this.containerName = "container.owcController";
+		this.containerName = "container.owc_controller";
     }
    
     @Override

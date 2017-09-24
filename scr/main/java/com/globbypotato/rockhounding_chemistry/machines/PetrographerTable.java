@@ -7,32 +7,23 @@ import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityPet
 
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class PetrographerTable extends BaseMachine{
-    private static final AxisAlignedBB BOUNDBOX = new AxisAlignedBB(0.2D, 0.0D, 0.2D, 0.8D, 0.7D, 0.8D);
+    private static final AxisAlignedBB BOUNDBOX = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.8D, 1.0D);
 
     public PetrographerTable(float hardness, float resistance, String name){
-        super(name, Material.WOOD, TileEntityPetrographerTable.class, GuiHandler.petrographerTableID);
+        super(name, Material.ROCK, TileEntityPetrographerTable.class, GuiHandler.petrographerTableID);
 		setHardness(hardness);
 		setResistance(resistance);	
-		setHarvestLevel("axe", 0);
+		setHarvestLevel("pickaxe", 0);
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
     }
     
-    @SideOnly(Side.CLIENT)
-    @Override
-    public BlockRenderLayer getBlockLayer(){
-        return BlockRenderLayer.CUTOUT;
-    }
-
     @Nullable
     public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos){
         return BOUNDBOX;

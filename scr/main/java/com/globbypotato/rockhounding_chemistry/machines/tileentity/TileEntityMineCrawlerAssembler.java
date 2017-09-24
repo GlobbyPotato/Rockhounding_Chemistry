@@ -25,41 +25,41 @@ public class TileEntityMineCrawlerAssembler extends TileEntityMachineInv {
     private static int getTier;
 
     //main slots
-    private static final int SLOT_CASING = 0;
-    private static final int SLOT_MODE = 1;
-    private static final int SLOT_ARMS = 2;
+    public static final int SLOT_CASING = 0;
+    public static final int SLOT_MODE = 1;
+    public static final int SLOT_ARMS = 2;
 
     //grid
-    private static final int SLOT_GRID_1 = 3;
-    private static final int SLOT_GRID_2 = 4;
-    private static final int SLOT_GRID_3 = 5;
-    private static final int SLOT_GRID_4 = 6;
-    private static final int SLOT_GRID_5 = 7;
-    private static final int SLOT_GRID_6 = 8;
-	    private static final int SLOT_GRID_MIN = 3;
-	    private static final int SLOT_GRID_MAX = 8;
+    public static final int SLOT_GRID_1 = 3;
+    public static final int SLOT_GRID_2 = 4;
+    public static final int SLOT_GRID_3 = 5;
+    public static final int SLOT_GRID_4 = 6;
+    public static final int SLOT_GRID_5 = 7;
+    public static final int SLOT_GRID_6 = 8;
+    public static final int SLOT_GRID_MIN = 3;
+    public static final int SLOT_GRID_MAX = 8;
 
     //handling slots
-    private static final int SLOT_MEMORY = 9;
+    public static final int SLOT_MEMORY = 9;
 
     //setup slots
-    private static final int SLOT_FILLER = 10;
-    private static final int SLOT_ABSORBER = 11;
-    private static final int SLOT_TUNNELER = 12;
-    private static final int SLOT_LIGHTER = 13;
-    private static final int SLOT_RAILMAKER = 14;
-    private static final int SLOT_DECORATOR = 15;
-    private static final int SLOT_PATHFINDER = 16;
-    private static final int SLOT_STORAGE = 17;
-	    private static final int SLOT_SETUP_MIN = 10;
-	    private static final int SLOT_SETUP_MAX = 17;
+    public static final int SLOT_FILLER = 10;
+    public static final int SLOT_ABSORBER = 11;
+    public static final int SLOT_TUNNELER = 12;
+    public static final int SLOT_LIGHTER = 13;
+    public static final int SLOT_RAILMAKER = 14;
+    public static final int SLOT_DECORATOR = 15;
+    public static final int SLOT_PATHFINDER = 16;
+    public static final int SLOT_STORAGE = 17;
+    public static final int SLOT_SETUP_MIN = 10;
+    public static final int SLOT_SETUP_MAX = 17;
 
     //interface slots
-    private static final int SLOT_LOADER = 18;
-    private static final int SLOT_MATERIAL = 19;
+    public static final int SLOT_LOADER = 18;
+    public static final int SLOT_MATERIAL = 19;
 
     //output slot
-    private static final int SLOT_OUTPUT = 0;
+    public static final int SLOT_OUTPUT = 0;
 
 	//parts itemstacks
 	ItemStack baseLogic = crawlerPart(0);
@@ -68,9 +68,9 @@ public class TileEntityMineCrawlerAssembler extends TileEntityMachineInv {
 	ItemStack crawlerSetup = crawlerPart(8);
 	ItemStack crawlerCasing = crawlerPart(9);
 	ItemStack miningHead = crawlerPart(10);
-	ItemStack supportArms = crawlerPart(11);
+	ItemStack supportArms = crawlerPart(66);
 	ItemStack anyCrawler = new ItemStack(ModBlocks.mineCrawler);
-    
+
 	public TileEntityMineCrawlerAssembler() {
 		super(20,1);
 

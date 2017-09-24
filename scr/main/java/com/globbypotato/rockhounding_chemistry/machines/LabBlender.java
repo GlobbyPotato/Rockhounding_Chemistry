@@ -1,5 +1,7 @@
 package com.globbypotato.rockhounding_chemistry.machines;
 
+import java.util.ArrayList;
+
 import javax.annotation.Nullable;
 
 import com.globbypotato.rockhounding_chemistry.handlers.GuiHandler;
@@ -7,10 +9,12 @@ import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityLab
 
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.stats.StatList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -24,6 +28,27 @@ public class LabBlender extends BaseMachine{
 		setResistance(resistance);	
 		setHarvestLevel("pickaxe", 0);
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
+    }
+
+    @Override
+    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack){
+    	super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
+    	TileEntityLabBlender labBlender = (TileEntityLabBlender) worldIn.getTileEntity(pos);
+    	if(stack.hasTagCompound() && labBlender != null){
+			labBlender.lock = stack.getTagCompound().getBoolean("Lock");
+    		if(stack.getTagCompound().hasKey("Locked")){
+		        NBTTagList nbttaglist = stack.getTagCompound().getTagList("Locked", 10);
+		        labBlender.lockList = new ArrayList<ItemStack>();
+		        labBlender.resetLock();
+		        for (int i = 0; i < nbttaglist.tagCount(); ++i){
+		            NBTTagCompound nbttagcompound = nbttaglist.getCompoundTagAt(i);
+		            int j = nbttagcompound.getByte("Slot");
+		            if (j >= 0 && j < labBlender.lockList.size()){
+		            	labBlender.lockList.add(j, ItemStack.loadItemStackFromNBT(nbttagcompound));
+		            }
+		        }
+    		}
+		}
     }
 
     @Override
@@ -41,8 +66,21 @@ public class LabBlender extends BaseMachine{
     }
 
 	private void addNbt(ItemStack itemstack, TileEntity tileentity) {
-		TileEntityLabBlender sizer = ((TileEntityLabBlender)tileentity);
+		TileEntityLabBlender labBlender = ((TileEntityLabBlender)tileentity);
 		itemstack.setTagCompound(new NBTTagCompound());
     	addPowerNbt(itemstack, tileentity);
+
+        NBTTagList nbttaglist = new NBTTagList();
+        itemstack.getTagCompound().setBoolean("Lock", labBlender.isLocked());
+        for (int i = 0; i < labBlender.lockList.size(); ++i){
+            if (labBlender.lockList.get(i) != null){
+                NBTTagCompound nbttagcompound = new NBTTagCompound();
+                nbttagcompound.setByte("Slot", (byte)i);
+                labBlender.lockList.get(i).writeToNBT(nbttagcompound);
+                nbttaglist.appendTag(nbttagcompound);
+            }
+        }
+        itemstack.getTagCompound().setTag("Locked", nbttaglist);
+
 	}
 }

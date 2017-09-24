@@ -28,7 +28,7 @@ public class GuiPipelineValve extends GuiBase {
 		this.pipelineValve = tile;
 		this.xSize = WIDTH;
 		this.ySize = HEIGHT;
-		this.containerName = "container.pipelineValve";
+		this.containerName = "container.pipeline_valve";
 	}
 
 	@Override

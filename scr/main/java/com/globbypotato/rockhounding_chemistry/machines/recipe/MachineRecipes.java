@@ -294,6 +294,7 @@ public class MachineRecipes extends BaseRecipes {
 		castingRecipes.add(new CastingRecipe("ingotNimonic", 		nimonicArm, 4));
 		castingRecipes.add(new CastingRecipe("ingotHastelloy", 		hastelloyArm, 4));
 		castingRecipes.add(new CastingRecipe("ingotCupronickel", 	cupronickelArm, 4));
+		castingRecipes.add(new CastingRecipe("ingotWidia", 			widiaArm, 4));
 		//casings
 		castingRecipes.add(new CastingRecipe("blockNimonic", 		miscs(8, 28), 5));
 		castingRecipes.add(new CastingRecipe("blockAluminum", 		miscs(8, 48), 5));

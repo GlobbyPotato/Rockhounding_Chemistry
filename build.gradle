@@ -35,14 +35,19 @@ repositories {
     maven { // Waila
 		url "http://mobiusstrip.eu/maven" 
 	}
+    maven { // TOP
+        url "http://maven.tterrag.com"
+    }
 
 }
 
 dependencies {
     deobfCompile "mezz.jei:jei_${version_mc}:${version_jei}"
     deobfCompile "MineTweaker3:MineTweaker3-MC1102-Main:${version_ct}"
+	deobfCompile "mcjty.theoneprobe:TheOneProbe:${version_top}"
 	deobfProvided "mcp.mobius.waila:Waila:${version_wa}_1.9.4"
 	compile files("lib/rockhounding_core-1.10.2-${version_core}.jar")
+
 }
 
 processResources

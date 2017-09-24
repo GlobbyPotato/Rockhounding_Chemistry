@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "facing=down":  { "model": "rockhounding_chemistry:depositionChamberTop"	},
+        "facing=up":    { "model": "rockhounding_chemistry:depositionChamberTop" 	},
+        "facing=south": { "model": "rockhounding_chemistry:depositionChamberTop"},
+        "facing=north": { "model": "rockhounding_chemistry:depositionChamberTop", "y": 180 },
+        "facing=east":  { "model": "rockhounding_chemistry:depositionChamberTop", "y": 270  },
+        "facing=west":  { "model": "rockhounding_chemistry:depositionChamberTop", "y": 90 }
+    }
+}

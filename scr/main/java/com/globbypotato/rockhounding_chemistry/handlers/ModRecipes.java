@@ -42,7 +42,7 @@ public class ModRecipes extends BaseRecipes {
 
 	private static void pipeRecipes() {
 		//duct
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.pipelineDuct, 4), new Object[] { "IGI", "IGI", "IGI", 'I', ironFoil, 'G', "blockGlass" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.pipelineDuct, 16), new Object[] { "IGI", "IGI", "IGI", 'I', ironFoil, 'G', "blockGlass" }));
 		//pump
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.pipelinePump), new Object[] { "IGI", "FDF", "IPI", 'F', ironFoil, 'I', ironCasing, 'G', "blockGlass", 'D', pipeline, 'P', piston }));
 		//valve
@@ -142,7 +142,7 @@ public class ModRecipes extends BaseRecipes {
 	//salt seasoner
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.saltSeasoner), new Object[] { "SSS", "SSS", "PIP", 'S', "slabWood", 'I', "ingotIron", 'P', "plankWood" }));
 	//petrographer table
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.petrographerTable), new Object[] { " G ", "SSS", " P ", 'P', "plankWood", 'S', "slabWood", 'G', "blockGlass" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.petrographerTable), new Object[] { "OOO", "CCC", " C ", 'C', Blocks.HARDENED_CLAY, 'O', "obsidian" }));
 
 	//cabinet
 		GameRegistry.addRecipe(new ShapedOreRecipe(cabinet, new Object[] { "GGG","GIG","GGG", 'I', "ingotIron", 'G', "blockGlass" }));

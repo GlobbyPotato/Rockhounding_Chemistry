@@ -81,6 +81,7 @@ public class ContainerDisposer extends ContainerBase<TileEntityDisposer>{
     				}
     			}
     		}
+			doClickSound(player, tile.getWorld(), tile.getPos());
     		return null;
     	}else{
     		return super.slotClick(slot, dragType, clickTypeIn, player);

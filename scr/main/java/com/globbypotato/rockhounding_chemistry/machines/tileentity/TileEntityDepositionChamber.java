@@ -45,7 +45,7 @@ public class TileEntityDepositionChamber extends TileEntityMachineTank{
 		inputTank = new FluidTank(10000){
 			@Override
 			public boolean canFillFluidType(FluidStack fluid){
-				return activation && hasSolvent(fluid) && isValidInterval() && isCorrectSolvent(fluid);
+				return isActive() && hasSolvent(fluid) && isValidInterval() && isCorrectSolvent(fluid);
 			}
 			@Override
 		    public boolean canDrain(){
@@ -58,7 +58,7 @@ public class TileEntityDepositionChamber extends TileEntityMachineTank{
 		input =  new MachineStackHandler(INPUT_SLOTS,this){
 			@Override
 			public ItemStack insertItem(int slot, ItemStack insertingStack, boolean simulate){
-				if(slot == INPUT_SLOT && activation && isValidInterval() && (hasRecipe(insertingStack) || isValidOredict(insertingStack))){
+				if(slot == INPUT_SLOT && isActive() && isValidInterval() && (hasRecipe(insertingStack) || isValidOredict(insertingStack))){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
 				if(slot == CASING_SLOT && ToolUtils.hasUpgrade(insertingStack)){
@@ -172,7 +172,6 @@ public class TileEntityDepositionChamber extends TileEntityMachineTank{
 	public void readFromNBT(NBTTagCompound compound){
 		super.readFromNBT(compound);
 		this.recipeIndex = compound.getInteger("RecipeScan");
-		this.activation = compound.getBoolean("Activation");
 		this.pressureCount = compound.getInteger("PressureCount");
 		this.temperatureCount = compound.getInteger("TemperatureCount");
 		this.inputTank.readFromNBT(compound.getCompoundTag("InputTank"));
@@ -182,7 +181,6 @@ public class TileEntityDepositionChamber extends TileEntityMachineTank{
 	public NBTTagCompound writeToNBT(NBTTagCompound compound){
 		super.writeToNBT(compound);
 		compound.setInteger("RecipeScan", this.recipeIndex);
-		compound.setBoolean("Activation", this.activation);
 		compound.setInteger("PressureCount", this.pressureCount);
 		compound.setInteger("TemperatureCount", this.temperatureCount);
 
@@ -223,7 +221,7 @@ public class TileEntityDepositionChamber extends TileEntityMachineTank{
 	}
 
 	public boolean canDeposit(){
-		return activation
+		return isActive()
 			&& getRecipe() != null
 			&& (hasRecipe(input.getStackInSlot(INPUT_SLOT)) || isValidOredict(input.getStackInSlot(INPUT_SLOT)))
 			&& input.hasEnoughFluid(inputTank.getFluid(), getRecipe().getSolvent())

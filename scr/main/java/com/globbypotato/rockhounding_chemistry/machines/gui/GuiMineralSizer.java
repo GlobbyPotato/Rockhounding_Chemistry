@@ -27,7 +27,7 @@ public class GuiMineralSizer extends GuiBase {
         this.playerInventory = playerInv;
 		this.xSize = WIDTH;
 		this.ySize = HEIGHT;
-		this.containerName = "container.mineralSizer";
+		this.containerName = "container.mineral_sizer";
     }
 
     private void composeSliders(String comminution, int mouseX, int mouseY){
@@ -67,25 +67,9 @@ public class GuiMineralSizer extends GuiBase {
 	   }
 
 		//fuel status
-		if(this.mineralSizer.getInput().getStackInSlot(this.mineralSizer.FUEL_SLOT) == null){
-			   	//fuel
-				String fuelString = TextFormatting.DARK_GRAY + "Fuel Type: " + TextFormatting.GOLD + "Common";
-				String indString = TextFormatting.DARK_GRAY + "Induction: " + TextFormatting.RED + "OFF";
-				String permaString = "";
-				if(this.mineralSizer.hasFuelBlend()){
-					fuelString = TextFormatting.DARK_GRAY + "Fuel Type: " + TextFormatting.GOLD + "Blend";
-				}
-				if(this.mineralSizer.canInduct()){
-					indString = TextFormatting.DARK_GRAY + "Induction: " + TextFormatting.RED + "ON";
-					permaString = TextFormatting.DARK_GRAY + "Status: " + TextFormatting.DARK_GREEN + "Mobile";
-					if(this.mineralSizer.hasPermanentInduction()){
-						permaString = TextFormatting.DARK_GRAY + "Status: " + TextFormatting.DARK_RED + "Permanent";
-					}
-				}
-				String multiString[] = new String[]{fuelString, "", indString, permaString};
-			if(mouseX >= 7+x && mouseX <= 24+x && mouseY >= 7+y && mouseY <= 24+y){
-				   drawMultiLabel(multiString, mouseX, mouseY);
-			}
+		String[] fuelstatusString = handleFuelStatus(this.mineralSizer.isFuelGated(), this.mineralSizer.hasFuelBlend(), this.mineralSizer.canInduct(), this.mineralSizer.allowPermanentInduction());
+		if(mouseX >= 7+x && mouseX <= 24+x && mouseY >= 7+y && mouseY <= 24+y){
+			drawMultiLabel(fuelstatusString, mouseX, mouseY);
 		}
 
        //sliders

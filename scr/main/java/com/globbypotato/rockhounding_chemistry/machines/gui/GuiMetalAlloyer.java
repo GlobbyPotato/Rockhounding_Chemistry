@@ -6,7 +6,6 @@ import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityMet
 
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -25,7 +24,7 @@ public class GuiMetalAlloyer extends GuiBase {
 		this.metalAlloyer = tile;
 		this.xSize = WIDTH;
 		this.ySize = HEIGHT;
-		this.containerName = "container.metalAlloyer";
+		this.containerName = "container.metal_alloyer";
 	}
 
 	@Override
@@ -40,25 +39,9 @@ public class GuiMetalAlloyer extends GuiBase {
 		}
 
 		//fuel status
-		if(this.metalAlloyer.getInput().getStackInSlot(this.metalAlloyer.FUEL_SLOT) == null){
-			   	//fuel
-				String fuelString = TextFormatting.DARK_GRAY + "Fuel Type: " + TextFormatting.GOLD + "Common";
-				String indString = TextFormatting.DARK_GRAY + "Induction: " + TextFormatting.RED + "OFF";
-				String permaString = "";
-				if(this.metalAlloyer.hasFuelBlend()){
-					fuelString = TextFormatting.DARK_GRAY + "Fuel Type: " + TextFormatting.GOLD + "Blend";
-				}
-				if(this.metalAlloyer.canInduct()){
-					indString = TextFormatting.DARK_GRAY + "Induction: " + TextFormatting.RED + "ON";
-					permaString = TextFormatting.DARK_GRAY + "Status: " + TextFormatting.DARK_GREEN + "Mobile";
-					if(this.metalAlloyer.hasPermanentInduction()){
-						permaString = TextFormatting.DARK_GRAY + "Status: " + TextFormatting.DARK_RED + "Permanent";
-					}
-				}
-				String multiString[] = new String[]{fuelString, "", indString, permaString};
-			if(mouseX >= 7+x && mouseX <= 24+x && mouseY >= 7+y && mouseY <= 24+y){
-				   drawMultiLabel(multiString, mouseX, mouseY);
-			}
+		String[] fuelstatusString = handleFuelStatus(this.metalAlloyer.isFuelGated(), this.metalAlloyer.hasFuelBlend(), this.metalAlloyer.canInduct(), this.metalAlloyer.allowPermanentInduction());
+		if(mouseX >= 7+x && mouseX <= 24+x && mouseY >= 7+y && mouseY <= 24+y){
+			drawMultiLabel(fuelstatusString, mouseX, mouseY);
 		}
 
 		//prev

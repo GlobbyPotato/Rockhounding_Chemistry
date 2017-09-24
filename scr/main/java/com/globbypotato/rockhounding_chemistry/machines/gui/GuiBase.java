@@ -98,4 +98,31 @@ public abstract class GuiBase extends GuiContainer{
 		}
 	}
 
+    protected String[] handleFuelStatus(boolean fuelGated, boolean hasFuelBlend, boolean canInduct, boolean isPermanentInduction) {		
+		String fuelCaption = TextFormatting.GRAY + "Fuel:";
+		String inductionCaption = TextFormatting.GRAY + "Induction:";
+
+		String fuelStatus = TextFormatting.DARK_GRAY + "Status: " + TextFormatting.GOLD + "Free";
+		if(fuelGated){
+			fuelStatus = TextFormatting.DARK_GRAY + "Status: " + TextFormatting.GOLD + "Gated";
+		}
+
+		String fuelType = TextFormatting.DARK_GRAY + "Type: " + TextFormatting.YELLOW + "Common";
+		if(hasFuelBlend){
+			fuelType = TextFormatting.DARK_GRAY + "Type: " + TextFormatting.YELLOW + "Blend";
+		}
+
+		String indString = TextFormatting.DARK_GRAY + "Status: " + TextFormatting.RED + "OFF";
+		if(canInduct){
+			indString = TextFormatting.DARK_GRAY + "Status: " + TextFormatting.RED + "ON";
+		}
+
+		String permaString = TextFormatting.DARK_GRAY + "Type: " + TextFormatting.DARK_RED + "Moveable";
+		if(isPermanentInduction){
+			permaString = TextFormatting.DARK_GRAY + "Type: " + TextFormatting.DARK_RED + "Permanent";
+		}
+
+		return new String[]{fuelCaption, fuelType, fuelStatus, "", inductionCaption, permaString, indString};
+	}
+
 }

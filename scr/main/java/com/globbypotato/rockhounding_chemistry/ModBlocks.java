@@ -24,6 +24,7 @@ import com.globbypotato.rockhounding_chemistry.machines.ChemicalExtractor;
 import com.globbypotato.rockhounding_chemistry.machines.CrawlerAssembler;
 import com.globbypotato.rockhounding_chemistry.machines.Dekatron;
 import com.globbypotato.rockhounding_chemistry.machines.DepositionChamber;
+import com.globbypotato.rockhounding_chemistry.machines.DepositionChamberTop;
 import com.globbypotato.rockhounding_chemistry.machines.Disposer;
 import com.globbypotato.rockhounding_chemistry.machines.EarthBreaker;
 import com.globbypotato.rockhounding_chemistry.machines.ElectroLaser;
@@ -73,12 +74,14 @@ public class ModBlocks {
 	public static Block mineralAnalyzer;
 	public static Block metalAlloyer;
 	public static Block chemicalExtractor;
-	public static Block depositionChamber;
 	public static Block petrographerTable;
 	public static Block dekatron;
 	public static Block earthBreaker;
 	public static Block castingBench;
 	public static Block labBlender;
+
+	public static Block depositionChamber;
+	public static Block depositionChamberTop;
 
 	public static Block saltMaker;
 	public static Block saltSeasoner;
@@ -126,13 +129,15 @@ public class ModBlocks {
 		mineralSizer = new MineralSizer(3.0F, 5.0F, "mineralSizer");
 		mineralAnalyzer = new MineralAnalyzer(3.0F, 5.0F, "mineralAnalyzer");
 		chemicalExtractor = new ChemicalExtractor(3.0F, 5.0F, "chemicalExtractor");
-		depositionChamber = new DepositionChamber(3.0F, 5.0F, "depositionChamber");
 		metalAlloyer = new MetalAlloyer(3.0F, 5.0F, "metalAlloyer");
 		petrographerTable = new PetrographerTable(3.0F, 5.0F, "petrographerTable");
 		dekatron = new Dekatron(3.0F, 5.0F, "dekatron");
 		earthBreaker = new EarthBreaker(3.0F, 5.0F, "earthBreaker");
 		castingBench = new CastingBench(3.0F, 5.0F, "castingBench");
 		labBlender = new LabBlender(3.0F, 5.0F, "labBlender");
+
+		depositionChamber = new DepositionChamber(3.0F, 5.0F, "depositionChamber");
+		depositionChamberTop = new DepositionChamberTop(3.0F, 5.0F, "depositionChamberTop");
 
 		saltMaker = new SaltMaker(3.0F, 5.0F, "saltMaker");
 		saltSeasoner = new SaltSeasoner(3.0F, 5.0F, "saltSeasoner");
@@ -190,6 +195,7 @@ public class ModBlocks {
 		registerSingleBlockRender(crawlerAssembler, 0, "crawlerAssembler");
 		registerSingleBlockRender(metalAlloyer, 0, "metalAlloyer");
 		registerSingleBlockRender(depositionChamber, 0, "depositionChamber");
+		registerSingleBlockRender(depositionChamberTop, 0, "depositionChamberTop");
 		registerSingleBlockRender(laserRedstoneTx, 0, "laserRedstoneTx");
 		registerSingleBlockRender(laserAmplifier, 0, "laserAmplifier");
 		registerSingleBlockRender(laserStabilizer, 0, "laserStabilizer");

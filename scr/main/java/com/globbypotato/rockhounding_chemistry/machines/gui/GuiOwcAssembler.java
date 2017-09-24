@@ -25,7 +25,7 @@ public class GuiOwcAssembler extends GuiBase {
         this.playerInventory = playerInv;
 		this.xSize = WIDTH;
 		this.ySize = HEIGHT;
-		this.containerName = "container.owcAssembler";
+		this.containerName = "container.owc_assembler";
     }
 
     @Override

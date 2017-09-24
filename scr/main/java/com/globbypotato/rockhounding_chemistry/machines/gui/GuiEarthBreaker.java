@@ -26,7 +26,7 @@ public class GuiEarthBreaker extends GuiBase {
         this.playerInventory = playerInv;
 		this.xSize = WIDTH;
 		this.ySize = HEIGHT;
-		this.containerName = "container.earthBreaker";
+		this.containerName = "container.earth_breaker";
     }
    
     @Override

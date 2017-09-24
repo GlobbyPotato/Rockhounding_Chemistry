@@ -37,7 +37,7 @@ public class TileEntityPipelinePump extends TileEntityMachineBase  implements IT
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound){
 		super.writeToNBT(compound);
-        compound.setBoolean("Activation", this.activation);
+        compound.setBoolean("Activation", isActive());
         compound.setBoolean("Upgrade", this.upgrade);
 		return compound;
 	}

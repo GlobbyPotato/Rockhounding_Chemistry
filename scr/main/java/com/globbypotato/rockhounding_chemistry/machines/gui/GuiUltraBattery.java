@@ -24,7 +24,7 @@ public class GuiUltraBattery extends GuiBase {
 		this.battery = tile;
 		this.xSize = WIDTH;
 		this.ySize = HEIGHT;
-		this.containerName = "container.ultraBattery";
+		this.containerName = "container.ultrabattery";
 	}
 
 	@Override

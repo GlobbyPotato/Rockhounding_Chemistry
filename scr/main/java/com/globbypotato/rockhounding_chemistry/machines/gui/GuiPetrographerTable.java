@@ -25,7 +25,7 @@ public class GuiPetrographerTable extends GuiBase {
         this.playerInventory = playerInv;
 		this.xSize = WIDTH;
 		this.ySize = HEIGHT;
-		this.containerName = "container.petroTable";
+		this.containerName = "container.petro_table";
     }
 
     public void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY){
