@@ -1,3 +1,25 @@
+v1.59 changelog
+	Salt making
+		Added some environmental options
+		Altitude advantage (Y > 120) over the specific biome evaporation time at sea level 
+		Configurable delay preserving the progress with rain. Still paused evaporation with rain 
+		Added a dimension blacklist in which evaporation will not happen 
+		Added a space whitelist for dimensions in which the evaporation is replaced by desublimation (instantly made raw salt)
+	Lab Blender
+		Fixed inputs accepting oredict when locked
+		Gui optimization
+	Mineral Sizer
+		The comminution level can be set also by redstone power (lv 0 to 15)  
+		Multiple outputs at the same comminution will be randomized or handled by the secondary output 
+		Crushing gear will accept an extra operation when breaking, whatever damage is required 
+		CraftTweaker script simplified 
+		Added a hovering section listing the expected results when an output is available
+	Leaching Vat
+		Increased the gravity interval for less restrictive picking 
+		Multiple outputs at the same gravity will be randomized 
+		Gravity level can be set also by redstone power (lv 0 to 15. 2.0 per redstone level)  
+		Added a hovering section listing the expected results when an output is available
+
 v1.58 changelog
 	Lab Blender
 		Slots can be locked to accept only the desired ingredients in the correct order
