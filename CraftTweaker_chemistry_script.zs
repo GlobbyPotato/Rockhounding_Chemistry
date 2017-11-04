@@ -19,16 +19,16 @@
 //----------------------------------
 	//input = the input itemstack
 	//output = the extractible itemstack/s
-	//probability = the probability for each output to be extracted
+	//probability = the probability for each output item to be extracted
+	//comminution = the level of comminution of each output item
 
 	//ADD with random output
-		mods.rockhounding_chemistry.MineralSizer.add(input, [output1, output2, output3, output4, output5], [probability1, probability2, probability3, probability4, probability5]);
-		mods.rockhounding_chemistry.MineralSizer.add(<minecraft:hardened_clay>, [<minecraft:dye:0>, <minecraft:dye:1>, <minecraft:dye:2>, <minecraft:dye:3>, <minecraft:dye:4>], [20, 20, 20, 20, 20]);
+		mods.rockhounding_chemistry.MineralSizer.add(input, [output1, output2, output3, output4, output5], [probability1, probability2, probability3, probability4, probability5], false);
+		mods.rockhounding_chemistry.MineralSizer.add(<minecraft:hardened_clay>, [<minecraft:dye:0>, <minecraft:dye:1>, <minecraft:dye:2>, <minecraft:dye:3>, <minecraft:dye:4>], [20, 20, 20, 20, 20], false);
 
 	//ADD with leveled output
-	//output items must be sorted from the easiest to hardest to crush
-		mods.rockhounding_chemistry.MineralSizer.add(input, [output1, output2, output3, output4, output5]);
-		mods.rockhounding_chemistry.MineralSizer.add(<minecraft:hardened_clay>, [<minecraft:dye:0>, <minecraft:dye:1>, <minecraft:dye:2>, <minecraft:dye:3>, <minecraft:dye:4>]);
+		mods.rockhounding_chemistry.MineralSizer.add(input, [output1, output2, output3, output4, output5], [comminution1, comminution2, comminution3, comminution4, comminution5], true);
+		mods.rockhounding_chemistry.MineralSizer.add(<minecraft:hardened_clay>, [<minecraft:dye:0>, <minecraft:dye:1>, <minecraft:dye:2>, <minecraft:dye:3>, <minecraft:dye:4>], [20, 20, 20, 20, 20], true);
 
 	//ADD with single output
 		mods.rockhounding_chemistry.MineralSizer.add(input, output);
