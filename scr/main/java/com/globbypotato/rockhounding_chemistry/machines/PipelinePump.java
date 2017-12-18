@@ -2,13 +2,15 @@ package com.globbypotato.rockhounding_chemistry.machines;
 
 import javax.annotation.Nullable;
 
+import com.globbypotato.rockhounding_chemistry.ModItems;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityPipelinePump;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityPipelineValve;
-import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
+import com.globbypotato.rockhounding_chemistry.utils.ToolUtils;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
@@ -44,7 +46,9 @@ public class PipelinePump extends PipelineBase {
     public boolean canConnectTo(IBlockAccess worldIn, BlockPos pos, BlockPos sidePos, EnumFacing facing){
         IBlockState state = worldIn.getBlockState(sidePos);
         Block block = state.getBlock();
-        return (hasFluidCapability(state, block, worldIn, sidePos) && !(block instanceof PipelinePump)) || block instanceof PipelineDuct || (block instanceof PipelineValve && isSideEnabled(worldIn, sidePos, facing.getOpposite())) ? true : false;
+        return hasFluidCapability(state, block, worldIn, sidePos) 
+        	|| (block instanceof PipelineDuct 
+        		|| (block instanceof PipelineValve) && isSideEnabled(worldIn, sidePos, facing.getOpposite())) ? true : false;
     }
 
 	private boolean isSideEnabled(IBlockAccess worldIn, BlockPos pos, EnumFacing facing) {
@@ -53,33 +57,48 @@ public class PipelinePump extends PipelineBase {
 	}
 
 	@Override
-	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
-		TileEntityPipelinePump pump = (TileEntityPipelinePump)worldIn.getTileEntity(pos);
-		if(playerIn.isSneaking()){
-			if(!worldIn.isRemote){
-				if(playerIn.getHeldItemMainhand() == null){
+	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+		TileEntityPipelinePump pump = (TileEntityPipelinePump)world.getTileEntity(pos);
+		if(player.isSneaking()){
+			if(!world.isRemote){
+				if(player.getHeldItemMainhand() == null){
 					pump.activation = !pump.activation;
-					pump.markDirtyClient();
 				}
 			}
-	        worldIn.playSound(playerIn, pos, SoundEvents.BLOCK_STONE_BUTTON_CLICK_ON, SoundCategory.BLOCKS, 0.3F, 0.6F);
+	        world.playSound(player, pos, SoundEvents.BLOCK_STONE_BUTTON_CLICK_ON, SoundCategory.BLOCKS, 0.3F, 0.6F);
 		}
 
-		if(!worldIn.isRemote){
-			if(!pump.hasUpgrade()){
-				if(playerIn.getHeldItemMainhand() != null && playerIn.getHeldItemMainhand().isItemEqual(BaseRecipes.pipelineUpgrade)){
+		if(pump.hasUpgrade()){
+			if(ToolUtils.hasWrench(player, hand)){
+				EntityItem upgrade = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), pipelineUpgrade());
+				upgrade.setPosition(pos.getX(), pos.getY() + 0.5D, pos.getZ());
+    			if(!world.isRemote) {
+    				world.spawnEntityInWorld(upgrade);
+					pump.upgrade = false;
+					pump.markDirtyClient();
+    			}
+                player.playSound(SoundEvents.BLOCK_STONE_BUTTON_CLICK_OFF, 0.4F, 2.0F);
+			}
+		}else{
+			if(player.getHeldItemMainhand() != null && player.getHeldItemMainhand().isItemEqual(pipelineUpgrade())){
+    			if(!world.isRemote) {
 					pump.upgrade = true;
 					pump.markDirtyClient();
-					if(!playerIn.capabilities.isCreativeMode){
-						playerIn.getHeldItemMainhand().stackSize--;
+					if(!player.capabilities.isCreativeMode){
+						player.getHeldItemMainhand().stackSize--;
 					}
-				}
+    			}
+                player.playSound(SoundEvents.BLOCK_STONE_BUTTON_CLICK_ON, 0.4F, 2.0F);
 			}
 		}
 		return true;
 	}
 
-    @Override
+    private ItemStack pipelineUpgrade() {
+		return new ItemStack(ModItems.miscItems, 1, 65);
+	}
+
+	@Override
     public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, @Nullable ItemStack stack){
         player.addStat(StatList.getBlockStats(this));
         player.addExhaustion(0.025F);

@@ -1,13 +1,13 @@
 package com.globbypotato.rockhounding_chemistry.machines.tileentity;
 
 import com.globbypotato.rockhounding_chemistry.ModBlocks;
+import com.globbypotato.rockhounding_chemistry.ModItems;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.machines.SaltMaker;
 import com.globbypotato.rockhounding_chemistry.machines.SaltSeasoner;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiSaltSeasoner;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.MachineRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.SaltSeasonerRecipe;
-import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 import com.globbypotato.rockhounding_core.machines.tileentity.MachineStackHandler;
 import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityMachineEnergy;
 import com.globbypotato.rockhounding_core.machines.tileentity.WrappedItemHandler;
@@ -25,18 +25,21 @@ public class TileEntitySaltSeasoner extends TileEntityMachineEnergy {
 	private int cycleDelay;
 	private int cycleScroll;
 	private int directionScan;
-
+	ItemStack saltStack = new ItemStack(ModItems.chemicalItems, 1, 1);
+	ItemStack rawStack = new ItemStack(ModItems.chemicalItems, 1, 7);
+	
 	public TileEntitySaltSeasoner() {
 		super(1,1,0);
-		
+
 		input =  new MachineStackHandler(INPUT_SLOTS,this){
 			@Override
 			public ItemStack insertItem(int slot, ItemStack insertingStack, boolean simulate){
-				if(slot == INPUT_SLOT && hasRecipe(insertingStack) || ItemStack.areItemsEqual(insertingStack, BaseRecipes.saltRaw) ){
+				if(slot == INPUT_SLOT && hasRecipe(insertingStack) || ItemStack.areItemsEqual(insertingStack, rawStack) ){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
 				return insertingStack;
 			}
+
 		};
 		this.automationInput = new WrappedItemHandler(input, WriteMode.IN);
 	}
@@ -97,13 +100,13 @@ public class TileEntitySaltSeasoner extends TileEntityMachineEnergy {
 	}
 
 	private boolean canProcess() {
-		return (hasRecipe(input.getStackInSlot(INPUT_SLOT)) || ItemStack.areItemsEqual(input.getStackInSlot(INPUT_SLOT), BaseRecipes.saltRaw))
+		return (hasRecipe(input.getStackInSlot(INPUT_SLOT)) || ItemStack.areItemsEqual(input.getStackInSlot(INPUT_SLOT), rawStack))
 			&& canOutput(output.getStackInSlot(OUTPUT_SLOT));
 	}
 
 	private void process() {
-		if(input.getStackInSlot(INPUT_SLOT).isItemEqual(BaseRecipes.saltRaw)){
-			output.setOrIncrement(OUTPUT_SLOT, BaseRecipes.saltStack);
+		if(input.getStackInSlot(INPUT_SLOT).isItemEqual(rawStack)){
+			output.setOrIncrement(OUTPUT_SLOT, saltStack.copy());
 		}else{
 			ItemStack recipeOutput = getRecipeOutput(input.getStackInSlot(INPUT_SLOT));
 			output.setOrStack(OUTPUT_SLOT, recipeOutput);
@@ -117,21 +120,21 @@ public class TileEntitySaltSeasoner extends TileEntityMachineEnergy {
 	    if(checkState == ModBlocks.saltMaker.getDefaultState().withProperty(SaltMaker.STAGE, Integer.valueOf(6))){
 			if(canInput()){
 				if(input.getStackInSlot(INPUT_SLOT) == null){
-					input.setStackInSlot(INPUT_SLOT, BaseRecipes.saltRaw); 
+					input.setStackInSlot(INPUT_SLOT, rawStack.copy()); 
 					input.getStackInSlot(INPUT_SLOT).stackSize = num;
 				}else{
-					if(input.canStack(input.getStackInSlot(INPUT_SLOT), BaseRecipes.saltRaw)){
+					if(input.canStack(input.getStackInSlot(INPUT_SLOT), rawStack)){
 						for(int x = 0; x < num; x++){
 							if(input.getStackInSlot(INPUT_SLOT).stackSize < input.getStackInSlot(INPUT_SLOT).getMaxStackSize()){
 								input.getStackInSlot(INPUT_SLOT).stackSize++;
 							}else{
-								dropItemStack(worldObj, BaseRecipes.saltRaw, tankPos, num);
+								dropItemStack(worldObj, rawStack, tankPos, num);
 							}
 						}
 					}
 				}
 			}else{
-				dropItemStack(worldObj, BaseRecipes.saltRaw, tankPos, num);
+				dropItemStack(worldObj, rawStack, tankPos, num);
 			}
 			worldObj.setBlockState(tankPos, checkState.withProperty(SaltMaker.STAGE, Integer.valueOf(0)));
 	    }
@@ -145,7 +148,7 @@ public class TileEntitySaltSeasoner extends TileEntityMachineEnergy {
 	}
 
 	private boolean canInput(){
-		return input.canSetOrStack(input.getStackInSlot(INPUT_SLOT), BaseRecipes.saltRaw);
+		return input.canSetOrStack(input.getStackInSlot(INPUT_SLOT), rawStack);
 	}
 
 	private boolean canOutput(ItemStack stack) {
@@ -153,8 +156,8 @@ public class TileEntitySaltSeasoner extends TileEntityMachineEnergy {
 	}
 
 	public ItemStack getRecipeOutput(ItemStack inputStack){
-		if(input.getStackInSlot(INPUT_SLOT).isItemEqual(BaseRecipes.saltRaw)){
-			return BaseRecipes.saltStack;
+		if(input.getStackInSlot(INPUT_SLOT).isItemEqual(rawStack)){
+			return saltStack.copy();
 		}else{
 			if(inputStack != null){
 				for(SaltSeasonerRecipe recipe: MachineRecipes.seasonerRecipes){

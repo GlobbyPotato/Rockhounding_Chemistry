@@ -1,6 +1,7 @@
 package com.globbypotato.rockhounding_chemistry.machines.tileentity;
 
 import com.globbypotato.rockhounding_chemistry.machines.PipelineDuct;
+import com.globbypotato.rockhounding_chemistry.machines.PipelineValve;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiPipelineValve;
 import com.globbypotato.rockhounding_core.machines.tileentity.TemplateStackHandler;
 import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityMachineInv;
@@ -18,11 +19,12 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class TileEntityPipelineValve extends TileEntityMachineInv{
-	private ItemStackHandler template = new TemplateStackHandler(12);
+	private ItemStackHandler template = new TemplateStackHandler(13);
 	public boolean[] sideStatus = new boolean[]{true, true, true, true, true, true};
 	public boolean[] tiltStatus = new boolean[]{false, false, false, false, false, false};
 	public FluidStack[] sideFilter = new FluidStack[]{null, null, null, null, null, null};
 	public boolean activation;
+	public boolean robin;
 
 	public TileEntityPipelineValve() {
 		super(0, 0);
@@ -48,6 +50,7 @@ public class TileEntityPipelineValve extends TileEntityMachineInv{
 	public void readFromNBT(NBTTagCompound compound){
 		super.readFromNBT(compound);
         this.activation = compound.getBoolean("Activation");
+        this.robin = compound.getBoolean("Robin");
 
         NBTTagCompound lockList = compound.getCompoundTag("Locks");
 		for(int i = 0; i < lockList.getSize(); i++){
@@ -73,6 +76,7 @@ public class TileEntityPipelineValve extends TileEntityMachineInv{
 	public NBTTagCompound writeToNBT(NBTTagCompound compound){
 		super.writeToNBT(compound);
         compound.setBoolean("Activation", isActive());
+        compound.setBoolean("Robin", hasRoundRobin());
 
         NBTTagCompound lockList = new NBTTagCompound();
 		for(int i = 0; i < sideStatus.length; i++){
@@ -107,6 +111,10 @@ public class TileEntityPipelineValve extends TileEntityMachineInv{
 		return activation;
 	}
 
+	public boolean hasRoundRobin(){
+		return this.robin;
+	}
+
 
 
 	//---------------- PROCESS ----------------
@@ -118,7 +126,7 @@ public class TileEntityPipelineValve extends TileEntityMachineInv{
 				IBlockState checkState = worldObj.getBlockState(checkPos);
 				TileEntity checkTile = worldObj.getTileEntity(checkPos);
 				if(checkState != null){
-					if(isInternalPipe(checkState) || (isAnyBlock(checkState) && !hasCapability(checkTile, facing))){
+					if(isInternalPump(checkState) || isInternalPipe(checkState) || (isAnyBlock(checkState) && !hasCapability(checkTile, facing))){
 						tiltStatus[facing.ordinal()] = true;
 					}else{
 						tiltStatus[facing.ordinal()] = false;
@@ -139,6 +147,10 @@ public class TileEntityPipelineValve extends TileEntityMachineInv{
 
 	private boolean isInternalPipe(IBlockState checkState) {
 		return checkState.getBlock() instanceof PipelineDuct;
+	}
+
+	private static boolean isInternalPump(IBlockState checkState) {
+		return checkState.getBlock() instanceof PipelineValve;
 	}
 
 }

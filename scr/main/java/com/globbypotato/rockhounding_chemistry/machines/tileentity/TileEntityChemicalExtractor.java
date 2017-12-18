@@ -34,6 +34,7 @@ public class TileEntityChemicalExtractor extends TileEntityMachineTank{
 	private static final int PHOS_SLOT = 5;
 	private static final int CYAN_SLOT = 6;
 	private static final int CYLINDER_SLOT = 7;
+	private static final int SPEED_SLOT = 8;
 
 	private ItemStackHandler template = new TemplateStackHandler(1);
 
@@ -44,7 +45,7 @@ public class TileEntityChemicalExtractor extends TileEntityMachineTank{
 	ChemicalExtractorRecipe currentRecipe;
 
 	public TileEntityChemicalExtractor() {
-		super(8,56,1);
+		super(9,56,1);
 
 		nitrTank = new FluidTank(1000 + ModConfig.machineTank){
 			@Override  
@@ -115,12 +116,22 @@ public class TileEntityChemicalExtractor extends TileEntityMachineTank{
 				if(slot == CYAN_SLOT && handleBucket(insertingStack, EnumFluid.pickFluid(EnumFluid.SODIUM_CYANIDE))){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
+				if(slot == SPEED_SLOT && ToolUtils.isValidSpeedUpgrade(insertingStack)){
+					return super.insertItem(slot, insertingStack, simulate);
+				}
 				return insertingStack;
 			}
 
 		};
 		automationInput = new WrappedItemHandler(input, WriteMode.IN);
 		this.markDirtyClient();
+	}
+
+
+
+	//----------------------- SLOTS -----------------------
+	public ItemStack speedSlot(){
+		return this.input.getStackInSlot(SPEED_SLOT);
 	}
 
 
@@ -145,12 +156,20 @@ public class TileEntityChemicalExtractor extends TileEntityMachineTank{
 		return true;
 	}
 
+	public int baseSpeed(){
+		return ModConfig.speedExtractor;
+	}
+
 	public int getExtractingFactor(){
 		return ModConfig.factorExtractor;
 	}
 
-	public int getCookTimeMax(){
-		return ModConfig.speedExtractor;
+	public int speedAnalyzer() {
+		return ToolUtils.isValidSpeedUpgrade(speedSlot()) ? baseSpeed() / ToolUtils.speedUpgrade(speedSlot()): baseSpeed();
+	}
+
+	public int getCookTimeMax() {
+		return speedAnalyzer();
 	}
 
 
@@ -211,7 +230,7 @@ public class TileEntityChemicalExtractor extends TileEntityMachineTank{
 	public void update(){
 		acceptEnergy();
 		fuelHandler(input.getStackInSlot(FUEL_SLOT));
-		redstoneHandler(REDSTONE_SLOT, this.getCookTimeMax());
+		redstoneHandler(REDSTONE_SLOT, baseSpeed());
 		lavaHandler();
 
 		if(!worldObj.isRemote){

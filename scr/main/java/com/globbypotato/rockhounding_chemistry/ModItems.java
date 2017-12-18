@@ -7,6 +7,7 @@ import com.globbypotato.rockhounding_chemistry.enums.EnumChemicals;
 import com.globbypotato.rockhounding_chemistry.enums.EnumElement;
 import com.globbypotato.rockhounding_chemistry.enums.EnumFires;
 import com.globbypotato.rockhounding_chemistry.enums.EnumItems;
+import com.globbypotato.rockhounding_chemistry.enums.EnumSpeeds;
 import com.globbypotato.rockhounding_chemistry.enums.shards.EnumArsenate;
 import com.globbypotato.rockhounding_chemistry.enums.shards.EnumBorate;
 import com.globbypotato.rockhounding_chemistry.enums.shards.EnumCarbonate;
@@ -25,6 +26,7 @@ import com.globbypotato.rockhounding_chemistry.items.ConsumableIO;
 import com.globbypotato.rockhounding_chemistry.items.MineralShards;
 import com.globbypotato.rockhounding_chemistry.items.MiscItems;
 import com.globbypotato.rockhounding_chemistry.items.PatternItems;
+import com.globbypotato.rockhounding_chemistry.items.SpeedItems;
 import com.globbypotato.rockhounding_chemistry.items.UtilIO;
 import com.globbypotato.rockhounding_chemistry.items.tools.BamShears;
 import com.globbypotato.rockhounding_chemistry.items.tools.BamSword;
@@ -60,6 +62,7 @@ public class ModItems {
 	public static Item miscItems;
 	public static Item alloyItems;
 	public static Item alloyBItems;
+	public static Item speedItems;
 
 	public static ConsumableIO gear;
 	public static ConsumableIO testTube;
@@ -101,6 +104,7 @@ public class ModItems {
 		alloyItems = new ArrayIO("alloyItems", EnumAlloy.getItemNames());	
 		alloyBItems = new ArrayIO("alloyBItems", EnumAlloyB.getItemNames());	
 		chemicalFires = new ChemicalFires("chemicalFires", EnumFires.getNames());										
+		speedItems = new SpeedItems("speedItems", EnumSpeeds.getNames());	
 
 		gear = new ConsumableIO("gear", ModConfig.gearUses);
 		testTube = new ConsumableIO("testTube", ModConfig.tubeUses);
@@ -144,7 +148,8 @@ public class ModItems {
 		for(int i = 0; i < EnumAlloy.getItemNames().length; i++){	registerMetaItemRender(alloyItems, i, EnumAlloy.getItemName(i));		}
 		for(int i = 0; i < EnumAlloyB.getItemNames().length; i++){	registerMetaItemRender(alloyBItems, i, EnumAlloyB.getItemName(i));		}
 		for(int i = 0; i < EnumFires.size(); i++){					registerMetaItemRender(chemicalFires, i, EnumFires.getName(i));			}
-		for(int i = 0; i < EnumCasting.size(); i++){				registerMetaItemRender(patternItems, i, EnumCasting.getName(i));			}
+		for(int i = 0; i < EnumCasting.size(); i++){				registerMetaItemRender(patternItems, i, EnumCasting.getName(i));		}
+		for(int i = 0; i < EnumSpeeds.size(); i++){					registerMetaItemRender(speedItems, i, EnumSpeeds.getName(i));			}
 		registerSimpleItemRender(cubeCrossbow, 0, "cubeCrossbow");
 		registerSimpleItemRender(scalBow, 0, "scalBow");
 		registerSimpleItemRender(scalBat, 0, "scalBat");

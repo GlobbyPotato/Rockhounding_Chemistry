@@ -47,6 +47,10 @@ public class GlobbyEventHandler {
 		ItemStack itemstack = event.getItemStack();
 		if(itemstack != null){
 
+			if(itemstack.getItem() == ModItems.speedItems && itemstack.getItemDamage() > 0){
+				event.getToolTip().add(TextFormatting.GREEN + "Divides the machine speed by " + (itemstack.getItemDamage() + 1) + " times");
+			}
+
 			Block owcBlocks = Block.getBlockFromItem(itemstack.getItem());
 			if(owcBlocks instanceof OwcBlocks){
 				event.getToolTip().add(TextFormatting.YELLOW + "Element of the OWC multiblock energy system");

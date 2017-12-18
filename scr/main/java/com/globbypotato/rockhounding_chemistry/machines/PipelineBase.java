@@ -31,14 +31,7 @@ public class PipelineBase extends Block{
     public static final PropertyBool WEST = PropertyBool.create("west");
     public static final PropertyBool UP = PropertyBool.create("up");
     public static final PropertyBool DOWN = PropertyBool.create("down");
-    public static final AxisAlignedBB CUBE_AABB = new AxisAlignedBB(	0.375D, 0.375D, 0.375D, 0.625D, 0.625D, 0.625D);
     public static final AxisAlignedBB PLUG_AABB = new AxisAlignedBB(	0.250D, 0.250D, 0.250D, 0.750D, 0.750D, 0.750D);
-    public static final AxisAlignedBB DOWN_AABB = new AxisAlignedBB(	0.375D, 0.000D, 0.375D, 0.625D, 0.500D, 0.625D);
-    public static final AxisAlignedBB UP_AABB = new AxisAlignedBB(		0.375D, 0.500D, 0.375D, 0.625D, 1.000D, 0.625D);
-    public static final AxisAlignedBB SOUTH_AABB = new AxisAlignedBB(	0.375D, 0.375D, 0.687D, 0.625D, 0.625D, 1.000D);
-    public static final AxisAlignedBB WEST_AABB = new AxisAlignedBB(	0.000D, 0.375D, 0.375D, 0.312D, 0.628D, 0.625D);
-    public static final AxisAlignedBB NORTH_AABB = new AxisAlignedBB(	0.375D, 0.375D, 0.000D, 0.625D, 0.625D, 0.312D);
-    public static final AxisAlignedBB EAST_AABB = new AxisAlignedBB(	0.687D, 0.375D, 0.375D, 1.000D, 0.625D, 0.625D);
 
     public PipelineBase(float hardness, float resistance, String name){
         super(Material.IRON);
@@ -74,72 +67,29 @@ public class PipelineBase extends Block{
 
     @Override
     public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn){
-        state = state.getActualState(worldIn, pos);
-        addCollisionBoxToList(pos, entityBox, collidingBoxes, CUBE_AABB);
+        IBlockState actualstate = state.getActualState(worldIn, pos);
+        addCollisionBoxToList(pos, entityBox, collidingBoxes, getHitbox(actualstate));
+    }
 
-        if (((Boolean)state.getValue(DOWN)).booleanValue()){
-            addCollisionBoxToList(pos, entityBox, collidingBoxes, DOWN_AABB);
-        }
+    private static AxisAlignedBB getHitbox(IBlockState actualstate ){
+        double xmin = 0.375D; double xmax = 0.625D;
+        double zmin = 0.375D; double zmax = 0.625D;
+        double ymin = 0.375D; double ymax = 0.625D;
 
-        if (((Boolean)state.getValue(UP)).booleanValue()){
-            addCollisionBoxToList(pos, entityBox, collidingBoxes, UP_AABB);
-        }
-
-        if (((Boolean)state.getValue(NORTH)).booleanValue()){
-            addCollisionBoxToList(pos, entityBox, collidingBoxes, NORTH_AABB);
-        }
-
-        if (((Boolean)state.getValue(EAST)).booleanValue()){
-            addCollisionBoxToList(pos, entityBox, collidingBoxes, EAST_AABB);
-        }
-
-        if (((Boolean)state.getValue(SOUTH)).booleanValue()){
-            addCollisionBoxToList(pos, entityBox, collidingBoxes, SOUTH_AABB);
-        }
-
-        if (((Boolean)state.getValue(WEST)).booleanValue()){
-            addCollisionBoxToList(pos, entityBox, collidingBoxes, WEST_AABB);
-        }
+        if(actualstate.getValue(DOWN).booleanValue()){	ymin = 0.000D; }
+        if(actualstate.getValue(UP).booleanValue()){	ymax = 1.000D; }
+        if(actualstate.getValue(NORTH).booleanValue()){	zmin = 0.000D; }
+        if(actualstate.getValue(SOUTH).booleanValue()){	zmax = 1.000D; }
+        if(actualstate.getValue(WEST).booleanValue()){	xmin = 0.000D; }
+        if(actualstate.getValue(EAST).booleanValue()){	xmax = 1.000D; }
         
-        if (((Boolean)state.getValue(WEST)).booleanValue()){
-            addCollisionBoxToList(pos, entityBox, collidingBoxes, WEST_AABB);
-        }
-
+        return new AxisAlignedBB(xmin, ymin, zmin, xmax, ymax, zmax);
     }
 
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
-        return CUBE_AABB;
-    }
-
-    private static int getBoundingBoxIdx(IBlockState state){
-        int i = 0;
-
-        if (((Boolean)state.getValue(DOWN)).booleanValue()){
-            i |= 1 << EnumFacing.DOWN.getFront(0).ordinal();
-        }
-
-        if (((Boolean)state.getValue(UP)).booleanValue()){
-            i |= 1 << EnumFacing.UP.getFront(1).ordinal();
-        }
-
-        if (((Boolean)state.getValue(NORTH)).booleanValue()){
-            i |= 1 << EnumFacing.NORTH.getFront(2).ordinal();
-        }
-
-        if (((Boolean)state.getValue(SOUTH)).booleanValue()){
-            i |= 1 << EnumFacing.SOUTH.getFront(3).ordinal();
-        }
-
-        if (((Boolean)state.getValue(WEST)).booleanValue()){
-            i |= 1 << EnumFacing.WEST.getFront(4).ordinal();
-        }
-
-        if (((Boolean)state.getValue(EAST)).booleanValue()){
-            i |= 1 << EnumFacing.EAST.getFront(5).ordinal();
-        }
-
-        return i;
+        IBlockState actualstate = this.getActualState(state, source, pos);
+        return getHitbox(actualstate);
     }
 
     @SideOnly(Side.CLIENT)

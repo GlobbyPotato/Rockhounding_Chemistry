@@ -1,5 +1,8 @@
 package com.globbypotato.rockhounding_chemistry.machines.gui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerMineralAnalyzer;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityMineralAnalyzer;
@@ -67,24 +70,63 @@ public class GuiMineralAnalyzer extends GuiBase {
 			drawTankInfoWithConsume(this.fluoTank, this.mineralAnalyzer.modFluo(), mouseX, mouseY);
 		}
 
+		//activation
+		if(mouseX >= 7+x && mouseX <= 22+x && mouseY >= 88+y && mouseY <= 103+y){
+			drawButtonLabel("Activation", mouseX, mouseY);
+		}
+
 		//drain
-		if(mouseX >= 96+x && mouseX <= 109+x && mouseY >= 88+y && mouseY <= 103+y){
+		if(mouseX >= 96+x && mouseX <= 109+x && mouseY >= 25+y && mouseY <= 40+y){
 		   drawButtonLabel("Drain Fluids. Pipe out fluids if unused", mouseX, mouseY);
 		}
 
+		   String[] multistring;
+		   String gDescr = "";
+
+		   String gValue = TextFormatting.DARK_GRAY + "Filtered interval: " + TextFormatting.LIGHT_PURPLE + "from " + (this.mineralAnalyzer.getGravity() - 2.0F) + " to " + (this.mineralAnalyzer.getGravity() + 2.0F);
+		   if(!this.mineralAnalyzer.hasGravity()){
+			   gValue = TextFormatting.DARK_GRAY + "Filtered interval: " + TextFormatting.LIGHT_PURPLE + "No gravity required";
+		   }
+
+		   String gState = TextFormatting.GRAY + "Switching Mode: " + TextFormatting.GOLD + "Manual switch";
+		   if(this.mineralAnalyzer.isPowered()){
+			   gState = TextFormatting.GRAY + "Switching Mode: " + TextFormatting.GOLD + "Redstone signal";
+		   }
+
 		//lo
 		if(mouseX >= 25+x && mouseX <= 40+x && mouseY >= 88+y && mouseY <= 103+y){
-			drawButtonLabel("Decrease Gravity Reference (-0.5)", mouseX, mouseY);
+			   gDescr = "Decrease Gravity Reference (-2.0)";
+			   if(this.mineralAnalyzer.isPowered()){
+				   gDescr = "Fixed gravity level";
+			   }else if(!this.mineralAnalyzer.hasGravity()){
+				   gDescr = "No decrement needed";
+			   }
+			   multistring = new String[]{gDescr, gValue, gState};
+			   drawMultiLabel(multistring, mouseX, mouseY);
 		}
 
 		//hi
 		if(mouseX >= 63+x && mouseX <= 78+x && mouseY >= 88+y && mouseY <= 103+y){
-			drawButtonLabel("Increase Gravity Reference (+0.5)", mouseX, mouseY);
+			   gDescr = "Increase Gravity Reference (+2.0)";
+			   if(this.mineralAnalyzer.isPowered()){
+				   gDescr = "Fixed gravity level";
+			   }else if(!this.mineralAnalyzer.hasGravity()){
+				   gDescr = "No increment needed";
+			   }
+			   multistring = new String[]{gDescr, gValue, gState};
+			   drawMultiLabel(multistring, mouseX, mouseY);
 		}
 
-		//activation
-		if(mouseX >= 7+x && mouseX <= 22+x && mouseY >= 88+y && mouseY <= 103+y){
-			drawButtonLabel("Activation", mouseX, mouseY);
+		//gravity
+		if(mouseX >= 41+x && mouseX <= 62+x && mouseY >= 90+y && mouseY <= 101+y){
+			gDescr = "Specific Gravity";
+		   if(this.mineralAnalyzer.isPowered()){
+			   gDescr = "Fixed gravity level";
+		   }else if(!this.mineralAnalyzer.hasGravity()){
+			   gDescr = "No gravity needed";
+		   }
+			multistring = new String[]{gDescr, gValue, gState};
+			drawMultiLabel(multistring, mouseX, mouseY);
 		}
 
 		//gravity fail
@@ -95,12 +137,18 @@ public class GuiMineralAnalyzer extends GuiBase {
 			}
 		}
 
-		//gravity
-		if(mouseX >= 41+x && mouseX <= 62+x && mouseY >= 90+y && mouseY <= 101+y){
-			String name = TextFormatting.WHITE + "Specific Gravity";
-			String descr = TextFormatting.DARK_GRAY + "Filtered interval: " + TextFormatting.LIGHT_PURPLE + "from " + (this.mineralAnalyzer.getGravity() - 0.5F) + " to " + (this.mineralAnalyzer.getGravity() + 0.5F);
-			String[] multistring = new String[]{name, descr};
-			drawMultiLabel(multistring, mouseX, mouseY);
+		//gravity picks
+		if(this.mineralAnalyzer.hasGravity() && this.mineralAnalyzer.isValidRange() && this.mineralAnalyzer.pickedShards.size() > 0){
+			List<String> tooltip = new ArrayList<String>();
+    	   tooltip.add(TextFormatting.GRAY + "Filtered shards:");
+    	   for(int k = 0; k < this.mineralAnalyzer.recipeOutput().size(); k++){
+    		   if(this.mineralAnalyzer.currentGravity(k) >= this.mineralAnalyzer.minGravity() && this.mineralAnalyzer.currentGravity(k) <= this.mineralAnalyzer.maxGravity()){
+    			   tooltip.add(this.mineralAnalyzer.recipeOutput().get(k).getDisplayName());
+    		   }
+    	   }
+			if(mouseX >= 83+x && mouseX <= 102+x && mouseY >= 88+y && mouseY <= 105+y){
+				 drawHoveringText(tooltip, mouseX, mouseY, fontRendererObj);
+			}
 		}
 
 		String alertstring = TextFormatting.RED + "Not enough solvent";
@@ -146,12 +194,12 @@ public class GuiMineralAnalyzer extends GuiBase {
         //smelt bar
         if (this.mineralAnalyzer.cookTime > 0){
             int k = this.getBarScaled(22, this.mineralAnalyzer.cookTime, this.mineralAnalyzer.getCookTimeMax());
-            this.drawTexturedModalRect(i + 73, j + 29, 176, 0, 22, k);
+            this.drawTexturedModalRect(i + 64, j + 29, 176, 0, 22, k);
         }
 
         //valve
         if(this.mineralAnalyzer.drainValve){
-            this.drawTexturedModalRect(i + 96, j + 88, 176, 101, 16, 16);
+            this.drawTexturedModalRect(i + 96, j + 25, 176, 101, 16, 16);
         }
 
         //inductor
@@ -159,14 +207,20 @@ public class GuiMineralAnalyzer extends GuiBase {
             this.drawTexturedModalRect(i + 7, j + 7, 176, 119, 18, 18);
         }
 
-        //inductor
+        //activation
         if(this.mineralAnalyzer.isActive()){
             this.drawTexturedModalRect(i + 7, j + 88, 176, 153, 16, 16);
         }
 
+        //fail icon
         if(this.mineralAnalyzer.hasGravity() && !this.mineralAnalyzer.isValidRange()){
             this.drawTexturedModalRect(i + 80, j + 90, 177, 139, 3, 12);
         }
+
+        //zoom icon
+		if(this.mineralAnalyzer.hasGravity() && this.mineralAnalyzer.isValidRange() && this.mineralAnalyzer.pickedShards.size() > 0){
+            this.drawTexturedModalRect(i + 83, j + 88, 176, 171, 20, 17);
+		}
 
         //fluid alerts
 		if(this.sulfTank.getFluid() != null && this.mineralAnalyzer.modSulf() > this.sulfTank.getFluidAmount()){
@@ -180,6 +234,15 @@ public class GuiMineralAnalyzer extends GuiBase {
 		if(this.fluoTank.getFluid() != null && this.mineralAnalyzer.modFluo() > this.fluoTank.getFluidAmount()){
             this.drawTexturedModalRect(i + 151, j + 16, 176, 30, 9, 9);
 		}
+
+		//signal
+        if(this.mineralAnalyzer.isPowered() && this.mineralAnalyzer.hasGravity()){
+            this.drawTexturedModalRect(i + 27, j + 90, 176, 189, 12, 12);
+            this.drawTexturedModalRect(i + 65, j + 90, 176, 189, 12, 12);
+       	}else if(!this.mineralAnalyzer.hasGravity()){
+            this.drawTexturedModalRect(i + 27, j + 90, 176, 202, 12, 12);
+            this.drawTexturedModalRect(i + 65, j + 90, 176, 202, 12, 12);
+        }
 
         //tanks
         if(this.sulfTank.getFluid() != null){

@@ -13,11 +13,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiLabBlender extends GuiBase {
 
 	public static ResourceLocation TEXTURE_REF = new ResourceLocation(Reference.MODID + ":textures/gui/guilabblender.png");
+	public static ResourceLocation TEXTURE_JEI = new ResourceLocation(Reference.MODID + ":textures/gui/guilabblenderjei.png");
 
     private final InventoryPlayer playerInventory;
     private final TileEntityLabBlender labBlender;
 	public static final int WIDTH = 176;
-	public static final int HEIGHT = 181;
+	public static final int HEIGHT = 210;
 
     public GuiLabBlender(InventoryPlayer playerInv, TileEntityLabBlender tile){
         super(tile, new ContainerLabBlender(playerInv,tile));
@@ -47,12 +48,12 @@ public class GuiLabBlender extends GuiBase {
 		}
 
 		//activation
-		if(mouseX >= 115+x && mouseX <= 130+x && mouseY >= 19+y && mouseY <= 34+y){
+		if(mouseX >= 105+x && mouseX <= 121+x && mouseY >= 96+y && mouseY <= 111+y){
 			drawButtonLabel("Activation", mouseX, mouseY);
 		}
 
 		//lock
-		if(mouseX >= 69+x && mouseX <= 84+x && mouseY >= 75+y && mouseY <= 90+y){
+		if(mouseX >= 125+x && mouseX <= 140+x && mouseY >= 96+y && mouseY <= 111+y){
 			if(this.labBlender.isLocked()){
 				drawButtonLabel("Locked", mouseX, mouseY);
 			}else{
@@ -61,14 +62,12 @@ public class GuiLabBlender extends GuiBase {
 		}
 
 		//lock stacks
-        for (int i = 0; i < 3; ++i){
-            for (int j = 0; j < 3; ++j){
-        		if(mouseX >= 50 + x + (18*j) && mouseX <= 67 + x + (18*j) && mouseY >= 19 + y + (18*i) && mouseY <= 36 + y + (18*i)){
-        			if(this.labBlender.lockList.get((j + i * 3)) != null){
-        				drawButtonLabel(this.labBlender.lockList.get((j + i * 3)).getDisplayName(), mouseX, mouseY);
-        			}
-        		}
-            }
+        for (int i = 0; i < 9; ++i){
+    		if(mouseX >= 147 + x - (17*i) && mouseX <= 163 + x - (17*i) && mouseY >= 41 + y + (8*i) && mouseY <= 56 + y + (8*i)){
+    			if(this.labBlender.lockList.get(i) != null){
+    				drawButtonLabel(this.labBlender.lockList.get(i).getDisplayName(), mouseX, mouseY);
+    			}
+    		}
         }
 
     }
@@ -89,7 +88,7 @@ public class GuiLabBlender extends GuiBase {
         //smelt bar
         if (this.labBlender.cookTime > 0){
             int k = this.getBarScaled(32, this.labBlender.cookTime, this.labBlender.getMaxCookTime());
-            this.drawTexturedModalRect(i + 108, j + 39, 176, 0, k, 31);
+            this.drawTexturedModalRect(i + 49, j + 23, 176, 0, k, 31);
         }
 
         //inductor
@@ -99,20 +98,18 @@ public class GuiLabBlender extends GuiBase {
         
         //activation
         if(this.labBlender.isActive()){
-            this.drawTexturedModalRect(i + 115, j + 19, 176, 99, 16, 16);
+            this.drawTexturedModalRect(i + 105, j + 96, 176, 99, 16, 16);
         }
         
         //lock
         if(this.labBlender.isLocked()){
-            this.drawTexturedModalRect(i + 69, j + 75, 176, 115, 16, 16);
+            this.drawTexturedModalRect(i + 125, j + 96, 176, 115, 16, 16);
 
             //locked
-            for (int col = 0; col < 3; ++col){
-                for (int row = 0; row < 3; ++row){
-        			if(this.labBlender.lockList.get((col + row * 3)) != null){
-        	            this.drawTexturedModalRect(i + 51 + (18*col), j + 20 + (18*row), 176, 131, 16, 16);
-        			}
-                }
+            for (int col = 0; col < 9; ++col){
+    			if(this.labBlender.lockList.get(col) != null){
+    	            this.drawTexturedModalRect(i + 151 - (17*col), j + 32 + (8*col), 176, 131, 7, 8);
+    			}
             }
         }
 

@@ -131,7 +131,7 @@ public class TileEntityLabBlender extends TileEntityMachineTank {
 	private boolean isMatchingIngredient(int slot, ItemStack insertingStack){
 		if(slot < lockList.size()){
 			if(insertingStack != null && lockList.get(slot) != null){
-				if(insertingStack.isItemEqual(lockList.get(slot))){
+				if(insertingStack.isItemEqual(lockList.get(slot)) || isMatchingOredict(lockList.get(slot), insertingStack)){
 					return true;
 				}
 			}
@@ -139,6 +139,22 @@ public class TileEntityLabBlender extends TileEntityMachineTank {
 		return false;
 	}
 
+	private static boolean isMatchingOredict(ItemStack recipeIngredient, ItemStack slotIngredient) {
+		ArrayList<Integer> inputIDs = Utils.intArrayToList(OreDictionary.getOreIDs(slotIngredient));
+		ArrayList<Integer> recipeIDs = Utils.intArrayToList(OreDictionary.getOreIDs(recipeIngredient));
+		if(inputIDs.size() > 0 && recipeIDs.size() > 0){
+			for(Integer recipeList: recipeIDs){
+				String recipeDict = OreDictionary.getOreName(recipeList);
+				for(Integer inputList: inputIDs){
+					String inputDict = OreDictionary.getOreName(inputList);
+					if(inputDict.matches(recipeDict)){
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
 
 
 	//----------------------- I/O -----------------------

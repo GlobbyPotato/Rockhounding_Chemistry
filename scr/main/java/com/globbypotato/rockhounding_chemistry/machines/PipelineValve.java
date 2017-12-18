@@ -40,7 +40,8 @@ public class PipelineValve extends PipelineBase {
     public boolean canConnectTo(IBlockAccess worldIn, BlockPos pos, BlockPos sidePos, EnumFacing facing){
         IBlockState state = worldIn.getBlockState(sidePos);
         Block block = state.getBlock();
-        return ((hasFluidCapability(state, block, worldIn, sidePos) && !(block instanceof PipelineValve)) || block instanceof PipelineDuct) && isSideEnabled(worldIn, pos, facing) ? true : false;
+        return (block instanceof PipelineDuct || block instanceof PipelinePump) 
+        	|| (hasFluidCapability(state, block, worldIn, sidePos) && isSideEnabled(worldIn, pos, facing)) ? true : false;
     }
 
 	private boolean isSideEnabled(IBlockAccess worldIn, BlockPos pos, EnumFacing facing) {

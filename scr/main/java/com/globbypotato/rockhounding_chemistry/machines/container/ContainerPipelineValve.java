@@ -32,6 +32,9 @@ public class ContainerPipelineValve extends ContainerBase<TileEntityPipelineValv
 			int offset = (x-6) * 18;
 			this.addSlotToContainer(new SlotItemHandler(template, x,  34 + offset, 54));//filters
 		}
+		
+		this.addSlotToContainer(new SlotItemHandler(template, 12,  11, 44));//rrobin
+
 	}
 
 	@Override
@@ -65,6 +68,10 @@ public class ContainerPipelineValve extends ContainerBase<TileEntityPipelineValv
 				this.tile.sideFilter[slot - 6] = null;
 			}
     		return null;
+		}else if(slot == 12){
+			this.tile.robin = !this.tile.robin;
+			doClickSound(player, this.tile.getWorld(), this.tile.getPos());
+    		return null;
     	}else{
     		return super.slotClick(slot, dragType, clickTypeIn, player);
     	}
@@ -72,7 +79,7 @@ public class ContainerPipelineValve extends ContainerBase<TileEntityPipelineValv
 
 	@Override
 	public boolean mergeItemStack(ItemStack stack, int startIndex, int endIndex, boolean reverseDirection){
-		return super.mergeItemStack(stack, 12, endIndex, reverseDirection);
+		return super.mergeItemStack(stack, 13, endIndex, reverseDirection);
     }
 
 }

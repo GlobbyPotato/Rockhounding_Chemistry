@@ -103,6 +103,8 @@ public class TileEntityUltraBattery extends TileEntityMachineEnergy implements I
 		return sideStatus[6];
 	}
 
+
+
 	//---------------- COFH ----------------
 	@Override
 	public int getMaxEnergyStored(EnumFacing from) {

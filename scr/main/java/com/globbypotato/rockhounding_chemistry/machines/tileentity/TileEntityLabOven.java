@@ -4,13 +4,13 @@ import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiLabOven;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.LabOvenRecipe;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.MachineRecipes;
+import com.globbypotato.rockhounding_chemistry.utils.ToolUtils;
 import com.globbypotato.rockhounding_core.machines.tileentity.MachineStackHandler;
 import com.globbypotato.rockhounding_core.machines.tileentity.TemplateStackHandler;
 import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityMachineTank;
 import com.globbypotato.rockhounding_core.machines.tileentity.WrappedItemHandler;
 import com.globbypotato.rockhounding_core.machines.tileentity.WrappedItemHandler.WriteMode;
 import com.globbypotato.rockhounding_core.utils.CoreUtils;
-import com.globbypotato.rockhounding_core.utils.FuelUtils;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -28,13 +28,14 @@ public class TileEntityLabOven extends TileEntityMachineTank {
 	public static final int SOLUTION_SLOT = 3;
 	public static final int REDSTONE_SLOT = 4;
 	public static final int REAGENT_SLOT = 5;
+	public static final int SPEED_SLOT = 6;
 
 	public FluidTank solventTank;
 	public FluidTank reagentTank;
 	public FluidTank outputTank;
 
 	public TileEntityLabOven() {
-		super(6, 0, 1);
+		super(7, 0, 1);
 
 		solventTank = new FluidTank(1000 + ModConfig.machineTank) {
 			@Override
@@ -90,6 +91,9 @@ public class TileEntityLabOven extends TileEntityMachineTank {
 				if (slot == SOLUTION_SLOT && CoreUtils.isBucketType(insertingStack) && CoreUtils.isEmptyBucket(insertingStack)) {
 					return super.insertItem(slot, insertingStack, simulate);
 				}
+				if(slot == SPEED_SLOT && ToolUtils.isValidSpeedUpgrade(insertingStack)){
+					return super.insertItem(slot, insertingStack, simulate);
+				}
 				return insertingStack;
 			}
 		};
@@ -99,13 +103,28 @@ public class TileEntityLabOven extends TileEntityMachineTank {
 
 
 
+	//----------------------- SLOTS -----------------------
+	public ItemStack speedSlot(){
+		return this.input.getStackInSlot(SPEED_SLOT);
+	}
+
+
+
 	// ----------------------- HANDLER -----------------------
 	public ItemStackHandler getTemplate() {
 		return this.template;
 	}
 
-	public int getCookTimeMax() {
+	public int baseSpeed(){
 		return ModConfig.speedLabOven;
+	}
+
+	public int speedOven() {
+		return ToolUtils.isValidSpeedUpgrade(speedSlot()) ? baseSpeed() / ToolUtils.speedUpgrade(speedSlot()): baseSpeed();
+	}
+
+	public int getCookTimeMax() {
+		return speedOven();
 	}
 
 	@Override
@@ -236,7 +255,7 @@ public class TileEntityLabOven extends TileEntityMachineTank {
 		}
 		acceptEnergy();
 		fuelHandler(input.getStackInSlot(FUEL_SLOT));
-		redstoneHandler(REDSTONE_SLOT, this.getCookTimeMax());
+		redstoneHandler(REDSTONE_SLOT, baseSpeed());
 		lavaHandler();
 
 		if (!worldObj.isRemote) {

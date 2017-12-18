@@ -567,6 +567,15 @@ item.rockhounding_chemistry:scalBow.name=Long Range Bow
 item.rockhounding_chemistry:scalBat.name=Compound Bat
 item.rockhounding_chemistry:bamSword.name=BAM Sword
 item.rockhounding_chemistry:splashSmoke.name=Smoke Screen Flask
+#upgrades
+item.rockhounding_chemistry:speedItems.base.name=Base Speed Upgrade
+item.rockhounding_chemistry:speedItems.iron.name=Iron Speed Upgrade
+item.rockhounding_chemistry:speedItems.scal.name=ScAl Speed Upgrade
+item.rockhounding_chemistry:speedItems.cube.name=CuBe Speed Upgrade
+item.rockhounding_chemistry:speedItems.bam.name=BAM Speed Upgrade
+item.rockhounding_chemistry:speedItems.vanasteel.name=Vanasteel Speed Upgrade
+item.rockhounding_chemistry:speedItems.carbide.name=Tungsten Carbide Speed Upgrade
+item.rockhounding_chemistry:speedItems.nitride.name=Titanium Nitride Speed Upgrade
 
 #### FLUID ####
 #fluids blocks

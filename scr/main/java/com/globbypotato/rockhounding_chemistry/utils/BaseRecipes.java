@@ -45,6 +45,7 @@ public class BaseRecipes {
 	public static ItemStack minerals(int type){						return new ItemStack(ModBlocks.mineralOres,1,type);}
 	public static ItemStack battery(int type){						return new ItemStack(ModBlocks.ultraBattery,1,type);}
 	public static ItemStack patterns(int num, int type){			return new ItemStack(ModItems.patternItems,1,type);}
+	public static ItemStack speeds(int meta){						return new ItemStack(ModItems.speedItems, 1, meta);}
 
 	public static ItemStack arsenateShards(int num, int meta) {		return new ItemStack(ModItems.arsenateShards,num,meta);}
 	public static ItemStack borateShards(int num, int meta) {		return new ItemStack(ModItems.borateShards,num,meta);}

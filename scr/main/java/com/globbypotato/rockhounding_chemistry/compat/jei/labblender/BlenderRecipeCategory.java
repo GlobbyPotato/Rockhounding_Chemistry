@@ -19,10 +19,10 @@ public class BlenderRecipeCategory extends RHRecipeCategory {
 	private static final int INPUT_SLOT[] = new int[]{0,1,2,3,4,5,6,7,8};
 	private static final int OUTPUT_SLOT = 10;
 
-	private final static ResourceLocation guiTexture = GuiLabBlender.TEXTURE_REF;
+	private final static ResourceLocation guiTexture = GuiLabBlender.TEXTURE_JEI;
 
 	public BlenderRecipeCategory(IGuiHelper guiHelper) {
-		super(guiHelper.createDrawable(guiTexture, 50, 19, 90, 75), "jei.lab_blender.name");
+		super(guiHelper.createDrawable(guiTexture, 0, 0, 153, 73), "jei.lab_blender.name");
 	}
 
 	@Nonnull
@@ -36,12 +36,10 @@ public class BlenderRecipeCategory extends RHRecipeCategory {
 		IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
 		BlenderRecipeWrapper wrapper = (BlenderRecipeWrapper) recipeWrapper;	
 
-        for (int i = 0; i < 3; ++i){
-            for (int j = 0; j < 3; ++j){
-            	guiItemStacks.init(j + i * 3, true, j * 18, i * 18);
-            }
+        for (int i = 0; i < 9; ++i){
+        	guiItemStacks.init(i, true, 135 - (i * 17), 0 + i * 5);
         }
-		guiItemStacks.init(OUTPUT_SLOT, false, 65, 55);
+		guiItemStacks.init(OUTPUT_SLOT, false, 135, 55);
 
 		for(int y = 0; y < wrapper.getInputs().size(); y++){
 			ItemStack ingr = wrapper.getInputs().get(y);

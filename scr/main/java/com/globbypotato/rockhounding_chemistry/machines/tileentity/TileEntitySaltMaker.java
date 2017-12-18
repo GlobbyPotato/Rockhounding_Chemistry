@@ -8,11 +8,14 @@ import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityMachineB
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -28,6 +31,8 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 
 public class TileEntitySaltMaker extends TileEntityMachineBase implements ITickable, IFluidHandlingTile {
 	private int evaporateCount = -1;
+	private int meltingTime;
+	boolean doParticles;
 
 	public FluidTank inputTank;
 	
@@ -55,6 +60,7 @@ public class TileEntitySaltMaker extends TileEntityMachineBase implements ITicka
 			if(inputTank.getFluidAmount() >= Fluid.BUCKET_VOLUME){
 				if(getStage() == 0){
 					setNewStage(1);
+					meltingTime = 0;
 				}
 			}
 
@@ -62,35 +68,77 @@ public class TileEntitySaltMaker extends TileEntityMachineBase implements ITicka
 			if(getStage() == 0){
 				evaporateCount = -1;
 				if(canRainRefill(biome)){
-					setNewStage(1);
+					inputTank.fillInternal(new FluidStack(FluidRegistry.WATER, 5), true);
+					meltingTime = 0;
 				}
 			}
 
 			//lose progress on rain
 			if(getStage() != 0){
 				if(canRainMelt(biome)){
-					evaporateCount = -1;
-					setNewStage(1);
+					countdownLoss();
+				}else{
+					meltingTime = 0;
 				}
 			}
 
 			//do evaporation
 			if(getStage() > 0 && getStage() < 6){
-				if(evaporateCount >= calculatedEvaporation(biome)){
+				if(mustDesublimate()){
 					evaporateCount = -1;
-					setNewStage(getStage() + 1);
+					setNewStage(6);
+					worldObj.playSound(null, pos, SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.AMBIENT, 1.0F, 1.0F);
+					doParticles = true;
+					meltingTime = 0;
 				}else{
-					if(canEvaporate()){
-						evaporateCount++;
+					if(evaporateCount >= calculatedEvaporation(biome)){
+						evaporateCount = -1;
+						setNewStage(getStage() + 1);
+						meltingTime = 0;
 					}else{
-						if(canRainRefill(biome)){
-							evaporateCount = -1;
-							setNewStage(1);
+						if(canEvaporate()){
+							evaporateCount++;
+							meltingTime = 0;
+						}else{
+							if(canRainRefill(biome)){
+								countdownLoss();
+							}else{
+								meltingTime = 0;
+							}
 						}
 					}
 				}
 			}
 			this.markDirtyClient();
+		}else{
+			if(doParticles){
+				worldObj.spawnParticle(EnumParticleTypes.EXPLOSION_LARGE, pos.getX(), pos.getY(), pos.getZ(), 0.5, 0.5, 0.5, new int[0]);
+				doParticles = false;
+			}
+		}
+	}
+
+	private boolean mustDesublimate(){
+		if(isValidDimension()){
+			boolean desublibate = false;
+			for(int x = 0; x < ModConfig.spacesaltdimensions.length; x++){
+				if(worldObj.provider.getDimension() == ModConfig.spacesaltdimensions[x]){
+					desublibate = true;
+				}
+			}
+			return desublibate;
+		}
+		return false;
+	}
+
+	private void countdownLoss() {
+		if(getStage() != 1){
+			meltingTime++;
+			if(meltingTime == ModConfig.meltingTime){
+				evaporateCount = -1;
+				setNewStage(1);
+				meltingTime = 0;
+			}
 		}
 	}
 
@@ -111,19 +159,49 @@ public class TileEntitySaltMaker extends TileEntityMachineBase implements ITicka
     }
 
 	private boolean canEvaporate() {
-		return worldObj.isDaytime() && worldObj.canSeeSky(pos) && !worldObj.isRaining();
+		return worldObj.isDaytime() && worldObj.canBlockSeeSky(pos) && !worldObj.isRaining() && isValidDimension();
+	}
+
+	private boolean isValidDimension() {
+		boolean isBacklisted = false;
+		for(int x = 0; x < ModConfig.saltdimensions.length; x++){
+			if(worldObj.provider.getDimension() == ModConfig.saltdimensions[x]){
+				isBacklisted = true;
+			}
+		}
+		return !isBacklisted;
 	}
 
 	private int calculatedEvaporation(Biome biome) {
 		if(BiomeDictionary.isBiomeOfType(biome, Type.SANDY)){
-			return evaporationSpeed() / 2 ;
+			if(pos.getY() > evapLevel()){
+				return evaporationSpeed() / 3;
+			}else{
+				return evaporationSpeed() / 2;
+			}
 		}else if(BiomeDictionary.isBiomeOfType(biome, Type.WET) || BiomeDictionary.isBiomeOfType(biome, Type.WATER) || BiomeDictionary.isBiomeOfType(biome, Type.FOREST) || BiomeDictionary.isBiomeOfType(biome, Type.CONIFEROUS) || BiomeDictionary.isBiomeOfType(biome, Type.SWAMP)){
-			return evaporationSpeed() * 2 ;
+			if(pos.getY() > evapLevel()){
+				return evaporationSpeed();
+			}else{
+				return evaporationSpeed() * 2;
+			}
 		}else if(BiomeDictionary.isBiomeOfType(biome, Type.COLD) || BiomeDictionary.isBiomeOfType(biome, Type.MOUNTAIN)){
-			return evaporationSpeed() * 4 ;
+			if(pos.getY() > evapLevel()){
+				return evaporationSpeed() * 2;
+			}else{
+				return evaporationSpeed() * 4;
+			}
 		}else{
-			return evaporationSpeed();
+			if(pos.getY() > evapLevel()){
+				return evaporationSpeed() / 2;
+			}else{
+				return evaporationSpeed();
+			}
 		}
+	}
+
+	private int evapLevel() {
+		return 120;
 	}
 
 	private boolean canRainMelt(Biome biome) {
@@ -138,6 +216,7 @@ public class TileEntitySaltMaker extends TileEntityMachineBase implements ITicka
     public void readFromNBT(NBTTagCompound compound){
         super.readFromNBT(compound);
         this.evaporateCount = compound.getInteger("EvaporateCount");
+        this.meltingTime = compound.getInteger("MeltingCount");
 		this.inputTank.readFromNBT(compound.getCompoundTag("InputTank"));
     }
 
@@ -145,6 +224,7 @@ public class TileEntitySaltMaker extends TileEntityMachineBase implements ITicka
     public NBTTagCompound writeToNBT(NBTTagCompound compound){
         super.writeToNBT(compound);
         compound.setInteger("EvaporateCount", this.evaporateCount);    
+        compound.setInteger("MeltingCount", this.meltingTime);    
         
 		NBTTagCompound sulfTankNBT = new NBTTagCompound();
 		this.inputTank.writeToNBT(sulfTankNBT);
@@ -163,7 +243,7 @@ public class TileEntitySaltMaker extends TileEntityMachineBase implements ITicka
 	@Override
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
 		if(capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY){
-			return getStage() == 0 && facing != EnumFacing.UP;
+			return getStage() == 0;
 		}
 		return super.hasCapability(capability, facing);
 	}
@@ -171,7 +251,7 @@ public class TileEntitySaltMaker extends TileEntityMachineBase implements ITicka
 	@Override
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
 		if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY){
-			if(getStage() == 0 && facing != EnumFacing.UP){
+			if(getStage() == 0){
 				return (T) inputTank;
 			}
 		}

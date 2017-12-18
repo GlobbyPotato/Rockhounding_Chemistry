@@ -12,7 +12,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -38,21 +37,8 @@ public class TileEntityPipelinePump extends TileEntityMachineBase  implements IT
 	public NBTTagCompound writeToNBT(NBTTagCompound compound){
 		super.writeToNBT(compound);
         compound.setBoolean("Activation", isActive());
-        compound.setBoolean("Upgrade", this.upgrade);
+        compound.setBoolean("Upgrade", hasUpgrade());
 		return compound;
-	}
-
-	@Override
-	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-		if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) return true;
-		else return super.hasCapability(capability, facing);
-	}
-
-	@Override
-	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-		if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
-			return (T) this;
-		return super.getCapability(capability, facing);
 	}
 
 
@@ -183,6 +169,7 @@ public class TileEntityPipelinePump extends TileEntityMachineBase  implements IT
 									if(valveTile != null && valveTile instanceof TileEntityPipelineValve){
 										TileEntityPipelineValve valve = (TileEntityPipelineValve)valveTile;
 										if(valve.isActive()){
+											int numHandlers = 0;
 											for(EnumFacing valvefacing : EnumFacing.values()){
 												if(valve.sideStatus[valvefacing.ordinal()]){
 													TileEntity userTile = this.worldObj.getTileEntity(thisPos.offset(valvefacing));
@@ -191,13 +178,37 @@ public class TileEntityPipelinePump extends TileEntityMachineBase  implements IT
 														if(receiveHandler != null){
 															if(hasFluidCapability(userTile, facing.getOpposite()) && !isAnyPipe(userTile)){
 																if(canExtract(extractHandler, valve, valvefacing.ordinal())){
-																	extractHandler.drain(receiveHandler.fill(extractHandler.drain(getFlow(), false), true), true);
+																	if(valve.hasRoundRobin()){
+																		numHandlers++;
+																	}else{
+																		extractHandler.drain(receiveHandler.fill(extractHandler.drain(getFlow(), false), true), true);
+																	}
 																}
 															}
 														}
 													}
 												}
 											}
+
+											if(valve.hasRoundRobin()){
+												for(EnumFacing valvefacing : EnumFacing.values()){
+													if(valve.sideStatus[valvefacing.ordinal()]){
+														TileEntity userTile = this.worldObj.getTileEntity(thisPos.offset(valvefacing));
+														if(userTile != null && hasFluidCapability(userTile, valvefacing.getOpposite())){
+															IFluidHandler receiveHandler = userTile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, valvefacing.getOpposite());
+															if(receiveHandler != null){
+																if(hasFluidCapability(userTile, facing.getOpposite())){
+																	if(canExtract(extractHandler, valve, valvefacing.ordinal())){
+																		int extr = extractHandler.drain(getFlow(), false).amount;
+																		extractHandler.drain(receiveHandler.fill(extractHandler.drain(getFlow() / numHandlers, false), true), true);
+																	}
+																}
+															}
+														}
+													}
+												}
+											}
+
 										}
 									}else{
 										fluidUsers.remove(thisPos);

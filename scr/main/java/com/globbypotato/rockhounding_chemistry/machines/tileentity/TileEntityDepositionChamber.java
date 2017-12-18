@@ -30,6 +30,7 @@ public class TileEntityDepositionChamber extends TileEntityMachineTank{
 	public static final int SOLVENT_SLOT = 1;
 	public static final int CASING_SLOT = 2;
 	public static final int INSULATION_SLOT = 3;
+	public static final int SPEED_SLOT = 4;
 	public int temperatureCount = 0;
 	public int temperatureMax = 3000;
 	public int pressureCount = 0;
@@ -40,7 +41,7 @@ public class TileEntityDepositionChamber extends TileEntityMachineTank{
 	public FluidTank inputTank;
 
 	public TileEntityDepositionChamber() {
-		super(4, 1, 0);
+		super(5, 1, 0);
 
 		inputTank = new FluidTank(10000){
 			@Override
@@ -70,6 +71,9 @@ public class TileEntityDepositionChamber extends TileEntityMachineTank{
 				if(slot == SOLVENT_SLOT && isValidInterval() && hasSolvent(FluidUtil.getFluidContained(insertingStack))){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
+				if(slot == SPEED_SLOT && ToolUtils.isValidSpeedUpgrade(insertingStack)){
+					return super.insertItem(slot, insertingStack, simulate);
+				}
 				return insertingStack;
 			}
 		};
@@ -79,13 +83,24 @@ public class TileEntityDepositionChamber extends TileEntityMachineTank{
 
 
 
+	//----------------------- SLOTS -----------------------
+	public ItemStack speedSlot(){
+		return this.input.getStackInSlot(SPEED_SLOT);
+	}
+
+
+
 	//----------------------- HANDLER -----------------------
 	public ItemStackHandler getTemplate(){
 		return this.template;
 	}
 
-	public int getCookTimeMax(){
-		return ModConfig.speedDeposition;
+	public int speedAnalyzer() {
+		return ToolUtils.isValidSpeedUpgrade(speedSlot()) ? ModConfig.speedDeposition / ToolUtils.speedUpgrade(speedSlot()): ModConfig.speedDeposition;
+	}
+
+	public int getCookTimeMax() {
+		return speedAnalyzer();
 	}
 
 	@Override

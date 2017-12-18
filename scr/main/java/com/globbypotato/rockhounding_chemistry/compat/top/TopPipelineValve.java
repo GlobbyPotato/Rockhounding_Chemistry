@@ -34,8 +34,15 @@ public class TopPipelineValve implements IProbeInfoProvider{
 				statusstring = TextFormatting.RED + "Disabled";
 			}
         	String stage = TextFormatting.GRAY + "Status: " + statusstring;
-
             probeInfo.text(stage);
+            
+            String robinstring = TextFormatting.RED + "Disabled";
+			if(pump.hasRoundRobin()){
+				robinstring = TextFormatting.GREEN + "Enabled";
+			}
+        	String robin = TextFormatting.GRAY + "Round Robin: " + robinstring;
+            probeInfo.text(robin);
+
         }
 	}
 

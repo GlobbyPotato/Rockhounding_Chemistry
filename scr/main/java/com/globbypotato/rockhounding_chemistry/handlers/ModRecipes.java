@@ -38,6 +38,17 @@ public class ModRecipes extends BaseRecipes {
 		metallurgyRecipes();
 		ganRecipes();
 		pipeRecipes();
+		upgradesRecipes();
+	}
+	
+	private static void upgradesRecipes(){
+		GameRegistry.addRecipe(new ShapedOreRecipe(speeds(1), new Object[] { "GCG", "CLC", "GCG", 'G', ToolUtils.gear, 'C', ironFoil, 'L', logicChip }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(speeds(2), new Object[] { "GCG", "CLC", "GCG", 'G', "ingotScal", 'C', ironFoil, 'L', speeds(1) }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(speeds(3), new Object[] { "GCG", "CLC", "GCG", 'G', "ingotCube", 'C', ironFoil, 'L', speeds(2) }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(speeds(4), new Object[] { "GCG", "CLC", "GCG", 'G', "ingotBam", 'C', ironFoil, 'L', speeds(3) }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(speeds(5), new Object[] { "GCG", "CLC", "GCG", 'G', "ingotVanasteel", 'C', ironFoil, 'L', speeds(4) }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(speeds(6), new Object[] { "GCG", "CLC", "GCG", 'G', "ingotWidia", 'C', ironFoil, 'L', speeds(5) }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(speeds(7), new Object[] { "GCG", "CLC", "GCG", 'G', "ingotTinite", 'C', ironFoil, 'L', speeds(6) }));
 	}
 
 	private static void pipeRecipes() {

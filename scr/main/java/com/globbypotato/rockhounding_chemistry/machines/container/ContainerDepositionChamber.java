@@ -24,8 +24,9 @@ public class ContainerDepositionChamber extends ContainerBase<TileEntityDepositi
 
 		this.addSlotToContainer(new SlotItemHandler(input, 0, 80, 34));//input
 		this.addSlotToContainer(new SlotItemHandler(input, 1, 128, 80));//fluid
-		this.addSlotToContainer(new SlotItemHandler(input, 2, 92, 93));//upgrade
-		this.addSlotToContainer(new SlotItemHandler(input, 3, 68, 93));//upgrade
+		this.addSlotToContainer(new SlotItemHandler(input, 2, 99, 93));//upgrade
+		this.addSlotToContainer(new SlotItemHandler(input, 3, 61, 93));//upgrade
+		this.addSlotToContainer(new SlotItemHandler(input, 4, 80, 93));//upgrade
 		this.addSlotToContainer(new SlotItemHandler(output, 0, 80, 71));//output
 
 		this.addSlotToContainer(new SlotItemHandler(template, 0, 137,  111));//prev
@@ -35,7 +36,7 @@ public class ContainerDepositionChamber extends ContainerBase<TileEntityDepositi
 
 	@Override
 	public ItemStack slotClick(int slot, int dragType, ClickType clickTypeIn, EntityPlayer player){
-		if(slot == 5){
+		if(slot == 6){
 			if(this.tile.recipeIndex >= 0){
 	    		this.tile.recipeIndex--; 
 	    		this.tile.activation = false;
@@ -45,7 +46,7 @@ public class ContainerDepositionChamber extends ContainerBase<TileEntityDepositi
 	    	}
 			doClickSound(player, tile.getWorld(), tile.getPos());
     		return null;
-    	}else if(slot == 6){
+    	}else if(slot == 7){
     		if(this.tile.recipeIndex < MachineRecipes.depositionRecipes.size() - 1){
     			this.tile.recipeIndex++; 
 	    		this.tile.activation = false;
@@ -55,7 +56,7 @@ public class ContainerDepositionChamber extends ContainerBase<TileEntityDepositi
     		}
 			doClickSound(player, tile.getWorld(), tile.getPos());
     		return null;
-    	}else if(slot == 7){
+    	}else if(slot == 8){
    			this.tile.activation = !this.tile.activation; 
 			doClickSound(player, tile.getWorld(), tile.getPos());
     		return null;
@@ -66,10 +67,10 @@ public class ContainerDepositionChamber extends ContainerBase<TileEntityDepositi
 
 	@Override
 	public boolean mergeItemStack(ItemStack stack, int startIndex, int endIndex, boolean reverseDirection){
-		if(super.mergeItemStack(stack, startIndex, 5, reverseDirection)){
+		if(super.mergeItemStack(stack, startIndex, 6, reverseDirection)){
 			return true;
 		}else{
-			return super.mergeItemStack(stack, 8, endIndex, reverseDirection);
+			return super.mergeItemStack(stack, 9, endIndex, reverseDirection);
 		}
     }
 

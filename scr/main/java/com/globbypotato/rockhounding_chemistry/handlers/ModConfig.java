@@ -25,6 +25,7 @@ public class ModConfig {
 	public static int speedDeposition;
 	public static int speedBlender;
     public static int machineTank;
+	public static int comminutionFactor;
 
 	public static int maxMineral;
 	public static int gearUses;
@@ -35,6 +36,7 @@ public class ModConfig {
 
 	public static boolean enableRainRefill;
 	public static int evaporationBase;
+	public static int meltingTime;
 	public static int evaporationMultiplier;
     public static int saltAmount;
 
@@ -53,6 +55,8 @@ public class ModConfig {
 	public static int consumedCyan = 20;
 
 	public static int[] dimensions = new int[]{};
+	public static int[] saltdimensions = new int[]{};
+	public static int[] spacesaltdimensions = new int[]{};
 
 	public static void loadConfig(FMLPreInitializationEvent event) {
 		Configuration config = new Configuration(event.getSuggestedConfigurationFile());
@@ -81,13 +85,17 @@ public class ModConfig {
 		config.addCustomCategoryComment("Salt", "These settings handle the making of Salt.");
 		evaporationMultiplier = config.get(							CATEGORY_SALT, "EvaporationMultiplier", 	3, 		"Multiply factor for the EvaporationBaseInterval").getInt();
 		evaporationBase = config.get(								CATEGORY_SALT, "EvaporationBaseInterval", 	1000, 	"Base ticks required to advance in the evaporation process").getInt();
+		meltingTime = config.get(									CATEGORY_SALT, "MeltingTime", 				1000, 	"Base ticks after which the progress is lost with rain").getInt();
 		enableRainRefill = config.get(								CATEGORY_SALT, "RefillTankFromRain", 		true,	"Wether the rain can automatically refill the tank when empty").getBoolean();
 		saltAmount = config.get(									CATEGORY_SALT, "SaltQuantity", 				4, 		"Max quantity of salt items a single tank can produce").getInt();
+		saltdimensions = config.get(								CATEGORY_SALT, "DimensionBlacklist", saltdimensions, "Deny in these dimensions IDs the production of salt").getIntList();
+		spacesaltdimensions = config.get(							CATEGORY_SALT, "SpaceDimensions", 	  spacesaltdimensions, "Dimensions in which evaporation is overridden by desublimation").getIntList();
 
 	//TOOLS
 		config.addCustomCategoryComment("Tools", "These settings handle the settings of machines and tools.");
 		speedLabOven = config.get(									CATEGORY_TOOLS, "SpeedLabOven", 			200,	"Ticks required to produce acids in the Lab Oven").getInt();
 		speedSizer = config.get(									CATEGORY_TOOLS, "SpeedMineralSizer", 		300,	"Ticks required to crush minerals in the Mineral Sizer").getInt();
+		comminutionFactor = config.get(								CATEGORY_TOOLS, "ComminutionFactor", 		30,		"Multiplied for the comminution level and added to the base Sizer speed").getInt();
 		speedAnalyzer = config.get(									CATEGORY_TOOLS, "SpeedMineralAnalyzer", 	300,	"Ticks required to analyze minerals in the Leaching Vat").getInt();
 		speedExtractor = config.get(								CATEGORY_TOOLS, "SpeedChemicalExtractor", 	400,	"Ticks required to extract elements in the Chemical Extractor").getInt();
 		speedAssembling = config.get(								CATEGORY_TOOLS, "SpeedAssemblyTables", 		100,	"Ticks required to assembly Devices in their Assembly Tables").getInt();
@@ -96,7 +104,7 @@ public class ModConfig {
 		speedDeposition = config.get(								CATEGORY_TOOLS, "SpeedDepositionChamber",	800,	"Ticks required to process in the Deposition Chamber").getInt();
 		speedBlender = config.get(									CATEGORY_TOOLS, "SpeedLabBlender",			30,		"Ticks required to process in the Lab Blender").getInt();
 		factorExtractor = config.get(								CATEGORY_TOOLS, "ExtractingFactor", 		100,	"Percentage of element required to produce one regular dust").getInt();
-		gearUses = config.get(										CATEGORY_TOOLS, "UsesGear", 				250,	"Max uses for the Crushing Gear in the Mineral Sizer").getInt();
+		gearUses = config.get(										CATEGORY_TOOLS, "UsesGear", 				400,	"Max uses for the Crushing Gear in the Mineral Sizer").getInt();
 		tubeUses = config.get(										CATEGORY_TOOLS, "UsesTube", 				300,	"Max uses for the Test Tube in the Chemical Extractor").getInt();
 		agitatorUses = config.get(									CATEGORY_TOOLS, "UsesAgitator", 			400,	"Max uses for the Agitator in the Leaching Vat").getInt();
 		patternUses = config.get(									CATEGORY_TOOLS, "UsesPattern", 				200,	"Max uses for the Ingot Pattern in the Metal Alloyer").getInt();

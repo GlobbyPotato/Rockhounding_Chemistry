@@ -29,6 +29,7 @@ public class TileEntityMineralAnalyzer extends TileEntityMachineTank{
 	private static final int SULFUR_SLOT = 3;
 	private static final int CHLOR_SLOT = 4;
 	private static final int FLUO_SLOT = 5;
+	private static final int SPEED_SLOT = 6;
 
 	public FluidTank sulfTank;
 	public FluidTank chloTank;
@@ -36,10 +37,10 @@ public class TileEntityMineralAnalyzer extends TileEntityMachineTank{
 
 	public boolean drainValve;
 	public float gravity = 8.00F;
-	ArrayList<ItemStack> pickedShards = new ArrayList<ItemStack>();
+	public ArrayList<ItemStack> pickedShards = new ArrayList<ItemStack>();
 
 	public TileEntityMineralAnalyzer() {
-		super(6,1,1);
+		super(7,1,1);
 
 		sulfTank = new FluidTank(1000 + ModConfig.machineTank){
 			@Override  
@@ -101,10 +102,20 @@ public class TileEntityMineralAnalyzer extends TileEntityMachineTank{
 				if(slot == FLUO_SLOT && handleBucket(insertingStack, EnumFluid.pickFluid(EnumFluid.HYDROFLUORIC_ACID)) ){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
+				if(slot == SPEED_SLOT && ToolUtils.isValidSpeedUpgrade(insertingStack)){
+					return super.insertItem(slot, insertingStack, simulate);
+				}
 				return insertingStack;
 			}
 		};
 		this.automationInput = new WrappedItemHandler(input, WriteMode.IN);
+	}
+
+
+
+	//----------------------- SLOTS -----------------------
+	public ItemStack speedSlot(){
+		return this.input.getStackInSlot(SPEED_SLOT);
 	}
 
 
@@ -119,8 +130,12 @@ public class TileEntityMineralAnalyzer extends TileEntityMachineTank{
 		return GuiMineralAnalyzer.HEIGHT;
 	}
 
-	public int getCookTimeMax(){
-		return ModConfig.speedAnalyzer;
+	public int speedAnalyzer() {
+		return ToolUtils.isValidSpeedUpgrade(speedSlot()) ? ModConfig.speedAnalyzer / ToolUtils.speedUpgrade(speedSlot()): ModConfig.speedAnalyzer;
+	}
+
+	public int getCookTimeMax() {
+		return speedAnalyzer();
 	}
 
 
@@ -136,7 +151,22 @@ public class TileEntityMineralAnalyzer extends TileEntityMachineTank{
 	}
 
 	public float getGravity(){
-		return gravity;
+		if(isPowered() && hasGravity()){
+			return ((float)getBlockPower() * 2) + 2.0F;
+		}else if(!isPowered() && hasGravity()){
+			return this.gravity;
+		}else if(!hasGravity()){
+			return 0F;
+		}
+		return 0F;
+	}
+
+	public boolean isPowered(){
+		return worldObj.isBlockPowered(this.pos);
+	}
+
+	public int getBlockPower(){
+		return isPowered() ? worldObj.isBlockIndirectlyGettingPowered(this.pos) : 0;
 	}
 
 	public boolean canDrainAcids(){
@@ -154,6 +184,18 @@ public class TileEntityMineralAnalyzer extends TileEntityMachineTank{
 
 	public boolean hasGravity(){
 		return getRecipe() != null ? getRecipe().hasGravity() : false; 
+	}
+
+	public boolean isValidRecipe() {
+		return getRecipe() != null;
+	}
+
+	public ArrayList<ItemStack> recipeOutput(){
+		return isValidRecipe() ? getRecipe().getOutput() : null;
+	}
+
+	public ArrayList<Integer> recipeGravity(){
+		return isValidRecipe() ? getRecipe().getProbability() : null;
 	}
 
 
@@ -287,7 +329,7 @@ public class TileEntityMineralAnalyzer extends TileEntityMachineTank{
 		}
 	}
 
-	private float minGravity(){return getGravity() - 0.5F;}
-	private float maxGravity(){return getGravity() + 0.5F;}
-	private float currentGravity(int y){return (float)getRecipe().getProbability().get(y).intValue() / 100;}
+	public float minGravity(){return getGravity() - 2.0F;}
+	public float maxGravity(){return getGravity() + 2.0F;}
+	public float currentGravity(int y){return (float)getRecipe().getProbability().get(y).intValue() / 100;}
 }

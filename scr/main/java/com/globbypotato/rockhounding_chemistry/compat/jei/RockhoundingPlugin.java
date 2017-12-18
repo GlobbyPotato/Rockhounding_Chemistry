@@ -120,7 +120,7 @@ public class RockhoundingPlugin extends BlankModPlugin{
 		registry.addRecipes(GanRecipeWrapper.getRecipes());
 
 		registry.addRecipeClickArea(GuiMineralSizer.class, 52, 39, 31, 31, RHRecipeUID.SIZER);
-		registry.addRecipeClickArea(GuiMineralAnalyzer.class, 73, 29, 22, 22, RHRecipeUID.ANALYZER);
+		registry.addRecipeClickArea(GuiMineralAnalyzer.class, 64, 29, 22, 22, RHRecipeUID.ANALYZER);
 		registry.addRecipeClickArea(GuiLabOven.class, 64, 57, 14, 15, RHRecipeUID.LAB_OVEN);
 		registry.addRecipeClickArea(GuiSaltSeasoner.class, 72, 23, 32, 52, RHRecipeUID.SALT_SEASONER);
 		registry.addRecipeClickArea(GuiMetalAlloyer.class, 41, 53, 128, 13, RHRecipeUID.ALLOYER);
@@ -129,7 +129,7 @@ public class RockhoundingPlugin extends BlankModPlugin{
 		registry.addRecipeClickArea(GuiDepositionChamber.class, 57, 56, 62, 14, RHRecipeUID.VAPOR_DEPOSITION);
 		registry.addRecipeClickArea(GuiPetrographerTable.class, 68, 45, 40, 27, RHRecipeUID.PETROGRAPHER);
 		registry.addRecipeClickArea(GuiCastingBench.class, 72, 33, 32, 14, RHRecipeUID.CASTING);
-		registry.addRecipeClickArea(GuiLabBlender.class, 108, 39, 31, 31, RHRecipeUID.BLENDER);
+		registry.addRecipeClickArea(GuiLabBlender.class, 41, 23, 47, 31, RHRecipeUID.BLENDER);
 
 		registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.mineralSizer), RHRecipeUID.SIZER);
 		registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.mineralAnalyzer), RHRecipeUID.ANALYZER);
@@ -192,19 +192,20 @@ public class RockhoundingPlugin extends BlankModPlugin{
 				+ "An addituinal function allows to perform a continous production alternating both phases. This function requires of course more energy.\n"
 				+ "The liquid nitrogen can be extracted by connecting any fluid transport system to the Nitrogen tank. The system consumes 50RF/tick when at Iron Tier and 20RF/tick when at Reinforced Tier");
 		registry.addDescription(new ItemStack(ModBlocks.castingBench), "This is an automatic machine used to trim some of the metal furnitures used by the mod. The purpose of this machine is to get rid of many little crafting recipes that could be redundant or possibly conflicting with others. It has different types of cuts and can be automated with pipes or manually interacted, no gui is available. Punching the machine with bare hand, it will scroll through the various cuts and the selected one will be indicated by a label in front of it. Using a valid recipe ingredient on it, will place the item inside the machine to start operating. Right-clicking again the machine will take out the ingredient or the processed output.");
-		String piplineText = "The pipeline allows to transfer fluids between fluid handlers. It is composed of 3 parts, a pump to extract the fluid, a valve to deliver the fluid and ducts for connections. When placed, pump and valve are disabled by default. To activate them it requires to be right-clicked with bare hands while sneaking. The valve is provided of a gui in which is possible to disable each of the ejecting sides or filter a side to a specific fluid. The pump comes in two tiers: the normal tier allows to transfer 1 bucket at time, while the advanced tier allows to transfer 100 buckets at time. The upgrade is given by a crafted item applied by righr-clicking the pump while holding it in hand. Longer pipline may require a slightly longer time to deliver. For a matter of balance, both pump and valve are at least require to form a pipline. A valce can be directly connected to a pump for the shorted setup possible. So far the fluids are delivered by the Valve routing between the available directions D-U-N-S-W-E";
+		String piplineText = "The pipeline allows to transfer fluids between fluid handlers. It is composed of 3 parts, a pump to extract the fluid, a valve to deliver the fluid and ducts for connections. When placed, pump and valve are disabled by default. To activate them it requires to be right-clicked with bare hands while sneaking. The valve is provided of a gui in which is possible to disable each of the ejecting sides or filter a side to a specific fluid. It has also an option to plit the fluid between the handler. The pump comes in two tiers: the normal tier allows to transfer 1 bucket at time, while the advanced tier allows to transfer 100 buckets at time. The upgrade is given by a crafted item applied by right-clicking the pump while holding it in hand. Using the mod wrench on the pump will remove the upgrade. Longer pipline may require a slightly longer time to deliver. For a matter of balance, both pump and valve are at least require to form a pipline. A valve can be directly connected to a pump for the shorted setup possible. So far the fluids are delivered by the Valve routing between the available directions D-U-N-S-W-E";
 		registry.addDescription(new ItemStack(ModBlocks.pipelinePump), piplineText);
 		registry.addDescription(new ItemStack(ModBlocks.pipelineDuct), piplineText);
 		registry.addDescription(new ItemStack(ModBlocks.pipelineValve), piplineText);
 		registry.addDescription(BaseRecipes.pipelineUpgrade, piplineText);
 
-		
-		
+
+
 		IIngredientBlacklist itemBlacklist = registry.getJeiHelpers().getIngredientBlacklist();
 		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.laserBeam));
 		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.laserRay));
 		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.smokeBlock));
 		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.depositionChamberTop));
+		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModItems.speedItems,1,0));
 		itemBlacklist.addIngredientToBlacklist(BaseRecipes.miscs(1,53));
 		itemBlacklist.addIngredientToBlacklist(BaseRecipes.miscs(1,54));
 		for(int i=0;i<EnumCasting.size();i++){

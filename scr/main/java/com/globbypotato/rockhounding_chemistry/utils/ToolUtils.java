@@ -21,7 +21,7 @@ public class ToolUtils extends BaseRecipes {
 													ModItems.sulfideShards};
 
 	public static boolean hasWrench(EntityPlayer player, EnumHand hand) {
-		return player.getHeldItem(hand) != null 
+		return player.getHeldItemMainhand() != null 
 			&& player.getHeldItemMainhand().isItemEqual(modWrench);
 	}
 
@@ -35,6 +35,14 @@ public class ToolUtils extends BaseRecipes {
 			&& ItemStack.areItemsEqual(insertingStack, insulationUpgrade);
 	}
 
+	public static boolean isValidSpeedUpgrade(ItemStack insertingStack) {
+		return insertingStack != null && insertingStack.getItem() == ModItems.speedItems && insertingStack.getItemDamage() > 0;
+	}
+
+	public static int speedUpgrade(ItemStack insertingStack) {
+		return isValidSpeedUpgrade(insertingStack) ? insertingStack.getItemDamage() + 1 : 1;
+	}
+
 	public static ItemStack petrographer = new ItemStack(ModItems.petrographer);
 	public static ItemStack cylinder = new ItemStack(ModItems.cylinder);
 	public static ItemStack testTube = new ItemStack(ModItems.testTube);
@@ -44,5 +52,6 @@ public class ToolUtils extends BaseRecipes {
 	public static ItemStack flask = new ItemStack(ModItems.chemFlask);
 	public static ItemStack feCatalyst = new ItemStack(ModItems.feCatalyst);
 	public static ItemStack ptCatalyst = new ItemStack(ModItems.ptCatalyst);
+
 
 }

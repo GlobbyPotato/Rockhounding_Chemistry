@@ -28,6 +28,7 @@ public class ContainerMetalAlloyer extends ContainerBase<TileEntityMetalAlloyer>
         }
         this.addSlotToContainer(new SlotItemHandler(input, 7, 41, 80));//consumable
         this.addSlotToContainer(new SlotItemHandler(input, 8, 42, 36));//loader
+        this.addSlotToContainer(new SlotItemHandler(input, 9, 152, 71));//upgrade
 
         this.addSlotToContainer(new SlotItemHandler(output, 0, 63, 80));//output
         this.addSlotToContainer(new SlotItemHandler(output, 1, 85, 80));//scrap
@@ -48,9 +49,9 @@ public class ContainerMetalAlloyer extends ContainerBase<TileEntityMetalAlloyer>
 
 	@Override
 	public ItemStack slotClick(int slot, int dragType, ClickType clickTypeIn, EntityPlayer player){
-    	if(slot >= 11 && slot <= 17){
+    	if(slot >= 12 && slot <= 18){
     		return null;
-    	}else if(slot == 18){ 
+    	}else if(slot == 19){ 
     		if(this.tile.recipeIndex >= 0){
         		this.tile.recipeIndex--; 
         		this.tile.resetGrid(); 
@@ -64,7 +65,7 @@ public class ContainerMetalAlloyer extends ContainerBase<TileEntityMetalAlloyer>
     		}
 			doClickSound(player, tile.getWorld(), tile.getPos());
         	return null;
-    	}else if(slot == 19){ 
+    	}else if(slot == 20){ 
     		if(this.tile.recipeIndex < MachineRecipes.alloyerRecipes.size() - 1){
 	    		this.tile.recipeIndex++; 
 	    		this.tile.resetGrid(); 
@@ -78,7 +79,7 @@ public class ContainerMetalAlloyer extends ContainerBase<TileEntityMetalAlloyer>
         	}
 			doClickSound(player, tile.getWorld(), tile.getPos());
     		return null;
-    	}else if(slot == 20){
+    	}else if(slot == 21){
    			this.tile.activation = !this.tile.activation; 
 			doClickSound(player, tile.getWorld(), tile.getPos());
     		return null;
@@ -89,10 +90,10 @@ public class ContainerMetalAlloyer extends ContainerBase<TileEntityMetalAlloyer>
 
 	@Override
 	protected boolean mergeItemStack(ItemStack stack, int startIndex, int endIndex, boolean reverseDirection){
-		if(super.mergeItemStack(stack, startIndex, 11, reverseDirection)){
+		if(super.mergeItemStack(stack, startIndex, 12, reverseDirection)){
 			return true;
 		}else{
-			return super.mergeItemStack(stack, 21, endIndex, reverseDirection);
+			return super.mergeItemStack(stack, 22, endIndex, reverseDirection);
 		}
     }
 }

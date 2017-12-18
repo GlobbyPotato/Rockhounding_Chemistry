@@ -27,12 +27,13 @@ public class TileEntityMetalAlloyer extends TileEntityMachineTank {
     public static final int SLOT_CONSUMABLE = 7;
 	public static final int SLOT_SCRAP = 1;
 	public static final int SLOT_LOADER = 8;
+	public static final int SPEED_SLOT = 9;
 
 	private ItemStackHandler template = new TemplateStackHandler(10);
 	public static int SLOT_FAKE[] = new int[]{0,1,2,3,4,5,6,7,8};
 
 	public TileEntityMetalAlloyer() {
-		super(11, 2, 0);
+		super(12, 2, 0);
 
 		input =  new MachineStackHandler(INPUT_SLOTS, this){
 			@Override
@@ -49,10 +50,20 @@ public class TileEntityMetalAlloyer extends TileEntityMachineTank {
 				if(slot == SLOT_CONSUMABLE && CoreUtils.hasConsumable(ToolUtils.pattern, insertingStack)){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
+				if(slot == SPEED_SLOT && ToolUtils.isValidSpeedUpgrade(insertingStack)){
+					return super.insertItem(slot, insertingStack, simulate);
+				}
 				return insertingStack;
 			}
 		};
 		automationInput = new WrappedItemHandler(input, WriteMode.IN);
+	}
+
+
+
+	//----------------------- SLOTS -----------------------
+	public ItemStack speedSlot(){
+		return this.input.getStackInSlot(SPEED_SLOT);
 	}
 
 
@@ -62,8 +73,12 @@ public class TileEntityMetalAlloyer extends TileEntityMachineTank {
 		return this.template;
 	}
 
-	public int getMaxCookTime(){
-		return ModConfig.speedAlloyer;
+	public int speedAlloyer() {
+		return ToolUtils.isValidSpeedUpgrade(speedSlot()) ? ModConfig.speedAlloyer / ToolUtils.speedUpgrade(speedSlot()): ModConfig.speedAlloyer;
+	}
+
+	public int getMaxCookTime() {
+		return speedAlloyer();
 	}
 
 	@Override

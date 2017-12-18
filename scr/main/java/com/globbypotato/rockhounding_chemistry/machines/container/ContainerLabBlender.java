@@ -21,16 +21,14 @@ public class ContainerLabBlender extends ContainerBase<TileEntityLabBlender>{
 		IItemHandler output = tile.getOutput();
 		IItemHandler template = tile.getTemplate();
 
-        for (int i = 0; i < 3; ++i){
-            for (int j = 0; j < 3; ++j){
-                this.addSlotToContainer(new SlotItemHandler(input, j + i * 3, 51 + j * 18, 20 + i * 18));//inputs
-            }
+        for (int i = 0; i < 9; ++i){
+            this.addSlotToContainer(new SlotItemHandler(input, i, 147 - i * 17, 41 + i * 8));//inputs
         }
 
 		this.addSlotToContainer(new SlotItemHandler(input, 9, 8, 8));//fuel
-		this.addSlotToContainer(new SlotItemHandler(output, 0, 116, 75));//output
-		this.addSlotToContainer(new SlotItemHandler(template, 0, 115,  19));//activation
-		this.addSlotToContainer(new SlotItemHandler(template, 1, 69,  75));//lock
+		this.addSlotToContainer(new SlotItemHandler(output, 0, 147, 96));//output
+		this.addSlotToContainer(new SlotItemHandler(template, 0, 105,  96));//activation
+		this.addSlotToContainer(new SlotItemHandler(template, 1, 125,  96));//lock
 	}
 
 	@Override

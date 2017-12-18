@@ -61,6 +61,15 @@ public class GuiPipelineValve extends GuiBase {
 			}
 		}		
 
+		String robinString = TextFormatting.RED + "Disabled";
+		if(this.pipelineValve.hasRoundRobin()){
+			robinString = TextFormatting.GREEN + "Enabled";
+		}
+		String robin = TextFormatting.GRAY + "Round Robin: " + robinString; 
+		if(mouseX>= 10 + x && mouseX <= 43 + x && mouseY >= 17+y && mouseY <= 60+y){
+			drawButtonLabel(robin, mouseX, mouseY);
+		}
+
 	}
 
 	@Override
@@ -86,7 +95,12 @@ public class GuiPipelineValve extends GuiBase {
 				int offset = side * 18;
 				renderFluidBar(this.pipelineValve.sideFilter[side], 1000, i + 34 + offset, j + 54, 16, 16);
 			}
-		}		
+		}	
+		
+		if(this.pipelineValve.hasRoundRobin()){
+			this.drawTexturedModalRect(i + 11, j + 44, 176, 32, 16, 16); //rrobin
+		}
+
 	}
 
 	private static String formalDir(String dir) {

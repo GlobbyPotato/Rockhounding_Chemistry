@@ -32,7 +32,7 @@ public class AnalyzerRecipeCategory extends RHRecipeCategory {
 	private final static ResourceLocation guiTexture = GuiMineralAnalyzer.TEXTURE_REF;
 
 	public AnalyzerRecipeCategory(IGuiHelper guiHelper) {
-		super(guiHelper.createDrawable(guiTexture, 43, 18, 126, 69), "jei.analyzer.name");
+		super(guiHelper.createDrawable(guiTexture, 34, 18, 135, 69), "jei.analyzer.name");
 	}
 
 	@Nonnull
@@ -47,10 +47,10 @@ public class AnalyzerRecipeCategory extends RHRecipeCategory {
 		IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
 		AnalyzerRecipeWrapper wrapper = (AnalyzerRecipeWrapper) recipeWrapper;	
 
-		guiFluidStacks.init(SULF_SLOT, true, 71, 8, 16, 60, 100, false, null);
-		guiFluidStacks.init(CHLOR_SLOT, true, 90, 8, 16, 60, 100, false, null);
-		guiFluidStacks.init(FLUO_SLOT, true, 109, 8, 16, 60, 100, false, null);
-		
+		guiFluidStacks.init(SULF_SLOT, true, 80, 8, 16, 60, 100, false, null);
+		guiFluidStacks.init(CHLOR_SLOT, true, 99, 8, 16, 60, 100, false, null);
+		guiFluidStacks.init(FLUO_SLOT, true, 118, 8, 16, 60, 100, false, null);
+
 		guiFluidStacks.set(SULF_SLOT, new FluidStack(ModFluids.SULFURIC_ACID, ModConfig.consumedSulf));
 		guiFluidStacks.set(CHLOR_SLOT, new FluidStack(ModFluids.HYDROCHLORIC_ACID, ModConfig.consumedChlo));
 		guiFluidStacks.set(FLUO_SLOT, new FluidStack(ModFluids.HYDROFLUORIC_ACID, ModConfig.consumedFluo));

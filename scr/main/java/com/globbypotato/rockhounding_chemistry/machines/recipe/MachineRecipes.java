@@ -59,7 +59,7 @@ public class MachineRecipes extends BaseRecipes {
 	public static ArrayList<String> inhibitedElements = new ArrayList<String>();
 
 	public static void machineRecipes(){
-		sizerRecipes.add(new MineralSizerRecipe(minerals(0), 								Arrays.asList(minerals(8), minerals(3), minerals(10), minerals(6), minerals(5), minerals(9), minerals(7), minerals(2), minerals(4), minerals(1))));
+		sizerRecipes.add(new MineralSizerRecipe(minerals(0), 								Arrays.asList(minerals(8), minerals(3), minerals(10), minerals(6), minerals(5), minerals(9), minerals(7), minerals(2), minerals(4), minerals(1)), Arrays.asList(1, 3, 4, 5, 5, 7, 10, 11, 12, 14), true));
 		sizerRecipes.add(new MineralSizerRecipe(ironIngot, 									elements(1,16))); //iron dust
 		sizerRecipes.add(new MineralSizerRecipe(goldIngot, 									elements(1,45))); //gold dust
 		sizerRecipes.add(new MineralSizerRecipe(copperIngot, 								elements(1,17))); //copper dust

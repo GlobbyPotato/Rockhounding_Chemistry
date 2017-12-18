@@ -30,18 +30,6 @@ public class MineralSizerRecipe {
 		this(input, fakeStack(output), fakeProb(100), false);
 	}
 
-	public MineralSizerRecipe(ItemStack input, List<ItemStack> output){
-		this(input, output, sliders(output), true);
-	}
-
-	private static List<Integer> sliders(List<ItemStack> output) {
-		ArrayList<Integer> temp = new ArrayList<Integer>();
-		for(int x = 1; x <= output.size(); x++){
-			temp.add(x);
-		}
-		return temp;
-	}
-
 	private static ArrayList<ItemStack> fakeStack(ItemStack output) {
 		ArrayList<ItemStack> temp = new ArrayList<ItemStack>();
 		temp.add(output);

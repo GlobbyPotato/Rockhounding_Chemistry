@@ -42,6 +42,14 @@ public class WailaPipelineValve implements IWailaDataProvider{
 				statusstring = TextFormatting.RED + "Disabled";
 			}
 	    	currenttip.add(TextFormatting.GRAY + "Status: " + statusstring);
+	    	
+            String robinstring = TextFormatting.RED + "Disabled";
+			if(pump.hasRoundRobin()){
+				robinstring = TextFormatting.GREEN + "Enabled";
+			}
+
+	    	currenttip.add(TextFormatting.GRAY + "Round Robin: " + robinstring);
+
 		}
 		return currenttip;
 	}

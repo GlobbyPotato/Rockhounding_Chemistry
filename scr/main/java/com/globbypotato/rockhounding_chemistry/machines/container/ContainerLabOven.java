@@ -27,6 +27,7 @@ public class ContainerLabOven extends ContainerBase<TileEntityLabOven> {
 		this.addSlotToContainer(new SlotItemHandler(input, 3, 62, 83));//output
 		this.addSlotToContainer(new SlotItemHandler(input, 4, 29, 82));//input redstone
 		this.addSlotToContainer(new SlotItemHandler(input, 5, 150, 15));//input solvent
+		this.addSlotToContainer(new SlotItemHandler(input, 6, 8, 82));//upgrade
 
 		this.addSlotToContainer(new SlotItemHandler(template, 0, 137,  121));//prev
 		this.addSlotToContainer(new SlotItemHandler(template, 1, 153,  121));//next
@@ -35,7 +36,7 @@ public class ContainerLabOven extends ContainerBase<TileEntityLabOven> {
 
 	@Override
 	public ItemStack slotClick(int slot, int dragType, ClickType clickTypeIn, EntityPlayer player){
-		if(slot == 6){
+		if(slot == 7){
 			if(this.tile.recipeIndex >= 0){
 	    		this.tile.recipeIndex--; 
     			this.tile.activation = false;
@@ -45,7 +46,7 @@ public class ContainerLabOven extends ContainerBase<TileEntityLabOven> {
 			}
 			doClickSound(player, tile.getWorld(), tile.getPos());
     		return null;
-    	}else if(slot == 7){
+    	}else if(slot == 8){
     		if(this.tile.recipeIndex < MachineRecipes.labOvenRecipes.size() - 1){
     			this.tile.recipeIndex++; 
     			this.tile.activation = false;
@@ -55,7 +56,7 @@ public class ContainerLabOven extends ContainerBase<TileEntityLabOven> {
     		}
 			doClickSound(player, tile.getWorld(), tile.getPos());
     		return null;
-    	}else if(slot == 8){
+    	}else if(slot == 9){
    			this.tile.activation = !this.tile.activation; 
 			doClickSound(player, tile.getWorld(), tile.getPos());
     		return null;
@@ -66,10 +67,10 @@ public class ContainerLabOven extends ContainerBase<TileEntityLabOven> {
 
 	@Override
 	public boolean mergeItemStack(ItemStack stack, int startIndex, int endIndex, boolean reverseDirection){
-		if(super.mergeItemStack(stack, startIndex, 6, reverseDirection)){
+		if(super.mergeItemStack(stack, startIndex, 7, reverseDirection)){
 			return true;
 		}else{
-			return super.mergeItemStack(stack, 9, endIndex, reverseDirection);
+			return super.mergeItemStack(stack, 10, endIndex, reverseDirection);
 		}
     }
 }
