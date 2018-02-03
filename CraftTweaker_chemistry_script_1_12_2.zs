@@ -51,7 +51,7 @@ mods.rockhounding_chemistry.GasifierPlant.removeByInput(<liquid:lava>*);
 mods.rockhounding_chemistry.GasifierPlant.removeByOutput(<liquid:oxygen>);
 
 
-//Note: the quantity of the gas ingredients are not relievant. Slags can be both null.
+//Note: the quantity of the gas ingredients is not relievant. Slags can be both null.
 //input gas: the raw ingredient. It must be "gaseous"
 //output gas: the purified output. It must be "gaseous"
 //slag stack 1: the main by-product (optional)
@@ -64,7 +64,7 @@ mods.rockhounding_chemistry.GasPurifier.removeByInput(<liquid:water_vapour>*);
 mods.rockhounding_chemistry.GasPurifier.removeByOutput(<liquid:oxygen>);
 
 
-//Note: the quantity of the gas ingredients are not relievant. The catalyst must be a damageable item.
+//Note: the quantity of the gas ingredients is not relievant. The catalyst must be a damageable item.
 //input gas A: the left gas ingredient. It must be "gaseous"
 //input gas B: the right gas ingredient. It must be "gaseous"
 //output gas: the combined gas
