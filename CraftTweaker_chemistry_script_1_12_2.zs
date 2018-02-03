@@ -36,13 +36,13 @@ mods.rockhounding_chemistry.GasCondenser.removeByInput(<liquid:water_vapour>);
 mods.rockhounding_chemistry.GasCondenser.removeByOutput(<liquid:water>);
 
 
-//Note: the quantity of the fluid/gas ingredients is not relievant.
+//Note: the quantity of the fluid/gas ingredients is not relievant. Slags can be both null.
 //input fluid: the main ingredient
 //solvent fluid: the secondary ingredient
 //output gas: the resulting gas. It must be "gaseous"
 //slag stack 1: the main by-product (optional)
 //slag stack 2: the secondary by-product (optional)
-//temperature: the threashold temperature (min 31K)
+//temperature: the threashold temperature (min 31K, max 2000K)
 mods.rockhounding_chemistry.GasifierPlant.add(<liquid:lava>*1000, <liquid:water>*1000, <liquid:oxygen>*1000, <minecraft:dye:14>, null, 900);
 
 //input fluid: the fluid to remove
@@ -51,9 +51,9 @@ mods.rockhounding_chemistry.GasifierPlant.removeByInput(<liquid:lava>*);
 mods.rockhounding_chemistry.GasifierPlant.removeByOutput(<liquid:oxygen>);
 
 
-//Note: the quantity of the gas ingredients is not relievant.
+//Note: the quantity of the gas ingredients are not relievant. Slags can be both null.
 //input gas: the raw ingredient. It must be "gaseous"
-//output gas: the purified gas. It must be "gaseous"
+//output gas: the purified output. It must be "gaseous"
 //slag stack 1: the main by-product (optional)
 //slag stack 2: the secondary by-product (optional)
 mods.rockhounding_chemistry.GasPurifier.add(<liquid:water_vapour>*1000, <liquid:oxygen>*1000, <minecraft:dye:4>, null);
@@ -64,7 +64,7 @@ mods.rockhounding_chemistry.GasPurifier.removeByInput(<liquid:water_vapour>*);
 mods.rockhounding_chemistry.GasPurifier.removeByOutput(<liquid:oxygen>);
 
 
-//Note: the quantity of the gas ingredients is not relievant. The catalyst must be a damageable item.
+//Note: the quantity of the gas ingredients are not relievant. The catalyst must be a damageable item.
 //input gas A: the left gas ingredient. It must be "gaseous"
 //input gas B: the right gas ingredient. It must be "gaseous"
 //output gas: the combined gas
@@ -79,7 +79,7 @@ mods.rockhounding_chemistry.GasPurifier.removeByInputB(<liquid:oxygen>*);
 mods.rockhounding_chemistry.GasPurifier.removeByOutput(<liquid:syngas>);
 
 
-//Note: the quantity of the gas ingredients is not relievant. The output must have a lower temperature than the input
+//Note: the quantity of the gas ingredient is not relievant. The output must have a lower temperature than the input
 //input gas: the gas to be cooled
 //output gas: the cooled gas
 mods.rockhounding_chemistry.HeatExchanger.add(<liquid:raw_syngas>*1000, <liquid:syngas>*1000);
@@ -124,7 +124,7 @@ mods.rockhounding_chemistry.LeachingVat.add(<minecraft:slime_ball>, [<minecraft:
 mods.rockhounding_chemistry.LeachingVat.remove(<minecraft:slime_ball>);
 
 
-//symbol: the 2 digit symbol appearing on screen
+//symbol: a 2 digit symbol appearing on screen
 //oredict: the element oredict to be added
 //name: the display name of the added element
 mods.rockhounding_chemistry.MaterialCabinet.add("Bz", "dustBronze", "Bronze");
@@ -154,7 +154,7 @@ mods.rockhounding_chemistry.MineralSizer.remove(<minecraft:hardened_clay>);
 //input stack: the item to be shaped
 //output stack: the reshaped item
 //pattern: the casting pattern (0:generic, 1:coil, 2:rod, 3:foil, 4:arm, 5:casing, 6:gear, 7:ingot, 8:gauze)
-mods.rockhounding_chemistry.ProfilingBench.add(<minecraft:iron_block>, <minecraft:iron_ingot>*9, 0);
+mods.rockhounding_chemistry.ProfilingBench.add(<minecraft:iron_block>, <minecraft:iron_ingot>*9, 7);
 
 //input stack: the input to remove
 mods.rockhounding_chemistry.ProfilingBench.removeByInput(<minecraft:iron_block>);
