@@ -1,15 +1,15 @@
 //categoty: the category of the input
 //input stack: the item to decompose
-//output array: the list of elements composing the input
+//output array: the list of elements oredict composing the input
 //quantity array: the list of quantities in PartsPerCraft for each element
-mods.rockhounding_chemistry.ChemicalExtractor.add("Sulfate", <minecraft:hardened_clay>, ["Calcium", "Sulfur", "Carbon", "Iron", "Tin"], [20, 13, 5, 4, 3]);
+mods.rockhounding_chemistry.ChemicalExtractor.add("Sulfate", <minecraft:hardened_clay>, ["dustCalcium", "dustSulfur", "dustCarbon", "dustIron", "dustTin"], [20, 13, 5, 4, 3]);
 
 //input stack: the input to remove
 mods.rockhounding_chemistry.ChemicalExtractor.remove(<minecraft:hardened_clay>);
 
 
 //inhibited element: element not being extracted
-mods.rockhounding_chemistry.InhibitElements.inhibit("Zirconium");
+mods.rockhounding_chemistry.InhibitElements.inhibit("dustZirconium");
 
 
 //input stack: the item to be mutated
