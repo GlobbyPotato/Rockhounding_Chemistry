@@ -151,10 +151,12 @@ mods.rockhounding_chemistry.MineralSizer.add(<minecraft:hardened_clay>, [<minecr
 mods.rockhounding_chemistry.MineralSizer.remove(<minecraft:hardened_clay>);
 
 
-//input stack: the item to be shaped
+//input stack: the specific item to be shaped
 //output stack: the reshaped item
 //pattern: the casting pattern (0:generic, 1:coil, 2:rod, 3:foil, 4:arm, 5:casing, 6:gear, 7:ingot, 8:gauze)
 mods.rockhounding_chemistry.ProfilingBench.add(<minecraft:iron_block>, <minecraft:iron_ingot>*9, 7);
+//input stack: the oredict-based items to be shaped
+mods.rockhounding_chemistry.ProfilingBench.add("blockGlass", <minecraft:empty_bottle>*4, 0);
 
 //input stack: the input to remove
 mods.rockhounding_chemistry.ProfilingBench.removeByInput(<minecraft:iron_block>);
