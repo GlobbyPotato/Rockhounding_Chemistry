@@ -40,23 +40,38 @@ public class TileEntityDepositionChamber extends TileEntityMachineTank{
 
 	public FluidTank inputTank;
 
-	public TileEntityDepositionChamber() {
-		super(5, 1, 0);
+	public static int totInput = 5;
+	public static int totOutput = 1;
 
-		inputTank = new FluidTank(10000){
+	public TileEntityDepositionChamber() {
+		super(totInput, totOutput, 0);
+
+		this.inputTank = new FluidTank(10000){
 			@Override
 			public boolean canFillFluidType(FluidStack fluid){
 				return isActive() && hasSolvent(fluid) && isValidInterval() && isCorrectSolvent(fluid);
 			}
 			@Override
 		    public boolean canDrain(){
-		        return !isValidInterval() || (isValidInterval() && isWrongSolvent(inputTank));
+		        return !isValidInterval() || (isValidInterval() && isWrongSolvent(TileEntityDepositionChamber.this.inputTank));
 		    }
 		};
-		inputTank.setTileEntity(this);
-		inputTank.setCanFill(true);
+		this.inputTank.setTileEntity(this);
+		this.inputTank.setCanFill(true);
 
-		input =  new MachineStackHandler(INPUT_SLOTS,this){
+		this.input =  new MachineStackHandler(totInput,this){
+			@SuppressWarnings("synthetic-access")
+			@Override
+			public void validateSlotIndex(int slot){
+				if(TileEntityDepositionChamber.this.input.getSlots() < totInput){
+					ItemStack[] stacksCloned = this.stacks;
+					TileEntityDepositionChamber.this.input.setSize(totInput);
+					for(int x = 0; x < stacksCloned.length; x++){
+						this.stacks[x] = stacksCloned[x];
+					}
+				}
+				super.validateSlotIndex(slot);
+			}
 			@Override
 			public ItemStack insertItem(int slot, ItemStack insertingStack, boolean simulate){
 				if(slot == INPUT_SLOT && isActive() && isValidInterval() && (hasRecipe(insertingStack) || isValidOredict(insertingStack))){
@@ -77,7 +92,7 @@ public class TileEntityDepositionChamber extends TileEntityMachineTank{
 				return insertingStack;
 			}
 		};
-		automationInput = new WrappedItemHandler(input, WriteMode.IN);
+		this.automationInput = new WrappedItemHandler(this.input, WriteMode.IN);
 		this.markDirtyClient();
 	}
 
@@ -122,11 +137,11 @@ public class TileEntityDepositionChamber extends TileEntityMachineTank{
 
 	//----------------------- CUSTOM ------------------------
 	public boolean isValidInterval() {
-		return recipeIndex >= 0 && recipeIndex <= MachineRecipes.depositionRecipes.size() - 1;
+		return this.recipeIndex >= 0 && this.recipeIndex <= MachineRecipes.depositionRecipes.size() - 1;
 	}
 
 	public DepositionChamberRecipe getRecipe(){
-		return isValidInterval() ? MachineRecipes.depositionRecipes.get(recipeIndex) : null;
+		return isValidInterval() ? MachineRecipes.depositionRecipes.get(this.recipeIndex) : null;
 	}
 
 	public static boolean isValidOredict(ItemStack stack) {
@@ -146,21 +161,21 @@ public class TileEntityDepositionChamber extends TileEntityMachineTank{
 		return false;
 	}
 
-	private boolean hasRecipe(ItemStack stack){
+	public boolean hasRecipe(ItemStack stack){
 		return isValidInterval() && MachineRecipes.depositionRecipes.stream().anyMatch(
 				recipe -> stack != null && recipe.getInput() != null && stack.isItemEqual(getRecipe().getInput()));
 	}
 
-	private boolean hasSolvent(FluidStack stack){
+	public boolean hasSolvent(FluidStack stack){
 		return isValidInterval() && MachineRecipes.depositionRecipes.stream().anyMatch(
 				recipe -> stack != null && recipe.getSolvent()!= null && stack.isFluidEqual(getRecipe().getSolvent()));
 	}
 
-	private boolean isWrongSolvent(FluidTank tank) {
+	public boolean isWrongSolvent(FluidTank tank) {
 		return isValidInterval() && tank.getFluid() != null && !tank.getFluid().isFluidEqual(getRecipe().getSolvent()) && tank.getFluidAmount() > 0;
 	}
 
-	private boolean isCorrectSolvent(FluidStack fluid) {
+	public boolean isCorrectSolvent(FluidStack fluid) {
 		return isValidInterval() && fluid.isFluidEqual(getRecipe().getSolvent());
 	}
 
@@ -208,7 +223,7 @@ public class TileEntityDepositionChamber extends TileEntityMachineTank{
 
 	@Override
 	public FluidHandlerConcatenate getCombinedTank(){
-		return new FluidHandlerConcatenate(inputTank);
+		return new FluidHandlerConcatenate(this.inputTank);
 	}
 
 
@@ -217,10 +232,10 @@ public class TileEntityDepositionChamber extends TileEntityMachineTank{
 	@Override
 	public void update(){
 		acceptEnergy();
-		if(!isValidInterval()){ recipeIndex = -1; }
+		if(!isValidInterval()){ this.recipeIndex = -1; }
 
-		if(!worldObj.isRemote){
-			emptyContainer(SOLVENT_SLOT, inputTank);
+		if(!this.worldObj.isRemote){
+			emptyContainer(SOLVENT_SLOT, this.inputTank);
 
 			if(isValidInterval()){
 				handleParameters();
@@ -238,34 +253,34 @@ public class TileEntityDepositionChamber extends TileEntityMachineTank{
 	public boolean canDeposit(){
 		return isActive()
 			&& getRecipe() != null
-			&& (hasRecipe(input.getStackInSlot(INPUT_SLOT)) || isValidOredict(input.getStackInSlot(INPUT_SLOT)))
-			&& input.hasEnoughFluid(inputTank.getFluid(), getRecipe().getSolvent())
+			&& (hasRecipe(this.input.getStackInSlot(INPUT_SLOT)) || isValidOredict(this.input.getStackInSlot(INPUT_SLOT)))
+			&& this.input.hasEnoughFluid(this.inputTank.getFluid(), getRecipe().getSolvent())
 			&& this.getTemperature() >= getRecipe().getTemperature()
 			&& this.getPressure() >= getRecipe().getPressure()
-			&& output.canSetOrStack(output.getStackInSlot(OUTPUT_SLOT), getRecipe().getOutput());
+			&& this.output.canSetOrStack(this.output.getStackInSlot(OUTPUT_SLOT), getRecipe().getOutput());
 	}
 
 	private void execute() {
-		cookTime++;
-		if(cookTime >= getCookTimeMax()) {
-			cookTime = 0; 
+		this.cookTime++;
+		if(this.cookTime >= getCookTimeMax()) {
+			this.cookTime = 0; 
 			handleOutput();
 		}
 	}
 
 	private void handleOutput() {
-		output.setOrStack(OUTPUT_SLOT, getRecipe().getOutput());
-		input.drainOrClean(inputTank, getRecipe().getSolvent().amount, true);
+		this.output.setOrStack(OUTPUT_SLOT, getRecipe().getOutput());
+		this.input.drainOrClean(this.inputTank, getRecipe().getSolvent().amount, true);
 		this.temperatureCount /= 3;
 		this.pressureCount /= 3;
-		input.decrementSlot(INPUT_SLOT);
+		this.input.decrementSlot(INPUT_SLOT);
 	}
 
 	private void handleRelaxing() {
-		if(this.getTemperature() > tempStability() && rand.nextInt(stabilityDelta()) == 0){
+		if(this.getTemperature() > tempStability() && this.rand.nextInt(stabilityDelta()) == 0){
 			this.temperatureCount -= tempStability();
 		}
-		if(this.getPressure() > pressStability() && rand.nextInt(stabilityDelta()) == 0){
+		if(this.getPressure() > pressStability() && this.rand.nextInt(stabilityDelta()) == 0){
 			this.pressureCount -= pressStability();
 		}
 	}
@@ -273,14 +288,14 @@ public class TileEntityDepositionChamber extends TileEntityMachineTank{
 	private void handleParameters() {
 		handleRelaxing();
 		int temp = getRecipe().getTemperature();
-		if(this.redstoneCount >= takenRF && this.getTemperature() < temp && temp < this.getTemperatureMax() - tempYeld() ){
-			this.redstoneCount -= takenRF; 
+		if(this.redstoneCount >= this.takenRF && this.getTemperature() < temp && temp < this.getTemperatureMax() - tempYeld() ){
+			this.redstoneCount -= this.takenRF; 
 			this.temperatureCount += tempYeld();
 		}
 
 		int press = getRecipe().getPressure();
-		if(this.getRedstone() >= takenRF && this.getPressure() < press && press < this.getPressureMax() - pressYeld()){
-			this.redstoneCount -= takenRF; 
+		if(this.getRedstone() >= this.takenRF && this.getPressure() < press && press < this.getPressureMax() - pressYeld()){
+			this.redstoneCount -= this.takenRF; 
 			this.pressureCount += pressYeld();
 		}
 	}
@@ -294,7 +309,7 @@ public class TileEntityDepositionChamber extends TileEntityMachineTank{
 	}
 
 	private int getUpgrade() {
-		return ToolUtils.hasUpgrade(input.getStackInSlot(CASING_SLOT))? 10 : 1;
+		return ToolUtils.hasUpgrade(this.input.getStackInSlot(CASING_SLOT))? 10 : 1;
 	}
 
 	public int tempStability(){
@@ -310,7 +325,7 @@ public class TileEntityDepositionChamber extends TileEntityMachineTank{
 	}
 
 	private int getInsulation() {
-		return ToolUtils.hasInsulation(input.getStackInSlot(INSULATION_SLOT)) ? 10 : 1;
+		return ToolUtils.hasInsulation(this.input.getStackInSlot(INSULATION_SLOT)) ? 10 : 1;
 	}
 
 }

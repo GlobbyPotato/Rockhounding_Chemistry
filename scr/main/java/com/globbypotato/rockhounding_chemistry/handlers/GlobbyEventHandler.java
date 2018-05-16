@@ -6,17 +6,21 @@ import com.globbypotato.rockhounding_chemistry.ModBlocks;
 import com.globbypotato.rockhounding_chemistry.ModItems;
 import com.globbypotato.rockhounding_chemistry.blocks.FireBlock;
 import com.globbypotato.rockhounding_chemistry.blocks.OwcBlocks;
+import com.globbypotato.rockhounding_chemistry.enums.EnumCasting;
+import com.globbypotato.rockhounding_chemistry.enums.EnumServer;
 import com.globbypotato.rockhounding_chemistry.items.tools.Petrographer;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.ChemicalExtractorRecipe;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.MachineRecipes;
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 import com.globbypotato.rockhounding_chemistry.utils.ToolUtils;
+import com.google.common.base.Strings;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
@@ -95,6 +99,42 @@ public class GlobbyEventHandler {
 					for(int x = 0; x < recipe.getElements().size(); x++){
 						event.getToolTip().add(TextFormatting.DARK_GRAY + recipe.getElements().get(x).substring(0, 1).toUpperCase() + recipe.getElements().get(x).substring(1) + " - " + TextFormatting.WHITE + TextFormatting.BOLD + recipe.getQuantities().get(x) + "%");
 					}
+				}
+	    	}
+
+			if(itemstack.isItemEqual(BaseRecipes.server_file)){
+				if(itemstack.hasTagCompound()){
+					NBTTagCompound tag = itemstack.getTagCompound();
+		    		if(isValidNBT(tag)){
+			        	int device = tag.getInteger("Device");
+			        	boolean cycle = tag.getBoolean("Cycle");
+			        	int recipe = tag.getInteger("Recipe");
+			        	int amount = tag.getInteger("Amount");
+			        	int done = tag.getInteger("Done");
+		        		event.getToolTip().add(TextFormatting.GRAY + "Served Device: " + TextFormatting.BOLD + TextFormatting.YELLOW + EnumServer.values()[device].getName());
+		        		event.getToolTip().add(TextFormatting.GRAY + "Repeatable: " + TextFormatting.BOLD + TextFormatting.YELLOW + cycle);
+		        		if(device == EnumServer.LAB_OVEN.ordinal()){
+			        		event.getToolTip().add(TextFormatting.GRAY + "Recipe: " + TextFormatting.BOLD +  TextFormatting.YELLOW + MachineRecipes.labOvenRecipes.get(recipe).getOutput().getLocalizedName());
+	/*	        		}else if(device == EnumServer.METAL_ALLOYER.ordinal()){
+			        		event.getToolTip().add(TextFormatting.GRAY + "Recipe: " + TextFormatting.BOLD +  TextFormatting.YELLOW + MetalAlloyerRecipes.metal_alloyer_recipes.get(recipe).getOutput().getDisplayName());
+		        		}else if(device == EnumServer.DEPOSITION.ordinal()){
+			        		event.getToolTip().add(TextFormatting.GRAY + "Recipe: " + TextFormatting.BOLD +  TextFormatting.YELLOW + DepositionChamberRecipes.deposition_chamber_recipes.get(recipe).getOutput().getDisplayName());
+		        		}else if(device == EnumServer.SIZER.ordinal()){
+			        		event.getToolTip().add(TextFormatting.GRAY + "Comminution Level: " + TextFormatting.BOLD +  TextFormatting.YELLOW + recipe);
+		        		}else if(device == EnumServer.LEACHING.ordinal()){
+		        			float currentGravity = (recipe * 2) + 2F;
+		        			event.getToolTip().add(TextFormatting.GRAY + "Gravity: " + TextFormatting.BOLD +  TextFormatting.YELLOW + (currentGravity - 2F) + " to " + (currentGravity + 2F));
+		        		}else if(device == EnumServer.RETENTION.ordinal()){
+		        			float currentGravity = (recipe * 2) + 2F;
+			        		event.getToolTip().add(TextFormatting.GRAY + "Gravity: " + TextFormatting.BOLD +  TextFormatting.YELLOW + (currentGravity - 2F) + " to " + (currentGravity + 2F));
+		        		}else if(device == EnumServer.CASTING.ordinal()){
+			        		event.getToolTip().add(TextFormatting.GRAY + "Pattern: " + TextFormatting.BOLD +  TextFormatting.YELLOW + EnumCasting.getFormalName(recipe));
+		        		}else if(device == EnumServer.REFORMER.ordinal()){
+			        		event.getToolTip().add(TextFormatting.GRAY + "Recipe: " + TextFormatting.BOLD +  TextFormatting.YELLOW + GasReformerRecipes.gas_reformer_recipes.get(recipe).getOutput().getLocalizedName());*/
+		        		}
+		        		event.getToolTip().add(TextFormatting.GRAY + "Amount: " + TextFormatting.BOLD +  TextFormatting.YELLOW + amount + " scheduled");
+		        		event.getToolTip().add(TextFormatting.GRAY + "Process: " + TextFormatting.BOLD +  TextFormatting.YELLOW + done + " to do");
+		    		}
 				}
 	    	}
 
@@ -237,6 +277,10 @@ public class GlobbyEventHandler {
 		
 			private boolean hasPetrographer(EntityPlayer player, HarvestDropsEvent event) {
 				return player.getHeldItem(EnumHand.MAIN_HAND) != null && player.getHeldItem(EnumHand.MAIN_HAND).getItem() == ModItems.petrographer;
+			}
+
+			private static boolean isValidNBT(NBTTagCompound tag) {
+				return (tag.hasKey("Device") && tag.getInteger("Device") > -1) && tag.hasKey("Cycle") && tag.hasKey("Recipe") && tag.hasKey("Amount") && tag.hasKey("Done");
 			}
 
 }

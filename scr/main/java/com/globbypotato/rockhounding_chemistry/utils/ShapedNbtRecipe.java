@@ -26,11 +26,11 @@ public class ShapedNbtRecipe extends ShapedOreRecipe{
     			if(Block.getBlockFromItem(var1.getStackInSlot(x).getItem()) instanceof GanBlocks){
     				ItemStack input = var1.getStackInSlot(x);
     				if(input.hasTagCompound()){
-    					output.setTagCompound(input.getTagCompound());
+    					this.output.setTagCompound(input.getTagCompound());
     				}
     			}
     		}
     	}
-    	return output.copy(); 
+    	return this.output.copy(); 
     }
 }

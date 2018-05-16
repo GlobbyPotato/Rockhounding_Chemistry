@@ -20,8 +20,11 @@ public class TileEntityNitrogenTank extends TileEntityMachineTank{
 
 	public FluidTank inputTank;
 
+	public static int totInput = 1;
+	public static int totOutput = 0;
+
 	public TileEntityNitrogenTank() {
-		super(1, 0, 0);
+		super(totInput, totOutput, 0);
 
 		inputTank = new FluidTank(100000) {
 			@Override
@@ -36,7 +39,7 @@ public class TileEntityNitrogenTank extends TileEntityMachineTank{
 		};
 		inputTank.setTileEntity(this);
 
-		input = new MachineStackHandler(INPUT_SLOTS, this) {
+		input = new MachineStackHandler(totInput, this) {
 			@Override
 			public ItemStack insertItem(int slot, ItemStack insertingStack, boolean simulate) {
 				if (slot == SOLUTION_SLOT && CoreUtils.isBucketType(insertingStack) && CoreUtils.isEmptyBucket(insertingStack)) {

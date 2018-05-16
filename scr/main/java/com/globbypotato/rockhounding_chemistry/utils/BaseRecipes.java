@@ -140,6 +140,7 @@ public class BaseRecipes {
 	public static ItemStack ironFoil = miscs(1,64);
 	public static ItemStack pipelineUpgrade = miscs(1,65);
 	public static ItemStack widiaArm = miscs(1,66);
+	public static ItemStack server_file = miscs(1,67);
 
 	public static ItemStack ironNuggets = miscs(9,2);
 	public static ItemStack aluminumNuggets = miscs(9,47);

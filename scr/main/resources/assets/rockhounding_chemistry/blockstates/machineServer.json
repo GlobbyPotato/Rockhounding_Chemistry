@@ -1,0 +1,8 @@
+{
+    "variants": {
+		"facing=south":{ "model": "rockhounding_chemistry:machineServer"	},
+        "facing=north":{ "model": "rockhounding_chemistry:machineServer", "y": 180},
+		"facing=east": { "model": "rockhounding_chemistry:machineServer", "y": 270	},
+		"facing=west": { "model": "rockhounding_chemistry:machineServer", "y": 90	}
+    }
+}

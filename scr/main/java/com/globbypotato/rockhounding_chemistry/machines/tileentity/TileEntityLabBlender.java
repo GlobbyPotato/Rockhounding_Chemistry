@@ -28,11 +28,14 @@ public class TileEntityLabBlender extends TileEntityMachineTank {
 	private ItemStackHandler template = new TemplateStackHandler(2);
 	public boolean lock;
 
+	public static int totInput = 11;
+	public static int totOutput = 1;
+
 	public TileEntityLabBlender() {
-		super(11,1,1);
+		super(totInput, totOutput, 1);
 		FUEL_SLOT = 9;
 
-		input =  new MachineStackHandler(INPUT_SLOTS,this){
+		input =  new MachineStackHandler(totInput,this){
 			@Override
 			public ItemStack insertItem(int slot, ItemStack insertingStack, boolean simulate){
 				if(slot >= INPUT_SLOT[0] && slot <= INPUT_SLOT.length && isActive() && handleInputs(slot, insertingStack) ){

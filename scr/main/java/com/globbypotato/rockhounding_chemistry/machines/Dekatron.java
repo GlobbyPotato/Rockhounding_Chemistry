@@ -52,9 +52,10 @@ public class Dekatron extends BaseMachine {
         return state.getValue(FACING).getAxis() == Axis.X ? BOUNDBOX_X : BOUNDBOX_Z;
     }
 	
+	@Override
 	public void setDefaultFacing(World worldIn, BlockPos pos, IBlockState state){
 		if (!worldIn.isRemote){
-			EnumFacing enumfacing = (EnumFacing)state.getValue(FACING);
+			EnumFacing enumfacing = state.getValue(FACING);
 			worldIn.setBlockState(pos, state.withProperty(FACING, enumfacing).withProperty(LEVEL, Integer.valueOf(0)), 2);
 		}
 	}
@@ -90,7 +91,7 @@ public class Dekatron extends BaseMachine {
     }
 
     protected int getStage(IBlockState state){
-        return ((Integer)state.getValue(LEVEL)).intValue();
+        return state.getValue(LEVEL).intValue();
     }
 
     public IBlockState withStage(int stage){
@@ -98,7 +99,8 @@ public class Dekatron extends BaseMachine {
     }
 
 
-    public BlockStateContainer createBlockState(){
+    @Override
+	public BlockStateContainer createBlockState(){
         return new BlockStateContainer(this, new IProperty[] { FACING, LEVEL });
     }
 

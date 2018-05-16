@@ -27,20 +27,23 @@ public class TileEntityDisposer extends TileEntityMachineEnergy {
 	public List<ItemStack> lockList = new ArrayList<ItemStack>();
 	private ItemStackHandler template = new TemplateStackHandler(6);
 
-	public TileEntityDisposer() {
-		super(9,0,0);
+	public static int totInput = 9;
+	public static int totOutput = 0;
 
-		input =  new MachineStackHandler(INPUT_SLOTS,this){
+	public TileEntityDisposer() {
+		super(totInput, totOutput, 0);
+
+		this.input =  new MachineStackHandler(totInput,this){
 			@Override
 			public ItemStack insertItem(int slot, ItemStack insertingStack, boolean simulate){
-				if(slot >= INPUT_SLOT[0] && slot <= INPUT_SLOT.length && insertingStack instanceof ItemStack && canPassTheLock(slot, insertingStack) ){
+				if(slot >= INPUT_SLOT[0] && slot <= INPUT_SLOT.length && insertingStack != null && canPassTheLock(slot, insertingStack) ){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
 				return insertingStack;
 			}
 
 		};
-		this.automationInput = new WrappedItemHandler(input, WriteMode.IN);
+		this.automationInput = new WrappedItemHandler(this.input, WriteMode.IN);
 	}
 
 
@@ -60,20 +63,20 @@ public class TileEntityDisposer extends TileEntityMachineEnergy {
 	//----------------------- CUSTOM -----------------------
 	@Override
 	public boolean isActive(){
-		return activation || worldObj.isBlockPowered(pos);
+		return this.activation || this.worldObj.isBlockPowered(this.pos);
 	}
 
 	public int getInterval(){
-		return interval;
+		return this.interval;
 	}
 
 	public boolean isLocked(){
-		return lock;
+		return this.lock;
 	}
 
-	private boolean canPassTheLock(int slot, ItemStack insertingStack) {
+	public boolean canPassTheLock(int slot, ItemStack insertingStack) {
 		return !isLocked()
-			|| (isLocked() && lockList.get(slot) != null && lockList.get(slot).isItemEqual(insertingStack) );
+			|| (isLocked() && this.lockList.get(slot) != null && this.lockList.get(slot).isItemEqual(insertingStack) );
 	}
 
 
@@ -86,13 +89,13 @@ public class TileEntityDisposer extends TileEntityMachineEnergy {
 		this.lock = compound.getBoolean("Locked");
 		
         NBTTagList nbttaglist = compound.getTagList("Items", 10);
-        lockList = new ArrayList<ItemStack>();
+        this.lockList = new ArrayList<ItemStack>();
         resetLock();
         for (int i = 0; i < nbttaglist.tagCount(); ++i){
             NBTTagCompound nbttagcompound = nbttaglist.getCompoundTagAt(i);
             int j = nbttagcompound.getByte("Slot");
-            if (j >= 0 && j < lockList.size()){
-            	lockList.add(j, ItemStack.loadItemStackFromNBT(nbttagcompound));
+            if (j >= 0 && j < this.lockList.size()){
+            	this.lockList.add(j, ItemStack.loadItemStackFromNBT(nbttagcompound));
             }
         }
 	}
@@ -104,11 +107,11 @@ public class TileEntityDisposer extends TileEntityMachineEnergy {
 		compound.setBoolean("Locked", this.lock);
 		
         NBTTagList nbttaglist = new NBTTagList();
-        for (int i = 0; i < lockList.size(); ++i){
-            if (lockList.get(i) != null){
+        for (int i = 0; i < this.lockList.size(); ++i){
+            if (this.lockList.get(i) != null){
                 NBTTagCompound nbttagcompound = new NBTTagCompound();
                 nbttagcompound.setByte("Slot", (byte)i);
-                lockList.get(i).writeToNBT(nbttagcompound);
+                this.lockList.get(i).writeToNBT(nbttagcompound);
                 nbttaglist.appendTag(nbttagcompound);
             }
         }
@@ -123,12 +126,12 @@ public class TileEntityDisposer extends TileEntityMachineEnergy {
 	@Override
 	public void update(){
 		acceptEnergy();
-		if(lockList.size() < 1) {resetLock(); }
-		if(!worldObj.isRemote){
+		if(this.lockList.size() < 1) {resetLock(); }
+		if(!this.worldObj.isRemote){
 			if(isActive()){
-				cookTime++;
-				if(cookTime >= getInterval()) {
-					cookTime = 0;
+				this.cookTime++;
+				if(this.cookTime >= getInterval()) {
+					this.cookTime = 0;
 					process();
 				}
 			}
@@ -138,32 +141,32 @@ public class TileEntityDisposer extends TileEntityMachineEnergy {
 
 	private void process() {
 		for(Integer slot : INPUT_SLOT){
-			if(input.getStackInSlot(slot) != null){
-				ItemStack drop = new ItemStack(input.getStackInSlot(slot).getItem(), 1, input.getStackInSlot(slot).getItemDamage());
+			if(this.input.getStackInSlot(slot) != null){
+				ItemStack drop = this.input.getStackInSlot(slot).copy();
 				drop.stackSize = 1;
 				dropItemStack(drop);
-				input.decrementSlot(slot);
+				this.input.decrementSlot(slot);
 			}
 		}
 	}
 
 	private void dropItemStack(ItemStack itemStack) {
-	    IBlockState state = worldObj.getBlockState(pos);
+	    IBlockState state = this.worldObj.getBlockState(this.pos);
 	    EnumFacing facing = state.getValue(Disposer.FACING);
-		BlockPos dropPos = pos.offset(facing);
+		BlockPos dropPos = this.pos.offset(facing);
         double d0 = dropPos.getX() + 0.5D;
         double d1 = dropPos.getY() + 0.5D;
         double d2 = dropPos.getZ() + 0.5D;
-		EntityItem entityitem = new EntityItem(worldObj, d0, d1, d2, itemStack);
+		EntityItem entityitem = new EntityItem(this.worldObj, d0, d1, d2, itemStack);
 		entityitem.motionX = 0;
 		entityitem.motionY = 0;
 		entityitem.motionZ = 0;
-		worldObj.spawnEntityInWorld(entityitem);
+		this.worldObj.spawnEntityInWorld(entityitem);
 	}
 
 	public void resetLock(){
 		for(Integer slot : INPUT_SLOT){
-			lockList.add(null);
+			this.lockList.add(null);
 		}
 	}
 }

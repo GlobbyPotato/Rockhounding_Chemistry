@@ -48,7 +48,7 @@ public class TileEntityEarthBreaker extends TileEntityMachineEnergy {
 	}
 
 	public boolean isSpinning(){
-		return isActive() && canDrill() && cookTime > 0;
+		return isActive() && canDrill() && this.cookTime > 0;
 	}
 
 	@Override
@@ -74,11 +74,11 @@ public class TileEntityEarthBreaker extends TileEntityMachineEnergy {
 	
 	//----------------------- CUSTOM -----------------------
 	private void spinState() {
-		if(worldObj.isRemote){
-			if (isSpinning() != spinning) {
-				spinning = isSpinning();
-				worldObj.notifyBlockOfStateChange(pos, worldObj.getBlockState(pos).getBlock());
-				worldObj.markBlockRangeForRenderUpdate(pos, pos);
+		if(this.worldObj.isRemote){
+			if (isSpinning() != this.spinning) {
+				this.spinning = isSpinning();
+				this.worldObj.notifyBlockOfStateChange(this.pos, this.worldObj.getBlockState(this.pos).getBlock());
+				this.worldObj.markBlockRangeForRenderUpdate(this.pos, this.pos);
 			}
 		}
 	}
@@ -89,7 +89,7 @@ public class TileEntityEarthBreaker extends TileEntityMachineEnergy {
 	@Override
 	public void update(){
 		acceptEnergy();
-		if(!worldObj.isRemote){
+		if(!this.worldObj.isRemote){
 			if(canDrill()){
 				process();
 				this.markDirtyClient();
@@ -107,43 +107,43 @@ public class TileEntityEarthBreaker extends TileEntityMachineEnergy {
 	}
 
 	private void process() {
-		cookTime++;
+		this.cookTime++;
 		this.chargeCount -= 2;
-		if(cookTime >= getMaxCookTime()) {
-			cookTime = 0; 
+		if(this.cookTime >= getMaxCookTime()) {
+			this.cookTime = 0; 
 			handleOutput();
 		}
 	}
 
 	private void handleOutput() {
-		if(worldObj.getBlockState(pos.offset(EnumFacing.UP)).getBlock() == Blocks.BEDROCK){
-			worldObj.destroyBlock(pos.offset(EnumFacing.UP), false);
-			dropBedrock(pos.offset(EnumFacing.UP.getOpposite()));
+		if(this.worldObj.getBlockState(this.pos.offset(EnumFacing.UP)).getBlock() == Blocks.BEDROCK){
+			this.worldObj.destroyBlock(this.pos.offset(EnumFacing.UP), false);
+			dropBedrock(this.pos.offset(EnumFacing.UP.getOpposite()));
 		}else{
-			if(worldObj.getBlockState(pos.offset(EnumFacing.DOWN)).getBlock() == Blocks.BEDROCK){
-				worldObj.destroyBlock(pos.offset(EnumFacing.DOWN), false);
-				dropBedrock(pos.offset(EnumFacing.DOWN.getOpposite()));
+			if(this.worldObj.getBlockState(this.pos.offset(EnumFacing.DOWN)).getBlock() == Blocks.BEDROCK){
+				this.worldObj.destroyBlock(this.pos.offset(EnumFacing.DOWN), false);
+				dropBedrock(this.pos.offset(EnumFacing.DOWN.getOpposite()));
 			}
 		}
 	}
 
 	private void dropBedrock(BlockPos pos) {
-		EntityItem bedrock = new EntityItem(worldObj, pos.getX() + rand.nextFloat(), pos.getY() + 0.5D, pos.getZ() + rand.nextFloat(), new ItemStack(Blocks.BEDROCK));
-		if(!worldObj.isRemote){
-			worldObj.spawnEntityInWorld(bedrock);
+		EntityItem bedrock = new EntityItem(this.worldObj, pos.getX() + this.rand.nextFloat(), pos.getY() + 0.5D, pos.getZ() + this.rand.nextFloat(), new ItemStack(Blocks.BEDROCK));
+		if(!this.worldObj.isRemote){
+			this.worldObj.spawnEntityInWorld(bedrock);
 		}
 	}
 
 	private void handleParameters() {
-		if(this.getRedstone() >= takenRF && this.chargeCount < this.chargeMax){
-			this.redstoneCount -= takenRF; 
+		if(this.getRedstone() >= this.takenRF && this.chargeCount < this.chargeMax){
+			this.redstoneCount -= this.takenRF; 
 			this.chargeCount++;
 			this.markDirtyClient();
 		}
 	}
 
 	private boolean hasBedrock() {
-		return worldObj.getBlockState(pos.offset(EnumFacing.UP)).getBlock() == Blocks.BEDROCK || worldObj.getBlockState(pos.offset(EnumFacing.DOWN)).getBlock() == Blocks.BEDROCK;
+		return this.worldObj.getBlockState(this.pos.offset(EnumFacing.UP)).getBlock() == Blocks.BEDROCK || this.worldObj.getBlockState(this.pos.offset(EnumFacing.DOWN)).getBlock() == Blocks.BEDROCK;
 	}
 
 }

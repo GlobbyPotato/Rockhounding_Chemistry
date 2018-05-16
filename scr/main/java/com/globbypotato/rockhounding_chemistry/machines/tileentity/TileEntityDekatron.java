@@ -1,6 +1,7 @@
 package com.globbypotato.rockhounding_chemistry.machines.tileentity;
 
 import com.globbypotato.rockhounding_chemistry.ModBlocks;
+import com.globbypotato.rockhounding_chemistry.machines.BaseMachine;
 import com.globbypotato.rockhounding_chemistry.machines.Dekatron;
 
 import net.minecraft.block.state.IBlockState;
@@ -26,22 +27,22 @@ public class TileEntityDekatron extends TileEntity implements ITickable {
 
 	@Override
 	public void update() {
-		if(selectMode == 1){
+		if(this.selectMode == 1){
 			executeSingleState();//count each state change
 			produceImpulse();
-		}else if(selectMode == 2){
+		}else if(this.selectMode == 2){
 			executeBiState();//count bi-states
 			produceImpulse();
-		}else if(selectMode == 3){
+		}else if(this.selectMode == 3){
 			executeCycle();//count cycles
 			produceSteady();
-		}else if(selectMode == 4){
+		}else if(this.selectMode == 4){
 			executeBiCycle();//count bi-states cycles
 			produceSteady();
-		}else if(selectMode == 5){
+		}else if(this.selectMode == 5){
 			pulseTimer();//pulse by frequency
 			produceImpulse();
-		}else if(selectMode == 6){
+		}else if(this.selectMode == 6){
 			steadyTimer();//steady by frequency
 			//produceImpulse();
 		}
@@ -49,23 +50,23 @@ public class TileEntityDekatron extends TileEntity implements ITickable {
 
 	private void steadyTimer() {
 		if(isDekaOff() && isPowered()){
-			if(pulseTick >= 10 + ((15 - getRedstonePower()) * 10 )){
-				pulseTick = 0;
+			if(this.pulseTick >= 10 + ((15 - getRedstonePower()) * 10 )){
+				this.pulseTick = 0;
 				enableDeka();
 				this.markDirtyClient();
 			}else{
-				pulseTick++;
+				this.pulseTick++;
 			}
 		}else if(isDekaOn() && isPowered()){
-			if(pulseTick >= 10 + ((15 - getRedstonePower()) * 10 )){
-				pulseTick = 0;
+			if(this.pulseTick >= 10 + ((15 - getRedstonePower()) * 10 )){
+				this.pulseTick = 0;
 				disableDeka();
 				this.markDirtyClient();
 			}else{
-				pulseTick++;
+				this.pulseTick++;
 			}
 		}else if(isDekaOn() && !isPowered()){
-			pulseTick = 0;
+			this.pulseTick = 0;
 			disableDeka();
 			this.markDirtyClient();
 		}
@@ -73,82 +74,82 @@ public class TileEntityDekatron extends TileEntity implements ITickable {
 
 	private void pulseTimer() {
 		if(isDekaOff() && isPowered()){
-			if(pulseTick >= 10 + ((15 - getRedstonePower()) * 10 )){
+			if(this.pulseTick >= 10 + ((15 - getRedstonePower()) * 10 )){
 				enableDeka();
-				pulseTick = 0;
+				this.pulseTick = 0;
 				this.markDirtyClient();
 			}else{
-				pulseTick++;
+				this.pulseTick++;
 			}
 		}
 	}
 
 	private void executeBiCycle() {
-		if(countCycle < 2){
-			if(pulseCount < pulseMax){
+		if(this.countCycle < 2){
+			if(this.pulseCount < this.pulseMax){
 				boolean flag = checkForPoweredBlocks();
-				if(oldState != flag){
-					checkBState++;
-					oldState = !oldState;
+				if(this.oldState != flag){
+					this.checkBState++;
+					this.oldState = !this.oldState;
 					this.markDirtyClient();
 				}
-				if(checkBState == 2){
-					pulseCount++;
-					checkBState = 0;
+				if(this.checkBState == 2){
+					this.pulseCount++;
+					this.checkBState = 0;
 					this.markDirtyClient();
 				}
 			}else{
 				enableDeka();
-				pulseCount = 0;
-				countCycle++;
+				this.pulseCount = 0;
+				this.countCycle++;
 				this.markDirtyClient();
 			}
 		}
 	}
 
 	private void executeCycle() {
-		if(countCycle < 2){
-			if(pulseCount < pulseMax){
+		if(this.countCycle < 2){
+			if(this.pulseCount < this.pulseMax){
 				boolean flag = checkForPoweredBlocks();
-				if(oldState != flag){
-					pulseCount++;
-					oldState = !oldState;
+				if(this.oldState != flag){
+					this.pulseCount++;
+					this.oldState = !this.oldState;
 					this.markDirtyClient();
 				}
 			}else{
 				enableDeka();
-				countCycle++;
-				pulseCount = 0;
+				this.countCycle++;
+				this.pulseCount = 0;
 				this.markDirtyClient();
 			}
 		}
 	}
 
 	private void produceSteady() {
-		if(countCycle == 2){
+		if(this.countCycle == 2){
 			disableDeka();
-			countCycle = 0;
+			this.countCycle = 0;
 			this.markDirtyClient();
 		}
 	}
 
 	private void executeBiState() {
 		if(isDekaOff()){
-			if(pulseCount < pulseMax){
+			if(this.pulseCount < this.pulseMax){
 				boolean flag = checkForPoweredBlocks();
-				if(oldState != flag){
-					checkBState++;
-					oldState = !oldState;
+				if(this.oldState != flag){
+					this.checkBState++;
+					this.oldState = !this.oldState;
 					this.markDirtyClient();
 				}
-				if(checkBState == 2){
-					pulseCount++;
-					checkBState = 0;
+				if(this.checkBState == 2){
+					this.pulseCount++;
+					this.checkBState = 0;
 					this.markDirtyClient();
 				}
 			}else{
 				enableDeka();
-				pulseCount = 0;
+				this.pulseCount = 0;
 				this.markDirtyClient();
 			}
 		}
@@ -156,16 +157,16 @@ public class TileEntityDekatron extends TileEntity implements ITickable {
 
 	private void executeSingleState() {
 		if(isDekaOff()){
-			if(pulseCount < pulseMax){
+			if(this.pulseCount < this.pulseMax){
 				boolean flag = checkForPoweredBlocks();
-				if(oldState != flag){
-					pulseCount++;
-					oldState = !oldState;
+				if(this.oldState != flag){
+					this.pulseCount++;
+					this.oldState = !this.oldState;
 					this.markDirtyClient();
 				}
 			}else{
 				enableDeka();
-				pulseCount = 0;
+				this.pulseCount = 0;
 				this.markDirtyClient();
 			}
 		}
@@ -173,30 +174,30 @@ public class TileEntityDekatron extends TileEntity implements ITickable {
 
 	private void produceImpulse() {
 		if(isDekaOn()){
-			if(outputState >= 20){
+			if(this.outputState >= 20){
 				disableDeka();
-				outputState = 0;
+				this.outputState = 0;
 				this.markDirtyClient();
 			}else{
-				outputState++;
+				this.outputState++;
 			}
 		}
 	}
 
 	private void enableDeka() {
-		worldObj.setBlockState(pos, getLevel(1));
+		this.worldObj.setBlockState(this.pos, getLevel(1));
 	}
 
 	private void disableDeka() {
-		worldObj.setBlockState(pos, getLevel(0));
+		this.worldObj.setBlockState(this.pos, getLevel(0));
 	}
 
 	private boolean checkForPoweredBlocks() {
-		return worldObj.isBlockPowered(pos.offset(worldObj.getBlockState(pos).getValue(Dekatron.FACING).getOpposite()));
+		return this.worldObj.isBlockPowered(this.pos.offset(this.worldObj.getBlockState(this.pos).getValue(BaseMachine.FACING).getOpposite()));
 	}
 
 	private int getRedstonePower(){
-		return worldObj.getRedstonePower(pos.offset(worldObj.getBlockState(pos).getValue(Dekatron.FACING).getOpposite()), worldObj.getBlockState(pos).getValue(Dekatron.FACING).getOpposite());
+		return this.worldObj.getRedstonePower(this.pos.offset(this.worldObj.getBlockState(this.pos).getValue(BaseMachine.FACING).getOpposite()), this.worldObj.getBlockState(this.pos).getValue(BaseMachine.FACING).getOpposite());
 	}
 
 	private boolean isPowered(){
@@ -204,8 +205,8 @@ public class TileEntityDekatron extends TileEntity implements ITickable {
 	}
 
 	private IBlockState getLevel(int i) {
-		EnumFacing dekaFacing = worldObj.getBlockState(pos).getValue(Dekatron.FACING);
-		return ModBlocks.dekatron.getDefaultState().withProperty(Dekatron.FACING, dekaFacing).withProperty(Dekatron.LEVEL, Integer.valueOf(i));
+		EnumFacing dekaFacing = this.worldObj.getBlockState(this.pos).getValue(BaseMachine.FACING);
+		return ModBlocks.dekatron.getDefaultState().withProperty(BaseMachine.FACING, dekaFacing).withProperty(Dekatron.LEVEL, Integer.valueOf(i));
 	}
 
 	@Override
@@ -214,19 +215,19 @@ public class TileEntityDekatron extends TileEntity implements ITickable {
 	}
 
 	private boolean isDekaOff() {
-		return worldObj.getBlockState(pos).getBlock() == ModBlocks.dekatron && worldObj.getBlockState(pos).getValue(Dekatron.LEVEL) == 0;
+		return this.worldObj.getBlockState(this.pos).getBlock() == ModBlocks.dekatron && this.worldObj.getBlockState(this.pos).getValue(Dekatron.LEVEL) == 0;
 	}
 
 	private boolean isDekaOn() {
-		return worldObj.getBlockState(pos).getBlock() == ModBlocks.dekatron && worldObj.getBlockState(pos).getValue(Dekatron.LEVEL) == 1;
+		return this.worldObj.getBlockState(this.pos).getBlock() == ModBlocks.dekatron && this.worldObj.getBlockState(this.pos).getValue(Dekatron.LEVEL) == 1;
 	}
 
 	//Courtesy of mcjtylib
 	public void markDirtyClient() {
 		markDirty();
-		if (worldObj != null) {
-			IBlockState state = worldObj.getBlockState(getPos());
-			worldObj.notifyBlockUpdate(getPos(), state, state, 3);
+		if (this.worldObj != null) {
+			IBlockState state = this.worldObj.getBlockState(getPos());
+			this.worldObj.notifyBlockUpdate(getPos(), state, state, 3);
 		}
 	}
 
@@ -254,7 +255,7 @@ public class TileEntityDekatron extends TileEntity implements ITickable {
 	public SPacketUpdateTileEntity getUpdatePacket() {
 		NBTTagCompound tag = getUpdateTag();
 		this.writeToNBT(tag);
-		return new SPacketUpdateTileEntity(pos, getBlockMetadata(), tag);
+		return new SPacketUpdateTileEntity(this.pos, getBlockMetadata(), tag);
 	}
 
 	@Override

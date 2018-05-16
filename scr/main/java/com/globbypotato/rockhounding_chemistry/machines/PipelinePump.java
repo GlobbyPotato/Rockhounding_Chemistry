@@ -3,6 +3,7 @@ package com.globbypotato.rockhounding_chemistry.machines;
 import javax.annotation.Nullable;
 
 import com.globbypotato.rockhounding_chemistry.ModItems;
+import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityPipelinePump;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityPipelineValve;
 import com.globbypotato.rockhounding_chemistry.utils.ToolUtils;
@@ -30,6 +31,7 @@ public class PipelinePump extends PipelineBase {
 
 	public PipelinePump(float hardness, float resistance, String name) {
 		super(hardness, resistance, name);
+		setCreativeTab(Reference.RockhoundingChemistry);
 	}
 
     @Override
@@ -92,6 +94,27 @@ public class PipelinePump extends PipelineBase {
 			}
 		}
 		return true;
+	}
+
+	@Override
+	public void onBlockClicked(World worldIn, BlockPos pos, EntityPlayer playerIn) {
+		TileEntity tile = worldIn.getTileEntity(pos);
+		if(tile != null && tile instanceof TileEntityPipelinePump){
+			TileEntityPipelinePump pump = (TileEntityPipelinePump)tile;
+			if(ToolUtils.hasWrench(playerIn, EnumHand.MAIN_HAND)){
+				if(!playerIn.isSneaking()){
+					if(!worldIn.isRemote){
+						pump.delay++;
+					}
+				}else{
+					if(!worldIn.isRemote){
+						if(pump.getDelay() > 0){
+							pump.delay--;
+						}
+					}
+				}
+			}
+		}
 	}
 
     private ItemStack pipelineUpgrade() {

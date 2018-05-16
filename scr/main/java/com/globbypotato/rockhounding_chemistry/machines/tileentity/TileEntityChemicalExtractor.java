@@ -44,10 +44,13 @@ public class TileEntityChemicalExtractor extends TileEntityMachineTank{
 
 	ChemicalExtractorRecipe currentRecipe;
 
-	public TileEntityChemicalExtractor() {
-		super(9,56,1);
+	public static int totInput = 9;
+	public static int totOutput = 56;
 
-		nitrTank = new FluidTank(1000 + ModConfig.machineTank){
+	public TileEntityChemicalExtractor() {
+		super(totInput, totOutput, 1);
+
+		this.nitrTank = new FluidTank(1000 + ModConfig.machineTank){
 			@Override  
 			public boolean canFillFluidType(FluidStack fluid){
 				return fluid.getFluid().equals(EnumFluid.pickFluid(EnumFluid.NITRIC_ACID));
@@ -55,13 +58,13 @@ public class TileEntityChemicalExtractor extends TileEntityMachineTank{
 
 			@Override
 		    public boolean canDrain(){
-		        return drainValve;
+		        return TileEntityChemicalExtractor.this.drainValve;
 		    }
 		};
-		nitrTank.setTileEntity(this);
-		nitrTank.setCanFill(true);
+		this.nitrTank.setTileEntity(this);
+		this.nitrTank.setCanFill(true);
 
-		phosTank = new FluidTank(1000 + ModConfig.machineTank){
+		this.phosTank = new FluidTank(1000 + ModConfig.machineTank){
 			@Override  
 			public boolean canFillFluidType(FluidStack fluid){
 				return fluid.getFluid().equals(EnumFluid.pickFluid(EnumFluid.PHOSPHORIC_ACID));
@@ -69,13 +72,13 @@ public class TileEntityChemicalExtractor extends TileEntityMachineTank{
 
 			@Override
 		    public boolean canDrain(){
-		        return drainValve;
+		        return TileEntityChemicalExtractor.this.drainValve;
 		    }
 		};
-		phosTank.setTileEntity(this);
-		phosTank.setCanFill(true);
+		this.phosTank.setTileEntity(this);
+		this.phosTank.setCanFill(true);
 
-		cyanTank = new FluidTank(1000 + ModConfig.machineTank){
+		this.cyanTank = new FluidTank(1000 + ModConfig.machineTank){
 			@Override  
 			public boolean canFillFluidType(FluidStack fluid){
 				return fluid.getFluid().equals(EnumFluid.pickFluid(EnumFluid.SODIUM_CYANIDE));
@@ -83,19 +86,31 @@ public class TileEntityChemicalExtractor extends TileEntityMachineTank{
 
 			@Override
 		    public boolean canDrain(){
-		        return drainValve;
+		        return TileEntityChemicalExtractor.this.drainValve;
 		    }
 		};
-		cyanTank.setTileEntity(this);
-		cyanTank.setCanFill(true);
+		this.cyanTank.setTileEntity(this);
+		this.cyanTank.setCanFill(true);
 
-		input = new MachineStackHandler(INPUT_SLOTS,this){
+		this.input = new MachineStackHandler(totInput,this){
+			@Override
+			public void validateSlotIndex(int slot){
+				if(input.getSlots() < totInput){
+					ItemStack[] stacksCloned = stacks;
+					input.setSize(totInput);
+					for(int x = 0; x < stacksCloned.length; x++){
+						stacks[x] = stacksCloned[x];
+					}
+				}
+				super.validateSlotIndex(slot);
+			}
+
 			@Override
 			public ItemStack insertItem(int slot, ItemStack insertingStack, boolean simulate){
 				if(slot == INPUT_SLOT && hasRecipe(insertingStack)){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
-				if(slot == FUEL_SLOT && isGatedPowerSource(insertingStack)){
+				if(slot == TileEntityChemicalExtractor.this.FUEL_SLOT && isGatedPowerSource(insertingStack)){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
 				if(slot == REDSTONE_SLOT && hasRedstone(insertingStack)){
@@ -123,7 +138,7 @@ public class TileEntityChemicalExtractor extends TileEntityMachineTank{
 			}
 
 		};
-		automationInput = new WrappedItemHandler(input, WriteMode.IN);
+		this.automationInput = new WrappedItemHandler(this.input, WriteMode.IN);
 		this.markDirtyClient();
 	}
 
@@ -186,8 +201,8 @@ public class TileEntityChemicalExtractor extends TileEntityMachineTank{
 	@Override
 	public void readFromNBT(NBTTagCompound compound){
 		super.readFromNBT(compound);
-		for(int i = 0; i < elementList.length; i++){
-			elementList[i] = compound.getInteger("element" + i);
+		for(int i = 0; i < this.elementList.length; i++){
+			this.elementList[i] = compound.getInteger("element" + i);
 		}
 		this.drainValve = compound.getBoolean("Drain");
 		this.nitrTank.readFromNBT(compound.getCompoundTag("NitrTank"));
@@ -198,8 +213,8 @@ public class TileEntityChemicalExtractor extends TileEntityMachineTank{
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound){
 		super.writeToNBT(compound);
-		for(int i = 0; i < elementList.length; i++){
-			compound.setInteger("element" + i, elementList[i]);
+		for(int i = 0; i < this.elementList.length; i++){
+			compound.setInteger("element" + i, this.elementList[i]);
 		}
 		compound.setBoolean("Drain", this.drainValve);
 
@@ -220,7 +235,7 @@ public class TileEntityChemicalExtractor extends TileEntityMachineTank{
 
 	@Override
 	public FluidHandlerConcatenate getCombinedTank(){
-		return new FluidHandlerConcatenate(lavaTank, nitrTank, phosTank, cyanTank);
+		return new FluidHandlerConcatenate(this.lavaTank, this.nitrTank, this.phosTank, this.cyanTank);
 	}
 
 
@@ -229,18 +244,18 @@ public class TileEntityChemicalExtractor extends TileEntityMachineTank{
 	@Override
 	public void update(){
 		acceptEnergy();
-		fuelHandler(input.getStackInSlot(FUEL_SLOT));
+		fuelHandler(this.input.getStackInSlot(this.FUEL_SLOT));
 		redstoneHandler(REDSTONE_SLOT, baseSpeed());
 		lavaHandler();
 
-		if(!worldObj.isRemote){
-			emptyContainer(NITR_SLOT, nitrTank);
-			emptyContainer(PHOS_SLOT, phosTank);
-			emptyContainer(CYAN_SLOT, cyanTank);
+		if(!this.worldObj.isRemote){
+			emptyContainer(NITR_SLOT, this.nitrTank);
+			emptyContainer(PHOS_SLOT, this.phosTank);
+			emptyContainer(CYAN_SLOT, this.cyanTank);
 
 			if(canExtractElements()){
 				execute();
-				if(CoreUtils.hasConsumable(ToolUtils.cylinder, input.getStackInSlot(CYLINDER_SLOT))){
+				if(CoreUtils.hasConsumable(ToolUtils.cylinder, this.input.getStackInSlot(CYLINDER_SLOT))){
 					transferDust();
 				}
 			}
@@ -249,29 +264,29 @@ public class TileEntityChemicalExtractor extends TileEntityMachineTank{
 	}
 
 	private void execute() {
-		cookTime++;
-		powerCount--;
-		if(!this.hasFuelBlend()){ redstoneCount--; }
-		if(cookTime >= getCookTimeMax()) {
-			cookTime = 0; 
+		this.cookTime++;
+		this.powerCount--;
+		if(!this.hasFuelBlend()){ this.redstoneCount--; }
+		if(this.cookTime >= getCookTimeMax()) {
+			this.cookTime = 0; 
 			extractElements();
 		}
 	}
 
 	private void extractElements() {
-		if(input.getStackInSlot(INPUT_SLOT) != null){
-			if(isFullRecipe() && currentRecipe != null){
-				for(int x = 0; x < currentRecipe.getElements().size(); x++){
+		if(this.input.getStackInSlot(INPUT_SLOT) != null){
+			if(isFullRecipe() && this.currentRecipe != null){
+				for(int x = 0; x < this.currentRecipe.getElements().size(); x++){
 					for(int y = 0; y < EnumElement.size(); y++){
-						if(currentRecipe.getElements().get(x).toLowerCase().matches(EnumElement.getName(y).toLowerCase())){
-							isInhibited = false;
+						if(this.currentRecipe.getElements().get(x).toLowerCase().matches(EnumElement.getName(y).toLowerCase())){
+							this.isInhibited = false;
 							for(int ix = 0; ix < MachineRecipes.inhibitedElements.size(); ix++){
-								if(currentRecipe.getElements().get(x).toLowerCase().matches(MachineRecipes.inhibitedElements.get(ix).toLowerCase())){
-									isInhibited = true;
+								if(this.currentRecipe.getElements().get(x).toLowerCase().matches(MachineRecipes.inhibitedElements.get(ix).toLowerCase())){
+									this.isInhibited = true;
 								}
 							}
-							if(!isInhibited){
-								elementList[y] += currentRecipe.getQuantities().get(x);
+							if(!this.isInhibited){
+								this.elementList[y] += this.currentRecipe.getQuantities().get(x);
 							}
 						}
 					}
@@ -283,7 +298,7 @@ public class TileEntityChemicalExtractor extends TileEntityMachineTank{
 
 	private boolean isFullRecipe() {
 		for(ChemicalExtractorRecipe recipe: MachineRecipes.extractorRecipes){
-			if(ItemStack.areItemsEqual(recipe.getInput(), input.getStackInSlot(INPUT_SLOT))){
+			if(ItemStack.areItemsEqual(recipe.getInput(), this.input.getStackInSlot(INPUT_SLOT))){
 				if(recipe.getElements().size() == recipe.getQuantities().size()){
 					int formula = 0;
 					for(int x = 0; x < recipe.getElements().size(); x++){
@@ -294,7 +309,7 @@ public class TileEntityChemicalExtractor extends TileEntityMachineTank{
 						}
 					}
 					if(formula == recipe.getElements().size()){
-						currentRecipe = recipe;
+						this.currentRecipe = recipe;
 						return true;
 					}
 				}
@@ -304,35 +319,35 @@ public class TileEntityChemicalExtractor extends TileEntityMachineTank{
 	}
 
 	private void handleOutput() {
-		input.decrementSlot(INPUT_SLOT);
-		input.damageSlot(CONSUMABLE_SLOT);
-		input.drainOrClean(nitrTank, ModConfig.consumedNitr, false);
-		input.drainOrClean(phosTank, ModConfig.consumedPhos, false);
-		input.drainOrClean(cyanTank, ModConfig.consumedCyan, false);
-		currentRecipe = null;
+		this.input.decrementSlot(INPUT_SLOT);
+		this.input.damageSlot(CONSUMABLE_SLOT);
+		this.input.drainOrClean(this.nitrTank, ModConfig.consumedNitr, false);
+		this.input.drainOrClean(this.phosTank, ModConfig.consumedPhos, false);
+		this.input.drainOrClean(this.cyanTank, ModConfig.consumedCyan, false);
+		this.currentRecipe = null;
 	}
 
 	private boolean canExtractElements() {
-		return hasRecipe(input.getStackInSlot(INPUT_SLOT))
+		return hasRecipe(this.input.getStackInSlot(INPUT_SLOT))
 			&& isFullRecipe()
-			&& CoreUtils.hasConsumable(ToolUtils.testTube, input.getStackInSlot(CONSUMABLE_SLOT))
-			&& CoreUtils.hasConsumable(ToolUtils.cylinder, input.getStackInSlot(CYLINDER_SLOT))
+			&& CoreUtils.hasConsumable(ToolUtils.testTube, this.input.getStackInSlot(CONSUMABLE_SLOT))
+			&& CoreUtils.hasConsumable(ToolUtils.cylinder, this.input.getStackInSlot(CYLINDER_SLOT))
 			&& getPower() >= getCookTimeMax()
 			&& isRedstoneRequired(this.getCookTimeMax()) 
-			&& nitrTank.getFluidAmount() >= ModConfig.consumedNitr
-			&& phosTank.getFluidAmount() >= ModConfig.consumedPhos
-			&& cyanTank.getFluidAmount() >= ModConfig.consumedCyan;
+			&& this.nitrTank.getFluidAmount() >= ModConfig.consumedNitr
+			&& this.phosTank.getFluidAmount() >= ModConfig.consumedPhos
+			&& this.cyanTank.getFluidAmount() >= ModConfig.consumedCyan;
 	}
 
 	private void transferDust() {
-		for(int i = 0; i < output.getSlots(); i++){
-			if(CoreUtils.hasConsumable(ToolUtils.cylinder, input.getStackInSlot(CYLINDER_SLOT))){
+		for(int i = 0; i < this.output.getSlots(); i++){
+			if(CoreUtils.hasConsumable(ToolUtils.cylinder, this.input.getStackInSlot(CYLINDER_SLOT))){
 				ItemStack elementStack = BaseRecipes.elements(1, i);
-				if(output.canSetOrStack(output.getStackInSlot(i), elementStack)){
-					if(elementList[i] >= getExtractingFactor()){
-						elementList[i]-= getExtractingFactor();
-						output.setOrIncrement(i, elementStack);
-						input.damageSlot(CYLINDER_SLOT);
+				if(this.output.canSetOrStack(this.output.getStackInSlot(i), elementStack)){
+					if(this.elementList[i] >= getExtractingFactor()){
+						this.elementList[i]-= getExtractingFactor();
+						this.output.setOrIncrement(i, elementStack);
+						this.input.damageSlot(CYLINDER_SLOT);
 					}
 				}
 			}

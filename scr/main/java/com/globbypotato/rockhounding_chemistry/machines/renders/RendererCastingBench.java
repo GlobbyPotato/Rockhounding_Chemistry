@@ -15,10 +15,9 @@ import net.minecraft.world.World;
 public class RendererCastingBench extends TileEntitySpecialRenderer<TileEntityCastingBench>{
 
 	@Override
-	public void renderTileEntityAt(TileEntityCastingBench te, double x, double y, double z, float partialTicks, int destroyStage) {
-		super.renderTileEntityAt(te, x, y, z, partialTicks, destroyStage);
+	public void renderTileEntityAt(TileEntityCastingBench bench, double x, double y, double z, float partialTicks, int destroyStage) {
+		super.renderTileEntityAt(bench, x, y, z, partialTicks, destroyStage);
 
-		TileEntityCastingBench bench = (TileEntityCastingBench)te;
 		if(bench != null){
 			int metadata = bench.getBlockMetadata();
 			World world = Minecraft.getMinecraft().theWorld;

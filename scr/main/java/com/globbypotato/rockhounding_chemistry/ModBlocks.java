@@ -38,6 +38,7 @@ import com.globbypotato.rockhounding_chemistry.machines.LaserRay;
 import com.globbypotato.rockhounding_chemistry.machines.LaserSplitter;
 import com.globbypotato.rockhounding_chemistry.machines.LaserStabilizer;
 import com.globbypotato.rockhounding_chemistry.machines.LaserTX;
+import com.globbypotato.rockhounding_chemistry.machines.MachineServer;
 import com.globbypotato.rockhounding_chemistry.machines.MetalAlloyer;
 import com.globbypotato.rockhounding_chemistry.machines.MineCrawler;
 import com.globbypotato.rockhounding_chemistry.machines.MineralAnalyzer;
@@ -46,6 +47,7 @@ import com.globbypotato.rockhounding_chemistry.machines.OwcAssembler;
 import com.globbypotato.rockhounding_chemistry.machines.OwcController;
 import com.globbypotato.rockhounding_chemistry.machines.PetrographerTable;
 import com.globbypotato.rockhounding_chemistry.machines.PipelineDuct;
+import com.globbypotato.rockhounding_chemistry.machines.PipelineHalt;
 import com.globbypotato.rockhounding_chemistry.machines.PipelinePump;
 import com.globbypotato.rockhounding_chemistry.machines.PipelineValve;
 import com.globbypotato.rockhounding_chemistry.machines.SaltMaker;
@@ -83,6 +85,8 @@ public class ModBlocks {
 	public static Block depositionChamber;
 	public static Block depositionChamberTop;
 
+	public static Block machineServer;
+
 	public static Block saltMaker;
 	public static Block saltSeasoner;
 
@@ -108,8 +112,9 @@ public class ModBlocks {
 	public static Block ultraBattery;
 
 	public static Block disposer;
-	
+
 	public static Block pipelineDuct;
+	public static Block pipelineHalt;
 	public static Block pipelinePump;
 	public static Block pipelineValve;
 
@@ -135,6 +140,7 @@ public class ModBlocks {
 		earthBreaker = new EarthBreaker(3.0F, 5.0F, "earthBreaker");
 		castingBench = new CastingBench(3.0F, 5.0F, "castingBench");
 		labBlender = new LabBlender(3.0F, 5.0F, "labBlender");
+		machineServer = new MachineServer(3.0F, 5.0F, "machineServer");
 
 		depositionChamber = new DepositionChamber(3.0F, 5.0F, "depositionChamber");
 		depositionChamberTop = new DepositionChamberTop(3.0F, 5.0F, "depositionChamberTop");
@@ -166,6 +172,7 @@ public class ModBlocks {
 		disposer = new Disposer(2.0F, 7.0F, "disposer", SoundType.METAL);
 
 		pipelineDuct = new PipelineDuct(1.0F, 1.0F, "pipelineDuct");
+		pipelineHalt = new PipelineHalt(1.0F, 1.0F, "pipelineHalt");
 		pipelinePump = new PipelinePump(1.0F, 1.0F, "pipelinePump");
 		pipelineValve = new PipelineValve(1.0F, 1.0F, "pipelineValve");
 
@@ -193,6 +200,7 @@ public class ModBlocks {
 		registerSingleBlockRender(chemicalExtractor, 0, "chemicalExtractor");
 		registerSingleBlockRender(mineCrawler, 0, "mineCrawler");
 		registerSingleBlockRender(crawlerAssembler, 0, "crawlerAssembler");
+		registerSingleBlockRender(machineServer, 0, "machineServer");
 		registerSingleBlockRender(metalAlloyer, 0, "metalAlloyer");
 		registerSingleBlockRender(depositionChamber, 0, "depositionChamber");
 		registerSingleBlockRender(depositionChamberTop, 0, "depositionChamberTop");
@@ -214,6 +222,7 @@ public class ModBlocks {
 		registerSingleBlockRender(labBlender, 0, "labBlender");
 		registerSingleBlockRender(disposer, 0, "disposer");
 		registerSingleBlockRender(pipelineDuct, 0, "pipelineDuct");
+		registerSingleBlockRender(pipelineHalt, 0, "pipelineHalt");
 		registerSingleBlockRender(pipelinePump, 0, "pipelinePump");
 		registerSingleBlockRender(pipelineValve, 0, "pipelineValve");
 	}

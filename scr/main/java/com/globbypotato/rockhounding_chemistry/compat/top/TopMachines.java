@@ -10,6 +10,7 @@ import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityEar
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityElectroLaser;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityLabBlender;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityLabOven;
+import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityMachineServer;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityMetalAlloyer;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityMineralAnalyzer;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityMineralSizer;
@@ -57,6 +58,7 @@ public class TopMachines implements IProbeInfoProvider{
 			|| te instanceof TileEntityDepositionChamber
 			|| te instanceof TileEntityDisposer
 			|| te instanceof TileEntityEarthBreaker
+			|| te instanceof TileEntityMachineServer
 			){
 				config.setRFMode(0);
 			}			

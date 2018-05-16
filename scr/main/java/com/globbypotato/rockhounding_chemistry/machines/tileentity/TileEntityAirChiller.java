@@ -20,10 +20,13 @@ public class TileEntityAirChiller extends TileEntityMachineTank{
 
 	public FluidTank inputTank;
 
-	public TileEntityAirChiller() {
-		super(2, 0, 0);
+	public static int totInput = 2;
+	public static int totOutput = 0;
 
-		inputTank = new FluidTank(30000) {
+	public TileEntityAirChiller() {
+		super(totInput, totOutput, 0);
+
+		this.inputTank = new FluidTank(30000) {
 			@Override
 			public boolean canFillFluidType(FluidStack fluid) {
 				return true;
@@ -34,9 +37,9 @@ public class TileEntityAirChiller extends TileEntityMachineTank{
 				return true;
 			}
 		};
-		inputTank.setTileEntity(this);
+		this.inputTank.setTileEntity(this);
 
-		input = new MachineStackHandler(INPUT_SLOTS, this) {
+		this.input = new MachineStackHandler(totInput, this) {
 			@Override
 			public ItemStack insertItem(int slot, ItemStack insertingStack, boolean simulate) {
 				if(slot == SOLUTION_SLOT && CoreUtils.isBucketType(insertingStack)) {
@@ -48,7 +51,7 @@ public class TileEntityAirChiller extends TileEntityMachineTank{
 				return insertingStack;
 			}
 		};
-		automationInput = new WrappedItemHandler(input, WriteMode.IN);
+		this.automationInput = new WrappedItemHandler(this.input, WriteMode.IN);
 		this.markDirtyClient();
 	}
 
@@ -82,7 +85,7 @@ public class TileEntityAirChiller extends TileEntityMachineTank{
 
 	@Override
 	public FluidHandlerConcatenate getCombinedTank() {
-		return new FluidHandlerConcatenate(inputTank);
+		return new FluidHandlerConcatenate(this.inputTank);
 	}
 
 
@@ -90,9 +93,9 @@ public class TileEntityAirChiller extends TileEntityMachineTank{
 	// ----------------------- PROCESS -----------------------
 	@Override
 	public void update() {
-		if (!worldObj.isRemote) {
-			emptyContainer(SOLUTION_SLOT, inputTank);
-			fillContainer(EXTRACT_SLOT, inputTank);
+		if (!this.worldObj.isRemote) {
+			emptyContainer(SOLUTION_SLOT, this.inputTank);
+			fillContainer(EXTRACT_SLOT, this.inputTank);
 			this.markDirtyClient();
 		}
 	}

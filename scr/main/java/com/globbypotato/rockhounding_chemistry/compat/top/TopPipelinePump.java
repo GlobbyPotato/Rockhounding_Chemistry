@@ -42,6 +42,10 @@ public class TopPipelinePump implements IProbeInfoProvider{
 			}
         	String tier = TextFormatting.GRAY + "Tier: " + uphradestring;
             probeInfo.text(tier);
+            
+        	String delay = TextFormatting.GRAY + "Delay: " + TextFormatting.GOLD + pump.getDelay() + " ticks";
+            probeInfo.text(delay);
+
         }
 	}
 

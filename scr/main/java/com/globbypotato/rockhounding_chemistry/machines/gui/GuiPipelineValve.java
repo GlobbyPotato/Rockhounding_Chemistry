@@ -82,7 +82,9 @@ public class GuiPipelineValve extends GuiBase {
 		for(int side = 0; side < this.pipelineValve.sideStatus.length; side++){
 			int offset = side * 18;
 			if(this.pipelineValve.tiltStatus[side]){
-				this.drawTexturedModalRect(i + 34 + offset, j + 35, 176, 16, 16, 16); //tilt
+				if(this.pipelineValve.sideStatus[side]){
+					this.drawTexturedModalRect(i + 34 + offset, j + 35, 176, 16, 16, 16); //tilt
+				}
 			}else{
 				if(this.pipelineValve.sideStatus[side]){
 					this.drawTexturedModalRect(i + 34 + offset, j + 35, 176, 0, 16, 16); //on

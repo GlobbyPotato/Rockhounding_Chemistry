@@ -31,10 +31,25 @@ public class TileEntityMineralSizer extends TileEntityMachineTank {
 	private ItemStackHandler template = new TemplateStackHandler(3);
 	public ArrayList<ItemStack> resultList = new ArrayList<ItemStack>();
 
-	public TileEntityMineralSizer() {
-		super(4,3,1);
+	public static int totInput = 4;
+	public static int totOutput = 3;
 
-		input =  new MachineStackHandler(INPUT_SLOTS,this){
+	public TileEntityMineralSizer() {
+		super(totInput, totOutput, 1);
+
+		input =  new MachineStackHandler(totInput,this){
+			@Override
+			public void validateSlotIndex(int slot){
+				if(input.getSlots() < totInput){
+					ItemStack[] stacksCloned = stacks;
+					input.setSize(totInput);
+					for(int x = 0; x < stacksCloned.length; x++){
+						stacks[x] = stacksCloned[x];
+					}
+				}
+				super.validateSlotIndex(slot);
+			}
+
 			@Override
 			public ItemStack insertItem(int slot, ItemStack insertingStack, boolean simulate){
 				if(slot == INPUT_SLOT && (isValidInput(insertingStack) || isValidOredict(insertingStack)) ){

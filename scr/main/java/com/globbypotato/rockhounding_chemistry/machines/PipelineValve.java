@@ -4,6 +4,7 @@ import javax.annotation.Nullable;
 
 import com.globbypotato.rockhounding_chemistry.Rhchemistry;
 import com.globbypotato.rockhounding_chemistry.handlers.GuiHandler;
+import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityPipelineValve;
 
 import net.minecraft.block.Block;
@@ -24,6 +25,7 @@ public class PipelineValve extends PipelineBase {
 
 	public PipelineValve(float hardness, float resistance, String name) {
 		super(hardness, resistance, name);
+		setCreativeTab(Reference.RockhoundingChemistry);
 	}
 
     @Override

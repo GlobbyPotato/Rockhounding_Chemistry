@@ -52,9 +52,9 @@ public class TileEntityAirCompresser extends TileEntityMachineInv{
 	// ----------------------- PROCESS -----------------------
 	@Override
 	public void update() {	
-		if(!worldObj.isRemote){
-			if (getAir() != updating) {
-				updating = getAir();
+		if(!this.worldObj.isRemote){
+			if (getAir() != this.updating) {
+				this.updating = getAir();
 				this.markDirtyClient();
 			}
 		}

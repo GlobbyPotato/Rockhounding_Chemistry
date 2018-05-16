@@ -22,6 +22,8 @@ public class TileEntityPipelinePump extends TileEntityMachineBase  implements IT
 	public int numducts = 0;
 	public boolean activation;
 	public boolean upgrade;
+	public int delay;
+	private int countDelay = 0;
 
 
 
@@ -31,6 +33,7 @@ public class TileEntityPipelinePump extends TileEntityMachineBase  implements IT
 		super.readFromNBT(compound);
         this.activation = compound.getBoolean("Activation");
         this.upgrade = compound.getBoolean("Upgrade");
+        this.delay = compound.getInteger("Delay");
 	}
 
 	@Override
@@ -38,6 +41,7 @@ public class TileEntityPipelinePump extends TileEntityMachineBase  implements IT
 		super.writeToNBT(compound);
         compound.setBoolean("Activation", isActive());
         compound.setBoolean("Upgrade", hasUpgrade());
+        compound.setInteger("Delay", getDelay());
 		return compound;
 	}
 
@@ -62,6 +66,10 @@ public class TileEntityPipelinePump extends TileEntityMachineBase  implements IT
 		return upgrade;
 	}
 
+	public int getDelay() {
+		return this.delay;
+	}
+
 	public boolean isAnyPipe(TileEntity checkTile) {
 		return checkTile instanceof TileEntityPipelineValve || checkTile instanceof TileEntityPipelinePump;
 	}
@@ -77,18 +85,25 @@ public class TileEntityPipelinePump extends TileEntityMachineBase  implements IT
 	public void update() {
 		if(!worldObj.isRemote){
 			if(isActive()){
-				//set starting pos
-				addPump(pos);
-				//search connections
-				if(numducts < ducts.size()){
-					addConnection(ducts.get(numducts));
-					numducts++;
+				if(countDelay >= getDelay()){
+					//set starting pos
+					if(this.ducts.size() == 0){
+						this.ducts.add(this.pos);
+					}
+					//search connections
+					if(numducts < ducts.size()){
+						addConnection(ducts.get(numducts));
+						numducts++;
+					}else{
+						//serve handlers
+						numducts = 0;
+						handleValves();
+						ducts.clear();
+						fluidUsers.clear();
+					}
+					countDelay = 0;
 				}else{
-					//serve handlers
-					numducts = 0;
-					handleValves();
-					ducts.clear();
-					fluidUsers.clear();
+					countDelay++;
 				}
 			}
 			this.markDirtyClient();
@@ -100,64 +115,28 @@ public class TileEntityPipelinePump extends TileEntityMachineBase  implements IT
 			BlockPos checkPos = duct.offset(facing);
 			IBlockState checkState = this.worldObj.getBlockState(checkPos);
 			if(checkState != null && checkState.getBlock() instanceof PipelineDuct){
-				addNewDuct(checkPos);
+				if(!this.ducts.contains(checkPos)){
+					this.ducts.add(checkPos);
+				}
 		    }
 
 			if(checkState != null && checkState.getBlock() instanceof PipelineValve){
 				TileEntityPipelineValve valveTile = (TileEntityPipelineValve)worldObj.getTileEntity(checkPos);
 				if(valveTile != null){
 					if(valveTile.sideStatus[facing.getOpposite().ordinal()]){
-						addNewHandler(checkPos);
+						if(!this.fluidUsers.contains(checkPos)){
+							this.fluidUsers.add(checkPos);
+						}
 					}
 				}
 			}
 		}
 	}
 
-	private void addNewDuct(BlockPos duct) {
-		boolean ductexists = false;
-		for(BlockPos poss : ducts){
-			if(poss.equals(duct)){
-				ductexists = true;
-				break;
-			}
-		}
-		if(!ductexists){
-			ducts.add(duct);
-			numducts--;
-		}
-	}
-
-	private void addNewHandler(BlockPos duct) {
-		boolean ductexists = false;
-		for(BlockPos valve : fluidUsers){
-			if(valve.equals(duct)){
-				ductexists = true;
-				break;
-			}
-		}
-		if(!ductexists){
-			fluidUsers.add(duct);
-		}
-	}
-
-	private void addPump(BlockPos pump) {
-		boolean ductexists = false;
-		for(BlockPos poss : ducts){
-			if(poss.equals(pump)){
-				ductexists = true;
-				break;
-			}
-		}
-		if(!ductexists){
-			ducts.add(pump);
-		}
-	}
-
 	private void handleValves() {
-		if(!fluidUsers.isEmpty() && fluidUsers.size() > 0){
+		if(!this.fluidUsers.isEmpty() && this.fluidUsers.size() > 0){
 			for(EnumFacing facing : EnumFacing.values()){
-				BlockPos checkPos = pos.offset(facing);
+				BlockPos checkPos = this.pos.offset(facing);
 				TileEntity checkTile = this.worldObj.getTileEntity(checkPos);
 				if(checkTile != null){
 					if(hasFluidCapability(checkTile, facing.getOpposite()) && !isAnyPipe(checkTile)){

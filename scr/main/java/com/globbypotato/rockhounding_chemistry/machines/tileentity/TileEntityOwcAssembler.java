@@ -42,10 +42,13 @@ public class TileEntityOwcAssembler extends TileEntityMachineInv {
 	ItemStack owcStorage = owcPart(6);
 	ItemStack owcController = new ItemStack(ModBlocks.owcController);
 	
-	public TileEntityOwcAssembler() {
-		super(8,0);
+	public static int totInput = 8;
+	public static int totOutput = 0;
 
-		input =  new MachineStackHandler(INPUT_SLOTS,this){
+	public TileEntityOwcAssembler() {
+		super(totInput,totOutput);
+
+		input =  new MachineStackHandler(totInput,this){
 			@Override
 			public ItemStack insertItem(int slot, ItemStack insertingStack, boolean simulate){
 				if(slot == SLOT_BULKHEAD && ItemStack.areItemsEqual(owcBulkhead, insertingStack) ){

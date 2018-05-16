@@ -18,10 +18,13 @@ public class TileEntityPetrographerTable extends TileEntityMachineInv {
 	public static final int ORE_SLOT = 1;
 	public static final int SHARD_SLOT = 2;
 
-	public TileEntityPetrographerTable(){
-		super(3,0);
+	public static int totInput = 3;
+	public static int totOutput = 0;
 
-		input =  new MachineStackHandler(INPUT_SLOTS,this){
+	public TileEntityPetrographerTable(){
+		super(totInput, totOutput);
+
+		input =  new MachineStackHandler(totInput,this){
 			@Override
 			public ItemStack insertItem(int slot, ItemStack insertingStack, boolean simulate){
 				if(slot == TOOL_SLOT && ItemStack.areItemsEqualIgnoreDurability(ToolUtils.petrographer, insertingStack) ){

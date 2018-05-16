@@ -18,10 +18,13 @@ public class TileEntityCastingBench extends TileEntityMachineTank {
 
 	public int currentCast;
 
-	public TileEntityCastingBench() {
-		super(1,1,0);
+	public static int totInput = 1;
+	public static int totOutput = 1;
 
-		input =  new MachineStackHandler(INPUT_SLOTS, this){
+	public TileEntityCastingBench() {
+		super(totInput, totOutput, 0);
+
+		this.input =  new MachineStackHandler(totInput, this){
 
 			@Override
 			public ItemStack insertItem(int slot, ItemStack insertingStack, boolean simulate){
@@ -32,7 +35,7 @@ public class TileEntityCastingBench extends TileEntityMachineTank {
 			}
 
 		};
-		automationInput = new WrappedItemHandler(input, WriteMode.IN);
+		this.automationInput = new WrappedItemHandler(this.input, WriteMode.IN);
 
 	}
 
@@ -44,7 +47,7 @@ public class TileEntityCastingBench extends TileEntityMachineTank {
 	}
 
 	public int getCurrentCast(){
-		return currentCast;
+		return this.currentCast;
 	}
 
 
@@ -83,15 +86,15 @@ public class TileEntityCastingBench extends TileEntityMachineTank {
 	}
 
 	public int getprogress(){
-		return cookTime;
+		return this.cookTime;
 	}
 
 	public boolean isProcessing(){
 		return canProcess() && getprogress() > 0;
 	}
 
-	private boolean isSlotEmpty() {
-		return input.getStackInSlot(INPUT_SLOT) == null;
+	public boolean isSlotEmpty() {
+		return this.input.getStackInSlot(INPUT_SLOT) == null;
 	}
 
 
@@ -115,11 +118,11 @@ public class TileEntityCastingBench extends TileEntityMachineTank {
 	//----------------------- PROCESS -----------------------
 	@Override
 	public void update(){
-		if(!worldObj.isRemote){
+		if(!this.worldObj.isRemote){
 			if(canProcess()){
-				cookTime++;
-				if(cookTime >= getMaxCookTime()) {
-					cookTime = 0;
+				this.cookTime++;
+				if(this.cookTime >= getMaxCookTime()) {
+					this.cookTime = 0;
 					process();
 				}
 			}
@@ -128,15 +131,15 @@ public class TileEntityCastingBench extends TileEntityMachineTank {
 	}
 
 	private boolean canProcess() {
-		return output.getStackInSlot(OUTPUT_SLOT) == null
-			&& getRecipe(input.getStackInSlot(INPUT_SLOT)) != null;
+		return this.output.getStackInSlot(OUTPUT_SLOT) == null
+			&& getRecipe(this.input.getStackInSlot(INPUT_SLOT)) != null;
 	}
 
 	private void process() {
-		ItemStack inputStack = input.getStackInSlot(INPUT_SLOT);
+		ItemStack inputStack = this.input.getStackInSlot(INPUT_SLOT);
 		ItemStack outputStack = getRecipe(inputStack).getOutput();
-		output.setStackInSlot(OUTPUT_SLOT, outputStack);
-		input.decrementSlot(INPUT_SLOT);
+		this.output.setStackInSlot(OUTPUT_SLOT, outputStack);
+		this.input.decrementSlot(INPUT_SLOT);
 	}
 
 

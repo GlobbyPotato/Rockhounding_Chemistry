@@ -71,10 +71,13 @@ public class TileEntityMineCrawlerAssembler extends TileEntityMachineInv {
 	ItemStack supportArms = crawlerPart(66);
 	ItemStack anyCrawler = new ItemStack(ModBlocks.mineCrawler);
 
-	public TileEntityMineCrawlerAssembler() {
-		super(20,1);
+	public static int totInput = 20;
+	public static int totOutput = 1;
 
-		input =  new MachineStackHandler(INPUT_SLOTS,this){
+	public TileEntityMineCrawlerAssembler() {
+		super(totInput, totOutput);
+
+		input =  new MachineStackHandler(totInput,this){
 			@Override
 			public ItemStack insertItem(int slot, ItemStack insertingStack, boolean simulate){
 				if(slot == SLOT_CASING && ItemStack.areItemsEqual(crawlerCasing, insertingStack) ){
@@ -220,7 +223,7 @@ public class TileEntityMineCrawlerAssembler extends TileEntityMachineInv {
 
 			private void handleSlots(ItemStack outputStack){
 				output.setStackInSlot(SLOT_OUTPUT, outputStack.copy());
-				for(int x = 0; x < this.INPUT_SLOTS; x++){
+				for(int x = 0; x < totInput; x++){
 					if(x < SLOT_LOADER){
 						input.setStackInSlot(x, null);
 					}

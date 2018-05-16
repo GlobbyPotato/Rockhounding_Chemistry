@@ -4,6 +4,7 @@ import javax.annotation.Nonnull;
 
 import com.globbypotato.rockhounding_chemistry.compat.jei.RHRecipeCategory;
 import com.globbypotato.rockhounding_chemistry.compat.jei.RHRecipeUID;
+import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiLabOven;
 
 import mezz.jei.api.IGuiHelper;
@@ -21,10 +22,10 @@ public class LabOvenRecipeCategory extends RHRecipeCategory {
 	private static final int REAGENT_SLOT = 2;
 	private static final int OUTPUT_SLOT = 3;
 
-	private final static ResourceLocation guiTexture = GuiLabOven.TEXTURE_REF;
+	public static final ResourceLocation guiTexture =  new ResourceLocation(Reference.MODID + ":textures/gui/jeilaboven.png");
 
 	public LabOvenRecipeCategory(IGuiHelper guiHelper) {
-		super(guiHelper.createDrawable(guiTexture, 60, 32, 109, 69), "jei.lab_oven.name");
+		super(guiHelper.createDrawable(guiTexture, 0, 0, 116, 62), "jei.lab_oven.name");
 	}
 
 	@Nonnull
@@ -39,10 +40,10 @@ public class LabOvenRecipeCategory extends RHRecipeCategory {
 		IGuiFluidStackGroup guiFluidStacks = recipeLayout.getFluidStacks();
 		LabOvenRecipeWrapper wrapper = (LabOvenRecipeWrapper) recipeWrapper;
 
-		guiItemStacks.init(INPUT_SLOT, true, 1, 1);
-		guiFluidStacks.init(SOLVENT_SLOT, true,  66, 2, 20, 65, 1000, false, null);
-		guiFluidStacks.init(REAGENT_SLOT, true, 88, 2, 20, 65, 1000, false, null);
-		guiFluidStacks.init(OUTPUT_SLOT,  false, 24, 2, 20, 65, 1000, false, null);
+		guiItemStacks.init(INPUT_SLOT, true, 0, 20);
+		guiFluidStacks.init(SOLVENT_SLOT, true,  74, 21, 16, 40, 1000, false, null);
+		guiFluidStacks.init(REAGENT_SLOT, true, 96, 21, 16, 40, 1000, false, null);
+		guiFluidStacks.init(OUTPUT_SLOT,  false, 40, 21, 16, 40, 1000, false, null);
 
 		guiItemStacks.set(INPUT_SLOT, wrapper.getInputs());
 		guiFluidStacks.set(SOLVENT_SLOT, wrapper.getFluidInputs().get(0));

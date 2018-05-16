@@ -32,10 +32,24 @@ public class TileEntityMetalAlloyer extends TileEntityMachineTank {
 	private ItemStackHandler template = new TemplateStackHandler(10);
 	public static int SLOT_FAKE[] = new int[]{0,1,2,3,4,5,6,7,8};
 
-	public TileEntityMetalAlloyer() {
-		super(12, 2, 0);
+	public static int totInput = 12;
+	public static int totOutput = 2;
 
-		input =  new MachineStackHandler(INPUT_SLOTS, this){
+	public TileEntityMetalAlloyer() {
+		super(totInput, totOutput, 0);
+
+		input =  new MachineStackHandler(totInput, this){
+			@Override
+			public void validateSlotIndex(int slot){
+				if(input.getSlots() < totInput){
+					ItemStack[] stacksCloned = stacks;
+					input.setSize(totInput);
+					for(int x = 0; x < stacksCloned.length; x++){
+						stacks[x] = stacksCloned[x];
+					}
+				}
+				super.validateSlotIndex(slot);
+			}
 			@Override
 			public ItemStack insertItem(int slot, ItemStack insertingStack, boolean simulate){
 				if(slot >= SLOT_INPUTS[1] && slot < SLOT_INPUTS.length && isActive() && isMatchingOredict(insertingStack, slot)){

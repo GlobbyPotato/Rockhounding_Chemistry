@@ -31,10 +31,13 @@ public class TileEntityElectroLaser extends TileEntityMachineTank {
 	private int countBeam;
 	private boolean firstObstacle;
 
-	public TileEntityElectroLaser() {
-		super(1, 0, 0);
+	public static int totInput = 1;
+	public static int totOutput = 0;
 
-		inputTank = new FluidTank(10000) {
+	public TileEntityElectroLaser() {
+		super(totInput, totOutput, 0);
+
+		this.inputTank = new FluidTank(10000) {
 			@Override
 			public boolean canFillFluidType(FluidStack fluid) {
 				return fluid.getFluid().equals(EnumFluid.pickFluid(EnumFluid.LIQUID_NITROGEN));
@@ -45,9 +48,9 @@ public class TileEntityElectroLaser extends TileEntityMachineTank {
 				return true;
 			}
 		};
-		inputTank.setTileEntity(this);
+		this.inputTank.setTileEntity(this);
 
-		input = new MachineStackHandler(INPUT_SLOTS, this) {
+		this.input = new MachineStackHandler(totInput, this) {
 			@Override
 			public ItemStack insertItem(int slot, ItemStack insertingStack, boolean simulate) {
 				if (slot == SOLUTION_SLOT && handleBucket(insertingStack, EnumFluid.pickFluid(EnumFluid.LIQUID_NITROGEN)) ) {
@@ -56,7 +59,7 @@ public class TileEntityElectroLaser extends TileEntityMachineTank {
 				return insertingStack;
 			}
 		};
-		automationInput = new WrappedItemHandler(input, WriteMode.IN);
+		this.automationInput = new WrappedItemHandler(this.input, WriteMode.IN);
 		this.markDirtyClient();
 	}
 
@@ -95,7 +98,7 @@ public class TileEntityElectroLaser extends TileEntityMachineTank {
 
 	@Override
 	public FluidHandlerConcatenate getCombinedTank() {
-		return new FluidHandlerConcatenate(inputTank);
+		return new FluidHandlerConcatenate(this.inputTank);
 	}
 
 
@@ -130,8 +133,8 @@ public class TileEntityElectroLaser extends TileEntityMachineTank {
 	@Override
 	public void update() {
 		acceptEnergy();
-		if (!worldObj.isRemote) {
-			emptyContainer(SOLUTION_SLOT, inputTank);
+		if (!this.worldObj.isRemote) {
+			emptyContainer(SOLUTION_SLOT, this.inputTank);
 			placeRay();
 			this.markDirtyClient();
 		}
@@ -139,63 +142,63 @@ public class TileEntityElectroLaser extends TileEntityMachineTank {
 
 	private boolean canEmit() {
 		return this.getRedstone() >= this.redstoneCost()
-			&& input.hasEnoughFluid(inputTank.getFluid(), new FluidStack(EnumFluid.pickFluid(EnumFluid.LIQUID_NITROGEN), consumedNitrogen()));
+			&& this.input.hasEnoughFluid(this.inputTank.getFluid(), new FluidStack(EnumFluid.pickFluid(EnumFluid.LIQUID_NITROGEN), consumedNitrogen()));
 	}
 
 	private void placeRay() {
 	    EnumFacing laserfacing = state().getValue(eleFacing());
 	    EnumFacing rayfacing = laserfacing;
-		firstObstacle = false;
-		if(countBeam >= getStage() + 1){
+		this.firstObstacle = false;
+		if(this.countBeam >= getStage() + 1){
 			if(isEmitting()){
 	    		for(int x = 1; x <= getStage() + 1; x++){
-	    			BlockPos checkingpos = pos.offset(laserfacing, x);
-					IBlockState checkingstate = worldObj.getBlockState(checkingpos); 
-	    			if(firstObstacle == false){
+	    			BlockPos checkingpos = this.pos.offset(laserfacing, x);
+					IBlockState checkingstate = this.worldObj.getBlockState(checkingpos); 
+	    			if(this.firstObstacle == false){
 					    if(checkingstate.getBlock() == air().getBlock()){
 							IBlockState raystate = ray().getDefaultState().withProperty(rayFacing(), rayfacing); 
-					    	worldObj.setBlockState(checkingpos, raystate);
-				    		firstObstacle = false;
-				    		TileEntityLaserRay ray = (TileEntityLaserRay)worldObj.getTileEntity(checkingpos);
+					    	this.worldObj.setBlockState(checkingpos, raystate);
+				    		this.firstObstacle = false;
+				    		TileEntityLaserRay ray = (TileEntityLaserRay)this.worldObj.getTileEntity(checkingpos);
 				    		ray.stage = getDamage();
 					    }else if(checkingstate.getBlock() == ray()){
 					    	if(checkingstate.getValue(rayFacing()) == rayfacing ) {
-					    		firstObstacle = false;
+					    		this.firstObstacle = false;
 						    }else{
-						    	firstObstacle = true;
+						    	this.firstObstacle = true;
 					    	}
 					    }else{
-					    	firstObstacle = true;
+					    	this.firstObstacle = true;
 					    }
 	    			}
 	    		}
-	    		if(rand.nextInt(20) == 0){
+	    		if(this.rand.nextInt(20) == 0){
 	    			this.inputTank.getFluid().amount -= consumedNitrogen();
 	    		}
 				this.redstoneCount -= redstoneCost();
 			}else{
-		    	if(worldObj.getBlockState(pos.offset(laserfacing)).getBlock() == ray()){
-		    		EnumFacing beamfacing = worldObj.getBlockState(pos.offset(laserfacing)).getValue(rayFacing());
+		    	if(this.worldObj.getBlockState(this.pos.offset(laserfacing)).getBlock() == ray()){
+		    		EnumFacing beamfacing = this.worldObj.getBlockState(this.pos.offset(laserfacing)).getValue(rayFacing());
 				    if(beamfacing == laserfacing){
-				    	worldObj.setBlockState(pos.offset(laserfacing), air());
+				    	this.worldObj.setBlockState(this.pos.offset(laserfacing), air());
 				    }
 		    	}
 			}
-			countBeam = 0;
+			this.countBeam = 0;
 		}else{
-			countBeam++;
+			this.countBeam++;
 		}
 	}
 
 	public int getStage() {
-		IBlockState state = worldObj.getBlockState(pos);
+		IBlockState state = this.worldObj.getBlockState(this.pos);
 	    EnumFacing elefacing = state.getValue(eleFacing());
-	    BlockPos cascadepos = pos.offset(elefacing.getOpposite());
-	    IBlockState cascadestate = worldObj.getBlockState(cascadepos);
+	    BlockPos cascadepos = this.pos.offset(elefacing.getOpposite());
+	    IBlockState cascadestate = this.worldObj.getBlockState(cascadepos);
 	    if(cascadestate != null && cascadestate.getBlock() instanceof LaserAmplifier){
 		    EnumFacing cascadefacing = cascadestate.getValue(cascadeFacing());
 		    if(cascadefacing == elefacing){
-		    	TileEntityLaserAmplifier amplifier = (TileEntityLaserAmplifier)worldObj.getTileEntity(cascadepos);
+		    	TileEntityLaserAmplifier amplifier = (TileEntityLaserAmplifier)this.worldObj.getTileEntity(cascadepos);
 		    	if(amplifier.isPowered()){ 
 		    		if(amplifier.getStage() <= getRange()){
 		    			return amplifier.getStage();
@@ -207,14 +210,14 @@ public class TileEntityElectroLaser extends TileEntityMachineTank {
 	}
 
 	public boolean isPowered() {
-		IBlockState state = worldObj.getBlockState(pos);
+		IBlockState state = this.worldObj.getBlockState(this.pos);
 	    EnumFacing elefacing = state.getValue(eleFacing());
-	    BlockPos cascadepos = pos.offset(elefacing.getOpposite());
-	    IBlockState cascadestate = worldObj.getBlockState(cascadepos);
+	    BlockPos cascadepos = this.pos.offset(elefacing.getOpposite());
+	    IBlockState cascadestate = this.worldObj.getBlockState(cascadepos);
 	    if(cascadestate != null && cascadestate.getBlock() instanceof LaserAmplifier){
 		    EnumFacing cascadefacing = cascadestate.getValue(cascadeFacing());
 		    if(cascadefacing == elefacing){
-		    	TileEntityLaserAmplifier amplifier = (TileEntityLaserAmplifier)worldObj.getTileEntity(cascadepos);
+		    	TileEntityLaserAmplifier amplifier = (TileEntityLaserAmplifier)this.worldObj.getTileEntity(cascadepos);
 		    	if(amplifier.isPowered()){
 			    	return true;
 		    	}
@@ -236,7 +239,7 @@ public class TileEntityElectroLaser extends TileEntityMachineTank {
 	}
 
 	public IBlockState state(){
-		return worldObj.getBlockState(pos);
+		return this.worldObj.getBlockState(this.pos);
 	}
 
 	public IBlockState air(){

@@ -39,8 +39,11 @@ public class TileEntityMineralAnalyzer extends TileEntityMachineTank{
 	public float gravity = 8.00F;
 	public ArrayList<ItemStack> pickedShards = new ArrayList<ItemStack>();
 
+	public static int totInput = 7;
+	public static int totOutput = 1;
+
 	public TileEntityMineralAnalyzer() {
-		super(7,1,1);
+		super(totInput, totOutput, 1);
 
 		sulfTank = new FluidTank(1000 + ModConfig.machineTank){
 			@Override  
@@ -81,7 +84,19 @@ public class TileEntityMineralAnalyzer extends TileEntityMachineTank{
 		};
 		fluoTank.setTileEntity(this);
 
-		input =  new MachineStackHandler(INPUT_SLOTS, this){
+		input =  new MachineStackHandler(totInput, this){
+			@Override
+			public void validateSlotIndex(int slot){
+				if(input.getSlots() < totInput){
+					ItemStack[] stacksCloned = stacks;
+					input.setSize(totInput);
+					for(int x = 0; x < stacksCloned.length; x++){
+						stacks[x] = stacksCloned[x];
+					}
+				}
+				super.validateSlotIndex(slot);
+			}
+
 			@Override
 			public ItemStack insertItem(int slot, ItemStack insertingStack, boolean simulate){
 				if(slot == INPUT_SLOT && hasRecipe(insertingStack)){

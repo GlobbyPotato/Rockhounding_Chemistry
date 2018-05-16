@@ -40,7 +40,7 @@ public class ModRecipes extends BaseRecipes {
 		pipeRecipes();
 		upgradesRecipes();
 	}
-	
+
 	private static void upgradesRecipes(){
 		GameRegistry.addRecipe(new ShapedOreRecipe(speeds(1), new Object[] { "GCG", "CLC", "GCG", 'G', ToolUtils.gear, 'C', ironFoil, 'L', logicChip }));
 		GameRegistry.addRecipe(new ShapedOreRecipe(speeds(2), new Object[] { "GCG", "CLC", "GCG", 'G', "ingotScal", 'C', ironFoil, 'L', speeds(1) }));
@@ -138,6 +138,8 @@ public class ModRecipes extends BaseRecipes {
 	}
 
 	private static void machineryRecipes() {
+	//server
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.machineServer), new Object[] { "ICI", "ccc", "IAI", 'I', ironCasing, 'C', comparator, 'c', logicChip, 'A', advancedChip }));
 	//lab oven
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.labOven), new Object[] { "GCG", "IcI", "IGI", 'I', ironCasing, 'C', cabinet, 'c', logicChip, 'G', "blockGlass" }));
 	//mineral sizer
@@ -155,6 +157,8 @@ public class ModRecipes extends BaseRecipes {
 	//petrographer table
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.petrographerTable), new Object[] { "OOO", "CCC", " C ", 'C', Blocks.HARDENED_CLAY, 'O', "obsidian" }));
 
+	//server file
+		GameRegistry.addRecipe(new ShapedOreRecipe(server_file, new Object[] { " N ","NLN"," N ", 'N', "nuggetIron", 'L', logicChip }));
 	//cabinet
 		GameRegistry.addRecipe(new ShapedOreRecipe(cabinet, new Object[] { "GGG","GIG","GGG", 'I', "ingotIron", 'G', "blockGlass" }));
 	//logic chip

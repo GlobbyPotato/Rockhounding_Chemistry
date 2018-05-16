@@ -12,6 +12,7 @@ import com.globbypotato.rockhounding_chemistry.machines.container.ContainerGanCo
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerLabBlender;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerLabOven;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerLaserAmplifier;
+import com.globbypotato.rockhounding_chemistry.machines.container.ContainerMachineServer;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerMetalAlloyer;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerMineCrawlerAssembler;
 import com.globbypotato.rockhounding_chemistry.machines.container.ContainerMineralAnalyzer;
@@ -35,6 +36,7 @@ import com.globbypotato.rockhounding_chemistry.machines.gui.GuiGanController;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiLabBlender;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiLabOven;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiLaserAmplifier;
+import com.globbypotato.rockhounding_chemistry.machines.gui.GuiMachineServer;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiMetalAlloyer;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiMineCrawlerAssembler;
 import com.globbypotato.rockhounding_chemistry.machines.gui.GuiMineralAnalyzer;
@@ -58,6 +60,7 @@ import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityGan
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityLabBlender;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityLabOven;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityLaserAmplifier;
+import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityMachineServer;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityMetalAlloyer;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityMineCrawlerAssembler;
 import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityMineralAnalyzer;
@@ -100,8 +103,9 @@ public class GuiHandler implements IGuiHandler {
 	public static final int ultraBatteryID = 19;
 	public static final int castingBenchID = 20;
 	public static final int labBlenderID = 21;
-	public static final int disposerID = 22;
-	public static final int pipelineValveID = 23;
+	public static final int serverID = 22;
+	public static final int disposerID = 23;
+	public static final int pipelineValveID = 24;
 
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -150,6 +154,8 @@ public class GuiHandler implements IGuiHandler {
 				if (entity != null && entity instanceof TileEntityCastingBench){return new ContainerCastingBench(player.inventory, (TileEntityCastingBench) entity);}
 			case labBlenderID:
 				if (entity != null && entity instanceof TileEntityLabBlender){return new ContainerLabBlender(player.inventory, (TileEntityLabBlender) entity);}
+			case serverID:
+				if (entity != null && entity instanceof TileEntityMachineServer){return new ContainerMachineServer(player.inventory, (TileEntityMachineServer) entity);}
 			case disposerID:
 				if (entity != null && entity instanceof TileEntityDisposer){return new ContainerDisposer(player.inventory, (TileEntityDisposer) entity);}
 			case pipelineValveID:
@@ -205,6 +211,8 @@ public class GuiHandler implements IGuiHandler {
 				if (entity != null && entity instanceof TileEntityCastingBench){return new GuiCastingBench(player.inventory, (TileEntityCastingBench) entity);}
 			case labBlenderID:
 				if (entity != null && entity instanceof TileEntityLabBlender){return new GuiLabBlender(player.inventory, (TileEntityLabBlender) entity);}
+			case serverID:
+				if (entity != null && entity instanceof TileEntityMachineServer){return new GuiMachineServer(player.inventory, (TileEntityMachineServer) entity);}
 			case disposerID:
 				if (entity != null && entity instanceof TileEntityDisposer){return new GuiDisposer(player.inventory, (TileEntityDisposer) entity);}
 			case pipelineValveID:

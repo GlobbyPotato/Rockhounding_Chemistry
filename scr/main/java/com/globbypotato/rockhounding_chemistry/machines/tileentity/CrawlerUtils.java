@@ -26,11 +26,10 @@ public class CrawlerUtils {
 	}
 
 	public static String decompileItemStack(String nameNbt) {
-		if(nameNbt.matches("None") || nameNbt.matches("") || nameNbt == null){
+		if(nameNbt.matches("None") || nameNbt.matches("")){
 			return "None";
-		}else{
-			return nameNbt;
 		}
+		return nameNbt;
 	}
 
 	public static IBlockState tempStateFromString(String name, int meta){

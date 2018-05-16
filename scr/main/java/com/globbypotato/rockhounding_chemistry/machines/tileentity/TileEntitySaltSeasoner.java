@@ -28,10 +28,13 @@ public class TileEntitySaltSeasoner extends TileEntityMachineEnergy {
 	ItemStack saltStack = new ItemStack(ModItems.chemicalItems, 1, 1);
 	ItemStack rawStack = new ItemStack(ModItems.chemicalItems, 1, 7);
 	
-	public TileEntitySaltSeasoner() {
-		super(1,1,0);
+	public static int totInput = 1;
+	public static int totOutput = 1;
 
-		input =  new MachineStackHandler(INPUT_SLOTS,this){
+	public TileEntitySaltSeasoner() {
+		super(totInput, totOutput, 0);
+
+		input =  new MachineStackHandler(totInput,this){
 			@Override
 			public ItemStack insertItem(int slot, ItemStack insertingStack, boolean simulate){
 				if(slot == INPUT_SLOT && hasRecipe(insertingStack) || ItemStack.areItemsEqual(insertingStack, rawStack) ){

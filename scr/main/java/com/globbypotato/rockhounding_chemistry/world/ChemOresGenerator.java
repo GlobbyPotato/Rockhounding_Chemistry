@@ -35,20 +35,19 @@ public class ChemOresGenerator implements IWorldGenerator {
 		}
 	}
 
-	private void generateMineral(World world, Random random, BlockPos pos) {
+	private static void generateMineral(World world, Random random, BlockPos pos) {
 		if(mineralFrequency > 0){
 			addNewMineral(ModBlocks.mineralOres, 0,  world, random, pos, 16, 16, mineralMinVein, mineralMaxVein, mineralFrequency, mineralMinLevel, mineralMaxLevel, Blocks.STONE);//mineral
 		}
 	}
 
-	private void addNewMineral(Block block, int metadata, World world, Random random, BlockPos pos, int maxX, int maxZ, int minVeinSize, int maxVeinSize, int chanceToSpawn, int minY, int maxY, Block generateIn) {
+	private static void addNewMineral(Block block, int metadata, World world, Random random, BlockPos pos, int maxX, int maxZ, int minVeinSize, int maxVeinSize, int chanceToSpawn, int minY, int maxY, Block generateIn) {
 		if (minY < 0 || maxY > 256 || minY > maxY) throw new IllegalArgumentException("Illegal Height Arguments for WorldGenerator");
 		int oreVeinSize = minVeinSize + random.nextInt(1 + (maxVeinSize - minVeinSize));
 		for (int i = 0; i < chanceToSpawn; i++) {
 			int x = pos.getX() + random.nextInt(maxX);
 			int y = minY + random.nextInt(1 + (maxY - minY));
 			int z = pos.getZ() + random.nextInt(maxZ);
-			BlockPos blockpos = new BlockPos(x, y, z);
             IBlockState state = block.getStateFromMeta(metadata);
 			WorldGenMinable mine = new WorldGenMinable(state, oreVeinSize, BlockMatcher.forBlock(generateIn));
 			mine.generate(world, random, new BlockPos(x, y, z));

@@ -48,6 +48,9 @@ public class WailaPipelinePump implements IWailaDataProvider{
 				upgradestring = TextFormatting.DARK_AQUA + "Advanced (100B)";
 			}
 	    	currenttip.add(TextFormatting.GRAY + "Tier: " + upgradestring);
+	    	
+	    	currenttip.add(TextFormatting.GRAY + "Delay: " + TextFormatting.GOLD + pump.getDelay() + " ticks");
+
 		}
 		return currenttip;
 	}
