@@ -203,3 +203,13 @@ mods.rockhounding_chemistry.SlurryPond.add(<minecraft:slime_ball>, <liquid:water
 mods.rockhounding_chemistry.SlurryPond.removeByInput(<minecraft:slime_ball>);
 //slurry: the output to remove
 mods.rockhounding_chemistry.SlurryPond.removeByOutput(<liquid:silicone>);
+
+
+//input: the fluid/gas input
+//output: the converted fluid/gas
+mods.rockhounding_chemistry.Transposer.add(<liquid:sulphuricacid>*1000, <liquid:sulfuric_acid>*1000);
+
+//input: the input to remove
+mods.rockhounding_chemistry.Transposer.removeByInput(<liquid:sulphuricacid>*1000);
+//slurry: the output to remove
+mods.rockhounding_chemistry.Transposer.removeByOutput(<liquid:sulfuric_acid>*1000));
