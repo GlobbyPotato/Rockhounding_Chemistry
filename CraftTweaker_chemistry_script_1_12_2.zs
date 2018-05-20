@@ -211,5 +211,5 @@ mods.rockhounding_chemistry.Transposer.add(<liquid:sulphuricacid>*1000, <liquid:
 
 //input: the input to remove
 mods.rockhounding_chemistry.Transposer.removeByInput(<liquid:sulphuricacid>*1000);
-//slurry: the output to remove
+//output: the output to remove
 mods.rockhounding_chemistry.Transposer.removeByOutput(<liquid:sulfuric_acid>*1000));
