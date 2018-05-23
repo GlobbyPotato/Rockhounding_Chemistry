@@ -205,9 +205,11 @@ mods.rockhounding_chemistry.SlurryPond.removeByInput(<minecraft:slime_ball>);
 mods.rockhounding_chemistry.SlurryPond.removeByOutput(<liquid:silicone>);
 
 
+//Note: to just allow the Gas Pipeline recognize gases from other mods, input and output below must be set same
 //input: the fluid/gas input
 //output: the converted fluid/gas
 mods.rockhounding_chemistry.Transposer.add(<liquid:sulphuricacid>*1000, <liquid:sulfuric_acid>*1000);
+mods.rockhounding_chemistry.Transposer.add(<liquid:ic2superheated_steam>*1000, <liquid:ic2superheated_steam>*1000);
 
 //input: the input to remove
 mods.rockhounding_chemistry.Transposer.removeByInput(<liquid:sulphuricacid>*1000);
