@@ -7,7 +7,7 @@ mods.rockhounding_chemistry.PollutantFluid.add(<liquid:chloromethane>*1000);
 
 
 //input stack: the item to mutate
-//output stack: the item to mutate
+//output stack: the mutated item
 mods.rockhounding_chemistry.ToxicMutation.add(<minecraft:leather>, <minecraft:rotten_flesh>);
 
 //input stack: the input to remove
