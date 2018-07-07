@@ -1,3 +1,21 @@
+//input gas: the gas to mark as pollutant
+mods.rockhounding_chemistry.PollutantGas.add(<liquid:ammonia>*1000);
+
+
+//input fluid: the fluid to mark as pollutant
+mods.rockhounding_chemistry.PollutantFluid.add(<liquid:chloromethane>*1000);
+
+
+//input stack: the item to mutate
+//output stack: the item to mutate
+mods.rockhounding_chemistry.ToxicMutation.add(<minecraft:leather>, <minecraft:rotten_flesh>);
+
+//input stack: the input to remove
+mods.rockhounding_chemistry.ToxicMutation.remove(<minecraft:leather>);
+//output stack: the output to remove
+mods.rockhounding_chemistry.ToxicMutation.remove(<minecraft:rotten_flesh>);
+
+
 //categoty: the category of the input
 //input stack: the item to decompose
 //output array: the list of elements oredict composing the input
