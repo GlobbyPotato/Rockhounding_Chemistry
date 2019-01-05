@@ -1,12 +1,12 @@
-//Note: one between solute and catalyst must be always used. the solvent and the solution cannot be null.
+//Note: the solute must be always used. the solvent and the solution cannot be null.
 //display name: alternative name for the recipe selector. Can be null id not needed
-//solute stack: the main ingredient (optional)
+//solute stack or roedict string: the main ingredient (required)
 //catalyst: the damageable ingredient (optional)
 //solvent fluid: the main solvent
 //solution fluid: the output fluid
 //precipitate: the secondary solid output (optional)
 mods.rockhounding_chemistry.Precipitator.add("Magma Cream", <minecraft:slime_ball>, null, <liquid:water>*500, <liquid:sulfuric_acid>*500, <minecraft:magma_cream>*100);
-mods.rockhounding_chemistry.Precipitator.add("Magma Cream", "slimeball", null, <liquid:water>*500, <liquid:sulfuric_acid>*500, <minecraft:magma_cream>*100);
+mods.rockhounding_chemistry.Precipitator.add("Magma Cream", "slimeball", <rockhounding_chemistry:co_catalyst>, <liquid:water>*500, <liquid:sulfuric_acid>*500, <minecraft:magma_cream>*100);
 
 //solute stack: the solute to remove
 mods.rockhounding_chemistry.Precipitator.removeByInput(<minecraft:slime_ball>);
@@ -76,8 +76,8 @@ mods.rockhounding_chemistry.InhibitElements.inhibit("dustZirconium");
 //solvent: the gas used as dopant and its quantity. It must be "gaseous"
 //temperature: the threashold temperature (max 3000K)
 //pressure: the threashold pressure (max 30000 uPa)
-mods.rockhounding_chemistry.DepositionChamber.add(<minecraft:hardened_clay>, <minecraft:obsidian>, <liquid:syngas>*500, 3000, 10000);
-mods.rockhounding_chemistry.DepositionChamber.add("ingotIron", <minecraft:obsidian>, <liquid:syngas>*500, 3000, 10000);
+mods.rockhounding_chemistry.DepositionChamber.add(<minecraft:hardened_clay>, <minecraft:obsidian>, <liquid:syngas>*500, 3000, 10000, <liquid:nitrogen>*500);
+mods.rockhounding_chemistry.DepositionChamber.add("ingotIron", <minecraft:obsidian>, <liquid:syngas>*500, 3000, 10000, <liquid:oxygen>*200);
 
 //input stack: the item to remove
 mods.rockhounding_chemistry.DepositionChamber.removeByInput(<minecraft:hardened_clay>);
@@ -162,16 +162,16 @@ mods.rockhounding_chemistry.LabBlender.remove(<minecraft:magma_cream>);
 
 
 
-//Note: one between solute and catalyst must be always used. the solvent and the solution cannot be null.
+//Note: the solute must be always used. the solvent and the solution cannot be null.
 //display name: alternative name for the recipe selector. Can be null id not needed
-//solute stack: the main ingredient (optional)
+//solute stack: the main ingredient (required)
 //catalyst: the damageable ingredient (optional)
 //solvent fluid: the main solvent
 //reagent fluid: the secondary solvent (optional)
 //solution fluid: the output fluid
 //byproduct: the secondary output (optional)
 mods.rockhounding_chemistry.LabOven.add("Silicone Plus", <minecraft:slime_ball>, null, <liquid:water>*500, null, <liquid:sulfuric_acid>*500, <liquid:silicone>*100);
-mods.rockhounding_chemistry.LabOven.add("Silicone Plus", "slimeball", null, <liquid:water>*500, null, <liquid:sulfuric_acid>*500, <liquid:silicone>*100);
+mods.rockhounding_chemistry.LabOven.add("Silicone Mega", "slimeball", <rockhounding_chemistry:co_catalyst>, <liquid:water>*1000, null, <liquid:sulfuric_acid>*500, <liquid:silicone>*400);
 
 //solute stack: the solute to remove
 mods.rockhounding_chemistry.LabOven.removeByInput(<minecraft:slime_ball>);
