@@ -76,6 +76,7 @@ mods.rockhounding_chemistry.InhibitElements.inhibit("dustZirconium");
 //solvent: the gas used as dopant and its quantity. It must be "gaseous"
 //temperature: the threashold temperature (max 3000K)
 //pressure: the threashold pressure (max 30000 uPa)
+//carrier: the gas used as carrier or additional reagent
 mods.rockhounding_chemistry.DepositionChamber.add(<minecraft:hardened_clay>, <minecraft:obsidian>, <liquid:syngas>*500, 3000, 10000, <liquid:nitrogen>*500);
 mods.rockhounding_chemistry.DepositionChamber.add("ingotIron", <minecraft:obsidian>, <liquid:syngas>*500, 3000, 10000, <liquid:oxygen>*200);
 
@@ -98,14 +99,14 @@ mods.rockhounding_chemistry.GasCondenser.removeByOutput(<liquid:water>);
 
 
 
-//Note: the quantity of the fluid/gas ingredients is not relievant. Slags can be both null.
+//Note: Slags can be both null.
 //input fluid: the main ingredient
 //solvent fluid: the secondary ingredient
 //output gas: the resulting gas. It must be "gaseous"
 //slag stack 1: the main by-product (optional)
 //slag stack 2: the secondary by-product (optional)
 //temperature: the threashold temperature (min 31K, max 2000K)
-mods.rockhounding_chemistry.GasifierPlant.add(<liquid:lava>*1000, <liquid:water>*1000, <liquid:oxygen>*1000, <minecraft:dye:14>, null, 900);
+mods.rockhounding_chemistry.GasifierPlant.add(<liquid:lava>*150, <liquid:water>*400, <liquid:oxygen>*120, <minecraft:dye:14>, null, 900);
 
 //input fluid: the fluid to remove
 mods.rockhounding_chemistry.GasifierPlant.removeByInput(<liquid:lava>*);
@@ -128,7 +129,7 @@ mods.rockhounding_chemistry.GasPurifier.removeByOutput(<liquid:oxygen>);
 
 
 
-//Note: the quantity of the gas ingredients is not relievant. The catalyst must be a damageable item.
+//Note: The catalyst must be a damageable item (any item with a durability).
 //input gas A: the left gas ingredient. It must be "gaseous"
 //input gas B: the right gas ingredient. It must be "gaseous"
 //output gas: the combined gas
