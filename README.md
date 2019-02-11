@@ -4,3 +4,5 @@ Each machine can be also integrated with custom recipes, allowing to freely reas
 
 By default the mod features a tech tree running through the processes which bring a mined undefined mineral to be analyzed, acknowledged and treated to become chemical elements.
 The goal is to acquire several elements and material by using a progressive manipulation, to turn the raw mineral into the final dust form. 
+
+This mod could be useful in expert or long term tech packs. To be profitably used, it is highly recommended a deep CraftTweaker integration, eventually with customized paths other than the default tech tree.
