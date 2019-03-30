@@ -1,3 +1,6 @@
+=======================================================
+PRECIPITATION CHAMBER
+=======================================================
 //Note: the solute must be always used. the solvent and the solution cannot be null.
 //display name: alternative name for the recipe selector. Can be null id not needed
 //solute stack or roedict string: the main ingredient (required)
@@ -17,6 +20,9 @@ mods.rockhounding_chemistry.Precipitator.removeByPrecipitate(<minecraft:magma_cr
 
 
 
+=======================================================
+ELECTROCHEMICAL CSTR
+=======================================================
 //input fluid 1: the fluid added from the left channel
 //input fluid 2: the fluid added from the right channel
 //output fluid: the output mixed fluid
@@ -27,22 +33,35 @@ mods.rockhounding_chemistry.StirredTank.add(<liquid:hydrochloric_acid>*1000, <li
 
 
 
+=======================================================
+HEAVY DRUM
+=======================================================
 //input stack: the item to spill into fluid
 //output fluid: the fluid spilled from the itemstack
 mods.rockhounding_chemistry.SlurryDrum.add(<minecraft:slimeball>, <liquid:silicone>*1000);
 mods.rockhounding_chemistry.SlurryDrum.add("slimeball", <liquid:lava>*1000);
 
 
+
+=======================================================
+POLLUTANT GASES
+=======================================================
 //input gas: the gas to mark as pollutant
 mods.rockhounding_chemistry.PollutantGas.add(<liquid:ammonia>*1000);
 
 
 
+=======================================================
+POLLUTANT FLUIDS
+=======================================================
 //input fluid: the fluid to mark as pollutant
 mods.rockhounding_chemistry.PollutantFluid.add(<liquid:chloromethane>*1000);
 
 
 
+=======================================================
+TOXIC MUTATION
+=======================================================
 //input stack: the item to mutate
 //output stack: the mutated item
 mods.rockhounding_chemistry.ToxicMutation.add(<minecraft:leather>, <minecraft:rotten_flesh>);
@@ -54,6 +73,9 @@ mods.rockhounding_chemistry.ToxicMutation.remove(<minecraft:rotten_flesh>);
 
 
 
+=======================================================
+CHEMICAL EXTRACTOR
+=======================================================
 //categoty: the category of the input
 //input stack: the item to decompose
 //output array: the list of elements oredict composing the input
@@ -64,13 +86,14 @@ mods.rockhounding_chemistry.ChemicalExtractor.add("Oxide", "oreIron", ["dustIron
 //input stack: the input to remove
 mods.rockhounding_chemistry.ChemicalExtractor.remove(<minecraft:hardened_clay>);
 
-
-
 //inhibited element: element not being extracted
 mods.rockhounding_chemistry.InhibitElements.inhibit("dustZirconium");
 
 
 
+=======================================================
+VAPOR DEPOSITION CHAMBER
+=======================================================
 //input stack: the item to be mutated
 //output stack: the mutated stack
 //solvent: the gas used as dopant and its quantity. It must be "gaseous"
@@ -87,7 +110,10 @@ mods.rockhounding_chemistry.DepositionChamber.removeByOutput(<minecraft:obsidian
 
 
 
-//Note: the conversion ratio is supposed to be N:1 where N is the input quantity against a unitary output quantity. The same (reversed) recipe works for the Expansion Chamber.
+=======================================================
+GAS CONDENSER / EXPANSION CHAMBER
+=======================================================
+//Note: the conversion ratio is supposed to be N:1 where N is the input quantity against a unitary output quantity. The same script works for the Expansion Chamber (reversed recipe).
 //input gas: the input gas and its quantity. It must be "gaseous"
 //output fluid: the output fluid and its quantity
 mods.rockhounding_chemistry.GasCondenser.add(<liquid:water_vapour>*100, <liquid:water>*1);
@@ -99,6 +125,9 @@ mods.rockhounding_chemistry.GasCondenser.removeByOutput(<liquid:water>);
 
 
 
+=======================================================
+GASIFICATION PLANT
+=======================================================
 //Note: Slags can be both null.
 //input fluid: the main ingredient
 //solvent fluid: the secondary ingredient
@@ -115,6 +144,9 @@ mods.rockhounding_chemistry.GasifierPlant.removeByOutput(<liquid:oxygen>);
 
 
 
+=======================================================
+GAS PURIFIER
+=======================================================
 //Note: the quantity of the gas ingredients is not relievant. Slags can be both null.
 //input gas: the raw ingredient. It must be "gaseous"
 //output gas: the purified output. It must be "gaseous"
@@ -129,6 +161,9 @@ mods.rockhounding_chemistry.GasPurifier.removeByOutput(<liquid:oxygen>);
 
 
 
+=======================================================
+REFORMING REACTOR
+=======================================================
 //Note: The catalyst must be a damageable item (any item with a durability).
 //input gas A: the left gas ingredient. It must be "gaseous"
 //input gas B: the right gas ingredient. It must be "gaseous"
@@ -137,14 +172,17 @@ mods.rockhounding_chemistry.GasPurifier.removeByOutput(<liquid:oxygen>);
 mods.rockhounding_chemistry.GasReformer.add(<liquid:water_vapour>*1000, <liquid:oxygen>*1000, <liquid:syngas>*1000, <minecraft:diamond_sword>);
 
 //input gas A: the gas to remove
-mods.rockhounding_chemistry.GasPurifier.removeByInputA(<liquid:water_vapour>*);
+mods.rockhounding_chemistry.GasReformer.removeByInputA(<liquid:water_vapour>*);
 //input gas B: the gas to remove
-mods.rockhounding_chemistry.GasPurifier.removeByInputB(<liquid:oxygen>*);
+mods.rockhounding_chemistry.GasReformer.removeByInputB(<liquid:oxygen>*);
 //output gas: the gas to remove
-mods.rockhounding_chemistry.GasPurifier.removeByOutput(<liquid:syngas>);
+mods.rockhounding_chemistry.GasReformer.removeByOutput(<liquid:syngas>);
 
 
 
+=======================================================
+HEAT EXCHANGER
+=======================================================
 //Note: the quantity of the gas ingredient is not relievant. The output must have a lower temperature than the input
 //input gas: the gas to be cooled
 //output gas: the cooled gas
@@ -154,6 +192,10 @@ mods.rockhounding_chemistry.HeatExchanger.add(<liquid:raw_syngas>*1000, <liquid:
 mods.rockhounding_chemistry.HeatExchanger.remove(<liquid:raw_syngas>*);
 
 
+
+=======================================================
+LAB BLENDER
+=======================================================
 //input array: the list of ingredients with their quantity
 //output stack: the resulting mixture
 mods.rockhounding_chemistry.LabBlender.add([<minecraft:redstone>*9, <minecraft:gunpowder>*4, <minecraft:glowstone_dust>*2], <minecraft:magma_cream>*9);
@@ -163,14 +205,18 @@ mods.rockhounding_chemistry.LabBlender.remove(<minecraft:magma_cream>);
 
 
 
+=======================================================
+LAB OVEN
+=======================================================
 //Note: the solute must be always used. the solvent and the solution cannot be null.
-//display name: alternative name for the recipe selector. Can be null id not needed
+//display name: alternative name for the recipe selector. Can be null if not necessary
 //solute stack: the main ingredient (required)
 //catalyst: the damageable ingredient (optional)
 //solvent fluid: the main solvent
 //reagent fluid: the secondary solvent (optional)
 //solution fluid: the output fluid
 //byproduct: the secondary output (optional)
+mods.rockhounding_chemistry.LabOven.add(null, <minecraft:slime_ball>, null, <liquid:water>*500, null, <liquid:sulfuric_acid>*500, <liquid:silicone>*100);
 mods.rockhounding_chemistry.LabOven.add("Silicone Plus", <minecraft:slime_ball>, null, <liquid:water>*500, null, <liquid:sulfuric_acid>*500, <liquid:silicone>*100);
 mods.rockhounding_chemistry.LabOven.add("Silicone Mega", "slimeball", <rockhounding_chemistry:co_catalyst>, <liquid:water>*1000, null, <liquid:sulfuric_acid>*500, <liquid:silicone>*400);
 
@@ -181,6 +227,9 @@ mods.rockhounding_chemistry.LabOven.removeByOutput(<liquid:sulfuric_acid>);
 
 
 
+=======================================================
+LEACHING VAT
+=======================================================
 //Note: the quantity of leachate is not relievant
 //input stack: the tem to de analyzed
 //output array: the list of extracted items
@@ -194,6 +243,9 @@ mods.rockhounding_chemistry.LeachingVat.remove(<minecraft:slime_ball>);
 
 
 
+=======================================================
+MATERIAL CABINET
+=======================================================
 //symbol: a 2 digit symbol appearing on screen
 //oredict: the element oredict to be added
 //name: the display name of the added element
@@ -204,6 +256,9 @@ mods.rockhounding_chemistry.MaterialCabinet.remove("dustBronze");
 
 
 
+=======================================================
+METAL ALLOYER
+=======================================================
 //input array: list of oredicts composing the alloy
 //quantity array: quantity in PartsPerCraft for each element
 //output stack: the resulting alloy
@@ -214,8 +269,11 @@ mods.rockhounding_chemistry.MetalAlloyer.remove(<minecraft:blaze_rod>);
 
 
 
+=======================================================
+MINERAL SIZER
+=======================================================
 //input stack: the item to crush
-//output array: the list of possible outputs
+//output array: the list of possible outputs (single outputs don't need an array)
 //comminution array: the comminution for each output (max 15)
 mods.rockhounding_chemistry.MineralSizer.add(<minecraft:hardened_clay>, <minecraft:dye:0>, 9);
 mods.rockhounding_chemistry.MineralSizer.add(<minecraft:hardened_clay>, [<minecraft:dye:0>, <minecraft:dye:1>, <minecraft:dye:2>, <minecraft:dye:3>, <minecraft:dye:4>], [5, 10, 12, 6, 4]);
@@ -226,6 +284,9 @@ mods.rockhounding_chemistry.MineralSizer.remove(<minecraft:hardened_clay>);
 
 
 
+=======================================================
+PROFILING BENCH
+=======================================================
 //input stack: the specific item to be shaped
 //output stack: the reshaped item
 //pattern: the casting pattern (0:generic, 1:coil, 2:rod, 3:foil, 4:arm, 5:casing, 6:gear, 7:ingot, 8:gauze, 9:coin, 10:plate )
@@ -240,6 +301,9 @@ mods.rockhounding_chemistry.ProfilingBench.removeByOutput(<minecraft:iron_ingot>
 
 
 
+=======================================================
+CRYSTAL PULLING CRUCIBLE
+=======================================================
 //base input: the base ingredient
 //dopant: the dopant element
 //output: the grown crystal
@@ -255,6 +319,9 @@ mods.rockhounding_chemistry.PullingCrucible.removeByOutput(<minecraft:ghast_tear
 
 
 
+=======================================================
+RETENTION VAT
+=======================================================
 //input fluid: the input fluid and its quantity
 //output array: the list of extracted items
 //gravity array: the gravity of each extracted items
@@ -265,6 +332,9 @@ mods.rockhounding_chemistry.RetentionVat.remove(<liquid:silicone>);
 
 
 
+=======================================================
+SEASONING RACK
+=======================================================
 //input stack: the item being processed
 //output stack: the processed item
 mods.rockhounding_chemistry.SeasoningRack.add(<minecraft:wheat>, <minecraft:wheat_seeds>);
@@ -277,6 +347,9 @@ mods.rockhounding_chemistry.SeasoningRack.removeByOutput(<minecraft:wheat_seeds>
 
 
 
+=======================================================
+SLURRY POND
+=======================================================
 //input stack: the solid ingredient
 //solvent: the fluid solvent
 //slurry: the resulting slurry
@@ -290,6 +363,9 @@ mods.rockhounding_chemistry.SlurryPond.removeByOutput(<liquid:silicone>);
 
 
 
+=======================================================
+TRANSPOSER
+=======================================================
 //Note: to just allow the Gas Pipeline recognize gases from other mods, input and output below must be set same
 //input: the fluid/gas input
 //output: the converted fluid/gas
