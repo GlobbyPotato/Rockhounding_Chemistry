@@ -135,7 +135,7 @@ GASIFICATION PLANT
 //output gas: the resulting gas. It must be "gaseous"
 //slag stack 1: the main by-product (optional)
 //slag stack 2: the secondary by-product (optional)
-//temperature: the threashold temperature (min 31K, max 2000K)
+//temperature: the threashold temperature (min 301K, max 2000K)
 mods.rockhounding_chemistry.GasifierPlant.add(<liquid:lava>*150, <liquid:water>*400, <liquid:oxygen>*120, <minecraft:dye:14>, null, 900);
 
 //input fluid: the fluid to remove
