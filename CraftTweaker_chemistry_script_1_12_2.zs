@@ -1,13 +1,14 @@
 =======================================================
 PRECIPITATION CHAMBER
 =======================================================
-//Note: the solute must be always used. the solvent and the solution cannot be null.
-//display name: alternative name for the recipe selector. Can be null id not needed
+//Note: the solute must be always used. Solvent and Solution cannot be null
+//display name: alternative name for the recipe selector. Can be null if not necessary
 //solute stack or roedict string: the main ingredient (required)
 //catalyst: the damageable ingredient (optional)
 //solvent fluid: the main solvent
 //solution fluid: the output fluid
-//precipitate: the secondary solid output (optional)
+//precipitate: the solid output
+mods.rockhounding_chemistry.Precipitator.add(null, <minecraft:slime_ball>, null, <liquid:water>*500, <liquid:sulfuric_acid>*500, <minecraft:magma_cream>*100);
 mods.rockhounding_chemistry.Precipitator.add("Magma Cream", <minecraft:slime_ball>, null, <liquid:water>*500, <liquid:sulfuric_acid>*500, <minecraft:magma_cream>*100);
 mods.rockhounding_chemistry.Precipitator.add("Magma Cream", "slimeball", <rockhounding_chemistry:co_catalyst>, <liquid:water>*500, <liquid:sulfuric_acid>*500, <minecraft:magma_cream>*100);
 
@@ -208,7 +209,7 @@ mods.rockhounding_chemistry.LabBlender.remove(<minecraft:magma_cream>);
 =======================================================
 LAB OVEN
 =======================================================
-//Note: the solute must be always used. the solvent and the solution cannot be null.
+//Note: the solute must be always used. Solvent and the Solution cannot be null
 //display name: alternative name for the recipe selector. Can be null if not necessary
 //solute stack: the main ingredient (required)
 //catalyst: the damageable ingredient (optional)
