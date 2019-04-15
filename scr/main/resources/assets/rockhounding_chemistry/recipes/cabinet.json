@@ -1,0 +1,24 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:utils",
+	"pattern": [
+		"GGG", 
+		"FAF", 
+		"GGG"
+	],
+	"key": {
+		"F":{
+				"item": "#IRON_FOIL"
+			},
+		"A":{
+				"item": "#CHEST"
+			},
+		"G":{
+				"item": "#GLASS"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:misc_items",
+				"data": 12
+			}
+}

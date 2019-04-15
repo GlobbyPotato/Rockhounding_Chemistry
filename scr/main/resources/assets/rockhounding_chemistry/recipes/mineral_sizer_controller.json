@@ -1,0 +1,30 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:machines",
+	"pattern": [
+		"CHC",
+		"CLC",
+		"SsS"
+	],
+	"key": {
+		"s":{
+				"item": "#SCAFFOLD"
+			},
+		"C":{
+				"item": "#IRON_CASING"
+			},
+		"S":{
+				"item": "#STONE"
+			},
+		"H":{
+				"item": "#HOPPER"
+			},
+		"L":{
+				"item": "#BASE_CHIP"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:machines_a",
+				"data": 0
+			}
+}

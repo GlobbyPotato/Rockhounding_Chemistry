@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.globbypotato.rockhounding_chemistry.ModBlocks;
 import com.globbypotato.rockhounding_chemistry.machines.PipelineValve;
-import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityPipelineValve;
+import com.globbypotato.rockhounding_chemistry.machines.tile.TEPipelineValve;
 
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
@@ -22,7 +22,7 @@ public class WailaPipelineValve implements IWailaDataProvider{
 
 	@Override
 	public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) {
-		return new ItemStack(ModBlocks.pipelineValve);
+		return new ItemStack(ModBlocks.PIPELINE_VALVE);
 	}
 
 	@Override
@@ -35,8 +35,8 @@ public class WailaPipelineValve implements IWailaDataProvider{
 		BlockPos pos = accessor.getPosition();
 		World world = accessor.getWorld();
 		TileEntity te = world.getTileEntity(pos);
-		if(te != null && te instanceof TileEntityPipelineValve){
-			TileEntityPipelineValve pump = (TileEntityPipelineValve)te;
+		if(te != null && te instanceof TEPipelineValve){
+			TEPipelineValve pump = (TEPipelineValve)te;
 			String statusstring = TextFormatting.GREEN + "Enabled";
 			if(!pump.isActive()){
 				statusstring = TextFormatting.RED + "Disabled";

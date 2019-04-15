@@ -1,0 +1,21 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:machines",
+	"pattern": [
+		"FFF",
+		" S ",
+		"FFF"
+	],
+	"key": {
+		"F":{
+				"item": "#IRON_FOIL"
+			},
+		"S":{
+				"item": "#SCAFFOLD"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:machines_b",
+				"data": 9
+			}
+}

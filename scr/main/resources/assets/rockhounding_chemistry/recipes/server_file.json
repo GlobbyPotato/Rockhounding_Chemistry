@@ -1,0 +1,22 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:utils",
+	"pattern": [
+		" N ",
+		"NCN",
+		" N "
+	],
+	"key": {
+		"C":{
+				"item": "#BASE_CHIP"
+			},
+		"N":{
+				"ore": "nuggetIron",
+				"type": "forge:ore_dict"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:misc_items",
+				"data": 0
+			}
+}

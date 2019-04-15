@@ -1,0 +1,31 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:machines",
+	"pattern": [
+		"CLC",
+		"cVc",
+		"CSC"
+	],
+	"key": {
+		"S":{
+				"item": "#SCAFFOLD"
+			},
+		"C":{
+				"item": "#IRON_FOIL"
+			},
+		"c":{
+				"item": "#IRON_COIL"
+			},
+		"V":{
+				"item": "rockhounding_chemistry:machines_b",
+				"data": 13
+			},
+		"L":{
+				"item": "#ADVANCED_CHIP"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:machines_a",
+				"data": 15
+			}
+}

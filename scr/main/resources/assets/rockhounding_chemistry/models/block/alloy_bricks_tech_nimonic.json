@@ -1,0 +1,6 @@
+{
+    "parent": "block/cube_all",
+    "textures": {
+        "all": "rockhounding_chemistry:blocks/alloy_bricks_tech_nimonic"
+    }
+}

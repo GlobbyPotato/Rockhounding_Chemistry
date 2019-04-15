@@ -1,0 +1,20 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:utils",
+	"pattern": [
+		" R ",
+		"FRF",
+		"FRF"
+	],
+	"key": {
+		"F":{
+				"item": "#IRON_FOIL"
+			},
+		"R":{
+				"item": "#IRON_ROD"
+			}	},
+	"result":{
+				"item": "rockhounding_chemistry:slurry_agitator",
+				"data": 0
+			}
+}

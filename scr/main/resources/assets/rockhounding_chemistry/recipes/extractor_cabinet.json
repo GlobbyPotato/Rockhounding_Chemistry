@@ -1,0 +1,24 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:machines",
+	"pattern": [
+		"SFS",
+		"FIF",
+		"SFS"
+	],
+	"key": {
+		"I":{
+				"item": "#ITEM_FILTER"
+			},
+		"F":{
+				"item": "#CABINET"
+			},
+		"S":{
+				"item": "#SCAFFOLD"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:machines_c",
+				"data": 9
+			}
+}

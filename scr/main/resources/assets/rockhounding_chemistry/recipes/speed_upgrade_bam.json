@@ -1,0 +1,26 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:utils",
+	"pattern": [
+		"IFI", 
+		"FLF", 
+		"IFI"
+	],
+	"key": {
+		"L":{
+				"item": "rockhounding_chemistry:speed_items",
+				"data": 3
+			},
+		"F":{
+				"item": "#IRON_FOIL"
+			},
+		"I":{
+				"ore":  "gearBam", 
+				"type": "forge:ore_dict"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:speed_items",
+				"data": 4
+			}
+}

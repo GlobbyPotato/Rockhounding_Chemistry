@@ -1,0 +1,27 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:machines",
+	"pattern": [
+		" D ",
+		"GSG",
+		"CCC"
+	],
+	"key": {
+		"C":{
+				"item": "#IRON_CASING"
+			},
+		"G":{
+				"item": "#REINFORCED_GLASS"
+			},
+		"S":{
+				"item": "#SEPARATOR"
+			},
+		"D":{
+				"item": "#CHARGER"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:machines_d",
+				"data": 10
+			}
+}

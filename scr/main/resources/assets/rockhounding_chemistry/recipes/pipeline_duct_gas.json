@@ -1,0 +1,22 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:utils",
+	"pattern": [
+		"IGI", 
+		"IGI", 
+		"IGI"
+	],
+	"key": {
+		"G":{
+				"item": "#GLASS_PIPE"
+			},
+		"I":{
+				"item": "#IRON_FOIL"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:gasline_duct",
+				"data": 0,
+				"count": 8
+			}
+}

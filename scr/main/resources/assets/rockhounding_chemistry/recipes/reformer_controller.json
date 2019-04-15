@@ -1,0 +1,33 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:machines",
+	"pattern": [
+		"CDC",
+		"FSF",
+		"sLs"
+	],
+	"key": {
+		"D":{
+				"item": "#ITEM_FILTER"
+			},
+		"C":{
+				"item": "#IRON_COIL"
+			},
+		"S":{
+				"item": "#SEPARATOR"
+			},
+		"F":{
+				"item": "#IRON_FOIL"
+			},
+		"L":{
+				"item": "#ADVANCED_CHIP"
+			},
+		"s":{
+				"item": "#SCAFFOLD"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:machines_c",
+				"data": 13
+			}
+}

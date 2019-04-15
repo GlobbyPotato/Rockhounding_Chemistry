@@ -1,0 +1,27 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:machines",
+	"pattern": [
+		" X ",
+		"FGF",
+		"S S"
+	],
+	"key": {
+		"X":{
+				"item": "#COMPRESSOR"
+			},
+		"S":{
+				"item": "#SCAFFOLD"
+			},
+		"F":{
+				"item": "#IRON_FOIL"
+			},
+		"G":{
+				"item": "#CABINET"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:machines_c",
+				"data": 5
+			}
+}

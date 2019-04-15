@@ -1,0 +1,22 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:utils",
+	"pattern": [
+		"ARA",
+		"R R",
+		"ARA"
+	],
+	"key": {
+		"A":{
+				"item": "#IRON_ARM"
+			},
+		"R":{
+				"item": "#IRON_ROD"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:misc_blocks_a",
+				"data": 0,
+				"count": 32
+			}
+}

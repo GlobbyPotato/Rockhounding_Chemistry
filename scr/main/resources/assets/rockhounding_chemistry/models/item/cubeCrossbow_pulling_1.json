@@ -1,6 +1,0 @@
-{
-    "parent": "rockhounding_chemistry:item/cubeCrossbow",
-    "textures": {
-        "layer0": "rockhounding_chemistry:items/cubeCrossbow_pulling_1"
-    }
-}

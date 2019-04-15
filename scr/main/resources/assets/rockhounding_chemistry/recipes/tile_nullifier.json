@@ -1,0 +1,21 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:utils",
+	"pattern": [
+		"  T", 
+		" S ", 
+		"S  "
+	],
+	"key": {
+		"T":{
+				"item": "#REDSTONE_TORCH"
+			},
+		"S":{
+				"item": "#STICK"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:tile_nullifier",
+				"data": 0
+			}
+}

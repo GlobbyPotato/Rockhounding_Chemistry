@@ -1,0 +1,24 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:utils",
+	"pattern": [
+		"IFI", 
+		"FLF", 
+		"IFI"
+	],
+	"key": {
+		"L":{
+				"item": "#BASE_CHIP"
+			},
+		"F":{
+				"item": "#IRON_FOIL"
+			},
+		"I":{
+				"item": "#CRUSHING_GEAR"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:speed_items",
+				"data": 1
+			}
+}

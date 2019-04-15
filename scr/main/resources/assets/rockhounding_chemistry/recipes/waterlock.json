@@ -1,0 +1,21 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:utils",
+	"pattern": [
+		"PPP",
+		"PPP",
+		"PPP"
+	],
+	"key": {
+		"P":{
+				"item": "rockhounding_chemistry:sodium_polyacrylate",
+				"data": 0,
+				"count": 1
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:waterlock",
+				"data": 0,
+				"count": 1
+			}
+}

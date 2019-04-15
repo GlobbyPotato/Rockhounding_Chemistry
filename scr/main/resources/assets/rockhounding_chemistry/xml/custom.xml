@@ -1,0 +1,491 @@
+<library>
+
+	<template id="layer_1" height="10">
+		<p color="#CC3333" indent="18" >Layer 1</p>
+    </template>
+
+	<template id="layer_2" height="10">
+		<p color="#CC3333" indent="18" >Layer 2</p>
+    </template>
+
+	<template id="layer_1_2" height="10">
+		<p color="#CC3333" indent="18" >Layer 1</p>
+		<p color="#CC3333" indent="102">Layer 2</p>
+    </template>
+
+	<template id="layer_1_2_b" height="10">
+		<p color="#CC3333" indent="30" >Layer 1</p>
+		<p color="#CC3333" indent="114">Layer 2</p>
+    </template>
+
+	<template id="layer_1_2_c" height="10">
+		<p color="#CC3333" indent="30" >Layer 1</p>
+		<p color="#CC3333" indent="135" >Layer 2</p>
+    </template>
+
+	<template id="layer_1_2_3" height="10">
+		<p color="#CC3333" indent="10" >Layer 1</p>
+		<p color="#CC3333" indent="70">Layer 2</p>
+		<p color="#CC3333" indent="130">Layer 3</p>
+    </template>
+
+	<template id="layer_1_3" height="10">
+		<p color="#CC3333" indent="18" >Layer 1</p>
+		<p color="#CC3333" indent="99">Layer 2/3</p>
+    </template>
+
+	<template id="layer_3" height="10">
+		<p color="#CC3333" indent="18" >Layer 3</p>
+    </template>
+
+	<template id="layer_3_4" height="10">
+		<p color="#CC3333" indent="18" >Layer 3</p>
+		<p color="#CC3333" indent="102">Layer 4</p>
+    </template>
+
+	<template id="layer_4_5" height="10">
+		<p color="#CC3333" indent="18" >Layer 4</p>
+		<p color="#CC3333" indent="102">Layer 5</p>
+    </template>
+
+	<template id="layer_5_6" height="10">
+		<p color="#CC3333" indent="18" >Layer 5</p>
+		<p color="#CC3333" indent="102">Layer 6</p>
+    </template>
+
+	<template id="layer_gases" height="10">
+		<p color="#CC3333" indent="2" >Main</p>
+		<p color="#CC3333" indent="62" >Rare Gases</p>
+    </template>
+
+	
+
+
+	<template id="grid_two" height="22">
+		<image src="rockhounding_chemistry:gbook/grids/grid_two" tw="45" th="22"/>
+        <element index="0" x="3"  y="3"/>
+        <element index="1" x="26" y="3"/>
+    </template>
+
+	<template id="grid_three" height="22">
+		<image src="rockhounding_chemistry:gbook/grids/grid_three" tw="68" th="22"/>
+        <element index="0" x="3"  y="3"/>
+        <element index="1" x="26" y="3"/>
+        <element index="2" x="49" y="3"/>
+    </template>
+
+	<template id="grid_four" height="22">
+		<image src="rockhounding_chemistry:gbook/grids/grid_four" tw="91" th="22"/>
+        <element index="0" x="3"  y="3"/>
+        <element index="1" x="26" y="3"/>
+        <element index="2" x="49" y="3"/>
+        <element index="3" x="72" y="3"/>
+    </template>
+
+	
+	
+	
+	<template id="stack_two" height="16">
+        <element index="0" x="0" y="0"/>
+        <element index="1" x="18" y="0"/>
+    </template>
+
+	<template id="stack_four" height="16">
+        <element index="0" x="0" y="0"/>
+        <element index="1" x="18" y="0"/>
+        <element index="2" x="36" y="0"/>
+        <element index="3" x="54" y="0"/>
+    </template>
+
+	<template id="stack_five" height="16">
+        <element index="0" x="0"   y="0"/>
+        <element index="1" x="20"  y="0"/>
+        <element index="2" x="40"  y="0"/>
+        <element index="3" x="60"  y="0"/>
+        <element index="4" x="80"  y="0"/>
+    </template>
+
+	<template id="stack_six" height="16">
+        <element index="0" x="0"   y="0"/>
+        <element index="1" x="20"  y="0"/>
+        <element index="2" x="40"  y="0"/>
+        <element index="3" x="60"  y="0"/>
+        <element index="4" x="80"  y="0"/>
+        <element index="5" x="100" y="0"/>
+    </template>
+
+	<template id="stack_eight" height="16">
+        <element index="0" x="0"   y="0"/>
+        <element index="1" x="18"  y="0"/>
+        <element index="2" x="36"  y="0"/>
+        <element index="3" x="54"  y="0"/>
+        <element index="4" x="72"  y="0"/>
+        <element index="5" x="90"  y="0"/>
+        <element index="6" x="108" y="0"/>
+        <element index="7" x="126" y="0"/>
+    </template>
+
+	<template id="stack_nine" height="16">
+        <element index="0" x="0"   y="0"/>
+        <element index="1" x="18"  y="0"/>
+        <element index="2" x="36"  y="0"/>
+        <element index="3" x="54"  y="0"/>
+        <element index="4" x="72"  y="0"/>
+        <element index="5" x="90"  y="0"/>
+        <element index="6" x="108" y="0"/>
+        <element index="7" x="126" y="0"/>
+        <element index="8" x="144" y="0"/>
+    </template>
+
+	
+	
+	
+	<template id="compressor_slots" height="36">
+		<image src="rockhounding_chemistry:gbook/grids/compressor_slots" tw="110" th="32"/>
+        <element index="0" x="3"  y="13"/>
+        <element index="2" x="26" y="13"/>
+        <element index="0" x="68" y="13"/>
+        <element index="1" x="91" y="13"/>
+    </template>
+
+
+
+
+	<template id="blender_slots" height="50">
+		<image src="rockhounding_chemistry:gbook/grids/blender_slots" tw="158" th="49"/>
+        <element index="0" x="30"  y="1"/>
+        <element index="1" x="30"  y="31"/>
+        <element index="1" x="114" y="31"/>
+    </template>
+
+
+
+
+    <template id="condenser_slots" height="33">
+		<image src="rockhounding_chemistry:gbook/grids/condenser_slots" tw="158" th="32"/>
+        <element index="0" x="6"   y="13"/>
+        <element index="1" x="29"  y="13"/>
+        <element index="2" x="52"  y="13"/>
+        <element index="3" x="113" y="13"/>
+    </template>
+
+    <template id="expander_slots" height="33">
+		<image src="rockhounding_chemistry:gbook/grids/expander_slots" tw="158" th="32"/>
+        <element index="0" x="6"   y="13"/>
+        <element index="1" x="29"  y="13"/>
+        <element index="2" x="52"  y="13"/>
+        <element index="3" x="113" y="13"/>
+    </template>
+
+
+
+
+	<template id="profiling_slots" height="36">
+		<image src="rockhounding_chemistry:gbook/grids/profiling_slots" tw="45" th="32"/>
+        <element index="0" x="3"  y="13"/>
+        <element index="1" x="26" y="13"/>
+    </template>
+
+
+
+
+    <template id="sizer_slots" height="50">
+		<image src="rockhounding_chemistry:gbook/grids/sizer_slots" tw="124" th="49"/>
+        <element index="0" x="106" y="31"/>
+        <element index="1" x="81"  y="31"/>
+        <element index="2" x="56"  y="31"/>
+        <element index="3" x="31"  y="31"/>
+        <element index="4" x="2"   y="31"/>
+        <element index="5" x="104" y="1"/>
+    </template>
+
+
+
+
+    <template id="oven_slots" height="74">
+		<image src="rockhounding_chemistry:gbook/grids/oven_slots" tw="158" th="74"/>
+        <element index="0" x="29"  y="1"/>
+        <element index="1" x="2"   y="29"/>
+        <element index="2" x="29"  y="29"/>
+        <element index="3" x="56"  y="29"/>
+        <element index="4" x="29"  y="56"/>
+        <element index="5" x="113" y="25"/>
+        <element index="4" x="113" y="56"/>
+    </template>
+
+
+	
+	
+   <template id="precipitation_slots_1" height="50">
+		<image src="rockhounding_chemistry:gbook/grids/precipitation_slots_1" tw="99" th="49"/>
+        <element index="0" x="2"   y="29"/>
+        <element index="1" x="26"  y="29"/>
+        <element index="1" x="57"  y="29"/>
+        <element index="2" x="4"   y="1"/>
+        <element index="3" x="81"  y="29"/>
+    </template>
+
+   <template id="precipitation_slots_2" height="25">
+		<image src="rockhounding_chemistry:gbook/grids/precipitation_slots_2" tw="74" th="24"/>
+        <element index="0" x="2"   y="4"/>
+        <element index="1" x="29"  y="4"/>
+        <element index="2" x="54"  y="4"/>
+    </template>
+
+	
+
+
+	<template id="cstr_slots_1" height="50">
+		<image src="rockhounding_chemistry:gbook/grids/cstr_slots_1" tw="158" th="49"/>
+        <element index="0" x="29"  y="29"/>
+        <element index="1" x="113" y="31"/>
+    </template>
+
+	<template id="cstr_slots_2" height="50">
+		<image src="rockhounding_chemistry:gbook/grids/cstr_slots_2" tw="158" th="49"/>
+        <element index="0" x="29"  y="31"/>
+        <element index="4" x="113" y="29"/>
+        <element index="1" x="52"  y="29"/>
+        <element index="2" x="29"  y="1"/>
+        <element index="3" x="2"   y="29"/>
+    </template>
+
+
+
+
+    <template id="gasifier_slots_1" height="50">
+		<image src="rockhounding_chemistry:gbook/grids/gasifier_slots_1" tw="158" th="49"/>
+        <element index="0" x="29"  y="2"/>
+        <element index="1" x="6"   y="29"/>
+        <element index="2" x="29"  y="31"/>
+        <element index="3" x="56"  y="29"/>
+        <element index="4" x="113" y="1"/>
+        <element index="2" x="113" y="31"/>
+    </template>
+
+    <template id="gasifier_slots_2" height="50">
+		<image src="rockhounding_chemistry:gbook/grids/gasifier_slots_2" tw="74" th="49"/>
+        <element index="0" x="29" y="29"/>
+    </template>
+	
+	
+	
+	
+    <template id="purifier_slots_1" height="50">
+		<image src="rockhounding_chemistry:gbook/grids/purifier_slots_1" tw="158" th="49"/>
+        <element index="0" x="29"  y="2"/>
+        <element index="1" x="2"   y="29"/>
+        <element index="2" x="29"  y="31"/>
+        <element index="3" x="56"  y="29"/>
+        <element index="3" x="113" y="6"/>
+        <element index="4" x="113" y="31"/>
+    </template>
+
+	<template id="purifier_slots_2" height="50">
+		<image src="rockhounding_chemistry:gbook/grids/purifier_slots_2" tw="158" th="49"/>
+        <element index="0" x="29"  y="31"/>
+        <element index="1" x="113" y="31"/>
+        <element index="2" x="140" y="29"/>
+    </template>
+
+
+
+
+	<template id="exchanger_slots" height="74">
+		<image src="rockhounding_chemistry:gbook/grids/exchanger_slots" tw="179" th="74"/>
+        <element index="0" x="9"   y="31"/>
+        <element index="0" x="69"  y="31"/>
+        <element index="1" x="9"   y="6"/>
+        <element index="1" x="9"   y="56"/>
+        <element index="2" x="36"  y="29"/>
+        <element index="3" x="96"  y="29"/>
+        <element index="4" x="129" y="29"/>
+    </template>
+
+	
+	
+
+	<template id="retention_slots" height="100">
+		<image src="rockhounding_chemistry:gbook/grids/retention_slots" tw="147" th="99"/>
+        <element index="0"  x="29"  y="81"/>
+        <element index="1"  x="29"  y="56"/>
+        <element index="1"  x="29"  y="31"/>
+        <element index="2"  x="29"  y="6"/>
+        <element index="3"  x="2"   y="79"/>
+        <element index="4"  x="56"  y="79"/>
+        <element index="5"  x="56"  y="54"/>
+        <element index="6"  x="127" y="54"/>
+        <element index="7"  x="127" y="4"/>
+        <element index="8"  x="6"   y="29"/>
+        <element index="9"  x="6"   y="54"/>
+        <element index="10" x="77"  y="54"/>
+    </template>
+
+
+
+
+	<template id="leaching_slots" height="98">
+		<image src="rockhounding_chemistry:gbook/grids/leaching_vat_slots" tw="180" th="97"/>
+        <element index="0"  x="2"   y="28"/>
+        <element index="1"  x="27"  y="28"/>
+        <element index="1"  x="52"  y="28"/>
+        <element index="1"  x="77"  y="28"/>
+        <element index="2"  x="102" y="28"/>
+        <element index="3"  x="4"   y="56"/>
+        <element index="4"  x="29"  y="56"/>
+        <element index="4"  x="54"  y="56"/>
+        <element index="5"  x="29"  y="4"/>
+        <element index="6"  x="54"  y="4"/>
+        <element index="7"  x="79"  y="4"/>
+        <element index="8"  x="29"  y="77"/>
+        <element index="9"  x="54"  y="77"/>
+        <element index="10" x="4"   y="1"/>
+        <element index="11" x="147" y="29"/>
+    </template>
+
+
+	
+	
+	<template id="gan_slots_1" height="172">
+		<image src="rockhounding_chemistry:gbook/grids/gan_slots_1" tw="158" th="172"/>
+        <element index="0"  x="29"  y="6"/>
+        <element index="1"  x="2"   y="29"/>
+        <element index="2"  x="29"  y="29"/>
+        <element index="3"  x="52"  y="29"/>
+        <element index="4"  x="2"   y="54"/>
+        <element index="5"  x="29"  y="54"/>
+        <element index="6"  x="56"  y="54"/>
+        <element index="7"  x="2"   y="79"/>
+        <element index="8"  x="29"  y="79"/>
+        <element index="9"  x="52"  y="79"/>
+        <element index="10" x="2"   y="104"/>
+        <element index="11" x="31"  y="104"/>
+        <element index="12" x="29"  y="131"/>
+        <element index="13" x="29"  y="153"/>
+        <element index="14" x="113" y="29"/>
+        <element index="15" x="113" y="79"/>
+    </template>
+
+	<template id="gan_slots_2" height="149">
+		<image src="rockhounding_chemistry:gbook/grids/gan_slots_2" tw="158" th="149"/>
+        <element index="0"  x="29"  y="29"/>
+        <element index="1"  x="29"  y="79"/>
+        <element index="2"  x="113" y="79"/>
+    </template>
+
+	
+	
+	
+	<template id="reformer_slots_1" height="75">
+		<image src="rockhounding_chemistry:gbook/grids/reformer_slots_1" tw="158" th="74"/>
+        <element index="0"  x="29"  y="26"/>
+        <element index="1"  x="29"  y="56"/>
+        <element index="2"  x="2"   y="54"/>
+        <element index="1"  x="113" y="56"/>
+        <element index="4"  x="86"  y="29"/>
+        <element index="4"  x="140" y="29"/>
+        <element index="3"  x="113" y="29"/>
+        <element index="4"  x="113" y="6"/>
+        <element index="4"  x="52"  y="54"/>
+    </template>
+
+	<template id="reformer_slots_2" height="75">
+		<image src="rockhounding_chemistry:gbook/grids/reformer_slots_2" tw="158" th="74"/>
+        <element index="0"  x="29"  y="54"/>
+        <element index="0"  x="113" y="54"/>
+    </template>
+
+	<template id="reformer_slots_3" height="75">
+		<image src="rockhounding_chemistry:gbook/grids/reformer_slots_3" tw="158" th="74"/>
+        <element index="0"  x="29"  y="54"/>
+        <element index="1"  x="113" y="54"/>
+    </template>
+
+	
+	
+	
+	<template id="extractor_slots" height="100">
+		<image src="rockhounding_chemistry:gbook/grids/extractor_slots" tw="158" th="99"/>
+        <element index="0"  x="4"   y="27"/>
+        <element index="1"  x="29"  y="27"/>
+        <element index="2"  x="2"   y="54"/>
+        <element index="3"  x="29"  y="52"/>
+        <element index="4"  x="56"  y="54"/>
+        <element index="5"  x="2"   y="79"/>
+        <element index="6"  x="29"  y="81"/>
+        <element index="7"  x="56"  y="79"/>
+        <element index="8"  x="4"   y="3"/>
+        <element index="9"  x="29"  y="3"/>
+        <element index="10" x="54"  y="27"/>
+        <element index="11" x="54"  y="2"/>
+        <element index="2"  x="86"  y="54"/>
+        <element index="5"  x="86"  y="79"/>
+        <element index="12" x="113" y="54"/>
+    </template>
+
+	
+	
+	
+	<template id="alloyer_slots" height="50">
+		<image src="rockhounding_chemistry:gbook/grids/alloyer_slots" tw="158" th="49"/>
+        <element index="0"  x="4"   y="2"/>
+        <element index="1"  x="29"  y="2"/>
+        <element index="2"  x="2"   y="29"/>
+        <element index="3"  x="29"  y="31"/>
+        <element index="4"  x="56"  y="29"/>
+        <element index="0"  x="88"  y="2"/>
+        <element index="1"  x="113" y="2"/>
+        <element index="3"  x="113" y="31"/>
+    </template>
+
+	
+
+	
+	<template id="deposition_slots" height="100">
+		<image src="rockhounding_chemistry:gbook/grids/deposition_slots" tw="158" th="99"/>
+        <element index="0"  x="29"  y="6"/>
+        <element index="1"  x="29"  y="29"/>
+        <element index="2"  x="2"   y="54"/>
+        <element index="1"  x="29"  y="54"/>
+        <element index="2"  x="56"  y="54"/>
+        <element index="4"  x="2"   y="79"/>
+        <element index="3"  x="29"  y="81"/>
+        <element index="0"  x="56"  y="79"/>
+        <element index="5"  x="113" y="50"/>
+        <element index="0"  x="86"  y="79"/>
+        <element index="3"  x="113" y="81"/>
+    </template>
+
+
+	
+	
+	<template id="pulling_slots_1" height="73">
+		<image src="rockhounding_chemistry:gbook/grids/pulling_slots_1" tw="158" th="72"/>
+        <element index="0"  x="29"  y="2"/>
+        <element index="1"  x="29"  y="31"/>
+        <element index="2"  x="113" y="2"/>
+        <element index="3"  x="113" y="31"/>
+        <element index="4"  x="86"  y="29"/>
+        <element index="5"  x="88"  y="52"/>
+    </template>
+
+	<template id="pulling_slots_2" height="80">
+		<image src="rockhounding_chemistry:gbook/grids/pulling_slots_2" tw="74" th="49"/>
+        <element index="0"  x="29" y="29"/>
+    </template>
+
+	
+	
+	
+	<template id="regen_slots" height="55">
+		<image src="rockhounding_chemistry:gbook/grids/regen_slots" tw="49" th="47"/>
+        <element index="0"  x="4"  y="20"/>
+        <element index="1"  x="29" y="20"/>
+        <element index="2"  x="4"  y="3"/>
+        <element index="3"  x="29" y="3"/>
+    </template>
+
+
+
+
+</library>

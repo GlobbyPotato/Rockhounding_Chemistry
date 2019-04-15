@@ -1,0 +1,27 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:utils",
+	"pattern": [
+		" F ",
+		"FTF",
+		"SGS"
+	],
+	"key": {
+		"G":{
+				"item": "#GLASS_PIPE"
+			},
+		"S":{
+				"item": "#SCAFFOLD"
+			},
+		"F":{
+				"item": "#IRON_FOIL"
+			},
+		"T":{
+				"item": "#CRUSHING_GEAR"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:misc_items",
+				"data": 6
+			}
+}

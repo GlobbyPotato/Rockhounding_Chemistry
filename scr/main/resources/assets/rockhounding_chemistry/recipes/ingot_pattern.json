@@ -1,0 +1,24 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:utils",
+	"pattern": [
+		" T ", 
+		"F F", 
+		"FPF"
+	],
+	"key": {
+		"F":{
+				"item": "#IRON_FOIL"
+			},
+		"P":{
+				"item": "#IRON_PLATE"
+			},
+		"T":{
+				"item": "#IRON_TRAP"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:ingot_pattern",
+				"data": 0
+			}
+}

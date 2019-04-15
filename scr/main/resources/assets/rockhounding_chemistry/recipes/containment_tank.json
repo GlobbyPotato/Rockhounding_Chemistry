@@ -1,0 +1,28 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:machines",
+	"pattern": [
+		"RCR",
+		"GSG",
+		"RCR"
+	],
+	"key": {
+		"C":{
+				"item": "#HASTELLOY_CASING"
+			},
+		"R":{
+				"item": "#HASTELLOY_ROD"
+			},
+		"G":{
+				"item": "#REINFORCED_GLASS"
+			},
+		"S":{
+				"item": "rockhounding_chemistry:machines_a",
+				"data": 4
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:machines_d",
+				"data": 15
+			}
+}

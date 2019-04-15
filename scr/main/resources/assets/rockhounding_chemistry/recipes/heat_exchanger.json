@@ -1,0 +1,30 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:machines",
+	"pattern": [
+		"CLC",
+		"cXc",
+		"CSC"
+	],
+	"key": {
+		"S":{
+				"item": "#SCAFFOLD"
+			},
+		"C":{
+				"item": "#IRON_CASING"
+			},
+		"X":{
+				"item": "#COMPRESSOR"
+			},
+		"c":{
+				"item": "#IRON_COIL"
+			},
+		"L":{
+				"item": "#BASE_CHIP"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:machines_b",
+				"data": 11
+			}
+}

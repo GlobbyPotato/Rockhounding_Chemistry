@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "variant=borderless": 	{"model" : "rockhounding_chemistry:didymium_glass_borderless"},
+        "variant=bordered": 	{"model" : "rockhounding_chemistry:didymium_glass_bordered"},
+        "variant=bricks": 		{"model" : "rockhounding_chemistry:didymium_glass_bricks"}
+    }
+}

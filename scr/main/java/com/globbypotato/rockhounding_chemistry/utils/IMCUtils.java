@@ -3,16 +3,48 @@ package com.globbypotato.rockhounding_chemistry.utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.globbypotato.rockhounding_chemistry.machines.recipe.CastingRecipe;
-import com.globbypotato.rockhounding_chemistry.machines.recipe.ChemicalExtractorRecipe;
-import com.globbypotato.rockhounding_chemistry.machines.recipe.DepositionChamberRecipe;
-import com.globbypotato.rockhounding_chemistry.machines.recipe.LabBlenderRecipe;
-import com.globbypotato.rockhounding_chemistry.machines.recipe.LabOvenRecipe;
-import com.globbypotato.rockhounding_chemistry.machines.recipe.MachineRecipes;
-import com.globbypotato.rockhounding_chemistry.machines.recipe.MetalAlloyerRecipe;
-import com.globbypotato.rockhounding_chemistry.machines.recipe.MineralAnalyzerRecipe;
-import com.globbypotato.rockhounding_chemistry.machines.recipe.MineralSizerRecipe;
-import com.globbypotato.rockhounding_chemistry.machines.recipe.SaltSeasonerRecipe;
+import com.globbypotato.rockhounding_chemistry.enums.EnumFluid;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.ChemicalExtractorRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.DepositionChamberRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.GasCondenserRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.GasPurifierRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.GasReformerRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.GasifierPlantRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.HeatExchangerRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.LabBlenderRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.LabOvenRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.LeachingVatRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.MaterialCabinetRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.MetalAlloyerRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.MineralSizerRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.PollutantRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.ProfilingBenchRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.RetentionVatRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.SeasoningRackRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.SlurryPondRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.ToxicMutationRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.TransposerRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.ChemicalExtractorRecipe;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.DepositionChamberRecipe;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.GasCondenserRecipe;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.GasPurifierRecipe;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.GasReformerRecipe;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.GasifierPlantRecipe;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.HeatExchangerRecipe;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.LabBlenderRecipe;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.LabOvenRecipe;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.LeachingVatRecipe;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.MaterialCabinetRecipe;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.MetalAlloyerRecipe;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.MineralSizerRecipe;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.PollutantFluidRecipe;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.PollutantGasRecipe;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.ProfilingBenchRecipe;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.RetentionVatRecipe;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.SeasoningRackRecipe;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.SlurryPondRecipe;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.ToxicMutationRecipe;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.TransposerRecipe;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -20,373 +52,391 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.event.FMLInterModComms.IMCMessage;
+import rockhounding.api.IReciperBase;
 
-public class IMCUtils {
-	public static String DEPOSITION_KEY = "addToDeposition";
-	public static String DEPOSITION_KEY_REMOVER = "removeFromDeposition";
-	public static String ANALYZER_KEY = "addToAnalyzer";
-	public static String ANALYZER_KEY_REMOVER = "removeFromAnalyzer";
-	public static String EXTRACTOR_KEY = "addToExtractor";
-	public static String EXTRACTOR_KEY_INHIBITOR = "inhibitFromExtractor";
-	public static String OVEN_KEY = "addToOven";
-	public static String OVEN_KEY_REMOVER = "removeFromOven";
-	public static String SIZER_KEY = "addToSizer";
-	public static String SIZER_KEY_REMOVER = "removeFromSizer";
-	public static String SEASONER_KEY = "addToSeasoner";
-	public static String SEASONER_KEY_REMOVER = "removeFromSeasoner";
-	public static String ALLOYER_KEY = "addToAlloyer";
-	public static String ALLOYER_KEY_REMOVER = "removeFromAlloyer";
-	public static String CASTING_KEY = "addToCasting";
-	public static String CASTING_KEY_REMOVER = "removeFromCasting";
-	public static String BLENDER_KEY = "addToBlender";
-	public static String BLENDER_KEY_REMOVER = "removeFromBlender";
-	static List<ItemStack> elements;
-	static List<String> dusts;
-	static List<Integer> quantities;
+public class IMCUtils extends IReciperBase{
+	static ItemStack input = ItemStack.EMPTY;
+	static ItemStack solute = ItemStack.EMPTY;
+	static ItemStack output = ItemStack.EMPTY;
+	static ItemStack catalyst = ItemStack.EMPTY;
+	static FluidStack solvent = null;
+	static FluidStack reagent = null;
+	static FluidStack solution = null;
+	static int pattern = 0;
 
 	public static void extraRecipes(List<IMCMessage> messages) {
 		for(IMCMessage message : messages) {
-			if(message.isNBTMessage()){
+    		if(message.isNBTMessage()){
 				try {
 		    		NBTTagCompound tag = message.getNBTValue();
-	    			/**
-		    		 * REMOVE RECIPES
-		    		 */
-		    		if(message.key.equalsIgnoreCase(OVEN_KEY_REMOVER)){
-		    			FluidStack solution = null;
-		        		if(tag.hasKey("Solution")){
-			        		solution = FluidStack.loadFluidStackFromNBT(tag.getCompoundTag("Solution"));
+		    		//POLLUTANT GAS
+	    			if(message.key.equalsIgnoreCase(add_pollutant_gas_key)){
+		        		if(tag.hasKey(tagInput)){
+		        			solvent =  FluidStack.loadFluidStackFromNBT(tag.getCompoundTag(tagInput));
 		        		}
-		        		if(solution != null){
-		        			for(int x = 0; x < MachineRecipes.labOvenRecipes.size(); x++){
-		        				if(MachineRecipes.labOvenRecipes.get(x).getOutput().getFluid() == solution.getFluid()){
-		        					MachineRecipes.labOvenRecipes.remove(x);
-		        				}
-		        			}
+		        		PollutantRecipes.pollutant_gases.add(solvent);
+		        		PollutantRecipes.pollutant_gas_recipes.add(new PollutantGasRecipe(solvent));
+	    			}
+		    		//POLLUTANT FLUID
+	    			if(message.key.equalsIgnoreCase(add_pollutant_fluid_key)){
+		        		if(tag.hasKey(tagInput)){
+		        			solvent =  FluidStack.loadFluidStackFromNBT(tag.getCompoundTag(tagInput));
 		        		}
-		    		}else if(message.key.equalsIgnoreCase(SEASONER_KEY_REMOVER)){
-		    			ItemStack seasIn = null;
-		        		if(tag.hasKey("Input")){
-		        			seasIn = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("Input"));
+		        		PollutantRecipes.pollutant_fluids.add(solvent);
+		        		PollutantRecipes.pollutant_fluid_recipes.add(new PollutantFluidRecipe(solvent));
+	    			}
+		    		//TOXIC MUTATION
+	    			if(message.key.equalsIgnoreCase(add_toxic_mutation_key)){
+		        		if(tag.hasKey(tagInput)){
+		        			input =  new ItemStack(tag.getCompoundTag(tagInput));
 		        		}
-		        		if(seasIn != null){
-		        			for(int x = 0; x < MachineRecipes.seasonerRecipes.size(); x++){
-		        				if(MachineRecipes.seasonerRecipes.get(x).getInput().isItemEqual(seasIn)){
-		        					MachineRecipes.seasonerRecipes.remove(x);
-		        				}
-		        			}
+		        		if(tag.hasKey(tagOutput)){
+		        			output =  new ItemStack(tag.getCompoundTag(tagOutput));
 		        		}
-		    		}else if(message.key.equalsIgnoreCase(ALLOYER_KEY_REMOVER)){
-		    			ItemStack alloy = null;
-		        		if(tag.hasKey("Ingot")){
-		        			alloy = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("Ingot"));
+		        		ToxicMutationRecipes.toxic_mutation_recipes.add(new ToxicMutationRecipe(input, output));
+	    			}
+		    		//TRANSPOSER
+	    			if(message.key.equalsIgnoreCase(add_transposer_key)){
+		        		if(tag.hasKey(tagInput)){
+		        			solvent =  FluidStack.loadFluidStackFromNBT(tag.getCompoundTag(tagInput));
 		        		}
-		        		if(alloy != null){
-		        			for(int x = 0; x < MachineRecipes.alloyerRecipes.size(); x++){
-		        				if(MachineRecipes.alloyerRecipes.get(x).getOutput().isItemEqual(alloy)){
-		        					MachineRecipes.alloyerRecipes.remove(x);
-		        				}
-		        			}
+		        		if(tag.hasKey(tagOutput)){
+		        			solution =  FluidStack.loadFluidStackFromNBT(tag.getCompoundTag(tagOutput));
 		        		}
-		    		}else if(message.key.equalsIgnoreCase(SIZER_KEY_REMOVER)){
-		    			ItemStack crush = null;
-		        		if(tag.hasKey("Input")){
-		        			crush = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("Input"));
+		        		TransposerRecipes.transposer_recipes.add(new TransposerRecipe(solvent, solution));
+	    			}
+		    		//SLURRY POND
+	    			if(message.key.equalsIgnoreCase(add_slurry_pond_key)){
+		        		if(tag.hasKey(tagInput)){
+		        			input =  new ItemStack(tag.getCompoundTag(tagInput));
 		        		}
-		        		if(crush != null){
-		        			for(int x = 0; x < MachineRecipes.sizerRecipes.size(); x++){
-		        				if(MachineRecipes.sizerRecipes.get(x).getInput().isItemEqual(crush)){
-		        					MachineRecipes.sizerRecipes.remove(x);
-		        				}
-		        			}
+		        		if(tag.hasKey(tagSolvent)){
+		        			solvent =  FluidStack.loadFluidStackFromNBT(tag.getCompoundTag(tagSolvent));
 		        		}
-		    		}else if(message.key.equalsIgnoreCase(ANALYZER_KEY_REMOVER)){
-		    			ItemStack analyzed = null;
-		        		if(tag.hasKey("Input")){
-		        			analyzed = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("Input"));
+		        		if(tag.hasKey(tagOutput)){
+		        			solution =  FluidStack.loadFluidStackFromNBT(tag.getCompoundTag(tagOutput));
 		        		}
-		        		if(analyzed != null){
-		        			for(int x = 0; x < MachineRecipes.analyzerRecipes.size(); x++){
-		        				if(MachineRecipes.analyzerRecipes.get(x).getInput().isItemEqual(analyzed)){
-		        					MachineRecipes.analyzerRecipes.remove(x);
-		        				}
-		        			}
+		        		SlurryPondRecipes.slurry_pond_recipes.add(new SlurryPondRecipe(input, solvent, solution));
+	    			}
+		    		//SEASONING RACK
+	    			if(message.key.equalsIgnoreCase(add_seasoning_rack_key)){
+		        		if(tag.hasKey(tagInput)){
+		        			input =  new ItemStack(tag.getCompoundTag(tagInput));
 		        		}
-		    		}else if(message.key.equalsIgnoreCase(EXTRACTOR_KEY_INHIBITOR)){
-		        		if(tag.hasKey("Elements")){
-		        			  NBTTagList dustList = tag.getTagList("Elements", Constants.NBT.TAG_COMPOUND);
-		        			  dusts = new ArrayList<String>();
-		        			  for(int i = 0; i < dustList.tagCount(); i++){
-		        				  NBTTagCompound getDusts = dustList.getCompoundTagAt(i);
-		        				  dusts.add(getDusts.getString("Element" + i));
+		        		if(tag.hasKey(tagOutput)){
+		        			output =  new ItemStack(tag.getCompoundTag(tagOutput));
+		        		}
+		        		SeasoningRackRecipes.seasoning_rack_recipes.add(new SeasoningRackRecipe(input, output));
+	    			}
+	    			//RETENTION VAT
+	    			if(message.key.equalsIgnoreCase(add_retention_vat_key)){
+		        		if(tag.hasKey(tagInput)){
+		        			solvent =  FluidStack.loadFluidStackFromNBT(tag.getCompoundTag(tagInput));
+		        		}
+	       			  	ArrayList<ItemStack> elements = new ArrayList<ItemStack>();
+		        		if(tag.hasKey(tagElements)){
+		        			  NBTTagList elementTag = tag.getTagList(tagElements, Constants.NBT.TAG_COMPOUND);
+		        			  for(int i = 0; i < elementTag.tagCount(); i++){
+		        				  NBTTagCompound elementNBT = elementTag.getCompoundTagAt(i);
+		        				  elements.add(new ItemStack(elementNBT));
 		        			  }
 		        		}
-		        		if(dusts.size() > 0){
-			        		for(int x = 0; x < dusts.size(); x++){
-			        			if(!dusts.get(x).matches("")){
-			        				MachineRecipes.inhibitedElements.add(dusts.get(x));
-			        			}
-			        		}
-		        		}
-		    		}else if(message.key.equalsIgnoreCase(DEPOSITION_KEY_REMOVER)){
-		    			ItemStack output = null;
-		        		if(tag.hasKey("Output")){
-		        			output = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("Output"));
-		        		}
-		        		if(output != null){
-		        			for(int x = 0; x < MachineRecipes.depositionRecipes.size(); x++){
-		        				if(MachineRecipes.depositionRecipes.get(x).getOutput().isItemEqual(output)){
-		        					MachineRecipes.depositionRecipes.remove(x);
-		        				}
-		        			}
-		        		}
-		    		}else if(message.key.equalsIgnoreCase(CASTING_KEY_REMOVER)){
-		    			ItemStack output = null;
-		        		if(tag.hasKey("Output")){
-		        			output = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("Output"));
-		        		}
-		        		if(output != null){
-		        			for(int x = 0; x < MachineRecipes.castingRecipes.size(); x++){
-		        				if(MachineRecipes.castingRecipes.get(x).getOutput().isItemEqual(output)){
-		        					MachineRecipes.castingRecipes.remove(x);
-		        				}
-		        			}
-		        		}
-		    		}else if(message.key.equalsIgnoreCase(BLENDER_KEY_REMOVER)){
-		    			ItemStack output = null;
-		        		if(tag.hasKey("Output")){
-		        			output = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("Output"));
-		        		}
-		        		if(output != null){
-		        			for(int x = 0; x < MachineRecipes.blenderRecipes.size(); x++){
-		        				if(MachineRecipes.blenderRecipes.get(x).getOutput().isItemEqual(output)){
-		        					MachineRecipes.blenderRecipes.remove(x);
-		        				}
-		        			}
-		        		}
-
-
-
-	    			/**
-		    		 * ADD RECIPES
-		    		 */
-		    		}else if(message.key.equalsIgnoreCase(ANALYZER_KEY)){
-		    			ItemStack input = null;
-		    			boolean hasGravity = false;
-		        		if(tag.hasKey("Input")){
-		        			input = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("Input"));
-		        		}
-		        		if(tag.hasKey("Elements")){
-		        			  NBTTagList dustList = tag.getTagList("Elements", Constants.NBT.TAG_COMPOUND);
-		        			  elements = new ArrayList<ItemStack>();
-		        			  for(int i = 0; i < dustList.tagCount(); i++){
-		        				  NBTTagCompound getDusts = dustList.getCompoundTagAt(i);
-		        				  elements.add(ItemStack.loadItemStackFromNBT(getDusts));
+	       			  	ArrayList<Float> gravities = new ArrayList<Float>();
+		        		if(tag.hasKey(tagWeights)){
+		        			  NBTTagList weightsTAG = tag.getTagList(tagWeights, Constants.NBT.TAG_COMPOUND);
+		        			  for(int i = 0; i < weightsTAG.tagCount(); i++){
+		        				  NBTTagCompound weightsNBT = weightsTAG.getCompoundTagAt(i);
+		        				  gravities.add(weightsNBT.getFloat(tagWeights + i));
 		        			  }
 		        		}
-		        		if(tag.hasKey("Probabilities")){
-		        			  NBTTagList quantityList = tag.getTagList("Probabilities", Constants.NBT.TAG_COMPOUND);
-		        			  quantities = new ArrayList<Integer>();
-		        			  for(int i = 0; i < quantityList.tagCount(); i++){
-		        				  NBTTagCompound getQuantities = quantityList.getCompoundTagAt(i);
-		        				  quantities.add(getQuantities.getInteger("Probability" + i));
+		        		RetentionVatRecipes.retention_vat_recipes.add(new RetentionVatRecipe(solvent, elements, gravities));
+	    			}
+	    			//PROFILING BENCH
+	    			if(message.key.equalsIgnoreCase(add_profiling_bench_key)){
+		        		if(tag.hasKey(tagInput)){
+		        			input =  new ItemStack(tag.getCompoundTag(tagInput));
+		        		}
+		        		if(tag.hasKey(tagOutput)){
+		        			output =  new ItemStack(tag.getCompoundTag(tagOutput));
+		        		}
+						if(tag.hasKey(tagPattern)){
+							pattern = tag.getInteger(tagPattern);
+		        		}
+		        		ProfilingBenchRecipes.profiling_bench_recipes.add(new ProfilingBenchRecipe(input, output, pattern));
+	    			}
+	    			//MINERAL SIZER
+	    			if(message.key.equalsIgnoreCase(add_mineral_sizer_key)){
+		        		if(tag.hasKey(tagInput)){
+		        			input =  new ItemStack(tag.getCompoundTag(tagInput));
+		        		}
+	       			  	ArrayList<ItemStack> elements = new ArrayList<ItemStack>();
+		        		if(tag.hasKey(tagElements)){
+		        			  NBTTagList elementTag = tag.getTagList(tagElements, Constants.NBT.TAG_COMPOUND);
+		        			  for(int i = 0; i < elementTag.tagCount(); i++){
+		        				  NBTTagCompound elementNBT = elementTag.getCompoundTagAt(i);
+		        				  elements.add(new ItemStack(elementNBT));
 		        			  }
 		        		}
-		        		if(tag.hasKey("Gravity")){
-		        			hasGravity = tag.getBoolean("Gravity");
-		        		}
-		        		if(input != null && elements.size() > 0 && quantities.size() > 0 && elements.size() == quantities.size()){
-		        			MachineRecipes.analyzerRecipes.add(new MineralAnalyzerRecipe(input, elements, quantities, hasGravity));
-		        		}
-		    		}else if(message.key.equalsIgnoreCase(EXTRACTOR_KEY)){
-		    			ItemStack input = null;
-		    			String display = "";
-		        		if(tag.hasKey("Category")){
-		        			display = tag.getString("Category");
-		        		}
-		        		if(tag.hasKey("Input")){
-		        			input = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("Input"));
-		        		}
-		        		if(tag.hasKey("Elements")){
-		        			  NBTTagList dustList = tag.getTagList("Elements", Constants.NBT.TAG_COMPOUND);
-		        			  dusts = new ArrayList<String>();
-		        			  for(int i = 0; i < dustList.tagCount(); i++){
-		        				  NBTTagCompound getDusts = dustList.getCompoundTagAt(i);
-		        				  dusts.add(getDusts.getString("Element" + i));
+	       			  	ArrayList<Integer> comminutions = new ArrayList<Integer>();
+		        		if(tag.hasKey(tagWeights)){
+		        			  NBTTagList weightsTAG = tag.getTagList(tagWeights, Constants.NBT.TAG_COMPOUND);
+		        			  for(int i = 0; i < weightsTAG.tagCount(); i++){
+		        				  NBTTagCompound weightsNBT = weightsTAG.getCompoundTagAt(i);
+		        				  comminutions.add(weightsNBT.getInteger(tagWeights + i));
 		        			  }
 		        		}
-		        		if(tag.hasKey("Quantities")){
-		        			  NBTTagList quantityList = tag.getTagList("Quantities", Constants.NBT.TAG_COMPOUND);
-		        			  quantities = new ArrayList<Integer>();
-		        			  for(int i = 0; i < quantityList.tagCount(); i++){
-		        				  NBTTagCompound getQuantities = quantityList.getCompoundTagAt(i);
-		        				  quantities.add(getQuantities.getInteger("Quantity" + i));
+		        		MineralSizerRecipes.mineral_sizer_recipes.add(new MineralSizerRecipe(input, elements, comminutions));
+	    			}
+	    			//METAL ALLOYER
+	    			if(message.key.equalsIgnoreCase(add_metal_alloyer_key)){
+		        		ArrayList<String> oredicts = new ArrayList<String>();
+		        		if(tag.hasKey(tagElements)){
+		        			  NBTTagList elementsTAG = tag.getTagList(tagElements, Constants.NBT.TAG_COMPOUND);
+		        			  for(int i = 0; i < elementsTAG.tagCount(); i++){
+		        				  NBTTagCompound elementsNBT = elementsTAG.getCompoundTagAt(i);
+		        				  oredicts.add(elementsNBT.getString(tagElements + i));
 		        			  }
 		        		}
-		        		if(input != null && dusts.size() > 0 && quantities.size() > 0 && dusts.size() == quantities.size()){
-		        			MachineRecipes.extractorRecipes.add(new ChemicalExtractorRecipe(display, input, dusts, quantities));
-		        		}
-					}else if(message.key.equalsIgnoreCase(OVEN_KEY)){
-						ItemStack solute = null;
-						boolean isCatalyst = false;
-						FluidStack solvent1 = null;
-						FluidStack solvent2 = null;
-						FluidStack solution = null;
-						if(tag.hasKey("Solute")){
-		        			solute = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("Solute"));
-		        		}
-						if(tag.hasKey("Catalyst")){
-							isCatalyst = tag.getBoolean("Catalyst");
-		        		}
-		        		if(tag.hasKey("Solvent1")){
-		        			solvent1 = FluidStack.loadFluidStackFromNBT(tag.getCompoundTag("Solvent1"));
-		        		}
-		        		if(tag.hasKey("Solvent2")){
-		        			solvent2 = FluidStack.loadFluidStackFromNBT(tag.getCompoundTag("Solvent2"));
-		        		}else{
-		        			solvent2 = null;
-		        		}
-		        		if(tag.hasKey("Solution")){
-			        		solution = FluidStack.loadFluidStackFromNBT(tag.getCompoundTag("Solution"));
-		        		}
-		        		if(solute != null && solvent1.getFluid() != null && (!tag.hasKey("Solvent2") || (tag.hasKey("Solvent2") && solvent2.getFluid() != null)) && solution.getFluid() != null){
-		        			MachineRecipes.labOvenRecipes.add(new LabOvenRecipe(solute, isCatalyst, solvent1, solvent2,	solution));
-		        		}
-					}else if(message.key.equalsIgnoreCase(SIZER_KEY)){
-		    			ItemStack input = null;
-		    			boolean comminution = false;
-		        		if(tag.hasKey("Input")){
-		        			input = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("Input"));
-		        		}
-		        		if(tag.hasKey("Elements")){
-		        			  NBTTagList dustList = tag.getTagList("Elements", Constants.NBT.TAG_COMPOUND);
-		        			  elements = new ArrayList<ItemStack>();
-		        			  for(int i = 0; i < dustList.tagCount(); i++){
-		        				  NBTTagCompound getDusts = dustList.getCompoundTagAt(i);
-		        				  elements.add(ItemStack.loadItemStackFromNBT(getDusts));
+	       			  	ArrayList<Integer> quantities = new ArrayList<Integer>();
+		        		if(tag.hasKey(tagWeights)){
+		        			  NBTTagList weightsTAG = tag.getTagList(tagWeights, Constants.NBT.TAG_COMPOUND);
+		        			  for(int i = 0; i < weightsTAG.tagCount(); i++){
+		        				  NBTTagCompound weightsNBT = weightsTAG.getCompoundTagAt(i);
+		        				  quantities.add(weightsNBT.getInteger(tagWeights + i));
 		        			  }
 		        		}
-		        		if(tag.hasKey("Probabilities")){
-		        			  NBTTagList quantityList = tag.getTagList("Probabilities", Constants.NBT.TAG_COMPOUND);
-		        			  quantities = new ArrayList<Integer>();
-		        			  for(int i = 0; i < quantityList.tagCount(); i++){
-		        				  NBTTagCompound getQuantities = quantityList.getCompoundTagAt(i);
-		        				  quantities.add(getQuantities.getInteger("Probability" + i));
+		        		if(tag.hasKey(tagOutput)){
+		        			output =  new ItemStack(tag.getCompoundTag(tagOutput));
+		        		}
+		        		MetalAlloyerRecipes.metal_alloyer_recipes.add(new MetalAlloyerRecipe(oredicts, quantities, output));
+	    			}
+	    			//MATERIAL CABINET
+	    			if(message.key.equalsIgnoreCase(add_material_cabinet_key)){
+		        		String pattern = null;
+						if(tag.hasKey(tagPattern)){
+							pattern = tag.getString(tagPattern);
+		        		}
+		        		String oredict = null;
+						if(tag.hasKey(tagOredict)){
+							oredict = tag.getString(tagOredict);
+		        		}
+		        		String display = null;
+						if(tag.hasKey(tagDisplay)){
+							display = tag.getString(tagDisplay);
+		        		}
+		        		MaterialCabinetRecipes.material_cabinet_recipes.add(new MaterialCabinetRecipe(pattern, oredict, display));
+	    			}
+	    			//LEACHING VAT
+	    			if(message.key.equalsIgnoreCase(add_leaching_vat_key)){
+		        		if(tag.hasKey(tagInput)){
+		        			input =  new ItemStack(tag.getCompoundTag(tagInput));
+		        		}
+	       			  	ArrayList<ItemStack> elements = new ArrayList<ItemStack>();
+		        		if(tag.hasKey(tagElements)){
+		        			  NBTTagList elementTag = tag.getTagList(tagElements, Constants.NBT.TAG_COMPOUND);
+		        			  for(int i = 0; i < elementTag.tagCount(); i++){
+		        				  NBTTagCompound elementNBT = elementTag.getCompoundTagAt(i);
+		        				  elements.add(new ItemStack(elementNBT));
 		        			  }
 		        		}
-		        		if(tag.hasKey("Comminution")){
-		        			comminution = tag.getBoolean("Comminution");
-		        		}
-		        		if(input != null && elements.size() > 0 && quantities.size() > 0 && elements.size() == quantities.size()){
-		        			MachineRecipes.sizerRecipes.add(new MineralSizerRecipe(input, elements, quantities, comminution));
-		        		}
-		        	}else if(message.key.equalsIgnoreCase(SEASONER_KEY)){
-		    			ItemStack input = null;
-		    			ItemStack output = null;
-		        		if(tag.hasKey("Input")){
-		        			input = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("Input"));
-		        		}
-		        		if(tag.hasKey("Output")){
-		        			output = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("Output"));
-		        		}
-		        		if(input != null && output != null){
-		        			MachineRecipes.seasonerRecipes.add(new SaltSeasonerRecipe(input, output));
-		        		}
-					}else if(message.key.equalsIgnoreCase(ALLOYER_KEY)){
-						String display = "";
-						ItemStack ingot = null;
-						ItemStack scrap = null;
-		        		if(tag.hasKey("Display")){
-		        			display = tag.getString("Display");
-		        		}
-		        		if(tag.hasKey("Ingot")){
-		        			ingot = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("Ingot"));
-		        		}
-		        		if(tag.hasKey("Scrap")){
-		        			scrap = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("Scrap"));
-		        		}else{
-		        			scrap = null;
-		        		}
-		        		if(tag.hasKey("Dusts")){
-		        			  NBTTagList dustList = tag.getTagList("Dusts", Constants.NBT.TAG_COMPOUND);
-		        			  dusts = new ArrayList<String>();
-		        			  for(int i = 0; i < dustList.tagCount(); i++){
-		        				  NBTTagCompound getDusts = dustList.getCompoundTagAt(i);
-		        				  dusts.add(getDusts.getString("Dust" + i));
+	       			  	ArrayList<Float> gravities = new ArrayList<Float>();
+		        		if(tag.hasKey(tagWeights)){
+		        			  NBTTagList weightsTAG = tag.getTagList(tagWeights, Constants.NBT.TAG_COMPOUND);
+		        			  for(int i = 0; i < weightsTAG.tagCount(); i++){
+		        				  NBTTagCompound weightsNBT = weightsTAG.getCompoundTagAt(i);
+		        				  gravities.add(weightsNBT.getFloat(tagWeights + i));
 		        			  }
 		        		}
-		        		if(tag.hasKey("Quantities")){
-		        			  NBTTagList quantityList = tag.getTagList("Quantities", Constants.NBT.TAG_COMPOUND);
-		        			  quantities = new ArrayList<Integer>();
-		        			  for(int i = 0; i < quantityList.tagCount(); i++){
-		        				  NBTTagCompound getQuantities = quantityList.getCompoundTagAt(i);
-		        				  quantities.add(getQuantities.getInteger("Quantity" + i));
-		        			  }
+		        		if(tag.hasKey(tagSolvent)){
+		        			solvent =  FluidStack.loadFluidStackFromNBT(tag.getCompoundTag(tagSolvent));
 		        		}
-		        		if(!display.matches("") && ingot != null && dusts.size() > 0 && quantities.size() > 0 && dusts.size() == quantities.size()){
-		        			MachineRecipes.alloyerRecipes.add(new MetalAlloyerRecipe(display, dusts, quantities, ingot, scrap));
+		        		LeachingVatRecipes.leaching_vat_recipes.add(new LeachingVatRecipe(input, elements, gravities, solvent));
+	    			}
+	    			//LAB OVEN
+	    			if(message.key.equalsIgnoreCase(add_lab_oven_key)){
+		        		String display = null;
+						if(tag.hasKey(tagDisplay)){
+							display = tag.getString(tagDisplay);
 		        		}
-					}else if(message.key.equalsIgnoreCase(DEPOSITION_KEY)){
-						ItemStack input = null;
-						FluidStack solvent = null;
-						ItemStack output = null;
-						int temperature = 0;
-						int pressure = 0;
-						if(tag.hasKey("Input")){
-							input = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("Input"));
+		        		if(tag.hasKey(tagInput)){
+		        			input =  new ItemStack(tag.getCompoundTag(tagInput));
 		        		}
-		        		if(tag.hasKey("Solvent")){
-		        			solvent = FluidStack.loadFluidStackFromNBT(tag.getCompoundTag("Solvent"));
+		        		if(tag.hasKey(tagPattern)){
+		        			catalyst =  new ItemStack(tag.getCompoundTag(tagPattern));
 		        		}
-		        		if(tag.hasKey("Output")){
-							output = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("Output"));
+		        		if(tag.hasKey(tagSolvent)){
+		        			solvent =  FluidStack.loadFluidStackFromNBT(tag.getCompoundTag(tagSolvent));
 		        		}
-		        		if(tag.hasKey("Temperature")){
-		        			temperature = tag.getInteger("Temperature");
+		        		if(tag.hasKey(tagReagent)){
+		        			reagent =  FluidStack.loadFluidStackFromNBT(tag.getCompoundTag(tagReagent));
 		        		}
-		        		if(tag.hasKey("Pressure")){
-		        			pressure = tag.getInteger("Pressure");
+		        		if(tag.hasKey(tagOutput)){
+		        			solution =  FluidStack.loadFluidStackFromNBT(tag.getCompoundTag(tagOutput));
 		        		}
-		        		if(input != null && solvent.getFluid() != null && output != null && temperature > 0 && pressure > 0){
-		        			MachineRecipes.depositionRecipes.add(new DepositionChamberRecipe(input, output, solvent, temperature, pressure));
+		        		FluidStack byproduct = null;
+		        		if(tag.hasKey(tagByproduct)){
+		        			byproduct =  FluidStack.loadFluidStackFromNBT(tag.getCompoundTag(tagByproduct));
 		        		}
-					}else if(message.key.equalsIgnoreCase(CASTING_KEY)){
-						String input = "";
-						ItemStack output = null;
-						int pattern = 0;
-						if(tag.hasKey("Input")){
-							input = tag.getString("Input");
-		        		}
-		        		if(tag.hasKey("Output")){
-							output = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("Output"));
-		        		}
-		        		if(tag.hasKey("Pattern")){
-		        			pattern = tag.getInteger("Pattern");
-		        		}
-		        		if(input != null && output != null){
-		        			MachineRecipes.castingRecipes.add(new CastingRecipe(input, output, pattern));
-		        		}
-					}else if(message.key.equalsIgnoreCase(BLENDER_KEY)){
-						ItemStack output = null;
-		        		if(tag.hasKey("Elements")){
-		        			  NBTTagList dustList = tag.getTagList("Elements", Constants.NBT.TAG_COMPOUND);
-		        			  elements = new ArrayList<ItemStack>();
-		        			  for(int i = 0; i < dustList.tagCount(); i++){
-		        				  NBTTagCompound getDusts = dustList.getCompoundTagAt(i);
-		        				  elements.add(ItemStack.loadItemStackFromNBT(getDusts));
-		        			  }
-		        		}
-		        		if(tag.hasKey("Output")){
-							output = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("Output"));
-		        		}
-		        		if(elements.size() > 0 && output != null){
-		        			MachineRecipes.blenderRecipes.add(new LabBlenderRecipe(elements, output));
-		        		}
+		        		LabOvenRecipes.lab_oven_recipes.add(new LabOvenRecipe(display, input, catalyst, solvent, reagent, solution, byproduct));
 					}
+	    			//LAB BLENDER
+	    			if(message.key.equalsIgnoreCase(add_lab_blender_key)){
+	       			  	ArrayList<ItemStack> elements = new ArrayList<ItemStack>();
+		        		if(tag.hasKey(tagElements)){
+		        			  NBTTagList elementTag = tag.getTagList(tagElements, Constants.NBT.TAG_COMPOUND);
+		        			  for(int i = 0; i < elementTag.tagCount(); i++){
+		        				  NBTTagCompound elementNBT = elementTag.getCompoundTagAt(i);
+		        				  elements.add(new ItemStack(elementNBT));
+		        			  }
+		        		}
+		        		if(tag.hasKey(tagOutput)){
+		        			output =  new ItemStack(tag.getCompoundTag(tagOutput));
+		        		}
+		        		LabBlenderRecipes.lab_blender_recipes.add(new LabBlenderRecipe(elements, output));
+					}
+	    			//HEAT EXCHANGER
+	    			if(message.key.equalsIgnoreCase(add_heat_exchanger_key)){
+		        		if(tag.hasKey(tagInput)){
+		        			solvent =  FluidStack.loadFluidStackFromNBT(tag.getCompoundTag(tagInput));
+		        		}
+		        		if(tag.hasKey(tagOutput)){
+		        			solution =  FluidStack.loadFluidStackFromNBT(tag.getCompoundTag(tagOutput));
+		        		}
+		        		HeatExchangerRecipes.heat_exchanger_recipes.add(new HeatExchangerRecipe(solvent, solution));
+	    			}
+	    			//REFORMING REACTOR
+	    			if(message.key.equalsIgnoreCase(add_reforming_reactor_key)){
+		        		if(tag.hasKey(tagSolvent)){
+		        			solvent =  FluidStack.loadFluidStackFromNBT(tag.getCompoundTag(tagSolvent));
+		        		}
+		        		if(tag.hasKey(tagReagent)){
+		        			reagent =  FluidStack.loadFluidStackFromNBT(tag.getCompoundTag(tagReagent));
+		        		}
+		        		if(tag.hasKey(tagOutput)){
+		        			solution =  FluidStack.loadFluidStackFromNBT(tag.getCompoundTag(tagOutput));
+		        		}
+		        		if(tag.hasKey(tagPattern)){
+		        			catalyst =  new ItemStack(tag.getCompoundTag(tagPattern));
+		        		}
+		        		GasReformerRecipes.gas_reformer_recipes.add(new GasReformerRecipe(solvent, reagent, solution, catalyst));
+	    			}
+	    			//GAS PURIFIER
+	    			if(message.key.equalsIgnoreCase(add_gas_purifier_key)){
+		        		if(tag.hasKey(tagInput)){
+		        			solvent =  FluidStack.loadFluidStackFromNBT(tag.getCompoundTag(tagInput));
+		        		}
+		        		if(tag.hasKey(tagOutput)){
+		        			solution =  FluidStack.loadFluidStackFromNBT(tag.getCompoundTag(tagOutput));
+		        		}
+		        		ItemStack slag1 = ItemStack.EMPTY;
+		        		if(tag.hasKey(tagSlag1)){
+		        			slag1 =  new ItemStack(tag.getCompoundTag(tagSlag1));
+		        		}
+		        		ItemStack slag2 = ItemStack.EMPTY;
+		        		if(tag.hasKey(tagSlag2)){
+		        			slag2 =  new ItemStack(tag.getCompoundTag(tagSlag2));
+		        		}
+		        		GasPurifierRecipes.gas_purifier_recipes.add(new GasPurifierRecipe(solvent, solution, slag1, slag2));
+	    			}
+	    			//GAS CONDENSER
+	    			if(message.key.equalsIgnoreCase(add_gas_condenser_key)){
+		        		if(tag.hasKey(tagInput)){
+		        			solvent =  FluidStack.loadFluidStackFromNBT(tag.getCompoundTag(tagInput));
+		        		}
+		        		if(tag.hasKey(tagOutput)){
+		        			solution =  FluidStack.loadFluidStackFromNBT(tag.getCompoundTag(tagOutput));
+		        		}
+		        		GasCondenserRecipes.gas_condenser_recipes.add(new GasCondenserRecipe(solvent, solution));
+	    			}
+	    			//GASIFICATION PLANT
+	    			if(message.key.equalsIgnoreCase(add_gasification_plant_key)){
+		        		if(tag.hasKey(tagSolvent)){
+		        			solvent =  FluidStack.loadFluidStackFromNBT(tag.getCompoundTag(tagSolvent));
+		        		}
+		        		if(tag.hasKey(tagReagent)){
+		        			reagent =  FluidStack.loadFluidStackFromNBT(tag.getCompoundTag(tagReagent));
+		        		}
+		        		if(tag.hasKey(tagOutput)){
+		        			solution =  FluidStack.loadFluidStackFromNBT(tag.getCompoundTag(tagOutput));
+		        		}
+		        		ItemStack slag1 = ItemStack.EMPTY;
+		        		if(tag.hasKey(tagSlag1)){
+		        			slag1 =  new ItemStack(tag.getCompoundTag(tagSlag1));
+		        		}
+		        		ItemStack slag2 = ItemStack.EMPTY;
+		        		if(tag.hasKey(tagSlag2)){
+		        			slag2 =  new ItemStack(tag.getCompoundTag(tagSlag2));
+		        		}
+						if(tag.hasKey(tagTemperature)){
+							pattern = tag.getInteger(tagTemperature);
+		        		}
+		        		GasifierPlantRecipes.gasifier_plant_recipes.add(new GasifierPlantRecipe(solvent, reagent, solution, slag1, slag2, pattern));
+	    			}
+	    			//DEPOSITION CHAMBER
+	    			if(message.key.equalsIgnoreCase(add_deposition_chamber_key)){
+		        		if(tag.hasKey(tagInput)){
+		        			input =  new ItemStack(tag.getCompoundTag(tagInput));
+		        		}
+		        		if(tag.hasKey(tagOutput)){
+		        			output =  new ItemStack(tag.getCompoundTag(tagOutput));
+		        		}
+		        		if(tag.hasKey(tagSolvent)){
+		        			solvent =  FluidStack.loadFluidStackFromNBT(tag.getCompoundTag(tagSolvent));
+		        		}
+		        		int temperature = 0;
+						if(tag.hasKey(tagTemperature)){
+							temperature = tag.getInteger(tagTemperature);
+		        		}
+		        		int pressure = 0;
+						if(tag.hasKey(tagPressure)){
+							pressure = tag.getInteger(tagPressure);
+		        		}
+		        		if(tag.hasKey(tagReagent)){
+		        			reagent =  FluidStack.loadFluidStackFromNBT(tag.getCompoundTag(tagReagent));
+		        		}else{
+		        			reagent = BaseRecipes.getFluid(EnumFluid.OXYGEN, 1000);
+		        		}
+		        		DepositionChamberRecipes.deposition_chamber_recipes.add(new DepositionChamberRecipe(input, output, solvent, temperature, pressure, reagent));
+	    			}
+	    			//CHEMICAL EXTRACTOR
+	    			if(message.key.equalsIgnoreCase(add_chemical_extractor_key)){
+		        		String display = null;
+						if(tag.hasKey(tagDisplay)){
+							display = tag.getString(tagDisplay);
+		        		}
+		        		if(tag.hasKey(tagInput)){
+		        			input =  new ItemStack(tag.getCompoundTag(tagInput));
+		        		}
+		        		ArrayList<String> oredicts = new ArrayList<String>();
+		        		if(tag.hasKey(tagElements)){
+		        			  NBTTagList elementsTAG = tag.getTagList(tagElements, Constants.NBT.TAG_COMPOUND);
+		        			  for(int i = 0; i < elementsTAG.tagCount(); i++){
+		        				  NBTTagCompound elementsNBT = elementsTAG.getCompoundTagAt(i);
+		        				  oredicts.add(elementsNBT.getString(tagElements + i));
+		        			  }
+		        		}
+	       			  	ArrayList<Integer> quantities = new ArrayList<Integer>();
+		        		if(tag.hasKey(tagWeights)){
+		        			  NBTTagList weightsTAG = tag.getTagList(tagWeights, Constants.NBT.TAG_COMPOUND);
+		        			  for(int i = 0; i < weightsTAG.tagCount(); i++){
+		        				  NBTTagCompound weightsNBT = weightsTAG.getCompoundTagAt(i);
+		        				  quantities.add(weightsNBT.getInteger(tagWeights + i));
+		        			  }
+		        		}
+		        		ChemicalExtractorRecipes.extractor_recipes.add(new ChemicalExtractorRecipe(display, input, oredicts, quantities));
+	    			}
+	    			//INHIBIT ELEMENT
+	    			if(message.key.equalsIgnoreCase(inhibit_chemical_extractor_key)){
+		        		String oredict = null;
+						if(tag.hasKey(tagOredict)){
+							oredict = tag.getString(tagOredict);
+		        		}
+		        		ChemicalExtractorRecipes.inhibited_elements.add(oredict);
+	    			}
 				}catch (Exception e){
 					e.printStackTrace();
 				}
-			}
+    		}
 		}
 	}
 }

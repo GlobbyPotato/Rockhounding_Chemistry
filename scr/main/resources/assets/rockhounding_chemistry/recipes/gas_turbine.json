@@ -1,0 +1,27 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:utils",
+	"pattern": [
+		"FFF", 
+		"RSW", 
+		"FFF"
+	],
+	"key": {
+		"F":{
+				"item": "#IRON_FOIL"
+			},
+		"R":{
+				"item": "#ROTOR"
+			},
+		"S":{
+				"item": "#STATOR"
+			},
+		"W":{
+				"item": "#TURBINE_FAN"
+			}
+	},
+	"result":{
+				"item": "rockhounding_core:gas_turbine",
+				"data": 0
+			}
+}

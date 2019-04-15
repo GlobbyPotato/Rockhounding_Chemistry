@@ -1,0 +1,21 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:utils",
+	"pattern": [
+		"RRR", 
+		"R R", 
+		"N N"
+	],
+	"key": {
+		"N":{
+				"item": "#IRON_NUGGET"
+			},
+		"R":{
+				"item": "#NICHROME_ROD"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:misc_items",
+				"data": 13
+			}
+}

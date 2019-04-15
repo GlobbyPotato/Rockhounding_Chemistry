@@ -1,0 +1,22 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:machines",
+	"pattern": [
+		" F ",
+		"FIF",
+		" F "
+	],
+	"key": {
+		"I":{
+				"item": "rockhounding_chemistry:machines_c",
+				"data": 9
+			},
+		"F":{
+				"item": "#FILE"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:machines_d",
+				"data": 2
+			}
+}

@@ -1,8 +1,0 @@
-{
-    "variants": {
-        "pos=down": 		{ "model": "rockhounding_chemistry:earthBreaker" },
-        "pos=down_spin": 	{ "model": "rockhounding_chemistry:earthBreaker_spin" },
-        "pos=up": 			{ "model": "rockhounding_chemistry:earthBreaker", "x": 180 },
-		"pos=up_spin": 		{ "model": "rockhounding_chemistry:earthBreaker_spin", "x": 180 }
-    }
-}

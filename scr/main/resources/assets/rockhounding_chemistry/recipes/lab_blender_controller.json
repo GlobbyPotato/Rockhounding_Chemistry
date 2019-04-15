@@ -1,0 +1,34 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:machines",
+	"pattern": [
+		"SU ",
+		"LA ",
+		"CPC"
+	],
+	"key": {
+		"S":{
+				"item": "#SCAFFOLD"
+			},
+		"P":{
+				"item": "#PISTON"
+			},
+		"C":{
+				"item": "#IRON_CASING"
+			},
+		"A":{
+				"item": "#IRON_ARM"
+			},
+		"L":{
+				"item": "#BASE_CHIP"
+			},
+		"U":{
+				"item": "rockhounding_chemistry:misc_items",
+				"data": 6
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:machines_a",
+				"data": 9
+			}
+}

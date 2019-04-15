@@ -1,0 +1,27 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:machines",
+	"pattern": [
+		"fff",
+		"fRf",
+		"SFS"
+	],
+	"key": {
+		"S":{
+				"item": "#SCAFFOLD"
+			},
+		"F":{
+				"item": "#FURNACE"
+			},
+		"f":{
+				"item": "#IRON_FOIL"
+			},
+		"R":{
+				"item": "#REDSTONE_BLOCK"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:machines_a",
+				"data": 2
+			}
+}

@@ -1,0 +1,6 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "rockhounding_chemistry:items/alloy_items_gems_nd_yag_dust"
+    }
+}

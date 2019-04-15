@@ -1,0 +1,8 @@
+{
+    "__comment": "Model generated using MrCrayfish's Model Creator (http://mrcrayfish.com/modelcreator/)",
+    "parent": "rockhounding_chemistry:block/base_mineral",
+    "textures": {
+        "particle": "rockhounding_chemistry:blocks/mineral_ores_halide",
+        "0": "rockhounding_chemistry:blocks/mineral_ores_halide"
+    }
+}

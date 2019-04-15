@@ -3,8 +3,8 @@ package com.globbypotato.rockhounding_chemistry.enums;
 public enum EnumSpeeds implements BaseEnum {
 	BASE,
 	IRON,
-	SCAL,
 	CUBE,
+	SCAL,
 	BAM,
 	VANASTEEL,
 	CARBIDE,

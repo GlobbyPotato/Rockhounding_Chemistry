@@ -1,0 +1,21 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:utils",
+	"pattern": [
+		"CCC", 
+		"CSC", 
+		"CCC"
+	],
+	"key": {
+		"S":{
+				"item": "#SCAFFOLD"
+			},
+		"C":{
+				"item": "#IRON_FOIL"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:misc_items",
+				"data": 22
+			}
+}

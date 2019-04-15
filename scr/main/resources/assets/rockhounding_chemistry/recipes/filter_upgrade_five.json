@@ -1,0 +1,26 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:utils",
+	"pattern": [
+		" A ", 
+		"PPP", 
+		"GGG"
+	],
+	"key": {
+		"A":{
+				"item": "rockhounding_chemistry:filter_items",
+				"data": 4
+			},
+		"P":{
+				"item": "#GLASS_PIPE"
+			},
+		"G":{
+				"item": "rockhounding_chemistry:in_catalyst",
+				"data": 0
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:filter_items",
+				"data": 5
+			}
+}

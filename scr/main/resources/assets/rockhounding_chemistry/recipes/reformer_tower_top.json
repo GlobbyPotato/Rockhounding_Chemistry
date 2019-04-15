@@ -1,0 +1,27 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:machines",
+	"pattern": [
+		"fCf",
+		"fPf",
+		"XPX"
+	],
+	"key": {
+		"X":{
+				"item": "#IRON_COIL"
+			},
+		"C":{
+				"item": "#COMPRESSOR"
+			},
+		"f":{
+				"item": "#IRON_FOIL"
+			},
+		"P":{
+				"item": "#GLASS_PIPE"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:misc_blocks_a",
+				"data": 9
+			}
+}

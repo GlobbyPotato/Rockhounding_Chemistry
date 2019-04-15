@@ -1,0 +1,24 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:machines",
+	"pattern": [
+		"SAS",
+		"f f",
+		"fff"
+	],
+	"key": {
+		"S":{
+				"item": "#SCAFFOLD"
+			},
+		"f":{
+				"item": "#IRON_FOIL"
+			},
+		"A":{
+				"item": "rockhounding_chemistry:slurry_agitator"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:machines_b",
+				"data": 0
+			}
+}

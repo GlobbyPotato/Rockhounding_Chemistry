@@ -1,0 +1,30 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:machines",
+	"pattern": [
+		"SHS",
+		"FIF",
+		"SLS"
+	],
+	"key": {
+		"L":{
+				"item": "#ADVANCED_CHIP"
+			},
+		"H":{
+				"item": "#HOPPER"
+			},
+		"I":{
+				"item": "#ITEM_FILTER"
+			},
+		"F":{
+				"item": "#IRON_FOIL"
+			},
+		"S":{
+				"item": "#SCAFFOLD"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:machines_c",
+				"data": 15
+			}
+}

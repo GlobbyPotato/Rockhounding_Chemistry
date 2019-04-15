@@ -1,0 +1,22 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:machines",
+	"pattern": [
+		"C C",
+		"SSS"
+	],
+	"key": {
+		"S":{
+				"item": "minecraft:stone_slab",
+				"data": 0
+			},
+		"C":{
+				"item": "minecraft:brick",
+				"data": 0
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:machines_a",
+				"data": 12
+			}
+}

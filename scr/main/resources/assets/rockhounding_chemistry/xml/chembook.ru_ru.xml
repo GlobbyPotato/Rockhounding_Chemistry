@@ -1,0 +1,1717 @@
+<book title="Rockhounding Chemistry: Гайд-Книга" cover="rockhounding_chemistry:gbook/icons/cover" fontSize="0.6" home="0:0">
+	<include ref="rockhounding_chemistry:xml/custom.xml" />
+
+	<chapter id="chapters">
+		<page id="index">
+			<title color="#CC3333" >Оглавление</title>
+			<p space="10" />
+			<link ref="concept:readme_page" color="#000066">-&gt; Сначала прочитайте меня</link>
+			<link ref="concept:concept_page" color="#000066">-&gt; Концепт Мода</link>
+			<p space="10" />
+			<link ref="tech:tech_page" color="#000066">-&gt; Технические концепции</link>
+			<p space="10" />
+			<link ref="resources:resources_page" color="#000066">-&gt; Ресурсы</link>
+			<p space="10" />
+			<link ref="utility:utility_page" color="#000066">-&gt; Сервисные блоки</link>
+			<link ref="tools:tools_page" color="#000066">-&gt; Служебные предметы</link>
+			<link ref="devices:devices_page" color="#000066">-&gt; Конструкции и Машины</link>
+			<p space="10" />
+			<link ref="mobs:mobs_page" color="#000066">-&gt; Мобы</link>
+			<p space="10" />
+			<link ref="projects:projects_page" color="#000066">-&gt; Проекты</link>
+			<link ref="features:features_page" color="#000066">-&gt; Дополнительные возможности</link>
+			<link ref="simulants:simulants_page" color="#000066">-&gt; Имитаторы</link>
+		</page>
+	</chapter>
+
+				<chapter id="concept">
+					<page id="readme_page">
+						<link ref="chapters:index" color="#CC3333">&lt;- Сначала прочитайте меня</link>
+						<p>- Если размер этой книги не позволяет оптимальное чтение, рекомендуется установить масштаб GUI равным 0 в конфигурации путеводителя "gbook.cfg" или подходящей комбинации со шкалой GUI игры.</p>
+						<p space="10" />
+						<p>- Этот мод лучше работает с другими техническими модами, представляющими металлы и другие материалы для быстрого совместного использования общих ресурсов, так как ключом является производство необычных или неделимых ресурсов, которые можно использовать позже в игре.</p>
+						<p space="10" />
+						<p>- Эта книга пытается описать все части мода и шаги, чтобы перейти к нему. Оглавление разделено на основные аргументы, каждый из которых разбит на главы. Каждая глава содержит отсортированные списки документации.</p> 
+						<p space="10" />
+						<p>- Для более быстрой навигации щелчок по индексам приводит вас к нужной странице, тогда как нажатие на заголовки красной страницы возвращает вас к ее прямому начальному индексу.</p>
+					</page>
+					<page id="concept_page">
+						<link ref="chapters:index" color="#CC3333">&lt;- Концепт Мода</link>
+						<p>- Этот мод грубо описывает производство различных ресурсов с точки зрения промышленной химии. Он включает процессы анализа неопознанного минерала, подтверждения его состава и постепенной обработки того, что подвергается воздействию, для сбора их несущих элементов. Не существует правильной линии развитии, но сборка фабрики и привлечение игрока к выбору и стратегии являются частью духа мода.</p>
+						<p>- Технологическое дерево состоит из нескольких сходящихся ветвей, работающих самостоятельно или подпитывающих друг друга, относительно приобретения первичных ресурсов и их переработки в передовые для дальнейшего использования.</p>
+						<p>- В своей основной форме в конце цепочки есть набор ингредиентов, которые можно использовать для реализации функций на определенных этапах игры, в основном в поздней игре. Каждая машина также настраивается с помощью внешних рецептов, так что каждый из них может использоваться вне механики модов, чтобы дифференцировать или распространять рецепты.</p>
+					</page>
+				</chapter>
+
+				<chapter id="tech">
+					<page id="tech_page">
+						<link ref="chapters:index" color="#CC3333">&lt;- Технические концепции</link>
+						<p space="10" />
+						<link ref="structures:structures_page" indent="8" color="#333399">-&gt; Сооружения</link>
+						<link ref="structures:connections_page" indent="8" color="#333399">-&gt; Связи</link>
+						<link ref="structures:gui_page" indent="8" color="#333399">-&gt; Элементы GUI</link>
+						<link ref="structures:measures_page" indent="8" color="#333399">-&gt; Измерение</link>
+						<link ref="structures:consumables_page" indent="8" color="#333399">-&gt; Расходные Материалы</link>
+					</page>
+				</chapter>
+
+							<chapter id="structures">
+								<page id="structures_page">
+									<link ref="tech:tech_page" color="#CC3333">&lt;- Сооружения</link>
+									<p>Большинство устройств представляют собой многоблочные конструкции, выполненные из ориентируемых элементов, соединенных друг с другом. Некоторые из них предоставляются с графическим интерфейсом для управления основными функциями или просто делегированы для хранения ингредиента выполненного рецепта. Некоторые элементы имеют высоту 2 блока и размещены одновременно, поэтому рассматриваются как единое целое. Удар по каждому элементу с помощью гаечного ключа будет вращать блок по часовой стрелке.</p>
+									<p>Чтобы собрать структуру, это руководство использует систему сетки для каждого слоя, составляющего ее, от самого низкого до самого высокого. Каждый слой отображается «как видно сверху», причем положение каждого компонента в сетке и красная стрелка указывают их ориентацию относительно остальной части структуры. Компоненты без стрелки ориентации могут быть свободно размещены. Слоты, помеченные цветными границами, указывают, делегирован ли блок для питания (красный), входных задач (синий) или выходных задач (оранжевый). Если блок обрабатывает только определенную жидкость или газ, он также будет показан внутри слота.</p>
+								</page>
+
+								<page id="connections_page">
+									<link ref="tech:tech_page" color="#CC3333">&lt;- Связи</link>
+									<p>Конструкции предлагают большое количество крюков для транспортных и силовых систем. Каждый элемент использует цветные заглушки только для справки, но если в главах структуры не указано иное, Трубопроводом можно управлять с любой стороны. Кроме того, блоки, делегированные для обработки определенной жидкости и газа, автоматически фильтруются для этого ресурса.</p>
+									<p>Цветные заглушки в общих чертах говорят о том, что за труба:</p>
+									<p space="2" />
+									<p>- Синие пробки указывают, что блок может принимать ингредиенты.</p>
+									<p space="2" />
+									<p>- Оранжевые заглушки показывают, что блок может извлекать продукты.</p>
+									<p space="2" />
+									<p>- Золотые пробки относятся к генеральным Связям между частями структуры.</p> 
+									<p space="2" />
+									<p>- Красные вилки указывают, что элемент должен быть подключен к электростанции.</p> 
+									<p space="2" />
+									<image src="rockhounding_chemistry:gbook/icons/plugs" tw="80" th="20"/>
+								</page>
+
+								<page id="gui_page">
+									<link ref="tech:tech_page" color="#CC3333">&lt;- Элементы GUI</link>
+									<image src="rockhounding_chemistry:gbook/icons/activation" tw="18" th="18" />
+									<p space="2" />
+									<p>Активирует структуру или отдельные элементы. Если доступен рецептор, возможно, потребуется активировать структуру, прежде чем можно будет принять правильные ингредиенты.</p>
+									<p space="5" />
+									<image src="rockhounding_chemistry:gbook/icons/sliders" tw="28" th="14"/>
+									<p space="2" />
+									<p>Когда доступно, ползунки увеличивают или уменьшают связанный параметр.</p>
+									<p space="5" />
+									<image src="rockhounding_chemistry:gbook/icons/rsignal" tw="14" th="14"/>
+									<p space="2" />
+									<p>Хотя он виден, это означает, что сигнал Редстоуна перекрывает функцию кнопки. Переопределение Редстоуна может использоваться для активации или для установки параметра по уровню мощности сигнала (от 0 до 15).</p>
+									<p space="5" />
+									<image src="rockhounding_chemistry:gbook/icons/speeds" tw="18" th="18"/>
+									<p space="2" />
+									<p>Где доступно, слот принимает многоуровневые ускорения. Есть 7 ярусов, ускоряющих процесс до 8 раз.</p>
+								</page>
+
+								<page>
+									<image src="rockhounding_chemistry:gbook/icons/recipes" tw="16" th="16"/>
+									<p space="2" />
+									<p>Если он активен поверх графического интерфейса, он позволяет получить доступ к вкладкам рецептов JEI машины. Стандартные цветные стрелки ввода / вывода указывают, являются ли элементы ингредиентами или результатом рецепта.</p>
+									<p space="5" />
+									<image src="rockhounding_chemistry:gbook/icons/monitor" tw="14" th="14"/>
+									<p space="2" />
+									<p>При наведении курсора на этот значок отображается полезная информация о соответствующем аппарате и обрабатываемом рецепте. С ним всегда нужно консультироваться.</p>
+									<p space="5" />
+									<image src="rockhounding_chemistry:gbook/icons/swapping" tw="100" th="22"/>
+									<p space="2" />
+									<p>При использовании этой системы слотов обработанный ингредиент может автоматически циклически переключаться с помощью селектора рецептов, чтобы его можно было вытолкнуть для извлечения, когда вводится другой ингредиент. Это помогает <link ref="utilities:server_page" color="#000000">Серверу</link> планировать рецепты.</p>
+								</page>
+
+								<page id="measures_page">
+									<link ref="tech:tech_page" color="#CC3333">&lt;- Измерение</link>
+									<p>Мод использует различные способы для количественного определения ресурсов, некоторые общие для любого мода, некоторые специфические для мода.</p>
+									<p space="5" />
+									<p>> Топливная мощность: выражается в тиках. Это соответствует времени горения обычного топлива или эффективности использования дополнительных сжигаемых ресурсов.</p>
+									<p space="5" />
+									<p>> Газы: газы количественно выражены в кубических единицах, где 1cu можно приблизительно сравнить с 1 ведром для жидкостей. </p>
+									<p space="5" />
+									<p>> Элементы: некоторые машины используют долю пыли от элементов, поэтому они количественно определяются в 'ppc' (Parts-Per-Craft), где 1 пыль по умолчанию состоит из 100ppc.</p>
+								</page>
+
+								<page id="consumables_page">
+									<link ref="tech:tech_page" color="#CC3333">&lt;- Расходные Материалы</link>
+									<p>Некоторые машины используют Расходные Материалы для своих процессов. Это повреждаемые предметы, которые медленно расходуются и нуждаются в замене. Все они в любом случае могут быть зачарованы на Починку, чтобы работать дольше.</p>
+								</page>
+							</chapter>
+
+				<chapter id="resources">
+					<page id="resources_page">
+						<link ref="chapters:index" color="#CC3333">&lt;- Resources</link>
+						<p space="10" />
+						<link ref="minerals:minerals_page" indent="8" color="#333399">-&gt; Расходные Материалы</link>
+						<link ref="minerals:minerals_page" indent="8" color="#333399">-&gt; Минералы</link>
+						<link ref="minerals:specimens_pages" indent="8" color="#333399">-&gt; Пустые породы</link>
+						<link ref="minerals:specimens_pages" indent="8" color="#333399">-&gt; Образцы</link>
+						<link ref="minerals:elements_pages" indent="8" color="#333399">-&gt; Елементы</link>
+						<link ref="minerals:fluid_pages" indent="8" color="#333399">-&gt; Жидкости и Газы</link>
+						<link ref="minerals:syngas_pages" indent="8" color="#333399">-&gt; Части Синтезированного Газа</link>
+						<link ref="minerals:parts_pages" indent="8" color="#333399">-&gt; Материалы и Части</link>
+					</page>
+				</chapter>
+
+							<chapter id="minerals">
+								<page id="minerals_page">
+									<link ref="resources:resources_page" color="#CC3333">&lt;- Расходные Материалы</link>
+									<p>Производственная цепочка требует, чтобы некоторые вспомогательные материалы работали стабильно. Это ванильные материалы, такие как уголь, гранит, Редстоун камень и вода. Будучи основой почти для каждого процесса, их приток должен быть постоянным и сильным.</p>
+									<p space="10" />
+
+									<link ref="resources:resources_page" color="#CC3333">&lt;- Минералы</link>
+									<p>Поставка руды представлена жилами Непроверенного Минерала, которые образуют в любом камне под землей. Будучи единственным источником материалов, параметры жилы должны быть соответственно установлены, чтобы обеспечить изобилие в любой области. Непроверенные Минералы устанавливают начало технологической цепочки, которая будет начата в Классификаторе Минералов.</p>
+									<stack item="rockhounding_chemistry:uninspected_mineral" meta="0" count="1" />
+								</page>
+
+								<page id="specimens_pages">
+									<link ref="resources:resources_page" color="#CC3333">&lt;- Пустые породы</link>
+									<p>Пустые породы - это смеси Минералы, попавшие в необработанную руду, подвергнутую дроблению Непроверенного Минерала в Классификаторе Минералов. Существует 13 типов групп, представляющих первый этап классификации. Перемещая курсор над ними, можно прочитать их требуемое измельчение, чтобы правильно настроить машину.</p>
+									<stack_eight>
+										<stack item="rockhounding_chemistry:mineral_ores" meta="0" count="1" />
+										<stack item="rockhounding_chemistry:mineral_ores" meta="1" count="1" />
+										<stack item="rockhounding_chemistry:mineral_ores" meta="2" count="1" />
+										<stack item="rockhounding_chemistry:mineral_ores" meta="3" count="1" />
+										<stack item="rockhounding_chemistry:mineral_ores" meta="4" count="1" />
+										<stack item="rockhounding_chemistry:mineral_ores" meta="5" count="1" />
+										<stack item="rockhounding_chemistry:mineral_ores" meta="6" count="1" />
+										<stack item="rockhounding_chemistry:mineral_ores" meta="7" count="1" />
+									</stack_eight>
+									<stack_eight>
+										<stack item="rockhounding_chemistry:mineral_ores" meta="8" count="1" />
+										<stack item="rockhounding_chemistry:mineral_ores" meta="9" count="1" />
+										<stack item="rockhounding_chemistry:mineral_ores" meta="10" count="1" />
+										<stack item="rockhounding_chemistry:mineral_ores" meta="11" count="1" />
+										<stack item="rockhounding_chemistry:mineral_ores" meta="12" count="1" />
+										<stack item="minecraft:air" meta="0" count="1" />
+										<stack item="minecraft:air" meta="0" count="1" />
+										<stack item="minecraft:air" meta="0" count="1" />
+									</stack_eight>
+									<p space="10" />
+
+									<link ref="resources:resources_page" color="#CC3333">&lt;- Образцы</link>
+									<p>Образцы являются стабильными осколками, извлеченными из их скопления после воздействия определенных веществ. Осколки - это Минералы, состоящие из одного или нескольких химических элементов по определенной формуле. Каждый осколок имеет свой удельный вес для правильной настройки фильтров выщелачивания, которые можно прочитать, наведя на них курсор.</p>
+									<stack_eight>
+										<stack item="rockhounding_chemistry:antimonate_shards" meta="3" count="1" />
+										<stack item="rockhounding_chemistry:arsenate_shards" meta="0" count="1" />
+										<stack item="rockhounding_chemistry:borate_shards" meta="4" count="1" />
+										<stack item="rockhounding_chemistry:carbonate_shards" meta="1" count="1" />
+										<stack item="rockhounding_chemistry:chromate_shards" meta="3" count="1" />
+										<stack item="rockhounding_chemistry:halide_shards" meta="2" count="1" />
+										<stack item="rockhounding_chemistry:native_shards" meta="4" count="1" />
+										<stack item="rockhounding_chemistry:oxide_shards" meta="9" count="1" />
+									</stack_eight>
+									<stack_eight>
+										<stack item="rockhounding_chemistry:phosphate_shards" meta="4" count="1" />
+										<stack item="rockhounding_chemistry:silicate_shards" meta="7" count="1" />
+										<stack item="rockhounding_chemistry:sulfate_shards" meta="6" count="1" />
+										<stack item="rockhounding_chemistry:sulfide_shards" meta="7" count="1" />
+										<stack item="rockhounding_chemistry:vanadate_shards" meta="1" count="1" />
+										<stack item="minecraft:air" meta="0" count="1" />
+										<stack item="minecraft:air" meta="0" count="1" />
+										<stack item="minecraft:air" meta="0" count="1" />
+									</stack_eight>
+								</page>
+
+								<page id="elements_pages">
+									<link ref="resources:resources_page" color="#CC3333">&lt;- Елементы</link>
+									<p>Химические элементы получают в виде пыли путем накопления небольших количеств из Химического Экстрактора и могут быть использованы в качестве источника в технологических средах. Количество извлеченного материала примерно отражает преимущества, перечисленные при наведении курсора на Образцы. Образцы - это стабильные осколки, извлеченные из их группы после того, как химические элементы получены в виде пыли путем накопления небольших количеств из Химического Экстрактора и могут использоваться в качестве поставка в техническую среду. Количество извлеченного материала примерно отражает преимущества, указанные при наведении курсора на Образцы.</p>
+									<p>Некоторые элементы являются общими и имеют высокую доступность. Они там только для доработки и профицита, так как обычно можно добыть из других модов.</p>
+									<stack_four>
+										<stack item="rockhounding_chemistry:chemical_dusts" meta="16" count="1" />
+										<stack item="rockhounding_chemistry:chemical_dusts" meta="26" count="1" />
+										<stack item="rockhounding_chemistry:chemical_dusts" meta="30" count="1" />
+										<stack item="rockhounding_chemistry:chemical_dusts" meta="38" count="1" />
+									</stack_four>
+									<p space="5" />
+									<p>К необычным элементам относятся те, которые обычно недоступны в качестве руды в мире и требуют добычи.</p>
+									<stack_four>
+										<stack item="rockhounding_chemistry:chemical_dusts" meta="17" count="1" />
+										<stack item="rockhounding_chemistry:chemical_dusts" meta="46" count="1" />
+										<stack item="rockhounding_chemistry:chemical_dusts" meta="47" count="1" />
+										<stack item="rockhounding_chemistry:chemical_dusts" meta="54" count="1" />
+									</stack_four>
+									<p space="5" />
+									<p>Редкоземельные элементы - это редчайшие элементы, которые можно найти, и для их получения требуется достаточно много ресурсов в приличных количествах, что является окончательным достижением.</p>
+									<stack_four>
+										<stack item="rockhounding_chemistry:chemical_dusts" meta="0" count="1" />
+										<stack item="rockhounding_chemistry:chemical_dusts" meta="3" count="1" />
+										<stack item="rockhounding_chemistry:chemical_dusts" meta="8" count="1" />
+										<stack item="rockhounding_chemistry:chemical_dusts" meta="12" count="1" />
+									</stack_four>
+								</page>
+
+								<page id="fluid_pages">
+									<link ref="resources:resources_page" color="#CC3333">&lt;- Жидкости и Газы</link>
+									<p color="#0000FF">Fluids:</p>
+									<p>Большинство жидкостей, используемых модом, представляют собой кислоты, наносящие урон (которые можно отключить из конфигурации). Они могут быть обработаны как обычно с любой движущейся системой.</p>
+									<p space="4" />
+									<p color="#0000FF">Газы:</p>
+									<p>В Minecraft газы представляют собой жидкости, помеченные как «газообразные» (обозначены значком с перевернутым ведром). Внутри мода газы обрабатываются только в сосудах и перемещаются по <link ref="utilities:pipeline_page" color="#000000">Газопроводу</link>.</p>
+									<p space="4" />
+									<p color="#0000FF">Категории Жидкостей:</p>
+									<p><link ref="utilities:fluidpedia_page" color="#000000">Флюидпедия</link> предоставляет некоторые параметры, которые определяют способ хранения жидкости в моде. Это примерно зависит от плотности и вязкости. В то время как легкие жидкости можно хранить в <link ref="utilities:fluid_tank_page" color="#000000">Жидкостных Баках</link>, тяжелые жидкости требуют хранения в  <link ref="utilities:fluid_tank_page" color="#000000">Усиленном Баке</link> </p>
+									<p>Af = (D + V) / 2</p>
+									<p>Kf = V / D</p>
+									<p>Легкая жидкость: Af = 3500 и Kf = 1,50</p>
+									<p>Тяжёлая жидкость: Af = 3500 и Kf = 1,50</p>
+								</page>
+
+								<page id="syngas_pages">
+									<link ref="resources:resources_page" color="#CC3333">&lt;- Производство Синтезированного Газа</link>
+									<p>Мод имеет собственную опциональную систему питания, основанную на производстве Синтезированного Газа, полностью поддерживаемую водой и углем. СинтезированнЫЙ Газ можно вводить на электростанции для выработки энергии топлива и радиочастот для конструкции, а также радиочастот для внешнего использования.</p>
+									<p space="2" />
+									<p color="#0000FF">Запуск: Производство Синтезированного Газа:</p>
+									<p>1- Соберём  <link ref="tiertwo:mineral_sizer_page" color="#000000">Классификатора Минералов</link> и превратить блоки угля в потрескавшийся уголь.</p>
+									<p space="2" />
+									<p>2- Поместите <link ref="tierone:pond_page" color="#000000">Преобразователь Жидкостей</link> и заполните его треснутым углем и водой, чтобы получить Угольные Шлаки.</p>
+									<p space="2" />
+									<p>3- Соберём <link ref="tiertwo:gas_plant_page" color="#000000">Завод газификации</link> и заполните его водой и Угольными Шлакоми, чтобы получить сырой Синтезированный Газ.</p>
+									<p space="2" />
+									<p>4- Соберём <link ref="tiertwo:gas_purifier_page" color="#000000">Очиститель газа</link> и заполните его сырым Синтезированным Газом, чтобы очистить его в Синтезированный Газ.</p>
+									<p space="2" />
+									<p>5- Запустите Синтезированный Газ в <link ref ="utilities:pressure_vessel_page" color = "#000000"> Баки </link>. Установите путь <link ref = "utilities:pipeline_page" color = "#000000"> Газопровод </link>, предназначенный для доставки Синтезированного Газа на все сооружения. </p>
+									<p space="2" />
+									<p>6- Заполните каждую <link ref="utilities:engine_page" color="#000000">Энергетическую Станцию</link> с Синтезированным Газом для производства топлива. Добавьте <link ref="tools:tools_page" color="#000000">Газовую Турбину</link> чтобы в слоте Редстоуна также производить RF.</p>
+								</page>
+
+								<page id="parts_pages">
+									<link ref="resources:resources_page" color="#CC3333">&lt;- Материалы и Части</link>
+									<p>Этот мод производит несколько сплавов в качестве непосредственного применения процессов. Они примерно изображены своими характеристиками и их реальным составом.</p>
+									<p space="5" />
+									<p color="#0000FF">Alloys</p>
+									<p>Сплавы реализуются с их набором предметов и, как ожидается, будут включены в рецепты.</p>
+									<stack_five>
+										<stack item="rockhounding_chemistry:alloy_blocks_tech" meta="13" count="1" />
+										<stack item="rockhounding_chemistry:alloy_bricks_tech" meta="13" count="1" />
+										<stack item="rockhounding_chemistry:alloy_items_tech" meta="39" count="1" />
+										<stack item="rockhounding_chemistry:alloy_items_tech" meta="40" count="1" />
+										<stack item="rockhounding_chemistry:alloy_items_tech" meta="41" count="1" />
+									</stack_five>
+									<p space="5" />
+									<p>Сплав Мишметалл обладает способностью генерировать искры при ходьбе по нему в сапогах.</p>
+									<p space="10" />
+									<p color="#0000FF">Parts</p>
+									<p>Для дополнительных применений сплавы и металлы могут производить дополнительные детали. Они могут быть общими компонентами для технических рецептов поздней игры, таких как шестерни, пластины и расплавленные металлы для Tinker Construct, а также для торговых целей, таких как монеты.</p>
+									<stack_eight>
+										<stack item="rockhounding_chemistry:alloy_parts" meta="0" count="1" />
+										<stack item="rockhounding_chemistry:alloy_parts" meta="1" count="1" />
+										<stack item="rockhounding_chemistry:alloy_parts" meta="2" count="1" />
+										<stack item="rockhounding_chemistry:fluid.molten_titanium" meta="0" count="1" />
+										<stack item="rockhounding_chemistry:alloy_parts" meta="3" count="1" />
+										<stack item="rockhounding_chemistry:alloy_parts" meta="4" count="1" />
+										<stack item="rockhounding_chemistry:alloy_parts" meta="5" count="1" />
+										<stack item="rockhounding_chemistry:fluid.molten_vanadium" meta="0" count="1" />
+									</stack_eight>
+									<stack_eight>
+										<stack item="rockhounding_chemistry:alloy_parts" meta="6" count="1" />
+										<stack item="rockhounding_chemistry:alloy_parts" meta="7" count="1" />
+										<stack item="rockhounding_chemistry:alloy_parts" meta="8" count="1" />
+										<stack item="rockhounding_chemistry:fluid.molten_cube" meta="0" count="1" />
+										<stack item="rockhounding_chemistry:alloy_parts" meta="24" count="1" />
+										<stack item="rockhounding_chemistry:alloy_parts" meta="25" count="1" />
+										<stack item="rockhounding_chemistry:alloy_parts" meta="26" count="1" />
+										<stack item="rockhounding_chemistry:fluid.molten_hastelloy" meta="0" count="1" />
+									</stack_eight>
+								</page>
+							</chapter>
+
+				<chapter id="utility">
+					<page id="utility_page">
+						<link ref="chapters:index" color="#CC3333">&lt;- Сервисные блоки</link>
+						<p space="10" />
+						<p><stack item="rockhounding_chemistry:machines_e" meta="2" count="1" /> <link ref="utilities:pump_page" color="#333399">-&gt; Помпа</link></p>
+						<p><stack item="rockhounding_chemistry:machines_a" meta="2" count="1" /> <link ref="utilities:engine_page" color="#333399">-&gt; Электростанция</link></p>
+						<p><stack item="rockhounding_chemistry:machines_c" meta="9" count="1" /> <link ref="utilities:cabinets_page" color="#333399">-&gt; Шкафы</link></p>
+						<p><stack item="rockhounding_chemistry:machines_a" meta="4" count="1" /> <link ref="utilities:fluid_tank_page" color="#333399">-&gt; Жидкостный Бак</link></p>
+						<p><stack item="rockhounding_chemistry:machines_e" meta="5" count="1" /> <link ref="utilities:fluid_tank_page" color="#333399">-&gt; Усиленный Бак</link></p>
+						<p><stack item="rockhounding_chemistry:machines_d" meta="15" count="1" /> <link ref="utilities:fluid_tank_page" color="#333399">-&gt; Защитный Бак</link></p>
+						<p><stack item="rockhounding_chemistry:machines_b" meta="9" count="1" /> <link ref="utilities:pressure_vessel_page" color="#333399">-&gt; Бак</link></p>
+						<p><stack item="rockhounding_chemistry:machines_d" meta="6" count="1" /> <link ref="utilities:pressure_vessel_page" color="#333399">-&gt; Большой Бак</link></p>
+						<p><stack item="rockhounding_chemistry:machines_a" meta="14" count="1" /> <link ref="utilities:server_page" color="#333399">-&gt; Сервер</link></p>
+						<p><stack item="rockhounding_chemistry:machines_d" meta="12" count="1" /> <link ref="utilities:fluidpedia_page" color="#333399">-&gt; Флюидпедия</link></p>
+						<p><stack item="rockhounding_chemistry:machines_d" meta="13" count="1" /> <link ref="utilities:fluidpedia_page" color="#333399">-&gt; Химический уничтожитель</link></p>
+						<p><stack item="rockhounding_chemistry:machines_e" meta="1" count="1" /> <link ref="utilities:exhaustion_page" color="#333399">-&gt; Выпуской Клапан</link></p>
+						<p><stack item="rockhounding_chemistry:pipeline_pump" meta="0" count="1" /> <link ref="utilities:pipeline_page" color="#333399">-&gt; Жидкостный Трубопровод</link></p>
+						<p><stack item="rockhounding_chemistry:gasline_pump" meta="0" count="1" /> <link ref="utilities:pipeline_page" color="#333399">-&gt; Газопровод</link></p>
+					</page>
+				</chapter>
+
+							<chapter id="utilities">
+								<page id="pump_page">
+									<p><stack item="rockhounding_chemistry:machines_e" meta="2" count="1" /> <link ref="utility:utility_page" color="#CC3333">&lt;- Помпа</link></p>
+									<p>Это устройство позволяет собирать воду. Он должен быть помещен сверху и включен сигналом Редстоуна. Вода будет медленно собираться во внутреннем резервуаре и может быть извлечена с помощью любой системы транспортировки жидкости.</p>
+									<p>Он не нуждается в заправке и не имеет графического интерфейса.</p>
+									<p>It has 2 combined upgrades: Compression and Tiers.</p>
+									<p space="5" />
+									<p>- Компрессорная установка позволяет улучшить всасывание воды, сделав ее постоянной.</p>
+									<p space="5" />
+									<p>- Рабочие колеса с ярусами повышают эффективность насоса за счет увеличения потока:</p>
+									<p indent = "10"> - Железный Пропеллер: 200 mb/t</p>
+									<p indent = "10"> - Алюминиевый Пропеллер: 1000 mb/t</p>
+									<p indent = "10"> - Стеллитовый Пропеллер: 2000 mb/t</p>
+									<p></p>
+									<grid_four>
+										<stack item="rockhounding_chemistry:misc_items" meta="9" count="1" />
+										<stack item="rockhounding_chemistry:misc_items" meta="30" count="1" />
+										<stack item="rockhounding_chemistry:misc_items" meta="31" count="1" />
+										<stack item="rockhounding_chemistry:misc_items" meta="32" count="1" />
+									</grid_four>
+								</page>
+								<page>
+									<p>Обновления на машине могут быть применены с помощью нужного элемента. Пропеллеры можно поменять местами, используя новую на машине, из-за чего старая падает. По умолчанию водяной насос изготовлен с установленным Железным пропеллером. Без Улучшения Сжатия уровня дают половину их эффективности. Компрессор на машине также можно снять с помощью гаечного ключа.</p>
+									<p></p>
+									<image src="rockhounding_chemistry:gbook/screens/water_pump" tw="150" th="105"/>
+								</page>
+
+								<page id="engine_page">
+									<p><stack item="rockhounding_chemistry:machines_a" meta="2" count="1" /> <link ref="utility:utility_page" color="#CC3333">&lt;- Электростанция </link></p>
+									<p>Это элемент управления источником питания внутри мода. Он может пассивно подавать питание на структуры или использоваться в качестве РФ-генератора. Он может производить Топливную или Редстоун энергию.</p>
+									<p>&gt; Топливная энергия вырабатывается любым горючим предметом, <link ref="minerals:syngas_pages" color="#000000">Синтезированным Газом</link>, лавой или преобразовывается из внешнего РФ (путем применения интерфейса индукционного нагрева к топливному отсеку).</p>
+									<p>&gt; RF генерируется редстоуном, <link ref="minerals:syngas_pages" color="#000000">Синтезированным Газом</link> (путем подачи Газовый Турбины в слот Редстоуна) или впрыскивается напрямую из внешних источников.</p>
+									<p>После подключения к конструкции два модуля будут автоматически обрабатываться, чтобы показать, какой тип топлива требуется (топливо, RF, оба). Переключатель посередине позволяет независимо подавать РЧ на блоки перед ним. Он должен быть выключен при подключении к структуре. Внешний RF может быть вставлен из любого канала, <link ref="minerals:syngas_pages" color="#000000">Синтезированный Газ</link> можно вставить сзади только через <link ref="utilities:pipeline_page" color="#000000">Газопровод</link>.</p>
+								</page>
+
+								<page id="cabinets_page">
+									<p><stack item="rockhounding_chemistry:machines_c" meta="9" count="1" />  <link ref="utility:utility_page" color="#CC3333">&lt;- Шкафы</link></p>
+									<p>Шкафы позволяют соединять ингредиенты в структурах. Существует два типа шкафов: Элемент и Шкаф материала. Первый тип содержит элементы, обрабатываемые модом, а второй тип содержит элементы, внедренные через CraftTweaker. Они имеют высоту 2 блока: нижняя часть является надлежащим хранилищем материала, а верхняя часть служит инжектором для хранилища и требует количественного цилиндра для количественной оценки вставленного материала. При необходимости со стороны вывода можно подключить лабораторный баланс, который превращает сохраненные элементы обратно в форму элемента. Для перемещения этих предметов к весам можно прикрепить экстрактор любого предмета.</p>
+									<image src="rockhounding_chemistry:gbook/screens/cabinets" tw="135" th="95"/>
+								</page>
+
+								<page id="fluid_tank_page">
+									<p><stack item="rockhounding_chemistry:machines_a" meta="4" count="1" /> <link ref="utility:utility_page" color="#CC3333">&lt;- Жидкостный Бак</link></p>
+									<p>Этот основной бак хранит <link ref="minerals:fluid_pages" color="#000000">Легкие жидкости</link>. Он снабжен фильтром для работы с конкретной жидкостью с использованием <link ref="tools:tools_page" color="#000000">Ампулы для отбора Проб</link> и слотов для подачи жидкости непосредственно из графического интерфейса, кроме использования ведер на резервуаре. Пустое отверстие позволяет очистить резервуар от его содержимого.</p>
+									<p space="4" />
+									<p><stack item="rockhounding_chemistry:machines_e" meta="5" count="1" /> <link ref="utility:utility_page" color="#CC3333">&lt;- Усиленный Бак</link></p>
+									<p>Этот бак хранит <link ref="minerals:fluid_pages" color="#000000">Тяжёлые жидкости</link>, очень плотные и вязкие жидкости, которые нельзя держать в основном резервуаре. Он имеет те же свойства обработки.</p>
+									<p space="4" />
+									<p><stack item="rockhounding_chemistry:machines_d" meta="15" count="1" /> <link ref="utility:utility_page" color="#CC3333">&lt;- Защитный Бак</link></p>
+									<p>Защитный Бак - это усовершенствованный бак, являющийся частью <link ref="feature:toxic_page" color="#000000">функции защиты от загрязнения </link> и загрязнения. Это позволяет содержать <link ref="minerals:fluid_pages" color="#000000">Легкие жидкости</link>  без риска утечки загрязняющих веществ. Нажав на него U, JEI скажет, какие жидкости являются опасными. </p>
+								</page>
+
+								<page id="pressure_vessel_page">
+									<p><stack item="rockhounding_chemistry:machines_b" meta="9" count="1" /> <link ref="utility:utility_page" color="#CC3333">&lt;- Бак</link></p>
+									<p>Это бак, способный содержать газы. Сосуды однонаправленные, с фиксированным входом и выходом, помеченными разноцветными пробками. На нем грубо изображено заполненное ведро с обычными жидкостями, содержащее только 1 куб. См газа и способное переноситься только через <link ref="utilities:pipeline_page" color="#000000">Газовый </link>. Его графический интерфейс позволяет фильтровать входные данные с помощью <link ref="tools:tools_page" color="#000000">Ампулы для отбора Проб</link> или аннулировать резервуар, теряя содержимое. При длительном хранении на полную мощность он может разрушиться и взорваться с помощью <link ref="feature:toxic_page" color="#000000">функции </link> "Опасность и Загрязнение".</p>
+									<p space="10" />
+									<p><stack item="rockhounding_chemistry:machines_d" meta="6" count="1" /> <link ref="utility:utility_page" color="#CC3333">&lt;- Большой Бак</link></p>
+									<p>Большой Бак - это сосуд высокого давления, способный вместить 1000 куб. См газа, высотой два блока. Имеет те же характеристики, что и нижний ярус.</p>
+									<image src="rockhounding_chemistry:gbook/screens/vessels" tw="120" th="48"/>
+								</page>
+
+								<page id="server_page">
+									<p><stack item="rockhounding_chemistry:machines_a" meta="14" count="1" /> <link ref="utility:utility_page" color="#CC3333">&lt;- Сервер</link></p>
+									<p>Сервер позволяет структурам, включающим его, автоматически планировать несколько рецептов в цикле, если ингредиенты постоянно поставляются. Для цикла он использует серверные файлы, в которые вписывается вся информация о рецепте для выполнения. Цикл может выполнить до 9 файлов в том порядке, в котором они размещены внутри шкафа (слева направо). После активации Сервер переопределяет обработчик рецептов структуры. Выключив его, контролируемая структура возвращается к своим обычным обязанностям.</p>
+									<grid_two>
+										<stack item="rockhounding_chemistry:machines_a" meta="14" count="1" />
+										<stack item="rockhounding_chemistry:misc_items" meta="0" count="1" />
+									</grid_two>
+									<p space="5" />
+									<image src="rockhounding_chemistry:gbook/wiki/wikiserver" tw="180" th="106"/>
+								</page>
+								<page>
+									<p color="#0000FF">Как настроить сервер:</p>
+									<p>1- Поместите файл сервера в слот вписывания.</p>
+									<p space="3" />
+									<p>2a- Выберите рецепт или переменный параметр, в зависимости от структуры и ее рецептов.</p>
+									<p space="3" />
+									<p>2b- Выберите, сколько раз он должен выполнить выбранный рецепт.</p>
+									<p space="3" />
+									<p>2c- Если включено, при необходимости установите фильтр элемента или фильтр жидкости с помощью <link ref ="tools:tools_page" color = "#000000"> Ампулы для отбора проб </link>, и в зависимости от типа рецепта.</p>
+									<p space="3" />
+									<p>2d- Выберите, должен ли файл повторяться бесконечно после окончания цикла обработки. Неповторяемые файлы будут пропущены после завершения.</p>
+									<p space="3" />
+									<p>3- Сохраните файл. Подсказка покажет настройки. Сохраненные файлы могут быть восстановлены в любое время с новыми значениями таким же образом.</p>
+									<p space="3" />
+									<p>4- Поместите сохраненный файл в шкафу в плановом порядке.</p>
+									<p space="3" />
+									<p>5- Активируйте сервер, когда все файлы на месте внутри шкафа. Структура должна быть всегда активирована после сервера.</p>
+								</page>
+
+								<page id="fluidpedia_page">
+									<p><stack item="rockhounding_chemistry:machines_d" meta="12" count="1" /> <link ref="utility:utility_page" color="#CC3333">&lt;- Флюидпедия</link></p>
+									<p>Флюидпедия - это служебный блок, который позволяет отбирать образцы жидкостей и газов для целей фильтрации внутри мода. Он работает с использованием <link ref = "tools:tools_page" color = "#000000"> Ампулы для отбора проб </link> в любом из доступных слотов. Всплывающая подсказка содержит дополнительную информацию, такую как тип и температура, которые относятся к некоторым машинам. Чтобы лучше выполнять поиск, селектор позволяет фильтровать материалы по символу (A-Z) или по типу (жидкость / газ / все). Заполненная ампула должна быть затем использована в слоте фильтра заинтересованной машины.</p> 
+									<p space="10" />
+									<p><stack item="rockhounding_chemistry:machines_d" meta="13" count="1" /> <link ref="utility:utility_page" color="#CC3333">&lt;- Химический уничтожитель</link></p>
+									<p>Химический уничтожитель является вспомогательным блоком, который позволяет динамически удалять нежелательные жидкости или газы. Он снабжен внутренним фильтром для настройки входа и может подключаться к любой трубе для жидкости или к <link ref = "utilities:pipeline_page" color = "#000000"> Газопроводу </link>, давая конечный пункт назначения материала.</p> 
+								</page>
+
+								<page id="exhaustion_page">
+									<p><stack item="rockhounding_chemistry:machines_e" meta="1" count="1" /> <link ref="utility:utility_page" color="#CC3333">&lt;- Выпускной клапан</link></p>
+									<p>Выпускной клапан - это блок, относящийся к функции <link ref = "feature:toxic_page" color = "#000000"> "Опасность и Загрязнение" </link>. Он позволяет сбросить давление в любом сосуде или держателе, если он слишком долго работает на полную мощность, предотвращая разрушение. Он имеет настраиваемый допуск и процент выпускаемого газа для достижения критической точки. Толерантность и ее текущая прогрессия отображаются на экранах, таких как HWYLA или TheOneProbe. Если содержащийся газ помечен как загрязняющее вещество, то при его выбросе вокруг сосуда образуется токсичное облако, которое через некоторое время растворится. Нажав U на сосуде под давлением, JEI сообщит, какие газы являются опасными.</p>
+									<image src="rockhounding_chemistry:gbook/screens/exhaustion_valve" tw="52" th="80"/>
+								</page>
+
+								<page id="pipeline_page">
+									<p><stack item="rockhounding_chemistry:pipeline_pump" meta="0" count="1" /> <link ref="utility:utility_page" color="#CC3333">&lt;- Жидкостный Трубопровод</link></p>
+									<p>Жидкостный Трубопровод - это система перемещения между манипуляторами для жидкости. Трубопровод для жидкости состоит из насоса, соединенного с передающим резервуаром, и клапана с приемными резервуарами, соединенных воздуховодами. По умолчанию насос перемещает 1 ковш за цикл, обновляя до 100 ковшей с помощью компрессорной установки. Клапан имеет интерфейс для отдельной фильтрации каждой из свободных сторон.</p> 
+									<grid_four>
+										<stack item="rockhounding_chemistry:pipeline_pump" meta="0" count="1" />
+										<stack item="rockhounding_chemistry:pipeline_duct" meta="0" count="1" />
+										<stack item="rockhounding_chemistry:pipeline_valve" meta="0" count="1" />
+										<stack item="rockhounding_chemistry:misc_items" meta="9" count="1" />
+									</grid_four>
+									<p space="10" />
+									<p><stack item="rockhounding_chemistry:gasline_pump" meta="0" count="1" /> <link ref="utility:utility_page" color="#CC3333">&lt;- Газопровод</link></p>
+									<p>Газопровод - это движущаяся система между обработчиками газа в моде. Газовая линия состоит из насоса, подключенного к выходу обработчика-отправителя, и воздуховодов, подключенных к входу обработчиков-отправителей. Один насос уже может передавать газ без воздуховодов. По умолчанию он передает 1 куб. См газа за цикл, повышенный до 10 куб. См газа с помощью компрессорной установки.</p> 
+									<grid_three>
+										<stack item="rockhounding_chemistry:gasline_pump" meta="0" count="1" />
+										<stack item="rockhounding_chemistry:gasline_duct" meta="0" count="1" />
+										<stack item="rockhounding_chemistry:misc_items" meta="9" count="1" />
+									</grid_three>
+								</page>
+								<page>
+									<p color="#0000FF">Запуск: Трубопровод:</p>
+									<p>Эти действия действительны как для жидкости, так и для газопровода.</p>
+									<p>- Для начала работы насосы и клапан должны быть активированы голыми руками.</p> 
+									<p>- Ударяя по насосам с помощью модового гаечного ключа, он устанавливает увеличивающуюся задержку (ударяется, когда крадется, чтобы уменьшиться), тикая менее интенсивно, чтобы сохранить производительность.</p> 
+									<p>- Как задержка, так и длина линии могут влиять на эффективность Трубопровода. Предлагается создать максимально короткий путь, избегая петель.</p>
+									<p>- Использование гаечного ключа на насосе удалит модернизацию компрессорной установки, если она была применена.</p> 
+									<p>- Используя гаечный ключ на Трубопроводе, он меняет цвет, перекрывая путь.</p>
+									<image src="rockhounding_chemistry:gbook/screens/pipeline" tw="179" th="70"/>
+								</page>
+
+							</chapter>
+
+				<chapter id="tools">
+					<page id="tools_page">
+						<link ref="chapters:index" color="#CC3333">&lt;- Служебные предметы</link>
+						<p space="10" />
+						<p color="#0000FF"><stack item="rockhounding_core:mod_wrench" meta="0" count="1" /> Гаечный Ключ</p>
+						<p space="2" />
+						<p>Этот инструмент позволяет взаимодействовать с некоторыми блоками и машинами, чтобы изменить их функцию или вращение. Его можно использовать, щелкая правой кнопкой мыши, щелкая левой кнопкой мыши, когда крадется или нет во время действия. Различные главы объясняют, когда это можно использовать и как.</p>
+						<p space="5" />
+						<p color="#0000FF"><stack item="rockhounding_chemistry:tile_nullifier" meta="0" count="1" /> Нейтрализатор</p>
+						<p space="2" />
+						<p>Этот элемент отладки позволяет сбрасывать и удалять любое что-то из машин, используя ее на них, если их элемент мозаичного изображения постоянно поврежден или вызывает сбои при попытке взаимодействия с ними.</p>
+						<p space="5" />
+						<p color="#0000FF"><stack item="rockhounding_chemistry:sampling_ampoule" meta="0" count="1" /> Флюидпедия</p>
+						<p space="2" />
+						<p>Этот элемент позволяет выбрать образец газа или жидкости из <link ref = "utilities:fluidpedia_page" color = "#000000"> Флюидпедии </link>, чтобы установить фильтр внутри резервуаров или сосудов, способных фильтровать их вход.</p>
+					</page>
+					<page>
+						<p color="#0000FF"><stack item="rockhounding_core:heat_inductor" meta="0" count="1" /> Интерфейс индукционного нагрева</p>
+						<p space="2" />
+						<p>Этот элемент должен быть помещен в топливный отсек <link ref = "utilities:engine_page" color = "#000000"> Электростанция </link>. Это позволяет преобразовать внешний входящий RF в Топливную энергию для питания конструкций.</p>
+						<p space="5" />
+						<p color="#0000FF"><stack item="rockhounding_core:gas_turbine" meta="0" count="1" /> Газовая турбина</p>
+						<p space="2" />
+						<p>Этот элемент должен быть помещен в красный слот <link ref = "utilities:engine_page" color = "#000000"> Электростанция </link> и позволяет использовать <link ref = "minerals:syngas_pages" color = "#000000"> Синтезированный Газ</link> для производства РФ.</p>
+						<p space="5" />
+						<p color="#0000FF"><stack item="rockhounding_core:fuel_blend" meta="0" count="1" /> Топливная смесь</p>
+						<p space="2" />
+						<p>Это экспериментальная альтернативная система заправки, перекрывающая как топливо, так и Редстоун, благодаря чему заправочные машины могут принимать только этот элемент. По умолчанию он отключен из ядра. Больше не разрабатывается.</p>
+					</page>
+				</chapter>
+
+				<chapter id="devices">
+					<page id="devices_page">
+						<link ref="chapters:index" color="#CC3333">&lt;- Конструкции и Машины</link>
+						<p space="10" />
+						<link ref="tier_one:tier_one_page" indent="8" color="#333399">-&gt; Машины  Уровень 1</link>
+						<p space="4" />
+						<link ref="tier_two:tier_two_page" indent="8" color="#333399">-&gt; Машины  Уровень 2</link>
+						<p space="4" />
+						<link ref="tier_three:tier_three_page" indent="8" color="#333399">-&gt; Машины  Уровень 3</link>
+						<p space="4" />
+						<link ref="tier_four:tier_four_page" indent="8" color="#333399">-&gt; Машины  Уровень 4</link>
+					</page>
+				</chapter>
+
+							<chapter id="tier_one">
+								<page id="tier_one_page">
+									<link ref="devices:devices_page" color="#CC3333">&lt;- Машины  Уровень1</link>
+									<p space="10" />
+									<p><stack item="rockhounding_chemistry:machines_a" meta="12" count="1" /> <link ref="tierone:evaporation_tank_page" color="#333399">-&gt; Танк Испарения</link></p>
+									<p><stack item="rockhounding_chemistry:machines_a" meta="13" count="1" /> <link ref="tierone:evaporation_tank_page" color="#333399">-&gt; Солеразделитель</link></p>
+									<p><stack item="rockhounding_chemistry:machines_b" meta="0" count="1" /> <link ref="tierone:pond_page" color="#333399">-&gt; Преобразователь жидкостей</link></p>
+									<p><stack item="rockhounding_chemistry:machines_d" meta="11" count="1" /> <link ref="tierone:transposer_page" color="#333399">-&gt; Транспозер</link></p>
+									<p><stack item="rockhounding_chemistry:machines_a" meta="10" count="1" /> <link ref="tierone:blender_page" color="#333399">-&gt; Лабораторный Блендер</link></p>
+									<p><stack item="rockhounding_chemistry:machines_a" meta="11" count="1" /> <link ref="tierone:casting_bench_page" color="#333399">-&gt; Высекатель</link></p>
+									<p><stack item="rockhounding_chemistry:machines_b" meta="11" count="1" /> <link ref="tierone:exchanger_page" color="#333399">-&gt; Теплообменник</link></p>
+									<p><stack item="rockhounding_chemistry:machines_c" meta="1" count="1" /> <link ref="tierone:condenser_page" color="#333399">-&gt; Газовый конденсатор</link></p>
+									<p><stack item="rockhounding_chemistry:machines_a" meta="15" count="1" /> <link ref="tierone:expander_page" color="#333399">-&gt; Газовый испаряющий Механизм</link></p>
+									<p><stack item="rockhounding_chemistry:machines_e" meta="3" count="1" /> <link ref="tierone:catalyst_regen" color="#333399">-&gt; Регенератор Катализатора</link></p>
+									<p><stack item="rockhounding_chemistry:machines_b" meta="10" count="1" /> <link ref="tierone:compressor_page" color="#333399">-&gt; Воздушный компрессор</link></p>
+								</page>
+							</chapter>
+										<chapter id="tierone">
+											<page id="evaporation_tank_page">
+												<p><stack item="rockhounding_chemistry:machines_a" meta="12" count="1" /> <link ref="tier_one:tier_one_page" color="#CC3333">&lt;- Танк Испарения</link></p>
+												<p>Испарительный резервуар представляет собой небольшой контейнер, наполняемый водой, медленно испаряющийся, чтобы показать слой сырой соли. Этот слой можно собирать вручную с помощью лопаты сверху резервуара или извлекать с помощью труб. Сырая соль должна храниться в стойке для приправ и превращаться в обычную соль. Процесс испарения включает в себя несколько экологических явлений:</p>
+												<p space="2" />
+												<p>&gt; Использование гаечного ключа на танке изменит извлекаемую жидкость с помощью труб. Это может превратить танк в коллектор дождя. Извлеченные жидкости больше не могут быть обработаны в резервуаре.</p>
+												<p space="2" />
+												<p>&gt; Если идет дождь, пустой танк медленно заполняется.</p>
+												<p space="2" />
+												<p>&gt; Сбор дождей не происходит в биомах без дождя.</p>
+												<p space="2" />
+												<p>&gt; Испарение проходит днем, останавливаясь ночью.</p>
+												<p space="2" />
+												<p>&gt; Танк всегда должен видеть небо, чтобы испарять.</p>
+											</page>
+
+											<page>
+												<p>&gt; Если на какой-либо стадии испарения идет дождь, соль будет снова таять в воде через заданное время.</p>
+												<p space="2" />
+												<p>&gt; Испарение изменяется через биомы: быстрее в горячих биомах, медленнее в холодных и влажных биомах.</p>
+												<p space="2" />
+												<p>&gt; Высоты выше y = 120 ускоряют испарение по сравнению с более низкими уровнями.</p>
+												<p space="2" />
+												<p>&gt;Черный список устанавливает размеры, где испарение не произойдет.</p>
+												<p space="2" />
+												<p>&gt; Белый список для измерений «без воздуха» или «космос» устанавливает места, где испарение заменяется десублимацией, вызывая немедленное обнаружение более бедной сырой соли при более низком расходе воды.</p>
+
+												<p space="10" />
+												<p><stack item="rockhounding_chemistry:machines_a" meta="13" count="1" /> <link ref="tier_one:tier_one_page" color="#CC3333">&lt;- Солеразделитель</link></p>
+												<p>Солеразделитель - это устройство без питания, работающее как объектный процессор, где ингредиенты могут быть превращены в другие через некоторый промежуток времени.</p>
+											</page>
+
+											<page id="pond_page">
+												<p><stack item="rockhounding_chemistry:machines_b" meta="0" count="1" /> <link ref="tier_one:tier_one_page" color="#CC3333">&lt;- Преобразователь Жидкостей</link></p>
+												<p>Преобразователь Жидкостей - это устройство без питания, производящее жидкое вещество путем мацерации твердого ингредиента в жидком растворителе. Его скорость и эффективность определяются концентрацией процесса, которой управляет ползунок.</p> 
+												<p space="2" />
+												<image src="rockhounding_chemistry:gbook/wiki/slurry_conc" tw="87" th="40"/>
+												<p space="2" />
+												<p color="#0000FF">> Высокая концентрация (зеленая зона)</p> 
+												<p>Плотный процесс меньшего масштаба.</p> 
+												<p>Потребляет меньше ингредиентов и дает меньше взвеси, но вырабатывает быстрее.</p>
+												<p space="2" />
+												<p color="#0000FF">> Низкая концентрация (красная зона)</p> 
+												<p>Разбавленный крупномасштабный процесс.</p> 
+												<p>Потребляет больше ингредиентов и дает больше взвеси, но требует больше времени для производства.</p> 
+												<p space="2" />
+												<p>Gui отображает необходимые ингредиенты и их количество, а также время процесса.</p>
+											</page>
+
+											<page id="transposer_page">
+												<p><stack item="rockhounding_chemistry:machines_d" meta="11" count="1" /> <link ref="tier_one:tier_one_page" color="#CC3333">&lt;- Транспозер</link></p>
+												<p>Это устройство без питания для объединения модифицированных жидкостей или газов в один вариант. Это также позволяет газам из других модов помещаться по кругу внутри мода, а также газам из мода, которые переносятся снаружи. После переноса газ можно выбрать с помощью <link ref = "utilities:pipeline_page" color = "#000000"> Газопровода </link> впереди. Подводя газ наружу, его можно собирать любой трубкой для жидкости с любой стороны, и для этого требуется сосуд, присоединенный к входу. Активаторы позволяют выбрать, какой тип материала обрабатывать.</p>
+												<p>Закачка газа в систему через CraftTweaker, скрипт должен содержать один и тот же газ как для входа, так и для вывода, чтобы перенести в мод.</p>
+												<p space="2" />
+												<image src="rockhounding_chemistry:gbook/screens/transposer" tw="154" th="94"/>
+											</page>
+
+											<page id="blender_page">
+												<p><stack item="rockhounding_chemistry:machines_a" meta="10" count="1" /> <link ref="tier_one:tier_one_page" color="#CC3333">&lt;- Лабораторный Блендер</link></p>
+												<p>Это позволяет смешивать различные ингредиенты в смесь. Это 2 блока высотой: пока контроллер выполняет операции, верхний резервуар содержит ингредиенты.</p>
+												<p space="4" />
+												<p color="#0000FF">Требования</p>
+												<p>1x Блок смешивания</p>
+												<p>1x <link ref="utilities:engine_page" color="#000000">Электростанция</link> (Редстоун)</p>
+												<p space="4" />
+												<p color="#0000FF">Установка</p>
+												<layer_1_2 />
+												<blender_slots>
+													<stack item="rockhounding_chemistry:machines_a" meta="2" count="1" />
+													<stack item="rockhounding_chemistry:machines_a" meta="10" count="1" />
+												</blender_slots>
+												<p space="4" />
+												<image src="rockhounding_chemistry:gbook/screens/blender" tw="94" th="110"/>
+											</page>
+											<page>
+												<p color="#0000FF">Запуск: Лабораторный Блендер:</p>
+												<p>> Предсказанные ингредиенты могут быть свободно вставлены, если только те, которые требуются по рецепту.</p>
+												<image src="rockhounding_chemistry:gbook/wiki/blender_tank_1" tw="103" th="40"/>
+												<p space="2" />
+												<p>> Система памяти также позволяет заблокировать слоты для приема только определенных ингредиентов. Включите замок и добавьте действительные элементы, которые будут распознаны. Повторное нажатие на слот приведет к удалению фильтра, отключение блокировки приведет к сбросу памяти.</p>
+												<image src="rockhounding_chemistry:gbook/wiki/blender_tank_2" tw="103" th="40"/>
+												<p space="2" />
+												<p>> Контроллер также показывает предварительный просмотр текущего рецепта в зависимости от ингредиентов.</p>
+												<image src="rockhounding_chemistry:gbook/wiki/blender_unit" tw="82" th="60"/>
+											</page>
+
+											<page id="casting_bench_page">
+												<p><stack item="rockhounding_chemistry:machines_a" meta="11" count="1" /> <link ref="tier_one:tier_one_page" color="#CC3333">&lt;- Высекатель</link></p>
+												<p>Высекатель - это машина без питания, которая позволяет преобразовывать материалы в детали с различными рисунками на выбор. С ним можно напрямую взаимодействовать, щелкнув правой кнопкой мыши блок, чтобы вставить или извлечь элементы, или обработать их с помощью труб.</p>
+												<p space="4" />
+												<p color="#0000FF">Требования</p>
+												<p>1x Высекатель</p>
+												<p>1x <link ref="utilities:server_page" color="#000000">Сервер</link></p>
+												<p space="4" />
+												<p color="#0000FF">Установка</p>
+												<profiling_slots>
+													<stack item="rockhounding_chemistry:machines_a" meta="14" count="1" />
+													<stack item="rockhounding_chemistry:machines_a" meta="11" count="1" />
+												</profiling_slots>
+												<image src="rockhounding_chemistry:gbook/screens/casting" tw="84" th="100"/>
+											</page>
+											<page>
+												<p color="#0000FF">Запуск: Высекатель:</p>
+												<p>> Устройство имеет селектор перед прессом, показывающий возможные формы, и его можно прокручивать, ударяя кулаком по блоку (пробивая, пробираясь, прокручивайте назад).</p>
+												<stack_eight>
+													<stack item="rockhounding_chemistry:pattern_items" meta="0" count="1" />
+													<stack item="rockhounding_chemistry:pattern_items" meta="1" count="1" />
+													<stack item="rockhounding_chemistry:pattern_items" meta="2" count="1" />
+													<stack item="rockhounding_chemistry:pattern_items" meta="3" count="1" />
+													<stack item="rockhounding_chemistry:pattern_items" meta="4" count="1" />
+													<stack item="rockhounding_chemistry:pattern_items" meta="5" count="1" />
+													<stack item="rockhounding_chemistry:pattern_items" meta="6" count="1" />
+													<stack item="rockhounding_chemistry:pattern_items" meta="7" count="1" />
+												</stack_eight>
+												<stack_four>
+													<stack item="rockhounding_chemistry:pattern_items" meta="8" count="1" />
+													<stack item="rockhounding_chemistry:pattern_items" meta="9" count="1" />
+													<stack item="rockhounding_chemistry:pattern_items" meta="10" count="1" />
+													<stack item="minecraft:air" meta="0" count="1" />
+												</stack_four>
+												<p space="4" />
+												<p>> Используйте элемент на блоке, и он будет помещен под пресс, который начнет двигаться.</p> 
+												<p space="4" />
+												<p>> После этого появится новый элемент, который можно извлечь, щелкнув на блок еще раз.</p>
+											</page>
+
+											<page id="exchanger_page">
+												<p><stack item="rockhounding_chemistry:machines_b" meta="11" count="1" /> <link ref="tier_one:tier_one_page" color="#CC3333">&lt;- Теплообменник</link></p>
+												<p>Теплообменник обрабатывает газы, охлаждая их через систему охлаждающей жидкости.</p>
+												<p space="4" />
+												<p color="#0000FF">Требования</p>
+												<p>1x Теплообменник</p>
+												<p>1x Газовый нагнетатель</p>								
+												<p>1x <link ref="utilities:engine_page" color="#000000">Электростанция</link> (Редстоун)</p>
+												<p>2x <link ref="utilities:pressure_vessel_page" color="#000000">Бак</link></p>
+												<p>1x Бак флотационного Обогащения</p>
+												<p space="4" />
+												<p color="#0000FF">Установка</p>
+												<layer_1_2_3 />
+												<exchanger_slots>
+													<stack item="rockhounding_chemistry:machines_b" meta="11" count="1" />
+													<stack item="rockhounding_chemistry:machines_b" meta="9" count="1" />
+													<stack item="rockhounding_chemistry:machines_a" meta="2" count="1" />
+													<stack item="rockhounding_chemistry:machines_b" meta="1" count="1" />
+													<stack item="rockhounding_chemistry:machines_d" meta="14" count="1" />
+												</exchanger_slots>
+											</page>
+											<page>
+												<p color="#0000FF">Запуск: Теплообменник:</p>
+												<p>> Заполните бак охлаждающей жидкости сверху, следя за тем, чтобы температура жидкости не превышала входную. Чем ниже температура охлаждающей жидкости, тем меньше энергии и охлаждающей жидкости потребляется в процессе.</p>
+												<image src="rockhounding_chemistry:gbook/wiki/coolant" tw="133" th="60"/>
+												<p space="4" />
+												<p>> Выходной газ должен иметь более низкую температуру, чем входной газ для действующего рецепта.</p> 
+												<p space="4" />
+												<p color="#0000FF">Предварительный Просмотр</p>
+												<link ref="galleries:gal_exchanger" color="#336633">Передний план</link>
+											</page>
+
+											<page id="condenser_page">
+												<p><stack item="rockhounding_chemistry:machines_c" meta="1" count="1" /> <link ref="tier_one:tier_one_page" color="#CC3333">&lt;- Газовый конденсатор</link></p>
+												<p>Он сжимает газы в жидкое состояние в соответствии с коэффициентом расширения 1 / N. Он работает против Экспансионной палаты, делясь теми же рецептами с перевернутыми факторами.</p>
+												<p space="4" />
+												<p color="#0000FF">Требования</p>
+												<p>1x Газовый конденсатор</p>
+												<p>1x <link ref="utilities:pressure_vessel_page" color="#000000">Бак</link></p>
+												<p>1x Буферная Ёмкость</p>
+												<p>1x <link ref="utilities:engine_page" color="#000000">Электростанция</link> (Топливо)</p>
+												<p space="4" />
+												<p color="#0000FF">Установка</p>
+												<layer_1_2 />
+												<condenser_slots>
+													<stack item="rockhounding_chemistry:machines_b" meta="9" count="1" />
+													<stack item="rockhounding_chemistry:machines_c" meta="1" count="1" />
+													<stack item="rockhounding_chemistry:machines_a" meta="2" count="1" />
+													<stack item="rockhounding_chemistry:machines_e" meta="6" count="1" />
+												</condenser_slots>
+												<p space="4" />
+												<image src="rockhounding_chemistry:gbook/screens/condenser" tw="90" th="90"/>
+											</page>
+
+											<page id="expander_page">
+												<p><stack item="rockhounding_chemistry:machines_a" meta="15" count="1" /> <link ref="tier_one:tier_one_page" color="#CC3333">&lt;- Газовый испаряющий Механизм</link></p>
+												<p>Он расширяет жидкости в их газовое состояние в соответствии с коэффициентом расширения 1 / N. Он работает в противовес Газовому Конденсатору, используя те же рецепты с перевернутыми факторами.</p>
+												<p space="4" />
+												<p color="#0000FF">Требования</p>
+												<p>1x Газовый испаряющий Механизм</p>
+												<p>1x <link ref="utilities:pressure_vessel_page" color="#000000">Бак</link></p>
+												<p>1x Бак флотационного Обогащения</p>
+												<p>1x <link ref="utilities:engine_page" color="#000000">Электростанция</link> (Топливо)</p>
+												<p space="4" />
+												<p color="#0000FF">Установка</p>
+												<layer_1_2 />
+												<expander_slots>
+													<stack item="rockhounding_chemistry:machines_b" meta="9" count="1" />
+													<stack item="rockhounding_chemistry:machines_a" meta="15" count="1" />
+													<stack item="rockhounding_chemistry:machines_a" meta="2" count="1" />
+													<stack item="rockhounding_chemistry:machines_d" meta="14" count="1" />
+												</expander_slots>
+												<p space="4" />
+												<image src="rockhounding_chemistry:gbook/screens/expander" tw="84" th="90"/>
+											</page>
+
+											<page id="catalyst_regen">
+												<p><stack item="rockhounding_chemistry:machines_e" meta="3" count="1" /> <link ref="tier_one:tier_one_page" color="#CC3333">&lt;- Регенератор Катализатора</link></p>
+												<p>Регенератор катализатора восстанавливает функциональность отработанных катализаторов. Система применяется под любым элементом, содержащим катализаторы.</p>
+												<p space="4" />
+												<p color="#0000FF">Требования</p>
+												<p>1x Регенератор Катализатора</p>
+												<p>1x <link ref="utilities:pressure_vessel_page" color="#000000">Бак</link></p>								
+												<p space="4" />
+												<p color="#0000FF">Установка</p>
+												<regen_slots>
+													<stack item="rockhounding_chemistry:machines_e" meta="3" count="1" />
+													<stack item="rockhounding_chemistry:machines_b" meta="9" count="1" />
+													<stack item="minecraft:water_bucket" meta="0" count="1" />
+													<stack item="rockhounding_chemistry:fluid.flue_gas" meta="0" count="1" />
+												</regen_slots>
+												<p space="2" />
+												<p color="#0000FF">Контролируемые блоки</p>
+												<p>Камера хим осаждения: Контроллер</p>
+												<p>Лабораторная Печь: Контроллер</p>
+												<p>Реактор Хим Преобразования: Контроллер</p>
+												<p>Химический Экстрактор: Стабилизатор</p>
+												<p space="2" />
+												<image src="rockhounding_chemistry:gbook/screens/catalyst_regen" tw="90" th="66"/>
+											</page>
+
+											<page>
+												<p color="#0000FF">Запуск: Регенератор Катализатора:</p>
+												<p>> Регенератор должен быть ориентирован так, чтобы ряд цветных штекеров сверху соответствовал тем, которые находятся под контролируемым блоком, к которому они подключены.</p>
+												<image src="rockhounding_chemistry:gbook/wiki/catalyst_plugs" tw="120" th="80"/>
+												<p space="4" />
+												<p>> Подача воды в Регенератор и Газов в присоединенный сосуд.</p>
+												<p space="4" />
+												<p>> При активации, когда какой-либо контролируемый катализатор теряет свою прочность ниже 25%, он пополняется. Как побочный эффект процесса очистки, коксовая смесь может иногда сохраняться.</p>
+											</page>
+											
+											<page id="compressor_page">
+												<p><stack item="rockhounding_chemistry:machines_b" meta="10" count="1" /> <link ref="tier_one:tier_one_page" color="#CC3333">&lt;- Воздушный компрессор</link></p>
+												<p>Воздушный компрессор позволяет производить сжатый воздух, используемый в некоторых процессах внутри модА.</p>
+												<p>Устройство уже оснащено собственной топливной системой, поэтому никаких дополнительных Электростанций не требуется. После активации компрессорный блок просто выталкивает воздух внутрь прикрепленного контейнера для хранения.</p>
+												<p space="4" />
+												<p color="#0000FF">Требования</p>
+												<p>1x Воздушный компрессор (Топливо)</p>
+												<p>1x <link ref="utilities:pressure_vessel_page" color="#000000">Бак</link></p>
+												<p space="4" />
+												<p color="#0000FF">Установка</p>
+												<compressor_slots>
+													<stack item="rockhounding_chemistry:machines_b" meta="10" count="1" />
+													<stack item="rockhounding_chemistry:machines_d" meta="6" count="1" />
+													<stack item="rockhounding_chemistry:machines_b" meta="9" count="1" />
+												</compressor_slots>
+												<image src="rockhounding_chemistry:gbook/screens/compressor" tw="141" th="90"/>
+											</page>
+										</chapter>
+
+							<chapter id="tier_two">
+								<page id="tier_two_page">
+									<link ref="devices:devices_page" color="#CC3333">&lt;- Машины Уровень 2</link>
+									<p> </p>
+									<p><stack item="rockhounding_chemistry:machines_a" meta="0"  count="1" /> <link ref="tiertwo:mineral_sizer_page" color="#333399">-&gt; Минеральный Дробитель</link></p>
+									<p><stack item="rockhounding_chemistry:machines_e" meta="7"  count="1" /> <link ref="tiertwo:cstr_page" color="#333399">-&gt; Электрохимический CSTR</link></p>
+									<p><stack item="rockhounding_chemistry:machines_a" meta="5"  count="1" /> <link ref="tiertwo:lab_oven_page" color="#333399">-&gt; Лабораторная Печь</link></p>
+									<p><stack item="rockhounding_chemistry:machines_e" meta="11" count="1" /> <link ref="tiertwo:precipitation_page" color="#333399">-&gt; Камера хим осаждения</link></p>
+									<p><stack item="rockhounding_chemistry:machines_b" meta="4"  count="1" /> <link ref="tiertwo:gas_plant_page" color="#333399">-&gt; Завод Газификации</link></p>
+									<p><stack item="rockhounding_chemistry:machines_b" meta="5"  count="1" /> <link ref="tiertwo:gas_purifier_page" color="#333399">-&gt; Очиститель Газа</link></p>
+									<p><stack item="rockhounding_chemistry:machines_c" meta="6"  count="1" /> <link ref="tiertwo:retention_vat_page" color="#333399">-&gt; Выщелачиватель </link></p>
+									<p><stack item="rockhounding_chemistry:machines_d" meta="0"  count="1" /> <link ref="tiertwo:alloyer_page" color="#333399">-&gt; Печь Сплавов</link></p>
+								</page>
+							</chapter>
+
+										<chapter id="tiertwo">
+											<page id="mineral_sizer_page">
+												<p><stack item="rockhounding_chemistry:machines_a" meta="0" count="1" /> <link ref="tier_two:tier_two_page" color="#CC3333">&lt;- Минеральный Дробитель</link></p>
+												<p>Минеральный Дробитель позволяет измельчать материалы в зависимости от того, насколько мелким должно быть зерно продукта (измельчение). Чем меньше это зерно, тем тяжелее может быть процесс, требующий больше энергии, времени и износа.</p>
+												<p space="4" />
+												<p color="#0000FF">Требования</p>
+												<p>1x Коллектор Породы</p>
+												<p>2x Дробящий Танк</p>
+												<p>1x Gangue Collector</p>
+												<p>1x <link ref="utilities:engine_page" color="#000000">Электростанция</link> (Топливо)</p>
+												<p>1x <link ref="utilities:server_page" color="#000000">Сервер</link></p>
+												<p space="4" />
+												<p color="#0000FF">Установка</p>
+												<sizer_slots>
+													<stack item="rockhounding_chemistry:machines_a" meta="0" count="1" />
+													<stack item="rockhounding_chemistry:machines_a" meta="1" count="1" />
+													<stack item="rockhounding_chemistry:machines_a" meta="1" count="1" />
+													<stack item="rockhounding_chemistry:machines_a" meta="3" count="1" />
+													<stack item="rockhounding_chemistry:machines_a" meta="2" count="1" />
+													<stack item="rockhounding_chemistry:machines_a" meta="14" count="1" />
+												</sizer_slots>
+												<p space="2" />
+												<image src="rockhounding_chemistry:gbook/screens/sizer" tw="176" th="66"/>
+											</page>
+											<page>
+												<p color="#0000FF">Запуск: Минеральный Дробитель:</p>
+												<p>> Заполните два Дробящих Танка с 8 Дробильными Шестернями. Они потребляются в соответствии с измельчением, поэтому первая передача в линии ломается быстрее, чем последняя.</p> 
+												<image src="rockhounding_chemistry:gbook/wiki/sizer_gears" tw="91" th="20"/>
+												<p space="4" />
+												<p>> Поместите предмет, который нужно раздавить, в слот ввода и с помощью JEI изменяйте измельчение до тех пор, пока он не отобразит правильный вывод.</p>
+												<image src="rockhounding_chemistry:gbook/wiki/sizer_comm_1" tw="102" th="40"/>
+												<p space="4" />
+												<p>> Открытые элементы можно увидеть, переместив курсор на значок, появляющийся при обнаружении выхода.</p>
+												<image src="rockhounding_chemistry:gbook/wiki/sizer_comm_2" tw="23" th="20"/>
+												<p space="4" />
+												<p>> Сборщик пустой породы получает измельченный продукт, и он должен всегда оставаться свободным для начала следующего процесса. Слоты обрабатываются машиной, давая дополнительный результат в зависимости от рецепта.</p>
+											</page>
+
+											<page id="cstr_page">
+												<p><stack item="rockhounding_chemistry:machines_e" meta="7" count="1" /> <link ref="tier_two:tier_two_page" color="#CC3333">&lt;- Электрохимический CSTR</link></p>
+												<p>Реактор непрерывного действия с мешалкой производит растворы, смешивая жидкости, в конечном итоге требуя напряжения. Газообразный побочный продукт необязательно должен быть произведен.</p>
+												<p space="4" />
+												<p color="#0000FF">Требования</p>
+												<p>1x Электрохимический CSTR</p>
+												<p>1x CSTR Контейнер</p>
+												<p>1x Система входа Жидкостей</p>
+												<p>1x Зарядник</p>
+												<p>1x <link ref="utilities:engine_page" color="#000000">Электростанция</link> (И то и другое)</p>
+												<p>1x <link ref="utilities:pressure_vessel_page" color="#000000">Бак</link></p>
+												<p space="4" />
+												<p color="#0000FF">Установка</p>
+												<layer_1_2 />
+												<cstr_slots_1>
+													<stack item="rockhounding_chemistry:machines_e" meta="9" count="1" />
+													<stack item="rockhounding_chemistry:machines_e" meta="7" count="1" />
+												</cstr_slots_1>
+												<p space="2" />
+												<layer_3_4 />
+												<cstr_slots_2>
+													<stack item="rockhounding_chemistry:machines_e" meta="7" count="1" />
+													<stack item="rockhounding_chemistry:machines_b" meta="9" count="1" />
+													<stack item="rockhounding_chemistry:machines_a" meta="2" count="1" />
+													<stack item="rockhounding_chemistry:machines_a" meta="7" count="1" />
+													<stack item="rockhounding_chemistry:misc_blocks_a" meta="4" count="1" />
+												</cstr_slots_2>
+											</page>																					
+											<page>
+												<p color="#0000FF">Запуск CSTR:</p>
+												<p>> Установите фильтр для обоих резервуаров в системе ввода, используя <link ref ="tools:tools_page" color ="#000000"> Ампулу для отбора проб </link> и подайте две жидкости.</p> 
+												<p space="2" />
+												<p>> Проверьте, требует ли рецепт напряжения и подачи соответственно. Если значок горит, он будет потреблять и RF. Заполните тогда Электростанцию.</p>
+												<image src="rockhounding_chemistry:gbook/wiki/cstr_voltage" tw="24" th="24"/>
+												<p space="4" />
+												<p>> Включите реактор. Продукт будет собран снизу, а побочный продукт будет отправлен в Бак.</p>
+												<p space="6" />
+												<p color="#0000FF">Предварительный Просмотр</p>
+												<link ref="galleries:gal_cstr" color="#336633">Передний план</link>
+											</page>
+
+											<page id="lab_oven_page">
+												<p><stack item="rockhounding_chemistry:machines_a" meta="5" count="1" /> <link ref="tier_two:tier_two_page" color="#CC3333">&lt;- Лабораторная Печь</link></p>
+												<p>Лабораторная Печь позволяет получать растворы по реакции различных ингредиентов.</p>
+												<p space="4" />
+												<p color="#0000FF">Требования</p>
+												<p>1x Реактор Печи</p>
+												<p>1x Сепаратор</p>
+												<p>1x Система входа Жидкостей</p>
+												<p>1x Система выхода Жидкостей</p>
+												<p>1x <link ref="utilities:engine_page" color="#000000">Электростанция</link> (И то и другое)</p>
+												<p>1x <link ref="utilities:server_page" color="#000000">Сервер</link></p>
+												<p space="4" />
+												<p color="#0000FF">Установка</p>
+												<layer_1_2 />
+												<oven_slots>
+													<stack item="rockhounding_chemistry:machines_a" meta="14" count="1" />
+													<stack item="rockhounding_chemistry:machines_a" meta="7" count="1" />
+													<stack item="rockhounding_chemistry:misc_blocks_a" meta="3" count="1" />
+													<stack item="rockhounding_chemistry:machines_a" meta="8" count="1" />
+													<stack item="rockhounding_chemistry:machines_a" meta="5" count="1" />
+													<stack item="rockhounding_chemistry:machines_a" meta="2" count="1" />
+												</oven_slots>
+												<p space="2" />
+												<p space="4" />
+												<p color="#0000FF">Предварительный Просмотр</p>
+												<link ref="galleries:gal_oven" color="#336633">Передний план</link>
+											</page>
+											<page>
+												<p color="#0000FF">Запуск: Лабораторная Печь:</p>
+												<p>> Выберите рецепт для выполнения в контроллере.</p> 
+												<p space="2" />
+												<p>> Обмен ингредиентами и жидкостями осуществляется автоматически, что позволяет подключить конструкцию к сети хранения.</p>
+												<image src="rockhounding_chemistry:gbook/wiki/oven_sel" tw="164" th="20"/>
+												<p space="2" />
+												<p>> Реактор принимает два типа твердых ингредиентов: растворенное вещество и / или катализатор. В то время как растворяется в каждом процессе, катализатор только поврежден.</p>
+												<p space="2" />
+												<image src="rockhounding_chemistry:gbook/wiki/oven_ingr" tw="57" th="35"/>
+												<p space="2" />
+												<p>> Печь имеет два возможных выхода: обязательное решение и дополнительный побочный продукт, выбираемый системой вывода жидкости.</p>
+												<p space="2" />
+												<p>> После того, как выбор сделан, включите машину, чтобы принять ингредиенты.</p>
+											</page>
+
+											<page id="precipitation_page">
+												<p><stack item="rockhounding_chemistry:machines_e" meta="11" count="1" /> <link ref="tier_two:tier_two_page" color="#CC3333">&lt;- Камера хим осаждения</link></p>
+												<p>Камера хим осаждения позволяет производить жидкий и твердый материал по реакции различных ингредиентов.</p>
+												<p space="4" />
+												<p color="#0000FF">Требования</p>
+												<p>1x Камера хим Осаждения</p>
+												<p>2x Реактор хим Осаждения</p>
+												<p>1x Бак флотационного Обогащения</p>
+												<p>1x Буферная Ёмкость</p>
+												<p>1x <link ref="utilities:engine_page" color="#000000">Электростанция</link> (И то и другое)</p>
+												<p>1x <link ref="utilities:server_page" color="#000000">Сервер</link></p>
+												<p space="4" />
+												<p color="#0000FF">Установка</p>
+												<layer_1 />
+												<precipitation_slots_1>
+													<stack item="rockhounding_chemistry:machines_e" meta="11" count="1" />
+													<stack item="rockhounding_chemistry:machines_e" meta="12" count="1" />
+													<stack item="rockhounding_chemistry:machines_a" meta="2" count="1" />
+													<stack item="rockhounding_chemistry:machines_a" meta="14" count="1" />
+												</precipitation_slots_1>
+												<p space="4" />
+												<layer_2 />
+												<precipitation_slots_2>
+													<stack item="rockhounding_chemistry:machines_e" meta="11" count="1" />
+													<stack item="rockhounding_chemistry:machines_d" meta="14" count="1" />
+													<stack item="rockhounding_chemistry:machines_e" meta="6" count="1" />
+												</precipitation_slots_2>
+												<p space="2" />
+												<p space="4" />
+												<p color="#0000FF">Предварительный Просмотр</p>
+												<link ref="galleries:gal_precipitator" color="#336633">Передний план</link>
+											</page>
+											<page>
+												<p color="#0000FF">Запуск: Камера хим Осаждения:</p>
+												<p>> Выберите рецепт для выполнения в верхнем контроллере.</p> 
+												<p space="2" />
+												<p>> Обмен ингредиентами и фильтр Бака флотационного Обогащения обрабатываются автоматически, что позволяет подключить структуру к сети хранения.</p>
+												<image src="rockhounding_chemistry:gbook/wiki/precipitator_sel" tw="164" th="21"/>
+												<p space="2" />
+												<p>> Реактор принимает два типа твердых ингредиентов: растворенное вещество и / или катализатор. В то время как растворяется в каждом процессе, катализатор только поврежден.</p>
+												<p space="2" />
+												<image src="rockhounding_chemistry:gbook/wiki/oven_ingr" tw="57" th="35"/>
+												<p space="2" />
+												<p>> Реактор имеет два возможных выхода: обязательный раствор, перекачиваемый в буферный резервуар, и необязательный твердый побочный продукт, собираемый в нижней камере реактора.</p>
+												<p space="2" />
+												<p>> После того, как выбор сделан, включите машину, чтобы принять ингредиенты.</p>
+											</page>
+
+											<page id="gas_plant_page">
+												<p><stack item="rockhounding_chemistry:machines_b" meta="4" count="1" /> <link ref="tier_two:tier_two_page" color="#CC3333">&lt;- Завод Газификации</link></p>
+												<p>Газификационная установка производит газы путем реакции растворов при высоких температурах, превышающих пороговое значение.</p>
+												<p space="4" />
+												<p color="#0000FF">Требования</p>
+												<p>1x Горелка Газификатора</p>
+												<p>1x Цистерна Газификатора</p>
+												<p>1x Газовый Нагнетатель</p>
+												<p>1x <link ref="utilities:engine_page" color="#000000">Электростанция</link> (Топливо)</p>
+												<p>1x <link ref="utilities:pressure_vessel_page" color="#000000">Бак</link></p>
+												<p>1x Дисперсный Коллектор</p>
+												<p space="4" />
+												<p color="#0000FF">Установка</p>
+												<layer_1_2 />
+												<gasifier_slots_1>
+													<stack item="rockhounding_chemistry:machines_b" meta="1" count="1" />
+													<stack item="rockhounding_chemistry:machines_b" meta="9" count="1" />
+													<stack item="rockhounding_chemistry:machines_b" meta="4" count="1" />
+													<stack item="rockhounding_chemistry:machines_b" meta="8" count="1" />
+													<stack item="rockhounding_chemistry:machines_a" meta="2" count="1" />
+												</gasifier_slots_1>
+												<p space="2" />
+												<layer_3 />
+												<gasifier_slots_2>
+													<stack item="rockhounding_chemistry:machines_b" meta="2" count="1" />
+												</gasifier_slots_2>
+											</page>
+											<page>
+												<p color="#0000FF">Запуск: Завод Газификации:</p>
+												<p>> Подайте входные жидкости на бачок и горелку.</p>
+												<p space="4" />
+												<p>> Подайте на электростанцию достаточно топлива, чтобы повысить температуру. Как только планка достигает значения порога, она начинает производить газ. Во время бездействия температура имеет тенденцию к снижению, снова повышаясь, поскольку рецепт снова распознается.</p>
+												<image src="rockhounding_chemistry:gbook/wiki/gasifier_burner" tw="84" th="40"/>
+												<p space="4" />
+												<p>> Сборщик Образцов собирает отходы рецепта. Каждый рецепт может не содержать или иметь до двух побочных продуктов. Для извлечения материала предлагается соединить блок с сундуком.</p>
+												<image src="rockhounding_chemistry:gbook/wiki/gasifier_slag" tw="77" th="40"/>
+												<p space="4" />
+												<p color="#0000FF">Предварительный Просмотр</p>
+												<link ref="galleries:gal_gasifier" color="#336633">Передний план</link>
+											</page>
+
+											<page id="gas_purifier_page">
+												<p><stack item="rockhounding_chemistry:machines_b" meta="5" count="1" /> <link ref="tier_two:tier_two_page" color="#CC3333">&lt;- Очиститель Газа</link></p>
+												<p>Это позволяет проводить процесс очистки газа до очищенного, возможно, очищенного варианта самого себя.</p>
+												<p space="4" />
+												<p color="#0000FF">Требования</p>
+												<p>1x Очиститель газа</p>
+												<p>1x Циклонный Сепаратор</p>
+												<p>1x Верхушка Циклонного сепаратора </p>
+												<p>1x Газовый Нагнетатель</p>								
+												<p>1x <link ref="utilities:engine_page" color="#000000">Электростанция</link> (Топливо)</p>
+												<p>2x <link ref="utilities:pressure_vessel_page" color="#000000">Бак</link></p>
+												<p>1x Дисперсный Коллектор </p>
+												<p space="4" />
+												<p color="#0000FF">Установка</p>
+												<layer_1_2 />
+												<purifier_slots_1>
+													<stack item="rockhounding_chemistry:machines_b" meta="8" count="1" />
+													<stack item="rockhounding_chemistry:machines_a" meta="2" count="1" />
+													<stack item="rockhounding_chemistry:machines_b" meta="5" count="1" />
+													<stack item="rockhounding_chemistry:machines_b" meta="9" count="1" />
+													<stack item="rockhounding_chemistry:machines_b" meta="6" count="1" />
+												</purifier_slots_1>
+												<p space="2" />
+												<layer_3_4 />
+												<purifier_slots_2>
+													<stack item="rockhounding_chemistry:machines_b" meta="6" count="1" />
+													<stack item="rockhounding_chemistry:machines_b" meta="15" count="1" />
+													<stack item="rockhounding_chemistry:machines_b" meta="1" count="1" />
+												</purifier_slots_2>
+											</page>
+											<page>
+												<p color="#0000FF">Запуск: Очиститель Газа:</p>
+												<p>> Структура управляется контроллером очистки, откуда можно активировать машину. Сырой газ отбирается из бокового контейнера и после очистки перемещается в задний контейнер.</p>
+												<p space="4" />
+												<p>> Сборщик Образца собирает отходы рецепта. Каждый рецепт может не содержать или иметь до двух побочных продуктов. Для извлечения материала предлагается соединить блок с сундуком..</p>
+												<image src="rockhounding_chemistry:gbook/wiki/gasifier_slag" tw="77" th="40"/>
+												<p space="4" />
+												<p color="#0000FF">Предварительный Просмотр</p>
+												<link ref="galleries:gal_purifier" color="#336633">Передний план</link>
+											</page>
+
+											<page id="retention_vat_page">
+												<p><stack item="rockhounding_chemistry:machines_c" meta="6" count="1" /> <link ref="tier_two:tier_two_page" color="#CC3333">&lt;- Выщелачиватель</link></p>
+												<p>Это второй этап системы выщелачивания. Это делает более точный анализ фильтрата для извлечения более мелких образцов.</p>
+												<p space="4" />
+												<p color="#0000FF">Требования</p>
+												<p>1x Контроллер Выщелачивателя</p>
+												<p>2x Бак Выщелачивателя</p>								
+												<p>1x Сборщик Образца</p>
+												<p>1x <link ref="utilities:pressure_vessel_page" color="#000000">Бак</link></p>
+												<p>1x <link ref="utilities:engine_page" color="#000000">Электростанция</link> (Топливо)</p>
+												<p>1x Бак флотационного Обогащения</p>
+												<p>1x Буферная Ёмкость</p>								
+												<p>1x <link ref="utilities:server_page" color="#000000">Сервер</link></p>
+												<p space="4" />
+												<p color="#0000FF">Установка</p>
+												<layer_1_2_b />
+												<retention_slots>
+													<stack item="rockhounding_chemistry:machines_c" meta="6" count="1" />
+													<stack item="rockhounding_chemistry:machines_c" meta="4" count="1" />
+													<stack item="rockhounding_chemistry:machines_c" meta="5" count="1" />
+													<stack item="rockhounding_chemistry:machines_a" meta="2" count="1" />
+													<stack item="rockhounding_chemistry:machines_a" meta="14" count="1" />
+													<stack item="rockhounding_chemistry:machines_b" meta="9" count="1" />
+													<stack item="rockhounding_chemistry:machines_d" meta="14" count="1" />
+													<stack item="rockhounding_chemistry:machines_e" meta="6" count="1" />
+													<stack item="minecraft:water_bucket" meta="0" count="1" />
+													<stack item="rockhounding_chemistry:fluid.hydrofluoric_acid" meta="0" count="1" />
+													<stack item="rockhounding_chemistry:fluid.water_vapour" meta="0" count="1" />
+												</retention_slots>
+											</page>
+											<page>
+												<p color="#0000FF">Запуск: Выщелачиватель:</p>
+												<p>> Добавьте входной фильтрат во флотационный резервуар и предоставьте дополнительный материал.</p>
+												<p space="4" />
+												<p>> Вставьте Перемешивающее Устройство в каждый Бак Выщелачивателя.</p>
+												<p space="4" />
+												<p>> Выберите лучший удельный вес, чтобы выставить необходимый образец. Выставленные образцы можно увидеть, наведя значок объектива, когда найден выход.</p>
+												<image src="rockhounding_chemistry:gbook/wiki/vat_gravity" tw="120" th="20"/>
+												<p space="4" />
+												<p>> Как можно скорее установите Улучшение фильтра, чтобы ужесточить диапазон выбора.</p>
+												<p space="4" />
+												<p>> Сборщик образцов получает выщелоченный продукт, и он должен всегда оставаться свободным с свободными трубами для запуска следующего процесса. Слоты обрабатываются машиной.</p>
+												<p space="4" />
+												<p>> Буферный резервуар будет собирать токсичные отходы, образующиеся в конце процесса.</p>
+												<p space="4" />
+												<p color="#0000FF">Предварительный Просмотр</p>
+												<link ref="galleries:gal_retention" color="#336633">Передний план</link>
+											</page>
+											
+											<page id="alloyer_page">
+												<p><stack item="rockhounding_chemistry:machines_d" meta="0" count="1" /> <link ref="tier_two:tier_two_page" color="#CC3333">&lt;- Печь Сплавов</link></p>
+												<p>Печь Сплавов отливает сплавы, комбинируя различные элементы в разном количестве.</p>
+												<p space="4" />
+												<p color="#0000FF">Требования</p>
+												<p>1x Печь Сплавов</p>
+												<p>1x <link ref="utilities:cabinets_page" color="#000000">Шкаф Элементов</link></p>								
+												<p>1x <link ref="utilities:cabinets_page" color="#000000">Шкаф Материалов</link></p>
+												<p>1x <link ref="utilities:engine_page" color="#000000">Электростанция</link> (Топливо)</p>
+												<p>1x <link ref="utilities:server_page" color="#000000">Сервер</link></p>
+												<p space="4" />
+												<p color="#0000FF">Установка</p>
+												<layer_1_2 />
+												<alloyer_slots>
+													<stack item="rockhounding_chemistry:machines_d" meta="2" count="1" />
+													<stack item="rockhounding_chemistry:machines_c" meta="9" count="1" />
+													<stack item="rockhounding_chemistry:machines_a" meta="14" count="1" />
+													<stack item="rockhounding_chemistry:machines_d" meta="0" count="1" />
+													<stack item="rockhounding_chemistry:machines_a" meta="2" count="1" />
+												</alloyer_slots>
+												<p space="4" />
+												<p color="#0000FF">Предварительный Просмотр</p>
+												<link ref="galleries:gal_alloyer" color="#336633">Передний план</link>
+											</page>
+											<page>
+												<p color="#0000FF">Запуск: Печь Сплавов:</p>
+												<p>> Выберите сплав из селектора.</p>
+												<image src="rockhounding_chemistry:gbook/wiki/alloyer_sel" tw="180" th="20"/>
+												<p space="4" />
+												<p>> Поместите Мерный Цилиндр в оба шкафа в верхней части.</p>
+												<p space="4" />
+												<p>> Поместите шаблон пресс-формы в слот для расходных материалов.</p>
+												<p space="4" />
+												<p>> Проверьте, достаточно ли ингредиентов, наведя курсор на контрольный список. Полный зеленый рецепт означает, что он готов к применению. Дополнительные ингредиенты могут быть поставлены из верхней части шкафов.</p> 
+												<image src="rockhounding_chemistry:gbook/wiki/alloyer_rec" tw="133" th="60"/>
+											</page>
+
+										</chapter>
+
+							<chapter id="tier_three">
+								<page id="tier_three_page">
+									<link ref="devices:devices_page" color="#CC3333">&lt;-Машины Уровень 2</link>
+									<p> </p>
+									<p><stack item="rockhounding_chemistry:machines_c" meta="3" count="1" /> <link ref="tierthree:leaching_vat_page" color="#333399">-&gt; Танк Хим Подавления</link></p>
+									<p><stack item="rockhounding_chemistry:machines_c" meta="0" count="1" /> <link ref="tierthree:gan_page" color="#333399">-&gt; Криогенный дистилляционный аппарат</link></p>
+									<p><stack item="rockhounding_chemistry:machines_d" meta="5" count="1" /> <link ref="tierthree:deposition_page" color="#333399">-&gt; Камера хим осаждения</link></p>
+									<p><stack item="rockhounding_chemistry:machines_d" meta="8" count="1" /> <link ref="tierthree:pulling_page" color="#333399">-&gt; Кристаллический вытягивающий Тигль</link></p>
+								</page>
+							</chapter>
+
+										<chapter id="tierthree">
+											<page id="leaching_vat_page">
+												<p><stack item="rockhounding_chemistry:machines_c" meta="3" count="1" /> <link ref="tier_three:tier_three_page" color="#CC3333">&lt;- Танк Хим Подавления</link></p>
+												<p>Это подвергает образцы в танках кислотными атаками, через 3 фазы. Помимо извлеченного образца он производит выщелачивание для дальнейшей обработки.</p>
+												<p space="4" />
+												<p color="#0000FF">Требования</p>
+												<p>1x Контроллер Подавления</p>
+												<p>3x Бак Выщелачивателя</p>								
+												<p>1x Сборщик Образца</p>
+												<p>2x <link ref="utilities:pressure_vessel_page" color="#000000">Бак</link></p>
+												<p>1x <link ref="utilities:engine_page" color="#000000">Электростанция</link> (Топливо)</p>
+												<p>1x Буферная Ёмкость</p>
+												<p>1x <link ref="utilities:server_page" color="#000000">Сервер</link></p>
+												<p space="4" />
+												<p color="#0000FF">Установка</p>
+												<layer_1_2_c />
+												<leaching_slots>
+													<stack item="rockhounding_chemistry:machines_c" meta="3" count="1" />
+													<stack item="rockhounding_chemistry:machines_c" meta="4" count="1" />
+													<stack item="rockhounding_chemistry:machines_c" meta="5" count="1" />
+													<stack item="rockhounding_chemistry:machines_a" meta="14" count="1" />
+													<stack item="rockhounding_chemistry:machines_b" meta="9" count="1" />
+													<stack item="rockhounding_chemistry:fluid.sodium_hydroxide" meta="0" count="1" />
+													<stack item="rockhounding_chemistry:fluid.hydrochloric_acid" meta="0" count="1" />
+													<stack item="minecraft:water_bucket" meta="0" count="1" />
+													<stack item="rockhounding_chemistry:fluid.water_vapour" meta="0" count="1" />
+													<stack item="rockhounding_chemistry:fluid.water_vapour" meta="0" count="1" />
+													<stack item="rockhounding_chemistry:machines_a" meta="2" count="1" />
+													<stack item="rockhounding_chemistry:machines_e" meta="6" count="1" />
+												</leaching_slots>
+											</page>
+											<page>
+												<p color="#0000FF">Запуск: Танк Подавления:</p>
+												<p>> Добавить ингредиент для ввода и предоставить дополнительный материал.</p>
+												<p space="4" />
+												<p>> Вставьте Перемешивающее Устройство в каждый Бак Выщелачивателя.</p>
+												<p space="4" />
+												<p>> Выберите лучший удельный вес, чтобы выставить необходимый образец. Выставленные образцы можно увидеть, наведя значок объектива, когда найден выход.</p>
+												<image src="rockhounding_chemistry:gbook/wiki/vat_gravity" tw="120" th="20"/>
+												<p space="4" />
+												<p>> Как можно скорее установите Улучшение фильтра, чтобы ужесточить диапазон выбора.</p>
+												<p space="4" />
+												<p>> Сборщик образцов получает продукт, и он должен всегда оставаться свободным с свободными трубами для начала следующего процесса. Слоты обрабатываются машиной. </p>
+												<p space="4" />
+												<p>> Резервуар на верхней части коллектора будет удерживать фильтрат.</p>
+												<p space="4" />
+												<p color="#0000FF">Предварительный Просмотр</p>
+												<link ref="galleries:gal_leaching" color="#336633">Передний план</link>
+											</page>
+
+											<page id="gan_page">
+												<p><stack item="rockhounding_chemistry:machines_c" meta="0" count="1" /> <link ref="tier_three:tier_three_page" color="#CC3333">&lt;- Криогенный дистилляционный аппарат</link></p>
+												<p>Эта установка позволяет извлекать элементы посредством процесса разделения воздуха, храня их в конечных держателях. Некоторые из извлеченных газов чрезвычайно редки, требуя много энергии и времени, чтобы быть должным образом приобретенными.</p> 
+												<p space="4" />
+												<p color="#0000FF">Требования</p>
+												<p>1x GAN Контроллер</p>
+												<p>1x <link ref="utilities:engine_page" color="#000000">Электростанция</link> (Редстоун)</p>
+												<p>3x Бак</p>								
+												<p>3x <link ref="utilities:pressure_vessel_page" color="#000000">Газовый Нагнетатель</link></p>
+												<p>1x Турбодетандер</p>
+												<p>1x Сепаратор</p>
+												<p>5x GAN Башня</p>
+												<p>2x GAN Верхняя Часть Башни</p>
+												<p>2x GAN Инжектор</p>
+												<p>1x Газовая Пипетка</p>
+
+												<p space="4" />
+												<p color="#0000FF">Выход</p>
+												<layer_gases />
+												<stack_nine>
+													<stack item="rockhounding_chemistry:fluid.nitrogen" meta="0" count="1" />
+													<stack item="rockhounding_chemistry:fluid.oxygen" meta="0" count="1" />
+													<stack item="minecraft:air" meta="0" count="1" />
+													<stack item="rockhounding_chemistry:fluid.argon" meta="0" count="1" />
+													<stack item="rockhounding_chemistry:fluid.carbon_dioxide" meta="0" count="1" />
+													<stack item="rockhounding_chemistry:fluid.helium" meta="0" count="1" />
+													<stack item="rockhounding_chemistry:fluid.neon" meta="0" count="1" />
+													<stack item="rockhounding_chemistry:fluid.krypton" meta="0" count="1" />
+													<stack item="rockhounding_chemistry:fluid.xenon" meta="0" count="1" />
+												</stack_nine>
+												<p space="4" />
+												<p color="#0000FF">Предварительный Просмотр</p>
+												<link ref="galleries:gal_gan" color="#336633">Передний план, Вид сзади</link>
+											</page>
+
+											<page>
+												<p space="4" />
+												<p color="#0000FF">Установка</p>
+												<layer_1_3 />
+												<gan_slots_1>
+													<stack item="rockhounding_chemistry:machines_c" meta="2" count="1" />
+													<stack item="rockhounding_chemistry:machines_b" meta="1" count="1" />
+													<stack item="rockhounding_chemistry:misc_blocks_a" meta="7" count="1" />
+													<stack item="rockhounding_chemistry:machines_b" meta="9" count="1" />
+													<stack item="rockhounding_chemistry:machines_b" meta="13" count="1" />
+													<stack item="rockhounding_chemistry:misc_blocks_a" meta="3" count="1" />
+													<stack item="rockhounding_chemistry:machines_b" meta="1" count="1" />
+													<stack item="rockhounding_chemistry:machines_b" meta="1" count="1" />
+													<stack item="rockhounding_chemistry:misc_blocks_a" meta="7" count="1" />
+													<stack item="rockhounding_chemistry:machines_b" meta="9" count="1" />
+													<stack item="rockhounding_chemistry:machines_a" meta="2" count="1" />
+													<stack item="rockhounding_chemistry:machines_c" meta="0" count="1" />
+													<stack item="rockhounding_chemistry:machines_b" meta="9" count="1" />
+													<stack item="rockhounding_chemistry:fluid.cooled_air" meta="0" count="1" />
+													<stack item="rockhounding_chemistry:misc_blocks_a" meta="5" count="1" />
+													<stack item="rockhounding_chemistry:misc_blocks_a" meta="5" count="1" />
+												</gan_slots_1>
+											</page>
+											<page>
+												<p space="4" />
+												<p color="#0000FF">Установка</p>
+												<layer_4_5 />
+												<gan_slots_2>
+													<stack item="rockhounding_chemistry:misc_blocks_a" meta="6" count="1" />
+													<stack item="rockhounding_chemistry:misc_blocks_a" meta="5" count="1" />
+													<stack item="rockhounding_chemistry:misc_blocks_a" meta="6" count="1" />
+												</gan_slots_2>
+											</page>
+											<page>
+												<p color="#0000FF">Запуск: Gan Завод:</p>
+												<p>Завод разделен на три канала, чтобы получить Азот, Кислород и редкие газы. Есть 6 экстрагируемых редких газов, каждый с разной редкостью. Каждый канал может работать на отдельной обязанности. Установка потребляет энергию в зависимости от того, сколько каналов работают одновременно.</p>
+												<p space="4" />
+												<p>> Выберите рабочие каналы от переключателей и включите установку.</p>
+												<image src="rockhounding_chemistry:gbook/wiki/gan_gas" tw="58" th="20"/>
+											</page>
+											
+											<page id="deposition_page">
+												<p><stack item="rockhounding_chemistry:machines_d" meta="5" count="1" /> <link ref="tier_three:tier_three_page" color="#CC3333">&lt;- Камера хим осаждения</link></p>
+												<p>Обрабатывает материалы путем воздействия газов при определенных температурах и давлениях..</p>
+												<p space="4" />
+												<p color="#0000FF">Требования</p>
+												<p>1x Камера хим осаждения</p>
+												<p>2x Сепаратор</p>
+												<p>3x <link ref="utilities:pressure_vessel_page" color="#000000">Бак</link></p>
+												<p>2x Газовый Нагнетатель</p>
+												<p>1x <link ref="utilities:engine_page" color="#000000">Электростанция</link> (Редстоун)</p>
+												<p>1x <link ref="utilities:server_page" color="#000000">Сервер</link></p>
+												<p space="4" />
+												<p color="#0000FF">Установка</p>
+												<layer_1_2 />
+												<deposition_slots>
+													<stack item="rockhounding_chemistry:machines_b" meta="9" count="1" />
+													<stack item="rockhounding_chemistry:misc_blocks_a" meta="3" count="1" />
+													<stack item="rockhounding_chemistry:machines_b" meta="1" count="1" />
+													<stack item="rockhounding_chemistry:machines_d" meta="5" count="1" />
+													<stack item="rockhounding_chemistry:machines_a" meta="14" count="1" />
+													<stack item="rockhounding_chemistry:machines_a" meta="2" count="1" />
+												</deposition_slots>
+												<p space="4" />
+												<p color="#0000FF">Предварительный Просмотр</p>
+												<link ref="galleries:gal_deposition" color="#336633">Передний план</link>
+											</page>
+											<page>
+												<p color="#0000FF">Запуск: Камера хим осаждения:</p>
+												<p>> Выберите рецепт из селектора. Сосуд сзади будет продувать неправильные газы для отправки обратно в систему хранения..</p>
+												<image src="rockhounding_chemistry:gbook/wiki/deposition_sel" tw="180" th="20"/>
+												<p space="4" />
+												<p>> Поместите ингредиент в контроллер, чтобы установить вход.</p>
+												<p space="4" />
+												<p>> Поместите улучшения в нижнюю камеру. Модернизация изоляции снижает утечку температуры и давления. Модернизация обсадной колонны усиливает камеру, ускоряющую повышение давления.</p>
+												<grid_three>
+													<stack item="rockhounding_chemistry:misc_items" meta="15" count="1" />
+													<stack item="minecraft:air" meta="0" count="1" />
+													<stack item="rockhounding_chemistry:misc_items" meta="16" count="1" />
+												</grid_three>
+												<p space="4" />
+												<p>> Подождите, пока температура и давление не поднимутся до порогового значения рецепта для запуска процесса. После каждого процесса устройство теряет большинство своих параметров, которые необходимо восстановить.</p>
+												<image src="rockhounding_chemistry:gbook/wiki/deposition_val" tw="18" th="40"/>
+											</page>
+
+											<page id="pulling_page">
+												<p><stack item="rockhounding_chemistry:machines_d" meta="8" count="1" /> <link ref="tier_three:tier_three_page" color="#CC3333">&lt;- Кристаллический вытягивающий Тигль</link></p>
+												<p>В Кристаллическом вытягивающим Тигле образуются синтетические кристаллы путем смешивания плавящегося соединения с легирующим составом в среде, полной Аргона..</p>
+												<p space="4" />
+												<p color="#0000FF">Требования</p>
+												<p>1x Кристаллический вытягивающий Тигль</p>
+												<p>1x Верхняя часть Кристаллического вытягивающего Тигля</p>
+												<p>1x <link ref="utilities:pressure_vessel_page" color="#000000">Бак</link></p>								
+												<p>1x Газовый Нагнетатель</p>
+												<p>1x <link ref="utilities:engine_page" color="#000000">Электростанция</link> (Редстоун)</p>
+												<p space="4" />
+												<p color="#0000FF">Установка</p>
+												<layer_1_2 />
+												<pulling_slots_1>
+													<stack item="rockhounding_chemistry:machines_a" meta="2" count="1" />
+													<stack item="rockhounding_chemistry:machines_d" meta="8" count="1" />
+													<stack item="rockhounding_chemistry:machines_b" meta="1" count="1" />
+													<stack item="rockhounding_chemistry:machines_d" meta="8" count="1" />
+													<stack item="rockhounding_chemistry:machines_b" meta="9" count="1" />
+													<stack item="rockhounding_chemistry:fluid.argon" meta="0" count="1" />
+												</pulling_slots_1>
+												<layer_3 />
+												<pulling_slots_2>
+													<stack item="rockhounding_chemistry:misc_blocks_a" meta="10" count="1" />
+												</pulling_slots_2>
+											</page>
+
+											<page>
+												<p color="#0000FF">Кристаллического вытягивающего Тигля:</p>
+												<p>> Установите ингредиенты в нижней части тигля и добавку в средней части..</p>
+												<p space="4" />
+												<p>> Подайте Аргон.</p>
+												<p space="4" />
+												<p>> Включите машину и подождите, пока камера не нагреется и не расплавит смесь.</p>
+												<image src="rockhounding_chemistry:gbook/wiki/pulling_heat" tw="54" th="19"/>
+												<p space="7" />
+												<p color="#0000FF">Предварительный Просмотр</p>
+												<link ref="galleries:gal_pulling" color="#336633">Передний план</link>
+											</page>
+
+										</chapter>
+
+							<chapter id="tier_four">
+								<page id="tier_four_page">
+									<link ref="devices:devices_page" color="#CC3333">&lt;- Машины  Уровень 4</link>
+									<p> </p>
+									<p><stack item="rockhounding_chemistry:machines_c" meta="13" count="1" /> <link ref="tierfour:gas_reformer_page" color="#333399">-&gt; Реактор Хим Преобразования</link></p>
+									<p><stack item="rockhounding_chemistry:machines_c" meta="7" count="1" /> <link ref="tierfour:extractor_page" color="#333399">-&gt; Химический Экстрактор</link></p>
+								</page>
+							</chapter>
+										<chapter id="tierfour">
+											<page id="gas_reformer_page">
+												<p><stack item="rockhounding_chemistry:machines_c" meta="13" count="1" /> <link ref="tier_four:tier_four_page" color="#CC3333">&lt;- Реактор Хим Преобразования</link></p>
+												<p>Реактор Хим Преобразования производит газообразные и жидкие соединения по реакции двух газов. Требуется 2 серии катализаторов, комбинация которых определяет эффективность реактора..</p>
+												<p space="4" />
+												<p color="#0000FF">Требования</p>
+												<p>1x Контроллер Хим Преобразования</p>
+												<p>3x <link ref="utilities:pressure_vessel_page" color="#000000">Бак</link></p>
+												<p>2x Башня Хим Преобразования</p>
+												<p>1x Верхняя часть Башни Хим Преобразования</p>
+												<p>1x Сепаратор</p>
+												<p>1x <link ref="utilities:engine_page" color="#000000">Электростанция</link> (Редстоун)</p>
+												<p>1x Буферная Ёмкость</p>
+												<p>1x <link ref="utilities:server_page" color="#000000">Сервер</link></p>
+												<p space="1" />
+											</page>
+											<page>
+												<p color="#0000FF">Установка</p>
+												<layer_1_2 />
+												<reformer_slots_1>
+													<stack item="rockhounding_chemistry:machines_a" meta="2" count="1" />
+													<stack item="rockhounding_chemistry:machines_c" meta="13" count="1" />
+													<stack item="rockhounding_chemistry:machines_a" meta="14" count="1" />
+													<stack item="rockhounding_chemistry:misc_blocks_a" meta="3" count="1" />
+													<stack item="rockhounding_chemistry:machines_b" meta="9" count="1" />
+												</reformer_slots_1>
+												<p space="4"> </p>
+												<layer_3_4 />
+												<reformer_slots_2>
+													<stack item="rockhounding_chemistry:misc_blocks_a" meta="8" count="1" />
+												</reformer_slots_2>
+												<p space="4"> </p>
+												<layer_5_6 />
+												<reformer_slots_3>
+													<stack item="rockhounding_chemistry:misc_blocks_a" meta="9" count="1" />
+													<stack item="rockhounding_chemistry:machines_e" meta="6" count="1" />
+												</reformer_slots_3>
+											</page>
+											<page>
+												<p color="#0000FF">Системные катализаторы</p>
+												<p><stack item="rockhounding_chemistry:nl_catalyst" meta="0" count="1" /> Уровень 1: NiAl</p>
+												<p><stack item="rockhounding_chemistry:gr_catalyst" meta="0" count="1" /> Уровень 2: Графит</p>
+												<p><stack item="rockhounding_chemistry:wg_catalyst" meta="0" count="1" /> Уровень 3: Белое Золото</p>
+												<p space="4"> </p>
+												<p color="#0000FF">Катализаторы реакции</p>
+												<p><stack item="rockhounding_chemistry:au_catalyst" meta="0" count="1" /> Уровень 1: Золото</p>
+												<p><stack item="rockhounding_chemistry:os_catalyst" meta="0" count="1" /> Уровень 2: Посмотреть рецепты</p>
+												<p space="9" />
+												<p color="#0000FF">Предварительный Просмотр</p>
+												<link ref="galleries:gal_reformer" color="#336633">Передний план</link>
+											</page>
+											<page>
+												<p color="#0000FF">Запуск: Реактор Хим Преобразования:</p>
+												<p>> Выберите реакцию для выполнения в контроллере.</p>
+												<image src="rockhounding_chemistry:gbook/wiki/reformer_1" tw="168" th="20"/>
+												<p space="4" />
+												<p>1a- Вставьте 4 Реакционных катализатора во внешнее гнездо реактора.</p>
+												<p space="4" />
+												<p>1b- Вставьте 6 Системных катализаторов во внутреннее гнездо реактора..</p>
+												<p space="4" />
+												<image src="rockhounding_chemistry:gbook/wiki/reformer_2" tw="156" th="80"/>
+												<p space="4" />
+												<p>> Подайте входные газов в боковые сосуды, в соответствии с автоматическими фильтрами.</p>
+												<p space="4" />
+												<p>> Выходной бак и бак являются опциональными для типа рецепта, может быть опущен.</p>
+												<p space="4" />
+												<p>> Включите реактор.</p>
+											</page>
+
+											<page id="extractor_page">
+												<p><stack item="rockhounding_chemistry:machines_c" meta="7" count="1" /> <link ref="tier_four:tier_four_page" color="#CC3333">&lt;- Химический Экстрактор</link></p>
+												<p>Разлагает образцы, чтобы изолировать элементы.</p> 
+												<p space="2" />
+												<p color="#0000FF">Требования</p>
+												<p>1x Контроллер Экстрактора</p>
+												<p>1x Реактор Экстрактора</p>
+												<p>1x <link ref="utilities:engine_page" color="#000000">Электростанция</link> (И то и другое)</p>
+												<p>1x Система входа Жидкостей</p>
+												<p>1x <link ref="utilities:cabinets_page" color="#000000">Шкаф Элементов</link></p>								
+												<p>1x <link ref="utilities:cabinets_page" color="#000000">Шкаф Материалов</link></p>								
+												<p>1x Инжектор Экстрактора</p>
+												<p>1x Стабилизатор Реакции</p>
+												<p>1x Зарядное Устройство</p>
+												<p>1x Лабораторный Балансер</p>
+												<p>1x <link ref="utilities:server_page" color="#000000">Сервер</link></p>
+												<p space="4" />
+												<p color="#0000FF">Установка</p>
+												<layer_1_2 />
+												<extractor_slots>
+													<stack item="rockhounding_chemistry:machines_c" meta="12" count="1" />
+													<stack item="rockhounding_chemistry:machines_a" meta="7" count="1" />
+													<stack item="rockhounding_chemistry:machines_c" meta="9" count="1" />
+													<stack item="rockhounding_chemistry:machines_c" meta="8" count="1" />
+													<stack item="rockhounding_chemistry:machines_c" meta="15" count="1" />
+													<stack item="rockhounding_chemistry:machines_d" meta="2" count="1" />
+													<stack item="rockhounding_chemistry:machines_c" meta="7" count="1" />
+													<stack item="rockhounding_chemistry:machines_a" meta="2" count="1" />
+													<stack item="rockhounding_chemistry:fluid.nitric_acid" meta="0" count="1" />
+													<stack item="rockhounding_chemistry:fluid.sodium_cyanide" meta="0" count="1" />
+													<stack item="rockhounding_chemistry:machines_c" meta="11" count="1" />
+													<stack item="rockhounding_chemistry:machines_a" meta="14" count="1" />
+													<stack item="rockhounding_chemistry:misc_blocks_a" meta="4" count="1" />
+												</extractor_slots>
+											</page>
+											<page>
+												<p color="#0000FF">Запуск: Химический Экстрактор:</p>
+												<p>> Поместите образец в контроллер, чтобы установить вход.</p>
+												<p space="4" />
+												<p>> Подайте жидкости в соответствии с заданными фильтрами.</p>
+												<p space="4" />
+												<p>> Поставьте 6 Железных Катализаторов в Стабилизатор Реакции.</p>
+												<p space="4" />
+												<p>> Поместите Пробирку и Мерный Цилиндр в Инжектор Экстрактора.</p>
+												<p space="4" />
+												<p>> Поместите Мерный Цилиндр в верхние секции обоих Шкафов.</p>
+												<p space="4" />
+												<p>> Выберите интенсивность в соответствии с ресурсами и образцом. Если все элементы, составляющие образец, составляют менее 20%, интенсивность становится несущественной, и чем ниже, тем выгоднее. Графические мониторы показывают состояние реактора.</p>
+												<image src="rockhounding_chemistry:gbook/wiki/extractor_int" tw="75" th="20"/>
+												<p space="4" />
+												<p>> Включите машину.</p>
+												<p space="4" />
+												<p color="#0000FF">Катализаторы</p>
+												<stack_six>
+													<stack item="rockhounding_chemistry:fe_catalyst" meta="0" count="1" />
+													<stack item="rockhounding_chemistry:fe_catalyst" meta="0" count="1" />
+													<stack item="rockhounding_chemistry:fe_catalyst" meta="0" count="1" />
+													<stack item="rockhounding_chemistry:fe_catalyst" meta="0" count="1" />
+													<stack item="rockhounding_chemistry:fe_catalyst" meta="0" count="1" />
+													<stack item="rockhounding_chemistry:fe_catalyst" meta="0" count="1" />
+												</stack_six>
+												<p space="4" />
+												<p color="#0000FF">Предварительный Просмотр</p>
+												<link ref="galleries:gal_extractor" color="#336633">Передний план</link>
+											</page>
+										</chapter>
+
+
+				<chapter id="mobs">
+					<page id="mobs_page">
+						<link ref="chapters:index" color="#CC3333">&lt;- Мобы</link>
+						<p> </p>
+						<link ref="mob:toxic_slime_page_page" indent="8" color="#333399">-&gt; Токсичный Слайм</link>
+					</page>
+				</chapter>
+							<chapter id="mob">
+								<page id="toxic_slime_page_page">
+									<link ref="mobs:mobs_page" color="#CC3333">&lt;- Токсичный Слайм</link>
+									<p>Этот моб связан с функцией <link ref = "feature:toxic_page" color = "#000000"> "Опасность и Загрязнение" </link>. Он появляется, если в резервуарах, разлитых по всему миру, есть токсичный шлам. Он маленький, но движется и прыгает быстро и неуязвим к кислотному урону, нацеливаясь на игрока, который получит урон и отравление при атаке. Когда убито, он бросает ядовитую слизь. В настоящее время нет использования для этого элемента.</p>
+									<p space="4" />
+									<stack item="rockhounding_chemistry:mob_items" meta="0" count="1" />
+									<p space="4" />
+									<image src="rockhounding_chemistry:gbook/screens/toxic_slime" tw="140" th="56"/>
+								</page>
+							</chapter>
+
+				<chapter id="projects">
+					<page id="projects_page">
+						<link ref="chapters:index" color="#CC3333">&lt;- Проекты</link>
+						<p space="10" />
+						<p><stack item="rockhounding_chemistry:machines_d" meta="10" count="1" /> <link ref="project:orbiter_page" color="#333399">-&gt; Орбитер</link></p>
+						<p><stack item="rockhounding_chemistry:machines_e" meta="4" count="1" /> <link ref="project:disposer" color="#333399">-&gt; Распределитель</link></p>
+						<p><stack item="rockhounding_chemistry:didymium_glass" meta="0" count="1" /> <link ref="project:didymium_page" color="#333399">-&gt; Дидиумное Стекло</link></p>
+					</page>
+				</chapter>
+							<chapter id="project">
+								<page id="orbiter_page">
+									<p><stack item="rockhounding_chemistry:machines_d" meta="10" count="1" /> <link ref="projects:projects_page" color="#CC3333">&lt;- Орбитер</link></p>
+									<p>Это устройство обнаруживает и выбирает любую сферу опыта внутри настраиваемого радиуса. Сферы будут мгновенно захвачены, а их ценность сохранена в хранилище. Радиус обнаружения зависит от магнитных зондов. Селектор внутри графического интерфейса позволяет игроку получить доступные уровни из хранилища. Машины также имеют бак для жидкости, в котором можно утилизировать токсичные отходы, образующиеся в некоторых модных конструкциях. Эта переработка позволяет с вероятностью 50% удвоить ценность шара. Кроме того, если установлен OpenBlocks, сохраненный XP может быть обработан как Жидкий XP и слит с машины с любой системой трубопроводов.</p>
+									<p>Устройство должно быть активировано, чтобы начать собирать шары. Зонды изготовлены из обычных материалов и современных сплавов. При наведении курсора на них отобразится указанный радиус. Для работы машины всегда следует использовать зонд.</p>
+									<stack_four>
+										<stack item="rockhounding_chemistry:probe_items" meta="0" count="1" />
+										<stack item="rockhounding_chemistry:probe_items" meta="1" count="1" />
+										<stack item="rockhounding_chemistry:probe_items" meta="2" count="1" />
+										<stack item="rockhounding_chemistry:probe_items" meta="3" count="1" />
+									</stack_four>
+								</page>
+
+								<page id="disposer">
+									<p><stack item="rockhounding_chemistry:machines_e" meta="4" count="1" /> <link ref="projects:projects_page" color="#CC3333">&lt;- Распределитель</link></p>
+									<p>Распределитель - это устройство без питания, которое позволяет одновременно бросать по одному предмету из каждого из своих внутренних слотов с заданным интервалом в тиках. Пропавшие предметы появляются перед устройством. Слоты также могут быть заблокированы, так что только каждый участвующий может получить этот конкретный предмет.</p> 
+								</page>
+
+								<page id="didymium_page">
+									<p><stack item="rockhounding_chemistry:didymium_glass" meta="0" count="1" /> <link ref="projects:projects_page" color="#CC3333">&lt;- Дидиумное Стекло</link></p>
+									<p>Дидиумное Стекло - это размытое стекло, которое позволяет фильтровать свет, создавая темные комнаты, которые видны снаружи. Это сделано в Печи Сплавов смесью Редкоземельных Элементов и Фильтрованного Песока. Он доступен в трех вариациях: (без полей, с рамками и кирпичи).</p>
+									<p space="4" />
+									<grid_three>
+										<stack item="rockhounding_chemistry:didymium_glass" meta="0" count="1" />
+										<stack item="rockhounding_chemistry:didymium_glass" meta="1" count="1" />
+										<stack item="rockhounding_chemistry:didymium_glass" meta="2" count="1" />
+									</grid_three>
+									<p space="4" />
+									<image src="rockhounding_chemistry:gbook/screens/didymium" tw="128" th="110"/>
+								</page>
+							</chapter>
+
+				<chapter id="features">
+					<page id="features_page">
+						<link ref="chapters:index" color="#CC3333">&lt;- Дополнительные возможности</link>
+						<p space="10" />
+						<link ref="feature:toxic_page" indent="8" color="#333399">-&gt; "Опасность и Загрязнение"</link>
+					</page>
+				</chapter>
+							<chapter id="feature">
+								<page id="toxic_page">
+									<link ref="features:features_page" color="#CC3333">&lt;- "Опасность и Загрязнение"</link>
+									<p space="10" />
+									<p color="#333399"> <stack item="rockhounding_chemistry:fluid.toxic_waste" meta="0" count="1" /> Токсичный Отход</p>
+									<p>Это побочный продукт нескольких химических реакций. Он наносит урон, касаясь его, и обладает настраиваемой способностью пропускать немного опыта при убийстве сущностей. Он также имеет способность мутировать предметы в других, бросая их в него.</p>
+									<p space="10" />
+									<p color="#333399"> <stack item="rockhounding_chemistry:fluid.toxic_sludge" meta="0" count="1" /> Токсичный Шлак</p>
+									<p>Это протекающая жидкость, возникающая, когда модовый резервуар содержит жидкость, помеченную как «загрязнитель», которая со временем вызывает загрязнение окружающей среды. Он также токсичен и может генерировать <link ref = "mobs:mobs_page" color = "#000000"> Токсичные слизи </link>. Чтобы предотвратить загрязнение, загрязняющие жидкости следует быстро хранить в <link ref = "utilities:fluid_tank_page" color = "#000000"> Бак для содержания </link>.</p>
+								</page>
+								<page>
+									<p color="#333399">Опасность давления газа</p>
+									<p>Сохранение любого из современных манипуляторов газа (сосудов, держателей, устройств) на полную мощность в течение длительного периода времени может привести к его разрушению и взрыву. Газы следует хранить в больших держателях, стараясь оставить немного допустимого отклонения, чтобы обеспечить стабилизацию. В любом случае, можно использовать <link ref = "utilities:exhaustion_page" color = "#000000"> Выпускные клапаны </link> поверх сосудов, которые позаботятся о выгрузке части содержимого, чтобы сохранить давление под контролем. Если выделяемый газ помечен как «загрязнитель», это может создать временное токсичное облако вокруг резервуара.</p>
+								</page>
+							</chapter>
+
+				<chapter id="simulants">
+					<page id="simulants_page">
+						<link ref="chapters:index" color="#CC3333">&lt;- Имитаторы</link>
+						<p space="10" />
+						<link ref="simulant:simul1_page" indent="8" color="#333399">-&gt; Силикон</link>
+						<link ref="simulant:simul1_page" indent="8" color="#333399">-&gt; Порох</link>
+						<link ref="simulant:simul2_page" indent="8" color="#333399">-&gt; Снег</link>
+						<link ref="simulant:simul2_page" indent="8" color="#333399">-&gt; Улучшенная Губка</link>
+					</page>
+				</chapter>
+							<chapter id="simulant">
+								<page id="simul1_page">
+									<link ref="simulants:simulants_page" color="#CC3333">&lt;- Силикон</link>
+									<grid_two>
+										<stack item="rockhounding_chemistry:silicone_cartridge" meta="0" count="1" />
+										<stack item="minecraft:slime_ball" meta="0" count="1" />
+									</grid_two>
+									<p space="2" />
+									<p>Силикон - это плотное соединение, полученное в лабораторной печи, которое требуется для изготовления силиконового картриджа. Этот инструмент позволяет производить шарики слизи при щелчке в воздухе во время пробежки, или размещать блоки слизи в мире при использовании на поверхности. Это может также использоваться в рецептах крафта вместо шаров слизи, повреждая инструмент после каждого крафта.</p>
+									<p space="10" />
+									<link ref="simulants:simulants_page" color="#CC3333">&lt;- Порох</link>
+									<grid_two>
+										<stack item="rockhounding_chemistry:chemical_items" meta="12" count="1" />
+										<stack item="minecraft:gunpowder" meta="0" count="1" />
+									</grid_two>
+									<p space="2" />
+									<p>Порох может быть произведен химически с помощью различных типов манипуляций, а также с использованием некоторых химических реакций и смешивания их для получения конечного соединения.</p>
+								</page>
+
+								<page id="simul2_page">
+									<link ref="simulants:simulants_page" color="#CC3333">&lt;- Снег</link>
+									<grid_two>
+										<stack item="rockhounding_chemistry:sodium_polyacrylate" meta="0" count="1" />
+										<stack item="minecraft:snow" meta="0" count="1" />
+									</grid_two>
+									<p space="2" />
+									<p>Искусственный снег производится путем создания в Лабораторной Печи полимера Полиакрилата Натрия. Его можно использовать в котле с водой. Жидкость поглощается соединением, образующим снежную глыбу. Альтернативно, предмет можно бросить в воду, чтобы реакция произошла на месте. Снежные Блоки можно добывать как обычно.</p>
+									<p space="10" />
+									<link ref="simulants:simulants_page" color="#CC3333">&lt;- Губка</link>
+									<grid_two>
+										<stack item="rockhounding_chemistry:waterlock" meta="0" count="1" />
+										<stack item="minecraft:sponge" meta="0" count="1" />
+									</grid_two>
+									<p space="2" />
+									<p>Улучшенная Губка - это высококачественный губчатый имитатор, позволяющий очищать большое количество воды. Он работает так же, как ванильная губка, помещая его в воду и плавя его до высыхания во влажном состоянии.</p>
+								</page>
+							</chapter>
+
+
+				<chapter id="galleries">
+					<page id="gal_oven">
+						<link ref="tiertwo:lab_oven_page" color="#CC3333">&lt;- Вернуться к Лабораторной Печи</link>
+						<p space="5" />
+						<image src="rockhounding_chemistry:gbook/screens/oven" tw="180" th="170"/>
+					</page>
+					<page id="gal_precipitator">
+						<link ref="tiertwo:precipitation_page" color="#CC3333">&lt;- Вернуться к Камере хим Осаждения</link>
+						<p space="5" />
+						<image src="rockhounding_chemistry:gbook/screens/precipitator" tw="180" th="180"/>
+					</page>
+					<page id="gal_gasifier">
+						<link ref="tiertwo:gas_plant_page" color="#CC3333">&lt;- Вернуться к Завод Газификации</link>
+						<p space="5" />
+						<image src="rockhounding_chemistry:gbook/screens/gasifier" tw="170" th="254"/>
+					</page>
+					<page id="gal_purifier">
+						<link ref="tiertwo:gas_purifier_page" color="#CC3333">&lt;- Вернуться к Очиститель Газа</link>
+						<p space="5" />
+						<image src="rockhounding_chemistry:gbook/screens/purifier" tw="172" th="256"/>
+					</page>
+					<page id="gal_exchanger">
+						<link ref="tierone:exchanger_page" color="#CC3333">&lt;- Вернуться к Теплообменнику</link>
+						<p space="5" />
+						<image src="rockhounding_chemistry:gbook/screens/exchanger" tw="180" th="245"/>
+					</page>
+					<page id="gal_retention">
+						<link ref="tiertwo:retention_vat_page" color="#CC3333">&lt;- Вернуться к Танку Подавления</link>
+						<p space="5" />
+						<image src="rockhounding_chemistry:gbook/screens/retention_vat" tw="180" th="180"/>
+					</page>
+					<page id="gal_alloyer">
+						<link ref="tiertwo:alloyer_page" color="#CC3333">&lt;- Вернуться к Печи Сплавов</link>
+						<p space="5" />
+						<image src="rockhounding_chemistry:gbook/screens/alloyer" tw="180" th="181"/>
+					</page>
+					<page id="gal_leaching">
+						<link ref="tierthree:leaching_vat_page" color="#CC3333">&lt;- Вернуться к Выщелачивателю</link>
+						<p space="5" />
+						<image src="rockhounding_chemistry:gbook/screens/leaching_vat" tw="180" th="208"/>
+					</page>
+					<page id="gal_gan">
+						<link ref="tierthree:gan_page" color="#CC3333">&lt;- Вернуться к Криогенному дистилляционному аппарату</link>
+						<p space="5" />
+						<image src="rockhounding_chemistry:gbook/screens/gan_1" tw="126" th="125"/>
+						<p space="5" />
+						<image src="rockhounding_chemistry:gbook/screens/gan_2" tw="123" th="125"/>
+					</page>
+					<page id="gal_deposition">
+						<link ref="tierthree:deposition_page" color="#CC3333">&lt;- Вернуться к Камере хим осаждения</link>
+						<p space="5" />
+						<image src="rockhounding_chemistry:gbook/screens/deposition" tw="180" th="167"/>
+					</page>
+					<page id="gal_pulling">
+						<link ref="tierthree:pulling_page" color="#CC3333">&lt;- Вернуться к Кристаллическому вытягивающему Тиглю</link>
+						<p space="5" />
+						<image src="rockhounding_chemistry:gbook/screens/pulling" tw="180" th="201"/>
+					</page>
+					<page id="gal_reformer">
+						<link ref="tierfour:gas_reformer_page" color="#CC3333">&lt;- Вернуться к Реактору Хим Преобразования</link>
+						<p space="5" />
+						<image src="rockhounding_chemistry:gbook/screens/reformer" tw="170" th="266"/>
+					</page>
+					<page id="gal_extractor">
+						<link ref="tierfour:extractor_page" color="#CC3333">&lt;- Вернуться к Химическому Экстрактору</link>
+						<p space="5" />
+						<image src="rockhounding_chemistry:gbook/screens/extractor" tw="180" th="130"/>
+					</page>
+					<page id="gal_cstr">
+						<link ref="tiertwo:cstr_page" color="#CC3333">&lt;- Вернуться к Электрохимическому CSTR</link>
+						<p space="5" />
+						<image src="rockhounding_chemistry:gbook/screens/cstr" tw="180" th="183"/>
+					</page>
+				</chapter>
+
+				<stack-links>
+					<stack item="rockhounding_chemistry:machines_b" meta="9">Утилита: Страница Бака</stack>
+				</stack-links>
+
+				
+</book>

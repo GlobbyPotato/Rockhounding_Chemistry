@@ -8,7 +8,10 @@ public enum EnumCasting implements BaseEnum {
 	ARM,
 	CASING,
 	GEAR,
-	INGOT;
+	INGOT,
+	GAUZE,
+	COIN,
+	PLATE;
 
 	//---------CUSTOM----------------
 	public static int size(){

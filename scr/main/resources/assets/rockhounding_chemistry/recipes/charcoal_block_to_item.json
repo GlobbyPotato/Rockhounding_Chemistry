@@ -1,0 +1,14 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"group": "rockhounding_chemistry:miscs",
+	"ingredients":[
+		{
+			"item": "#CHARCOAL_BLOCK"
+		}
+	],
+	"result":{
+				"item": "minecraft:coal",
+				"data": 1,
+				"count": 9
+			}
+}

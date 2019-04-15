@@ -4,54 +4,66 @@ buildscript {
         maven { url = "http://files.minecraftforge.net/maven" }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
     }
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
-//Only edit below this line, the above code adds and enables the nessasary things for Forge to be setup.
+//Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
+
+group = "com.globbypotato.rockhounding_chemistry" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = "rockhounding_chemistry"
+version = "${version_mc}-${version_mod}"
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
-group= "com.globbypotato.rockhounding_chemistry"
-archivesBaseName = "rockhounding_chemistry"
-version = "${version_mc}-${version_mod}"
-
 minecraft {
-    version = "1.10.2-12.18.3.2316"
+    version = "1.12.2-14.23.5.2815"
     runDir = "run"
-    mappings = "snapshot_20161111"
+    mappings = "snapshot_20171003"
     makeObfSourceJar = false
 	replace '${version_mod}', project.version
 }
 
 repositories {
-    maven { // JEI
-        url "http://dvs1.progwml6.com/files/maven"
-    }
+	maven { // JEI
+		url "http://dvs1.progwml6.com/files/maven"
+	}
     maven { // CraftTweaker
         url "http://maven.blamejared.com"
     }
-    maven { // Waila
-		url "http://mobiusstrip.eu/maven" 
+    maven { // Hwyla
+		url "http://tehnut.info/maven" 
 	}
     maven { // TOP
         url "http://maven.tterrag.com"
     }
-
+    maven { // CoFH Maven
+        url "http://maven.covers1624.net"
+    }
+    maven { // Bookshelf
+        url "https://maven.mcmoddev.com"
+    }
+	maven { // Guidebook
+		url "http://dogforce-games.com/maven" 
+	}
 }
 
 dependencies {
     deobfCompile "mezz.jei:jei_${version_mc}:${version_jei}"
-    deobfCompile "MineTweaker3:MineTweaker3-MC1102-Main:${version_ct}"
-	deobfCompile "mcjty.theoneprobe:TheOneProbe:${version_top}"
-	deobfProvided "mcp.mobius.waila:Waila:${version_wa}_1.9.4"
-	compile files("lib/rockhounding_core-1.10.2-${version_core}.jar")
-
+//	deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-${version_ct}"
+	deobfCompile "cofh:RedstoneFlux:${version_rf}:deobf"
+	deobfCompile "mcjty.theoneprobe:TheOneProbe-1.12:1.12-${version_top}"
+    deobfCompile "mcp.mobius.waila:Hwyla:${version_wa}"
+//	deobfCompile "net.darkhax.bookshelf:Bookshelf-1.12.2:${version_bs}"
+//  deobfCompile "gigaherz.guidebook:Guidebook-${version_gb}"
+	compile files("lib/rockhounding_core-${version_mc}-${version_core}.jar")
+	compile files("lib/Guidebook-1.12.2-2.8.3.jar")
+	compile files("lib/CraftTweaker2-1.12-4.1.9.jar")
+	compile files("lib/Bookshelf-1.12.2-2.3.553.jar")
 }
 
-processResources
-{
+processResources {
     // this will ensure that this task is redone when the versions change.
     inputs.property "version", project.version
     inputs.property "mcversion", project.minecraft.version
@@ -64,7 +76,7 @@ processResources
         expand 'version':project.version, 'mcversion':project.minecraft.version
     }
         
-    // copy everything else, thats not the mcmod.info
+    // copy everything else except the mcmod.info
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
     }

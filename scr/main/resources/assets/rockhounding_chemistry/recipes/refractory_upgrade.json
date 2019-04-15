@@ -1,0 +1,21 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:utils",
+	"pattern": [
+		"RRR", 
+		"RCR", 
+		"RRR"
+	],
+	"key": {
+		"C":{
+				"item": "#IRON_CASING"
+			},
+		"R":{
+				"item": "#REFRACTORY_BRICK"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:misc_items",
+				"data": 35
+			}
+}

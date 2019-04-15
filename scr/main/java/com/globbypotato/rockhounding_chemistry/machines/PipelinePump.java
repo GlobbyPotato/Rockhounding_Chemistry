@@ -2,11 +2,12 @@ package com.globbypotato.rockhounding_chemistry.machines;
 
 import javax.annotation.Nullable;
 
-import com.globbypotato.rockhounding_chemistry.ModItems;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
-import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityPipelinePump;
-import com.globbypotato.rockhounding_chemistry.machines.tileentity.TileEntityPipelineValve;
-import com.globbypotato.rockhounding_chemistry.utils.ToolUtils;
+import com.globbypotato.rockhounding_chemistry.machines.tile.TEPipelinePump;
+import com.globbypotato.rockhounding_chemistry.machines.tile.TEPipelineValve;
+import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
+import com.globbypotato.rockhounding_core.machines.PipelineBase;
+import com.globbypotato.rockhounding_core.utils.CoreUtils;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -29,8 +30,8 @@ import net.minecraft.world.World;
 
 public class PipelinePump extends PipelineBase {
 
-	public PipelinePump(float hardness, float resistance, String name) {
-		super(hardness, resistance, name);
+	public PipelinePump(String name) {
+		super(Reference.MODID, name);
 		setCreativeTab(Reference.RockhoundingChemistry);
 	}
 
@@ -41,7 +42,7 @@ public class PipelinePump extends PipelineBase {
 
 	@Override
 	public TileEntity createTileEntity(World world, IBlockState state) {
-		return new TileEntityPipelinePump();
+		return new TEPipelinePump();
 	}
 
 	@Override
@@ -53,55 +54,50 @@ public class PipelinePump extends PipelineBase {
         		|| (block instanceof PipelineValve) && isSideEnabled(worldIn, sidePos, facing.getOpposite())) ? true : false;
     }
 
-	private boolean isSideEnabled(IBlockAccess worldIn, BlockPos pos, EnumFacing facing) {
-		TileEntityPipelineValve valve = (TileEntityPipelineValve)worldIn.getTileEntity(pos);
+	private static boolean isSideEnabled(IBlockAccess worldIn, BlockPos pos, EnumFacing facing) {
+		TEPipelineValve valve = (TEPipelineValve)worldIn.getTileEntity(pos);
 		return valve.sideStatus[facing.ordinal()];
 	}
 
 	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
-		TileEntityPipelinePump pump = (TileEntityPipelinePump)world.getTileEntity(pos);
+	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ){
+		TEPipelinePump pump = (TEPipelinePump)world.getTileEntity(pos);
 		if(player.isSneaking()){
 			if(!world.isRemote){
-				if(player.getHeldItemMainhand() == null){
+				if(player.getHeldItemMainhand().isEmpty()){ //turn on/off
 					pump.activation = !pump.activation;
 				}
 			}
-	        world.playSound(player, pos, SoundEvents.BLOCK_STONE_BUTTON_CLICK_ON, SoundCategory.BLOCKS, 0.3F, 0.6F);
-		}
-
-		if(pump.hasUpgrade()){
-			if(ToolUtils.hasWrench(player, hand)){
-				EntityItem upgrade = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), pipelineUpgrade());
-				upgrade.setPosition(pos.getX(), pos.getY() + 0.5D, pos.getZ());
-    			if(!world.isRemote) {
-    				world.spawnEntityInWorld(upgrade);
-					pump.upgrade = false;
-					pump.markDirtyClient();
-    			}
-                player.playSound(SoundEvents.BLOCK_STONE_BUTTON_CLICK_OFF, 0.4F, 2.0F);
-			}
 		}else{
-			if(player.getHeldItemMainhand() != null && player.getHeldItemMainhand().isItemEqual(pipelineUpgrade())){
-    			if(!world.isRemote) {
-					pump.upgrade = true;
-					pump.markDirtyClient();
-					if(!player.capabilities.isCreativeMode){
-						player.getHeldItemMainhand().stackSize--;
+			if(!world.isRemote){
+				if(pump.hasUpgrade()){ // remove upgrade
+					if(CoreUtils.hasWrench(player)){
+						pump.upgrade = false;
+						EntityItem upgrade = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), BaseRecipes.compressor);
+						world.spawnEntity(upgrade);
 					}
-    			}
-                player.playSound(SoundEvents.BLOCK_STONE_BUTTON_CLICK_ON, 0.4F, 2.0F);
+				}
+				if(!pump.hasUpgrade()){ //add upgrade
+					if(CoreUtils.hasTool(player, BaseRecipes.compressor)){
+						pump.upgrade = true;
+						pump.markDirtyClient();
+						if(!player.capabilities.isCreativeMode){
+							player.getHeldItemMainhand().shrink(1);
+						}
+					}
+				}
 			}
 		}
+        world.playSound(player, pos, SoundEvents.BLOCK_STONE_BUTTON_CLICK_ON, SoundCategory.BLOCKS, 0.3F, 0.6F);
 		return true;
 	}
 
 	@Override
 	public void onBlockClicked(World worldIn, BlockPos pos, EntityPlayer playerIn) {
 		TileEntity tile = worldIn.getTileEntity(pos);
-		if(tile != null && tile instanceof TileEntityPipelinePump){
-			TileEntityPipelinePump pump = (TileEntityPipelinePump)tile;
-			if(ToolUtils.hasWrench(playerIn, EnumHand.MAIN_HAND)){
+		if(tile != null && tile instanceof TEPipelinePump){
+			TEPipelinePump pump = (TEPipelinePump)tile;
+			if(CoreUtils.hasWrench(playerIn)){
 				if(!playerIn.isSneaking()){
 					if(!worldIn.isRemote){
 						pump.delay++;
@@ -117,34 +113,30 @@ public class PipelinePump extends PipelineBase {
 		}
 	}
 
-    private ItemStack pipelineUpgrade() {
-		return new ItemStack(ModItems.miscItems, 1, 65);
-	}
-
-	@Override
+    @Override
     public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, @Nullable ItemStack stack){
         player.addStat(StatList.getBlockStats(this));
         player.addExhaustion(0.025F);
         java.util.List<ItemStack> items = new java.util.ArrayList<ItemStack>();
         ItemStack itemstack = new ItemStack(Item.getItemFromBlock(this));
-        if(te != null && te instanceof TileEntityPipelinePump){
+        if(te != null && te instanceof TEPipelinePump){
   			addNbt(itemstack, te);
         }
-        if (itemstack != null){ items.add(itemstack); }
+        if (!itemstack.isEmpty()){ items.add(itemstack); }
         net.minecraftforge.event.ForgeEventFactory.fireBlockHarvesting(items, worldIn, pos, state, 0, 1.0f, true, player);
         for (ItemStack item : items){ spawnAsEntity(worldIn, pos, item); }
     }
 
-	private void addNbt(ItemStack itemstack, TileEntity tileentity) {
-		TileEntityPipelinePump tile = ((TileEntityPipelinePump)tileentity);
+	private static void addNbt(ItemStack itemstack, TileEntity tileentity) {
+		TEPipelinePump tile = ((TEPipelinePump)tileentity);
 		itemstack.setTagCompound(new NBTTagCompound());
 		itemstack.getTagCompound().setBoolean("Upgrade", tile.hasUpgrade());
 	}
 
     @Override
     public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack){
-        if(worldIn.getTileEntity(pos) != null && worldIn.getTileEntity(pos) instanceof TileEntityPipelinePump){
-        	TileEntityPipelinePump te = (TileEntityPipelinePump) worldIn.getTileEntity(pos);
+        if(worldIn.getTileEntity(pos) != null && worldIn.getTileEntity(pos) instanceof TEPipelinePump){
+        	TEPipelinePump te = (TEPipelinePump) worldIn.getTileEntity(pos);
 			if(stack.hasTagCompound() && te != null){
 				if(stack.getTagCompound().hasKey("Upgrade")){
 					boolean upg = stack.getTagCompound().getBoolean("Upgrade");
@@ -153,4 +145,5 @@ public class PipelinePump extends PipelineBase {
 			}
         }
     }
+
 }

@@ -1,0 +1,30 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:utils",
+	"pattern": [
+		"TGT", 
+		" P ", 
+		"cLc"
+	],
+	"key": {
+		"T":{
+				"item": "#IRON_COIL"
+			},
+		"L":{
+				"item": "#BASE_CHIP"
+			},
+		"P":{
+				"item": "#PISTON"
+			},
+		"c":{
+				"item": "#IRON_FOIL"
+			},
+		"G":{
+				"item": "#GLASS"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:misc_items",
+				"data": 9
+			}
+}

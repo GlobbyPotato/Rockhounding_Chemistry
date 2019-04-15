@@ -1,8 +1,0 @@
-{
-    "__comment": "Model generated using MrCrayfish's Model Creator (http://mrcrayfish.com/modelcreator/)",
-    "parent": "rockhounding_chemistry:block/base_mineral",
-    "textures": {
-        "particle": "rockhounding_chemistry:blocks/mineralOres_silicate",
-        "0": "rockhounding_chemistry:blocks/mineralOres_arsenate"
-    }
-}

@@ -1,0 +1,30 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:machines",
+	"pattern": [
+		"fSf",
+		"pLp",
+		"fPf"
+	],
+	"key": {
+		"S":{
+				"item": "#SCAFFOLD"
+			},
+		"f":{
+				"item": "#IRON_FOIL"
+			},
+		"P":{
+				"item": "#PISTON"
+			},
+		"p":{
+				"item": "#GLASS_PIPE"
+			},
+		"L":{
+				"item": "#BASE_CHIP"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:machines_b",
+				"data": 5
+			}
+}

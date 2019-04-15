@@ -1,220 +1,288 @@
 package com.globbypotato.rockhounding_chemistry.compat.jei;
 
 import com.globbypotato.rockhounding_chemistry.ModBlocks;
-import com.globbypotato.rockhounding_chemistry.ModItems;
-import com.globbypotato.rockhounding_chemistry.compat.jei.castingbench.CastingRecipeCategory;
-import com.globbypotato.rockhounding_chemistry.compat.jei.castingbench.CastingRecipeHandler;
-import com.globbypotato.rockhounding_chemistry.compat.jei.castingbench.CastingRecipeWrapper;
-import com.globbypotato.rockhounding_chemistry.compat.jei.chemicalextractor.ExtractorRecipeCategory;
-import com.globbypotato.rockhounding_chemistry.compat.jei.chemicalextractor.ExtractorRecipeHandler;
-import com.globbypotato.rockhounding_chemistry.compat.jei.chemicalextractor.ExtractorRecipeWrapper;
-import com.globbypotato.rockhounding_chemistry.compat.jei.distillationtower.DistillationRecipeCategory;
-import com.globbypotato.rockhounding_chemistry.compat.jei.distillationtower.DistillationRecipeHandler;
-import com.globbypotato.rockhounding_chemistry.compat.jei.distillationtower.DistillationRecipeWrapper;
-import com.globbypotato.rockhounding_chemistry.compat.jei.flametest.FlameRecipeCategory;
-import com.globbypotato.rockhounding_chemistry.compat.jei.flametest.FlameRecipeHandler;
-import com.globbypotato.rockhounding_chemistry.compat.jei.flametest.FlameRecipeWrapper;
-import com.globbypotato.rockhounding_chemistry.compat.jei.gan.GanRecipeCategory;
-import com.globbypotato.rockhounding_chemistry.compat.jei.gan.GanRecipeHandler;
-import com.globbypotato.rockhounding_chemistry.compat.jei.gan.GanRecipeWrapper;
-import com.globbypotato.rockhounding_chemistry.compat.jei.labblender.BlenderRecipeCategory;
-import com.globbypotato.rockhounding_chemistry.compat.jei.labblender.BlenderRecipeHandler;
-import com.globbypotato.rockhounding_chemistry.compat.jei.labblender.BlenderRecipeWrapper;
-import com.globbypotato.rockhounding_chemistry.compat.jei.laboven.LabOvenRecipeCategory;
-import com.globbypotato.rockhounding_chemistry.compat.jei.laboven.LabOvenRecipeHandler;
-import com.globbypotato.rockhounding_chemistry.compat.jei.laboven.LabOvenRecipeWrapper;
-import com.globbypotato.rockhounding_chemistry.compat.jei.metalalloyer.AlloyerRecipeCategory;
-import com.globbypotato.rockhounding_chemistry.compat.jei.metalalloyer.AlloyerRecipeHandler;
-import com.globbypotato.rockhounding_chemistry.compat.jei.metalalloyer.AlloyerRecipeWrapper;
-import com.globbypotato.rockhounding_chemistry.compat.jei.mineralanalyzer.AnalyzerRecipeCategory;
-import com.globbypotato.rockhounding_chemistry.compat.jei.mineralanalyzer.AnalyzerRecipeHandler;
-import com.globbypotato.rockhounding_chemistry.compat.jei.mineralanalyzer.AnalyzerRecipeWrapper;
-import com.globbypotato.rockhounding_chemistry.compat.jei.mineralsizer.SizerRecipeCategory;
-import com.globbypotato.rockhounding_chemistry.compat.jei.mineralsizer.SizerRecipeHandler;
-import com.globbypotato.rockhounding_chemistry.compat.jei.mineralsizer.SizerRecipeWrapper;
-import com.globbypotato.rockhounding_chemistry.compat.jei.petrographer.PetroRecipeCategory;
-import com.globbypotato.rockhounding_chemistry.compat.jei.petrographer.PetroRecipeHandler;
-import com.globbypotato.rockhounding_chemistry.compat.jei.petrographer.PetroRecipeWrapper;
-import com.globbypotato.rockhounding_chemistry.compat.jei.saltseasoning.SeasonerRecipeCategory;
-import com.globbypotato.rockhounding_chemistry.compat.jei.saltseasoning.SeasonerRecipeHandler;
-import com.globbypotato.rockhounding_chemistry.compat.jei.saltseasoning.SeasonerRecipeWrapper;
-import com.globbypotato.rockhounding_chemistry.compat.jei.vapordeposition.DepositionRecipeCategory;
-import com.globbypotato.rockhounding_chemistry.compat.jei.vapordeposition.DepositionRecipeHandler;
-import com.globbypotato.rockhounding_chemistry.compat.jei.vapordeposition.DepositionRecipeWrapper;
+import com.globbypotato.rockhounding_chemistry.compat.jei.air_compressor.AirCompressorCategory;
+import com.globbypotato.rockhounding_chemistry.compat.jei.air_compressor.AirCompressorWrapper;
+import com.globbypotato.rockhounding_chemistry.compat.jei.chemical_extractor.ChemicalExtractorCategory;
+import com.globbypotato.rockhounding_chemistry.compat.jei.chemical_extractor.ChemicalExtractorWrapper;
+import com.globbypotato.rockhounding_chemistry.compat.jei.deposition_chamber.DepositionChamberCategory;
+import com.globbypotato.rockhounding_chemistry.compat.jei.deposition_chamber.DepositionChamberWrapper;
+import com.globbypotato.rockhounding_chemistry.compat.jei.evaporation_tank.EvaporationTankCategory;
+import com.globbypotato.rockhounding_chemistry.compat.jei.evaporation_tank.EvaporationTankWrapper;
+import com.globbypotato.rockhounding_chemistry.compat.jei.gan_plant.GanPlantCategory;
+import com.globbypotato.rockhounding_chemistry.compat.jei.gan_plant.GanPlantWrapper;
+import com.globbypotato.rockhounding_chemistry.compat.jei.gas_condenser.GasCondenserCategory;
+import com.globbypotato.rockhounding_chemistry.compat.jei.gas_condenser.GasCondenserWrapper;
+import com.globbypotato.rockhounding_chemistry.compat.jei.gas_expander.GasExpanderCategory;
+import com.globbypotato.rockhounding_chemistry.compat.jei.gas_expander.GasExpanderWrapper;
+import com.globbypotato.rockhounding_chemistry.compat.jei.gas_purifier.GasPurifierCategory;
+import com.globbypotato.rockhounding_chemistry.compat.jei.gas_purifier.GasPurifierWrapper;
+import com.globbypotato.rockhounding_chemistry.compat.jei.gas_reformer.GasReformerCategory;
+import com.globbypotato.rockhounding_chemistry.compat.jei.gas_reformer.GasReformerWrapper;
+import com.globbypotato.rockhounding_chemistry.compat.jei.gasifier_plant.GasifierPlantCategory;
+import com.globbypotato.rockhounding_chemistry.compat.jei.gasifier_plant.GasifierPlantWrapper;
+import com.globbypotato.rockhounding_chemistry.compat.jei.heat_exchanger.HeatExchangerCategory;
+import com.globbypotato.rockhounding_chemistry.compat.jei.heat_exchanger.HeatExchangerWrapper;
+import com.globbypotato.rockhounding_chemistry.compat.jei.lab_blender.LabBlenderCategory;
+import com.globbypotato.rockhounding_chemistry.compat.jei.lab_blender.LabBlenderWrapper;
+import com.globbypotato.rockhounding_chemistry.compat.jei.lab_oven.LabOvenCategory;
+import com.globbypotato.rockhounding_chemistry.compat.jei.lab_oven.LabOvenWrapper;
+import com.globbypotato.rockhounding_chemistry.compat.jei.leaching_vat.LeachingVatCategory;
+import com.globbypotato.rockhounding_chemistry.compat.jei.leaching_vat.LeachingVatWrapper;
+import com.globbypotato.rockhounding_chemistry.compat.jei.metal_alloyer.MetalAlloyerCategory;
+import com.globbypotato.rockhounding_chemistry.compat.jei.metal_alloyer.MetalAlloyerWrapper;
+import com.globbypotato.rockhounding_chemistry.compat.jei.mineral_sizer.MineralSizerCategory;
+import com.globbypotato.rockhounding_chemistry.compat.jei.mineral_sizer.MineralSizerWrapper;
+import com.globbypotato.rockhounding_chemistry.compat.jei.pollutant_fluids.PollutantFluidCategory;
+import com.globbypotato.rockhounding_chemistry.compat.jei.pollutant_fluids.PollutantFluidWrapper;
+import com.globbypotato.rockhounding_chemistry.compat.jei.pollutant_gases.PollutantGasCategory;
+import com.globbypotato.rockhounding_chemistry.compat.jei.pollutant_gases.PollutantGasWrapper;
+import com.globbypotato.rockhounding_chemistry.compat.jei.precipitation_chamber.PrecipitationCategory;
+import com.globbypotato.rockhounding_chemistry.compat.jei.precipitation_chamber.PrecipitationWrapper;
+import com.globbypotato.rockhounding_chemistry.compat.jei.profiling_bench.ProfilingBenchCategory;
+import com.globbypotato.rockhounding_chemistry.compat.jei.profiling_bench.ProfilingBenchWrapper;
+import com.globbypotato.rockhounding_chemistry.compat.jei.pulling_crucible.PullingCrucibleCategory;
+import com.globbypotato.rockhounding_chemistry.compat.jei.pulling_crucible.PullingCrucibleWrapper;
+import com.globbypotato.rockhounding_chemistry.compat.jei.retention_vat.RetentionVatCategory;
+import com.globbypotato.rockhounding_chemistry.compat.jei.retention_vat.RetentionVatWrapper;
+import com.globbypotato.rockhounding_chemistry.compat.jei.seasoning_rack.SeasoningRackCategory;
+import com.globbypotato.rockhounding_chemistry.compat.jei.seasoning_rack.SeasoningRackWrapper;
+import com.globbypotato.rockhounding_chemistry.compat.jei.slurry_drum.SlurryDrumCategory;
+import com.globbypotato.rockhounding_chemistry.compat.jei.slurry_drum.SlurryDrumWrapper;
+import com.globbypotato.rockhounding_chemistry.compat.jei.slurry_pond.SlurryPondCategory;
+import com.globbypotato.rockhounding_chemistry.compat.jei.slurry_pond.SlurryPondWrapper;
+import com.globbypotato.rockhounding_chemistry.compat.jei.stirred_tank.StirredTankCategory;
+import com.globbypotato.rockhounding_chemistry.compat.jei.stirred_tank.StirredTankWrapper;
+import com.globbypotato.rockhounding_chemistry.compat.jei.toxic_mutation.ToxicMutationCategory;
+import com.globbypotato.rockhounding_chemistry.compat.jei.toxic_mutation.ToxicMutationWrapper;
+import com.globbypotato.rockhounding_chemistry.compat.jei.transposer.TransposerCategory;
+import com.globbypotato.rockhounding_chemistry.compat.jei.transposer.TransposerWrapper;
 import com.globbypotato.rockhounding_chemistry.enums.EnumCasting;
-import com.globbypotato.rockhounding_chemistry.enums.EnumElement;
-import com.globbypotato.rockhounding_chemistry.machines.gui.GuiCastingBench;
-import com.globbypotato.rockhounding_chemistry.machines.gui.GuiChemicalExtractor;
-import com.globbypotato.rockhounding_chemistry.machines.gui.GuiDepositionChamber;
-import com.globbypotato.rockhounding_chemistry.machines.gui.GuiLabBlender;
-import com.globbypotato.rockhounding_chemistry.machines.gui.GuiLabOven;
-import com.globbypotato.rockhounding_chemistry.machines.gui.GuiMetalAlloyer;
-import com.globbypotato.rockhounding_chemistry.machines.gui.GuiMineralAnalyzer;
-import com.globbypotato.rockhounding_chemistry.machines.gui.GuiMineralSizer;
-import com.globbypotato.rockhounding_chemistry.machines.gui.GuiPetrographerTable;
-import com.globbypotato.rockhounding_chemistry.machines.gui.GuiSaltSeasoner;
+import com.globbypotato.rockhounding_chemistry.fluids.ModFluids;
+import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UIAirCompressor;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UIDepositionChamberTop;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UIExtractorController;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UIGanController;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UIGasCondenser;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UIGasExpander;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UIGasPurifier;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UIGasifierCooler;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UIGasifierTank;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UIHeatExchangerBase;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UILabBlenderController;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UILabBlenderTank;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UILabOvenController;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UILeachingVatController;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UIMetalAlloyer;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UIMineralSizerCollector;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UIMineralSizerController;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UIMineralSizerTank;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UIPrecipitationController;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UIPullingCrucibleBase;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UIPullingCrucibleTop;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UIReformerController;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UIReformerReactor;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UIRetentionVat;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UISeasoningRack;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UISlurryDrum;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UISlurryPond;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UIStirredTankTop;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UITransposer;
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 
-import mezz.jei.api.BlankModPlugin;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.IJeiHelpers;
+import mezz.jei.api.IModPlugin;
 import mezz.jei.api.IModRegistry;
 import mezz.jei.api.JEIPlugin;
 import mezz.jei.api.ingredients.IIngredientBlacklist;
+import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 @JEIPlugin
-public class RockhoundingPlugin extends BlankModPlugin{
+@SideOnly(Side.CLIENT)
+public class RockhoundingPlugin implements IModPlugin {
 
 	public static IJeiHelpers jeiHelpers;
 
 	@Override
-	public void register(IModRegistry registry) {
-
+	public void registerCategories(IRecipeCategoryRegistration registry) {
 		jeiHelpers = registry.getJeiHelpers();
 		IGuiHelper guiHelper = jeiHelpers.getGuiHelper();
 
-		registry.addRecipeCategories(
-				new SizerRecipeCategory(guiHelper),
-				new AnalyzerRecipeCategory(guiHelper),
-				new ExtractorRecipeCategory(guiHelper),
-				new LabOvenRecipeCategory(guiHelper),
-				new SeasonerRecipeCategory(guiHelper),
-				new AlloyerRecipeCategory(guiHelper),
-				new DepositionRecipeCategory(guiHelper),
-				new DistillationRecipeCategory(guiHelper),
-				new PetroRecipeCategory(guiHelper),
-				new FlameRecipeCategory(guiHelper),
-				new CastingRecipeCategory(guiHelper),
-				new BlenderRecipeCategory(guiHelper),
-				new GanRecipeCategory(guiHelper));
+		registry.addRecipeCategories(	
+				new MineralSizerCategory(guiHelper, RHRecipeUID.SIZER),
+				new SlurryPondCategory(guiHelper, RHRecipeUID.POND),
+				new LabOvenCategory(guiHelper, RHRecipeUID.OVEN),
+				new LabBlenderCategory(guiHelper, RHRecipeUID.BLENDER),
+				new GasifierPlantCategory(guiHelper, RHRecipeUID.GASIFIER),
+				new AirCompressorCategory(guiHelper, RHRecipeUID.COMPRESSOR),
+				new GasPurifierCategory(guiHelper, RHRecipeUID.PURIFIER),
+				new SeasoningRackCategory(guiHelper, RHRecipeUID.SEASONING),
+				new HeatExchangerCategory(guiHelper, RHRecipeUID.EXCHANGER),
+				new GasCondenserCategory(guiHelper, RHRecipeUID.CONDENSER),
+				new GasExpanderCategory(guiHelper, RHRecipeUID.EXPANDER),
+				new ProfilingBenchCategory(guiHelper, RHRecipeUID.PROFILER),
+				new LeachingVatCategory(guiHelper, RHRecipeUID.LEACHING),
+				new RetentionVatCategory(guiHelper, RHRecipeUID.RETENTION),
+				new GanPlantCategory(guiHelper, RHRecipeUID.SEPARATION),
+				new ChemicalExtractorCategory(guiHelper, RHRecipeUID.EXTRACTION),
+				new GasReformerCategory(guiHelper, RHRecipeUID.REFORMING),
+				new MetalAlloyerCategory(guiHelper, RHRecipeUID.ALLOYER),
+				new DepositionChamberCategory(guiHelper, RHRecipeUID.DEPOSITION),
+				new PullingCrucibleCategory(guiHelper, RHRecipeUID.PULLING),
+				new TransposerCategory(guiHelper, RHRecipeUID.TRANSPOSER),
+				new ToxicMutationCategory(guiHelper, RHRecipeUID.MUTATION),
+				new PollutantFluidCategory(guiHelper, RHRecipeUID.POLLUTANT_FLUIDS),
+				new PollutantGasCategory(guiHelper, RHRecipeUID.POLLUTANT_GASES),
+				new SlurryDrumCategory(guiHelper, RHRecipeUID.SLURRY_DRUM),
+				new StirredTankCategory(guiHelper, RHRecipeUID.STIRRED_TANK),
+				new EvaporationTankCategory(guiHelper, RHRecipeUID.EVAPORATION_TANK),
+				new PrecipitationCategory(guiHelper, RHRecipeUID.PRECIPITATION)
+		);
+	}
 
-		registry.addRecipeHandlers(
-				new SizerRecipeHandler(),
-				new AnalyzerRecipeHandler(),
-				new ExtractorRecipeHandler(),
-				new LabOvenRecipeHandler(),
-				new SeasonerRecipeHandler(),
-				new AlloyerRecipeHandler(),
-				new DepositionRecipeHandler(),
-				new DistillationRecipeHandler(),
-				new PetroRecipeHandler(),
-				new FlameRecipeHandler(),
-				new CastingRecipeHandler(),
-				new BlenderRecipeHandler(),
-				new GanRecipeHandler());
+	@Override
+	public void register(IModRegistry registry) {
+		jeiHelpers = registry.getJeiHelpers();
+		int rX = 156; int rY = 4; int rW = 16; int rH = 14; 
 
-		registry.addRecipes(SizerRecipeWrapper.getRecipes());
-		registry.addRecipes(AnalyzerRecipeWrapper.getRecipes());
-		registry.addRecipes(ExtractorRecipeWrapper.getRecipes());
-		registry.addRecipes(LabOvenRecipeWrapper.getRecipes());
-		registry.addRecipes(SeasonerRecipeWrapper.getRecipes());
-		registry.addRecipes(AlloyerRecipeWrapper.getRecipes());
-		registry.addRecipes(DepositionRecipeWrapper.getRecipes());
-		registry.addRecipes(DistillationRecipeWrapper.getRecipes());
-		registry.addRecipes(PetroRecipeWrapper.getRecipes());
-		registry.addRecipes(FlameRecipeWrapper.getRecipes());
-		registry.addRecipes(CastingRecipeWrapper.getRecipes());
-		registry.addRecipes(BlenderRecipeWrapper.getRecipes());
-		registry.addRecipes(GanRecipeWrapper.getRecipes());
+		registry.addRecipes(MineralSizerWrapper.getRecipes(), RHRecipeUID.SIZER);
+		registry.addRecipes(SlurryPondWrapper.getRecipes(), RHRecipeUID.POND);
+		registry.addRecipes(LabOvenWrapper.getRecipes(), RHRecipeUID.OVEN);
+		registry.addRecipes(LabBlenderWrapper.getRecipes(), RHRecipeUID.BLENDER);
+		registry.addRecipes(GasifierPlantWrapper.getRecipes(), RHRecipeUID.GASIFIER);
+		registry.addRecipes(GasPurifierWrapper.getRecipes(), RHRecipeUID.PURIFIER);
+		registry.addRecipes(AirCompressorWrapper.getRecipes(), RHRecipeUID.COMPRESSOR);
+		registry.addRecipes(SeasoningRackWrapper.getRecipes(), RHRecipeUID.SEASONING);
+		registry.addRecipes(HeatExchangerWrapper.getRecipes(), RHRecipeUID.EXCHANGER);
+		registry.addRecipes(GasCondenserWrapper.getRecipes(), RHRecipeUID.CONDENSER);
+		registry.addRecipes(ProfilingBenchWrapper.getRecipes(), RHRecipeUID.PROFILER);
+		registry.addRecipes(LeachingVatWrapper.getRecipes(), RHRecipeUID.LEACHING);
+		registry.addRecipes(RetentionVatWrapper.getRecipes(), RHRecipeUID.RETENTION);
+		registry.addRecipes(GanPlantWrapper.getRecipes(), RHRecipeUID.SEPARATION);
+		registry.addRecipes(ChemicalExtractorWrapper.getRecipes(), RHRecipeUID.EXTRACTION);
+		registry.addRecipes(GasReformerWrapper.getRecipes(), RHRecipeUID.REFORMING);
+		registry.addRecipes(GasExpanderWrapper.getRecipes(), RHRecipeUID.EXPANDER);
+		registry.addRecipes(MetalAlloyerWrapper.getRecipes(), RHRecipeUID.ALLOYER);
+		registry.addRecipes(DepositionChamberWrapper.getRecipes(), RHRecipeUID.DEPOSITION);
+		registry.addRecipes(PullingCrucibleWrapper.getRecipes(), RHRecipeUID.PULLING);
+		registry.addRecipes(TransposerWrapper.getRecipes(), RHRecipeUID.TRANSPOSER);
+		registry.addRecipes(ToxicMutationWrapper.getRecipes(), RHRecipeUID.MUTATION);
+		registry.addRecipes(PollutantFluidWrapper.getRecipes(), RHRecipeUID.POLLUTANT_FLUIDS);
+		registry.addRecipes(PollutantGasWrapper.getRecipes(), RHRecipeUID.POLLUTANT_GASES);
+		registry.addRecipes(SlurryDrumWrapper.getRecipes(), RHRecipeUID.SLURRY_DRUM);
+		registry.addRecipes(StirredTankWrapper.getRecipes(), RHRecipeUID.STIRRED_TANK);
+		registry.addRecipes(EvaporationTankWrapper.getRecipes(), RHRecipeUID.EVAPORATION_TANK);
+		registry.addRecipes(PrecipitationWrapper.getRecipes(), RHRecipeUID.PRECIPITATION);
 
-		registry.addRecipeClickArea(GuiMineralSizer.class, 52, 39, 31, 31, RHRecipeUID.SIZER);
-		registry.addRecipeClickArea(GuiMineralAnalyzer.class, 64, 29, 22, 22, RHRecipeUID.ANALYZER);
-		registry.addRecipeClickArea(GuiLabOven.class, 76, 47, 15, 15, RHRecipeUID.LAB_OVEN);
-		registry.addRecipeClickArea(GuiSaltSeasoner.class, 72, 23, 32, 52, RHRecipeUID.SALT_SEASONER);
-		registry.addRecipeClickArea(GuiMetalAlloyer.class, 41, 53, 128, 13, RHRecipeUID.ALLOYER);
-		registry.addRecipeClickArea(GuiMetalAlloyer.class, 40, 66, 18, 13, RHRecipeUID.ALLOYER);
-		registry.addRecipeClickArea(GuiChemicalExtractor.class, 49, 47, 14, 32, RHRecipeUID.EXTRACTOR);
-		registry.addRecipeClickArea(GuiDepositionChamber.class, 57, 56, 62, 14, RHRecipeUID.VAPOR_DEPOSITION);
-		registry.addRecipeClickArea(GuiPetrographerTable.class, 68, 45, 40, 27, RHRecipeUID.PETROGRAPHER);
-		registry.addRecipeClickArea(GuiCastingBench.class, 72, 33, 32, 14, RHRecipeUID.CASTING);
-		registry.addRecipeClickArea(GuiLabBlender.class, 41, 23, 47, 31, RHRecipeUID.BLENDER);
+		registry.addRecipeClickArea(UIMineralSizerController.class, rX, rY, rW, rH, RHRecipeUID.SIZER);
+		registry.addRecipeClickArea(UIMineralSizerTank.class, rX, rY, rW, rH, RHRecipeUID.SIZER);
+		registry.addRecipeClickArea(UIMineralSizerCollector.class, rX, rY, rW, rH, RHRecipeUID.SIZER);
+		registry.addRecipeClickArea(UISlurryPond.class, rX, rY, rW, rH, RHRecipeUID.POND);
+		registry.addRecipeClickArea(UILabOvenController.class, rX, rY, rW, rH, RHRecipeUID.OVEN);
+		registry.addRecipeClickArea(UILabBlenderController.class, rX, rY, rW, rH, RHRecipeUID.BLENDER);
+		registry.addRecipeClickArea(UILabBlenderTank.class, rX, rY, rW, rH, RHRecipeUID.BLENDER);
+		registry.addRecipeClickArea(UIGasifierCooler.class, rX, rY, rW, rH, RHRecipeUID.GASIFIER);
+		registry.addRecipeClickArea(UIGasifierTank.class, rX, rY, rW, rH, RHRecipeUID.GASIFIER);
+		registry.addRecipeClickArea(UIGasPurifier.class, rX, rY, rW, rH, RHRecipeUID.PURIFIER);
+		registry.addRecipeClickArea(UIAirCompressor.class, rX, rY, rW, rH, RHRecipeUID.COMPRESSOR);
+		registry.addRecipeClickArea(UISeasoningRack.class, rX, rY, rW, rH, RHRecipeUID.SEASONING);
+		registry.addRecipeClickArea(UIHeatExchangerBase.class, rX, rY, rW, rH, RHRecipeUID.EXCHANGER);
+		registry.addRecipeClickArea(UIGasCondenser.class, rX, rY, rW, rH, RHRecipeUID.CONDENSER);
+		registry.addRecipeClickArea(UILeachingVatController.class, rX, rY, rW, rH, RHRecipeUID.LEACHING);
+		registry.addRecipeClickArea(UIRetentionVat.class, rX, rY, rW, rH, RHRecipeUID.RETENTION);
+		registry.addRecipeClickArea(UIGanController.class, rX, rY, rW, rH, RHRecipeUID.SEPARATION);
+		registry.addRecipeClickArea(UIExtractorController.class, rX, rY, rW, rH, RHRecipeUID.EXTRACTION);
+		registry.addRecipeClickArea(UIReformerController.class, rX, rY, rW, rH, RHRecipeUID.REFORMING);
+		registry.addRecipeClickArea(UIReformerReactor.class, rX, rY, rW, rH, RHRecipeUID.REFORMING);
+		registry.addRecipeClickArea(UIGasExpander.class, rX, rY, rW, rH, RHRecipeUID.EXPANDER);
+		registry.addRecipeClickArea(UIMetalAlloyer.class, rX, rY, rW, rH, RHRecipeUID.ALLOYER);
+		registry.addRecipeClickArea(UIDepositionChamberTop.class, rX, rY, rW, rH, RHRecipeUID.DEPOSITION);
+		registry.addRecipeClickArea(UIPullingCrucibleBase.class, rX, rY, rW, rH, RHRecipeUID.PULLING);
+		registry.addRecipeClickArea(UIPullingCrucibleTop.class, rX, rY, rW, rH, RHRecipeUID.PULLING);
+		registry.addRecipeClickArea(UITransposer.class, rX, rY, rW, rH, RHRecipeUID.TRANSPOSER);
+		registry.addRecipeClickArea(UISlurryDrum.class, rX, rY, rW, rH, RHRecipeUID.SLURRY_DRUM);
+		registry.addRecipeClickArea(UIStirredTankTop.class, rX, rY, rW, rH, RHRecipeUID.STIRRED_TANK);
+		registry.addRecipeClickArea(UIPrecipitationController.class, rX, rY, rW, rH, RHRecipeUID.PRECIPITATION);
 
-		registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.mineralSizer), RHRecipeUID.SIZER);
-		registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.mineralAnalyzer), RHRecipeUID.ANALYZER);
-		registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.chemicalExtractor), RHRecipeUID.EXTRACTOR);
-		registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.labOven), RHRecipeUID.LAB_OVEN);
-		registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.saltSeasoner), RHRecipeUID.SALT_SEASONER);
-		registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.metalAlloyer), RHRecipeUID.ALLOYER);
-		registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.depositionChamber), RHRecipeUID.VAPOR_DEPOSITION);
-		registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.ganController), RHRecipeUID.DISTILLATION_TOWER);
-		registry.addRecipeCategoryCraftingItem(new ItemStack(ModItems.petrographer), RHRecipeUID.PETROGRAPHER);
-		registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.petrographerTable), RHRecipeUID.PETROGRAPHER);
-		registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.fireBlock), RHRecipeUID.FLAME_TEST);
-		registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.castingBench), RHRecipeUID.CASTING);
-		registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.labBlender), RHRecipeUID.BLENDER);
-		registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.ganController), RHRecipeUID.GAN);
-		registry.addRecipeCategoryCraftingItem(new ItemStack(ModBlocks.ganBlocks, 1, OreDictionary.WILDCARD_VALUE), RHRecipeUID.GAN);
+		registry.addRecipeCatalyst(BaseRecipes.sizer_controller, RHRecipeUID.SIZER);
+		registry.addRecipeCatalyst(BaseRecipes.slurry_pond, RHRecipeUID.POND);
+		registry.addRecipeCatalyst(BaseRecipes.oven_controller, RHRecipeUID.OVEN);
+		registry.addRecipeCatalyst(BaseRecipes.blender_controller, RHRecipeUID.BLENDER);
+		registry.addRecipeCatalyst(BaseRecipes.gasifier_cooler, RHRecipeUID.GASIFIER);
+		registry.addRecipeCatalyst(BaseRecipes.gas_purifier, RHRecipeUID.PURIFIER);
+		registry.addRecipeCatalyst(BaseRecipes.air_compressor, RHRecipeUID.COMPRESSOR);
+		registry.addRecipeCatalyst(BaseRecipes.seasoning_rack, RHRecipeUID.SEASONING);
+		registry.addRecipeCatalyst(BaseRecipes.exchanger_base, RHRecipeUID.EXCHANGER);
+		registry.addRecipeCatalyst(BaseRecipes.gas_condenser, RHRecipeUID.CONDENSER);
+		registry.addRecipeCatalyst(BaseRecipes.profiling_bench, RHRecipeUID.PROFILER);
+		registry.addRecipeCatalyst(BaseRecipes.leaching_vat, RHRecipeUID.LEACHING);
+		registry.addRecipeCatalyst(BaseRecipes.retention_vat, RHRecipeUID.RETENTION);
+		registry.addRecipeCatalyst(BaseRecipes.gan_controller, RHRecipeUID.SEPARATION);
+		registry.addRecipeCatalyst(BaseRecipes.extractor_controller, RHRecipeUID.EXTRACTION);
+		registry.addRecipeCatalyst(BaseRecipes.reformer_controller, RHRecipeUID.REFORMING);
+		registry.addRecipeCatalyst(BaseRecipes.gas_expander, RHRecipeUID.EXPANDER);
+		registry.addRecipeCatalyst(BaseRecipes.metal_alloyer, RHRecipeUID.ALLOYER);
+		registry.addRecipeCatalyst(BaseRecipes.deposition_controller, RHRecipeUID.DEPOSITION);
+		registry.addRecipeCatalyst(BaseRecipes.pulling_crucible_base, RHRecipeUID.PULLING);
+		registry.addRecipeCatalyst(BaseRecipes.transposer, RHRecipeUID.TRANSPOSER);
+		registry.addRecipeCatalyst(BaseRecipes.chemical_waste, RHRecipeUID.MUTATION);
+		registry.addRecipeCatalyst(BaseRecipes.containment_tank, RHRecipeUID.POLLUTANT_FLUIDS);
+		registry.addRecipeCatalyst(BaseRecipes.pressure_vessel, RHRecipeUID.POLLUTANT_GASES);
+		registry.addRecipeCatalyst(BaseRecipes.slurry_drum, RHRecipeUID.SLURRY_DRUM);
+		registry.addRecipeCatalyst(BaseRecipes.stirred_tank_base, RHRecipeUID.STIRRED_TANK);
+		registry.addRecipeCatalyst(BaseRecipes.evaporation_tank, RHRecipeUID.EVAPORATION_TANK);
+		registry.addRecipeCatalyst(BaseRecipes.precipitation_chamber, RHRecipeUID.PRECIPITATION);
 
-		for(int i=0;i<EnumElement.size();i++){
-			registry.addDescription(BaseRecipes.elements(1, i), "Dusts are produced inside the Chemical Extractor by processing shards. All the elements composing a shard will be collected and when a cabinet bar will fill up, a dust will be produced. To operate, the machine needs two conumables to be placed in their related slots: a Test Tube and a Graduated Cylinder.");
-		}
-		registry.addDescription(new ItemStack(ModBlocks.saltMaker), 
-				"The Evaporation tank allows to obtain raw salt by letting evaporate a certain quantity of water.\n"
-				+"It consists in filling the tank with a bucket of water and waiting it to dry out through the various phases. Evaporation will take some time depending on the biome type. In case of rain, any content of the tank will melt back into water. The final product of the tabk is though a raw salt that needs to be cleaned to be used.\n"
-				+"Raw salt can be harvested from the tank manually by right clicking the top if the tank with a shovel.\n"
-				+"The entire process can be automatized by piping water into the tank from any side, excluding the top. Then, placing next to the tank a Seasoning Rack, it will extract the raw salt smelting it into salt.");
-		registry.addDescription(BaseRecipes.saltRaw, "This is the raw for of the salt as it is produced by the evaporation tank. It must be placed inside the Seasoning rack to be dried or let the block acquire it itself as per the salt automation process.");
-		String crawlerText = "The Mine Crawler is a mining device that can automatically mine paths up to a 3x2 grid with additional features. It is an automatic machine, hence no power is required and can be created inside the Mine Crawler Assembly Table out of the various parts composing it. It uses the mod wrench to change the mining direction and to be quickly removed from the ground.\n"
-				+ "Inside the assembly table is possible to define the amount of mined blocks by setting a tier. The tier depends on the placements of the mining heads on the grid.\n"
-				+ "This is the list of tiers.\n"
-				+ "The 'X' represents a mining head on the grid:\n" 		
-				+ "T 1 - T 2  - T 3  - T 4\n"
-				+ "OOO - OXO - OOO - XXX\n"
-				+ "OXO - OXO - XXX - XXX\n";
-		registry.addDescription(new ItemStack(ModBlocks.mineCrawler), crawlerText);
-		registry.addDescription(new ItemStack(ModBlocks.crawlerAssembler), crawlerText);
-		registry.addDescription(new ItemStack(ModBlocks.saltSeasoner), "This device allows to acquire and turn the raw salt pruduced by the Evaporation Tank into the final salt used by recipes. It can handle up to four tanks placed on its sides. It can be also used as generic item processor.");
-		registry.addDescription(new ItemStack(ModItems.petrographer), "This tools allows to improve the mineral mining by spotting the desired mineral category and specimen out of the undefined mineral. It has a leveling system which will increase its discovery ability. To set the tool it requires the Petrographer table where to put the items to learn. It is also required to enchant the tool as soon as possible with Fortune to make it work efficiently. When enchanted, the tool has also a chance to spot undefined minerals while mining stone.");
-		registry.addDescription(new ItemStack(ModBlocks.mineralAnalyzer), "This device allows to clean and expose shards of minerals from the gangues containing them. To operate it requires three acids (sulfuric acid, hydrochloric acid and hydrofluoric acid) and a Slurry Agitator to keep the processed slurry suspended in the solvent. Since a gangue may contain many specimen, it is possible to restrict the filter and capture only the specimens having a specific range of density. This will require a variable amount of solvents to perform the process.");
-		registry.addDescription(new ItemStack(ModBlocks.chemicalExtractor), "This device allows to produce dusts for the elements listed in the cabinet. It takes three Fluids (phosphoric acid, nitric acid and sodium cyanyde) and two consumables (Test tube and Graduated Cylinder) to operate. When processing a shard, the percentages of each element composing the sample, will be stored in the cabinet. As the cabinet bar will fill, a regular dust will be produced.");
-		registry.addDescription(new ItemStack(ModBlocks.mineralSizer), "This device allows to crack the Uninspected Mineral to let the bearing gangues be exposed and identified. Different classes of mineral may require an heavier treatment due to the size or the rarity of their occurrence. Each class of mineral is then identified by a level of comminution, determining how fine the crushed grain will be. A selector in the gui and JEI tooltips will provide several informations about the required settings. Heavier passages will require more fuel and will consume the gear faster. The sizer also allows to perform other generic crushing recipes related to the mod. In this cases the comminution is nor relievant. It is strongly suggested to apply an hopper or an extraction system to the device, freeing the slots for a continous working.");
-		registry.addDescription(BaseRecipes.polymer, "Sodium Polyacrylate is a polymer used to produce fake snow. Used on a filled cauldron or tossed in water it will absarb the water in the tile turning it into a snow block.");
-		registry.addDescription(new ItemStack(ModItems.splashSmoke), "Throwing it in the world will create a small dense screen smoke, slowly vanishing.");
-		registry.addDescription(new ItemStack(ModBlocks.electroLaser), "The electrolaser is a system allowing to charge the laser beam emitted by a Redstone Laser emitter and amplify it. At this stage it is used as weapon, as it deals damage on any entity crossing the beam. The system can be modular with a cascade of amplifiers (up to 5) to increase the beam power hence the damage (up to 30HP/tick). The system is powered by RF and requires nitrogen to be ionized by the ray being shot. Each element consumes 20RF/tick of energy and 10mB/tick of liquid nitrogen, so it's necessary to have an energy supplier able to pull out more than required to make sure the storage is being filled and let the system work steadly. This is a scheme as seen from top of an electrolaser system:\n"
-				+ "\n"
-				+ "\n"
-				+ "rR----SAAAAAE-----\n"
-				+ "\n"
-				+ "r = repeater\n"
-				+ "R = Redstone Laser Emitter\n"
-				+ "S = Laser Stabilizer\n"
-				+ "A = Laser Amplifier\n"
-				+ "E = Electrolaser\n"
-				+ "- = The laser beams\n"
-				+ "\n"
-				+ "All the elements must face the same direction. The Stabilizer is not powered, while in each Amplifier added in the row and in the Electrolaser it must be supplied RF. To the Electrolaser must be also connected a tank with Liquid nitrogen. A gui will give informations about the resources being supplied and about the current state of the devices.");
-		registry.addDescription(new ItemStack(ModBlocks.ganController), "The Cryogenic Distillation Plant is a multiblock structure that allows to extract elements by cooling down and processing air. It is composed by various parts, some of which have a gui to show what their work is about. The main block is the GAN Controller which is delegated to control the entire system and acquire the RF used to keep the structure working. The Pressure Vessel is the component acquiring and compressing the air. The Heat Exchanger cools down the air to be processed by using refrigerant liquids. The Nitrogen Tank is the final container where the produced nitrogen will be stored. A JAI tab will show how to place the various blocks.\n"
-				+ "The Heat Exchanger accepts any liquid having a Temperature not higher than 300K and allows to reduce the energy required for the air processing in the Compression phase. The temperature of the liquid will determine the amount of RF required to cool down the air.\n"
-				+ "The Structure has two tiers, one allowing to build it straight away with basic materials, another to reinforce it with stronger materials. The Iron Tier acquires 1 unit of air per tick and produces 10mB of liquid nitrogen per tick. The Reinforced Tier allows to increase ten times these values.\n"
-				+ "The system can work in two separated phases, selected by a switch in the controller. The first phase consists in acquiring and compressing the air, the second phase consists in producing the liquid nitrogen from the stored air. It is also available a general switch to turn on/off the structure and a Sanity Check telling if the system is correctly assembled.\n"
-				+ "An addituinal function allows to perform a continous production alternating both phases. This function requires of course more energy.\n"
-				+ "The liquid nitrogen can be extracted by connecting any fluid transport system to the Nitrogen tank. The system consumes 50RF/tick when at Iron Tier and 20RF/tick when at Reinforced Tier");
-		registry.addDescription(new ItemStack(ModBlocks.castingBench), "This is an automatic machine used to trim some of the metal furnitures used by the mod. The purpose of this machine is to get rid of many little crafting recipes that could be redundant or possibly conflicting with others. It has different types of cuts and can be automated with pipes or manually interacted, no gui is available. Punching the machine with bare hand, it will scroll through the various cuts and the selected one will be indicated by a label in front of it. Using a valid recipe ingredient on it, will place the item inside the machine to start operating. Right-clicking again the machine will take out the ingredient or the processed output.");
-		String piplineText = "The pipeline allows to transfer fluids between fluid handlers. It is composed of 3 parts, a pump to extract the fluid, a valve to deliver the fluid and ducts for connections. When placed, pump and valve are disabled by default. To enable/disable them, they need to be right-clicked with bare hands while sneaking. The valve is provided of a gui in which is possible to disable each ejecting side or filter it to a specific fluid. The pump comes in two tiers: the normal tier allows to transfer 1 bucket at time, while the advanced tier allows to transfer 100 buckets at time. The upgrade is given by a crafted item applied by righr-clicking the pump while holding it in hand. Longer pipline may require a slightly longer time to deliver. For a matter of balance, both pump and valve are at least required to form a pipline. A valve can be directly connected to a pump for the shorted setup possible. Using the mod wrench on the duct is possible to interrupt the path: a red node will indicate the line is barred. So far the fluids are delivered by the Valve routing between the available directions D-U-N-S-W-E. Using the mod wrench on the duct it's possible to block/unblock it, interrupring the path. The pump has also a timing that allows to ease its ticking. It slows down the transfering depending also on on the lenght of the path. The delay can be set by hitting the pump with the mod wrench (sneak while hitting to decrease the time).";
-		registry.addDescription(new ItemStack(ModBlocks.pipelinePump), piplineText);
-		registry.addDescription(new ItemStack(ModBlocks.pipelineDuct), piplineText);
-		registry.addDescription(new ItemStack(ModBlocks.pipelineValve), piplineText);
-		registry.addDescription(BaseRecipes.pipelineUpgrade, piplineText);
-
-
+		String salt_text = "Raw salt is an intermediate stage of the salt making. It is produced by the Evaporation Tank as result of water evaporation or desublimation and is refined in the Seasoning Rack into the generic refined salt used for recipes. In case of desublimation, since less water is required, a poorer variant will be produced, returning less refined salt.";
+		registry.addIngredientInfo(BaseRecipes.raw_salt_block, ItemStack.class, salt_text);
+		registry.addIngredientInfo(BaseRecipes.poor_salt_block, ItemStack.class, salt_text);
 
 		IIngredientBlacklist itemBlacklist = registry.getJeiHelpers().getIngredientBlacklist();
-		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.laserBeam));
-		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.laserRay));
-		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.smokeBlock));
-		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.depositionChamberTop));
-		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModItems.speedItems,1,0));
-		itemBlacklist.addIngredientToBlacklist(BaseRecipes.miscs(1,53));
-		itemBlacklist.addIngredientToBlacklist(BaseRecipes.miscs(1,54));
-		for(int i=0;i<EnumCasting.size();i++){
-			itemBlacklist.addIngredientToBlacklist(BaseRecipes.patterns(1,i));
-		}
-		itemBlacklist.addIngredientToBlacklist(BaseRecipes.gan(12));
-		itemBlacklist.addIngredientToBlacklist(BaseRecipes.gan(13));
-		itemBlacklist.addIngredientToBlacklist(BaseRecipes.gan(14));
-		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.pipelineHalt));
+		itemBlacklist.addIngredientToBlacklist(BaseRecipes.profiler_piston);
+		itemBlacklist.addIngredientToBlacklist(BaseRecipes.cyclone_top);
+		itemBlacklist.addIngredientToBlacklist(BaseRecipes.exchanger_top);
+		itemBlacklist.addIngredientToBlacklist(BaseRecipes.expander_top);
+		itemBlacklist.addIngredientToBlacklist(BaseRecipes.blender_tank);
+		itemBlacklist.addIngredientToBlacklist(BaseRecipes.oven_controller);
+		itemBlacklist.addIngredientToBlacklist(BaseRecipes.cabinet_top);
+		itemBlacklist.addIngredientToBlacklist(BaseRecipes.reformer_reactor);
+		itemBlacklist.addIngredientToBlacklist(BaseRecipes.alloyer_tank);
+		itemBlacklist.addIngredientToBlacklist(BaseRecipes.deposition_chamber);
+		itemBlacklist.addIngredientToBlacklist(BaseRecipes.gas_holder_top);
+		itemBlacklist.addIngredientToBlacklist(BaseRecipes.gasifier_burner);
+		itemBlacklist.addIngredientToBlacklist(BaseRecipes.pulling_crucible_top);
+		itemBlacklist.addIngredientToBlacklist(BaseRecipes.stirred_tank_top);
+		itemBlacklist.addIngredientToBlacklist(BaseRecipes.precipitation_controller);
 
+		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.PIPELINE_HALT));
+		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.GASLINE_HALT));
+
+		itemBlacklist.addIngredientToBlacklist(BaseRecipes.speed_base);
+		itemBlacklist.addIngredientToBlacklist(BaseRecipes.waterlock_wet);
+		itemBlacklist.addIngredientToBlacklist(BaseRecipes.toxic_cloud);
+		itemBlacklist.addIngredientToBlacklist(BaseRecipes.laser_emitter);
+
+		if(!ModConfig.enableHazard){
+			itemBlacklist.addIngredientToBlacklist(BaseRecipes.toxic_slimeball);
+			itemBlacklist.addIngredientToBlacklist(BaseRecipes.exhaustion_valve);
+			itemBlacklist.addIngredientToBlacklist(BaseRecipes.containment_tank);
+		}
+
+		for(Fluid gas : ModFluids.GASES){
+			ItemStack gas_bucket = FluidUtil.getFilledBucket(new FluidStack(gas, 1000));
+			itemBlacklist.addIngredientToBlacklist(gas_bucket);
+		}
+
+		for(int i=0;i<EnumCasting.size();i++){
+			itemBlacklist.addIngredientToBlacklist(BaseRecipes.patterns(1, EnumCasting.values()[i]));
+		}
 	}
 }

@@ -1,9 +1,9 @@
 package com.globbypotato.rockhounding_chemistry.handlers;
 
-import com.globbypotato.rockhounding_chemistry.ModBlocks;
+import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 public class Reference {
 	// Create Mod Reference 
@@ -15,6 +15,9 @@ public class Reference {
 
 	//Create new Creative Tab with Icon
 	public static CreativeTabs RockhoundingChemistry = new CreativeTabs("rockhoundingChemistry") {
-		public Item getTabIconItem() { return Item.getItemFromBlock(ModBlocks.mineralSizer); }
+		@Override
+		public ItemStack getTabIconItem() { 
+			return BaseRecipes.fluorite_compound; 
+		}
 	};
 }

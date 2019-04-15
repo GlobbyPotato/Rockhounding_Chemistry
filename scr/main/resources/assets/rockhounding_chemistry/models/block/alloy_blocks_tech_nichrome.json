@@ -1,0 +1,6 @@
+{
+    "parent": "block/cube_all",
+    "textures": {
+        "all": "rockhounding_chemistry:blocks/alloy_blocks_tech_nichrome"
+    }
+}

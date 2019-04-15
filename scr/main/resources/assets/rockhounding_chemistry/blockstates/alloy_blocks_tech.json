@@ -1,0 +1,20 @@
+{
+    "variants": {
+		"variant=cube": 		{"model" : "rockhounding_chemistry:alloy_blocks_tech_cube"},
+		"variant=scal": 		{"model" : "rockhounding_chemistry:alloy_blocks_tech_scal"},
+		"variant=bam": 			{"model" : "rockhounding_chemistry:alloy_blocks_tech_bam"},
+		"variant=stellite": 	{"model" : "rockhounding_chemistry:alloy_blocks_tech_stellite"},
+		"variant=cupronickel": 	{"model" : "rockhounding_chemistry:alloy_blocks_tech_cupronickel"},
+		"variant=nimonic": 		{"model" : "rockhounding_chemistry:alloy_blocks_tech_nimonic"},
+		"variant=hastelloy": 	{"model" : "rockhounding_chemistry:alloy_blocks_tech_hastelloy"},
+		"variant=nichrome": 	{"model" : "rockhounding_chemistry:alloy_blocks_tech_nichrome"},
+		"variant=cunife": 		{"model" : "rockhounding_chemistry:alloy_blocks_tech_cunife"},
+		"variant=siena": 		{"model" : "rockhounding_chemistry:alloy_blocks_tech_siena"},
+		"variant=carborundum": 	{"model" : "rockhounding_chemistry:alloy_blocks_tech_carborundum"},
+		"variant=tinite": 		{"model" : "rockhounding_chemistry:alloy_blocks_tech_tinite"},
+		"variant=hydronalium": 	{"model" : "rockhounding_chemistry:alloy_blocks_tech_hydronalium"},
+		"variant=vanasteel": 	{"model" : "rockhounding_chemistry:alloy_blocks_tech_vanasteel"},
+		"variant=widia": 		{"model" : "rockhounding_chemistry:alloy_blocks_tech_widia"},
+		"variant=tantaloy": 	{"model" : "rockhounding_chemistry:alloy_blocks_tech_tantaloy"}
+    }
+}

@@ -1,0 +1,33 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:machines",
+	"pattern": [
+		"PCP",
+		"FTF",
+		"SLS"
+	],
+	"key": {
+		"L":{
+				"item": "#ADVANCED_CHIP"
+			},
+		"C":{
+				"item": "#COMPRESSOR"
+			},
+		"T":{
+				"item": "#GAS_TURBINE"
+			},
+		"F":{
+				"item": "#IRON_FOIL"
+			},
+		"P":{
+				"item": "#GLASS_PIPE"
+			},
+		"S":{
+				"item": "#SCAFFOLD"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:machines_e",
+				"data": 3
+			}
+}

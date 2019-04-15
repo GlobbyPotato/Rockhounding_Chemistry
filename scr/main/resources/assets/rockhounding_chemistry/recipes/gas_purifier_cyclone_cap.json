@@ -1,0 +1,30 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:machines",
+	"pattern": [
+		"PfP",
+		"SCS",
+		"fpf"
+	],
+	"key": {
+		"P":{
+				"item": "#GOLD_PLATE"
+			},
+		"S":{
+				"item": "#SCAFFOLD"
+			},
+		"C":{
+				"item": "#COMPRESSOR"
+			},
+		"f":{
+				"item": "#IRON_FOIL"
+			},
+		"p":{
+				"item": "#GLASS_PIPE"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:machines_b",
+				"data": 15
+			}
+}

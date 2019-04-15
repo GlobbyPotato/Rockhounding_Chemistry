@@ -1,34 +1,52 @@
 package com.globbypotato.rockhounding_chemistry.handlers;
 
+import java.util.ArrayList;
 import java.util.Random;
 
-import com.globbypotato.rockhounding_chemistry.ModBlocks;
 import com.globbypotato.rockhounding_chemistry.ModItems;
-import com.globbypotato.rockhounding_chemistry.blocks.FireBlock;
-import com.globbypotato.rockhounding_chemistry.blocks.OwcBlocks;
 import com.globbypotato.rockhounding_chemistry.enums.EnumCasting;
 import com.globbypotato.rockhounding_chemistry.enums.EnumServer;
-import com.globbypotato.rockhounding_chemistry.items.tools.Petrographer;
-import com.globbypotato.rockhounding_chemistry.machines.recipe.ChemicalExtractorRecipe;
-import com.globbypotato.rockhounding_chemistry.machines.recipe.MachineRecipes;
+import com.globbypotato.rockhounding_chemistry.fluids.ModFluids;
+import com.globbypotato.rockhounding_chemistry.items.ProbeItems;
+import com.globbypotato.rockhounding_chemistry.machines.io.MachineIO;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.ChemicalExtractorRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.DepositionChamberRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.GasReformerRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.LabOvenRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.LeachingVatRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.MetalAlloyerRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.MineralSizerRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.PrecipitationRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.RetentionVatRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.ChemicalExtractorRecipe;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.LeachingVatRecipe;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.MineralSizerRecipe;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.RetentionVatRecipe;
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
-import com.globbypotato.rockhounding_chemistry.utils.ToolUtils;
+import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
+import com.globbypotato.rockhounding_core.enums.EnumFluidNbt;
+import com.globbypotato.rockhounding_core.utils.CoreUtils;
 import com.google.common.base.Strings;
 
-import net.minecraft.block.Block;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityXPOrb;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent.LeftClickBlock;
-import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
+import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.UniversalBucket;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class GlobbyEventHandler {
@@ -37,250 +55,250 @@ public class GlobbyEventHandler {
 	Random rand = new Random();
 
 	@SubscribeEvent
-	public void hitBlock(LeftClickBlock event){
-		if(event.getFace() == EnumFacing.UP){
-			if(event.getWorld().getBlockState(event.getPos().up()).getBlock() instanceof FireBlock){
-				event.getWorld().setBlockToAir(event.getPos().up());
-				event.getWorld().playSound((double)((float)event.getPos().up().getX() + 0.5F), (double)((float)event.getPos().up().getY() + 0.5F), (double)((float)event.getPos().up().getZ() + 0.5F), SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 2.0F, 2.0F, false);
-			}
-		}
-	}
-
-	@SubscribeEvent
+    @SideOnly(Side.CLIENT)
 	public void handleTooltip(ItemTooltipEvent event){
 		ItemStack itemstack = event.getItemStack();
-		if(itemstack != null){
+		if(itemstack != ItemStack.EMPTY){
 
-			if(itemstack.getItem() == ModItems.speedItems && itemstack.getItemDamage() > 0){
-				event.getToolTip().add(TextFormatting.GREEN + "Divides the machine speed by " + (itemstack.getItemDamage() + 1) + " times");
+			if(itemstack.getItem() == ModItems.SPEED_ITEMS && itemstack.getItemDamage() > 0){
+				event.getToolTip().add(TextFormatting.GREEN + "Increases the machine speed by " + (itemstack.getItemDamage() + 1));
 			}
 
-			Block owcBlocks = Block.getBlockFromItem(itemstack.getItem());
-			if(owcBlocks instanceof OwcBlocks){
-				event.getToolTip().add(TextFormatting.YELLOW + "Element of the OWC multiblock energy system");
+			if(itemstack.getItem() == ModItems.FILTER_ITEMS && itemstack.getItemDamage() > 0){
+				event.getToolTip().add(TextFormatting.GREEN + "Thickens the leaching filter mesh by " + (itemstack.getItemDamage() * 0.5F));
+				event.getToolTip().add(TextFormatting.GREEN + "Sets the filter step to " + ModUtils.stepDivision(itemstack.getItemDamage()));
 			}
-			
-	    	for(int x = 0; x < MachineRecipes.sizerRecipes.size(); x++){
-	    		if(MachineRecipes.sizerRecipes.get(x).getOutput().size() > 1){
-			    	for(int y = 0; y < MachineRecipes.sizerRecipes.get(x).getOutput().size(); y++){
-			    		if(MachineRecipes.sizerRecipes.get(x).getComminution()){
-							if(ItemStack.areItemsEqual(MachineRecipes.sizerRecipes.get(x).getOutput().get(y), itemstack)){
-								event.getToolTip().add(TextFormatting.GRAY + "Comminution Level: " + TextFormatting.GREEN + MachineRecipes.sizerRecipes.get(x).getProbability().get(y).intValue());
-							}
-			    		}else{
-							if(ItemStack.areItemsEqual(MachineRecipes.sizerRecipes.get(x).getOutput().get(y), itemstack)){
-								event.getToolTip().add(TextFormatting.GRAY + "Sizing Chance: " + TextFormatting.GREEN + MachineRecipes.sizerRecipes.get(x).getProbability().get(y).intValue());
-							}
-			    		}
-					}
-	    		}
-	    	}
 
-	    	for(int x = 0; x < MachineRecipes.analyzerRecipes.size(); x++){
-	    		if(MachineRecipes.analyzerRecipes.get(x).getOutput().size() > 1){
-			    	for(int y = 0; y < MachineRecipes.analyzerRecipes.get(x).getOutput().size(); y++){
-			    		if(MachineRecipes.analyzerRecipes.get(x).hasGravity()){
-							if(ItemStack.areItemsEqual(MachineRecipes.analyzerRecipes.get(x).getOutput().get(y), itemstack)){
-								float realgravity = (float)MachineRecipes.analyzerRecipes.get(x).getProbability().get(y).intValue() / 100;
-								event.getToolTip().add(TextFormatting.GRAY + "Specific Gravity: " + TextFormatting.LIGHT_PURPLE + realgravity);
-							}
-			    		}else{
-							if(ItemStack.areItemsEqual(MachineRecipes.analyzerRecipes.get(x).getOutput().get(y), itemstack)){
-								event.getToolTip().add(TextFormatting.GRAY + "Leaching Chance: " + TextFormatting.LIGHT_PURPLE + MachineRecipes.analyzerRecipes.get(x).getProbability().get(y).intValue() + "%");
-							}
-			    		}
-					}
-	    		}
-	    	}
+			if(itemstack.getItem() == ModItems.PROBE_ITEMS){
+				event.getToolTip().add(TextFormatting.GREEN + "Increases the Orbiter radius to " + ProbeItems.orbiterUpgrade(itemstack) + " block/s");
+			}
 
-	    	for(ChemicalExtractorRecipe recipe: MachineRecipes.extractorRecipes){
-				if(recipe.getInput() != null && itemstack.isItemEqual(recipe.getInput())){
-					event.getToolTip().add(TextFormatting.GRAY + "Category: " + TextFormatting.YELLOW + recipe.getCategory());
-					for(int x = 0; x < recipe.getElements().size(); x++){
-						event.getToolTip().add(TextFormatting.DARK_GRAY + recipe.getElements().get(x).substring(0, 1).toUpperCase() + recipe.getElements().get(x).substring(1) + " - " + TextFormatting.WHITE + TextFormatting.BOLD + recipe.getQuantities().get(x) + "%");
+	    	for(MineralSizerRecipe recipe : MineralSizerRecipes.mineral_sizer_recipes){
+		    	for(int y = 0; y < recipe.getOutput().size(); y++){
+					if(ItemStack.areItemsEqual(recipe.getOutput().get(y), itemstack)){
+						String comText = TextFormatting.GRAY + "Required Comminution Level: " + TextFormatting.GREEN + recipe.getComminution().get(y);
+			    		if(!event.getToolTip().contains(comText)){
+			    			event.getToolTip().add(comText);
+						}
 					}
 				}
 	    	}
 
-			if(itemstack.isItemEqual(BaseRecipes.server_file)){
-				if(itemstack.hasTagCompound()){
+	    	for(LeachingVatRecipe recipe : LeachingVatRecipes.leaching_vat_recipes){
+	    		if(recipe.getOutput().size() >= 1){
+			    	for(int y = 0; y < recipe.getOutput().size(); y++){
+						if(ItemStack.areItemsEqual(recipe.getOutput().get(y), itemstack)){
+							float realgravity = recipe.getGravity().get(y);
+							event.getToolTip().add(TextFormatting.GRAY + "Specific Gravity: " + TextFormatting.LIGHT_PURPLE + realgravity);
+						}
+					}
+	    		}
+	    	}
+
+	    	for(RetentionVatRecipe recipe : RetentionVatRecipes.retention_vat_recipes){
+	    		if(recipe.getOutput().size() >= 1){
+			    	for(int y = 0; y < recipe.getOutput().size(); y++){
+						if(ItemStack.areItemsEqual(recipe.getOutput().get(y), itemstack)){
+							float realgravity = recipe.getGravity().get(y);
+							String gravText = TextFormatting.GRAY + "Specific Gravity: " + TextFormatting.LIGHT_PURPLE + realgravity;
+							if(!event.getToolTip().contains(gravText)){
+								event.getToolTip().add(gravText);
+							}
+						}
+					}
+	    		}
+	    	}
+
+	    	for(ChemicalExtractorRecipe recipe: ChemicalExtractorRecipes.extractor_recipes){
+	    		if(recipe.getType()){
+					ArrayList<Integer> inputOreIDs = CoreUtils.intArrayToList(OreDictionary.getOreIDs(itemstack));
+					if(inputOreIDs.size() > 0 && inputOreIDs.contains(OreDictionary.getOreID(recipe.getOredict()))){
+						addExtractorRecipe(recipe, event);
+					}
+	    		}else{
+					if(!recipe.getInput().isEmpty() && itemstack.isItemEqual(recipe.getInput())){
+						addExtractorRecipe(recipe, event);
+					}
+	    		}
+	    	}
+
+			if(itemstack.hasTagCompound()){
+				if(itemstack.isItemEqual(BaseRecipes.sampling_ampoule)){
 					NBTTagCompound tag = itemstack.getTagCompound();
-		    		if(isValidNBT(tag)){
-			        	int device = tag.getInteger("Device");
-			        	boolean cycle = tag.getBoolean("Cycle");
-			        	int recipe = tag.getInteger("Recipe");
-			        	int amount = tag.getInteger("Amount");
-			        	int done = tag.getInteger("Done");
-		        		event.getToolTip().add(TextFormatting.GRAY + "Served Device: " + TextFormatting.BOLD + TextFormatting.YELLOW + EnumServer.values()[device].getName());
-		        		event.getToolTip().add(TextFormatting.GRAY + "Repeatable: " + TextFormatting.BOLD + TextFormatting.YELLOW + cycle);
-		        		if(device == EnumServer.LAB_OVEN.ordinal()){
-			        		event.getToolTip().add(TextFormatting.GRAY + "Recipe: " + TextFormatting.BOLD +  TextFormatting.YELLOW + MachineRecipes.labOvenRecipes.get(recipe).getOutput().getLocalizedName());
-	/*	        		}else if(device == EnumServer.METAL_ALLOYER.ordinal()){
-			        		event.getToolTip().add(TextFormatting.GRAY + "Recipe: " + TextFormatting.BOLD +  TextFormatting.YELLOW + MetalAlloyerRecipes.metal_alloyer_recipes.get(recipe).getOutput().getDisplayName());
-		        		}else if(device == EnumServer.DEPOSITION.ordinal()){
-			        		event.getToolTip().add(TextFormatting.GRAY + "Recipe: " + TextFormatting.BOLD +  TextFormatting.YELLOW + DepositionChamberRecipes.deposition_chamber_recipes.get(recipe).getOutput().getDisplayName());
-		        		}else if(device == EnumServer.SIZER.ordinal()){
-			        		event.getToolTip().add(TextFormatting.GRAY + "Comminution Level: " + TextFormatting.BOLD +  TextFormatting.YELLOW + recipe);
-		        		}else if(device == EnumServer.LEACHING.ordinal()){
-		        			float currentGravity = (recipe * 2) + 2F;
-		        			event.getToolTip().add(TextFormatting.GRAY + "Gravity: " + TextFormatting.BOLD +  TextFormatting.YELLOW + (currentGravity - 2F) + " to " + (currentGravity + 2F));
-		        		}else if(device == EnumServer.RETENTION.ordinal()){
-		        			float currentGravity = (recipe * 2) + 2F;
-			        		event.getToolTip().add(TextFormatting.GRAY + "Gravity: " + TextFormatting.BOLD +  TextFormatting.YELLOW + (currentGravity - 2F) + " to " + (currentGravity + 2F));
-		        		}else if(device == EnumServer.CASTING.ordinal()){
-			        		event.getToolTip().add(TextFormatting.GRAY + "Pattern: " + TextFormatting.BOLD +  TextFormatting.YELLOW + EnumCasting.getFormalName(recipe));
-		        		}else if(device == EnumServer.REFORMER.ordinal()){
-			        		event.getToolTip().add(TextFormatting.GRAY + "Recipe: " + TextFormatting.BOLD +  TextFormatting.YELLOW + GasReformerRecipes.gas_reformer_recipes.get(recipe).getOutput().getLocalizedName());*/
-		        		}
-		        		event.getToolTip().add(TextFormatting.GRAY + "Amount: " + TextFormatting.BOLD +  TextFormatting.YELLOW + amount + " scheduled");
-		        		event.getToolTip().add(TextFormatting.GRAY + "Process: " + TextFormatting.BOLD +  TextFormatting.YELLOW + done + " to do");
-		    		}
+					if(tag.hasKey(EnumFluidNbt.GAS.nameTag())){
+						String sampleText = TextFormatting.GRAY + "Sample: " + TextFormatting.BOLD + TextFormatting.AQUA + "Empty";
+						FluidStack sampledGas = FluidStack.loadFluidStackFromNBT(itemstack.getTagCompound().getCompoundTag(EnumFluidNbt.GAS.nameTag()));
+						if(sampledGas != null && sampledGas.getFluid() != null && sampledGas.getFluid().isGaseous()){
+							sampleText = TextFormatting.GRAY + "Sampled Gas: " + TextFormatting.BOLD + TextFormatting.AQUA + sampledGas.getLocalizedName();
+							event.getToolTip().add(sampleText);
+						}
+					}else if(tag.hasKey(EnumFluidNbt.FLUID.nameTag())){
+						String sampleText = TextFormatting.GRAY + "Sample: " + TextFormatting.BOLD + TextFormatting.AQUA + "Empty";
+						FluidStack sampledGas = FluidStack.loadFluidStackFromNBT(itemstack.getTagCompound().getCompoundTag(EnumFluidNbt.FLUID.nameTag()));
+						if(sampledGas != null && sampledGas.getFluid() != null){
+							sampleText = TextFormatting.GRAY + "Sampled Fluid: " + TextFormatting.BOLD + TextFormatting.AQUA + sampledGas.getLocalizedName();
+							event.getToolTip().add(sampleText);
+						}
+					}
 				}
-	    	}
 
+				if(itemstack.isItemEqual(BaseRecipes.orbiter)){
+					NBTTagCompound tag = itemstack.getTagCompound();
+					if(tag.hasKey("XPCount")){
+						int xpCount = tag.getInteger("XPCount");
+						if(xpCount > 0){
+							String xp = TextFormatting.GRAY + "Stored Experience: " + TextFormatting.BOLD + TextFormatting.DARK_GREEN + xpCount + " xp";
+							event.getToolTip().add(xp);
+						}
+					}
+				}
+
+				if(itemstack.isItemEqual(BaseRecipes.server_file)){
+					if(itemstack.hasTagCompound()){
+						NBTTagCompound tag = itemstack.getTagCompound();
+			    		if(isValidNBT(tag)){
+				        	int device = tag.getInteger("Device");
+				        	boolean cycle = tag.getBoolean("Cycle");
+				        	int recipe = tag.getInteger("Recipe");
+				        	int amount = tag.getInteger("Amount");
+				        	int done = tag.getInteger("Done");
+			        		event.getToolTip().add(TextFormatting.GRAY + "Served Device: " + TextFormatting.BOLD + TextFormatting.YELLOW + EnumServer.values()[device].getName());
+			        		event.getToolTip().add(TextFormatting.GRAY + "Repeatable: " + TextFormatting.BOLD + TextFormatting.YELLOW + cycle);
+			        		if(device == EnumServer.LAB_OVEN.ordinal()){
+			        			if(Strings.isNullOrEmpty(LabOvenRecipes.lab_oven_recipes.get(recipe).getRecipeName())){
+					        		event.getToolTip().add(TextFormatting.GRAY + "Recipe: " + TextFormatting.BOLD +  TextFormatting.YELLOW + LabOvenRecipes.lab_oven_recipes.get(recipe).getSolution().getLocalizedName());
+			        			}else{
+					        		event.getToolTip().add(TextFormatting.GRAY + "Recipe: " + TextFormatting.BOLD +  TextFormatting.YELLOW + LabOvenRecipes.lab_oven_recipes.get(recipe).getRecipeName());
+			        			}
+			        		}else if(device == EnumServer.METAL_ALLOYER.ordinal()){
+				        		event.getToolTip().add(TextFormatting.GRAY + "Recipe: " + TextFormatting.BOLD +  TextFormatting.YELLOW + MetalAlloyerRecipes.metal_alloyer_recipes.get(recipe).getOutput().getDisplayName());
+			        		}else if(device == EnumServer.DEPOSITION.ordinal()){
+				        		event.getToolTip().add(TextFormatting.GRAY + "Recipe: " + TextFormatting.BOLD +  TextFormatting.YELLOW + DepositionChamberRecipes.deposition_chamber_recipes.get(recipe).getOutput().getDisplayName());
+			        		}else if(device == EnumServer.SIZER.ordinal()){
+				        		event.getToolTip().add(TextFormatting.GRAY + "Comminution Level: " + TextFormatting.BOLD +  TextFormatting.YELLOW + recipe);
+			        		}else if(device == EnumServer.LEACHING.ordinal()){
+			        			float currentGravity = (recipe * 2) + 2F;
+			        			event.getToolTip().add(TextFormatting.GRAY + "Gravity: " + TextFormatting.BOLD +  TextFormatting.YELLOW + (currentGravity - 2F) + " to " + (currentGravity + 2F));
+			        		}else if(device == EnumServer.RETENTION.ordinal()){
+			        			float currentGravity = (recipe * 2) + 2F;
+				        		event.getToolTip().add(TextFormatting.GRAY + "Gravity: " + TextFormatting.BOLD +  TextFormatting.YELLOW + (currentGravity - 2F) + " to " + (currentGravity + 2F));
+			        		}else if(device == EnumServer.CASTING.ordinal()){
+				        		event.getToolTip().add(TextFormatting.GRAY + "Pattern: " + TextFormatting.BOLD +  TextFormatting.YELLOW + EnumCasting.getFormalName(recipe));
+			        		}else if(device == EnumServer.REFORMER.ordinal()){
+				        		event.getToolTip().add(TextFormatting.GRAY + "Recipe: " + TextFormatting.BOLD +  TextFormatting.YELLOW + GasReformerRecipes.gas_reformer_recipes.get(recipe).getOutput().getLocalizedName());
+			        		}else if(device == EnumServer.EXTRACTOR.ordinal()){
+				        		event.getToolTip().add(TextFormatting.GRAY + "Intensity Level: " + TextFormatting.BOLD +  TextFormatting.YELLOW + recipe);
+			        		}else if(device == EnumServer.PRECIPITATOR.ordinal()){
+			        			if(Strings.isNullOrEmpty(PrecipitationRecipes.precipitation_recipes.get(recipe).getRecipeName())){
+					        		event.getToolTip().add(TextFormatting.GRAY + "Recipe: " + TextFormatting.BOLD +  TextFormatting.YELLOW + PrecipitationRecipes.precipitation_recipes.get(recipe).getSolution().getLocalizedName());
+			        			}else{
+					        		event.getToolTip().add(TextFormatting.GRAY + "Recipe: " + TextFormatting.BOLD +  TextFormatting.YELLOW + PrecipitationRecipes.precipitation_recipes.get(recipe).getRecipeName());
+			        			}
+			        		}
+			        		if(tag.hasKey("FilterStack")){
+			        			ItemStack filter = new ItemStack(tag.getCompoundTag("FilterStack"));
+			        			if(!filter.isEmpty()){
+					        		event.getToolTip().add(TextFormatting.GRAY + "Filter: " + TextFormatting.BOLD +  TextFormatting.DARK_GREEN + filter.getDisplayName());
+			        			}
+			        		}
+			        		if(tag.hasKey("FilterFluid")){
+								FluidStack filter = FluidStack.loadFluidStackFromNBT(tag.getCompoundTag("FilterFluid"));
+			        			if(filter != null){
+					        		event.getToolTip().add(TextFormatting.GRAY + "Filter: " + TextFormatting.BOLD +  TextFormatting.DARK_GREEN + filter.getLocalizedName());
+			        			}
+			        		}
+			        		event.getToolTip().add(TextFormatting.GRAY + "Amount: " + TextFormatting.BOLD +  TextFormatting.YELLOW + amount + " scheduled");
+			        		event.getToolTip().add(TextFormatting.GRAY + "Process: " + TextFormatting.BOLD +  TextFormatting.YELLOW + done + " to do");
+			    		}
+					}
+		    	}
+
+		    	if(itemstack.isItemEqual(BaseRecipes.speed_base)){
+		    		if(itemstack.getTagCompound().hasKey("Title")){
+		    			event.getToolTip().add(itemstack.getTagCompound().getString("Title"));
+		    		}
+		    		if(itemstack.getTagCompound().hasKey("DustList")){
+		    			NBTTagList dustList = itemstack.getTagCompound().getTagList("DustList", Constants.NBT.TAG_COMPOUND);
+		    			for(int i = 0; i < dustList.tagCount(); i++){
+		    				NBTTagCompound getQuantities = dustList.getCompoundTagAt(i);
+		    				event.getToolTip().add(getQuantities.getString("Ingr" + i));
+		    			}
+		    		}
+		    	}
+
+		    	if(!ModUtils.hasWawla()){
+			    	if(itemstack.getItem() instanceof UniversalBucket){
+						if(FluidUtil.getFluidContained(itemstack) != null){
+							FluidStack filterfluid = FluidUtil.getFluidContained(itemstack);
+			        		event.getToolTip().add(TextFormatting.GRAY + "Temperature: " + TextFormatting.BOLD +  TextFormatting.YELLOW + filterfluid.getFluid().getTemperature() + "K");
+						}
+			    	}
+		    	}
+
+		    	if(itemstack.isItemEqual(BaseRecipes.pressure_vessel)){
+		    		if(itemstack.getTagCompound().hasKey(EnumFluidNbt.GAS.nameTag())){
+						FluidStack filterfluid = FluidStack.loadFluidStackFromNBT(itemstack.getTagCompound().getCompoundTag(EnumFluidNbt.GAS.nameTag()));
+						if(filterfluid != null){
+							event.getToolTip().add(TextFormatting.GRAY + "Temperature: " + TextFormatting.BOLD +  TextFormatting.YELLOW + filterfluid.getFluid().getTemperature() + "K");
+						}
+		    		}
+		    	}
+
+			}
+		}
+	}
+
+	private void addExtractorRecipe(ChemicalExtractorRecipe recipe, ItemTooltipEvent event) {
+		event.getToolTip().add(TextFormatting.GRAY + "Category: " + TextFormatting.YELLOW + recipe.getCategory());
+		for(int x = 0; x < recipe.getElements().size(); x++){
+			String recipeDict = recipe.getElements().get(x);
+			ArrayList<ItemStack> firstDict = new ArrayList<ItemStack>();
+			if(!OreDictionary.getOres(recipeDict).isEmpty()){
+				firstDict.addAll(OreDictionary.getOres(recipeDict));
+				if(!firstDict.isEmpty() && firstDict.size() > 0){
+					event.getToolTip().add(TextFormatting.GRAY + firstDict.get(0).getDisplayName() + " - " + TextFormatting.WHITE + TextFormatting.BOLD + recipe.getQuantities().get(x) + "%");
+				}
+			}
 		}
 	}
 
 	@SubscribeEvent
-	public void onBlockHarvest(HarvestDropsEvent event) {
-		if(event.getHarvester() != null) {
-			EntityPlayer player = event.getHarvester();
-			if(hasPetrographer(player, event)) {
-				int fortuneLevel = event.getFortuneLevel();
-				petroStack = event.getHarvester().getHeldItem(EnumHand.MAIN_HAND);
-				if(petroStack.hasTagCompound()){
-			    	int nLevel = petroStack.getTagCompound().getInteger("nLevel");
-			    	int nLevelUp = petroStack.getTagCompound().getInteger("nLevelUp");
-			    	int nFlavor = petroStack.getTagCompound().getInteger("nFlavor");
-			    	int nSpecimen = petroStack.getTagCompound().getInteger("nSpecimen");
-			    	int nFortune = petroStack.getTagCompound().getInteger("nFortune");
-			    	int nFinds = petroStack.getTagCompound().getInteger("nFinds");
-			    	
-					if(isMineral(event, event.getState().getBlock())){
-						if(rand.nextInt(24) < nFortune){
-							if(nFlavor > 0){
-								//handle item drops
-								int validFortune = fortuneLevel;
-								int validFinds = 0;
-								if(fortuneLevel > 3){ 
-									validFortune = 3; 
-								}
-								if(validFortune > 0){
-									validFinds = 1 + rand.nextInt(validFortune);
-								}else{
-									validFinds = 1;
-								}
-								mineralStack = new ItemStack(ModBlocks.mineralOres, validFinds, nFlavor);
-
-								//handle skill and finds
-								if(nFortune <= 16){
-									nFinds -= validFinds;
-									if(nFinds < 0) nFinds = 0;
-									if(nFinds <= 0){ 
-										if(nFortune < 16){
-											nFortune++;
-											int totFinds = Petrographer.baseFinds + ((nFortune-1) * Petrographer.baseFinds);
-											nFinds = totFinds;   
-											player.worldObj.playSound(player, player.getPosition(), SoundEvents.ENTITY_PLAYER_LEVELUP, SoundCategory.PLAYERS, 1.0F, 1.0F);
-											petroStack.getTagCompound().setInteger("nFortune", nFortune);
-										}
-									}
-									petroStack.getTagCompound().setInteger("nFinds", nFinds);
-								}
-
-								//handle xp and level
-								if(nLevel <= 20){
-									int getXp = 0; int newLevelUp = 0;
-									player.worldObj.playSound(player, player.getPosition(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1.0F, 1.0F);
-									if(validFortune > 0){
-										newLevelUp = nLevelUp - (1 + rand.nextInt(validFortune));
-									}else{
-										newLevelUp = nLevelUp - 1;
-									}
-									if(newLevelUp < 0) newLevelUp = 0;
-									if(nLevel < 20){
-										if(newLevelUp <= 0){
-											nLevel++;
-											int totLevelUp = Petrographer.baseLevelUp + (nLevel * Petrographer.baseLevelUp);
-											newLevelUp = totLevelUp;
-											player.worldObj.playSound(player, player.getPosition(), SoundEvents.ENTITY_PLAYER_LEVELUP, SoundCategory.PLAYERS, 1.0F, 1.0F);
-											petroStack.getTagCompound().setInteger("nLevel", nLevel);
-										}
-									}
-									petroStack.getTagCompound().setInteger("nLevelUp", newLevelUp);
-								}
-
-								//handle specimen
-								if(nLevel > 16){
-									if(nFortune > 10){
-										if(nFlavor > 0){
-											if(nSpecimen > -1){
-												if(rand.nextInt(32) < nFortune){
-													mineralStack = new ItemStack(ToolUtils.specimenList[nFlavor], validFinds, nSpecimen);
-												}
-											}
-										}
-									}
-								}
-
-								//handle drop exp
-								for (int i = 0; i < (nLevel / 2) + 1; i++){
-									double fx = this.rand.nextFloat(); double fy = this.rand.nextFloat(); double fz = this.rand.nextFloat();
-									if(!player.worldObj.isRemote){ player.worldObj.spawnEntityInWorld(new EntityXPOrb(player.worldObj, player.posX + (fx - 0.5), player.posY + fy, player.posZ + (fz - 0.5), 1)); }
-								}
-							}else{
-								mineralStack = new ItemStack(ModBlocks.mineralOres, 1, 0);
-							}
-						}else{
-							mineralStack = new ItemStack(ModBlocks.mineralOres, 1, 0);
-						}
-						event.getDrops().clear();
-						event.getDrops().add(mineralStack.copy());
-					}else if(isStone(event, event.getState().getBlock())){
-						if(nLevel > 0 && nFortune > 0){
-							if(rand.nextInt(24) < nLevel){
-								if(rand.nextInt(24) < nFortune){
-									mineralStack = BaseRecipes.oreStack;
-									player.worldObj.playSound(player, player.getPosition(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1.0F, 1.0F);
-									event.getDrops().clear();
-									event.getDrops().add(mineralStack.copy());
-								}
-							}
-						}
-					}
-				}else{
-					Petrographer.setItemNbt(petroStack);
-				}
-			}
+	public void onBlockBurn(FurnaceFuelBurnTimeEvent event) {
+		if(event.getItemStack().isItemEqual(BaseRecipes.charcoal_block) ){
+			event.setBurnTime(16000);
 		}
 	}
 
-			private boolean isStone(HarvestDropsEvent event, Block block){
-				ItemStack oreStack = event.getState().getBlock().getPickBlock(event.getState(), null, event.getWorld(), event.getPos(), null);
-				if(oreStack != null) {
-					int[] oreIDs = OreDictionary.getOreIDs(oreStack);
-					if(oreIDs.length > 0) {
-						for(int i = 0; i < oreIDs.length; i++) {
-							String oreName = OreDictionary.getOreName(oreIDs[i]);
-							if(oreName != null && oreName.matches("stone")){
-								return true;
-							}
-						}
-					}
-				}
-				return false;
-			}
-		
-			private boolean isMineral(HarvestDropsEvent event, Block block) {
-				return block != null && block == ModBlocks.mineralOres && block.getMetaFromState(event.getState()) == 0;
-			}
-		
-			private boolean hasPetrographer(EntityPlayer player, HarvestDropsEvent event) {
-				return player.getHeldItem(EnumHand.MAIN_HAND) != null && player.getHeldItem(EnumHand.MAIN_HAND).getItem() == ModItems.petrographer;
-			}
+	@SubscribeEvent
+	public void onInteract(RightClickBlock event){
+		if(Loader.isModLoaded(ModUtils.thermal_f_id)){
+        	if(event.getWorld().getBlockState(event.getPos()) != null && event.getWorld().getBlockState(event.getPos()).getBlock() instanceof MachineIO){
+	            if (!event.getItemStack().isEmpty() && !ModUtils.thermal_f_wrench().isEmpty() && event.getItemStack().isItemEqual(ModUtils.thermal_f_wrench())){
+	            	event.setCanceled(true);
+	            }
+        	}
+		}
+	}
 
-			private static boolean isValidNBT(NBTTagCompound tag) {
-				return (tag.hasKey("Device") && tag.getInteger("Device") > -1) && tag.hasKey("Cycle") && tag.hasKey("Recipe") && tag.hasKey("Amount") && tag.hasKey("Done");
-			}
+    @SubscribeEvent
+    public void killDrops(LivingDeathEvent event){
+    	if(ModConfig.fluidDamage && ModConfig.xpDrop){
+	    	EntityLivingBase entity = event.getEntityLiving();
+	    	World world = entity.getEntityWorld();
+	    	if(event.getSource() == ModFluids.SPILL){
+				double fx = world.rand.nextDouble();
+				double fy = world.rand.nextDouble();
+				double fz = world.rand.nextDouble();    		
+				EntityXPOrb orb = new EntityXPOrb(world, entity.posX + fx, entity.posY + fy, entity.posZ + fz, world.rand.nextInt(3)+1);
+				if(!world.isRemote){
+					world.spawnEntity(orb);
+				}
+	    	}
+    	}
+    }
+
+    private static boolean isValidNBT(NBTTagCompound tag) {
+		return (tag.hasKey("Device") && tag.getInteger("Device") > -1) && tag.hasKey("Cycle") && tag.hasKey("Recipe") && tag.hasKey("Amount") && tag.hasKey("Done");
+	}
 
 }

@@ -1,0 +1,6 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "rockhounding_chemistry:items/misc_items_base_chip"
+    }
+}

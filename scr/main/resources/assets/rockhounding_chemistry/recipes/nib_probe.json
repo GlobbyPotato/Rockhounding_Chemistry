@@ -1,0 +1,24 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:utils",
+	"pattern": [
+		"R R", 
+		"RXR", 
+		" S "
+	],
+	"key": {
+		"R":{
+				"item": "#NIB_ROD"
+			},
+		"X":{
+				"item": "#IRON_COIL"
+			},
+		"S":{
+				"item": "#STICK"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:probe_items",
+				"data": 2
+			}
+}

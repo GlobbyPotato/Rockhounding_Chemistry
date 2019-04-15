@@ -1,0 +1,26 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:machines",
+	"pattern": [
+		"ARR",
+		"CSC"
+	],
+	"key": {
+		"S":{
+				"item": "#SCAFFOLD"
+			},
+		"C":{
+				"item": "#IRON_CASING"
+			},
+		"A":{
+				"item": "#IRON_ARM"
+			},
+		"R":{
+				"item": "#IRON_ROD"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:machines_a",
+				"data": 1
+			}
+}

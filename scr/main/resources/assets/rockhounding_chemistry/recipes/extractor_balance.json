@@ -1,0 +1,30 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:machines",
+	"pattern": [
+		"GpG",
+		"GLG",
+		"SPS"
+	],
+	"key": {
+		"L":{
+				"item": "#BASE_CHIP"
+			},
+		"P":{
+				"item": "#GOLD_PLATE"
+			},
+		"p":{
+				"item": "#GLASS_PIPE"
+			},
+		"S":{
+				"item": "#SCAFFOLD"
+			},
+		"G":{
+				"item": "#GLASS"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:machines_c",
+				"data": 12
+			}
+}

@@ -1,0 +1,24 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:machines",
+	"pattern": [
+		"SCS",
+		"CcC",
+		"SCS"
+	],
+	"key": {
+		"c":{
+				"item": "#COMPRESSOR"
+			},
+		"C":{
+				"item": "#IRON_CASING"
+			},
+		"S":{
+				"item": "#SCAFFOLD"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:machines_d",
+				"data": 6
+			}
+}

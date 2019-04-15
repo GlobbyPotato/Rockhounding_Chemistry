@@ -1,0 +1,117 @@
+{
+    "variants": {
+        "facing=down,variant=slurry_pond": 				{ "model": "rockhounding_chemistry:machines_b_slurry_pond", "y": 180},
+        "facing=up,variant=slurry_pond": 				{ "model": "rockhounding_chemistry:machines_b_slurry_pond", "y": 180},
+        "facing=north,variant=slurry_pond": 			{ "model": "rockhounding_chemistry:machines_b_slurry_pond", "y": 180},
+        "facing=south,variant=slurry_pond": 			{ "model": "rockhounding_chemistry:machines_b_slurry_pond"},
+        "facing=west,variant=slurry_pond": 				{ "model": "rockhounding_chemistry:machines_b_slurry_pond", "y": 90},
+        "facing=east,variant=slurry_pond": 				{ "model": "rockhounding_chemistry:machines_b_slurry_pond", "y": 270},
+		
+		"facing=down,variant=gas_pressurizer":	 		{ "model": "rockhounding_chemistry:machines_b_gas_pressurizer", "y": 180},
+		"facing=up,variant=gas_pressurizer":	 		{ "model": "rockhounding_chemistry:machines_b_gas_pressurizer", "y": 180},
+		"facing=north,variant=gas_pressurizer":	 		{ "model": "rockhounding_chemistry:machines_b_gas_pressurizer", "y": 180},
+        "facing=south,variant=gas_pressurizer":	 		{ "model": "rockhounding_chemistry:machines_b_gas_pressurizer"},
+        "facing=west,variant=gas_pressurizer": 			{ "model": "rockhounding_chemistry:machines_b_gas_pressurizer", "y": 90},
+        "facing=east,variant=gas_pressurizer": 			{ "model": "rockhounding_chemistry:machines_b_gas_pressurizer", "y": 270},
+
+        "facing=down,variant=gasifier_tank": 			{ "model": "rockhounding_chemistry:machines_b_gasifier_tank", "y": 180},
+        "facing=up,variant=gasifier_tank": 				{ "model": "rockhounding_chemistry:machines_b_gasifier_tank", "y": 180},
+        "facing=north,variant=gasifier_tank": 			{ "model": "rockhounding_chemistry:machines_b_gasifier_tank", "y": 180},
+        "facing=south,variant=gasifier_tank": 			{ "model": "rockhounding_chemistry:machines_b_gasifier_tank"},
+        "facing=west,variant=gasifier_tank": 			{ "model": "rockhounding_chemistry:machines_b_gasifier_tank", "y": 90},
+        "facing=east,variant=gasifier_tank":	 		{ "model": "rockhounding_chemistry:machines_b_gasifier_tank", "y": 270},
+
+        "facing=down,variant=gasifier_burner": 			{ "model": "rockhounding_chemistry:machines_b_gasifier_burner", "y": 180},
+        "facing=up,variant=gasifier_burner": 			{ "model": "rockhounding_chemistry:machines_b_gasifier_burner", "y": 180},
+        "facing=north,variant=gasifier_burner": 		{ "model": "rockhounding_chemistry:machines_b_gasifier_burner", "y": 180},
+        "facing=south,variant=gasifier_burner": 		{ "model": "rockhounding_chemistry:machines_b_gasifier_burner"},
+        "facing=west,variant=gasifier_burner": 			{ "model": "rockhounding_chemistry:machines_b_gasifier_burner", "y": 90},
+        "facing=east,variant=gasifier_burner": 			{ "model": "rockhounding_chemistry:machines_b_gasifier_burner", "y": 270},
+
+		"facing=down,variant=gasifier_cooler": 			{ "model": "rockhounding_chemistry:machines_b_gasifier_cooler", "y": 180},
+		"facing=up,variant=gasifier_cooler": 			{ "model": "rockhounding_chemistry:machines_b_gasifier_cooler", "y": 180},
+		"facing=north,variant=gasifier_cooler": 		{ "model": "rockhounding_chemistry:machines_b_gasifier_cooler", "y": 180},
+        "facing=south,variant=gasifier_cooler": 		{ "model": "rockhounding_chemistry:machines_b_gasifier_cooler"},
+        "facing=west,variant=gasifier_cooler": 			{ "model": "rockhounding_chemistry:machines_b_gasifier_cooler", "y": 90},
+        "facing=east,variant=gasifier_cooler": 			{ "model": "rockhounding_chemistry:machines_b_gasifier_cooler", "y": 270},
+
+		"facing=down,variant=gas_purifier":	 			{ "model": "rockhounding_chemistry:machines_b_gas_purifier", "y": 180},
+		"facing=up,variant=gas_purifier":	 			{ "model": "rockhounding_chemistry:machines_b_gas_purifier", "y": 180},
+		"facing=north,variant=gas_purifier":	 		{ "model": "rockhounding_chemistry:machines_b_gas_purifier", "y": 180},
+        "facing=south,variant=gas_purifier":	 		{ "model": "rockhounding_chemistry:machines_b_gas_purifier"},
+        "facing=west,variant=gas_purifier": 			{ "model": "rockhounding_chemistry:machines_b_gas_purifier", "y": 90},
+        "facing=east,variant=gas_purifier": 			{ "model": "rockhounding_chemistry:machines_b_gas_purifier", "y": 270},
+
+		"facing=down,variant=purifier_cyclone_base": 	{ "model": "rockhounding_chemistry:machines_b_purifier_cyclone_base", "y": 180},
+		"facing=up,variant=purifier_cyclone_base": 		{ "model": "rockhounding_chemistry:machines_b_purifier_cyclone_base", "y": 180},
+		"facing=north,variant=purifier_cyclone_base": 	{ "model": "rockhounding_chemistry:machines_b_purifier_cyclone_base", "y": 180},
+        "facing=south,variant=purifier_cyclone_base": 	{ "model": "rockhounding_chemistry:machines_b_purifier_cyclone_base"},
+        "facing=west,variant=purifier_cyclone_base": 	{ "model": "rockhounding_chemistry:machines_b_purifier_cyclone_base", "y": 90},
+        "facing=east,variant=purifier_cyclone_base": 	{ "model": "rockhounding_chemistry:machines_b_purifier_cyclone_base", "y": 270},
+
+		"facing=down,variant=purifier_cyclone_top": 	{ "model": "rockhounding_chemistry:machines_b_purifier_cyclone_top", "y": 180},
+		"facing=up,variant=purifier_cyclone_top": 		{ "model": "rockhounding_chemistry:machines_b_purifier_cyclone_top", "y": 180},
+		"facing=north,variant=purifier_cyclone_top": 	{ "model": "rockhounding_chemistry:machines_b_purifier_cyclone_top", "y": 180},
+        "facing=south,variant=purifier_cyclone_top": 	{ "model": "rockhounding_chemistry:machines_b_purifier_cyclone_top"},
+        "facing=west,variant=purifier_cyclone_top": 	{ "model": "rockhounding_chemistry:machines_b_purifier_cyclone_top", "y": 90},
+        "facing=east,variant=purifier_cyclone_top": 	{ "model": "rockhounding_chemistry:machines_b_purifier_cyclone_top", "y": 270},
+
+		"facing=down,variant=particulate_collector": 	{ "model": "rockhounding_chemistry:machines_b_particulate_collector", "y": 180},
+		"facing=up,variant=particulate_collector": 		{ "model": "rockhounding_chemistry:machines_b_particulate_collector", "y": 180},
+		"facing=north,variant=particulate_collector": 	{ "model": "rockhounding_chemistry:machines_b_particulate_collector", "y": 180},
+        "facing=south,variant=particulate_collector": 	{ "model": "rockhounding_chemistry:machines_b_particulate_collector"},
+        "facing=west,variant=particulate_collector": 	{ "model": "rockhounding_chemistry:machines_b_particulate_collector", "y": 90},
+        "facing=east,variant=particulate_collector": 	{ "model": "rockhounding_chemistry:machines_b_particulate_collector", "y": 270},
+
+		"facing=down,variant=pressure_vessel": 			{ "model": "rockhounding_chemistry:machines_b_pressure_vessel", "y": 180},
+		"facing=up,variant=pressure_vessel": 			{ "model": "rockhounding_chemistry:machines_b_pressure_vessel", "y": 180},
+		"facing=north,variant=pressure_vessel": 		{ "model": "rockhounding_chemistry:machines_b_pressure_vessel", "y": 180},
+        "facing=south,variant=pressure_vessel": 		{ "model": "rockhounding_chemistry:machines_b_pressure_vessel"},
+        "facing=west,variant=pressure_vessel": 			{ "model": "rockhounding_chemistry:machines_b_pressure_vessel", "y": 90},
+        "facing=east,variant=pressure_vessel": 			{ "model": "rockhounding_chemistry:machines_b_pressure_vessel", "y": 270},
+
+		"facing=down,variant=air_compressor": 			{ "model": "rockhounding_chemistry:machines_b_air_compressor"},
+		"facing=up,variant=air_compressor": 			{ "model": "rockhounding_chemistry:machines_b_air_compressor"},
+		"facing=north,variant=air_compressor": 			{ "model": "rockhounding_chemistry:machines_b_air_compressor"},
+        "facing=south,variant=air_compressor": 			{ "model": "rockhounding_chemistry:machines_b_air_compressor", "y": 180},
+        "facing=west,variant=air_compressor": 			{ "model": "rockhounding_chemistry:machines_b_air_compressor", "y": 270},
+        "facing=east,variant=air_compressor": 			{ "model": "rockhounding_chemistry:machines_b_air_compressor", "y": 90},
+
+		"facing=down,variant=heat_exchanger_base": 		{ "model": "rockhounding_chemistry:machines_b_heat_exchanger_base", "y": 180},
+		"facing=up,variant=heat_exchanger_base": 		{ "model": "rockhounding_chemistry:machines_b_heat_exchanger_base", "y": 180},
+		"facing=north,variant=heat_exchanger_base": 	{ "model": "rockhounding_chemistry:machines_b_heat_exchanger_base", "y": 180},
+        "facing=south,variant=heat_exchanger_base": 	{ "model": "rockhounding_chemistry:machines_b_heat_exchanger_base"},
+        "facing=west,variant=heat_exchanger_base": 		{ "model": "rockhounding_chemistry:machines_b_heat_exchanger_base", "y": 90},
+        "facing=east,variant=heat_exchanger_base": 		{ "model": "rockhounding_chemistry:machines_b_heat_exchanger_base", "y": 270},
+
+		"facing=down,variant=heat_exchanger_top": 		{ "model": "rockhounding_chemistry:machines_b_heat_exchanger_top", "y": 180},
+		"facing=up,variant=heat_exchanger_top": 		{ "model": "rockhounding_chemistry:machines_b_heat_exchanger_top", "y": 180},
+		"facing=north,variant=heat_exchanger_top": 		{ "model": "rockhounding_chemistry:machines_b_heat_exchanger_top", "y": 180},
+        "facing=south,variant=heat_exchanger_top": 		{ "model": "rockhounding_chemistry:machines_b_heat_exchanger_top"},
+        "facing=west,variant=heat_exchanger_top": 		{ "model": "rockhounding_chemistry:machines_b_heat_exchanger_top", "y": 90},
+        "facing=east,variant=heat_exchanger_top": 		{ "model": "rockhounding_chemistry:machines_b_heat_exchanger_top", "y": 270},
+
+		"facing=down,variant=gan_turboexpander_base": 	{ "model": "rockhounding_chemistry:machines_b_gan_turboexpander_base", "y": 180},
+		"facing=up,variant=gan_turboexpander_base": 	{ "model": "rockhounding_chemistry:machines_b_gan_turboexpander_base", "y": 180},
+		"facing=north,variant=gan_turboexpander_base": 	{ "model": "rockhounding_chemistry:machines_b_gan_turboexpander_base", "y": 180},
+        "facing=south,variant=gan_turboexpander_base": 	{ "model": "rockhounding_chemistry:machines_b_gan_turboexpander_base"},
+        "facing=west,variant=gan_turboexpander_base": 	{ "model": "rockhounding_chemistry:machines_b_gan_turboexpander_base", "y": 90},
+        "facing=east,variant=gan_turboexpander_base": 	{ "model": "rockhounding_chemistry:machines_b_gan_turboexpander_base", "y": 270},
+
+		"facing=down,variant=gan_turboexpander_top": 	{ "model": "rockhounding_chemistry:machines_b_gan_turboexpander_top", "y": 180},
+		"facing=up,variant=gan_turboexpander_top": 		{ "model": "rockhounding_chemistry:machines_b_gan_turboexpander_top", "y": 180},
+		"facing=north,variant=gan_turboexpander_top": 	{ "model": "rockhounding_chemistry:machines_b_gan_turboexpander_top", "y": 180},
+        "facing=south,variant=gan_turboexpander_top": 	{ "model": "rockhounding_chemistry:machines_b_gan_turboexpander_top"},
+        "facing=west,variant=gan_turboexpander_top": 	{ "model": "rockhounding_chemistry:machines_b_gan_turboexpander_top", "y": 90},
+        "facing=east,variant=gan_turboexpander_top": 	{ "model": "rockhounding_chemistry:machines_b_gan_turboexpander_top", "y": 270},
+
+		"facing=down,variant=purifier_cyclone_cap": 	{ "model": "rockhounding_chemistry:machines_b_purifier_cyclone_cap", "y": 180},
+		"facing=up,variant=purifier_cyclone_cap": 		{ "model": "rockhounding_chemistry:machines_b_purifier_cyclone_cap", "y": 180},
+		"facing=north,variant=purifier_cyclone_cap": 	{ "model": "rockhounding_chemistry:machines_b_purifier_cyclone_cap", "y": 180},
+        "facing=south,variant=purifier_cyclone_cap": 	{ "model": "rockhounding_chemistry:machines_b_purifier_cyclone_cap"},
+        "facing=west,variant=purifier_cyclone_cap": 	{ "model": "rockhounding_chemistry:machines_b_purifier_cyclone_cap", "y": 90},
+        "facing=east,variant=purifier_cyclone_cap": 	{ "model": "rockhounding_chemistry:machines_b_purifier_cyclone_cap", "y": 270}
+
+
+	}
+}

@@ -1,0 +1,30 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:utils",
+	"pattern": [
+		"SGS", 
+		"CgC", 
+		"CcC"
+	],
+	"key": {
+		"G":{
+				"item": "#GLASS_PIPE"
+			},
+		"C":{
+				"item": "#IRON_COIL"
+			},
+		"g":{
+				"item": "#GLASS"
+			},
+		"S":{
+				"item": "#SCAFFOLD"
+			},
+		"c":{
+				"item": "#IRON_CASING"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:machines_e",
+				"data": 9
+			}
+}

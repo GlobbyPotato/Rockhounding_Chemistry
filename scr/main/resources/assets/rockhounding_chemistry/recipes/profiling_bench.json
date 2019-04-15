@@ -1,0 +1,25 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:machines",
+	"pattern": [
+		"IPI",
+		"I I",
+		"SSS"
+	],
+	"key": {
+		"P":{
+				"item": "#PISTON"
+			},
+		"I":{
+				"item": "#IRON_INGOT"
+			},
+		"S":{
+				"item": "minecraft:stone_slab",
+				"data": 0
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:machines_a",
+				"data": 11
+			}
+}

@@ -1,0 +1,14 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"group": "rockhounding_chemistry:utils",
+	"ingredients":[
+		{
+				"item": "rockhounding_chemistry:misc_items",
+				"data": 0
+		}
+	],
+	"result":{
+				"item": "rockhounding_chemistry:misc_items",
+				"data": 0
+			}
+}

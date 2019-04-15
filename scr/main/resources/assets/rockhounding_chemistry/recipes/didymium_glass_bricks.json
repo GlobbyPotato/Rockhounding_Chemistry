@@ -1,0 +1,19 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:utils",
+	"pattern": [
+		"PP", 
+		"PP" 
+	],
+	"key": {
+		"P":{
+				"item": "rockhounding_chemistry:didymium_glass",
+				"data": 1
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:didymium_glass",
+				"data": 2,
+				"count": 4
+			}
+}

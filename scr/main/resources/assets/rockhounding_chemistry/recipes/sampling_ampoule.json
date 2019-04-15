@@ -1,0 +1,23 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:utils",
+	"pattern": [
+		"N  ", 
+		"PGG" 
+	],
+	"key": {
+		"N":{
+				"item": "#IRON_NUGGET"
+			},
+		"P":{
+				"item": "#GLASS_PIPE"
+			},
+		"G":{
+				"item": "#GLASS"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:sampling_ampoule",
+				"data": 0
+			}
+}

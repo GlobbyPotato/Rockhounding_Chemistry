@@ -1,0 +1,30 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:machines",
+	"pattern": [
+		"CXC",
+		"TLT",
+		"CSC"
+	],
+	"key": {
+		"S":{
+				"item": "#SCAFFOLD"
+			},
+		"C":{
+				"item": "#IRON_CASING"
+			},
+		"T":{
+				"item": "#GLASS_PIPE"
+			},
+		"L":{
+				"item": "#BASE_CHIP"
+			},
+		"X":{
+				"item": "#COMPARATOR"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:machines_d",
+				"data": 11
+			}
+}

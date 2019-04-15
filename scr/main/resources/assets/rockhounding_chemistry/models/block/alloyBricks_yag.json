@@ -1,6 +1,0 @@
-{
-    "parent": "block/cube_all",
-    "textures": {
-        "all": "rockhounding_chemistry:blocks/alloyBricks_yag"
-    }
-}

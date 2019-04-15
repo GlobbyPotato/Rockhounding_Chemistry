@@ -1,0 +1,22 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:utils",
+	"pattern": [
+		"ARA",
+		"R R",
+		"ARA"
+	],
+	"key": {
+		"A":{
+				"item": "#SCAFFOLD"
+			},
+		"R":{
+				"item": "#GLASS"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:misc_blocks_a",
+				"data": 13,
+				"count": 4
+			}
+}

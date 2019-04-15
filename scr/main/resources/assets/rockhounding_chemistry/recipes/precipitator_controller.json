@@ -1,0 +1,30 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:machines",
+	"pattern": [
+		"CxC",
+		"pLp",
+		"CSC"
+	],
+	"key": {
+		"x":{
+				"item": "#IRON_COIL"
+			},
+		"p":{
+				"item": "#GLASS_PIPE"
+			},
+		"C":{
+				"item": "#IRON_CASING"
+			},
+		"L":{
+				"item": "#ADVANCED_CHIP"
+			},
+		"S":{
+				"item": "#SEPARATOR"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:machines_e",
+				"data": 11
+			}
+}

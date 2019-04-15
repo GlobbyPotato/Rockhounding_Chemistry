@@ -1,0 +1,30 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:machines",
+	"pattern": [
+		"fSf",
+		"PCP",
+		"fTf"
+	],
+	"key": {
+		"f":{
+				"item": "#IRON_FOIL"
+			},
+		"S":{
+				"item": "#SCAFFOLD"
+			},
+		"C":{
+				"item": "#SEPARATOR"
+			},
+		"T":{
+				"item": "#COMPRESSOR"
+			},
+		"P":{
+				"item": "#GLASS_PIPE"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:misc_blocks_a",
+				"data": 7
+			}
+}

@@ -1,0 +1,17 @@
+{
+    "variants": {
+        "variant=antimonate": 	{"model" : "rockhounding_chemistry:mineral_ores_antimonate"},
+        "variant=arsenate": 	{"model" : "rockhounding_chemistry:mineral_ores_arsenate"},
+        "variant=borate": 		{"model" : "rockhounding_chemistry:mineral_ores_borate"},
+        "variant=carbonate": 	{"model" : "rockhounding_chemistry:mineral_ores_carbonate"},
+        "variant=chromate": 	{"model" : "rockhounding_chemistry:mineral_ores_chromate"},
+        "variant=halide": 		{"model" : "rockhounding_chemistry:mineral_ores_halide"},
+        "variant=native": 		{"model" : "rockhounding_chemistry:mineral_ores_native"},
+        "variant=oxide": 		{"model" : "rockhounding_chemistry:mineral_ores_oxide"},
+        "variant=phosphate": 	{"model" : "rockhounding_chemistry:mineral_ores_phosphate"},
+        "variant=silicate": 	{"model" : "rockhounding_chemistry:mineral_ores_silicate"},
+        "variant=sulfate": 		{"model" : "rockhounding_chemistry:mineral_ores_sulfate"},
+        "variant=sulfide": 		{"model" : "rockhounding_chemistry:mineral_ores_sulfide"},
+        "variant=vanadate": 	{"model" : "rockhounding_chemistry:mineral_ores_vanadate"}
+    }
+}

@@ -1,0 +1,30 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:machines",
+	"pattern": [
+		"CcC",
+		"LAL",
+		"SCS"
+	],
+	"key": {
+		"c":{
+				"item": "#COMPARATOR"
+			},
+		"S":{
+				"item": "#SCAFFOLD"
+			},
+		"C":{
+				"item": "#IRON_CASING"
+			},
+		"A":{
+				"item": "#ADVANCED_CHIP"
+			},
+		"L":{
+				"item": "#BASE_CHIP"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:machines_c",
+				"data": 0
+			}
+}

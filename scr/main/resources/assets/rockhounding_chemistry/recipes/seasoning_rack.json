@@ -1,0 +1,27 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:machines",
+	"pattern": [
+		"SSS",
+		"SSS",
+		"PIP"
+	],
+	"key": {
+		"P":{
+				"ore": "plankWood", 
+				"type": "forge:ore_dict"
+			},
+		"S":{
+				"ore": "slabWood", 
+				"type": "forge:ore_dict"
+			},
+		"I":{
+				"ore": "ingotIron", 
+				"type": "forge:ore_dict"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:machines_a",
+				"data": 13
+			}
+}

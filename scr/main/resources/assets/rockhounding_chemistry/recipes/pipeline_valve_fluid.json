@@ -1,0 +1,27 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:utils",
+	"pattern": [
+		"FGF", 
+		"FrF", 
+		"FRF"
+	],
+	"key": {
+		"G":{
+				"item": "#GLASS"
+			},
+		"r":{
+				"item": "#COMPARATOR"
+			},
+		"R":{
+				"item": "#REDSTONE_BLOCK"
+			},
+		"F":{
+				"item": "#IRON_FOIL"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:pipeline_valve",
+				"data": 0
+			}
+}

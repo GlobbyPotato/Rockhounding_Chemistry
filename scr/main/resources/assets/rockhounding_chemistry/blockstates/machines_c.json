@@ -1,0 +1,117 @@
+{
+    "variants": {
+        "facing=down,variant=gan_controller": 				{ "model": "rockhounding_chemistry:machines_c_gan_controller", "y": 180},
+        "facing=up,variant=gan_controller": 				{ "model": "rockhounding_chemistry:machines_c_gan_controller", "y": 180},
+        "facing=north,variant=gan_controller": 				{ "model": "rockhounding_chemistry:machines_c_gan_controller", "y": 180},
+        "facing=south,variant=gan_controller": 				{ "model": "rockhounding_chemistry:machines_c_gan_controller"},
+        "facing=west,variant=gan_controller": 				{ "model": "rockhounding_chemistry:machines_c_gan_controller", "y": 90},
+        "facing=east,variant=gan_controller": 				{ "model": "rockhounding_chemistry:machines_c_gan_controller", "y": 270},
+
+        "facing=down,variant=gas_condenser": 				{ "model": "rockhounding_chemistry:machines_c_gas_condenser", "y": 180},
+        "facing=up,variant=gas_condenser": 					{ "model": "rockhounding_chemistry:machines_c_gas_condenser", "y": 180},
+        "facing=north,variant=gas_condenser": 				{ "model": "rockhounding_chemistry:machines_c_gas_condenser", "y": 180},
+        "facing=south,variant=gas_condenser": 				{ "model": "rockhounding_chemistry:machines_c_gas_condenser"},
+        "facing=west,variant=gas_condenser": 				{ "model": "rockhounding_chemistry:machines_c_gas_condenser", "y": 90},
+        "facing=east,variant=gas_condenser": 				{ "model": "rockhounding_chemistry:machines_c_gas_condenser", "y": 270},
+		
+        "facing=down,variant=multivessel": 					{ "model": "rockhounding_chemistry:machines_c_multivessel", "y": 180},
+        "facing=up,variant=multivessel": 					{ "model": "rockhounding_chemistry:machines_c_multivessel", "y": 180},
+        "facing=north,variant=multivessel": 				{ "model": "rockhounding_chemistry:machines_c_multivessel", "y": 180},
+        "facing=south,variant=multivessel": 				{ "model": "rockhounding_chemistry:machines_c_multivessel"},
+        "facing=west,variant=multivessel": 					{ "model": "rockhounding_chemistry:machines_c_multivessel", "y": 90},
+        "facing=east,variant=multivessel": 					{ "model": "rockhounding_chemistry:machines_c_multivessel", "y": 270},
+
+        "facing=down,variant=leaching_vat_controller":		{ "model": "rockhounding_chemistry:machines_c_leaching_vat_controller", "y": 180},
+        "facing=up,variant=leaching_vat_controller":		{ "model": "rockhounding_chemistry:machines_c_leaching_vat_controller", "y": 180},
+        "facing=north,variant=leaching_vat_controller":		{ "model": "rockhounding_chemistry:machines_c_leaching_vat_controller", "y": 180},
+        "facing=south,variant=leaching_vat_controller": 	{ "model": "rockhounding_chemistry:machines_c_leaching_vat_controller"},
+        "facing=west,variant=leaching_vat_controller": 		{ "model": "rockhounding_chemistry:machines_c_leaching_vat_controller", "y": 90},
+        "facing=east,variant=leaching_vat_controller": 		{ "model": "rockhounding_chemistry:machines_c_leaching_vat_controller", "y": 270},
+
+        "facing=down,variant=leaching_vat_tank": 			{ "model": "rockhounding_chemistry:machines_c_leaching_vat_tank", "y": 180},
+        "facing=up,variant=leaching_vat_tank": 				{ "model": "rockhounding_chemistry:machines_c_leaching_vat_tank", "y": 180},
+        "facing=north,variant=leaching_vat_tank": 			{ "model": "rockhounding_chemistry:machines_c_leaching_vat_tank", "y": 180},
+        "facing=south,variant=leaching_vat_tank": 			{ "model": "rockhounding_chemistry:machines_c_leaching_vat_tank"},
+        "facing=west,variant=leaching_vat_tank": 			{ "model": "rockhounding_chemistry:machines_c_leaching_vat_tank", "y": 90},
+        "facing=east,variant=leaching_vat_tank": 			{ "model": "rockhounding_chemistry:machines_c_leaching_vat_tank", "y": 270},
+
+        "facing=down,variant=leaching_vat_collector": 		{ "model": "rockhounding_chemistry:machines_c_leaching_vat_collector", "y": 180},
+        "facing=up,variant=leaching_vat_collector": 		{ "model": "rockhounding_chemistry:machines_c_leaching_vat_collector", "y": 180},
+        "facing=north,variant=leaching_vat_collector": 		{ "model": "rockhounding_chemistry:machines_c_leaching_vat_collector", "y": 180},
+        "facing=south,variant=leaching_vat_collector": 		{ "model": "rockhounding_chemistry:machines_c_leaching_vat_collector"},
+        "facing=west,variant=leaching_vat_collector": 		{ "model": "rockhounding_chemistry:machines_c_leaching_vat_collector", "y": 90},
+        "facing=east,variant=leaching_vat_collector": 		{ "model": "rockhounding_chemistry:machines_c_leaching_vat_collector", "y": 270},
+		
+        "facing=down,variant=retention_vat": 				{ "model": "rockhounding_chemistry:machines_c_retention_vat", "y": 180},
+        "facing=up,variant=retention_vat": 					{ "model": "rockhounding_chemistry:machines_c_retention_vat", "y": 180},
+        "facing=north,variant=retention_vat": 				{ "model": "rockhounding_chemistry:machines_c_retention_vat", "y": 180},
+        "facing=south,variant=retention_vat": 				{ "model": "rockhounding_chemistry:machines_c_retention_vat"},
+        "facing=west,variant=retention_vat": 				{ "model": "rockhounding_chemistry:machines_c_retention_vat", "y": 90},
+        "facing=east,variant=retention_vat": 				{ "model": "rockhounding_chemistry:machines_c_retention_vat", "y": 270},
+
+        "facing=down,variant=extractor_controller": 		{ "model": "rockhounding_chemistry:machines_c_extractor_controller", "y": 180},
+        "facing=up,variant=extractor_controller": 			{ "model": "rockhounding_chemistry:machines_c_extractor_controller", "y": 180},
+        "facing=north,variant=extractor_controller": 		{ "model": "rockhounding_chemistry:machines_c_extractor_controller", "y": 180},
+        "facing=south,variant=extractor_controller": 		{ "model": "rockhounding_chemistry:machines_c_extractor_controller"},
+        "facing=west,variant=extractor_controller": 		{ "model": "rockhounding_chemistry:machines_c_extractor_controller", "y": 90},
+        "facing=east,variant=extractor_controller": 		{ "model": "rockhounding_chemistry:machines_c_extractor_controller", "y": 270},
+
+        "facing=down,variant=extractor_reactor": 			{ "model": "rockhounding_chemistry:machines_c_extractor_reactor", "y": 180},
+        "facing=up,variant=extractor_reactor": 				{ "model": "rockhounding_chemistry:machines_c_extractor_reactor", "y": 180},
+        "facing=north,variant=extractor_reactor": 			{ "model": "rockhounding_chemistry:machines_c_extractor_reactor", "y": 180},
+        "facing=south,variant=extractor_reactor": 			{ "model": "rockhounding_chemistry:machines_c_extractor_reactor"},
+        "facing=west,variant=extractor_reactor": 			{ "model": "rockhounding_chemistry:machines_c_extractor_reactor", "y": 90},
+        "facing=east,variant=extractor_reactor": 			{ "model": "rockhounding_chemistry:machines_c_extractor_reactor", "y": 270},
+		
+		"facing=down,variant=elements_cabinet_base": 		{ "model": "rockhounding_chemistry:machines_c_elements_cabinet_base", "y": 180},
+		"facing=up,variant=elements_cabinet_base": 			{ "model": "rockhounding_chemistry:machines_c_elements_cabinet_base", "y": 180},
+		"facing=north,variant=elements_cabinet_base": 		{ "model": "rockhounding_chemistry:machines_c_elements_cabinet_base", "y": 180},
+        "facing=south,variant=elements_cabinet_base": 		{ "model": "rockhounding_chemistry:machines_c_elements_cabinet_base"},
+        "facing=west,variant=elements_cabinet_base": 		{ "model": "rockhounding_chemistry:machines_c_elements_cabinet_base", "y": 90},
+        "facing=east,variant=elements_cabinet_base": 		{ "model": "rockhounding_chemistry:machines_c_elements_cabinet_base", "y": 270},
+
+		"facing=down,variant=elements_cabinet_top": 		{ "model": "rockhounding_chemistry:machines_c_elements_cabinet_top", "y": 180},
+		"facing=up,variant=elements_cabinet_top": 			{ "model": "rockhounding_chemistry:machines_c_elements_cabinet_top", "y": 180},
+		"facing=north,variant=elements_cabinet_top": 		{ "model": "rockhounding_chemistry:machines_c_elements_cabinet_top", "y": 180},
+        "facing=south,variant=elements_cabinet_top": 		{ "model": "rockhounding_chemistry:machines_c_elements_cabinet_top"},
+        "facing=west,variant=elements_cabinet_top": 		{ "model": "rockhounding_chemistry:machines_c_elements_cabinet_top", "y": 90},
+        "facing=east,variant=elements_cabinet_top": 		{ "model": "rockhounding_chemistry:machines_c_elements_cabinet_top", "y": 270},
+		
+		"facing=down,variant=extractor_injector": 			{ "model": "rockhounding_chemistry:machines_c_extractor_injector"},
+		"facing=up,variant=extractor_injector": 			{ "model": "rockhounding_chemistry:machines_c_extractor_injector"},
+		"facing=north,variant=extractor_injector": 			{ "model": "rockhounding_chemistry:machines_c_extractor_injector"},
+        "facing=south,variant=extractor_injector": 			{ "model": "rockhounding_chemistry:machines_c_extractor_injector", "y": 180},
+        "facing=west,variant=extractor_injector": 			{ "model": "rockhounding_chemistry:machines_c_extractor_injector", "y": 270},
+        "facing=east,variant=extractor_injector": 			{ "model": "rockhounding_chemistry:machines_c_extractor_injector", "y": 90},
+		
+		"facing=down,variant=extractor_balance": 			{ "model": "rockhounding_chemistry:machines_c_extractor_balance", "y": 180},
+		"facing=up,variant=extractor_balance": 				{ "model": "rockhounding_chemistry:machines_c_extractor_balance", "y": 180},
+		"facing=north,variant=extractor_balance": 			{ "model": "rockhounding_chemistry:machines_c_extractor_balance", "y": 180},
+        "facing=south,variant=extractor_balance": 			{ "model": "rockhounding_chemistry:machines_c_extractor_balance"},
+        "facing=west,variant=extractor_balance": 			{ "model": "rockhounding_chemistry:machines_c_extractor_balance", "y": 90},
+        "facing=east,variant=extractor_balance": 			{ "model": "rockhounding_chemistry:machines_c_extractor_balance", "y": 270},
+
+		"facing=down,variant=reformer_controller": 			{ "model": "rockhounding_chemistry:machines_c_reformer_controller", "y": 180},
+		"facing=up,variant=reformer_controller": 			{ "model": "rockhounding_chemistry:machines_c_reformer_controller", "y": 180},
+		"facing=north,variant=reformer_controller": 		{ "model": "rockhounding_chemistry:machines_c_reformer_controller", "y": 180},
+        "facing=south,variant=reformer_controller": 		{ "model": "rockhounding_chemistry:machines_c_reformer_controller"},
+        "facing=west,variant=reformer_controller": 			{ "model": "rockhounding_chemistry:machines_c_reformer_controller", "y": 90},
+        "facing=east,variant=reformer_controller": 			{ "model": "rockhounding_chemistry:machines_c_reformer_controller", "y": 270},
+
+		"facing=down,variant=reformer_reactor": 			{ "model": "rockhounding_chemistry:machines_c_reformer_reactor", "y": 180},
+		"facing=up,variant=reformer_reactor": 				{ "model": "rockhounding_chemistry:machines_c_reformer_reactor", "y": 180},
+		"facing=north,variant=reformer_reactor": 			{ "model": "rockhounding_chemistry:machines_c_reformer_reactor", "y": 180},
+        "facing=south,variant=reformer_reactor": 			{ "model": "rockhounding_chemistry:machines_c_reformer_reactor"},
+        "facing=west,variant=reformer_reactor": 			{ "model": "rockhounding_chemistry:machines_c_reformer_reactor", "y": 90},
+        "facing=east,variant=reformer_reactor": 			{ "model": "rockhounding_chemistry:machines_c_reformer_reactor", "y": 270},
+
+		"facing=down,variant=extractor_stabilizer": 		{ "model": "rockhounding_chemistry:machines_c_extractor_stabilizer"},
+		"facing=up,variant=extractor_stabilizer": 			{ "model": "rockhounding_chemistry:machines_c_extractor_stabilizer"},
+		"facing=north,variant=extractor_stabilizer": 		{ "model": "rockhounding_chemistry:machines_c_extractor_stabilizer"},
+        "facing=south,variant=extractor_stabilizer": 		{ "model": "rockhounding_chemistry:machines_c_extractor_stabilizer", "y": 180},
+        "facing=west,variant=extractor_stabilizer": 		{ "model": "rockhounding_chemistry:machines_c_extractor_stabilizer", "y": 270},
+        "facing=east,variant=extractor_stabilizer": 		{ "model": "rockhounding_chemistry:machines_c_extractor_stabilizer", "y": 90}
+		
+
+	}
+}

@@ -1,0 +1,7 @@
+{
+    "variants": {
+		"variant=nd_yag": 			{"model" : "rockhounding_chemistry:alloy_blocks_gems_nd_yag"},
+		"variant=er_yag": 			{"model" : "rockhounding_chemistry:alloy_blocks_gems_er_yag"},
+		"variant=yb_yag": 			{"model" : "rockhounding_chemistry:alloy_blocks_gems_yb_yag"}
+    }
+}

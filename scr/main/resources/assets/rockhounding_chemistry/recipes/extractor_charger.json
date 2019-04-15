@@ -1,0 +1,30 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:machines",
+	"pattern": [
+		"rrr",
+		"GRG",
+		"FSF"
+	],
+	"key": {
+		"R":{
+				"item": "#REDSTONE_BLOCK"
+			},
+		"r":{
+				"item": "#REPEATER"
+			},
+		"G":{
+				"item": "#GLASS"
+			},
+		"F":{
+				"item": "#IRON_FOIL"
+			},
+		"S":{
+				"item": "#SCAFFOLD"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:misc_blocks_a",
+				"data": 4
+			}
+}

@@ -1,0 +1,29 @@
+{
+    "multipart": [
+        {   "apply": { "model": "rockhounding_chemistry:gasline_duct_cube" }},
+
+        {   "when": { "down": "true" },
+            "apply": { "model": "rockhounding_chemistry:gasline_duct_side", "x": 90, "uvlock": false }
+        },
+
+        {   "when": { "up": "true" },
+            "apply": { "model": "rockhounding_chemistry:gasline_duct_side", "x": 270, "uvlock": false }
+        },
+
+        {   "when": { "north": "true" },
+            "apply": { "model": "rockhounding_chemistry:gasline_duct_side", "uvlock": false }
+        },
+
+        {   "when": { "east": "true" },
+            "apply": { "model": "rockhounding_chemistry:gasline_duct_side", "y": 90, "uvlock": false }
+        },
+
+        {   "when": { "south": "true" },
+            "apply": { "model": "rockhounding_chemistry:gasline_duct_side", "y": 180, "uvlock": false }
+        },
+
+        {   "when": { "west": "true" },
+            "apply": { "model": "rockhounding_chemistry:gasline_duct_side", "y": 270, "uvlock": false }
+        }
+    ]
+}

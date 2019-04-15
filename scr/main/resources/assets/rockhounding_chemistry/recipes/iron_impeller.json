@@ -1,0 +1,21 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:utils",
+	"pattern": [
+		"F F", 
+		" R ", 
+		"F F"
+	],
+	"key": {
+		"R":{
+				"item": "#ROTOR"
+			},
+		"F":{
+				"item": "#IRON_FOIL"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:misc_items",
+				"data": 30
+			}
+}

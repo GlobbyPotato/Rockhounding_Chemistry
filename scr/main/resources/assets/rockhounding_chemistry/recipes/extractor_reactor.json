@@ -1,0 +1,24 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:machines",
+	"pattern": [
+		"CGC",
+		"p p",
+		"CGC"
+	],
+	"key": {
+		"p":{
+				"item": "#GLASS_PIPE"
+			},
+		"C":{
+				"item": "#IRON_CASING"
+			},
+		"G":{
+				"item": "#GLASS"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:machines_c",
+				"data": 8
+			}
+}

@@ -1,0 +1,132 @@
+package com.globbypotato.rockhounding_chemistry.compat.waila;
+
+import java.util.List;
+
+import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
+import com.globbypotato.rockhounding_chemistry.machines.MachinesE;
+import com.globbypotato.rockhounding_chemistry.machines.tile.TEBufferTank;
+import com.globbypotato.rockhounding_chemistry.machines.tile.TECatalystRegen;
+import com.globbypotato.rockhounding_chemistry.machines.tile.TEExhaustionValve;
+import com.globbypotato.rockhounding_chemistry.machines.tile.TEGasHolderBase;
+import com.globbypotato.rockhounding_chemistry.machines.tile.TEGasHolderTop;
+import com.globbypotato.rockhounding_chemistry.machines.tile.TEMultivessel;
+import com.globbypotato.rockhounding_chemistry.machines.tile.TEPressureVessel;
+import com.globbypotato.rockhounding_chemistry.machines.tile.TESlurryDrum;
+import com.globbypotato.rockhounding_chemistry.machines.tile.TEStirredTankOut;
+import com.globbypotato.rockhounding_chemistry.machines.tile.TETransposer;
+import com.globbypotato.rockhounding_chemistry.machines.tile.TEWaterPump;
+
+import mcp.mobius.waila.api.IWailaConfigHandler;
+import mcp.mobius.waila.api.IWailaDataAccessor;
+import mcp.mobius.waila.api.IWailaDataProvider;
+import mcp.mobius.waila.api.IWailaRegistrar;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.World;
+
+public class WailaMachinesE implements IWailaDataProvider{
+
+	@Override
+	public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) {
+		return new ItemStack(accessor.getBlock(), 1, accessor.getMetadata());
+	}
+
+	@Override
+	public List<String> getWailaHead(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
+		return currenttip;
+	}
+
+	@Override
+	public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
+		BlockPos pos = accessor.getPosition();
+		World world = accessor.getWorld();
+		TileEntity te = world.getTileEntity(pos);
+		if(te != null){
+			if(te instanceof TEWaterPump){
+				TEWaterPump tank = (TEWaterPump)te;
+				if(tank.hasTankFluid()){
+					currenttip.add(TextFormatting.GRAY + "Content: " + TextFormatting.WHITE + tank.getTankFluid().getLocalizedName() + " - " + TextFormatting.WHITE + tank.getTankAmount() + "/" + tank.getTankCapacity() + " mB");
+				}else{
+					currenttip.add(TextFormatting.GRAY + "Content: " + TextFormatting.WHITE + "Empty");
+				}
+				currenttip.add(TextFormatting.GRAY + "Compression: " + TextFormatting.AQUA + tank.getCompressor());
+				currenttip.add(TextFormatting.GRAY + "Tier: " + TextFormatting.DARK_AQUA + (tank.getTier() + 1) + TextFormatting.GRAY + " (" + tank.tierFactor() + " mB)");
+			}
+			if(te instanceof TEExhaustionValve){
+				TileEntity vessel = world.getTileEntity(pos.offset(EnumFacing.DOWN));
+				if(vessel instanceof TEPressureVessel){
+					TEPressureVessel ves = (TEPressureVessel)vessel;
+					currenttip.add(TextFormatting.GRAY + "Tolerance: " + TextFormatting.RED + ves.getCollapse() + "/" + ModConfig.pressureTolerance + " units");
+				}
+				if(vessel instanceof TEMultivessel){
+					TEMultivessel ves = (TEMultivessel)vessel;
+					currenttip.add(TextFormatting.GRAY + "Tolerance: " + TextFormatting.RED + ves.getCollapse() + "/" + ModConfig.pressureTolerance + " units");
+				}
+				if(vessel instanceof TETransposer){
+					TETransposer ves = (TETransposer)vessel;
+					currenttip.add(TextFormatting.GRAY + "Tolerance: " + TextFormatting.RED + ves.getCollapse() + "/" + ModConfig.pressureTolerance + " units");
+				}
+				if(vessel instanceof TEGasHolderTop){
+					TileEntity holder = world.getTileEntity(pos.offset(EnumFacing.DOWN, 2));
+					if(holder instanceof TEGasHolderBase){
+						TEGasHolderBase ves = (TEGasHolderBase)holder;
+						currenttip.add(TextFormatting.GRAY + "Tolerance: " + TextFormatting.RED + ves.getCollapse() + "/" + ModConfig.pressureTolerance + " units");
+					}
+				}
+			}
+			if(te instanceof TECatalystRegen){
+				TECatalystRegen tank = (TECatalystRegen)te;
+				if(tank.hasInputFluid()){
+					currenttip.add(TextFormatting.GRAY + "Content: " + TextFormatting.WHITE + tank.getInputFluid().getLocalizedName() + " - " + TextFormatting.WHITE + tank.getInputAmount() + "/" + tank.getTankCapacity() + " mB");
+				}else{
+					currenttip.add(TextFormatting.GRAY + "Content: " + TextFormatting.WHITE + "Empty");
+				}
+			}
+			if(te instanceof TESlurryDrum){
+				TESlurryDrum tank = (TESlurryDrum)te;
+				if(tank.hasTankFluid()){
+					currenttip.add(TextFormatting.GRAY + "Content: " + TextFormatting.WHITE + tank.getTankFluid().getLocalizedName() + " - " + TextFormatting.WHITE + tank.getTankAmount() + "/" + tank.getTankCapacity() + " mB");
+				}else{
+					currenttip.add(TextFormatting.GRAY + "Content: " + TextFormatting.WHITE + "Empty");
+				}
+			}
+			if(te instanceof TEBufferTank){
+				TEBufferTank tank = (TEBufferTank)te;
+				if(tank.hasTankFluid()){
+					currenttip.add(TextFormatting.GRAY + "Content: " + TextFormatting.WHITE + tank.getTankFluid().getLocalizedName() + " - " + TextFormatting.WHITE + tank.getTankAmount() + "/" + tank.getTankCapacity() + " mB");
+				}else{
+					currenttip.add(TextFormatting.GRAY + "Content: " + TextFormatting.WHITE + "Empty");
+				}
+			}
+			if(te instanceof TEStirredTankOut){
+				TEStirredTankOut tank = (TEStirredTankOut)te;
+				if(tank.hasTankFluid()){
+					currenttip.add(TextFormatting.GRAY + "Content: " + TextFormatting.WHITE + tank.getTankFluid().getLocalizedName() + " - " + TextFormatting.WHITE + tank.getTankAmount() + "/" + tank.getTankCapacity() + " mB");
+				}else{
+					currenttip.add(TextFormatting.GRAY + "Content: " + TextFormatting.WHITE + "Empty");
+				}
+			}
+		}
+		return currenttip;
+	}
+
+	@Override
+	public List<String> getWailaTail(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
+		return currenttip;
+	}
+
+	@Override
+	public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, BlockPos pos) {
+		return tag;
+	}
+
+	public static void callbackRegister(IWailaRegistrar registrar) {
+		registrar.registerBodyProvider(new WailaMachinesE(), MachinesE.class);
+	}
+
+}

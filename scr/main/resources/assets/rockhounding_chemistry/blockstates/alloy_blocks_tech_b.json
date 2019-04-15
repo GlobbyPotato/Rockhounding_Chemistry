@@ -1,0 +1,7 @@
+{
+    "variants": {
+		"variant=nial": 		{"model" : "rockhounding_chemistry:alloy_blocks_tech_b_nial"},
+		"variant=inconel": 		{"model" : "rockhounding_chemistry:alloy_blocks_tech_b_inconel"},
+		"variant=zircaloy": 	{"model" : "rockhounding_chemistry:alloy_blocks_tech_b_zircaloy"}
+    }
+}

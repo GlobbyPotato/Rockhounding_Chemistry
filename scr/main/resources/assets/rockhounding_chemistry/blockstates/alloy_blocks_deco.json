@@ -1,0 +1,16 @@
+{
+    "variants": {
+        "variant=mischmetal": 	{"model" : "rockhounding_chemistry:alloy_blocks_deco_mischmetal"},
+		"variant=rosegold": 	{"model" : "rockhounding_chemistry:alloy_blocks_deco_rosegold"},
+		"variant=greengold": 	{"model" : "rockhounding_chemistry:alloy_blocks_deco_greengold"},
+		"variant=whitegold": 	{"model" : "rockhounding_chemistry:alloy_blocks_deco_whitegold"},
+		"variant=shibuichi": 	{"model" : "rockhounding_chemistry:alloy_blocks_deco_shibuichi"},
+		"variant=tombak": 		{"model" : "rockhounding_chemistry:alloy_blocks_deco_tombak"},
+		"variant=pewter": 		{"model" : "rockhounding_chemistry:alloy_blocks_deco_pewter"},
+		"variant=corten": 		{"model" : "rockhounding_chemistry:alloy_blocks_deco_corten"},
+		"variant=shakudo": 		{"model" : "rockhounding_chemistry:alloy_blocks_deco_shakudo"},
+		"variant=purplegold": 	{"model" : "rockhounding_chemistry:alloy_blocks_deco_purplegold"},
+		"variant=nib": 			{"model" : "rockhounding_chemistry:alloy_blocks_deco_nib"},
+		"variant=cosm": 		{"model" : "rockhounding_chemistry:alloy_blocks_deco_cosm"}
+	}
+}

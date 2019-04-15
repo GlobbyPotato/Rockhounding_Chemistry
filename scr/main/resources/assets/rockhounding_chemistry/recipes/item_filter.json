@@ -1,0 +1,27 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:utils",
+	"pattern": [
+		"rCr", 
+		"RLR", 
+		"rCr"
+	],
+	"key": {
+		"L":{
+				"item": "#BASE_CHIP"
+			},
+		"R":{
+				"item": "#REPEATER"
+			},
+		"C":{
+				"item": "#COMPARATOR"
+			},
+		"r":{
+				"item": "#REDSTONE_DUST"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:misc_items",
+				"data": 11
+			}
+}

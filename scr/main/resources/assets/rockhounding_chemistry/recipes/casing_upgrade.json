@@ -1,0 +1,24 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:utils",
+	"pattern": [
+		"CAC", 
+		"ASA", 
+		"CAC"
+	],
+	"key": {
+		"S":{
+				"item": "#SCAFFOLD"
+			},
+		"A":{
+				"item": "#IRON_ARM"
+			},
+		"C":{
+				"item": "#HYDRONALIUM_CASING"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:misc_items",
+				"data": 15
+			}
+}

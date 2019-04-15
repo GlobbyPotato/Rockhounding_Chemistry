@@ -1,0 +1,30 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:machines",
+	"pattern": [
+		"CXC",
+		"SPS",
+		"CAC"
+	],
+	"key": {
+		"X":{
+				"item": "#CHARGER"
+			},
+		"P":{
+				"item": "#PISTON"
+			},
+		"C":{
+				"item": "#IRON_CASING"
+			},
+		"S":{
+				"item": "#SCAFFOLD"
+			},
+		"A":{
+				"item": "#IRON_ARM"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:misc_blocks_a",
+				"data": 10
+			}
+}
