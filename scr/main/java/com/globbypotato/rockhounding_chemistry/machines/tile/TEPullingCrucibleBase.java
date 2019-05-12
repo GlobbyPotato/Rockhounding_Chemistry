@@ -118,6 +118,11 @@ public class TEPullingCrucibleBase extends TileEntityInv {
 		return ModUtils.isValidSpeedUpgrade(speedSlot()) ? ModConfig.speedPulling / ModUtils.speedUpgrade(speedSlot()): ModConfig.speedPulling;
 	}
 
+	@Override
+	public EnumFacing poweredFacing(){
+		return getFacing().getOpposite();
+	}
+
 
 
 	//----------------------- RECIPE -----------------------

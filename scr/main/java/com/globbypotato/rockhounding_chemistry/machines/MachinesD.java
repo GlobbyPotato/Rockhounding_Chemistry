@@ -29,6 +29,8 @@ import com.globbypotato.rockhounding_chemistry.machines.tile.TEPullingCrucibleBa
 import com.globbypotato.rockhounding_chemistry.machines.tile.TEPullingCrucibleTop;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TETransposer;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TEWasteDumper;
+import com.globbypotato.rockhounding_chemistry.machines.tile.TileTank;
+import com.globbypotato.rockhounding_chemistry.machines.tile.TileVessel;
 import com.globbypotato.rockhounding_core.enums.EnumFluidNbt;
 import com.globbypotato.rockhounding_core.machines.tileentity.IFluidHandlingTile;
 import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityInv;
@@ -286,6 +288,44 @@ public class MachinesD extends MachineIO {
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
 		int meta = state.getBlock().getMetaFromState(state);
         return meta == EnumMachinesD.FLOTATION_TANK.ordinal() ? FLOTATION_BLOCK_AABB : FULL_BLOCK_AABB;
+    }
+
+	public boolean canEmitSignal(IBlockState state){
+		int meta = state.getBlock().getMetaFromState(state);
+        return meta == EnumMachinesD.CONTAINMENT_TANK.ordinal() 
+        	|| meta == EnumMachinesD.GAS_HOLDER_BASE.ordinal();
+	}
+
+	@Override
+    public boolean canProvidePower(IBlockState state){
+        return canEmitSignal(state);
+    }
+
+	@Override
+    public boolean canConnectRedstone(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side){
+        return canEmitSignal(state);
+    }
+
+	@Override
+    public int getStrongPower(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side){
+        return blockState.getWeakPower(blockAccess, pos, side);
+    }
+
+	@Override
+    public int getWeakPower(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side){
+		int currentPower = 0;
+        TileEntity te = world.getTileEntity(pos);
+        if(te != null){
+        	if(te instanceof TileTank){
+	        	TileTank tank = (TileTank)te;
+	        	currentPower = tank.emittedPower();
+        	}
+        	if(te instanceof TileVessel){
+        		TileVessel tank = (TileVessel)te;
+	        	currentPower = tank.emittedPower();
+        	}
+        }
+        return currentPower;
     }
 
 

@@ -29,6 +29,7 @@ import com.globbypotato.rockhounding_chemistry.machines.tile.TEPurifierCycloneBa
 import com.globbypotato.rockhounding_chemistry.machines.tile.TEPurifierCycloneCap;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TEPurifierCycloneTop;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TESlurryPond;
+import com.globbypotato.rockhounding_chemistry.machines.tile.TileVessel;
 import com.globbypotato.rockhounding_core.enums.EnumFluidNbt;
 import com.globbypotato.rockhounding_core.machines.tileentity.IFluidHandlingTile;
 import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityInv;
@@ -240,6 +241,37 @@ public class MachinesB extends MachineIO {
 			world.setBlockToAir(pos);
 		}
 	}
+
+	public boolean canEmitSignal(IBlockState state){
+		int meta = state.getBlock().getMetaFromState(state);
+        return meta == EnumMachinesB.PRESSURE_VESSEL.ordinal();
+	}
+
+	@Override
+    public boolean canProvidePower(IBlockState state){
+        return canEmitSignal(state);
+    }
+
+	@Override
+    public boolean canConnectRedstone(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side){
+        return canEmitSignal(state);
+    }
+
+	@Override
+    public int getStrongPower(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side){
+        return blockState.getWeakPower(blockAccess, pos, side);
+    }
+
+	@Override
+    public int getWeakPower(IBlockState blockState, IBlockAccess world, BlockPos pos, EnumFacing side){
+		int currentPower = 0;
+        TileEntity te = world.getTileEntity(pos);
+        if(te != null && te instanceof TileVessel){
+        	TileVessel tank = (TileVessel)te;
+        	currentPower = tank.emittedPower();
+        }
+        return currentPower;
+    }
 
 
 

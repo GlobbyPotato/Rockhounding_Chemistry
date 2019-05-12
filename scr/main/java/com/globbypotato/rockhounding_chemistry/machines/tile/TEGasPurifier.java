@@ -120,6 +120,16 @@ public class TEGasPurifier extends TileEntityInv {
 		return 30;
 	}
 
+	@Override
+	public BlockPos poweredPosition(){
+		return cycloneTopCap().offset(poweredFacing());
+	}
+
+	@Override
+	public EnumFacing poweredFacing(){
+		return EnumFacing.fromAngle(getFacing().getHorizontalAngle() + 270);
+	}
+
 
 
 	//----------------------- CUSTOM -----------------------

@@ -18,6 +18,7 @@ import net.minecraft.init.Enchantments;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.oredict.OreDictionary;
@@ -144,6 +145,11 @@ public class TEMineralSizerController extends TileEntityInv implements IInternal
 		return EnumServer.SIZER.ordinal();
 	}
 
+	@Override
+	public EnumFacing poweredFacing(){
+		return EnumFacing.fromAngle(getFacing().getHorizontalAngle() + 270);
+	}
+
 
 
 	//----------------------- RECIPE -----------------------
@@ -215,7 +221,7 @@ public class TEMineralSizerController extends TileEntityInv implements IInternal
 
 	//----------------------- CUSTOM -----------------------
 	public int getComminution(){
-		return isPowered() ? getBlockPower() : this.comminution;
+		return /*isPowered() ? getBlockPower() :*/ this.comminution;
 	}
 
 	public ItemStack getFilter() {

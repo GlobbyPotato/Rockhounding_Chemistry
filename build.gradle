@@ -18,7 +18,7 @@ sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
 minecraft {
-    version = "1.12.2-14.23.5.2815"
+    version = "1.12.2-14.23.5.2837"
     runDir = "run"
     mappings = "snapshot_20171003"
     makeObfSourceJar = false
@@ -51,16 +51,16 @@ repositories {
 
 dependencies {
     deobfCompile "mezz.jei:jei_${version_mc}:${version_jei}"
-//	deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-${version_ct}"
 	deobfCompile "cofh:RedstoneFlux:${version_rf}:deobf"
 	deobfCompile "mcjty.theoneprobe:TheOneProbe-1.12:1.12-${version_top}"
     deobfCompile "mcp.mobius.waila:Hwyla:${version_wa}"
-//	deobfCompile "net.darkhax.bookshelf:Bookshelf-1.12.2:${version_bs}"
 //  deobfCompile "gigaherz.guidebook:Guidebook-${version_gb}"
+	deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-${version_ct}"
+	deobfCompile "net.darkhax.bookshelf:Bookshelf-1.12.2:${version_bs}"
 	compile files("lib/rockhounding_core-${version_mc}-${version_core}.jar")
-	compile files("lib/Guidebook-1.12.2-2.8.3.jar")
-	compile files("lib/CraftTweaker2-1.12-4.1.9.jar")
-	compile files("lib/Bookshelf-1.12.2-2.3.553.jar")
+	compile files("lib/Guidebook-1.12.2-2.9.1.jar")
+//	compile files("lib/CraftTweaker2-1.12-4.1.9.jar")
+//	compile files("lib/Bookshelf-1.12.2-2.3.553.jar")
 }
 
 processResources {

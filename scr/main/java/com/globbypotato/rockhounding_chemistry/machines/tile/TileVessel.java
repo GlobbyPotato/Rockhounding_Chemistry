@@ -13,8 +13,11 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 
 public class TileVessel extends TileEntityVessel implements ICollapse{
+	public int emitType;
+	public int emitThreashold;
+	public int capacity;
 
-	public static int templateSlots = 2;
+	public static int templateSlots = 5;
 
 	public FluidTank inputTank;
 	public FluidStack filter = null;
@@ -23,6 +26,7 @@ public class TileVessel extends TileEntityVessel implements ICollapse{
 
 	public TileVessel(int capacity) {
 		super(0, 0, templateSlots, 0);
+		this.capacity = capacity;
 
 		this.inputTank = new FluidTank(capacity){
 
@@ -35,6 +39,12 @@ public class TileVessel extends TileEntityVessel implements ICollapse{
 			public boolean canDrainFluidType(FluidStack gas) {
 				return isValidPump(gas);
 			}
+			
+			@Override
+			public void onContentsChanged(){
+				updateNeighbours();
+		    }
+
 		};
 		this.inputTank.setTileEntity(this);
 		this.markDirtyClient();
@@ -49,6 +59,8 @@ public class TileVessel extends TileEntityVessel implements ICollapse{
 		this.inputTank.readFromNBT(compound.getCompoundTag("InputGas"));
 		this.filter = FluidStack.loadFluidStackFromNBT(compound.getCompoundTag("Filter"));
 		this.collapseRate = compound.getInteger("Collapse");
+		this.emitThreashold = compound.getInteger("EmitThreashold");
+		this.emitType = compound.getInteger("EmitType");
 	}
 
 	@Override
@@ -56,7 +68,9 @@ public class TileVessel extends TileEntityVessel implements ICollapse{
 		super.writeToNBT(compound);
 		
 		compound.setInteger("Collapse", getCollapse());
-		
+		compound.setInteger("EmitType", this.emitType);
+		compound.setInteger("EmitThreashold", this.emitThreashold);
+
 		NBTTagCompound storage = new NBTTagCompound();
 		this.inputTank.writeToNBT(storage);
 		compound.setTag("InputGas", storage);
@@ -97,6 +111,48 @@ public class TileVessel extends TileEntityVessel implements ICollapse{
 	public int exhaustOffset(){
 		return 1;
 	}
+
+	public int getTankCapacity() {
+		return this.capacity;
+	}
+
+	public int getTankAmount() {
+		return hasTankFluid() ? this.inputTank.getFluidAmount() : 0;
+	}
+
+
+
+	// ----------------------- CUSTOM -----------------------
+	public void updateNeighbours() {
+		this.world.notifyNeighborsOfStateChange(this.pos, this.world.getBlockState(this.pos).getBlock(), true);
+	}
+
+	public int getEmitType() {
+		return this.emitType;
+	}
+
+	public int getEmitThreashold() {
+		return this.emitThreashold;
+	}
+
+	public int emittedPower() {
+		int powerFraction = getTankCapacity() / 16;
+		// by level
+		if(getEmitType() == 1){
+			return ((15 * getTankAmount()) / getTankCapacity());
+
+		// on over threashold
+		}else if(getEmitType() == 2){
+			return getTankAmount() >= ((getTankCapacity() / 100) * getEmitThreashold()) ? 15 : 0;
+
+		// off over threashold
+		}else if(getEmitType() == 3){
+			return getTankAmount() < ((getTankCapacity() / 100) * getEmitThreashold()) ? 15 : 0;
+		}
+
+		return 0;
+	}
+
 
 
 	//----------------------- CUSTOM -----------------------

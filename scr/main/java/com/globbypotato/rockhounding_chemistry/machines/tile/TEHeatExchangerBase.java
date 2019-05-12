@@ -96,6 +96,11 @@ public class TEHeatExchangerBase extends TileEntityInv {
 		return ModUtils.isValidSpeedUpgrade(speedSlot()) ? ModUtils.speedUpgrade(speedSlot()) : 1;
 	}
 
+	@Override
+	public EnumFacing poweredFacing(){
+		return EnumFacing.fromAngle(getFacing().getHorizontalAngle() + 270);
+	}
+
 
 
 	// ----------------------- RECIPE -----------------------

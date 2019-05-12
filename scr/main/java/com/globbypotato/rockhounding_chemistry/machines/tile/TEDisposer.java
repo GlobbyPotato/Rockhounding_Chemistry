@@ -100,6 +100,10 @@ public class TEDisposer extends TileEntityInv {
 		return "disposer";
 	}
 
+	@Override
+	public boolean isComparatorSensible(){
+		return false;
+	}
 
 
 	//----------------------- CUSTOM -----------------------

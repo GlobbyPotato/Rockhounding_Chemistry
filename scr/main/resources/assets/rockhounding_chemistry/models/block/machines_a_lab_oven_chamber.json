@@ -5,7 +5,8 @@
         "particle": "rockhounding_chemistry:models/machines_generic_b",
         "0": "rockhounding_chemistry:models/machines_generic_b",
         "1": "rockhounding_chemistry:models/machines_generic",
-        "2": "rockhounding_chemistry:models/machines_generic_c"
+        "2": "rockhounding_chemistry:models/machines_generic_c",
+		"3": "rockhounding_chemistry:models/machines_generic_d"
     },
     "elements": [
         {
@@ -634,6 +635,43 @@
                 "west": { "texture": "#0", "uv": [ 4.0, 4.0, 8.0, 8.0 ] },
                 "up": { "texture": "#0", "uv": [ 4.0, 4.0, 8.0, 8.0 ] },
                 "down": { "texture": "#0", "uv": [ 4.0, 4.0, 8.0, 8.0 ] }
+            }
+        },
+        {
+            "name": "Cube",
+            "from": [ -0.20000000298023224, 1.4901161138336505E-9, 4.0 ], 
+            "to": [ 4.799999982118607, 1.4000000074505805, 12.0 ], 
+            "faces": {
+                "north": { "texture": "#2", "uv": [ 4.0, 0.0, 8.0, 4.0 ] },
+                "east": { "texture": "#2", "uv": [ 4.0, 0.0, 8.0, 4.0 ] },
+                "south": { "texture": "#2", "uv": [ 4.0, 0.0, 8.0, 4.0 ] },
+                "west": { "texture": "#3", "uv": [ 12.0, 0.0, 16.0, 4.0 ] },
+                "up": { "texture": "#2", "uv": [ 4.0, 0.0, 7.999999985098839, 4.0 ] },
+                "down": { "texture": "#2", "uv": [ 4.0, 0.0, 8.0, 4.0 ] }
+            }
+        },
+        {
+            "name": "Cube",
+            "from": [ -2.0000000298023224, 3.7999999821186066, 4.999999971687794 ], 
+            "to": [ 0.9999999701976776, 6.799999982118607, 10.999999971687794 ], 
+            "rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 22.5 },
+            "faces": {
+                "north": { "texture": "#0", "uv": [ 4.0, 4.0, 8.0, 8.0 ] },
+                "south": { "texture": "#0", "uv": [ 4.0, 4.0, 8.0, 8.0 ] },
+                "west": { "texture": "#0", "uv": [ 4.0, 4.0, 8.0, 8.0 ] },
+                "up": { "texture": "#0", "uv": [ 4.0, 4.0, 8.0, 8.0 ] }
+            }
+        },
+        {
+            "name": "Cube",
+            "from": [ -2.0000000298023224, 5.399999976158142, 11.499999979138375 ], 
+            "to": [ -2.9802322387695312E-8, 7.399999976158142, 13.499999979138375 ], 
+            "rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "z", "angle": 22.5 },
+            "faces": {
+                "north": { "texture": "#0", "uv": [ 8.0, 12.0, 12.0, 16.0 ] },
+                "south": { "texture": "#0", "uv": [ 8.0, 12.0, 12.0, 16.0 ] },
+                "west": { "texture": "#0", "uv": [ 8.0, 12.0, 12.0, 16.0 ] },
+                "up": { "texture": "#0", "uv": [ 8.0, 12.0, 12.0, 16.0 ] }
             }
         }
     ]

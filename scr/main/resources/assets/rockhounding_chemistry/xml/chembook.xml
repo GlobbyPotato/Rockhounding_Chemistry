@@ -50,6 +50,7 @@
 						<link ref="structures:structures_page" indent="8" color="#333399">-&gt; Structures</link>
 						<link ref="structures:connections_page" indent="8" color="#333399">-&gt; Connections</link>
 						<link ref="structures:gui_page" indent="8" color="#333399">-&gt; GUI elements</link>
+						<link ref="structures:signal_page" indent="8" color="#333399">-&gt; Redstone handling</link>
 						<link ref="structures:measures_page" indent="8" color="#333399">-&gt; Measurement</link>
 						<link ref="structures:consumables_page" indent="8" color="#333399">-&gt; Consumables</link>
 					</page>
@@ -109,6 +110,34 @@
 									<image src="rockhounding_chemistry:gbook/icons/swapping" tw="100" th="22"/>
 									<p space="2" />
 									<p>In guis with this slot system, the handled ingredient can be automatically cycled by the recipe selector so to be pushed for extraction while a different one is injected. It helps the <link ref="utilities:server_page" color="#000000">Server</link> to schedule recipes.</p>
+								</page>
+
+								<page id="signal_page">
+									<link ref="tech:tech_page" color="#CC3333">&lt;- Redstone handling</link>
+									<p space="2" />
+									<p>Every structure is provided of a special plug which allows a redstone signal to override the manual activation. It can be useful to control and temporize the activity of each structure inside the factory:</p>
+									<p space="4" />
+									<image src="rockhounding_chemistry:gbook/icons/signal_plug" tw="78" th="24"/>
+									<p space="4" />
+									<p>It can be located in a different spot inside each structure and it's the only side where a valid signal can be acquired from repeaters, redstone wires or any powered block.</p>
+									<p space="4" />
+									<image src="rockhounding_chemistry:gbook/screens/signal_sample" tw="180" th="111"/>
+								</page>
+								<page>
+									<p space="2" />
+									<p>Fluid tanks and gas vessels, can be set to provide a steady redstone signal to a comparator attached to them once a certain threashold in the stored amount is reached. This is useful to control the amount of produced material or to turn on/off a device depending on available resources.</p>
+									<image src="rockhounding_chemistry:gbook/wiki/tank_threashold" tw="78" th="24"/>
+									<p space="4" />
+									<p>There are three available modes:</p>
+									<p color="#0000FF">> By redstone level:</p>
+									<p>A redstone signal from 0 to 15, will be provided depending on the stored quantity, where 15 equals to a full tank.</p>
+									<p color="#0000FF">> High past threashold:</p>
+									<p>Once the stored amount passes the assigned precentage (in steps of 5%), it will provide a high signal.</p>
+									<p color="#0000FF">> Low past threashold:</p>
+									<p>Once the stored amount passes the assigned precentage (in steps of 5%), the provided high level signal will turn low.</p>
+									<p space="4" />
+									<p color="#0000FF">Preview</p>
+									<link ref="galleries:gal_signal" color="#336633">Redstone handling example</link>
 								</page>
 
 								<page id="measures_page">
@@ -1707,6 +1736,14 @@
 						<p space="5" />
 						<image src="rockhounding_chemistry:gbook/screens/cstr" tw="180" th="183"/>
 					</page>
+					<page id="gal_signal">
+						<link ref="structures:signal_page" color="#CC3333">&lt;- Back to Redstone handling</link>
+						<p space="5" />
+						<image src="rockhounding_chemistry:gbook/screens/signal_tank" tw="180" th="105"/>
+						<p space="5" />
+						<p>In this example, the activation of the Air Compressor is overriden by the signal coming from the gas holder. It produces compressed air until the holder reaches its 75% capacity, then turning off itself until the storage goes under the threashold again. During the down time, another device will be enabled.</p>
+					</page>
+
 				</chapter>
 
 				<stack-links>

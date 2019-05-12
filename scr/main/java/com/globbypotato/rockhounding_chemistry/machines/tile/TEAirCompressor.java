@@ -11,6 +11,7 @@ import com.globbypotato.rockhounding_core.machines.tileentity.WrappedItemHandler
 import com.globbypotato.rockhounding_core.utils.CoreBasics;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerConcatenate;
 
@@ -62,6 +63,11 @@ public class TEAirCompressor extends TileEntityPoweredVessel {
 	@Override
 	public int fuelID() {
 		return 0;
+	}
+
+	@Override
+	public EnumFacing poweredFacing(){
+		return EnumFacing.fromAngle(getFacing().getHorizontalAngle() + 90);
 	}
 
 

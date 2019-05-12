@@ -86,6 +86,11 @@ public class TECatalystRegen extends TileEntityTank {
 		return "catalyst_regen";
 	}
 
+	@Override
+	public EnumFacing poweredFacing(){
+		return getFacing();
+	}
+
 
 
 	//----------------------- TANK HANDLER -----------------------

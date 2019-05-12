@@ -86,6 +86,16 @@ public class TEStirredTankTop extends TileEntityInv{
 		return ModUtils.isValidSpeedUpgrade(speedSlot()) ? (125 * speedFactor()) : 125;
 	}
 
+	@Override
+	public BlockPos poweredPosition(){
+		return chamberPos().offset(poweredFacing());
+	}
+
+	@Override
+	public EnumFacing poweredFacing(){
+		return getFacing();
+	}
+
 
 
 	//----------------------- RECIPE -----------------------
@@ -128,6 +138,11 @@ public class TEStirredTankTop extends TileEntityInv{
 
 
 	//----------------------- STRUCTURE -----------------------
+//chamber
+	public BlockPos chamberPos(){
+		return this.pos.offset(EnumFacing.DOWN, 1);		
+	}
+
 //engine
 	public TEPowerGenerator getEngine(){
 		TEPowerGenerator engine = TileStructure.getEngine(this.world, this.pos, getFacing(), 1, 0);

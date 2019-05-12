@@ -2,6 +2,7 @@ package com.globbypotato.rockhounding_chemistry.machines.gui;
 
 import java.util.List;
 
+import com.globbypotato.rockhounding_chemistry.enums.EnumEmitting;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.COPressureVessel;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TEPressureVessel;
@@ -35,32 +36,63 @@ public class UIPressureVessel extends GuiBase {
 	   int x = (this.width - this.xSize) / 2;
 	   int y = (this.height - this.ySize) / 2;
 
+	   List<String> tooltip;
+	   String[] multiString;
+
+		//void
+	    if(GuiUtils.hoveringArea(140, 78, 18, 18, mouseX, mouseY, x, y)){
+			tooltip = GuiUtils.drawLabel(this.void_label, mouseX, mouseY);
+			drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
+	    }
+
+		//-
+	    if(GuiUtils.hoveringArea(63, 95, 16, 16, mouseX, mouseY, x, y)){
+			tooltip = GuiUtils.drawLabel("Decrease Threashold", mouseX, mouseY);
+			drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
+	    }
+
+		//+
+	    if(GuiUtils.hoveringArea(81, 95, 16, 16, mouseX, mouseY, x, y)){
+			tooltip = GuiUtils.drawLabel("Increase Threashold", mouseX, mouseY);
+			drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
+	    }
+
+	    //emit type
+	    if(GuiUtils.hoveringArea(45, 95, 16, 16, mouseX, mouseY, x, y)){
+	    	String emitTitle = TextFormatting.WHITE + "Redstone signal. Click to change";
+	    	String emitType = TextFormatting.GRAY + "Method: " + TextFormatting.RED + EnumEmitting.getFormals()[this.tile.getEmitType()];
+			multiString = new String[]{emitTitle, emitType};
+			tooltip = GuiUtils.drawMultiLabel(multiString, mouseX, mouseY);
+			drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
+	    }
+
 	    //tank
-	    if(GuiUtils.hoveringArea(72, 40, 32, 64, mouseX, mouseY, x, y)){
-			List<String> tooltip = GuiUtils.drawGasTankInfo(this.tile.inputTank, mouseX, mouseY);
+	    if(GuiUtils.hoveringArea(55, 29, 65, 46, mouseX, mouseY, x, y)){
+			tooltip = GuiUtils.drawGasTankInfo(this.tile.inputTank, mouseX, mouseY);
 			drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 		}
 
 		//filter
-	    if(GuiUtils.hoveringArea(23, 57, 18, 18, mouseX, mouseY, x, y)){
+	    if(GuiUtils.hoveringArea(17, 78, 18, 18, mouseX, mouseY, x, y)){
 			String filterstring = TextFormatting.BLUE + "Gas Filter: " + TextFormatting.WHITE + "use a filled ampoule to set";
 			if(!this.tile.hasFilter()){
-				List<String> tooltip = GuiUtils.drawLabel(filterstring, mouseX, mouseY);
+				tooltip = GuiUtils.drawLabel(filterstring, mouseX, mouseY);
 				drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 			}else{
 				filterstring = TextFormatting.GRAY + "Filter: " + TextFormatting.WHITE + this.tile.getFilter().getLocalizedName();
-				List<String> tooltip = GuiUtils.drawLabel(filterstring, mouseX, mouseY);
+				tooltip = GuiUtils.drawLabel(filterstring, mouseX, mouseY);
 				drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 			}
 		}
-
-		//void
-	    if(GuiUtils.hoveringArea(133, 91, 18, 18, mouseX, mouseY, x, y)){
-			List<String> tooltip = GuiUtils.drawLabel(this.void_label, mouseX, mouseY);
-			drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
-	    }
-
+	    
     }
+
+	 @Override
+	public void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
+		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+		String amount = String.valueOf(this.tile.getEmitThreashold()) + "%";
+		this.fontRenderer.drawString(amount, 104, 100, 4210752);
+	}
 
     @Override
     public void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY){
@@ -70,14 +102,23 @@ public class UIPressureVessel extends GuiBase {
         int j = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
 
+        //emit type
+        if(this.tile.getEmitType() == EnumEmitting.LEVEL.ordinal()){
+    		this.drawTexturedModalRect(i + 47, j + 97, 177, 15, 12, 12);
+    	}else if(this.tile.getEmitType() == EnumEmitting.ON.ordinal()){
+    		this.drawTexturedModalRect(i + 47, j + 97, 177, 29, 12, 12);
+    	}else if(this.tile.getEmitType() == EnumEmitting.OFF.ordinal()){
+    		this.drawTexturedModalRect(i + 47, j + 97, 177, 43, 12, 12);
+    	}
+
 		//input gas
 		if(this.tile.inputTankHasGas()){
-			GuiUtils.renderFluidBar(this.tile.inputTank.getFluid(), this.tile.inputTank.getFluidAmount(), this.tile.inputTank.getCapacity(), i + 72, j + 40, 32, 51);
+			GuiUtils.renderFluidBar(this.tile.inputTank.getFluid(), this.tile.inputTank.getFluidAmount(), this.tile.inputTank.getCapacity(), i + 55, j + 29, 65, 46);
 		}
 
 		//filter
 		if(this.tile.hasFilter()){
-			GuiUtils.renderFluidBar(this.tile.getFilter(), 1000, 1000, i + 23, j + 57, 16, 16);
+			GuiUtils.renderFluidBar(this.tile.getFilter(), 1000, 1000, i + 18, j + 79, 16, 16);
 		}
 
     }

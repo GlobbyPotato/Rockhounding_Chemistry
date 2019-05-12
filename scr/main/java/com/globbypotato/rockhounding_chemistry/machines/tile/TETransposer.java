@@ -208,6 +208,12 @@ public class TETransposer extends TileEntityTankVessel implements IToxic, IColla
 		return tanks;
  	}
 
+	@Override
+	public boolean isComparatorSensible(){
+		return false;
+	}
+
+
 
 	//----------------------- TANK HANDLER -----------------------
 	public int getFluidCapacity() {

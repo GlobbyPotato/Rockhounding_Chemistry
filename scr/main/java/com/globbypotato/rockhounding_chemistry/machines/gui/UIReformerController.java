@@ -101,7 +101,7 @@ public class UIReformerController extends GuiBase {
 	   //gaseous check
 	   String type = "Recipe output is gaseous";
 	   if(!this.tile.isOutputGaseous()){
-		   type = "Recipe output is acqueous";
+		   type = "Recipe output is aqueous";
 	   }
 	   if(GuiUtils.hoveringArea(15, 64, 14, 14, mouseX, mouseY, x, y)){
 		   tooltip = GuiUtils.drawLabel(type, mouseX, mouseY);

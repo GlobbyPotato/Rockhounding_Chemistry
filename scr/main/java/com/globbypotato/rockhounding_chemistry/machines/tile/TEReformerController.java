@@ -111,6 +111,11 @@ public class TEReformerController extends TileEntityInv implements IInternalServ
 		return ModUtils.isValidSpeedUpgrade(speedSlot()) ? ModUtils.speedUpgrade(speedSlot()) : 1;
 	}
 
+	@Override
+	public EnumFacing poweredFacing(){
+		return getFacing().getOpposite();
+	}
+
 
 
 	//----------------------- RECIPE -----------------------

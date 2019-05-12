@@ -43,13 +43,11 @@ public class UILeachingVatController extends GuiBase {
 	   String commDescr = "";
 	   String commValue = TextFormatting.GRAY + "Specific Gravity: " + TextFormatting.GREEN + GuiUtils.floatRounder(this.tile.getGravity());
 	   String commRange = TextFormatting.GRAY + "Filtered interval: " + TextFormatting.LIGHT_PURPLE + "from " + GuiUtils.floatRounder(this.tile.minGravity()) + " to " + GuiUtils.floatRounder(this.tile.maxGravity());
-	   String commState = TextFormatting.GRAY + "Switching Mode: " + TextFormatting.GOLD + "Manual switch";
-	   if(this.tile.isPowered()){commState = TextFormatting.GRAY + "Switching Mode: " + TextFormatting.GOLD + "Redstone signal";}
 
 	   //display
 	   if(GuiUtils.hoveringArea(73, 75, 30, 16, mouseX, mouseY, x, y)){
 		   commDescr = "Current gravity level";
-		   multistring = new String[]{commDescr, commValue, commRange, commState};
+		   multistring = new String[]{commDescr, commValue, commRange};
 		   tooltip = GuiUtils.drawMultiLabel(multistring, mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
@@ -57,7 +55,7 @@ public class UILeachingVatController extends GuiBase {
 	   // lo
 	   if(GuiUtils.hoveringArea(57, 75, 16, 16, mouseX, mouseY, x, y)){
 		   commDescr = "Decrease gravity level";
-		   multistring = new String[]{commDescr, commValue, commRange, commState};
+		   multistring = new String[]{commDescr, commValue, commRange};
 		   tooltip = GuiUtils.drawMultiLabel(multistring, mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
@@ -65,7 +63,7 @@ public class UILeachingVatController extends GuiBase {
 	   // hi
 	   if(GuiUtils.hoveringArea(103, 75, 16, 16, mouseX, mouseY, x, y)){
 		   commDescr = "Increase gravity level";
-		   multistring = new String[]{commDescr, commValue, commRange, commState};
+		   multistring = new String[]{commDescr, commValue, commRange};
 		   tooltip = GuiUtils.drawMultiLabel(multistring, mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
@@ -160,12 +158,6 @@ public class UILeachingVatController extends GuiBase {
         if (this.tile.getCooktime() > 0){
             int k = GuiUtils.getScaledValue(23, this.tile.getCooktime(), this.tile.getCooktimeMax());
             this.drawTexturedModalRect(i + 77, j + 49, 176, 63, 22, k);
-        }
-
-		//signal
-        if(this.tile.isPowered()){
-            this.drawTexturedModalRect(i + 59,  j + 77, 176, 51, 12, 12);
-            this.drawTexturedModalRect(i + 105, j + 77, 176, 51, 12, 12);
         }
 
 		//show result

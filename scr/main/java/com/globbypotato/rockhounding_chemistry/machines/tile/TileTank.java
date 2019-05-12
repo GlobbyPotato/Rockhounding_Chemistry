@@ -15,9 +15,11 @@ import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerConcatenate;
 
 public class TileTank extends TileEntityTank{
+	public int emitType;
+	public int emitThreashold;
 
 	public static int inputSlots = 2;
-	public static int templateSlots = 2;
+	public static int templateSlots = 5;
 
 	public FluidTank inputTank;
 	public static int FILL_BUCKET = 0;
@@ -37,6 +39,12 @@ public class TileTank extends TileEntityTank{
 			public boolean canDrain() {
 				return true;
 			}
+
+			@Override
+			public void onContentsChanged(){
+				updateNeighbours();
+		    }
+
 		};
 		this.inputTank.setTileEntity(this);
 
@@ -65,11 +73,15 @@ public class TileTank extends TileEntityTank{
 		super.readFromNBT(compound);
 		this.inputTank.readFromNBT(compound.getCompoundTag("InputTank"));
 		this.filter = FluidStack.loadFluidStackFromNBT(compound.getCompoundTag("Filter"));
+		this.emitThreashold = compound.getInteger("EmitThreashold");
+		this.emitType = compound.getInteger("EmitType");
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		super.writeToNBT(compound);
+		compound.setInteger("EmitType", this.emitType);
+		compound.setInteger("EmitThreashold", this.emitThreashold);
 
 		NBTTagCompound inputTankNBT = new NBTTagCompound();
 		this.inputTank.writeToNBT(inputTankNBT);
@@ -109,7 +121,32 @@ public class TileTank extends TileEntityTank{
 	}
 
 
- 
+
+	// ----------------------- CUSTOM -----------------------
+	public void updateNeighbours() {
+		this.world.notifyNeighborsOfStateChange(this.pos, this.world.getBlockState(this.pos).getBlock(), true);
+	}
+
+	public int emittedPower() {
+		int powerFraction = getTankCapacity() / 16;
+		// by level
+		if(getEmitType() == 1){
+			return ((15 * getTankAmount()) / getTankCapacity());
+
+		// on over threashold
+		}else if(getEmitType() == 2){
+			return getTankAmount() >= ((getTankCapacity() / 100) * getEmitThreashold()) ? 15 : 0;
+
+		// off over threashold
+		}else if(getEmitType() == 3){
+			return getTankAmount() < ((getTankCapacity() / 100) * getEmitThreashold()) ? 15 : 0;
+		}
+
+		return 0;
+	}
+
+
+
 	//----------------------- TANK HANDLER -----------------------
 	public int getTankCapacity() {
 		return 100000;
@@ -157,6 +194,14 @@ public class TileTank extends TileEntityTank{
 	// ----------------------- CUSTOM -----------------------
 	public boolean isValidSubstance(FluidStack fluid) {
 		return ModUtils.isLightFluid(fluid.getFluid());
+	}
+
+	public int getEmitType() {
+		return this.emitType;
+	}
+
+	public int getEmitThreashold() {
+		return this.emitThreashold;
 	}
 
 

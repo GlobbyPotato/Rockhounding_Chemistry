@@ -39,13 +39,13 @@ public class COMineralSizerController extends ContainerBase<TEMineralSizerContro
 			doClickSound(player, this.tile.getWorld(), this.tile.getPos());
 	    	return ItemStack.EMPTY;
     	}else if(slot == 3){ 
-    		if(this.tile.getComminution() > 0 && !this.tile.isPowered()){
+    		if(this.tile.getComminution() > 0){
     			this.tile.comminution--;
     		}
 			doClickSound(player, this.tile.getWorld(), this.tile.getPos());
         	return ItemStack.EMPTY;
 		}else if(slot == 4){
-    		if(this.tile.getComminution() < 15 && !this.tile.isPowered()){
+    		if(this.tile.getComminution() < 15){
     			this.tile.comminution++;
     		}
 			doClickSound(player, this.tile.getWorld(), this.tile.getPos());

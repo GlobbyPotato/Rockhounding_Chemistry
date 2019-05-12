@@ -137,6 +137,11 @@ public class TEOrbiter extends TileEntityTank {
 		return "orbiter";
 	}
 
+	@Override
+	public boolean isComparatorSensible(){
+		return false;
+	}
+
 
 
 	//----------------------- TANK HANDLER -----------------------

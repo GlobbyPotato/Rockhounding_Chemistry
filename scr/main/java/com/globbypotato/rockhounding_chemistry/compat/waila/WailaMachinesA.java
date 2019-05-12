@@ -47,11 +47,6 @@ public class WailaMachinesA implements IWailaDataProvider{
 			if(te instanceof TEMineralSizerController){
 				TEMineralSizerController controller = (TEMineralSizerController)te;
 				currenttip.add(TextFormatting.GRAY + "Comminution Level: " + TextFormatting.GREEN + controller.getComminution());
-				if(!controller.isPowered()){
-					currenttip.add(TextFormatting.GRAY + "Switching Mode: " + TextFormatting.GOLD + "Manual Switching");
-				}else{
-					currenttip.add(TextFormatting.GRAY + "Switching Mode: " + TextFormatting.GOLD + "Redstone Signal");
-				}
 			}
 			if(te instanceof TEPowerGenerator){
 				TEPowerGenerator engine = (TEPowerGenerator)te;

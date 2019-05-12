@@ -103,6 +103,11 @@ public class TEServer extends TileEntityInv {
 		return "server";
 	}
 
+	@Override
+	public boolean isComparatorSensible(){
+		return false;
+	}
+
 
 
 	//----------------------- CUSTOM -----------------------

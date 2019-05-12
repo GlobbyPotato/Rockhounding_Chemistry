@@ -124,14 +124,19 @@ public class TELabOvenController extends TileEntityInv implements IInternalServe
 		return EnumServer.LAB_OVEN.ordinal();
 	}
 
+	@Override
+	public BlockPos poweredPosition(){
+		return chamberPos().offset(poweredFacing());
+	}
+
+	@Override
+	public EnumFacing poweredFacing(){
+		return EnumFacing.fromAngle(getFacing().getHorizontalAngle() + 90);
+	}
+
 
 
 	//----------------------- CUSTOM -----------------------
-	@Override
-	public boolean isActive(){
-		return this.activation || this.world.isBlockPowered(this.pos) || isChamberPowered();
-	}
-
 	boolean isValidInput(ItemStack stack) {
 		if(isValidPreset()){
 			if(recipeList().get(getRecipeIndex()).getType()){
@@ -274,10 +279,6 @@ public class TELabOvenController extends TileEntityInv implements IInternalServe
 
 	public boolean hasChamber(){
 		return getChamber() != null;
-	}
-
-	private boolean isChamberPowered() {
-		return hasChamber() ? getChamber().isActive() : false;
 	}
 
 //separator

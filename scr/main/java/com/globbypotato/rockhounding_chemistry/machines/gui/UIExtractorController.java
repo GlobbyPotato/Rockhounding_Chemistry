@@ -41,13 +41,11 @@ public class UIExtractorController extends GuiBase {
 
 	   String commDescr = "";
 	   String commValue = TextFormatting.GRAY + "Reaction Intensity: " + TextFormatting.GREEN + this.tile.getIntensity() + "/16";
-	   String commState = TextFormatting.GRAY + "Switching Mode: " + TextFormatting.GOLD + "Manual switch";
-	   if(this.tile.isPowered()){commState = TextFormatting.GRAY + "Switching Mode: " + TextFormatting.GOLD + "Redstone signal";}
 
 	   //display
 	   if(GuiUtils.hoveringArea(26, 97, 15, 16, mouseX, mouseY, x, y)){
 		   commDescr = "Current reaction intensity";
-		   multistring = new String[]{commDescr, commValue, commState};
+		   multistring = new String[]{commDescr, commValue};
 		   tooltip = GuiUtils.drawMultiLabel(multistring, mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
@@ -55,7 +53,7 @@ public class UIExtractorController extends GuiBase {
 	   // lo
 	   if(GuiUtils.hoveringArea(10, 97, 16, 16, mouseX, mouseY, x, y)){
 		   commDescr = "Decrease reaction intensity";
-		   multistring = new String[]{commDescr, commValue, commState};
+		   multistring = new String[]{commDescr, commValue};
 		   tooltip = GuiUtils.drawMultiLabel(multistring, mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
@@ -63,7 +61,7 @@ public class UIExtractorController extends GuiBase {
 	   // hi
 	   if(GuiUtils.hoveringArea(41, 97, 16, 16, mouseX, mouseY, x, y)){
 		   commDescr = "Increase reaction intensity";
-		   multistring = new String[]{commDescr, commValue, commState};
+		   multistring = new String[]{commDescr, commValue};
 		   tooltip = GuiUtils.drawMultiLabel(multistring, mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
@@ -160,12 +158,6 @@ public class UIExtractorController extends GuiBase {
             this.drawTexturedModalRect(i + 70, j + 49, 176, 27, 36, (29 - k));
         }else{
             this.drawTexturedModalRect(i + 70, j + 49, 176, 27, 36, 29);
-        }
-
-		//signal
-        if(this.tile.isPowered()){
-            this.drawTexturedModalRect(i + 12, j + 99, 176, 61, 12, 12);
-            this.drawTexturedModalRect(i + 43, j + 99, 176, 61, 12, 12);
         }
 
     }

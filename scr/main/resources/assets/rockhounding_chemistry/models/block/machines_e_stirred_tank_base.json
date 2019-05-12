@@ -4,7 +4,9 @@
     "textures": {
         "particle": "rockhounding_chemistry:models/machines_generic_b",
 		"0": "rockhounding_chemistry:models/machines_generic_b",
-		"1": "rockhounding_chemistry:models/machines_generic"
+		"1": "rockhounding_chemistry:models/machines_generic",
+		"2": "rockhounding_chemistry:models/machines_generic_c",
+		"3": "rockhounding_chemistry:models/machines_generic_d"
 	},
     "elements": [
         {
@@ -303,6 +305,29 @@
                 "south": { "texture": "#0", "uv": [ 12.0, 0.0, 16.0, 4.0 ] },
                 "west": { "texture": "#0", "uv": [ 12.0, 0.0, 16.0, 4.0 ] },
                 "down": { "texture": "#0", "uv": [ 12.0, 0.0, 16.0, 4.0 ] }
+            }
+        },
+        {
+            "name": "Cube",
+            "from": [ 4.0, 0.0, 12.0 ], 
+            "to": [ 12.000000014901161, 1.4, 16.200000017881393 ], 
+            "faces": {
+                "north": { "texture": "#2", "uv": [ 4.0, 0.0, 8.0, 4.0 ] },
+                "east": { "texture": "#2", "uv": [ 4.0, 0.0, 8.0, 4.0 ] },
+                "south": { "texture": "#3", "uv": [ 12.0, 0.0, 16.0, 4.0 ] },
+                "west": { "texture": "#2", "uv": [ 4.0, 0.0, 8.0, 4.0 ] },
+                "up": { "texture": "#2", "uv": [ 4.0, 0.0, 8.000000014901161, 4.200000017881393 ] },
+                "down": { "texture": "#2", "uv": [ 4.0, 0.0, 8.0, 4.0 ] }
+            }
+        },
+        {
+            "name": "Cube",
+            "from": [ 5.0, 1.0, 11.0 ], 
+            "to": [ 11.000000014901161, 5.000000008940697, 15.200000017881393 ], 
+            "faces": {
+                "east": { "texture": "#0", "uv": [ 12.0, 0.0, 16.0, 4.0 ] },
+                "south": { "texture": "#0", "uv": [ 12.0, 0.0, 16.0, 4.0 ] },
+                "west": { "texture": "#0", "uv": [ 12.0, 0.0, 16.0, 4.0 ] }
             }
         }
     ]

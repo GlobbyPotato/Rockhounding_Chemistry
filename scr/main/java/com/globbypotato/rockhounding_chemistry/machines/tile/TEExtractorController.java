@@ -122,6 +122,11 @@ public class TEExtractorController extends TileEntityInv implements IInternalSer
 		return EnumServer.EXTRACTOR.ordinal();
 	}
 
+	@Override
+	public EnumFacing poweredFacing(){
+		return getFacing().getOpposite();
+	}
+
 
 
 	//----------------------- RECIPE -----------------------
@@ -377,12 +382,7 @@ public class TEExtractorController extends TileEntityInv implements IInternalSer
 
 	//----------------------- CUSTOM -----------------------
 	public int getIntensity(){
-		if(isPowered()){
-			return getBlockPower() + 1;
-		}else if(!isPowered()){
-			return this.intensity;
-		}
-		return 1;
+		return this.intensity;
 	}
 
 	public ItemStack getFilter() {

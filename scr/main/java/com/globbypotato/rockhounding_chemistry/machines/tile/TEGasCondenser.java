@@ -58,6 +58,11 @@ public class TEGasCondenser extends TileEntityInv {
 		return ModUtils.isValidSpeedUpgrade(speedSlot()) ? ModUtils.speedUpgrade(speedSlot()) : 1;
 	}
 
+	@Override
+	public EnumFacing poweredFacing(){
+		return EnumFacing.fromAngle(getFacing().getHorizontalAngle() + 90);
+	}
+
 
 
 	//----------------------- CUSTOM -----------------------

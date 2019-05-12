@@ -128,6 +128,11 @@ public class TERetentionVat extends TileEntityInv implements IInternalServer {
 		return EnumServer.RETENTION.ordinal();
 	}
 
+	@Override
+	public EnumFacing poweredFacing(){
+		return getFacing().getOpposite();
+	}
+
 
 
 	//----------------------- RECIPE -----------------------
@@ -222,12 +227,7 @@ public class TERetentionVat extends TileEntityInv implements IInternalServer {
 
 	//----------------------- CUSTOM -----------------------
 	public float getGravity(){
-		if(isPowered()){
-			return ((float)getBlockPower() * 2) + 2.0F;
-		}else if(!isPowered()){
-			return this.gravity;
-		}
-		return 0F;
+		return this.gravity;
 	}
 
 	public boolean isBugged(){

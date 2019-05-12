@@ -120,14 +120,19 @@ public class TEPrecipitationController extends TileEntityInv implements IInterna
 		return EnumServer.PRECIPITATOR.ordinal();
 	}
 
+	@Override
+	public BlockPos poweredPosition(){
+		return chamberPos().offset(poweredFacing());
+	}
+
+	@Override
+	public EnumFacing poweredFacing(){
+		return EnumFacing.fromAngle(getFacing().getHorizontalAngle() + 90);
+	}
+
 
 
 	//----------------------- CUSTOM -----------------------
-	@Override
-	public boolean isActive(){
-		return this.activation || this.world.isBlockPowered(this.pos) || isChamberPowered();
-	}
-
 	boolean isValidInput(ItemStack stack) {
 		if(isValidPreset()){
 			if(recipeList().get(getRecipeIndex()).getType()){

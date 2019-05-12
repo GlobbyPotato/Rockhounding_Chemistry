@@ -99,7 +99,7 @@ public class TEWaterPump extends TileEntityTank{
 
 
 
-	// ----------------------- PROCESS -----------------------
+	// ----------------------- CUSTOM -----------------------
 	public boolean getCompressor() {
 		return this.compressor;
 	}

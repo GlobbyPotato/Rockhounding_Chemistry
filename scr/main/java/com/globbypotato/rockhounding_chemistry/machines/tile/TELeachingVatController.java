@@ -160,6 +160,11 @@ public class TELeachingVatController extends TileEntityInv implements IInternalS
 		return EnumServer.LEACHING.ordinal();
 	}
 
+	@Override
+	public EnumFacing poweredFacing(){
+		return getFacing().getOpposite();
+	}
+
 
 
 	//----------------------- RECIPE -----------------------
@@ -285,12 +290,7 @@ public class TELeachingVatController extends TileEntityInv implements IInternalS
 
 	//----------------------- CUSTOM -----------------------
 	public float getGravity(){
-		if(isPowered()){
-			return ((float)getBlockPower() * 2) + 2.0F;
-		}else if(!isPowered()){
-			return this.gravity;
-		}
-		return 0F;
+		return this.gravity;
 	}
 
 	public boolean isBugged(){

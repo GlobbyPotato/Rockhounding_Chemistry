@@ -42,13 +42,13 @@ public class UIMineralSizerController extends GuiBase {
 
 	   String commDescr = "";
 	   String commValue = TextFormatting.GRAY + "Comminution level: " + TextFormatting.GREEN + this.tile.getComminution();
-	   String commState = TextFormatting.GRAY + "Switching Mode: " + TextFormatting.GOLD + "Manual switch";
-	   if(this.tile.isPowered()){commState = TextFormatting.GRAY + "Switching Mode: " + TextFormatting.GOLD + "Redstone signal";}
+//	   String commState = TextFormatting.GRAY + "Switching Mode: " + TextFormatting.GOLD + "Manual switch";
+//	   if(this.tile.isPowered()){commState = TextFormatting.GRAY + "Switching Mode: " + TextFormatting.GOLD + "Redstone signal";}
 
 	   //slider
 	   if(GuiUtils.hoveringArea(79, 20, 18, 18, mouseX, mouseY, x, y)){
 		   commDescr = "Current comminution level";
-		   multistring = new String[]{commDescr, commValue, commState};
+		   multistring = new String[]{commDescr, commValue};
 		   tooltip = GuiUtils.drawMultiLabel(multistring, mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
@@ -56,7 +56,7 @@ public class UIMineralSizerController extends GuiBase {
 	   // lo
 	   if(GuiUtils.hoveringArea(61, 20, 18, 18, mouseX, mouseY, x, y)){
 		   commDescr = "Decrease comminution level";
-		   multistring = new String[]{commDescr, commValue, commState};
+		   multistring = new String[]{commDescr, commValue};
 		   tooltip = GuiUtils.drawMultiLabel(multistring, mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
@@ -64,7 +64,7 @@ public class UIMineralSizerController extends GuiBase {
 	   // hi
 	   if(GuiUtils.hoveringArea(97, 20, 18, 18, mouseX, mouseY, x, y)){
 		   commDescr = "Increase comminution level";
-		   multistring = new String[]{commDescr, commValue, commState};
+		   multistring = new String[]{commDescr, commValue};
 		   tooltip = GuiUtils.drawMultiLabel(multistring, mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
@@ -139,12 +139,6 @@ public class UIMineralSizerController extends GuiBase {
         //slider
     	int offset = this.tile.getComminution() * 2;
         this.drawTexturedModalRect(i + 44, j + 38 + offset, 0, 200, 88, 16);
-
-		//signal
-        if(this.tile.isPowered()){
-            this.drawTexturedModalRect(i + 64,  j + 23, 183, 72, 14, 14);
-            this.drawTexturedModalRect(i + 100, j + 23, 183, 72, 14, 14);
-        }
 
 		//show result
         if(this.tile.expectResult()){

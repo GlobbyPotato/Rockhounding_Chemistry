@@ -21,6 +21,7 @@ import net.minecraft.init.Enchantments;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 
 public class TEMetalAlloyer extends TileEntityInv implements IInternalServer{
@@ -108,6 +109,11 @@ public class TEMetalAlloyer extends TileEntityInv implements IInternalServer{
 
 	private static int deviceCode() {
 		return EnumServer.METAL_ALLOYER.ordinal();
+	}
+
+	@Override
+	public EnumFacing poweredFacing(){
+		return getFacing().getOpposite();
 	}
 
 

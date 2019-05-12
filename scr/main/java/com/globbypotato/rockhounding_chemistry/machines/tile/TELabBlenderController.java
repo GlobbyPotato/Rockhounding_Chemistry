@@ -55,6 +55,11 @@ public class TELabBlenderController extends TileEntityInv {
 		return ModConfig.speedBlender;
 	}
 
+	@Override
+	public EnumFacing poweredFacing(){
+		return EnumFacing.fromAngle(getFacing().getHorizontalAngle() + 270);
+	}
+
 
 
 	//----------------------- CUSTOM -----------------------

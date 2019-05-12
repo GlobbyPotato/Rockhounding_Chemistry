@@ -21,11 +21,15 @@ public class COContainmentTank extends ContainerBase<TEContainmentTank>{
 		IItemHandler input = this.tile.getInput();
 		IItemHandler template = this.tile.getTemplate();
 
-		this.addSlotToContainer(new SlotItemHandler(input, 0, 50, 34));//input
-		this.addSlotToContainer(new SlotItemHandler(input, 1, 110, 82));//output
+		this.addSlotToContainer(new SlotItemHandler(input, 0, 23, 29));//input
+		this.addSlotToContainer(new SlotItemHandler(input, 1, 137, 64));//output
 
-		this.addSlotToContainer(new SlotItemHandler(template, 0, 50, 82));//filter
-		this.addSlotToContainer(new SlotItemHandler(template, 1, 110, 34));//void
+		this.addSlotToContainer(new SlotItemHandler(template, 0, 137, 35));//filter
+		this.addSlotToContainer(new SlotItemHandler(template, 1, 23, 57));//void
+
+		this.addSlotToContainer(new SlotItemHandler(template, 2, 45, 95));//emit
+		this.addSlotToContainer(new SlotItemHandler(template, 3, 63, 95));//+
+		this.addSlotToContainer(new SlotItemHandler(template, 4, 81, 95));//-
 	}
 
 	@Override
@@ -37,6 +41,30 @@ public class COContainmentTank extends ContainerBase<TEContainmentTank>{
     		return ItemStack.EMPTY;
 		}else if(slot == 3){
 			this.tile.inputTank.setFluid(null);
+			this.tile.updateNeighbours();
+			doClickSound(player, this.tile.getWorld(), this.tile.getPos());
+    		return ItemStack.EMPTY;
+		}else if(slot == 4){
+    		if(this.tile.getEmitType() < 3){
+    			this.tile.emitType++;
+    		}else{
+    			this.tile.emitType = 0;
+    		}
+			this.tile.updateNeighbours();
+			doClickSound(player, this.tile.getWorld(), this.tile.getPos());
+    		return ItemStack.EMPTY;
+		}else if(slot == 5){
+    		if(this.tile.getEmitThreashold() >= 5){
+    			this.tile.emitThreashold -= 5;
+    		}
+			this.tile.updateNeighbours();
+			doClickSound(player, this.tile.getWorld(), this.tile.getPos());
+    		return ItemStack.EMPTY;
+		}else if(slot == 6){
+    		if(this.tile.getEmitThreashold() <= 95){
+    			this.tile.emitThreashold += 5;
+    		}
+			this.tile.updateNeighbours();
 			doClickSound(player, this.tile.getWorld(), this.tile.getPos());
     		return ItemStack.EMPTY;
     	}else{
@@ -49,7 +77,7 @@ public class COContainmentTank extends ContainerBase<TEContainmentTank>{
 		if(super.mergeItemStack(stack, startIndex, 2, reverseDirection)){
 			return true;
 		}
-		return super.mergeItemStack(stack, 4, endIndex, reverseDirection);
+		return super.mergeItemStack(stack, 7, endIndex, reverseDirection);
     }
 
 }

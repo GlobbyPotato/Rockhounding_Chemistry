@@ -116,6 +116,16 @@ public class TEDepositionChamberTop extends TileEntityInv implements IInternalSe
 		return EnumServer.DEPOSITION.ordinal();
 	}
 
+	@Override
+	public BlockPos poweredPosition(){
+		return chamberPos().offset(poweredFacing());
+	}
+
+	@Override
+	public EnumFacing poweredFacing(){
+		return getFacing().getOpposite();
+	}
+
 
 
 	//----------------------- RECIPE -----------------------
@@ -220,6 +230,7 @@ public class TEDepositionChamberTop extends TileEntityInv implements IInternalSe
 		int baseConsume = 1000 * ModConfig.basePower;
 		return ModConfig.speedMultiplier ? baseConsume * speedFactor() : baseConsume;
 	}
+
 
 
 	//----------------------- STRUCTURE -----------------------

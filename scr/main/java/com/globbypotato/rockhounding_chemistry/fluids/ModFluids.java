@@ -67,7 +67,7 @@ public class ModFluids {
 	public static DamageSource CHEMICALS = new DamageSource("chemicals").setDamageBypassesArmor();
 	public static DamageSource SPILL = new DamageSource("spill").setDamageBypassesArmor();
 
-//ACQUEOUS
+//AQUEOUS
 	public static final Fluid SULFURIC_ACID = createFluid(EnumFluid.SULFURIC_ACID.getFluidName(), true, 0xFFFFFFFF, "blur", 1000, 1000, 300, false, 0,
 		fluid -> new BlockFluidClassic(fluid, Material.WATER){
 			@Override

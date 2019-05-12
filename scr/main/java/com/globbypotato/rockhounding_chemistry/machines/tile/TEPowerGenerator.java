@@ -87,6 +87,8 @@ public class TEPowerGenerator extends TileEntityPoweredVessel {
 		return 0;
 	}
 
+
+
 	//----------------------- HANDLER -----------------------
 	@Override
 	public int getGUIHeight() {
@@ -105,6 +107,11 @@ public class TEPowerGenerator extends TileEntityPoweredVessel {
 	@Override
 	public boolean hasRF() {
 		return true;
+	}
+
+	@Override
+	public boolean isComparatorSensible(){
+		return false;
 	}
 
 

@@ -99,12 +99,8 @@ public class TopMachines implements IProbeInfoProvider{
 			if(te instanceof TEMineralSizerController){
 				TEMineralSizerController tile = (TEMineralSizerController)te;
 				String comm = TextFormatting.GRAY + "Comminution Level: " + TextFormatting.GREEN + tile.getComminution();
-				String swit = TextFormatting.GRAY + "Switching Method: " + TextFormatting.GOLD + "Manual Switching";
-				if(tile.isPowered()){
-					swit = TextFormatting.GRAY + "Switching Method: " + TextFormatting.GOLD + "Redstone Signal";
-				}
 				
-				String[] multistring = {comm, swit};
+				String[] multistring = {comm};
 				for(int x = 0; x < multistring.length; x++){
 					probeInfo.text(multistring[x]);
 				}
