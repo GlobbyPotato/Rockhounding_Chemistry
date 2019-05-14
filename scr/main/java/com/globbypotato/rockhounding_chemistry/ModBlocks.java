@@ -41,6 +41,7 @@ import com.globbypotato.rockhounding_chemistry.machines.PipelineDuct;
 import com.globbypotato.rockhounding_chemistry.machines.PipelineHalt;
 import com.globbypotato.rockhounding_chemistry.machines.PipelinePump;
 import com.globbypotato.rockhounding_chemistry.machines.PipelineValve;
+import com.globbypotato.rockhounding_chemistry.utils.OredictUtils;
 import com.globbypotato.rockhounding_core.blocks.itemblocks.BaseMetaIB;
 import com.globbypotato.rockhounding_core.blocks.itemblocks.PoweredMetaIB;
 
@@ -166,6 +167,8 @@ public class ModBlocks {
 			registry.register(new BaseMetaIB(WATERLOCK, EnumWaterlock.getNames()).setRegistryName(WATERLOCK.getRegistryName()));
 
 			registry.register(new ItemBlock(TOXIC_CLOUD).setRegistryName(TOXIC_CLOUD.getRegistryName()));
+
+			OredictUtils.registerOreDictBlocks();
 
 		}
 

@@ -40,6 +40,7 @@ import com.globbypotato.rockhounding_chemistry.items.SpeedItems;
 import com.globbypotato.rockhounding_chemistry.items.io.ArrayIO;
 import com.globbypotato.rockhounding_chemistry.items.io.ConsumableIO;
 import com.globbypotato.rockhounding_chemistry.items.io.ItemIO;
+import com.globbypotato.rockhounding_chemistry.utils.OredictUtils;
 
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -165,6 +166,8 @@ public class ModItems {
 			registry.register(FILTER_ITEMS);
 			registry.register(PROBE_ITEMS);
 			registry.register(MOB_ITEMS);
+			
+			OredictUtils.registerOreDictItems();
 		}
 
 		// register the model
