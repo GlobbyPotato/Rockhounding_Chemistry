@@ -100,14 +100,15 @@ mods.rockhounding_chemistry.InhibitElements.inhibit("dustZirconium");
 =======================================================
 VAPOR DEPOSITION CHAMBER
 =======================================================
+//display name: alternative name for the recipe selector. Can be null if not necessary
 //input stack: the item to be mutated
 //output stack: the mutated item
 //dopant gas: the gas used as dopant and its quantity. It must be "gaseous"
 //temperature: the threashold temperature (max 3000K)
 //pressure: the threashold pressure (max 30000 uPa)
 //carrier gas: the gas and its quantity used as carrier or additional reagent
-mods.rockhounding_chemistry.DepositionChamber.add(<minecraft:hardened_clay>, <minecraft:obsidian>, <liquid:syngas>*500, 3000, 10000, <liquid:nitrogen>*500);
-mods.rockhounding_chemistry.DepositionChamber.add("ingotIron", <minecraft:obsidian>, <liquid:syngas>*500, 3000, 10000, <liquid:oxygen>*200);
+mods.rockhounding_chemistry.DepositionChamber.add("Fake Obsidian", <minecraft:hardened_clay>, <minecraft:obsidian>, <liquid:syngas>*500, 3000, 10000, <liquid:nitrogen>*500);
+mods.rockhounding_chemistry.DepositionChamber.add("Moar Obsidian", "ingotIron", <minecraft:obsidian>, <liquid:syngas>*500, 3000, 10000, <liquid:oxygen>*200);
 
 //input stack: the item to remove
 mods.rockhounding_chemistry.DepositionChamber.removeByInput(<minecraft:hardened_clay>);
@@ -174,11 +175,12 @@ mods.rockhounding_chemistry.GasPurifier.removeByOutput(<liquid:oxygen>*1000);
 REFORMING REACTOR
 =======================================================
 **Note: the catalyst must be a damageable item (any item with a durability).
+//display name: alternative name for the recipe selector. Can be null if not necessary
 //input gas A: the left channel ingredient and its quantity. It must be "gaseous"
 //input gas B: the right channel ingredient and its quantity. It must be "gaseous"
 //output gas: the combined gas and its quantity
 //catalyst: the damageable item
-mods.rockhounding_chemistry.GasReformer.add(<liquid:water_vapour>*100, <liquid:oxygen>*150, <liquid:syngas>*110, <minecraft:diamond_sword>);
+mods.rockhounding_chemistry.GasReformer.add("Cheap Fuel", <liquid:water_vapour>*100, <liquid:oxygen>*150, <liquid:syngas>*110, <minecraft:diamond_sword>);
 
 //input gas A: the gas to remove
 mods.rockhounding_chemistry.GasReformer.removeByInputA(<liquid:water_vapour>*1000);
