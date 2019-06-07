@@ -17,7 +17,7 @@ public class LabOvenCategory extends RHRecipeCategory {
 	private String uid;
 
 	public LabOvenCategory(IGuiHelper guiHelper, String uid) {
-		super(guiHelper.createDrawable(guiTexture, 0, 0, 128, 44), "jei." + uid + ".name");
+		super(guiHelper.createDrawable(guiTexture, 0, 0, 128, 52), "jei." + uid + ".name");
 		this.uid = uid;
 	}
 
@@ -39,12 +39,12 @@ public class LabOvenCategory extends RHRecipeCategory {
 		int SOLUTION_SLOT = 4;
 		int BYPRODUCT_SLOT = 5;
 
-		guiItemStacks.init(SOLUTE_SLOT, true, 42, 9);
-		guiItemStacks.init(CATALYST_SLOT, true, 68, 9);
-		guiFluidStacks.init(SOLVENT_SLOT, true,  1, 1, 16, 34, 1000, false, null);
-		guiFluidStacks.init(REAGENT_SLOT, true,  20, 1, 16, 34, 1000, false, null);
-		guiFluidStacks.init(SOLUTION_SLOT, false,  92, 1, 16, 34, 1000, false, null);
-		guiFluidStacks.init(BYPRODUCT_SLOT, false,  111, 1, 16, 34, 1000, false, null);
+		guiItemStacks.init(SOLUTE_SLOT, true, 42, 17);
+		guiItemStacks.init(CATALYST_SLOT, true, 68, 17);
+		guiFluidStacks.init(SOLVENT_SLOT, true,  1, 9, 16, 34, 1000, false, null);
+		guiFluidStacks.init(REAGENT_SLOT, true,  20, 9, 16, 34, 1000, false, null);
+		guiFluidStacks.init(SOLUTION_SLOT, false,  92, 9, 16, 34, 1000, false, null);
+		guiFluidStacks.init(BYPRODUCT_SLOT, false,  111, 9, 16, 34, 1000, false, null);
 
 		if(!wrapper.getSolutes().isEmpty() && wrapper.getSolutes().get(0) != null){
 			guiItemStacks.set(SOLUTE_SLOT, wrapper.getSolutes());

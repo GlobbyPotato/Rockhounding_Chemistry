@@ -16,7 +16,7 @@ public class HeatExchangerCategory extends RHRecipeCategory {
 	private String uid;
 
 	public HeatExchangerCategory(IGuiHelper guiHelper, String uid) {
-		super(guiHelper.createDrawable(guiTexture, 0, 0, 108, 99), "jei." + uid + ".name");
+		super(guiHelper.createDrawable(guiTexture, 0, 0, 108, 66), "jei." + uid + ".name");
 		this.uid = uid;
 	}
 
@@ -33,8 +33,8 @@ public class HeatExchangerCategory extends RHRecipeCategory {
 		int INPUT_SLOT = 0;
 		int OUTPUT_SLOT = 1;
 
-		guiFluidStacks.init(INPUT_SLOT, true,  1, 1, 20, 64, 1000, false, null);
-		guiFluidStacks.init(OUTPUT_SLOT, false,  87, 1, 20, 64, 1000, false, null);
+		guiFluidStacks.init(INPUT_SLOT, true,  1, 17, 16, 34, 1000, false, null);
+		guiFluidStacks.init(OUTPUT_SLOT, false,  91, 31, 16, 34, 1000, false, null);
 
 		guiFluidStacks.set(INPUT_SLOT, wrapper.getInputs());
 		guiFluidStacks.set(OUTPUT_SLOT, wrapper.getOutputs());

@@ -21,7 +21,13 @@ public class CT_GasReformer extends CTSupport{
     @ZenMethod
     public static void add(ILiquidStack inputA, ILiquidStack inputB, ILiquidStack output, IItemStack catalyst) {
         if(inputA == null || inputB == null || output == null || !toFluid(inputA).getFluid().isGaseous() || !toFluid(inputB).getFluid().isGaseous() || catalyst == null || !toStack(catalyst).getItem().isDamageable()) {error(name); return;}
-        CraftTweakerAPI.apply(new Add(new GasReformerRecipe(toFluid(inputA), toFluid(inputB), toFluid(output), toStack(catalyst))));
+        CraftTweakerAPI.apply(new Add(new GasReformerRecipe("", toFluid(inputA), toFluid(inputB), toFluid(output), toStack(catalyst))));
+    }
+
+    @ZenMethod
+    public static void add(String recipename, ILiquidStack inputA, ILiquidStack inputB, ILiquidStack output, IItemStack catalyst) {
+        if(inputA == null || inputB == null || output == null || !toFluid(inputA).getFluid().isGaseous() || !toFluid(inputB).getFluid().isGaseous() || catalyst == null || !toStack(catalyst).getItem().isDamageable()) {error(name); return;}
+        CraftTweakerAPI.apply(new Add(new GasReformerRecipe(recipename, toFluid(inputA), toFluid(inputB), toFluid(output), toStack(catalyst))));
     }
 			private static class Add implements IAction {
 		    	private final GasReformerRecipe recipe;

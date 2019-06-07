@@ -20,14 +20,24 @@ public class CT_DepositionChamber extends CTSupport{
 	public static ArrayList<DepositionChamberRecipe> recipeList = DepositionChamberRecipes.deposition_chamber_recipes;
 
     @ZenMethod
+    public static void add(String recipename, IItemStack input, IItemStack output, ILiquidStack solvent, int temperature, int pressure, ILiquidStack carrier) {
+        if(input == null || output == null || solvent == null) {error(name); return;}
+        CraftTweakerAPI.apply(new Add(new DepositionChamberRecipe(recipename, toStack(input), toStack(output), toFluid(solvent), temperature, pressure, toFluid(carrier))));
+    }
+    @ZenMethod
+    public static void add(String recipename, String input, IItemStack output, ILiquidStack solvent, int temperature, int pressure, ILiquidStack carrier) {
+        if(input == null || output == null || solvent == null) {error(name); return;}
+        CraftTweakerAPI.apply(new Add(new DepositionChamberRecipe(recipename, input, toStack(output), toFluid(solvent), temperature, pressure, toFluid(carrier))));
+    }
+    @ZenMethod
     public static void add(IItemStack input, IItemStack output, ILiquidStack solvent, int temperature, int pressure, ILiquidStack carrier) {
         if(input == null || output == null || solvent == null) {error(name); return;}
-        CraftTweakerAPI.apply(new Add(new DepositionChamberRecipe(toStack(input), toStack(output), toFluid(solvent), temperature, pressure, toFluid(carrier))));
+        CraftTweakerAPI.apply(new Add(new DepositionChamberRecipe("", toStack(input), toStack(output), toFluid(solvent), temperature, pressure, toFluid(carrier))));
     }
     @ZenMethod
     public static void add(String input, IItemStack output, ILiquidStack solvent, int temperature, int pressure, ILiquidStack carrier) {
         if(input == null || output == null || solvent == null) {error(name); return;}
-        CraftTweakerAPI.apply(new Add(new DepositionChamberRecipe(input, toStack(output), toFluid(solvent), temperature, pressure, toFluid(carrier))));
+        CraftTweakerAPI.apply(new Add(new DepositionChamberRecipe("", input, toStack(output), toFluid(solvent), temperature, pressure, toFluid(carrier))));
     }
 			private static class Add implements IAction {
 		    	private final DepositionChamberRecipe recipe;

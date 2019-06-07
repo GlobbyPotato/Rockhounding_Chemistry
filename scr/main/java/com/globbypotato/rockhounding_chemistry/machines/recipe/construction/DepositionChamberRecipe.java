@@ -8,10 +8,11 @@ public class DepositionChamberRecipe {
 	private ItemStack input, output;
 	private FluidStack solvent, carrier;
 	private int temp, press;
-	private String oredict;
+	private String oredict, name;
 	private boolean type;
 
-	public DepositionChamberRecipe(ItemStack input, String oredict, boolean type, ItemStack output, FluidStack solvent, int temp, int press, FluidStack carrier){
+	public DepositionChamberRecipe(String name, ItemStack input, String oredict, boolean type, ItemStack output, FluidStack solvent, int temp, int press, FluidStack carrier){
+		this.name = name;
 		this.input = input;
 		this.output = output;
 		this.solvent = solvent;
@@ -22,12 +23,16 @@ public class DepositionChamberRecipe {
 		this.carrier = carrier;
 	}
 
-	public DepositionChamberRecipe(ItemStack input, ItemStack output, FluidStack solvent, int temp, int press, FluidStack carrier){
-		this(input, "", false, output, solvent, temp, press, carrier);
+	public DepositionChamberRecipe(String name, ItemStack input, ItemStack output, FluidStack solvent, int temp, int press, FluidStack carrier){
+		this(name, input, "", false, output, solvent, temp, press, carrier);
 	}
 
-	public DepositionChamberRecipe(String oredict, ItemStack output, FluidStack solvent, int temp, int press, FluidStack carrier){
-		this(ItemStack.EMPTY, oredict, true, output, solvent, temp, press, carrier);
+	public DepositionChamberRecipe(String name, String oredict, ItemStack output, FluidStack solvent, int temp, int press, FluidStack carrier){
+		this(name, ItemStack.EMPTY, oredict, true, output, solvent, temp, press, carrier);
+	}
+
+	public String getRecipeName(){
+		return this.name;
 	}
 
 	public ItemStack getInput(){

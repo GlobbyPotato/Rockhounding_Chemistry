@@ -5,14 +5,24 @@ import net.minecraftforge.fluids.FluidStack;
 
 public class GasReformerRecipe {
 
+	private String name;
 	private FluidStack inputA, inputB, output;
 	private ItemStack catalyst;
 
-	public GasReformerRecipe(FluidStack inputA, FluidStack inputB, FluidStack output, ItemStack catalyst){
+	public GasReformerRecipe(String name, FluidStack inputA, FluidStack inputB, FluidStack output, ItemStack catalyst){
+		this.name = name;
 		this.inputA = inputA;
 		this.inputB = inputB;
 		this.output = output;
 		this.catalyst = catalyst;
+	}
+
+	public GasReformerRecipe(FluidStack inputA, FluidStack inputB, FluidStack output, ItemStack catalyst){
+		this("", inputA, inputB, output, catalyst);
+	}
+
+	public String getRecipeName(){
+		return this.name;
 	}
 
 	public FluidStack getInputA(){

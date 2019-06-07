@@ -7,6 +7,7 @@ import com.globbypotato.rockhounding_chemistry.machines.container.COReformerCont
 import com.globbypotato.rockhounding_chemistry.machines.tile.TEReformerController;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.machines.gui.GuiUtils;
+import com.google.common.base.Strings;
 
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -123,7 +124,11 @@ public class UIReformerController extends GuiBase {
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 		String recipeLabel = "No recipe relected";
 		if(this.tile.isValidPreset()){
-			recipeLabel = this.tile.getRecipeList(this.tile.getRecipeIndex()).getOutput().getLocalizedName();
+			if(Strings.isNullOrEmpty(this.tile.getRecipeList(this.tile.getRecipeIndex()).getRecipeName())){
+				recipeLabel = this.tile.getRecipeList(this.tile.getRecipeIndex()).getOutput().getLocalizedName();
+			}else{
+				recipeLabel = this.tile.getRecipeList(this.tile.getRecipeIndex()).getRecipeName();
+			}
 		}
 		this.fontRenderer.drawString(recipeLabel, 62, 28, 4210752);
 	}

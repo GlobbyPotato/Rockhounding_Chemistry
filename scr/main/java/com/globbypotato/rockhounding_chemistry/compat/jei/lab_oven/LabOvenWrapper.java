@@ -1,5 +1,6 @@
 package com.globbypotato.rockhounding_chemistry.compat.jei.lab_oven;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -10,8 +11,11 @@ import javax.annotation.Nonnull;
 import com.globbypotato.rockhounding_chemistry.compat.jei.RHRecipeWrapper;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.LabOvenRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.LabOvenRecipe;
+import com.google.common.base.Strings;
 
 import mezz.jei.api.ingredients.IIngredients;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
@@ -31,6 +35,20 @@ public class LabOvenWrapper extends RHRecipeWrapper<LabOvenRecipe>{
 		}
 		return recipes;
 	}
+
+    @Override
+    public void drawInfo(@Nonnull Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY) {
+    	String altString = "N/A";
+		if(!Strings.isNullOrEmpty(getRecipe().getRecipeName())){
+    		altString = getRecipe().getRecipeName();
+    	}else{
+    		altString = getRecipe().getSolution().getLocalizedName();
+    	}
+    	GlStateManager.pushMatrix();
+   	 	GlStateManager.scale(0.5, 0.5, 1);
+    	minecraft.fontRenderer.drawString(altString, 0, 0, Color.red.getRGB());
+		GlStateManager.popMatrix();
+    }
 
 	private static boolean isValidRecipe(LabOvenRecipe recipe){
 		return ((!recipe.getType() && !recipe.getSolute().isEmpty()) || (recipe.getType() && OreDictionary.getOres(recipe.getOredict()).size() > 0))

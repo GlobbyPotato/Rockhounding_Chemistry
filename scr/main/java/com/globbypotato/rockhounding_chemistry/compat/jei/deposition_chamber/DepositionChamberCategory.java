@@ -37,10 +37,10 @@ public class DepositionChamberCategory extends RHRecipeCategory {
 		int CARRIER_SLOT = 2;
 		int OUTPUT_SLOT = 3;
 
-		guiItemStacks.init(INPUT_SLOT, true, 61, 32);
-		guiItemStacks.init(OUTPUT_SLOT, false, 61, 61);
-		guiFluidStacks.init(SOLVENT_SLOT, true,  110, 46, 16, 34, 1000, false, null);
-		guiFluidStacks.init(CARRIER_SLOT, true,  28, 1, 34, 16, 1000, false, null);
+		guiItemStacks.init(INPUT_SLOT, true, 51, 32);
+		guiItemStacks.init(OUTPUT_SLOT, false, 51, 61);
+		guiFluidStacks.init(SOLVENT_SLOT, true,  98, 46, 16, 34, 1000, false, null);
+		guiFluidStacks.init(CARRIER_SLOT, true,  18, 1, 34, 16, 1000, false, null);
 
 		guiItemStacks.set(INPUT_SLOT, wrapper.getInputs());
 		guiItemStacks.set(OUTPUT_SLOT, wrapper.getOutputs());

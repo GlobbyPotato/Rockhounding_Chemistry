@@ -31,6 +31,7 @@ public class CT_ChemicalExtractor extends CTSupport{
 
         CraftTweakerAPI.apply(new Add(new ChemicalExtractorRecipe(category, toStack(input), outputs, quantities)));
     }
+
     @ZenMethod
     public static void add(String category, String input, String[] output, int[] quantity) {
         if(input == null || output == null) {error(name); return;}

@@ -17,7 +17,7 @@ public class PrecipitationCategory extends RHRecipeCategory {
 	private String uid;
 
 	public PrecipitationCategory(IGuiHelper guiHelper, String uid) {
-		super(guiHelper.createDrawable(guiTexture, 0, 0, 90, 56), "jei." + uid + ".name");
+		super(guiHelper.createDrawable(guiTexture, 0, 0, 120, 53), "jei." + uid + ".name");
 		this.uid = uid;
 	}
 
@@ -38,11 +38,11 @@ public class PrecipitationCategory extends RHRecipeCategory {
 		int SOLUTION_SLOT = 3;
 		int BYPRODUCT_SLOT = 4;
 
-		guiItemStacks.init(SOLUTE_SLOT, true, 23, 9);
-		guiItemStacks.init(CATALYST_SLOT, true, 49, 9);
-		guiItemStacks.init(BYPRODUCT_SLOT, false, 36, 38);
-		guiFluidStacks.init(SOLVENT_SLOT, true,  1, 1, 16, 34, 1000, false, null);
-		guiFluidStacks.init(SOLUTION_SLOT, false,  73, 1, 16, 34, 1000, false, null);
+		guiItemStacks.init(SOLUTE_SLOT, true, 23, 16);
+		guiItemStacks.init(CATALYST_SLOT, true, 49, 16);
+		guiItemStacks.init(BYPRODUCT_SLOT, false, 82, 27);
+		guiFluidStacks.init(SOLVENT_SLOT, true,  1, 8, 16, 36, 1000, false, null);
+		guiFluidStacks.init(SOLUTION_SLOT, false,  73, 8, 36, 16, 1000, false, null);
 
 		if(!wrapper.getSolutes().isEmpty() && wrapper.getSolutes().get(0) != null){
 			guiItemStacks.set(SOLUTE_SLOT, wrapper.getSolutes());

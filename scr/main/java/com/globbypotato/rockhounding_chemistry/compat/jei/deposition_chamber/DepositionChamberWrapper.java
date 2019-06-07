@@ -12,6 +12,7 @@ import com.globbypotato.rockhounding_chemistry.compat.jei.RHRecipeWrapper;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.DepositionChamberRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.DepositionChamberRecipe;
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
+import com.google.common.base.Strings;
 
 import mezz.jei.api.ingredients.IIngredients;
 import net.minecraft.client.Minecraft;
@@ -93,11 +94,22 @@ public class DepositionChamberWrapper extends RHRecipeWrapper<DepositionChamberR
     	if(getRecipe().getPressure() > 0){
     		pressString = String.valueOf(getRecipe().getPressure()) + "uP";
     	}
+    	String altString = "N/A";
+		if(!Strings.isNullOrEmpty(getRecipe().getRecipeName())){
+    		altString = getRecipe().getRecipeName();
+    	}else{
+    		altString = getRecipe().getOutput().getDisplayName();
+    	}
 
     	GlStateManager.pushMatrix();
-   	 	GlStateManager.scale(1, 1, 1);
-    	minecraft.fontRenderer.drawString(tempString, 2, 80, Color.red.getRGB());
-    	minecraft.fontRenderer.drawString(pressString, 114, 2, Color.red.getRGB());
+   	 	GlStateManager.scale(0.5, 0.5, 1);
+    	minecraft.fontRenderer.drawString(altString, 0, 170, Color.red.getRGB());
+		GlStateManager.popMatrix();
+
+    	GlStateManager.pushMatrix();
+   	 	GlStateManager.scale(0.5, 0.5, 1);
+    	minecraft.fontRenderer.drawString(tempString, 0, 147, Color.blue.getRGB());
+    	minecraft.fontRenderer.drawString(pressString, 247, 147, Color.blue.getRGB());
 		GlStateManager.popMatrix();
     }
 

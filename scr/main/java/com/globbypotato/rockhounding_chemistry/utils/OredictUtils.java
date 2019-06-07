@@ -10,6 +10,7 @@ import com.globbypotato.rockhounding_chemistry.enums.EnumAlloyTechB;
 import com.globbypotato.rockhounding_chemistry.enums.EnumChemicals;
 import com.globbypotato.rockhounding_chemistry.enums.EnumElements;
 import com.globbypotato.rockhounding_chemistry.enums.EnumMetalItems;
+import com.globbypotato.rockhounding_chemistry.enums.EnumMiscBlocksA;
 import com.globbypotato.rockhounding_chemistry.enums.EnumMiscItems;
 import com.globbypotato.rockhounding_chemistry.enums.shards.EnumNative;
 
@@ -23,8 +24,8 @@ public class OredictUtils extends BaseRecipes{
 		OreDictionary.registerOre("oreUninspected", new ItemStack(ModBlocks.UNINSPECTED_MINERAL));
 
 		//misc blocks
-		OreDictionary.registerOre("blockRawsalt", raw_salt_block);
-		OreDictionary.registerOre("blockCharcoal", charcoal_block);
+		OreDictionary.registerOre("blockRawsalt", new ItemStack(ModBlocks.MISC_BLOCKS_A, 1, EnumMiscBlocksA.RAW_SALT.ordinal()));
+		OreDictionary.registerOre("blockCharcoal", new ItemStack(ModBlocks.MISC_BLOCKS_A, 1, EnumMiscBlocksA.CHARCOAL_BLOCK.ordinal()));
 		
 		//alloys
 		for(int x = 0; x < EnumAlloyTech.size(); x++){

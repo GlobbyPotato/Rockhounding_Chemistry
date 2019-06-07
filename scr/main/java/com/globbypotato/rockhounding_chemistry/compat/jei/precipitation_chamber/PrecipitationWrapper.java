@@ -1,5 +1,6 @@
 package com.globbypotato.rockhounding_chemistry.compat.jei.precipitation_chamber;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -10,8 +11,11 @@ import javax.annotation.Nonnull;
 import com.globbypotato.rockhounding_chemistry.compat.jei.RHRecipeWrapper;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.PrecipitationRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.PrecipitationRecipe;
+import com.google.common.base.Strings;
 
 import mezz.jei.api.ingredients.IIngredients;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
@@ -31,6 +35,20 @@ public class PrecipitationWrapper extends RHRecipeWrapper<PrecipitationRecipe>{
 		}
 		return recipes;
 	}
+
+    @Override
+    public void drawInfo(@Nonnull Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY) {
+    	String altString = "N/A";
+		if(!Strings.isNullOrEmpty(getRecipe().getRecipeName())){
+    		altString = getRecipe().getRecipeName();
+    	}else{
+    		altString = getRecipe().getPrecipitate().getDisplayName();
+    	}
+    	GlStateManager.pushMatrix();
+   	 	GlStateManager.scale(0.5, 0.5, 1);
+    	minecraft.fontRenderer.drawString(altString, 0, 0, Color.red.getRGB());
+		GlStateManager.popMatrix();
+    }
 
 	private static boolean isValidRecipe(PrecipitationRecipe recipe){
 		return ((!recipe.getType() && !recipe.getSolute().isEmpty()) || (recipe.getType() && OreDictionary.getOres(recipe.getOredict()).size() > 0))

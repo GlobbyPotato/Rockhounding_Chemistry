@@ -374,6 +374,10 @@ public class IMCUtils extends IReciperBase{
 	    			}
 	    			//DEPOSITION CHAMBER
 	    			if(message.key.equalsIgnoreCase(add_deposition_chamber_key)){
+		        		String display = null;
+						if(tag.hasKey(tagDisplay)){
+							display = tag.getString(tagDisplay);
+		        		}
 		        		if(tag.hasKey(tagInput)){
 		        			input =  new ItemStack(tag.getCompoundTag(tagInput));
 		        		}
@@ -396,7 +400,7 @@ public class IMCUtils extends IReciperBase{
 		        		}else{
 		        			reagent = BaseRecipes.getFluid(EnumFluid.OXYGEN, 1000);
 		        		}
-		        		DepositionChamberRecipes.deposition_chamber_recipes.add(new DepositionChamberRecipe(input, output, solvent, temperature, pressure, reagent));
+		        		DepositionChamberRecipes.deposition_chamber_recipes.add(new DepositionChamberRecipe(display, input, output, solvent, temperature, pressure, reagent));
 	    			}
 	    			//CHEMICAL EXTRACTOR
 	    			if(message.key.equalsIgnoreCase(add_chemical_extractor_key)){

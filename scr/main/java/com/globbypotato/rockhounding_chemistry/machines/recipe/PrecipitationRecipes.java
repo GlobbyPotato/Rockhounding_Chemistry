@@ -15,42 +15,42 @@ public class PrecipitationRecipes extends BaseRecipes{
 	public static ArrayList<PrecipitationRecipe> precipitation_recipes = new ArrayList<PrecipitationRecipe>();
 
 	public static void machineRecipes() {
-		precipitation_recipes.add(new PrecipitationRecipe(	"Zeolite Compound",
+		precipitation_recipes.add(new PrecipitationRecipe(	"",
 															"compoundFlyash",
 															ItemStack.EMPTY,
 															getFluid(EnumFluid.HYDROCHLORIC_ACID, 500),
 															getFluid(EnumFluid.TOXIC_WASTE, 300),
 															chemicals(1, EnumChemicals.ZEOLITE_COMPOUND) ));
 
-		precipitation_recipes.add(new PrecipitationRecipe(	"Pure YAG Compound",
+		precipitation_recipes.add(new PrecipitationRecipe(	"",
 															yag_compound,
 															ItemStack.EMPTY,
 															getFluid(EnumFluid.LIQUID_AMMONIA, 100),
 															getFluid(EnumFluid.TOXIC_WASTE, 100), 
 															chemicals(1, EnumChemicals.PURE_YAG_COMPOUND) ));
 
-		precipitation_recipes.add(new PrecipitationRecipe(	"Potassium Carbonate", 
+		precipitation_recipes.add(new PrecipitationRecipe(	"", 
 															cracked_charcoal, 
 															ItemStack.EMPTY,
 															CoreBasics.waterStack(1000),
 															getFluid(EnumFluid.TOXIC_WASTE, 700), 
 															chemicals(1, EnumChemicals.POTASSIUM_CARBONATE) ));
 
-		precipitation_recipes.add(new PrecipitationRecipe(	"Potassium Nitrate", 
+		precipitation_recipes.add(new PrecipitationRecipe(	"", 
 															potassium_carbonate,
 															ItemStack.EMPTY,
 															getFluid(EnumFluid.NITRIC_ACID, 200), 
 															getFluid(EnumFluid.TOXIC_WASTE, 200), 
 															chemicals(1, EnumChemicals.POTASSIUM_NITRATE) ));
 
-		precipitation_recipes.add(new PrecipitationRecipe(	"Sodium Polyacrylate", 
+		precipitation_recipes.add(new PrecipitationRecipe(	"", 
 															salt_compound,
 															ItemStack.EMPTY,
 															getFluid(EnumFluid.ACRYLIC_ACID, 200), 
 															getFluid(EnumFluid.TOXIC_WASTE, 200), 
 															new ItemStack(ModItems.SODIUM_POLYACRYLATE) ));
 
-		precipitation_recipes.add(new PrecipitationRecipe(	"Ammonium Chloride",
+		precipitation_recipes.add(new PrecipitationRecipe(	"",
 															"compoundFlyash", 
 															ItemStack.EMPTY, 
 															getFluid(EnumFluid.HYDROCHLORIC_ACID, 200), 

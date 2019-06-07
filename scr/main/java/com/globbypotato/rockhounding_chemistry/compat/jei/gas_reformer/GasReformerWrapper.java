@@ -1,5 +1,6 @@
 package com.globbypotato.rockhounding_chemistry.compat.jei.gas_reformer;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -11,8 +12,11 @@ import com.globbypotato.rockhounding_chemistry.compat.jei.RHRecipeWrapper;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.GasReformerRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.GasReformerRecipe;
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
+import com.google.common.base.Strings;
 
 import mezz.jei.api.ingredients.IIngredients;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -31,6 +35,20 @@ public class GasReformerWrapper extends RHRecipeWrapper<GasReformerRecipe>{
 		}
 		return recipes;
 	}
+
+    @Override
+    public void drawInfo(@Nonnull Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY) {
+    	String altString = "N/A";
+		if(!Strings.isNullOrEmpty(getRecipe().getRecipeName())){
+    		altString = getRecipe().getRecipeName();
+    	}else{
+    		altString = getRecipe().getOutput().getLocalizedName();
+    	}
+    	GlStateManager.pushMatrix();
+   	 	GlStateManager.scale(0.5, 0.5, 1);
+    	minecraft.fontRenderer.drawString(altString, 0, 0, Color.red.getRGB());
+		GlStateManager.popMatrix();
+    }
 
 	@Nonnull
 	public List<FluidStack> getInputsA(){

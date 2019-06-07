@@ -36,6 +36,7 @@ public class UIPowerGenerator extends GuiBase {
 	   int x = (this.width - this.xSize) / 2;
 	   int y = (this.height - this.ySize) / 2;
 
+	   String[] multistring;
 	   List<String> tooltip;
 
 	   //activation
@@ -75,12 +76,30 @@ public class UIPowerGenerator extends GuiBase {
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
 
+	   //reservoir lava
+	   if(GuiUtils.hoveringArea(81, 60, 6, 34, mouseX, mouseY, x, y)){
+		   String content = TextFormatting.GRAY + "Internal Buffer: " + TextFormatting.GOLD + TextFormatting.BOLD + "Lava";
+		   String amount = TextFormatting.GOLD + "" + this.tile.lavaTank.getFluidAmount() + "/" + this.tile.lavaTank.getCapacity() + " mB";
+		   multistring = new String[]{content, amount};
+		   tooltip = GuiUtils.drawMultiLabel(multistring, mouseX, mouseY);
+		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
+	   }
+
+	   //reservoir syngas
+	   if(GuiUtils.hoveringArea(89, 60, 6, 34, mouseX, mouseY, x, y)){
+		   String content = TextFormatting.GRAY + "Internal Buffer: " + TextFormatting.WHITE + TextFormatting.BOLD + "Syngas";
+		   String amount = TextFormatting.WHITE + "" + GuiUtils.translateMC(this.tile.gasTank.getFluidAmount()) + "/" + GuiUtils.translateMC(this.tile.gasTank.getCapacity()) + " cu";
+		   multistring = new String[]{content, amount};
+		   tooltip = GuiUtils.drawMultiLabel(multistring, mouseX, mouseY);
+		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
+	   }
+
 	   //info
 	   if(ModConfig.hasInfo){
 		   if(GuiUtils.hoveringArea(154, 81, 12, 12, mouseX, mouseY, x, y)){
 			   String text = "Takes Redstone dust or blocks";
 			   String text2 = "The Gas Turbine turns Syngas into RF";
-			   String[] multistring = new String[]{text, text2};
+			   multistring = new String[]{text, text2};
 			   tooltip = GuiUtils.drawMultiLabel(multistring, mouseX, mouseY);
 			   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 		   }
@@ -89,7 +108,7 @@ public class UIPowerGenerator extends GuiBase {
 			   String text = "Takes coal, lava or any burnable item";
 			   String text2 = "Syngas turns into fuel power";
 			   String text3 = "The Induction Heating Interface turns external RF into fuel power";
-			   String[] multistring = new String[]{text, text2, text3};
+			   multistring = new String[]{text, text2, text3};
 			   tooltip = GuiUtils.drawMultiLabel(multistring, mouseX, mouseY);
 			   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 		   }
@@ -112,11 +131,7 @@ public class UIPowerGenerator extends GuiBase {
 
 		//activation
         if(this.tile.isActive()){
-        	if(this.tile.isPowered()){
-        		this.drawTexturedModalRect(i + 81, j + 97, 190, 10, 14, 14);
-        	}else{
-        		this.drawTexturedModalRect(i + 81, j + 97, 204, 152, 14, 14);
-        	}
+       		this.drawTexturedModalRect(i + 81, j + 97, 204, 152, 14, 14);
         }
 
         //power module
@@ -144,6 +159,16 @@ public class UIPowerGenerator extends GuiBase {
         if (this.tile.getRedstone() > 0){
             int k = GuiUtils.getScaledValue(60, this.tile.getRedstone(), this.tile.getRedstoneMax());
             this.drawTexturedModalRect(i + 127, j + 52+(60-k), 199, 29, 23, k);
+        }
+
+        //reservoir bar
+        if (this.tile.lavaTank.getFluidAmount() > 0){
+            int k = GuiUtils.getScaledValue(32, this.tile.lavaTank.getFluidAmount(), this.tile.lavaTank.getCapacity());
+            this.drawTexturedModalRect(i + 82, j + 61+(32-k), 176, 93, 4, k);
+        }
+        if (this.tile.gasTank.getFluidAmount() > 0){
+            int k = GuiUtils.getScaledValue(32, this.tile.gasTank.getFluidAmount(), this.tile.gasTank.getCapacity());
+            this.drawTexturedModalRect(i + 90, j + 61+(32-k), 180, 93, 4, k);
         }
 
 		//blend fix
