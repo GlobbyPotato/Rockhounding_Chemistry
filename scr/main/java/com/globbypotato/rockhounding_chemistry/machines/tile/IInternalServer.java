@@ -1,6 +1,7 @@
 package com.globbypotato.rockhounding_chemistry.machines.tile;
 
-import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
+import com.globbypotato.rockhounding_chemistry.ModItems;
+import com.globbypotato.rockhounding_chemistry.enums.EnumMiscItems;
 import com.globbypotato.rockhounding_core.utils.CoreUtils;
 
 import net.minecraft.item.ItemStack;
@@ -52,7 +53,7 @@ public abstract interface IInternalServer {
 	public default void resetFiles(TEServer server, int code){
 		for(int k = 0; k < TEServer.FILE_SLOTS.length; k++){
 			ItemStack fileSlot = server.inputSlot(k);
-			if(!fileSlot.isEmpty() && fileSlot.isItemEqual(BaseRecipes.server_file)){
+			if(!fileSlot.isEmpty() && fileSlot.isItemEqual(new ItemStack(ModItems.MISC_ITEMS, 1, EnumMiscItems.SERVER_FILE.ordinal()))){
 				if(fileSlot.hasTagCompound()){
 					NBTTagCompound tag = fileSlot.getTagCompound();
 					if(isValidFile(tag)){

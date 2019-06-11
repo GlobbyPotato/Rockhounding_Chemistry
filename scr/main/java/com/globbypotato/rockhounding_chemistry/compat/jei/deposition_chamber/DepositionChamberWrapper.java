@@ -8,13 +8,15 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
+import com.globbypotato.rockhounding_chemistry.ModItems;
 import com.globbypotato.rockhounding_chemistry.compat.jei.RHRecipeWrapper;
+import com.globbypotato.rockhounding_chemistry.enums.EnumMiscItems;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.DepositionChamberRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.DepositionChamberRecipe;
-import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 import com.google.common.base.Strings;
 
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
@@ -79,8 +81,8 @@ public class DepositionChamberWrapper extends RHRecipeWrapper<DepositionChamberR
 
 	public List<ItemStack> getUtils() {
 		ArrayList<ItemStack> stacks = new ArrayList<ItemStack>();
-		stacks.add(BaseRecipes.casing_upd);
-		stacks.add(BaseRecipes.insulation_upd);
+		stacks.add(new ItemStack(ModItems.MISC_ITEMS, 1, EnumMiscItems.DEPOSITION_CASING.ordinal()));
+		stacks.add(new ItemStack(ModItems.MISC_ITEMS, 1, EnumMiscItems.DEPOSITION_INSULATION.ordinal()));
 		return stacks;
 	}
 
@@ -115,9 +117,9 @@ public class DepositionChamberWrapper extends RHRecipeWrapper<DepositionChamberR
 
 	@Override
 	public void getIngredients(IIngredients ingredients) {
-		ingredients.setInputLists(ItemStack.class, Arrays.asList(getInputs(), getUtils()));
-		ingredients.setInputLists(FluidStack.class, Arrays.asList(getSolvents(),getCarriers()));
-		ingredients.setOutputs(ItemStack.class, Arrays.asList(getOutputs()));
+		ingredients.setInputLists(VanillaTypes.ITEM, Arrays.asList(getInputs(), getUtils()));
+		ingredients.setInputLists(VanillaTypes.FLUID, Arrays.asList(getSolvents(),getCarriers()));
+		ingredients.setOutputs(VanillaTypes.ITEM, getOutputs());
 	}
 
 }

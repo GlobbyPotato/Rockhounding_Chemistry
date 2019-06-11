@@ -11,6 +11,7 @@ import com.globbypotato.rockhounding_chemistry.machines.recipe.ToxicMutationReci
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.ToxicMutationRecipe;
 
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -52,8 +53,8 @@ public class ToxicMutationWrapper extends RHRecipeWrapper<ToxicMutationRecipe>{
 
 	@Override
 	public void getIngredients(IIngredients ingredients) {
-		ingredients.setInputs(ItemStack.class, getInputs());
-		ingredients.setOutputs(ItemStack.class, getOutputs());
+		ingredients.setInputs(VanillaTypes.ITEM, getInputs());
+		ingredients.setOutputs(VanillaTypes.ITEM, getOutputs());
 	}
 
 }

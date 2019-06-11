@@ -1,13 +1,14 @@
 package com.globbypotato.rockhounding_chemistry.machines.tile;
 
+import com.globbypotato.rockhounding_chemistry.ModItems;
 import com.globbypotato.rockhounding_chemistry.enums.EnumCasting;
+import com.globbypotato.rockhounding_chemistry.enums.EnumMiscItems;
 import com.globbypotato.rockhounding_chemistry.enums.EnumServer;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.DepositionChamberRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.GasReformerRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.LabOvenRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.MetalAlloyerRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.PrecipitationRecipes;
-import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityInv;
 
@@ -170,7 +171,7 @@ public class TEServer extends TileEntityInv {
 	}
 
 	private void loadFile() {
-		if(!printSlot().isEmpty() && printSlot().isItemEqual(BaseRecipes.server_file)){
+		if(!printSlot().isEmpty() && printSlot().isItemEqual(new ItemStack(ModItems.MISC_ITEMS, 1, EnumMiscItems.SERVER_FILE.ordinal()))){
 			if(printSlot().hasTagCompound()){
 				NBTTagCompound tag = printSlot().getTagCompound();
 				if(tag.hasKey("Device") && tag.getInteger("Device") == servedDevice()){
@@ -204,7 +205,7 @@ public class TEServer extends TileEntityInv {
 
 	public void writeFile() {
 		if(!this.world.isRemote){
-			if(!printSlot().isEmpty() && printSlot().isItemEqual(BaseRecipes.server_file)){
+			if(!printSlot().isEmpty() && printSlot().isItemEqual(new ItemStack(ModItems.MISC_ITEMS, 1, EnumMiscItems.SERVER_FILE.ordinal()))){
 				if(!printSlot().hasTagCompound()){printSlot().setTagCompound(new NBTTagCompound());}
 				NBTTagCompound tag = printSlot().getTagCompound();
 				tag.setInteger("Device", servedDevice());

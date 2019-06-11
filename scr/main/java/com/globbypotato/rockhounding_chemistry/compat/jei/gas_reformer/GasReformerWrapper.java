@@ -15,6 +15,7 @@ import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 import com.google.common.base.Strings;
 
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
@@ -89,9 +90,9 @@ public class GasReformerWrapper extends RHRecipeWrapper<GasReformerRecipe>{
 
 	@Override
 	public void getIngredients(IIngredients ingredients) {
-		ingredients.setInputLists(FluidStack.class, Arrays.asList(getInputsA(), getInputsB()));
-		ingredients.setOutputs(FluidStack.class, getOutputs());
-		ingredients.setInputLists(ItemStack.class, Arrays.asList(getCatalysts(),getSpecificCatalysts()));
+		ingredients.setInputLists(VanillaTypes.FLUID, Arrays.asList(getInputsA(), getInputsB()));
+		ingredients.setOutputs(VanillaTypes.FLUID, getOutputs());
+		ingredients.setInputLists(VanillaTypes.ITEM, Arrays.asList(getCatalysts(),getSpecificCatalysts()));
 	}
 
 }

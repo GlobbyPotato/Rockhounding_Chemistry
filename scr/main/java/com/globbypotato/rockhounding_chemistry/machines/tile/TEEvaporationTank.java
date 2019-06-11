@@ -1,6 +1,8 @@
 package com.globbypotato.rockhounding_chemistry.machines.tile;
 
+import com.globbypotato.rockhounding_chemistry.ModBlocks;
 import com.globbypotato.rockhounding_chemistry.enums.EnumFluid;
+import com.globbypotato.rockhounding_chemistry.enums.EnumMiscBlocksA;
 import com.globbypotato.rockhounding_chemistry.enums.EnumSaltStages;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
@@ -285,12 +287,12 @@ public class TEEvaporationTank extends TileEntityTank {
 
 	private void setRawSalt() {
 		this.inputTank.setFluid(null);
-		this.output.setStackInSlot(OUTPUT_SLOT, BaseRecipes.raw_salt_block.copy());
+		this.output.setStackInSlot(OUTPUT_SLOT, new ItemStack(ModBlocks.MISC_BLOCKS_A, 1, EnumMiscBlocksA.RAW_SALT.ordinal()));
 	}
 
 	private void setPoorSalt() {
 		this.inputTank.setFluid(null);
-		this.output.setStackInSlot(OUTPUT_SLOT, BaseRecipes.poor_salt_block.copy());
+		this.output.setStackInSlot(OUTPUT_SLOT, new ItemStack(ModBlocks.MISC_BLOCKS_A, 1, EnumMiscBlocksA.POOR_RAW_SALT.ordinal()));
 	}
 
 	private boolean canProcess() {

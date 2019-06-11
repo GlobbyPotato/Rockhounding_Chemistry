@@ -15,6 +15,13 @@ public class StirredTankRecipes extends BaseRecipes{
 	public static ArrayList<StirredTankRecipe> stirred_tank_recipes = new ArrayList<StirredTankRecipe>();
 
 	public static void machineRecipes() {
+		stirred_tank_recipes.add(new StirredTankRecipe(	getFluid(	EnumFluid.HYDROCHLORIC_ACID, 1000),							
+																	getFluid(EnumFluid.METHANOL, 1000),											
+																	getFluid(EnumFluid.CHLOROMETHANE, 1000), 			
+																	null,
+																	0
+		));
+
 		stirred_tank_recipes.add(new StirredTankRecipe(	getFluid(EnumFluid.SALT_BRINE, 1000),							
 														CoreBasics.waterStack(1000), 											
 														getFluid(EnumFluid.SODIUM_HYDROXIDE, 1000), 			
@@ -32,13 +39,6 @@ public class StirredTankRecipes extends BaseRecipes{
 				));
 			}
 		}
-
-		stirred_tank_recipes.add(new StirredTankRecipe(	getFluid(EnumFluid.HYDROCHLORIC_ACID, 1000),							
-														getFluid(EnumFluid.METHANOL, 1000),											
-														getFluid(EnumFluid.CHLOROMETHANE, 1000), 			
-														null,
-														0
-		));
 
 	}
 

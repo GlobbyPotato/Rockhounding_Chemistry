@@ -11,6 +11,7 @@ import com.globbypotato.rockhounding_chemistry.machines.recipe.SlurryDrumRecipes
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.SlurryDrumRecipe;
 
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
@@ -54,8 +55,8 @@ public class SlurryDrumWrapper extends RHRecipeWrapper<SlurryDrumRecipe>{
 
 	@Override
 	public void getIngredients(IIngredients ingredients) {
-		ingredients.setInputs(ItemStack.class, getInputs());
-		ingredients.setOutputs(FluidStack.class, getOutputs());
+		ingredients.setInputs(VanillaTypes.ITEM, getInputs());
+		ingredients.setOutputs(VanillaTypes.FLUID, getOutputs());
 	}
 
 }

@@ -6,12 +6,14 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
+import com.globbypotato.rockhounding_chemistry.ModBlocks;
 import com.globbypotato.rockhounding_chemistry.compat.jei.RHRecipeWrapper;
+import com.globbypotato.rockhounding_chemistry.enums.EnumMiscBlocksA;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.EvaporationTankRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.EvaporationTankRecipe;
-import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -34,8 +36,8 @@ public class EvaporationTankWrapper extends RHRecipeWrapper<EvaporationTankRecip
 	@Nonnull
 	public List<ItemStack> getSalt(){
 		ArrayList<ItemStack> stacks = new ArrayList<ItemStack>();
-		stacks.add(BaseRecipes.poor_salt_block);
-		stacks.add(BaseRecipes.raw_salt_block);
+		stacks.add(new ItemStack(ModBlocks.MISC_BLOCKS_A, 1, EnumMiscBlocksA.POOR_RAW_SALT.ordinal()));
+		stacks.add(new ItemStack(ModBlocks.MISC_BLOCKS_A, 1, EnumMiscBlocksA.RAW_SALT.ordinal()));
 		return stacks;
 	}
 
@@ -46,8 +48,8 @@ public class EvaporationTankWrapper extends RHRecipeWrapper<EvaporationTankRecip
 
 	@Override
 	public void getIngredients(IIngredients ingredients) {
-		ingredients.setOutputs(FluidStack.class, getOutputs());
-		ingredients.setOutputs(ItemStack.class, getSalt());
+		ingredients.setOutputs(VanillaTypes.FLUID, getOutputs());
+		ingredients.setOutputs(VanillaTypes.ITEM, getSalt());
 	}
 
 }

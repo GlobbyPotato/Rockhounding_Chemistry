@@ -1,6 +1,7 @@
 package com.globbypotato.rockhounding_chemistry.machines.tile;
 
-import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
+import com.globbypotato.rockhounding_chemistry.ModItems;
+import com.globbypotato.rockhounding_chemistry.enums.EnumMiscItems;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.machines.tileentity.MachineStackHandler;
 import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityInv;
@@ -18,16 +19,19 @@ public class TEDepositionChamberBase extends TileEntityInv {
 	public static final int INSULATION_SLOT = 1;
 	public static final int SPEED_SLOT = 2;
 
+	ItemStack casing_upd = new ItemStack(ModItems.MISC_ITEMS, 1, EnumMiscItems.DEPOSITION_CASING.ordinal());
+	ItemStack insulation_upd = new ItemStack(ModItems.MISC_ITEMS, 1, EnumMiscItems.DEPOSITION_INSULATION.ordinal());
+
 	public TEDepositionChamberBase() {
 		super(0, outputSlots, 0, upgradeSlots);
 
 		this.upgrade =  new MachineStackHandler(upgradeSlots, this){
 			@Override
 			public ItemStack insertItem(int slot, ItemStack insertingStack, boolean simulate){
-				if(slot == CASING_SLOT && (isValidUpgrade(insertingStack, BaseRecipes.casing_upd)) ){
+				if(slot == CASING_SLOT && (isValidUpgrade(insertingStack, casing_upd)) ){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
-				if(slot == INSULATION_SLOT && (isValidUpgrade(insertingStack, BaseRecipes.insulation_upd)) ){
+				if(slot == INSULATION_SLOT && (isValidUpgrade(insertingStack, insulation_upd)) ){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
 				if(slot == SPEED_SLOT && ModUtils.isValidSpeedUpgrade(insertingStack) ){
@@ -78,11 +82,11 @@ public class TEDepositionChamberBase extends TileEntityInv {
 	}
 
 	public boolean hasCasing(){
-		return isValidUpgrade(casingSlot(), BaseRecipes.casing_upd);
+		return isValidUpgrade(casingSlot(), casing_upd);
 	}
 
 	public boolean hasInsulation(){
-		return isValidUpgrade(insulationSlot(), BaseRecipes.insulation_upd);
+		return isValidUpgrade(insulationSlot(), insulation_upd);
 	}
 
 

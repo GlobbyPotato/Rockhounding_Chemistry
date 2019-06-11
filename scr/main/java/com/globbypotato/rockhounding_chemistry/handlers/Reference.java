@@ -1,6 +1,7 @@
 package com.globbypotato.rockhounding_chemistry.handlers;
 
-import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
+import com.globbypotato.rockhounding_chemistry.ModItems;
+import com.globbypotato.rockhounding_chemistry.enums.EnumChemicals;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
@@ -17,7 +18,7 @@ public class Reference {
 	public static CreativeTabs RockhoundingChemistry = new CreativeTabs("rockhoundingChemistry") {
 		@Override
 		public ItemStack getTabIconItem() { 
-			return BaseRecipes.fluorite_compound; 
+			return new ItemStack(ModItems.CHEMICAL_ITEMS, 1, EnumChemicals.FLUORITE_COMPOUND.ordinal()); 
 		}
 	};
 }

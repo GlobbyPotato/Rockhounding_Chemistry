@@ -1,8 +1,9 @@
 package com.globbypotato.rockhounding_chemistry.compat.jei.metal_alloyer;
 
+import com.globbypotato.rockhounding_chemistry.ModItems;
 import com.globbypotato.rockhounding_chemistry.compat.jei.RHRecipeCategory;
+import com.globbypotato.rockhounding_chemistry.enums.EnumSpeeds;
 import com.globbypotato.rockhounding_chemistry.machines.gui.UIMetalAlloyer;
-import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IGuiItemStackGroup;
@@ -45,7 +46,7 @@ public class MetalAlloyerCategory extends RHRecipeCategory {
 		guiItemStacks.init(OUTPUT_SLOT, false, 72, 0);
 		guiItemStacks.init(INGR_SLOT, true, 0, 28);
 
-		ItemStack recipeList = new ItemStack(BaseRecipes.speed_base.getItem(), 1, BaseRecipes.speed_base.getItemDamage());
+		ItemStack recipeList = new ItemStack(ModItems.SPEED_ITEMS, 1, EnumSpeeds.BASE.ordinal());
 		recipeList.setTagCompound(new NBTTagCompound());
 		recipeList.getTagCompound().setString("Title", TextFormatting.GRAY + "Alloy: " + TextFormatting.DARK_GREEN + wrapper.getOutputs().get(0).getDisplayName());
 		

@@ -3,9 +3,15 @@ package com.globbypotato.rockhounding_chemistry.handlers;
 import java.util.ArrayList;
 import java.util.Random;
 
+import com.globbypotato.rockhounding_chemistry.ModBlocks;
 import com.globbypotato.rockhounding_chemistry.ModItems;
 import com.globbypotato.rockhounding_chemistry.enums.EnumCasting;
+import com.globbypotato.rockhounding_chemistry.enums.EnumMachinesB;
+import com.globbypotato.rockhounding_chemistry.enums.EnumMachinesD;
+import com.globbypotato.rockhounding_chemistry.enums.EnumMiscBlocksA;
+import com.globbypotato.rockhounding_chemistry.enums.EnumMiscItems;
 import com.globbypotato.rockhounding_chemistry.enums.EnumServer;
+import com.globbypotato.rockhounding_chemistry.enums.EnumSpeeds;
 import com.globbypotato.rockhounding_chemistry.fluids.ModFluids;
 import com.globbypotato.rockhounding_chemistry.items.ProbeItems;
 import com.globbypotato.rockhounding_chemistry.machines.io.MachineIO;
@@ -142,7 +148,7 @@ public class GlobbyEventHandler {
 					}
 				}
 
-				if(itemstack.isItemEqual(BaseRecipes.orbiter)){
+				if(itemstack.isItemEqual(new ItemStack(ModBlocks.MACHINES_D, 1, EnumMachinesD.ORBITER.ordinal()))){
 					NBTTagCompound tag = itemstack.getTagCompound();
 					if(tag.hasKey("XPCount")){
 						int xpCount = tag.getInteger("XPCount");
@@ -153,7 +159,7 @@ public class GlobbyEventHandler {
 					}
 				}
 
-				if(itemstack.isItemEqual(BaseRecipes.server_file)){
+				if(itemstack.isItemEqual(new ItemStack(ModItems.MISC_ITEMS, 1, EnumMiscItems.SERVER_FILE.ordinal()))){
 					if(itemstack.hasTagCompound()){
 						NBTTagCompound tag = itemstack.getTagCompound();
 			    		if(isValidNBT(tag)){
@@ -213,7 +219,7 @@ public class GlobbyEventHandler {
 					}
 		    	}
 
-		    	if(itemstack.isItemEqual(BaseRecipes.speed_base)){
+		    	if(itemstack.isItemEqual(new ItemStack(ModItems.SPEED_ITEMS, 1, EnumSpeeds.BASE.ordinal()))){
 		    		if(itemstack.getTagCompound().hasKey("Title")){
 		    			event.getToolTip().add(itemstack.getTagCompound().getString("Title"));
 		    		}
@@ -235,7 +241,7 @@ public class GlobbyEventHandler {
 			    	}
 		    	}
 
-		    	if(itemstack.isItemEqual(BaseRecipes.pressure_vessel)){
+		    	if(itemstack.isItemEqual(new ItemStack(ModBlocks.MACHINES_B, 1, EnumMachinesB.PRESSURE_VESSEL.ordinal()))){
 		    		if(itemstack.getTagCompound().hasKey(EnumFluidNbt.GAS.nameTag())){
 						FluidStack filterfluid = FluidStack.loadFluidStackFromNBT(itemstack.getTagCompound().getCompoundTag(EnumFluidNbt.GAS.nameTag()));
 						if(filterfluid != null){
@@ -264,7 +270,7 @@ public class GlobbyEventHandler {
 
 	@SubscribeEvent
 	public void onBlockBurn(FurnaceFuelBurnTimeEvent event) {
-		if(event.getItemStack().isItemEqual(BaseRecipes.charcoal_block) ){
+		if(event.getItemStack().isItemEqual(new ItemStack(ModBlocks.MISC_BLOCKS_A, 1, EnumMiscBlocksA.CHARCOAL_BLOCK.ordinal())) ){
 			event.setBurnTime(16000);
 		}
 	}

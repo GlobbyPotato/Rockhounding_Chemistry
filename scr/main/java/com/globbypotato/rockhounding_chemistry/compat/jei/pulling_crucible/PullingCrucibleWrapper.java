@@ -14,6 +14,7 @@ import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.Pull
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
@@ -73,9 +74,9 @@ public class PullingCrucibleWrapper extends RHRecipeWrapper<PullingCrucibleRecip
 
 	@Override
 	public void getIngredients(IIngredients ingredients) {
-		ingredients.setInputLists(ItemStack.class, Arrays.asList(getInputs(), getDopants()));
-		ingredients.setInputLists(FluidStack.class, Arrays.asList(getCarriers()));
-		ingredients.setOutputs(ItemStack.class, Arrays.asList(getOutputs()));
+		ingredients.setInputLists(VanillaTypes.ITEM, Arrays.asList(getInputs(), getDopants()));
+		ingredients.setInputLists(VanillaTypes.FLUID, Arrays.asList(getCarriers()));
+		ingredients.setOutputs(VanillaTypes.ITEM, getOutputs());
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.globbypotato.rockhounding_chemistry.machines.tile;
 
+import com.globbypotato.rockhounding_chemistry.ModItems;
+import com.globbypotato.rockhounding_chemistry.enums.EnumChemicals;
 import com.globbypotato.rockhounding_chemistry.enums.EnumFluid;
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
@@ -212,8 +214,9 @@ public class TECatalystRegen extends TileEntityTank {
 		((MachineStackHandler)getInTank().getInput()).drainOrCleanFluid(getInTank().inputTank, consumedGas(), true);
 
 		if(this.world.rand.nextInt(3) == 0){
-			if(this.output.canSetOrStack(this.outputSlot(), BaseRecipes.coke_compound)){
-				this.output.setOrIncrement(OUTPUT_SLOT, BaseRecipes.coke_compound);
+			ItemStack coke_compound = new ItemStack(ModItems.CHEMICAL_ITEMS, 1, EnumChemicals.COKE_COMPOUND.ordinal());
+			if(this.output.canSetOrStack(this.outputSlot(), coke_compound)){
+				this.output.setOrIncrement(OUTPUT_SLOT, coke_compound);
 			}
 		}
 	}

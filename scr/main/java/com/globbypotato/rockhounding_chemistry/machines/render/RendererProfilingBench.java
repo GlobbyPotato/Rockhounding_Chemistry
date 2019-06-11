@@ -1,6 +1,8 @@
 package com.globbypotato.rockhounding_chemistry.machines.render;
 
+import com.globbypotato.rockhounding_chemistry.ModBlocks;
 import com.globbypotato.rockhounding_chemistry.enums.EnumCasting;
+import com.globbypotato.rockhounding_chemistry.enums.EnumMiscBlocksA;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TEProfilingBench;
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityInv;
@@ -70,7 +72,7 @@ public class RendererProfilingBench extends TileEntitySpecialRenderer<TEProfilin
 			}
 
 			//piston
-			EntityItem pistonEntity = new EntityItem(world, 0, 0, 0, BaseRecipes.profiler_piston.copy());
+			EntityItem pistonEntity = new EntityItem(world, 0, 0, 0, new ItemStack(ModBlocks.MISC_BLOCKS_A, 1, EnumMiscBlocksA.PRESSER.ordinal()));
 			pistonEntity.hoverStart = 0;
 			GlStateManager.pushMatrix();
 			{

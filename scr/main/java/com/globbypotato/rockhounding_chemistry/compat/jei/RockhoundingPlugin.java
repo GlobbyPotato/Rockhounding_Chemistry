@@ -1,6 +1,7 @@
 package com.globbypotato.rockhounding_chemistry.compat.jei;
 
 import com.globbypotato.rockhounding_chemistry.ModBlocks;
+import com.globbypotato.rockhounding_chemistry.ModItems;
 import com.globbypotato.rockhounding_chemistry.compat.jei.air_compressor.AirCompressorCategory;
 import com.globbypotato.rockhounding_chemistry.compat.jei.air_compressor.AirCompressorWrapper;
 import com.globbypotato.rockhounding_chemistry.compat.jei.chemical_extractor.ChemicalExtractorCategory;
@@ -65,6 +66,7 @@ import com.globbypotato.rockhounding_chemistry.enums.EnumMachinesC;
 import com.globbypotato.rockhounding_chemistry.enums.EnumMachinesD;
 import com.globbypotato.rockhounding_chemistry.enums.EnumMachinesE;
 import com.globbypotato.rockhounding_chemistry.enums.EnumMiscBlocksA;
+import com.globbypotato.rockhounding_chemistry.enums.EnumSpeeds;
 import com.globbypotato.rockhounding_chemistry.fluids.ModFluids;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.machines.gui.UIAirCompressor;
@@ -107,6 +109,7 @@ import mezz.jei.api.IModPlugin;
 import mezz.jei.api.IModRegistry;
 import mezz.jei.api.JEIPlugin;
 import mezz.jei.api.ingredients.IIngredientBlacklist;
+import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
@@ -254,8 +257,8 @@ public class RockhoundingPlugin implements IModPlugin {
 		registry.addRecipeCatalyst(CoreUtils.getFluidBucket(EnumFluid.pickFluid(EnumFluid.TOXIC_WASTE)), RHRecipeUID.MUTATION);
 
 		String salt_text = "Raw salt is an intermediate stage of the salt making. It is produced by the Evaporation Tank as result of water evaporation or desublimation and is refined in the Seasoning Rack into the generic refined salt used for recipes. In case of desublimation, since less water is required, a poorer variant will be produced, returning less refined salt.";
-		registry.addIngredientInfo(new ItemStack(ModBlocks.MISC_BLOCKS_A, 1, EnumMiscBlocksA.RAW_SALT.ordinal()), ItemStack.class, salt_text);
-		registry.addIngredientInfo(new ItemStack(ModBlocks.MISC_BLOCKS_A, 1, EnumMiscBlocksA.POOR_RAW_SALT.ordinal()), ItemStack.class, salt_text);
+		registry.addIngredientInfo(new ItemStack(ModBlocks.MISC_BLOCKS_A, 1, EnumMiscBlocksA.RAW_SALT.ordinal()), VanillaTypes.ITEM, salt_text);
+		registry.addIngredientInfo(new ItemStack(ModBlocks.MISC_BLOCKS_A, 1, EnumMiscBlocksA.POOR_RAW_SALT.ordinal()), VanillaTypes.ITEM, salt_text);
 
 		IIngredientBlacklist itemBlacklist = registry.getJeiHelpers().getIngredientBlacklist();
 		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.MISC_BLOCKS_A, 1, EnumMiscBlocksA.PRESSER.ordinal()));
@@ -277,7 +280,7 @@ public class RockhoundingPlugin implements IModPlugin {
 		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.PIPELINE_HALT));
 		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.GASLINE_HALT));
 
-		itemBlacklist.addIngredientToBlacklist(BaseRecipes.speed_base);
+		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModItems.SPEED_ITEMS, 1, EnumSpeeds.BASE.ordinal()));
 		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.WATERLOCK,1,1));
 		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.TOXIC_CLOUD));
 		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.MACHINES_E, 1, EnumMachinesE.LASER_EMITTER.ordinal()));

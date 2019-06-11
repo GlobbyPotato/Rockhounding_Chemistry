@@ -13,6 +13,7 @@ import com.globbypotato.rockhounding_chemistry.machines.recipe.ProfilingBenchRec
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.ProfilingBenchRecipe;
 
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -60,8 +61,8 @@ public class ProfilingBenchWrapper extends RHRecipeWrapper<ProfilingBenchRecipe>
 
 	@Override
 	public void getIngredients(IIngredients ingredients) {
-		ingredients.setInputLists(ItemStack.class, Arrays.asList(getStackedInputs(), getCastings()));
-		ingredients.setOutputs(ItemStack.class, getOutputs());
+		ingredients.setInputLists(VanillaTypes.ITEM, Arrays.asList(getStackedInputs(), getCastings()));
+		ingredients.setOutputs(VanillaTypes.ITEM, getOutputs());
 	}
 
 }

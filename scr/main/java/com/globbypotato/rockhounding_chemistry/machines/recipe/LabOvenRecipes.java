@@ -2,6 +2,8 @@ package com.globbypotato.rockhounding_chemistry.machines.recipe;
 
 import java.util.ArrayList;
 
+import com.globbypotato.rockhounding_chemistry.ModItems;
+import com.globbypotato.rockhounding_chemistry.enums.EnumChemicals;
 import com.globbypotato.rockhounding_chemistry.enums.EnumFluid;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.LabOvenRecipe;
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
@@ -16,7 +18,7 @@ public class LabOvenRecipes extends BaseRecipes{
 
 	public static void machineRecipes() {
 		lab_oven_recipes.add(new LabOvenRecipe(		null,
-													sulfur_compound, 		
+													new ItemStack(ModItems.CHEMICAL_ITEMS, 1, EnumChemicals.SULFUR_COMPOUND.ordinal()), 		
 													ItemStack.EMPTY, 	
 													CoreBasics.waterStack(1000), 							
 													null, 											
@@ -24,7 +26,7 @@ public class LabOvenRecipes extends BaseRecipes{
 													null ));
 
 		lab_oven_recipes.add(new LabOvenRecipe(		"Sulfuric Acid Plus", 	
-													sulfur_compound, 		
+													new ItemStack(ModItems.CHEMICAL_ITEMS, 1, EnumChemicals.SULFUR_COMPOUND.ordinal()), 		
 													va_catalyst, 		
 													CoreBasics.waterStack(1000), 							
 													null,
@@ -32,7 +34,7 @@ public class LabOvenRecipes extends BaseRecipes{
 													null));
 
 		lab_oven_recipes.add(new LabOvenRecipe(		null,
-													salt_compound,
+													new ItemStack(ModItems.CHEMICAL_ITEMS, 1, EnumChemicals.CHLORIDE_COMPOUND.ordinal()),
 													ItemStack.EMPTY,
 													getFluid(EnumFluid.SULFURIC_ACID, 400),
 													CoreBasics.waterStack(1000),
@@ -40,7 +42,7 @@ public class LabOvenRecipes extends BaseRecipes{
 													getFluid(EnumFluid.TOXIC_WASTE, 10)));
 
 		lab_oven_recipes.add(new LabOvenRecipe(		null,
-													fluorite_compound,
+													new ItemStack(ModItems.CHEMICAL_ITEMS, 1, EnumChemicals.FLUORITE_COMPOUND.ordinal()),
 													ItemStack.EMPTY,
 													getFluid(EnumFluid.SULFURIC_ACID, 500),
 													null,
@@ -48,7 +50,7 @@ public class LabOvenRecipes extends BaseRecipes{
 													getFluid(EnumFluid.TOXIC_WASTE, 50)));
 
 		lab_oven_recipes.add(new LabOvenRecipe(		null,
-													salt_compound,
+													new ItemStack(ModItems.CHEMICAL_ITEMS, 1, EnumChemicals.CHLORIDE_COMPOUND.ordinal()),
 													ItemStack.EMPTY,
 													getFluid(EnumFluid.LIQUID_AMMONIA, 400),
 													CoreBasics.waterStack(1000),
@@ -56,7 +58,7 @@ public class LabOvenRecipes extends BaseRecipes{
 													getFluid(EnumFluid.TOXIC_WASTE, 50)));
 
 		lab_oven_recipes.add(new LabOvenRecipe(		"Sodium Cyanide Plus",
-													salt_compound,
+													new ItemStack(ModItems.CHEMICAL_ITEMS, 1, EnumChemicals.CHLORIDE_COMPOUND.ordinal()),
 													gr_catalyst,
 													getFluid(EnumFluid.LIQUID_AMMONIA, 400),
 													CoreBasics.waterStack(1000),
@@ -74,7 +76,7 @@ public class LabOvenRecipes extends BaseRecipes{
 		}
 
 		lab_oven_recipes.add(new LabOvenRecipe(		null,
-													cracked_lime, 
+													new ItemStack(ModItems.CHEMICAL_ITEMS, 1, EnumChemicals.CRACKED_LIME.ordinal()), 
 													ItemStack.EMPTY, 
 													getFluid(EnumFluid.COAL_TAR, 200), 
 													CoreBasics.waterStack(1000), 
@@ -82,7 +84,7 @@ public class LabOvenRecipes extends BaseRecipes{
 													getFluid(EnumFluid.COAL_SLURRY, 50)));
 
 		lab_oven_recipes.add(new LabOvenRecipe(		null,
-													silicon_compound,
+													new ItemStack(ModItems.CHEMICAL_ITEMS, 1, EnumChemicals.SILICON_COMPOUND.ordinal()),
 													ItemStack.EMPTY,
 													getFluid(EnumFluid.CHLOROMETHANE, 500),
 													CoreBasics.waterStack(1000),
@@ -90,7 +92,7 @@ public class LabOvenRecipes extends BaseRecipes{
 													getFluid(EnumFluid.TOXIC_WASTE, 100)));
 
 		lab_oven_recipes.add(new LabOvenRecipe(		"IE Creosote",
-													coal_tar_compound, 
+													new ItemStack(ModItems.CHEMICAL_ITEMS, 1, EnumChemicals.COAL_TAR_COMPOUND.ordinal()), 
 													ItemStack.EMPTY, 
 													CoreBasics.waterStack(1000), 
 													null, 
@@ -98,7 +100,7 @@ public class LabOvenRecipes extends BaseRecipes{
 													getFluid(EnumFluid.COAL_SLURRY, 50)));
 
 		lab_oven_recipes.add(new LabOvenRecipe(		null,
-													ammonium_chloride, 
+													new ItemStack(ModItems.CHEMICAL_ITEMS, 1, EnumChemicals.AMMONIUM_CHLORIDE.ordinal()), 
 													ItemStack.EMPTY, 
 													CoreBasics.waterStack(1000), 
 													null,

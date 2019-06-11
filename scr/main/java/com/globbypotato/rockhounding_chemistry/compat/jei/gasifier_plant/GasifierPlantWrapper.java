@@ -8,12 +8,14 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
+import com.globbypotato.rockhounding_chemistry.ModItems;
 import com.globbypotato.rockhounding_chemistry.compat.jei.RHRecipeWrapper;
+import com.globbypotato.rockhounding_chemistry.enums.EnumMiscItems;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.GasifierPlantRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.GasifierPlantRecipe;
-import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
@@ -64,7 +66,7 @@ public class GasifierPlantWrapper extends RHRecipeWrapper<GasifierPlantRecipe>{
 
 	public List<ItemStack> getUtils() {
 		ArrayList<ItemStack> stacks = new ArrayList<ItemStack>();
-		stacks.add(BaseRecipes.refractory_upd);
+		stacks.add(new ItemStack(ModItems.MISC_ITEMS, 1, EnumMiscItems.REFRACTORY_CASING.ordinal()));
 		return stacks;
 	}
 
@@ -82,10 +84,10 @@ public class GasifierPlantWrapper extends RHRecipeWrapper<GasifierPlantRecipe>{
 
 	@Override
 	public void getIngredients(IIngredients ingredients) {
-		ingredients.setInputs(ItemStack.class, getUtils());
-		ingredients.setInputLists(FluidStack.class, Arrays.asList(getSlurries(), getReactants()));
-		ingredients.setOutputs(FluidStack.class, getOutputs());
-		ingredients.setOutputLists(ItemStack.class, Arrays.asList(getMainSlags(), getAltSlags()));
+		ingredients.setInputs(VanillaTypes.ITEM, getUtils());
+		ingredients.setInputLists(VanillaTypes.FLUID, Arrays.asList(getSlurries(), getReactants()));
+		ingredients.setOutputs(VanillaTypes.FLUID, getOutputs());
+		ingredients.setOutputLists(VanillaTypes.ITEM, Arrays.asList(getMainSlags(), getAltSlags()));
 	}
 
 }

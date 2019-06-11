@@ -2,7 +2,9 @@ package com.globbypotato.rockhounding_chemistry.machines.tile;
 
 import java.util.ArrayList;
 
+import com.globbypotato.rockhounding_chemistry.ModItems;
 import com.globbypotato.rockhounding_chemistry.enums.EnumFluid;
+import com.globbypotato.rockhounding_chemistry.enums.EnumMiscItems;
 import com.globbypotato.rockhounding_chemistry.enums.EnumServer;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.LeachingVatRecipes;
@@ -646,7 +648,7 @@ public class TELeachingVatController extends TileEntityInv implements IInternalS
 		if(getServer().isActive()){
 			for(int x = 0; x < TEServer.FILE_SLOTS.length; x++){
 				ItemStack fileSlot = getServer().inputSlot(x).copy();
-				if(!fileSlot.isEmpty() && fileSlot.isItemEqual(BaseRecipes.server_file)){
+				if(!fileSlot.isEmpty() && fileSlot.isItemEqual(new ItemStack(ModItems.MISC_ITEMS, 1, EnumMiscItems.SERVER_FILE.ordinal()))){
 					if(fileSlot.hasTagCompound()){
 						NBTTagCompound tag = fileSlot.getTagCompound();
 						if(isValidFile(tag)){

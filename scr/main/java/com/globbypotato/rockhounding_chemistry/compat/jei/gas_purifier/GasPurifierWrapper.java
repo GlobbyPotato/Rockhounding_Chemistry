@@ -12,6 +12,7 @@ import com.globbypotato.rockhounding_chemistry.machines.recipe.GasPurifierRecipe
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.GasPurifierRecipe;
 
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -51,9 +52,9 @@ public class GasPurifierWrapper extends RHRecipeWrapper<GasPurifierRecipe>{
 
 	@Override
 	public void getIngredients(IIngredients ingredients) {
-		ingredients.setInputs(FluidStack.class, getInputs());
-		ingredients.setOutputs(FluidStack.class, getOutputs());
-		ingredients.setOutputLists(ItemStack.class, Arrays.asList(getMainSlags(), getAltSlags()));
+		ingredients.setInputs(VanillaTypes.FLUID, getInputs());
+		ingredients.setOutputs(VanillaTypes.FLUID, getOutputs());
+		ingredients.setOutputLists(VanillaTypes.ITEM, Arrays.asList(getMainSlags(), getAltSlags()));
 	}
 
 }

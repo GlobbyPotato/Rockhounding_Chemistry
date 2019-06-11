@@ -24,17 +24,6 @@ public class RetentionVatRecipes extends BaseRecipes{
 	public static ArrayList<RetentionVatRecipe> retention_vat_recipes = new ArrayList<RetentionVatRecipe>();
 
 	public static void machineRecipes(){
-		retention_vat_recipes.add(new RetentionVatRecipe(getFluid(EnumFluid.COAL_SLURRY, 200), 
-									Arrays.asList(	
-													antimonate_stack(1, EnumAntimonate.PARTZITE),
-													antimonate_stack(1, EnumAntimonate.CAMEROLAITE)
-									),
-									
-									Arrays.asList(	
-													5.95F,
-													3.10F
-									)));
-
 		retention_vat_recipes.add(new RetentionVatRecipe(getFluid(EnumFluid.LEACHATE, 200), 
 									Arrays.asList(	
 													antimonate_stack(1, EnumAntimonate.PARTZITE),

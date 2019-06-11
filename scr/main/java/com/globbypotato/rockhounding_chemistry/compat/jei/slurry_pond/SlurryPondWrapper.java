@@ -11,6 +11,7 @@ import com.globbypotato.rockhounding_chemistry.machines.recipe.SlurryPondRecipes
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.SlurryPondRecipe;
 
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
@@ -59,9 +60,9 @@ public class SlurryPondWrapper extends RHRecipeWrapper<SlurryPondRecipe>{
 
 	@Override
 	public void getIngredients(IIngredients ingredients) {
-		ingredients.setInputs(ItemStack.class, getInputs());
-		ingredients.setInputs(FluidStack.class, getBaths());
-		ingredients.setOutputs(FluidStack.class, getOutputs());
+		ingredients.setInputs(VanillaTypes.ITEM, getInputs());
+		ingredients.setInputs(VanillaTypes.FLUID, getBaths());
+		ingredients.setOutputs(VanillaTypes.FLUID, getOutputs());
 	}
 
 }

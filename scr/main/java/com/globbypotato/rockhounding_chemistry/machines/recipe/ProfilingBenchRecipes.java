@@ -12,10 +12,6 @@ public class ProfilingBenchRecipes extends BaseRecipes {
 	public static ArrayList<ProfilingBenchRecipe> profiling_bench_recipes = new ArrayList<ProfilingBenchRecipe>();
 
 	public static void machineRecipes() {
-		profiling_bench_recipes.add(new ProfilingBenchRecipe(	cracked_coal, 												
-																silicone_cartridge,
-																EnumCasting.GEAR.ordinal()));
-
 		profiling_bench_recipes.add(new ProfilingBenchRecipe(	"ingotIron", 												
 																crushing_gear,
 																EnumCasting.GEAR.ordinal()));

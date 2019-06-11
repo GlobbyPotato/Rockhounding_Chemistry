@@ -40,10 +40,18 @@ public class StirredTankCategory extends RHRecipeCategory {
 		guiFluidStacks.init(SOLUTION_SLOT, false,  54, 75, 34, 16, 1000, false, null);
 		guiFluidStacks.init(FUME_SLOT, false,  105, 9, 34, 16, 1000, false, null);
 
-		guiFluidStacks.set(SOLVENT_SLOT, wrapper.getSolvents());
-		guiFluidStacks.set(REAGENT_SLOT, wrapper.getReagents());
-		guiFluidStacks.set(SOLUTION_SLOT, wrapper.getSolutions());
-		guiFluidStacks.set(FUME_SLOT, wrapper.getFumes());
+		if(!wrapper.getSolvents().isEmpty() && wrapper.getSolvents().get(0) != null){
+			guiFluidStacks.set(SOLVENT_SLOT, wrapper.getSolvents());
+		}
+		if(!wrapper.getReagents().isEmpty() && wrapper.getReagents().get(0) != null){
+			guiFluidStacks.set(REAGENT_SLOT, wrapper.getReagents());
+		}
+		if(!wrapper.getSolutions().isEmpty() && wrapper.getSolutions().get(0) != null){
+			guiFluidStacks.set(SOLUTION_SLOT, wrapper.getSolutions());
+		}
+		if(!wrapper.getFumes().isEmpty() && wrapper.getFumes().get(0) != null){
+			guiFluidStacks.set(FUME_SLOT, wrapper.getFumes());
+		}
 	}
 
 }

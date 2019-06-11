@@ -11,6 +11,7 @@ import com.globbypotato.rockhounding_chemistry.machines.recipe.GanPlantRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.GanPlantRecipe;
 
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import net.minecraftforge.fluids.FluidStack;
 
 public class GanPlantWrapper extends RHRecipeWrapper<GanPlantRecipe>{
@@ -41,8 +42,8 @@ public class GanPlantWrapper extends RHRecipeWrapper<GanPlantRecipe>{
 
 	@Override
 	public void getIngredients(IIngredients ingredients) {
-		ingredients.setInputs(FluidStack.class, getInputs());
-		ingredients.setOutputs(FluidStack.class, getOutputs());
+		ingredients.setInputs(VanillaTypes.FLUID, getInputs());
+		ingredients.setOutputs(VanillaTypes.FLUID, getOutputs());
 	}
 
 }

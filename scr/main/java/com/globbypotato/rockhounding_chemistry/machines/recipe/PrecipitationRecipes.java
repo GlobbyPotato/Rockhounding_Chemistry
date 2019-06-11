@@ -23,28 +23,28 @@ public class PrecipitationRecipes extends BaseRecipes{
 															chemicals(1, EnumChemicals.ZEOLITE_COMPOUND) ));
 
 		precipitation_recipes.add(new PrecipitationRecipe(	"",
-															yag_compound,
+															new ItemStack(ModItems.CHEMICAL_ITEMS, 1, EnumChemicals.YAG_COMPOUND.ordinal()),
 															ItemStack.EMPTY,
 															getFluid(EnumFluid.LIQUID_AMMONIA, 100),
 															getFluid(EnumFluid.TOXIC_WASTE, 100), 
 															chemicals(1, EnumChemicals.PURE_YAG_COMPOUND) ));
 
 		precipitation_recipes.add(new PrecipitationRecipe(	"", 
-															cracked_charcoal, 
+															new ItemStack(ModItems.CHEMICAL_ITEMS, 1, EnumChemicals.CRACKED_CHARCOAL.ordinal()), 
 															ItemStack.EMPTY,
 															CoreBasics.waterStack(1000),
 															getFluid(EnumFluid.TOXIC_WASTE, 700), 
 															chemicals(1, EnumChemicals.POTASSIUM_CARBONATE) ));
 
 		precipitation_recipes.add(new PrecipitationRecipe(	"", 
-															potassium_carbonate,
+															new ItemStack(ModItems.CHEMICAL_ITEMS, 1, EnumChemicals.POTASSIUM_CARBONATE.ordinal()),
 															ItemStack.EMPTY,
 															getFluid(EnumFluid.NITRIC_ACID, 200), 
 															getFluid(EnumFluid.TOXIC_WASTE, 200), 
 															chemicals(1, EnumChemicals.POTASSIUM_NITRATE) ));
 
 		precipitation_recipes.add(new PrecipitationRecipe(	"", 
-															salt_compound,
+															new ItemStack(ModItems.CHEMICAL_ITEMS, 1, EnumChemicals.CHLORIDE_COMPOUND.ordinal()),
 															ItemStack.EMPTY,
 															getFluid(EnumFluid.ACRYLIC_ACID, 200), 
 															getFluid(EnumFluid.TOXIC_WASTE, 200), 

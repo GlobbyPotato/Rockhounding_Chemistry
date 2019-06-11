@@ -11,6 +11,7 @@ import com.globbypotato.rockhounding_chemistry.machines.recipe.TransposerRecipes
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.TransposerRecipe;
 
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import net.minecraftforge.fluids.FluidStack;
 
 public class TransposerWrapper extends RHRecipeWrapper<TransposerRecipe>{
@@ -40,8 +41,8 @@ public class TransposerWrapper extends RHRecipeWrapper<TransposerRecipe>{
 
 	@Override
 	public void getIngredients(IIngredients ingredients) {
-		ingredients.setInputs(FluidStack.class, getInputs());
-		ingredients.setOutputs(FluidStack.class, getOutputs());
+		ingredients.setInputs(VanillaTypes.FLUID, getInputs());
+		ingredients.setOutputs(VanillaTypes.FLUID, getOutputs());
 	}
 
 }

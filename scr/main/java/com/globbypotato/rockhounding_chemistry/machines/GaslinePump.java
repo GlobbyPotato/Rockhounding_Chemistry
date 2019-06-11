@@ -2,9 +2,10 @@ package com.globbypotato.rockhounding_chemistry.machines;
 
 import javax.annotation.Nullable;
 
+import com.globbypotato.rockhounding_chemistry.ModItems;
+import com.globbypotato.rockhounding_chemistry.enums.EnumMiscItems;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TEGaslinePump;
-import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 import com.globbypotato.rockhounding_core.machines.PipelineBase;
 import com.globbypotato.rockhounding_core.utils.CoreUtils;
 
@@ -28,6 +29,8 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class GaslinePump extends PipelineBase {
+
+	ItemStack compressor = new ItemStack(ModItems.MISC_ITEMS, 1, EnumMiscItems.COMPRESSOR.ordinal());
 
 	public GaslinePump(String name) {
 		super(Reference.MODID, name);
@@ -65,12 +68,12 @@ public class GaslinePump extends PipelineBase {
 				if(pump.hasUpgrade()){ //remove upgrade
 					if(CoreUtils.hasWrench(player)){
 						pump.upgrade = false;
-						EntityItem upgrade = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), BaseRecipes.compressor);
+						EntityItem upgrade = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), compressor);
 						world.spawnEntity(upgrade);
 					}
 				}
 				if(!pump.hasUpgrade()){ //add upgrade
-					if(CoreUtils.hasTool(player, BaseRecipes.compressor)){
+					if(CoreUtils.hasTool(player, compressor)){
 						pump.upgrade = true;
 						pump.markDirtyClient();
 						if(!player.capabilities.isCreativeMode){

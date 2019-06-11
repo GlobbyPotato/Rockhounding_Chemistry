@@ -11,6 +11,7 @@ import com.globbypotato.rockhounding_chemistry.machines.recipe.HeatExchangerReci
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.HeatExchangerRecipe;
 
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import net.minecraftforge.fluids.FluidStack;
 
 public class HeatExchangerWrapper extends RHRecipeWrapper<HeatExchangerRecipe>{
@@ -41,8 +42,8 @@ public class HeatExchangerWrapper extends RHRecipeWrapper<HeatExchangerRecipe>{
 
 	@Override
 	public void getIngredients(IIngredients ingredients) {
-		ingredients.setInputs(FluidStack.class, getInputs());
-		ingredients.setOutputs(FluidStack.class, getOutputs());
+		ingredients.setInputs(VanillaTypes.FLUID, getInputs());
+		ingredients.setOutputs(VanillaTypes.FLUID, getOutputs());
 	}
 
 }

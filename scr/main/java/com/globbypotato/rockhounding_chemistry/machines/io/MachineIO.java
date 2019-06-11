@@ -2,6 +2,7 @@ package com.globbypotato.rockhounding_chemistry.machines.io;
 
 import java.util.Random;
 
+import com.globbypotato.rockhounding_chemistry.ModBlocks;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 import com.globbypotato.rockhounding_core.machines.BaseRotatingMachine;
@@ -101,7 +102,7 @@ public class MachineIO extends BaseRotatingMachine {
     }
 
 	public static boolean miscBlocksA(Block block, IBlockState state, int meta) {
-		return block != null && block == BaseRecipes.miscBlocksA() && block.getMetaFromState(state) == meta;
+		return block != null && block == ModBlocks.MISC_BLOCKS_A && block.getMetaFromState(state) == meta;
 	}
 
 	public boolean hasNullifier(EntityPlayer player, EnumHand hand) {

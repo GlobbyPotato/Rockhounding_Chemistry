@@ -2,10 +2,11 @@ package com.globbypotato.rockhounding_chemistry.machines.tile;
 
 import java.util.ArrayList;
 
+import com.globbypotato.rockhounding_chemistry.ModItems;
+import com.globbypotato.rockhounding_chemistry.enums.EnumMiscItems;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.GasifierPlantRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.GasifierPlantRecipe;
-import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.machines.tileentity.MachineStackHandler;
 import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityInv;
@@ -30,6 +31,8 @@ public class TEGasifierCooler extends TileEntityInv {
 
 	public GasifierPlantRecipe dummyRecipe;
 
+	ItemStack refractory_upd = new ItemStack(ModItems.MISC_ITEMS, 1, EnumMiscItems.REFRACTORY_CASING.ordinal());
+
 	public TEGasifierCooler() {
 		super(0, 0, 0, upgradeSlots);
 
@@ -51,7 +54,7 @@ public class TEGasifierCooler extends TileEntityInv {
 				if(slot == SPEED_SLOT && ModUtils.isValidSpeedUpgrade(insertingStack) ){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
-				if(slot == CASING_SLOT && (ItemStack.areItemsEqual(insertingStack, BaseRecipes.refractory_upd)) ){
+				if(slot == CASING_SLOT && (ItemStack.areItemsEqual(insertingStack, refractory_upd)) ){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
 				return insertingStack;
@@ -202,7 +205,7 @@ public class TEGasifierCooler extends TileEntityInv {
 
 	//----------------------- CUSTOM -----------------------
 	public boolean hasRefractory(){
-		return !casingSlot().isEmpty() && ItemStack.areItemsEqual(casingSlot(), BaseRecipes.refractory_upd);
+		return !casingSlot().isEmpty() && ItemStack.areItemsEqual(casingSlot(), refractory_upd);
 	}
 
 

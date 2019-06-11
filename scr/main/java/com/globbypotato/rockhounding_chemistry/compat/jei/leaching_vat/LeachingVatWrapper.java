@@ -14,6 +14,7 @@ import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.Leac
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -82,10 +83,10 @@ public class LeachingVatWrapper extends RHRecipeWrapper<LeachingVatRecipe>{
 
 	@Override
 	public void getIngredients(IIngredients ingredients) {
-		ingredients.setInputLists(ItemStack.class, Arrays.asList(getInputs(), getCatalysts()));
-		ingredients.setOutputs(ItemStack.class, getOutputs());
-		ingredients.setInputs(FluidStack.class, getSolvents());
-		ingredients.setOutputs(FluidStack.class, getSolutions());
+		ingredients.setInputLists(VanillaTypes.ITEM, Arrays.asList(getInputs(), getCatalysts()));
+		ingredients.setOutputs(VanillaTypes.ITEM, getOutputs());
+		ingredients.setInputs(VanillaTypes.FLUID, getSolvents());
+		ingredients.setOutputs(VanillaTypes.FLUID, getSolutions());
 	}
 
 }

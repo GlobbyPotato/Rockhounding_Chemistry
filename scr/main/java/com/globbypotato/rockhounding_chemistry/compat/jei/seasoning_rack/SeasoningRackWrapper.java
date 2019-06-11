@@ -11,6 +11,7 @@ import com.globbypotato.rockhounding_chemistry.machines.recipe.SeasoningRackReci
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.SeasoningRackRecipe;
 
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -52,8 +53,8 @@ public class SeasoningRackWrapper extends RHRecipeWrapper<SeasoningRackRecipe>{
 
 	@Override
 	public void getIngredients(IIngredients ingredients) {
-		ingredients.setInputs(ItemStack.class, getInputs());
-		ingredients.setOutputs(ItemStack.class, getOutputs());
+		ingredients.setInputs(VanillaTypes.ITEM, getInputs());
+		ingredients.setOutputs(VanillaTypes.ITEM, getOutputs());
 	}
 
 }

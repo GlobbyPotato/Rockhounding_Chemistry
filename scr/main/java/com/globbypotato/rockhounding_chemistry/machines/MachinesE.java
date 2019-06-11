@@ -9,6 +9,7 @@ import javax.annotation.Nullable;
 import com.globbypotato.rockhounding_chemistry.ModItems;
 import com.globbypotato.rockhounding_chemistry.Rhchemistry;
 import com.globbypotato.rockhounding_chemistry.enums.EnumMachinesE;
+import com.globbypotato.rockhounding_chemistry.enums.EnumMiscItems;
 import com.globbypotato.rockhounding_chemistry.handlers.GuiHandler;
 import com.globbypotato.rockhounding_chemistry.machines.io.MachineIO;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TEBufferTank;
@@ -25,7 +26,6 @@ import com.globbypotato.rockhounding_chemistry.machines.tile.TEStirredTankOut;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TEStirredTankTop;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TEWaterPump;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TileTank;
-import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 import com.globbypotato.rockhounding_core.enums.EnumFluidNbt;
 import com.globbypotato.rockhounding_core.machines.tileentity.IFluidHandlingTile;
 import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityInv;
@@ -63,6 +63,11 @@ public class MachinesE extends MachineIO {
     public static final AxisAlignedBB EXHAUSTION_VALVE_AABB = new AxisAlignedBB(0.2D, 0.0D, 0.2D, 0.8D, 0.7D, 0.8D);
     public static final AxisAlignedBB SLURRY_DRUM_AABB = new AxisAlignedBB(0.1D, 0.0D, 0.1D, 0.9D, 1.0D, 0.9D);
     public static final AxisAlignedBB BUFFER_TANK_AABB = new AxisAlignedBB(0.2D, 0.0D, 0.2D, 0.8D, 1.0D, 0.8D);
+
+	ItemStack compressor = new ItemStack(ModItems.MISC_ITEMS, 1, EnumMiscItems.COMPRESSOR.ordinal());
+	ItemStack iron_impeller = new ItemStack(ModItems.MISC_ITEMS, 1, EnumMiscItems.IRON_IMPELLER.ordinal());
+	ItemStack aluminum_impeller = new ItemStack(ModItems.MISC_ITEMS, 1, EnumMiscItems.ALUMINUM_IMPELLER.ordinal());
+	ItemStack stellite_impeller = new ItemStack(ModItems.MISC_ITEMS, 1, EnumMiscItems.STELLITE_IMPELLER.ordinal());
 
 	public MachinesE(String name) {
 		super(name, Material.IRON, EnumMachinesE.getNames(), 3.0F, 5.0F, SoundType.METAL);
@@ -345,12 +350,12 @@ public class MachinesE extends MachineIO {
 						if(pump.getCompressor()){ //remove upgrade
 							if(CoreUtils.hasWrench(player)){
 								pump.compressor = false;
-								EntityItem upgrade = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), BaseRecipes.compressor);
+								EntityItem upgrade = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), compressor);
 								world.spawnEntity(upgrade);
 							}
 						}
 						if(!pump.getCompressor()){ //add upgrade
-							if(CoreUtils.hasTool(player, BaseRecipes.compressor)){
+							if(CoreUtils.hasTool(player, compressor)){
 								pump.compressor = true;
 								pump.markDirtyClient();
 								if(!player.capabilities.isCreativeMode){
@@ -358,7 +363,7 @@ public class MachinesE extends MachineIO {
 								}
 							}
 						}
-						if(CoreUtils.hasTool(player, BaseRecipes.iron_impeller)){
+						if(CoreUtils.hasTool(player, iron_impeller)){
 							EntityItem upgrade = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ModItems.MISC_ITEMS, 1, pump.tier + 30));
 							world.spawnEntity(upgrade);
 							pump.tier = 0;
@@ -366,7 +371,7 @@ public class MachinesE extends MachineIO {
 								player.getHeldItemMainhand().shrink(1);
 							}
 						}
-						if(CoreUtils.hasTool(player, BaseRecipes.aluminum_impeller)){
+						if(CoreUtils.hasTool(player, aluminum_impeller)){
 							EntityItem upgrade = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ModItems.MISC_ITEMS, 1, pump.tier + 30));
 							world.spawnEntity(upgrade);
 							pump.tier = 1;
@@ -374,7 +379,7 @@ public class MachinesE extends MachineIO {
 								player.getHeldItemMainhand().shrink(1);
 							}
 						}
-						if(CoreUtils.hasTool(player, BaseRecipes.stellite_impeller)){
+						if(CoreUtils.hasTool(player, stellite_impeller)){
 							EntityItem upgrade = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ModItems.MISC_ITEMS, 1, pump.tier + 30));
 							world.spawnEntity(upgrade);
 							pump.tier = 2;

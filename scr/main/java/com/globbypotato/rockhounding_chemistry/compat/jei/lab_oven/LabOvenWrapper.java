@@ -14,6 +14,7 @@ import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.LabO
 import com.google.common.base.Strings;
 
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
@@ -89,9 +90,9 @@ public class LabOvenWrapper extends RHRecipeWrapper<LabOvenRecipe>{
 
 	@Override
 	public void getIngredients(IIngredients ingredients) {
-		ingredients.setInputLists(ItemStack.class, Arrays.asList(getSolutes(), getCatalysts()));
-		ingredients.setInputLists(FluidStack.class, Arrays.asList(getSolvents(),getReagents()));
-		ingredients.setOutputLists(FluidStack.class, Arrays.asList(getSolutions(), getByproducts()));
+		ingredients.setInputLists(VanillaTypes.ITEM, Arrays.asList(getSolutes(), getCatalysts()));
+		ingredients.setInputLists(VanillaTypes.FLUID, Arrays.asList(getSolvents(),getReagents()));
+		ingredients.setOutputLists(VanillaTypes.FLUID, Arrays.asList(getSolutions(), getByproducts()));
 	}
 
 }

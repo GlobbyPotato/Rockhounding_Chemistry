@@ -13,6 +13,7 @@ import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.Meta
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -65,8 +66,8 @@ public class MetalAlloyerWrapper extends RHRecipeWrapper<MetalAlloyerRecipe>{
 
 	@Override
 	public void getIngredients(IIngredients ingredients) {
-		ingredients.setInputLists(ItemStack.class, Arrays.asList(getMiscs(), getStackedInputs()));
-		ingredients.setOutputs(ItemStack.class, getOutputs());
+		ingredients.setInputLists(VanillaTypes.ITEM, Arrays.asList(getMiscs(), getStackedInputs()));
+		ingredients.setOutputs(VanillaTypes.ITEM, getOutputs());
 	}
 
 }

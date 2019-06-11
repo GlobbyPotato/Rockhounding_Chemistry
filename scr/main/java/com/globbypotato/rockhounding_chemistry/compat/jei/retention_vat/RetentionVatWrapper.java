@@ -14,6 +14,7 @@ import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.Rete
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -64,9 +65,9 @@ public class RetentionVatWrapper extends RHRecipeWrapper<RetentionVatRecipe>{
 
 	@Override
 	public void getIngredients(IIngredients ingredients) {
-		ingredients.setInputLists(FluidStack.class, Arrays.asList(getInputs(), getSolvents()));
-		ingredients.setOutputs(ItemStack.class, getOutputs());
-		ingredients.setOutputs(FluidStack.class, getSolutions());
+		ingredients.setInputLists(VanillaTypes.FLUID, Arrays.asList(getInputs(), getSolvents()));
+		ingredients.setOutputs(VanillaTypes.ITEM, getOutputs());
+		ingredients.setOutputs(VanillaTypes.FLUID, getSolutions());
 	}
 
 }

@@ -14,6 +14,7 @@ import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.Prec
 import com.google.common.base.Strings;
 
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
@@ -86,10 +87,10 @@ public class PrecipitationWrapper extends RHRecipeWrapper<PrecipitationRecipe>{
 
 	@Override
 	public void getIngredients(IIngredients ingredients) {
-		ingredients.setInputLists(ItemStack.class, Arrays.asList(getSolutes(), getCatalysts()));
-		ingredients.setInputs(FluidStack.class, getSolvents());
-		ingredients.setOutputs(FluidStack.class, getSolutions());
-		ingredients.setOutputs(ItemStack.class, getPrecipitates());
+		ingredients.setInputLists(VanillaTypes.ITEM, Arrays.asList(getSolutes(), getCatalysts()));
+		ingredients.setInputs(VanillaTypes.FLUID, getSolvents());
+		ingredients.setOutputs(VanillaTypes.FLUID, getSolutions());
+		ingredients.setOutputs(VanillaTypes.ITEM, getPrecipitates());
 	}
 
 }

@@ -11,6 +11,7 @@ import com.globbypotato.rockhounding_chemistry.machines.recipe.PollutantRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.PollutantGasRecipe;
 
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import net.minecraftforge.fluids.FluidStack;
 
 public class PollutantGasWrapper extends RHRecipeWrapper<PollutantGasRecipe>{
@@ -36,7 +37,7 @@ public class PollutantGasWrapper extends RHRecipeWrapper<PollutantGasRecipe>{
 
 	@Override
 	public void getIngredients(IIngredients ingredients) {
-		ingredients.setInputs(FluidStack.class, getInputs());
+		ingredients.setInputs(VanillaTypes.FLUID, getInputs());
 	}
 
 }

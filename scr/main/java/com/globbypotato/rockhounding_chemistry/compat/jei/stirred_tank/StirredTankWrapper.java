@@ -7,12 +7,14 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.globbypotato.rockhounding_chemistry.compat.jei.RHRecipeWrapper;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.StirredTankRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.StirredTankRecipe;
 
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraftforge.fluids.FluidStack;
@@ -40,8 +42,8 @@ public class StirredTankWrapper extends RHRecipeWrapper<StirredTankRecipe>{
     		voltString = String.valueOf(getRecipe().getVoltage() * 10) + " RF";
     	}
     	GlStateManager.pushMatrix();
-   	 	GlStateManager.scale(0.85, 0.85, 1);
-    	minecraft.fontRenderer.drawString(voltString, 3, 5, Color.red.getRGB());
+	   	 	GlStateManager.scale(0.85, 0.85, 1);
+	    	minecraft.fontRenderer.drawString(voltString, 3, 5, Color.red.getRGB());
 		GlStateManager.popMatrix();
     }
 
@@ -60,6 +62,7 @@ public class StirredTankWrapper extends RHRecipeWrapper<StirredTankRecipe>{
 		return Collections.singletonList(getRecipe().getSolution());
 	}
 
+	@Nullable
 	public List<FluidStack> getFumes(){
 		return Collections.singletonList(getRecipe().getFume());
 	}
@@ -70,8 +73,8 @@ public class StirredTankWrapper extends RHRecipeWrapper<StirredTankRecipe>{
 
 	@Override
 	public void getIngredients(IIngredients ingredients) {
-		ingredients.setInputLists(FluidStack.class, Arrays.asList(getSolvents(), getReagents()));
-		ingredients.setOutputLists(FluidStack.class, Arrays.asList(getSolutions(), getFumes()));
+		ingredients.setInputLists(VanillaTypes.FLUID, Arrays.asList(getSolvents(), getReagents()));
+		ingredients.setOutputLists(VanillaTypes.FLUID, Arrays.asList(getSolutions(), getFumes()));
 	}
 
 }

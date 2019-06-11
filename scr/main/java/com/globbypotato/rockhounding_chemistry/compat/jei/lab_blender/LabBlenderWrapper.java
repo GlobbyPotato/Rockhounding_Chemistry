@@ -12,6 +12,7 @@ import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.LabB
 import com.globbypotato.rockhounding_core.utils.CoreUtils;
 
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -74,8 +75,8 @@ public class LabBlenderWrapper extends RHRecipeWrapper<LabBlenderRecipe>{
 
 	@Override
 	public void getIngredients(IIngredients ingredients) {
-		ingredients.setInputs(ItemStack.class, getInputs());
-		ingredients.setOutputs(ItemStack.class, getOutputs());
+		ingredients.setInputs(VanillaTypes.ITEM, getInputs());
+		ingredients.setOutputs(VanillaTypes.ITEM, getOutputs());
 	}
 
 }

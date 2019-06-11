@@ -12,6 +12,7 @@ import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.Mine
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -68,8 +69,8 @@ public class MineralSizerWrapper extends RHRecipeWrapper<MineralSizerRecipe>{
 
 	@Override
 	public void getIngredients(IIngredients ingredients) {
-		ingredients.setInputLists(ItemStack.class, Arrays.asList(getInputs(), getCatalysts()));
-		ingredients.setOutputs(ItemStack.class, getOutputs());
+		ingredients.setInputLists(VanillaTypes.ITEM, Arrays.asList(getInputs(), getCatalysts()));
+		ingredients.setOutputs(VanillaTypes.ITEM, getOutputs());
 	}
 
 }

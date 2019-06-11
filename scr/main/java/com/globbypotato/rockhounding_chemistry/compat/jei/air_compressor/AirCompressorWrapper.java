@@ -11,6 +11,7 @@ import com.globbypotato.rockhounding_chemistry.machines.recipe.AirCompressorReci
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.AirCompressorRecipe;
 
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import net.minecraftforge.fluids.FluidStack;
 
 public class AirCompressorWrapper extends RHRecipeWrapper<AirCompressorRecipe>{
@@ -36,7 +37,7 @@ public class AirCompressorWrapper extends RHRecipeWrapper<AirCompressorRecipe>{
 
 	@Override
 	public void getIngredients(IIngredients ingredients) {
-		ingredients.setOutputs(FluidStack.class, getOutputs());
+		ingredients.setOutputs(VanillaTypes.FLUID, getOutputs());
 	}
 
 }

@@ -58,7 +58,9 @@ public class LeachingVatCategory extends RHRecipeCategory {
 		guiFluidStacks.set(CHLO_SLOT, BaseRecipes.getFluid(EnumFluid.HYDROCHLORIC_ACID, 1000));
 		guiFluidStacks.set(WATER_SLOT, new FluidStack(FluidRegistry.WATER, 1000));
 		guiFluidStacks.set(STEAM_SLOT, BaseRecipes.getFluid(EnumFluid.WATER_VAPOUR, 1000));
-		guiFluidStacks.set(PULP_SLOT, wrapper.getSolutions());
+		if(!wrapper.getSolutions().isEmpty() && wrapper.getSolutions().get(0) != null){
+			guiFluidStacks.set(PULP_SLOT, wrapper.getSolutions());
+		}
 	}
 
 }
