@@ -1373,7 +1373,7 @@
 												<p space="4" />
 												<p color="#0000FF">Требования</p>
 												<p>1x Контроллер Хим Преобразования</p>
-												<p>3x <link ref="utilities:pressure_vessel_page" color="#000000">Бак</link></p>
+												<p>4x <link ref="utilities:pressure_vessel_page" color="#000000">Бак</link></p>
 												<p>2x Башня Хим Преобразования</p>
 												<p>1x Верхняя часть Башни Хим Преобразования</p>
 												<p>1x Сепаратор</p>

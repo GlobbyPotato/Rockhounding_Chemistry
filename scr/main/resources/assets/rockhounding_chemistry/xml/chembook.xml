@@ -1402,7 +1402,7 @@
 												<p space="4" />
 												<p color="#0000FF">Requirements</p>
 												<p>1x Reforming Controller</p>
-												<p>3x <link ref="utilities:pressure_vessel_page" color="#000000">Vessel/Holder</link></p>
+												<p>4x <link ref="utilities:pressure_vessel_page" color="#000000">Vessel/Holder</link></p>
 												<p>2x Reforming Tower</p>
 												<p>1x Reforming Tower Top</p>
 												<p>1x Separator</p>

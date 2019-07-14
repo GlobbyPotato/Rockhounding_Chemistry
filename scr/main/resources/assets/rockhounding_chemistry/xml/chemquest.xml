@@ -287,12 +287,13 @@
 
 		<page id="quest_04_01">
 			<link ref="main:index_02" color="#CC3333">&lt;- 01: Removing heroBrine</link>
-			<p>This stage involves the salt making process again. It takes to place another group of Evaporation Tanks but this time you don't need the whole process to be done but an intermediate fluid to be extracted. What you need is the low density brine stage of the evaporation.</p>
+			<p>This stage involves the salt making process again. It takes to place another group of Evaporation Tanks but this time you don't need the whole process to be done but an intermediate fluid to be extracted. What you need is the Saturated Brine stage of the evaporation.</p>
 			<p space="4" />
 			<p color="#0000FF">Tasks</p>
-			<p>- Put down several Evaporation Tanks. Right click them with the mod wrench until selecting the purging of Brine (look at Hwyla for reference).</p>
+			<p>- Put down several Evaporation Tanks. Right click them with the mod wrench until selecting the purging of the Saturated Brine (look at Hwyla for reference).</p>
 			<p>- Connect the water storage to the tanks to constantly fill them.</p>
-			<p>- Connect the tank to a storage to extract the brine when formed.</p>
+			<p>- Connect the tank to a storage to extract the Saturated Brine when formed.</p>
+			<p>- ProTip: Unremoved Saturated Brine will continue to evaporate as usual into the next stages.</p>
 		</page>
 
 		<page id="quest_04_02">
@@ -301,8 +302,8 @@
 			<p space="4" />
 			<p color="#0000FF">Tasks</p>
 			<p>- Assembly an Electrochemical CSTR.</p>
-			<p>- Set a filter for brine and water on the Input System tanks, following the displacement for left/right tank from JEI.</p>
-			<p>- Connect the brine and water storage to the Input System.</p>
+			<p>- Set a filter for Saturated Brine and water on the Input System tanks, following the displacement for left/right tank from JEI.</p>
+			<p>- Connect the Saturated Brine and water storage to the Input System.</p>
 			<p>- Connect the lower tank to a larger storage to keep the structure working.</p>
 			<p>- ProTip: you can avoid to install the Pressure Vessel because not required for this specific recipe.</p>
 		</page>
