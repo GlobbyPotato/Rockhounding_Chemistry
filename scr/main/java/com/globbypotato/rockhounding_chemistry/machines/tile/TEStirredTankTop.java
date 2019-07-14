@@ -82,10 +82,6 @@ public class TEStirredTankTop extends TileEntityInv{
 		return ModUtils.isValidSpeedUpgrade(speedSlot()) ? ModUtils.speedUpgrade(speedSlot()) : 1;
 	}
 
-	public int getYeld(){
-		return ModUtils.isValidSpeedUpgrade(speedSlot()) ? (125 * speedFactor()) : 125;
-	}
-
 	@Override
 	public BlockPos poweredPosition(){
 		return chamberPos().offset(poweredFacing());
@@ -131,9 +127,6 @@ public class TEStirredTankTop extends TileEntityInv{
 	private boolean hasFume() {return recipeFume() != null;}
 	public boolean hasVoltage(){return isValidRecipe() ? getCurrentRecipe().getVoltage() > 0 : false;}
 	public int voltageLevel(){return isValidRecipe() ? getCurrentRecipe().getVoltage() : 0;}
-
-	private FluidStack calculatedYeld() {return new FluidStack(recipeSolution().getFluid(), getCalculatedYeld() * 2);}
-	
 
 
 
@@ -244,17 +237,21 @@ public class TEStirredTankTop extends TileEntityInv{
 	public int getCooktimeMax() {
 		return ModUtils.isValidSpeedUpgrade(speedSlot()) ? ModConfig.speedCstr / ModUtils.speedUpgrade(speedSlot()): ModConfig.speedCstr;
 	}
+	
+	public int getCalculatedSolvent(){
+		return getCurrentRecipe().getSolvent().amount * speedFactor();
+	}
+	
+	public int getCalculatedReagent(){
+		return getCurrentRecipe().getReagent().amount * speedFactor();
+	}
 
-	public int getCalculatedYeld(){
-		if(hasIntank()){
-			int getmin = Math.min(getIntank().getSolventAmount(), getIntank().getReagentAmount());
-			if(getmin < getYeld()){
-				return getmin;
-			}else{
-				return getYeld();
-			}
-		}
-		return 0;
+	public int getCalculatedSolution(){
+		return getCurrentRecipe().getSolution().amount * speedFactor();
+	}
+
+	public int getCalculatedFume(){
+		return getCurrentRecipe().getFume().amount * speedFactor();
 	}
 
 
@@ -295,8 +292,8 @@ public class TEStirredTankTop extends TileEntityInv{
 			if(hasFuelPower() && hasRedstonePower()
 			&& canExtract()
 			&& hasCharger() && hasOuttank()
-			&& this.output.canSetOrFillFluid(getOuttank().inputTank, getOuttank().getTankFluid(), calculatedYeld())
-			&& ((hasFume() && hasFumeTank() && this.output.canSetOrFillFluid(getFumeTank().inputTank, getFumeTank().getTankFluid(), recipeFume())) || !hasFume())
+			&& canOutput()
+			&& ((hasFume() && hasFumeTank() && this.output.canSetOrAddFluid(getFumeTank().inputTank, getFumeTank().getTankFluid(), recipeFume(), getCalculatedFume())) || !hasFume())
 			){
 				return true;
 			}
@@ -304,22 +301,23 @@ public class TEStirredTankTop extends TileEntityInv{
 		return false;
 	}
 
+	private boolean canOutput() {
+		return this.output.canSetOrAddFluid(getOuttank().inputTank, getOuttank().getTankFluid(), getCurrentRecipe().getSolution(), getCalculatedSolution());
+	}
+
 	private boolean canExtract() {
-		return this.input.canDrainFluid(getIntank().getSolventFluid(), getCurrentRecipe().getSolvent(), getCalculatedYeld())
-			&& this.input.canDrainFluid(getIntank().getReagentFluid(), getCurrentRecipe().getReagent(), getCalculatedYeld());
+		return this.input.canDrainFluid(getIntank().getSolventFluid(), getCurrentRecipe().getSolvent(), getCalculatedSolvent())
+			&& this.input.canDrainFluid(getIntank().getReagentFluid(), getCurrentRecipe().getReagent(), getCalculatedReagent());
 	}
 
 	private void process() {
-		this.output.setOrFillFluid(getOuttank().inputTank, calculatedYeld());
-		this.input.drainOrCleanFluid(getIntank().solventTank, getCalculatedYeld(), true);
-		this.input.drainOrCleanFluid(getIntank().reagentTank, getCalculatedYeld(), true);
+		this.output.setOrFillFluid(getOuttank().inputTank, getCurrentRecipe().getSolution(), getCalculatedSolution());
+		this.input.drainOrCleanFluid(getIntank().solventTank, getCalculatedSolvent(), true);
+		this.input.drainOrCleanFluid(getIntank().reagentTank, getCalculatedReagent(), true);
 
 		if(hasFume() && hasFumeTank() && this.output.canSetOrFillFluid(getFumeTank().inputTank, getFumeTank().getTankFluid(), recipeFume())){
-			this.output.setOrFillFluid(getFumeTank().inputTank, recipeFume());
+			this.output.setOrFillFluid(getFumeTank().inputTank, recipeFume(), getCalculatedFume());
 		}
 	}
-
-
-
 
 }

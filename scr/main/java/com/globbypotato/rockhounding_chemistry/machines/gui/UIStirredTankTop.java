@@ -43,7 +43,7 @@ public class UIStirredTankTop extends GuiBase {
 	   if(GuiUtils.hoveringArea(111, 87, 14, 14, mouseX, mouseY, x, y)){
 		   String rf = TextFormatting.GRAY + "Energy: " + TextFormatting.RED + this.tile.powerConsume() + " RF/t";
 		   String tk = TextFormatting.GRAY + "Process: " + TextFormatting.YELLOW + this.tile.getCooktimeMax() + " ticks"; 
-		   String yd = TextFormatting.GRAY + "Yeld: " + TextFormatting.YELLOW + this.tile.getCalculatedYeld() * 2 + " mb/t"; 
+		   String yd = TextFormatting.GRAY + "Yeld: " + TextFormatting.YELLOW + this.tile.getCalculatedSolution() + " mb/t"; 
 		   String sf = TextFormatting.GRAY + "Tier: " + TextFormatting.AQUA + this.tile.speedFactor() + "x"; 
 		   multistring = new String[]{sf, tk, yd, rf};
 		   tooltip = GuiUtils.drawMultiLabel(multistring, mouseX, mouseY);
@@ -53,10 +53,10 @@ public class UIStirredTankTop extends GuiBase {
 	   //acid consume
 	   if(GuiUtils.hoveringArea(30, 60, 16, 31, mouseX, mouseY, x, y)){
 		   String solv = TextFormatting.RED + "N/A";
-		   String commDescr = TextFormatting.GRAY + "Primary Solvent:";
+		   String commDescr = TextFormatting.GRAY + "Primary Reagent:";
 		   if(this.tile.hasIntank()){
 			   if(this.tile.getIntank().hasSolventFluid()){
-				   solv = TextFormatting.WHITE + this.tile.getIntank().getSolventFluid().getLocalizedName() + ": "+ TextFormatting.AQUA + this.tile.getCalculatedYeld() + " mB";
+				   solv = TextFormatting.WHITE + this.tile.getIntank().getSolventFluid().getLocalizedName() + ": "+ TextFormatting.AQUA + this.tile.getCalculatedSolvent() + " mB";
 			   }
 		   }
 		   multistring = new String[]{commDescr, solv};
@@ -66,10 +66,10 @@ public class UIStirredTankTop extends GuiBase {
 
 	   if(GuiUtils.hoveringArea(130, 60, 16, 31, mouseX, mouseY, x, y)){
 		   String solv = TextFormatting.RED + "N/A";
-		   String commDescr = TextFormatting.GRAY + "Secondary Solvent:";
+		   String commDescr = TextFormatting.GRAY + "Secondary Reagent:";
 		   if(this.tile.hasIntank()){
 			   if(this.tile.getIntank().hasReagentFluid()){
-				   solv = TextFormatting.WHITE + this.tile.getIntank().getReagentFluid().getLocalizedName() + ": "+ TextFormatting.AQUA + this.tile.getCalculatedYeld() + " mB";
+				   solv = TextFormatting.WHITE + this.tile.getIntank().getReagentFluid().getLocalizedName() + ": "+ TextFormatting.AQUA + this.tile.getCalculatedReagent() + " mB";
 			   }
 		   }
 		   multistring = new String[]{commDescr, solv};

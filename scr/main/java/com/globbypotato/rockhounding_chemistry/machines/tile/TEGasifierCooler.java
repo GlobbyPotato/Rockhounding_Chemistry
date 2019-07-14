@@ -291,7 +291,7 @@ public class TEGasifierCooler extends TileEntityInv {
 	}
 
 	public boolean hasParts(){
-		return hasBurner() && getPressurizer() != null;
+		return getPressurizer() != null;
 	}
 
 //particulate
@@ -376,6 +376,7 @@ public class TEGasifierCooler extends TileEntityInv {
 
 	private boolean canProcess() {
 		return isValidRecipe()
+			&& hasParts()
 			&& getTemperature() >= getThreashold()
 			&& hasEnoughSlurry()
 			&& hasEnoughReactant()

@@ -35,7 +35,7 @@ public class ChemicalExtractorRecipe {
 	}
 
 	public ItemStack getInput() {
-		if(!this.input.isEmpty()) return this.input.copy();
+		if(!this.input.isEmpty()) return this.input;
 		return ItemStack.EMPTY;
 	}
 

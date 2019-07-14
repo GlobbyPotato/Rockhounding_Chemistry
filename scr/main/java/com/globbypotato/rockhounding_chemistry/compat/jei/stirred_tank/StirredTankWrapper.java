@@ -43,7 +43,10 @@ public class StirredTankWrapper extends RHRecipeWrapper<StirredTankRecipe>{
     	}
     	GlStateManager.pushMatrix();
 	   	 	GlStateManager.scale(0.85, 0.85, 1);
-	    	minecraft.fontRenderer.drawString(voltString, 3, 5, Color.red.getRGB());
+	    	minecraft.fontRenderer.drawString(voltString, 3, 5, Color.RED.getRGB());
+	   	 	GlStateManager.scale(0.6, 0.6, 1);
+	    	minecraft.fontRenderer.drawString("Primary", 24, 146, Color.BLUE.getRGB());
+	    	minecraft.fontRenderer.drawString("Secondary", 210, 146, Color.BLUE.getRGB());
 		GlStateManager.popMatrix();
     }
 

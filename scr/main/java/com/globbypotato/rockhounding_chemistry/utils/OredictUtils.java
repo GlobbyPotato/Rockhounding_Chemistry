@@ -63,6 +63,8 @@ public class OredictUtils extends BaseRecipes{
 
 		//dusts
 		OreDictionary.registerOre("dustSalt", chemicals(1, EnumChemicals.SALT));
+		OreDictionary.registerOre("foodSalt", chemicals(1, EnumChemicals.SALT));
+		OreDictionary.registerOre("itemSalt", chemicals(1, EnumChemicals.SALT));
 		OreDictionary.registerOre("dustGraphite", chemicals(1, EnumChemicals.GRAPHITE_COMPOUND));
 		OreDictionary.registerOre("dustZeolite", chemicals(1, EnumChemicals.ZEOLITE_PELLET));
 		OreDictionary.registerOre("dustSand", chemicals(1, EnumChemicals.SAND_COMPOUND));

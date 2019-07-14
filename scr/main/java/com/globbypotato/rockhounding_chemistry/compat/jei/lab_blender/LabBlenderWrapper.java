@@ -69,13 +69,24 @@ public class LabBlenderWrapper extends RHRecipeWrapper<LabBlenderRecipe>{
 	}
 
 	@Nonnull
+	public ArrayList<ItemStack> getAllInputs() {
+		ArrayList<ItemStack> allInputs = new ArrayList<ItemStack>();
+		for(int y = 0; y < getStackedInputs().size(); y++){
+			for(int x = 0; x < getStackedInputs().get(y).size(); x++){
+				allInputs.add(getStackedInputs().get(y).get(x));
+			}
+		}
+		return allInputs;
+	}
+
+	@Nonnull
 	public List<ItemStack> getOutputs() {
 		return Collections.singletonList(getRecipe().getOutput());
 	}
 
 	@Override
 	public void getIngredients(IIngredients ingredients) {
-		ingredients.setInputs(VanillaTypes.ITEM, getInputs());
+		ingredients.setInputs(VanillaTypes.ITEM, getAllInputs());
 		ingredients.setOutputs(VanillaTypes.ITEM, getOutputs());
 	}
 

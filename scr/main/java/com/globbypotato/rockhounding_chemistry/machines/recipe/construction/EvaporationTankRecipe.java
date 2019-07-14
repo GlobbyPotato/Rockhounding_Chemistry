@@ -11,7 +11,7 @@ public class EvaporationTankRecipe {
 	}
 
 	public FluidStack getInput(){
-		if(this.input != null) return this.input.copy();
+		if(this.input != null) return this.input;
 		return null;
 	}
 

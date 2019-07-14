@@ -42,6 +42,12 @@ public class SlurryPondRecipes extends BaseRecipes{
 															getFluid(EnumFluid.ORGANIC_SLURRY, 200)));
 		}
 
+		if(!ModUtils.surface_compost().isEmpty()){
+			slurry_pond_recipes.add(new SlurryPondRecipe(	ModUtils.surface_compost(), 			
+															CoreBasics.waterStack(400), 				
+															getFluid(EnumFluid.ORGANIC_SLURRY, 300)));
+		}
+
 		for(int x = 0; x < EnumMinerals.size(); x++){
 			slurry_pond_recipes.add(new SlurryPondRecipe(	mineral_ores(1, EnumMinerals.values()[x]), 	
 															getFluid(EnumFluid.SULFURIC_ACID, 250), 	

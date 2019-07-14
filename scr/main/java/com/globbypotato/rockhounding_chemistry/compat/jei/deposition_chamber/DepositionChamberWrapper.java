@@ -105,13 +105,10 @@ public class DepositionChamberWrapper extends RHRecipeWrapper<DepositionChamberR
 
     	GlStateManager.pushMatrix();
    	 	GlStateManager.scale(0.5, 0.5, 1);
-    	minecraft.fontRenderer.drawString(altString, 0, 170, Color.red.getRGB());
-		GlStateManager.popMatrix();
+    	minecraft.fontRenderer.drawString(altString, 0, 170, Color.RED.getRGB());
 
-    	GlStateManager.pushMatrix();
-   	 	GlStateManager.scale(0.5, 0.5, 1);
-    	minecraft.fontRenderer.drawString(tempString, 0, 147, Color.blue.getRGB());
-    	minecraft.fontRenderer.drawString(pressString, 247, 147, Color.blue.getRGB());
+    	minecraft.fontRenderer.drawString(tempString, 0, 147, Color.BLUE.getRGB());
+    	minecraft.fontRenderer.drawString(pressString, 247, 147, Color.BLUE.getRGB());
 		GlStateManager.popMatrix();
     }
 

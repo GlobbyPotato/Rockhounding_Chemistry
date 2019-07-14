@@ -47,7 +47,7 @@ public class LabOvenWrapper extends RHRecipeWrapper<LabOvenRecipe>{
     	}
     	GlStateManager.pushMatrix();
    	 	GlStateManager.scale(0.5, 0.5, 1);
-    	minecraft.fontRenderer.drawString(altString, 0, 0, Color.red.getRGB());
+    	minecraft.fontRenderer.drawString(altString, 0, 0, Color.RED.getRGB());
 		GlStateManager.popMatrix();
     }
 

@@ -22,6 +22,7 @@ public class ModUtils {
 	public static final int HEIGHT = 200;
 
 	public static String immersive_id = "immersiveengineering";
+	public static String rh_surface_id = "rockhounding_surface";
 	public static String mekanism_id = "mekanism";
 	public static String forestry_id = "forestry";
 	public static String thermal_f_id = "thermalfoundation";
@@ -148,6 +149,10 @@ public class ModUtils {
 		return Loader.isModLoaded(forestry_id);
 	}
 
+	public static boolean hasSurface() {
+		return Loader.isModLoaded(rh_surface_id);
+	}
+
 	public static boolean hasTFoundation() {
 		return Loader.isModLoaded(thermal_f_id);
 	}
@@ -197,6 +202,17 @@ public class ModUtils {
 		if(hasForestry()){
 			Item material = Item.REGISTRY.getObject(new ResourceLocation(forestry_id + ":" + "fertilizer_bio"));
 			ItemStack temp = CoreUtils.getModdedStack(material, 1, 0);
+			if(!temp.isEmpty()){
+				return temp;
+			}
+		}
+		return ItemStack.EMPTY;
+	}
+
+	public static ItemStack surface_compost(){
+		if(hasSurface()){
+			Item material = Item.REGISTRY.getObject(new ResourceLocation(rh_surface_id + ":" + "gypsum_items"));
+			ItemStack temp = CoreUtils.getModdedStack(material, 1, 4);
 			if(!temp.isEmpty()){
 				return temp;
 			}

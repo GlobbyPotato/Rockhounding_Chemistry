@@ -15,25 +15,25 @@ public class StirredTankRecipes extends BaseRecipes{
 	public static ArrayList<StirredTankRecipe> stirred_tank_recipes = new ArrayList<StirredTankRecipe>();
 
 	public static void machineRecipes() {
-		stirred_tank_recipes.add(new StirredTankRecipe(	getFluid(	EnumFluid.HYDROCHLORIC_ACID, 1000),							
-																	getFluid(EnumFluid.METHANOL, 1000),											
-																	getFluid(EnumFluid.CHLOROMETHANE, 1000), 			
-																	null,
-																	0
+		stirred_tank_recipes.add(new StirredTankRecipe(	getFluid(EnumFluid.HYDROCHLORIC_ACID, 100),							
+														getFluid(EnumFluid.METHANOL, 100),											
+														getFluid(EnumFluid.CHLOROMETHANE, 150), 			
+														getFluid(EnumFluid.RAW_FLUE_GAS, 50), 			
+														0
 		));
 
-		stirred_tank_recipes.add(new StirredTankRecipe(	getFluid(EnumFluid.SALT_BRINE, 1000),							
-														CoreBasics.waterStack(1000), 											
-														getFluid(EnumFluid.SODIUM_HYDROXIDE, 1000), 			
+		stirred_tank_recipes.add(new StirredTankRecipe(	getFluid(EnumFluid.SALT_BRINE, 80),							
+														CoreBasics.waterStack(100), 											
+														getFluid(EnumFluid.SODIUM_HYDROXIDE, 170), 			
 														null,
 														4
 		));
 
 		if(Loader.isModLoaded(ModUtils.mekanism_id)){
 			if(CoreUtils.fluidExists(ModUtils.mek_brine)){
-				stirred_tank_recipes.add(new StirredTankRecipe(	CoreUtils.getFluid(ModUtils.mek_brine, 1000),							
-																CoreBasics.waterStack(1000), 											
-																getFluid(EnumFluid.SODIUM_HYDROXIDE, 1000), 			
+				stirred_tank_recipes.add(new StirredTankRecipe(	CoreUtils.getFluid(ModUtils.mek_brine, 80),							
+																CoreBasics.waterStack(100), 											
+																getFluid(EnumFluid.SODIUM_HYDROXIDE, 170), 			
 																null,
 																4
 				));

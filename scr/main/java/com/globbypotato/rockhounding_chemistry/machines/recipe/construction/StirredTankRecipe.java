@@ -19,22 +19,22 @@ public class StirredTankRecipe {
 	}
 
 	public FluidStack getSolvent(){
-		if(this.solvent != null) return this.solvent.copy();
+		if(this.solvent != null) return this.solvent;
 		return null;
 	}
 
 	public FluidStack getReagent(){
-		if(this.reagent != null) return this.reagent.copy();
+		if(this.reagent != null) return this.reagent;
 		return null;
 	}
 
 	public FluidStack getSolution(){
-		if(this.solution != null) return this.solution.copy();
+		if(this.solution != null) return this.solution;
 		return null;
 	}
 
 	public FluidStack getFume(){
-		if(this.fume != null) return this.fume.copy();
+		if(this.fume != null) return this.fume;
 		return null;
 	}
 

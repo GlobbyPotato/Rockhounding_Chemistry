@@ -17,7 +17,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class EvaporationTankCategory extends RHRecipeCategory {
 
-	private final static ResourceLocation guiTexture = new ResourceLocation(Reference.MODID + ":textures/gui/jei/evaporationtankjei.png");
+	private final static ResourceLocation guiTexture = new ResourceLocation(Reference.MODID + ":textures/gui/jei/guievaporationtankjei.png");
 	private String uid;
 
 	public EvaporationTankCategory(IGuiHelper guiHelper, String uid) {

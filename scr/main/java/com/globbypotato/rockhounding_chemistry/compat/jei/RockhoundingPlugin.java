@@ -229,7 +229,7 @@ public class RockhoundingPlugin implements IModPlugin {
 
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.MACHINES_A, 1, EnumMachinesA.SIZER_CONTROLLER.ordinal()), RHRecipeUID.SIZER);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.MACHINES_B, 1, EnumMachinesB.SLURRY_POND.ordinal()), RHRecipeUID.POND);
-		registry.addRecipeCatalyst(new ItemStack(ModBlocks.MACHINES_A, 1, EnumMachinesA.LAB_OVEN_CONTROLLER.ordinal()), RHRecipeUID.OVEN);
+		registry.addRecipeCatalyst(new ItemStack(ModBlocks.MACHINES_A, 1, EnumMachinesA.LAB_OVEN_CHAMBER.ordinal()), RHRecipeUID.OVEN);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.MACHINES_A, 1, EnumMachinesA.LAB_BLENDER_CONTROLLER.ordinal()), RHRecipeUID.BLENDER);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.MACHINES_B, 1, EnumMachinesB.GASIFIER_COOLER.ordinal()), RHRecipeUID.GASIFIER);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.MACHINES_B, 1, EnumMachinesB.GAS_PURIFIER.ordinal()), RHRecipeUID.PURIFIER);
