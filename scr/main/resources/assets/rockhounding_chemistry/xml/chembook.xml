@@ -892,7 +892,7 @@
 											</page>																					
 											<page>
 												<p color="#0000FF">How to set the CSTR:</p>
-												<p>> Set a filter on both tanks in the input system by using the <link ref="tools:tools_page" color="#000000">Sampling Ampoule</link> and feed the two fluids.</p> 
+												<p>> Set a filter on both tanks in the input system by using the <link ref="tools:tools_page" color="#000000">Sampling Ampoule</link> and feed the two fluids. Make sure to set the filters accordingly with the JEI indications about Primary and Secondary input.</p> 
 												<p space="2" />
 												<p>> Check if the recipe requires voltage and feed accordingly. If the icon it lighted it will consume also RF. Feed then the Power Station.</p>
 												<image src="rockhounding_chemistry:gbook/wiki/cstr_voltage" tw="24" th="24"/>

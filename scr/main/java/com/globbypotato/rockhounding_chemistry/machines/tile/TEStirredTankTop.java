@@ -239,19 +239,19 @@ public class TEStirredTankTop extends TileEntityInv{
 	}
 	
 	public int getCalculatedSolvent(){
-		return getCurrentRecipe().getSolvent().amount * speedFactor();
+		return isValidRecipe() ? getCurrentRecipe().getSolvent().amount * speedFactor(): 0;
 	}
 	
 	public int getCalculatedReagent(){
-		return getCurrentRecipe().getReagent().amount * speedFactor();
+		return isValidRecipe() ? getCurrentRecipe().getReagent().amount * speedFactor() : 0;
 	}
 
 	public int getCalculatedSolution(){
-		return getCurrentRecipe().getSolution().amount * speedFactor();
+		return isValidRecipe() ? getCurrentRecipe().getSolution().amount * speedFactor() : 0;
 	}
 
 	public int getCalculatedFume(){
-		return getCurrentRecipe().getFume().amount * speedFactor();
+		return isValidRecipe() ? getCurrentRecipe().getFume().amount * speedFactor(): 0;
 	}
 
 

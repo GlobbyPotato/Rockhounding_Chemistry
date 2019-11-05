@@ -21,14 +21,14 @@ public class COFluidInputTank extends ContainerBase<TEFluidInputTank>{
 		IItemHandler input = this.tile.getInput();
 		IItemHandler template = this.tile.getTemplate();
 
-		this.addSlotToContainer(new SlotItemHandler(input, 0, 24, 34));//input solvent
-		this.addSlotToContainer(new SlotItemHandler(input, 1, 136, 34));//input reagent
+		this.addSlotToContainer(new SlotItemHandler(input, 0, 14, 34));//input solvent
+		this.addSlotToContainer(new SlotItemHandler(input, 1, 146, 34));//input reagent
 
-		this.addSlotToContainer(new SlotItemHandler(template, 0, 27, 82));//void solvent
-		this.addSlotToContainer(new SlotItemHandler(template, 1, 133, 82));//void reagent
+		this.addSlotToContainer(new SlotItemHandler(template, 0, 14, 82));//void solvent
+		this.addSlotToContainer(new SlotItemHandler(template, 1, 146, 82));//void reagent
 		
-		this.addSlotToContainer(new SlotItemHandler(template, 2, 27, 58));//filter solvent
-		this.addSlotToContainer(new SlotItemHandler(template, 3, 133, 58));//filter reagent
+		this.addSlotToContainer(new SlotItemHandler(template, 2, 14, 58));//filter solvent
+		this.addSlotToContainer(new SlotItemHandler(template, 3, 146, 58));//filter reagent
 
 	}
 

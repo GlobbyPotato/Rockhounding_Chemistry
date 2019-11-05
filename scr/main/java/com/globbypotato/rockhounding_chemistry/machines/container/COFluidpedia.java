@@ -28,12 +28,16 @@ public class COFluidpedia extends ContainerBase<TEFluidpedia>{
                 this.addSlotToContainer(new SlotItemHandler(template, j + i * 9, 8 + j * 18, 23 + i * 18));
             }
         }
-		this.addSlotToContainer(new SlotItemHandler(template, 36, 8,   96));//-
-		this.addSlotToContainer(new SlotItemHandler(template, 37, 44,  96));//+
+		this.addSlotToContainer(new SlotItemHandler(template, 36, 7,   96));//char -
+		this.addSlotToContainer(new SlotItemHandler(template, 37, 36,  96));//char +
 
-		this.addSlotToContainer(new SlotItemHandler(template, 38, 116, 96));//all
-		this.addSlotToContainer(new SlotItemHandler(template, 39, 134, 96));//fluid
-		this.addSlotToContainer(new SlotItemHandler(template, 40, 152, 96));//gas
+		this.addSlotToContainer(new SlotItemHandler(template, 38, 119, 96));//all
+		this.addSlotToContainer(new SlotItemHandler(template, 39, 136, 96));//fluid
+		this.addSlotToContainer(new SlotItemHandler(template, 40, 153, 96));//gas
+		
+		this.addSlotToContainer(new SlotItemHandler(template, 41, 62,  96));//page -
+		this.addSlotToContainer(new SlotItemHandler(template, 42, 93,  96));//page +
+
 	}
 
 	@Override
@@ -45,10 +49,10 @@ public class COFluidpedia extends ContainerBase<TEFluidpedia>{
 				if(heldItem.isItemEqual(BaseRecipes.sampling_ampoule)){
 					if(!heldItem.hasTagCompound()){heldItem.setTagCompound(new NBTTagCompound());}
 					if(heldItem.hasTagCompound()){
-				  		if(!this.tile.FLUID_LIST.isEmpty() && this.tile.FLUID_LIST.size() > 0){
-							if(slot < this.tile.FLUID_LIST.size()){
+				  		if(!this.tile.PAGED_FLUID_LIST.isEmpty() && this.tile.PAGED_FLUID_LIST.size() > 0){
+							if(slot < this.tile.PAGED_FLUID_LIST.size()){
 								NBTTagCompound gas = new NBTTagCompound();
-								FluidStack sample = new FluidStack(this.tile.FLUID_LIST.get(slot), 1000);
+								FluidStack sample = new FluidStack(this.tile.PAGED_FLUID_LIST.get(slot), 1000);
 								if(sample != null && sample.getFluid() != null){
 									sample.writeToNBT(gas);
 									if(sample.getFluid().isGaseous()){
@@ -92,6 +96,20 @@ public class COFluidpedia extends ContainerBase<TEFluidpedia>{
     		return ItemStack.EMPTY;
 		}else if(slot == 40){
 			this.tile.viewNum = 2;
+			this.tile.collectFluids(this.tile.getAlphabet(), this.tile.getView());
+    		return ItemStack.EMPTY;
+		}else if(slot == 41){
+			this.tile.pageNum--;
+			if(this.tile.getPage() < 1){
+				this.tile.pageNum = 99;
+			}
+			this.tile.collectFluids(this.tile.getAlphabet(), this.tile.getView());
+    		return ItemStack.EMPTY;
+		}else if(slot == 42){
+			this.tile.pageNum++;
+			if(this.tile.getPage() > 99){
+				this.tile.pageNum = 1;
+			}
 			this.tile.collectFluids(this.tile.getAlphabet(), this.tile.getView());
     		return ItemStack.EMPTY;
 		}

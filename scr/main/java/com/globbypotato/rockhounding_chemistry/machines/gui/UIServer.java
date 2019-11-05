@@ -127,7 +127,7 @@ public class UIServer extends GuiBase {
 
     }
 
-	 @Override
+	@Override
 	public void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 		String recipeLabel = "No recipe selected";

@@ -13,11 +13,13 @@ import net.minecraftforge.fluids.FluidRegistry;
 
 public class TEFluidpedia extends TileEntityInv {
 
-	public static int templateSlots = 41;
+	public static int templateSlots = 43;
 
 	public int charNum = 0;
 	public int viewNum = -1;
+	public int pageNum = 1;
 	public ArrayList<Fluid> FLUID_LIST = new ArrayList<Fluid>();
+	public ArrayList<Fluid> PAGED_FLUID_LIST = new ArrayList<Fluid>();
 
 	public TEFluidpedia() {
 		super(0, 0, templateSlots, 0);
@@ -30,12 +32,14 @@ public class TEFluidpedia extends TileEntityInv {
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
 		this.charNum = compound.getInteger("Char");
+//		this.pageNum = compound.getInteger("Page");
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		super.writeToNBT(compound);
 		compound.setInteger("Char", this.charNum);
+//		compound.setInteger("Page", this.pageNum);
         return compound;
 	}
 
@@ -62,12 +66,17 @@ public class TEFluidpedia extends TileEntityInv {
 		return this.viewNum;
 	}
 
+	public int getPage() {
+		return this.pageNum;
+	}
+
 	public String getAlphabet() {
 		return String.valueOf((char)(this.getChar() + 65));
 	}
 
 	public void collectFluids(String chars, int views) {
 		FLUID_LIST = new ArrayList<Fluid>();
+		PAGED_FLUID_LIST = new ArrayList<Fluid>();
 		for(Fluid fluid : FluidRegistry.getRegisteredFluids().values()){
 			if(fluid.getName().toLowerCase().startsWith(chars.toLowerCase())){
 				if((views == 1 && !fluid.isGaseous()) || (views == 2 && fluid.isGaseous()) || views == 0){
@@ -75,7 +84,13 @@ public class TEFluidpedia extends TileEntityInv {
 				}
 			}
 		}
-		Collections.sort(FLUID_LIST, COMPARE_BY_NAME);
+		int page_split = 36 * (this.getPage() - 1);
+		for(int x = page_split; x < page_split + 36; x++){
+			if(x < FLUID_LIST.size()){
+				PAGED_FLUID_LIST.add(FLUID_LIST.get(x));
+			}
+		}
+		Collections.sort(PAGED_FLUID_LIST, COMPARE_BY_NAME);
 	}
 
     public Comparator<Fluid> COMPARE_BY_NAME = new Comparator<Fluid>() {

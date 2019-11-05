@@ -35,25 +35,25 @@ public class UIFluidOutputTank extends GuiBase {
 	   int y = (this.height - this.ySize) / 2;
 
 		//void solution
-	    if(GuiUtils.hoveringArea(26, 33, 18, 18, mouseX, mouseY, x, y)){
+	    if(GuiUtils.hoveringArea(13, 33, 18, 18, mouseX, mouseY, x, y)){
 			List<String> tooltip = GuiUtils.drawLabel(this.void_label, mouseX, mouseY);
 			drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 		}
 
 		//void byproduct
-	    if(GuiUtils.hoveringArea(132, 33, 18, 18, mouseX, mouseY, x, y)){
+	    if(GuiUtils.hoveringArea(145, 33, 18, 18, mouseX, mouseY, x, y)){
 			List<String> tooltip = GuiUtils.drawLabel(this.void_label, mouseX, mouseY);
 			drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 		}
 
 		//input solution
-	    if(GuiUtils.hoveringArea(45, 33, 34, 66, mouseX, mouseY, x, y)){
+	    if(GuiUtils.hoveringArea(32, 33, 34, 66, mouseX, mouseY, x, y)){
 			List<String> tooltip = GuiUtils.drawFluidTankInfo(this.tile.solutionTank, mouseX, mouseY);
 			drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 		}
 
 		//input byproduct
-	    if(GuiUtils.hoveringArea(97, 33, 34, 66, mouseX, mouseY, x, y)){
+	    if(GuiUtils.hoveringArea(110, 33, 34, 66, mouseX, mouseY, x, y)){
 			List<String> tooltip = GuiUtils.drawFluidTankInfo(this.tile.byproductTank, mouseX, mouseY);
 			drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 		}
@@ -70,12 +70,12 @@ public class UIFluidOutputTank extends GuiBase {
 
 		//input solution
 		if(this.tile.getSolutionFluid() != null){
-			GuiUtils.renderFluidBar(this.tile.getSolutionFluid(), this.tile.getSolutionAmount(), this.tile.getTankCapacity(), i + 46, j + 34, 32, 64);
+			GuiUtils.renderFluidBar(this.tile.getSolutionFluid(), this.tile.getSolutionAmount(), this.tile.getTankCapacity(), i + 33, j + 34, 32, 64);
 		}
 
 		//input byproduct
 		if(this.tile.getByproductFluid() != null){
-			GuiUtils.renderFluidBar(this.tile.getByproductFluid(), this.tile.getByproductAmount(), this.tile.getTankCapacity(), i + 98, j + 34, 32, 64);
+			GuiUtils.renderFluidBar(this.tile.getByproductFluid(), this.tile.getByproductAmount(), this.tile.getTankCapacity(), i + 111, j + 34, 32, 64);
 		}
 
     }

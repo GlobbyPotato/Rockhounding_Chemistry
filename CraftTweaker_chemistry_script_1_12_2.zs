@@ -28,7 +28,7 @@ ELECTROCHEMICAL CSTR
 //input fluid 2: the fluid added from the right channel
 //output fluid: the output mixed fluid
 //output gas: the output gas byproduct (optional)
-//voltage: the voltage multiplier to aplly to the reaction (set zero for no voltage required)
+//voltage: the voltage multiplier to apply to the reaction (set zero for no voltage required)
 mods.rockhounding_chemistry.StirredTank.add(<liquid:hydrochloric_acid>*150, <liquid:methanol>*100, <liquid:chloromethane>*200, <liquid:hydrogen>*50, 5);
 mods.rockhounding_chemistry.StirredTank.add(<liquid:hydrochloric_acid>*130, <liquid:methanol>*200, <liquid:chloromethane>*300, null, 5);
 

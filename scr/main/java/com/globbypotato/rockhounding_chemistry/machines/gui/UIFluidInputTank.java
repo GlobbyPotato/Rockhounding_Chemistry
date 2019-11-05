@@ -36,20 +36,20 @@ public class UIFluidInputTank extends GuiBase {
 	   int y = (this.height - this.ySize) / 2;
 
 		//void solvent
-	    if(GuiUtils.hoveringArea(26, 81, 18, 18, mouseX, mouseY, x, y)){
+	    if(GuiUtils.hoveringArea(13, 81, 18, 18, mouseX, mouseY, x, y)){
 			List<String> tooltip = GuiUtils.drawLabel(this.void_label, mouseX, mouseY);
 			drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 		}
 
 		//void reagent
-	    if(GuiUtils.hoveringArea(132, 81, 18, 18, mouseX, mouseY, x, y)){
+	    if(GuiUtils.hoveringArea(145, 81, 18, 18, mouseX, mouseY, x, y)){
 			List<String> tooltip = GuiUtils.drawLabel(this.void_label, mouseX, mouseY);
 			drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 		}
 
 		//filter
 		String filterString = "";
-	    if(GuiUtils.hoveringArea(26, 57, 18, 18, mouseX, mouseY, x, y)){
+	    if(GuiUtils.hoveringArea(13, 57, 18, 18, mouseX, mouseY, x, y)){
 			if(!this.tile.isFiltered() && !this.tile.hasManualSolvent()){
 				filterString = TextFormatting.BLUE + "Fluid Filter: " + TextFormatting.WHITE + "use a filled ampoule to set";			
 			}
@@ -65,7 +65,7 @@ public class UIFluidInputTank extends GuiBase {
 			List<String> tooltip = GuiUtils.drawLabel(filterString, mouseX, mouseY);
 			drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 		}
-	    if(GuiUtils.hoveringArea(132, 57, 18, 18, mouseX, mouseY, x, y)){
+	    if(GuiUtils.hoveringArea(145, 57, 18, 18, mouseX, mouseY, x, y)){
 			if(!this.tile.isFiltered() && !this.tile.hasManualReagent()){
 				filterString = TextFormatting.BLUE + "Fluid Filter: " + TextFormatting.WHITE + "use a filled ampoule to set";			
 			}
@@ -83,13 +83,13 @@ public class UIFluidInputTank extends GuiBase {
 		}
 		
 		//input solvent
-	    if(GuiUtils.hoveringArea(45, 33, 34, 66, mouseX, mouseY, x, y)){
+	    if(GuiUtils.hoveringArea(32, 33, 34, 66, mouseX, mouseY, x, y)){
 			List<String> tooltip = GuiUtils.drawFluidTankInfo(this.tile.solventTank, mouseX, mouseY);
 			drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 		}
 
 		//input reagent
-	    if(GuiUtils.hoveringArea(97, 33, 34, 66, mouseX, mouseY, x, y)){
+	    if(GuiUtils.hoveringArea(110, 33, 34, 66, mouseX, mouseY, x, y)){
 			List<String> tooltip = GuiUtils.drawFluidTankInfo(this.tile.reagentTank, mouseX, mouseY);
 			drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 		}
@@ -106,27 +106,27 @@ public class UIFluidInputTank extends GuiBase {
 
 		//input solvent
 		if(this.tile.getSolventFluid() != null){
-			GuiUtils.renderFluidBar(this.tile.getSolventFluid(), this.tile.getSolventAmount(), this.tile.getTankCapacity(), i + 46, j + 34, 32, 64);
+			GuiUtils.renderFluidBar(this.tile.getSolventFluid(), this.tile.getSolventAmount(), this.tile.getTankCapacity(), i + 33, j + 34, 32, 64);
 		}
 
 		//input reagent
 		if(this.tile.getReagentFluid() != null){
-			GuiUtils.renderFluidBar(this.tile.getReagentFluid(), this.tile.getReagentAmount(), this.tile.getTankCapacity(), i + 98, j + 34, 32, 64);
+			GuiUtils.renderFluidBar(this.tile.getReagentFluid(), this.tile.getReagentAmount(), this.tile.getTankCapacity(), i + 111, j + 34, 32, 64);
 		}
 
 		if(this.tile.isFiltered()){
 			if(this.tile.hasFilterSolvent()){
-				GuiUtils.renderFluidBar(this.tile.getFilterSolvent(), 1000, 1000, i + 27, j + 58, 16, 16);
+				GuiUtils.renderFluidBar(this.tile.getFilterSolvent(), 1000, 1000, i + 14, j + 58, 16, 16);
 			}
 			if(this.tile.hasFilterReagent()){
-				GuiUtils.renderFluidBar(this.tile.getFilterReagent(), 1000, 1000, i + 133, j + 58, 16, 16);
+				GuiUtils.renderFluidBar(this.tile.getFilterReagent(), 1000, 1000, i + 146, j + 58, 16, 16);
 			}
 		}else{
 			if(this.tile.hasManualSolvent()){
-				GuiUtils.renderFluidBar(this.tile.getManualSolvent(), 1000, 1000, i + 27, j + 58, 16, 16);
+				GuiUtils.renderFluidBar(this.tile.getManualSolvent(), 1000, 1000, i + 14, j + 58, 16, 16);
 			}
 			if(this.tile.hasManualReagent()){
-				GuiUtils.renderFluidBar(this.tile.getManualReagent(), 1000, 1000, i + 133, j + 58, 16, 16);
+				GuiUtils.renderFluidBar(this.tile.getManualReagent(), 1000, 1000, i + 146, j + 58, 16, 16);
 			}
         }
 

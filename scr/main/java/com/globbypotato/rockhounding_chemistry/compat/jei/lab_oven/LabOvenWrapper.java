@@ -48,7 +48,14 @@ public class LabOvenWrapper extends RHRecipeWrapper<LabOvenRecipe>{
     	GlStateManager.pushMatrix();
    	 	GlStateManager.scale(0.5, 0.5, 1);
     	minecraft.fontRenderer.drawString(altString, 0, 0, Color.RED.getRGB());
-		GlStateManager.popMatrix();
+
+    	minecraft.fontRenderer.drawString("Primary", 22, 57, Color.BLUE.getRGB());
+    	minecraft.fontRenderer.drawString("Secondary", 22, 113, Color.BLUE.getRGB());
+
+    	minecraft.fontRenderer.drawString("Produce", 178, 57, Color.BLUE.getRGB());
+    	minecraft.fontRenderer.drawString("Waste", 191, 113, Color.BLUE.getRGB());
+
+    	GlStateManager.popMatrix();
     }
 
 	private static boolean isValidRecipe(LabOvenRecipe recipe){

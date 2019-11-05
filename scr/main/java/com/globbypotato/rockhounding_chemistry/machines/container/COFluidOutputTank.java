@@ -19,11 +19,11 @@ public class COFluidOutputTank extends ContainerBase<TEFluidOutputTank>{
 		IItemHandler input = this.tile.getInput();
 		IItemHandler template = this.tile.getTemplate();
 
-		this.addSlotToContainer(new SlotItemHandler(input, 0, 24, 82));//input solution
-		this.addSlotToContainer(new SlotItemHandler(input, 1, 136, 82));//input byproduct
+		this.addSlotToContainer(new SlotItemHandler(input, 0, 14, 82));//input solution
+		this.addSlotToContainer(new SlotItemHandler(input, 1, 146, 82));//input byproduct
 
-		this.addSlotToContainer(new SlotItemHandler(template, 0, 27, 34));//void solution
-		this.addSlotToContainer(new SlotItemHandler(template, 1, 133, 34));//void byproduct
+		this.addSlotToContainer(new SlotItemHandler(template, 0, 14, 34));//void solution
+		this.addSlotToContainer(new SlotItemHandler(template, 1, 146, 34));//void byproduct
 	}
 
 	@Override
