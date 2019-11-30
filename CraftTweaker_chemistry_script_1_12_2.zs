@@ -292,11 +292,14 @@ mods.rockhounding_chemistry.MetalAlloyer.remove(<minecraft:blaze_rod>);
 =======================================================
 MINERAL SIZER
 =======================================================
-**Note: single outputs do not need an array neither a comminution
+**Note 1: the script with a single output does not need comminution
+**Note 2: output arrays can be also made of 1 element only
 //input stack: the item to crush
-//output array: the list of possible outputs (single outputs don't need an array)
-//comminution array: the comminution for each output (min 0, max 15)
+//output stack: the crushed item
 mods.rockhounding_chemistry.MineralSizer.add(<minecraft:hardened_clay>, <minecraft:dye:0>);
+//input stack: the item to crush
+//output array: the list of possible outputs
+//comminution array: the comminution for each output (values: min 0, max 15)
 mods.rockhounding_chemistry.MineralSizer.add(<minecraft:hardened_clay>, [<minecraft:dye:0>, <minecraft:dye:1>, <minecraft:dye:2>, <minecraft:dye:3>, <minecraft:dye:4>], [5, 10, 12, 6, 4]);
 mods.rockhounding_chemistry.MineralSizer.add("oreUninspected", [<minecraft:dye:0>, <minecraft:dye:1>, <minecraft:dye:2>, <minecraft:dye:3>, <minecraft:dye:4>], [5, 10, 12, 6, 4]);
 
