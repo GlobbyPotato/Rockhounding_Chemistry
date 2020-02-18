@@ -1023,13 +1023,19 @@
 											</page>
 											<page>
 												<p color="#0000FF">How to set the Gasification Plant:</p>
-												<p>> Supply the input fluids on both the cistern and the burner.</p>
+												<p>> Supply the input fluids on both cistern and burner.</p>
 												<p space="4" />
-												<p>> Feed the Power Station with enough fuel to raise the temperature. Once the bar reaches the threashold value, it starts producing the gas. During the inactivity, the temperature tends to decrease, raising again as a recipe is again recognized.</p>
+												<p>> Feed the Power Station constantly with fuel to raise the temperature. Once reached the threashold, it starts producing. While inactive, the temperature slowly decreases.</p>
 												<image src="rockhounding_chemistry:gbook/wiki/gasifier_burner" tw="84" th="40"/>
 												<p space="4" />
-												<p>> The Particulate Collector picks the waste of the recipe. Each recipe can have none or up to two by-products. It is suggested to connect the block to a chest to extract the material.</p>
+												<p>> The Particulate Collector picks the available by-products and should be connected to a chest.</p>
 												<image src="rockhounding_chemistry:gbook/wiki/gasifier_slag" tw="77" th="40"/>
+												<p space="4" />
+												<p>> Add a Refractory Casing upgrade when craftable. It improves the heating/cooling factors but has a rare chance to break increasing the speed upgrade.</p>
+												<grid_two>
+													<stack item="rockhounding_chemistry:misc_items" meta="35" count="1" />
+													<stack item="rockhounding_chemistry:speed_items" meta="7" count="1" />
+												</grid_two>
 												<p space="4" />
 												<p color="#0000FF">Preview</p>
 												<link ref="galleries:gal_gasifier" color="#336633">Front View</link>
@@ -1337,7 +1343,7 @@
 												<p>> Put the upgrades in the lower chamber. The Insulation Upgrade reduces temperature and pressure leaking. The Casing Upgrade reinforces the chamber speeding the pressurizing.</p>
 												<grid_three>
 													<stack item="rockhounding_chemistry:misc_items" meta="15" count="1" />
-													<stack item="minecraft:air" meta="0" count="1" />
+													<stack item="rockhounding_chemistry:speed_items" meta="7" count="1" />
 													<stack item="rockhounding_chemistry:misc_items" meta="16" count="1" />
 												</grid_three>
 												<p space="4" />
