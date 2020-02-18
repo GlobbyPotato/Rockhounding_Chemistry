@@ -416,3 +416,11 @@ mods.rockhounding_chemistry.Transposer.add(<liquid:ic2superheated_steam>*1000, <
 mods.rockhounding_chemistry.Transposer.removeByInput(<liquid:sulphuricacid>*1000);
 //output: the output to remove
 mods.rockhounding_chemistry.Transposer.removeByOutput(<liquid:sulfuric_acid>*1000));
+
+
+
+=======================================================
+CRYOGENIC DISTILLATION PLANT
+=======================================================
+//inhibited gases: gases not being extracted (nitrogen, oxigen, argon, carbon_dioxide, neon, helium, krypton, xenon)
+mods.rockhounding_chemistry.InhibitGases.inhibit("carbon_dioxide");
