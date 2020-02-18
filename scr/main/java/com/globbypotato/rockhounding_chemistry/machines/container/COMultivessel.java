@@ -1,5 +1,7 @@
 package com.globbypotato.rockhounding_chemistry.machines.container;
 
+import com.globbypotato.rockhounding_chemistry.enums.EnumAirGases;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.GanPlantRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TEMultivessel;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -40,8 +42,10 @@ public class COMultivessel extends ContainerBase<TEMultivessel>{
 			doClickSound(player, this.tile.getWorld(), this.tile.getPos());
     		return ItemStack.EMPTY;
     	}else if(slot >= 6 && slot < 12){
-			this.tile.rareEnabler[slot-6] = !this.tile.rareEnabler[slot-6];
-			doClickSound(player, this.tile.getWorld(), this.tile.getPos());
+			if(!GanPlantRecipes.inhibited_gases.contains(EnumAirGases.name(slot-6))){
+				this.tile.rareEnabler[slot-6] = !this.tile.rareEnabler[slot-6];
+				doClickSound(player, this.tile.getWorld(), this.tile.getPos());
+			}
     		return ItemStack.EMPTY;
     	}
 		return super.slotClick(slot, dragType, clickTypeIn, player);

@@ -2,8 +2,10 @@ package com.globbypotato.rockhounding_chemistry.machines.gui;
 
 import java.util.List;
 
+import com.globbypotato.rockhounding_chemistry.enums.EnumAirGases;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.COMultivessel;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.GanPlantRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TEMultivessel;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.machines.gui.GuiUtils;
@@ -11,6 +13,7 @@ import com.globbypotato.rockhounding_core.machines.gui.GuiUtils;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -34,76 +37,91 @@ public class UIMultivessel extends GuiBase {
 	   int x = (this.width - this.xSize) / 2;
 	   int y = (this.height - this.ySize) / 2;
 
+	   String[] multistring;
+	   List<String> tooltip;
+
 	   //labels
 	   if(GuiUtils.hoveringArea(22, 21, 18, 14, mouseX, mouseY, x, y)){
-		   List<String> tooltip = GuiUtils.drawLabel("Argon", mouseX, mouseY);
+		   tooltip = GuiUtils.drawLabel("Argon" + inhibitedTag(0), mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
 
 	   if(GuiUtils.hoveringArea(44, 21, 18, 14, mouseX, mouseY, x, y)){
-		   List<String> tooltip = GuiUtils.drawLabel("Carbon Dioxide", mouseX, mouseY);
+		   tooltip = GuiUtils.drawLabel("Carbon Dioxide" + inhibitedTag(1), mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
 
 	   if(GuiUtils.hoveringArea(66, 21, 18, 14, mouseX, mouseY, x, y)){
-		   List<String> tooltip = GuiUtils.drawLabel("Neon", mouseX, mouseY);
+		   tooltip = GuiUtils.drawLabel("Neon" + inhibitedTag(2), mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
 
 	   if(GuiUtils.hoveringArea(88, 21, 18, 14, mouseX, mouseY, x, y)){
-		   List<String> tooltip = GuiUtils.drawLabel("Helium", mouseX, mouseY);
+		   tooltip = GuiUtils.drawLabel("Helium" + inhibitedTag(3), mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
 
 	   if(GuiUtils.hoveringArea(110, 21, 18, 14, mouseX, mouseY, x, y)){
-		   List<String> tooltip = GuiUtils.drawLabel("Krypton", mouseX, mouseY);
+		   tooltip = GuiUtils.drawLabel("Krypton" + inhibitedTag(4), mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
 
 	   if(GuiUtils.hoveringArea(132, 21, 18, 14, mouseX, mouseY, x, y)){
-		   List<String> tooltip = GuiUtils.drawLabel("Xenon", mouseX, mouseY);
+		   tooltip = GuiUtils.drawLabel("Xenon" + inhibitedTag(5), mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
 
 	    if(GuiUtils.hoveringArea(24, 39, 18, 56, mouseX, mouseY, x, y)){
-			List<String> tooltip = GuiUtils.drawGasTankInfo(this.tile.tank_Ar, mouseX, mouseY);
+			tooltip = GuiUtils.drawGasTankInfo(this.tile.tank_Ar, mouseX, mouseY);
 			drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 		}
 
 	    if(GuiUtils.hoveringArea(46, 39, 18, 56, mouseX, mouseY, x, y)){
-			List<String> tooltip = GuiUtils.drawGasTankInfo(this.tile.tank_CO, mouseX, mouseY);
+			tooltip = GuiUtils.drawGasTankInfo(this.tile.tank_CO, mouseX, mouseY);
 			drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 		}
 
 	    if(GuiUtils.hoveringArea(68, 39, 18, 56, mouseX, mouseY, x, y)){
-			List<String> tooltip = GuiUtils.drawGasTankInfo(this.tile.tank_Ne, mouseX, mouseY);
+			tooltip = GuiUtils.drawGasTankInfo(this.tile.tank_Ne, mouseX, mouseY);
 			drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 		}
 
 	    if(GuiUtils.hoveringArea(90, 39, 18, 56, mouseX, mouseY, x, y)){
-			List<String> tooltip = GuiUtils.drawGasTankInfo(this.tile.tank_He, mouseX, mouseY);
+			tooltip = GuiUtils.drawGasTankInfo(this.tile.tank_He, mouseX, mouseY);
 			drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 		}
 
 	    if(GuiUtils.hoveringArea(112, 39, 18, 56, mouseX, mouseY, x, y)){
-			List<String> tooltip = GuiUtils.drawGasTankInfo(this.tile.tank_Kr, mouseX, mouseY);
+			tooltip = GuiUtils.drawGasTankInfo(this.tile.tank_Kr, mouseX, mouseY);
 			drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 		}
 
 	    if(GuiUtils.hoveringArea(134, 39, 18, 56, mouseX, mouseY, x, y)){
-			List<String> tooltip = GuiUtils.drawGasTankInfo(this.tile.tank_Xe, mouseX, mouseY);
+			tooltip = GuiUtils.drawGasTankInfo(this.tile.tank_Xe, mouseX, mouseY);
 			drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 		}
 
 	   //drain
 	   if(GuiUtils.hoveringArea(24, 95, 128, 16, mouseX, mouseY, x, y)){
-		   List<String> tooltip = GuiUtils.drawLabel("Drain the content from the tank", mouseX, mouseY);
+		   tooltip = GuiUtils.drawLabel("Drain the content from the tank", mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
 
     }
 
-    @Override
+	private boolean isInhibited(int gas) {
+		return GanPlantRecipes.inhibited_gases.contains(EnumAirGases.name(gas));
+	}
+
+    private String inhibitedTag(int gas) {
+    	if(isInhibited(gas)){
+    		return TextFormatting.RED + " - inhibited";
+    	}else{
+    		return "";
+    	}
+    }
+
+	@Override
     public void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY){
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
     	super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
@@ -139,26 +157,38 @@ public class UIMultivessel extends GuiBase {
 		//enabler
         if(this.tile.rareEnabler[0]){
             this.drawTexturedModalRect(i + 24, j + 23, 176, 17, 18, 14);
+        }else if(isInhibited(0)){
+            this.drawTexturedModalRect(i + 24, j + 23, 194, 17, 18, 14);
         }
 
         if(this.tile.rareEnabler[1]){
             this.drawTexturedModalRect(i + 46, j + 23, 176, 32, 18, 14);
+        }else if(isInhibited(1)){
+            this.drawTexturedModalRect(i + 46, j + 23, 194, 32, 18, 14);
         }
 
         if(this.tile.rareEnabler[2]){
             this.drawTexturedModalRect(i + 68, j + 23, 176, 47, 18, 14);
+        }else if(isInhibited(2)){
+            this.drawTexturedModalRect(i + 68, j + 23, 194, 47, 18, 14);
         }
 
         if(this.tile.rareEnabler[3]){
             this.drawTexturedModalRect(i + 90, j + 23, 176, 62, 18, 14);
+        }else if(isInhibited(3)){
+            this.drawTexturedModalRect(i + 90, j + 23, 194, 62, 18, 14);
         }
 
         if(this.tile.rareEnabler[4]){
             this.drawTexturedModalRect(i + 112, j + 23, 176, 77, 18, 14);
+        }else if(isInhibited(4)){
+            this.drawTexturedModalRect(i + 112, j + 23, 194, 77, 18, 14);
         }
 
         if(this.tile.rareEnabler[5]){
             this.drawTexturedModalRect(i + 134, j + 23, 176, 92, 18, 14);
+        }else if(isInhibited(5)){
+            this.drawTexturedModalRect(i + 134, j + 23, 194, 92, 18, 14);
         }
 
 		//input gas

@@ -37,6 +37,7 @@ public class CTSupport {
 	        CraftTweakerAPI.registerClass(CT_SlurryDrum.class);
 	        CraftTweakerAPI.registerClass(CT_StirredTank.class);
 	        CraftTweakerAPI.registerClass(CT_Precipitator.class);
+	        CraftTweakerAPI.registerClass(CT_InhibitGases.class);
     	}
     }
 

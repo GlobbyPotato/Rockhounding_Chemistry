@@ -23,6 +23,7 @@ import net.minecraftforge.fluids.FluidStack;
 
 public class TEGasifierCooler extends TileEntityInv {
 
+	public static int templateSlots = 1;
 	public static int upgradeSlots = 2;
 	public static final int SPEED_SLOT = 0;
 	public static final int CASING_SLOT = 1;
@@ -34,7 +35,21 @@ public class TEGasifierCooler extends TileEntityInv {
 	ItemStack refractory_upd = new ItemStack(ModItems.MISC_ITEMS, 1, EnumMiscItems.REFRACTORY_CASING.ordinal());
 
 	public TEGasifierCooler() {
-		super(0, 0, 0, upgradeSlots);
+		super(0, 0, templateSlots, upgradeSlots);
+
+		this.template =  new MachineStackHandler(templateSlots, this){
+			@Override
+			public void validateSlotIndex(int slot){
+				if(template.getSlots() < templateSlots){
+					NonNullList<ItemStack> stacksCloned = stacks;
+					template.setSize(templateSlots);
+					for(ItemStack stack : stacksCloned){
+		                stacks.set(slot, stack);
+					}
+				}
+				super.validateSlotIndex(slot);
+			}
+		};
 
 		this.upgrade =  new MachineStackHandler(upgradeSlots, this){
 			@Override
@@ -327,39 +342,47 @@ public class TEGasifierCooler extends TileEntityInv {
 				this.markDirtyClient();
 			}
 
-			if(getDummyRecipe() == null){
-				this.dummyRecipe = getCurrentRecipe();
-				this.cooktime = 0;
-			}else{
-				if(!hasFluids()){
-					this.dummyRecipe = null;	
-				}
-			}
-
-			if(isValidRecipe()){
-				if(getTemperature() < getThreashold() + 10 && getEnginePower() >= powerConsume()){
-					this.temperature += heatingFactor();
-					drainPower();
-					this.markDirtyClient();
-				}
-
-				if(hasParticulate()){
-					getParticulate().handlePreview(hasMainSlag(), getMainSlag(), hasAltSlag(), getAltSlag());
-				}
-			}
-
-			if(canProcess()){
-				this.cooktime++;
-				if(getCooktime() >= getCooktimeMax()) {
+			if(isUnlocked()){
+				if(getDummyRecipe() == null){
+					this.dummyRecipe = getCurrentRecipe();
 					this.cooktime = 0;
-					process();
+				}else{
+					if(!hasFluids()){
+						this.dummyRecipe = null;	
+					}
 				}
-				this.markDirtyClient();
-			}else{
-				tickOff();
+
+				if(isValidRecipe()){
+					if(getTemperature() < getThreashold() + 10 && getEnginePower() >= powerConsume()){
+						this.temperature += heatingFactor();
+						drainPower();
+						this.markDirtyClient();
+					}
+
+					if(hasParticulate()){
+						getParticulate().handlePreview(hasMainSlag(), getMainSlag(), hasAltSlag(), getAltSlag());
+					}
+				}
+
+				if(canProcess()){
+					this.cooktime++;
+					if(getCooktime() >= getCooktimeMax()) {
+						this.cooktime = 0;
+						process();
+					}
+					this.markDirtyClient();
+				}else{
+					tickOff();
+				}
 			}
 		}
 	}
+
+	public boolean isUnlocked() {
+		return isActive() || hasBurner() && getBurner().isActive();
+	}
+
+
 
 	private void doPreset() {
 		if(hasEngine()){

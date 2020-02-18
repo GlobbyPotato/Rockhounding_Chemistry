@@ -1,5 +1,7 @@
 package com.globbypotato.rockhounding_chemistry.machines.container;
 
+import com.globbypotato.rockhounding_chemistry.enums.EnumAirGases;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.GanPlantRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TEGanController;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -34,12 +36,16 @@ public class COGanController extends ContainerBase<TEGanController>{
 			doClickSound(player, this.tile.getWorld(), this.tile.getPos());
     		return ItemStack.EMPTY;
     	}else if(slot == 2){ 
-			this.tile.enableN = !this.tile.enableN;
-			doClickSound(player, this.tile.getWorld(), this.tile.getPos());
+			if(!GanPlantRecipes.inhibited_gases.contains(EnumAirGases.name(6))){
+				this.tile.enableN = !this.tile.enableN;
+				doClickSound(player, this.tile.getWorld(), this.tile.getPos());
+			}
     		return ItemStack.EMPTY;
     	}else if(slot == 3){ 
-			this.tile.enableO = !this.tile.enableO;
-			doClickSound(player, this.tile.getWorld(), this.tile.getPos());
+			if(!GanPlantRecipes.inhibited_gases.contains(EnumAirGases.name(7))){
+				this.tile.enableO = !this.tile.enableO;
+				doClickSound(player, this.tile.getWorld(), this.tile.getPos());
+			}
     		return ItemStack.EMPTY;
     	}else if(slot == 4){ 
 			this.tile.enableX = !this.tile.enableX;

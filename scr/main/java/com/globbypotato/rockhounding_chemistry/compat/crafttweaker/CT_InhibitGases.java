@@ -2,28 +2,28 @@ package com.globbypotato.rockhounding_chemistry.compat.crafttweaker;
 
 import java.util.ArrayList;
 
-import com.globbypotato.rockhounding_chemistry.machines.recipe.ChemicalExtractorRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.GanPlantRecipes;
 
 import crafttweaker.CraftTweakerAPI;
 import crafttweaker.IAction;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
-@ZenClass("mods.rockhounding_chemistry.InhibitElements")
-public class CT_InhibitElements extends CTSupport{
-	public static String name = "Inhibit Elements";
-	public static ArrayList<String> recipeList = ChemicalExtractorRecipes.inhibited_elements;
+@ZenClass("mods.rockhounding_chemistry.InhibitGases")
+public class CT_InhibitGases extends CTSupport{
+	public static String name = "Inhibit Gases";
+	public static ArrayList<String> recipeList = GanPlantRecipes.inhibited_gases;
 
     @ZenMethod
     public static void inhibit(String element) {
         if(element == null) {error(name); return;}
 
-        CraftTweakerAPI.apply(new InhibitFromExtractor(element));
+        CraftTweakerAPI.apply(new InhibitFromGan(element));
     }
 
-		    private static class InhibitFromExtractor implements IAction {
+		    private static class InhibitFromGan implements IAction {
 		    	String input;
-		    	public InhibitFromExtractor(String input) {
+		    	public InhibitFromGan(String input) {
 		    		super();
 		    		this.input = input;
 		    	}

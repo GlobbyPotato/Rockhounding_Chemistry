@@ -12,6 +12,7 @@ import com.globbypotato.rockhounding_core.machines.tileentity.WrappedItemHandler
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidUtil;
@@ -106,6 +107,11 @@ public class TEGasifierBurner extends TileEntityTank implements IToxic{
 		tanks.add(this.inputTank);
 		return tanks;
  	}
+
+	@Override
+	public EnumFacing poweredFacing(){
+		return getFacing().getOpposite();
+	}
 
 
 

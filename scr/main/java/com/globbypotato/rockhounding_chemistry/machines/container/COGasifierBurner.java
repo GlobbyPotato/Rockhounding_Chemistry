@@ -21,10 +21,10 @@ public class COGasifierBurner extends ContainerBase<TEGasifierBurner>{
 		IItemHandler input = this.tile.getInput();
 		IItemHandler template = this.tile.getTemplate();
 
-		this.addSlotToContainer(new SlotItemHandler(input, 0, 143, 51));//input
+		this.addSlotToContainer(new SlotItemHandler(input, 0, 143, 40));//input
 
 		this.addSlotToContainer(new SlotItemHandler(template, 0, 120, 91));//void
-		this.addSlotToContainer(new SlotItemHandler(template, 1, 35, 58));//filter
+		this.addSlotToContainer(new SlotItemHandler(template, 1, 143, 61));//filter
 
 	}
 

@@ -2,8 +2,10 @@ package com.globbypotato.rockhounding_chemistry.machines.tile;
 
 import java.util.ArrayList;
 
+import com.globbypotato.rockhounding_chemistry.enums.EnumAirGases;
 import com.globbypotato.rockhounding_chemistry.enums.EnumFluid;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.GanPlantRecipes;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.gas.GasHandlerConcatenate;
 import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityVessel;
@@ -140,7 +142,11 @@ public class TEMultivessel extends TileEntityVessel implements ICollapse {
 
         NBTTagCompound enableList = compound.getCompoundTag("Enablers");
 		for(int i = 0; i < enableList.getSize(); i++){
-			this.rareEnabler[i] = enableList.getBoolean("Enabler" + i);
+			if(!GanPlantRecipes.inhibited_gases.contains(EnumAirGases.name(i))){
+				this.rareEnabler[i] = enableList.getBoolean("Enabler" + i);
+			}else{
+				this.rareEnabler[i] = false;
+			}
 		}
 
 		this.collapseRate = compound.getInteger("Collapse");

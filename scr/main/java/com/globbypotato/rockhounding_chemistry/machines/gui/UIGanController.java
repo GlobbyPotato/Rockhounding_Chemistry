@@ -2,8 +2,10 @@ package com.globbypotato.rockhounding_chemistry.machines.gui;
 
 import java.util.List;
 
+import com.globbypotato.rockhounding_chemistry.enums.EnumAirGases;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.COGanController;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.GanPlantRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TEGanController;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.machines.gui.GuiUtils;
@@ -50,7 +52,7 @@ public class UIGanController extends GuiBase {
 
 	   //enable N
 	   if(GuiUtils.hoveringArea(7, 28, 18, 18, mouseX, mouseY, x, y)){
-		   caption = TextFormatting.WHITE + "Enable Channel 1: Nitrogen";
+		   caption = TextFormatting.WHITE + "Enable Channel 1: Nitrogen" + inhibitedTag(6);
 		   mainprod = TextFormatting.AQUA + "Nitrogen: 0.300 cu/sec";
 		   multiString = new String[]{caption, mainprod};
 		   tooltip = GuiUtils.drawMultiLabel(multiString, mouseX, mouseY);
@@ -59,7 +61,7 @@ public class UIGanController extends GuiBase {
 
 	   //enable O
 	   if(GuiUtils.hoveringArea(26, 28, 18, 18, mouseX, mouseY, x, y)){
-		   caption = TextFormatting.WHITE + "Enable Channel 2: Oxygen";
+		   caption = TextFormatting.WHITE + "Enable Channel 2: Oxygen" + inhibitedTag(7);
 		   mainprod = TextFormatting.AQUA + "Oxygen: 0.100 cu/sec";
 		   multiString = new String[]{caption, mainprod};
 		   tooltip = GuiUtils.drawMultiLabel(multiString, mouseX, mouseY);
@@ -69,12 +71,12 @@ public class UIGanController extends GuiBase {
 	   //enable X
 	   if(GuiUtils.hoveringArea(45, 28, 18, 18, mouseX, mouseY, x, y)){
 		   caption = TextFormatting.WHITE + "Enable Channel 3: Rare gases";
-		   String prod_Ar = TextFormatting.AQUA + "Argon: 0.006 cu/sec";
-		   String prod_CO = TextFormatting.AQUA + "Carbon Dioxide: 0.003 cu/sec";
-		   String prod_Ne = TextFormatting.AQUA + "Neon: 0.090 cu/min";
-		   String prod_He = TextFormatting.AQUA + "Helium: 0.036 cu/min";
-		   String prod_Kr = TextFormatting.AQUA + "Krypton: 0.008 cu/min";
-		   String prod_Xe = TextFormatting.AQUA + "Xenon: 0.009 cu/min";
+		   String prod_Ar = TextFormatting.AQUA + "Argon: 0.006 cu/sec" + inhibitedTag(0);
+		   String prod_CO = TextFormatting.AQUA + "Carbon Dioxide: 0.003 cu/sec" + inhibitedTag(1);
+		   String prod_Ne = TextFormatting.AQUA + "Neon: 0.090 cu/min" + inhibitedTag(2);
+		   String prod_He = TextFormatting.AQUA + "Helium: 0.036 cu/min" + inhibitedTag(3);
+		   String prod_Kr = TextFormatting.AQUA + "Krypton: 0.008 cu/min" + inhibitedTag(4);
+		   String prod_Xe = TextFormatting.AQUA + "Xenon: 0.009 cu/min" + inhibitedTag(5);
 		   multiString = new String[]{caption, prod_Ar, prod_CO, prod_Ne, prod_He, prod_Kr, prod_Xe};
 		   tooltip = GuiUtils.drawMultiLabel(multiString, mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
@@ -100,6 +102,18 @@ public class UIGanController extends GuiBase {
 
     }
 
+	private boolean isInhibited(int gas) {
+		return GanPlantRecipes.inhibited_gases.contains(EnumAirGases.name(gas));
+	}
+
+    private String inhibitedTag(int gas) {
+    	if(isInhibited(gas)){
+    		return TextFormatting.RED + " - inhibited";
+    	}else{
+    		return "";
+    	}
+    }
+
     @Override
     public void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY){
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
@@ -117,14 +131,18 @@ public class UIGanController extends GuiBase {
 	    	}
 	    }
 
-        //enable N
+        //enable N2
         if(this.tile.enableN()){
     		this.drawTexturedModalRect(i + 9, j + 30, 204, 10, 14, 14);
+        }else if(isInhibited(6)){
+    		this.drawTexturedModalRect(i + 9, j + 30, 204, 24, 14, 14);
 	    }
 
-        //enable O
+        //enable O2
         if(this.tile.enableO()){
     		this.drawTexturedModalRect(i + 28, j + 30, 218, 10, 14, 14);
+        }else if(isInhibited(7)){
+    		this.drawTexturedModalRect(i + 28, j + 30, 218, 24, 14, 14);
 	    }
 
         //enable X

@@ -36,7 +36,7 @@ public class UIGasifierBurner extends GuiBase {
 	   int y = (this.height - this.ySize) / 2;
 
 		//filter
-	    if(GuiUtils.hoveringArea(34, 57, 18, 18, mouseX, mouseY, x, y)){
+	    if(GuiUtils.hoveringArea(142, 60, 18, 18, mouseX, mouseY, x, y)){
 			String filterstring = TextFormatting.BLUE + "Fluid Filter: " + TextFormatting.WHITE + "use a filled ampoule to set";
 			if(!this.tile.hasFilter()){
 				List<String> tooltip = GuiUtils.drawLabel(filterstring, mouseX, mouseY);
@@ -55,7 +55,7 @@ public class UIGasifierBurner extends GuiBase {
 		}
 
 		//input fluid
-	    if(GuiUtils.hoveringArea(97, 67, 16, 33, mouseX, mouseY, x, y)){
+	    if(GuiUtils.hoveringArea(97, 67, 16, 35, mouseX, mouseY, x, y)){
 			List<String> tooltip = GuiUtils.drawFluidTankInfo(this.tile.inputTank, mouseX, mouseY);
 			drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 		}
@@ -72,7 +72,7 @@ public class UIGasifierBurner extends GuiBase {
 
 		//input fluid
 		if(this.tile.hasReactant()){
-			GuiUtils.renderFluidBar(this.tile.getReactant(), this.tile.getReactantAmount(), this.tile.getTankCapacity(), i + 98, j + 68, 14, 31);
+			GuiUtils.renderFluidBar(this.tile.getReactant(), this.tile.getReactantAmount(), this.tile.getTankCapacity(), i + 98, j + 68, 14, 33);
 		}
 
 		//filter

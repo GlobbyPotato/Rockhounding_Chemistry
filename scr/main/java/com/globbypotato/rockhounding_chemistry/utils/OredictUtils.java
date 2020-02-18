@@ -26,7 +26,7 @@ public class OredictUtils extends BaseRecipes{
 		//misc blocks
 		OreDictionary.registerOre("blockRawsalt", new ItemStack(ModBlocks.MISC_BLOCKS_A, 1, EnumMiscBlocksA.RAW_SALT.ordinal()));
 		OreDictionary.registerOre("blockCharcoal", new ItemStack(ModBlocks.MISC_BLOCKS_A, 1, EnumMiscBlocksA.CHARCOAL_BLOCK.ordinal()));
-		
+
 		//alloys
 		for(int x = 0; x < EnumAlloyTech.size(); x++){
 			OreDictionary.registerOre(EnumAlloyTech.getBlock(x), alloy_tech_block(1, EnumAlloyTech.values()[x]));

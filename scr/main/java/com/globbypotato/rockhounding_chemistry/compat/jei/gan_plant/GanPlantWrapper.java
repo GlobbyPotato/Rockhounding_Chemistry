@@ -23,8 +23,10 @@ public class GanPlantWrapper extends RHRecipeWrapper<GanPlantRecipe>{
 	public static List<GanPlantWrapper> getRecipes() {
 		List<GanPlantWrapper> recipes = new ArrayList<>();
 		for (GanPlantRecipe recipe : GanPlantRecipes.gan_plant_recipes) {
-			if(recipe.getInput() != null){
-				recipes.add(new GanPlantWrapper(recipe));
+			if(recipe.getInput() != null && recipe.getOutput() != null){
+				if(!GanPlantRecipes.inhibited_gases.contains(recipe.getOutput().getFluid().getName().toLowerCase())){
+					recipes.add(new GanPlantWrapper(recipe));
+				}
 			}
 		}
 		return recipes;
@@ -37,7 +39,7 @@ public class GanPlantWrapper extends RHRecipeWrapper<GanPlantRecipe>{
 
 	@Nonnull
 	public List<FluidStack> getOutputs(){
-		return getRecipe().getOutputs();
+		return Collections.singletonList(getRecipe().getOutput());
 	}
 
 	@Override

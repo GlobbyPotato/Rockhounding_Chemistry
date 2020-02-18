@@ -1,20 +1,25 @@
 package com.globbypotato.rockhounding_chemistry.enums;
 
 public enum EnumAlloyDeco implements BaseEnum{
-	MISCHMETAL,
-	ROSEGOLD,
-	GREENGOLD,
-	WHITEGOLD,
-	SHIBUICHI,
-	TOMBAK,
-	PEWTER,
-	CORTEN,
-	SHAKUDO,
-	PURPLEGOLD,
-	NIB,
-	COSM;
+	MISCHMETAL("Mischmetal"),
+	ROSEGOLD("Rosegold"),
+	GREENGOLD("Greengold"),
+	WHITEGOLD("Whitegold"),
+	SHIBUICHI("Shibuichi"),
+	TOMBAK("Tombak"),
+	PEWTER("Pewter"),
+	CORTEN("Corten"),
+	SHAKUDO("Shakudo"),
+	PURPLEGOLD("Purplegold"),
+	NIB("Nib"),
+	COSM("Cosm");
 
 	//---------CUSTOM----------------
+	public String formal;
+	EnumAlloyDeco(String formal){
+		this.formal = formal;
+	}
+
 	public static int size(){
 		return values().length;
 	}
@@ -23,10 +28,22 @@ public enum EnumAlloyDeco implements BaseEnum{
 		return values()[index].getName();
 	}
 
+	public static String[] getFormals(){
+		String[] temp = new String[size()];
+		for(int i = 0; i < size(); i++){
+			temp[i] = formalName(i);
+		}
+		return temp;
+	}
+
+	private static String formalName(int index) {
+		return values()[index].formal;
+	}
+/*
 	private static String formalName(int index) {
 		return name(index).substring(0, 1).toUpperCase() + name(index).substring(1);
 	}
-
+*/
 	//---------ENUM----------------
 	public static String[] getAlloys(){
 		String[] temp = new String[size()];
@@ -40,6 +57,7 @@ public enum EnumAlloyDeco implements BaseEnum{
 		return name(index);
 	}
 
+	
 	public static String[] getItemNames(){
 		String[] temp = new String[size()*3];
 		for(int i = 0; i < size(); i++){

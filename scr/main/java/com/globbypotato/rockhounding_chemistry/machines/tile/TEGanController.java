@@ -1,9 +1,13 @@
 package com.globbypotato.rockhounding_chemistry.machines.tile;
 
+import java.util.ArrayList;
+
+import com.globbypotato.rockhounding_chemistry.enums.EnumAirGases;
 import com.globbypotato.rockhounding_chemistry.enums.EnumFluid;
 import com.globbypotato.rockhounding_chemistry.enums.EnumMiscBlocksA;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.machines.io.MachineIO;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.GanPlantRecipes;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.machines.tileentity.MachineStackHandler;
 import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityInv;
@@ -18,6 +22,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidTank;
 
 public class TEGanController extends TileEntityInv {
 
@@ -57,8 +62,16 @@ public class TEGanController extends TileEntityInv {
 	//----------------------- I/O -----------------------
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
-		this.enableN = compound.getBoolean("EnableN");
-		this.enableO = compound.getBoolean("EnableO");
+		if(!GanPlantRecipes.inhibited_gases.contains(EnumAirGases.name(6))){
+			this.enableN = compound.getBoolean("EnableN");
+		}else{
+			this.enableN = false;
+		}
+		if(!GanPlantRecipes.inhibited_gases.contains(EnumAirGases.name(7))){
+			this.enableO = compound.getBoolean("EnableO");
+		}else{
+			this.enableO = false;
+		}			
 		this.enableX = compound.getBoolean("EnableX");
 		
         NBTTagCompound drainList = compound.getCompoundTag("Gases");
@@ -244,6 +257,13 @@ public class TEGanController extends TileEntityInv {
 	}
 	private int num_Xe(){
 		return 3 * speedFactor();
+	}
+
+
+
+	//----------------------- RECIPE -----------------------
+	public ArrayList<String> inhibitedList(){
+		return GanPlantRecipes.inhibited_gases;
 	}
 
 
@@ -517,13 +537,7 @@ public class TEGanController extends TileEntityInv {
 	}
 
 	private boolean handleCh3() {
-		return hasChannel2() && hasChannel3()
-			&& this.output.canSetOrFillFluid(getMultivessel().tank_Ar, getMultivessel().tank_Ar.getFluid(), stack_Ar())
-			&& this.output.canSetOrFillFluid(getMultivessel().tank_CO, getMultivessel().tank_CO.getFluid(), stack_CO())
-			&& this.output.canSetOrFillFluid(getMultivessel().tank_Ne, getMultivessel().tank_Ne.getFluid(), stack_Ne())
-			&& this.output.canSetOrFillFluid(getMultivessel().tank_He, getMultivessel().tank_He.getFluid(), stack_He())
-			&& this.output.canSetOrFillFluid(getMultivessel().tank_Kr, getMultivessel().tank_Kr.getFluid(), stack_Kr())
-			&& this.output.canSetOrFillFluid(getMultivessel().tank_Xe, getMultivessel().tank_Xe.getFluid(), stack_Xe());
+		return hasChannel2() && hasChannel3();
 	}
 
 	public boolean doOutput1(){
@@ -538,58 +552,76 @@ public class TEGanController extends TileEntityInv {
 		return enableX() && handleCh3();
 	}
 
+	public boolean isGasInhibited(int i) {
+		return inhibitedList().contains(EnumAirGases.name(i));
+	}
+
+	private boolean canFillChannel(FluidTank tank, FluidStack gas) {
+		return this.output.canSetOrFillFluid(tank, tank.getFluid(), gas);
+	}
+
 	private void distillate() {
-		if(doOutput1()){
+		if(doOutput1() && !isGasInhibited(6)){
 			this.output.setOrFillFluid(getChOut1().inputTank, nitrogenStack());
 		}
-		if(doOutput2()){
+
+		if(doOutput2() && !isGasInhibited(7)){
 			this.output.setOrFillFluid(getChOut2().inputTank, oxygenStack());
 		}
+
 		if(doOutput3()){
-			if(getMultivessel().rareEnabler[0]){
-				this.rareGases[0]++;
-				if(this.rareGases[0] >= 10 ){
-					this.output.setOrFillFluid(getMultivessel().tank_Ar, stack_Ar());
-					this.rareGases[0] = 0;
-				}
-			}	
-			if(getMultivessel().rareEnabler[1]){
-				this.rareGases[1]++;
-				if(this.rareGases[1] >= 20 ){
-					this.output.setOrFillFluid(getMultivessel().tank_CO, stack_CO());
-					this.rareGases[1] = 0;
+			if(!isGasInhibited(0) && canFillChannel(getMultivessel().tank_Ar, stack_Ar())){
+				if(getMultivessel().rareEnabler[0]){
+					this.rareGases[0]++;
+					if(this.rareGases[0] >= 10 ){
+						this.output.setOrFillFluid(getMultivessel().tank_Ar, stack_Ar());
+						this.rareGases[0] = 0;
+					}
 				}
 			}
-			
-			if(getMultivessel().rareEnabler[2]){
-				this.rareGases[2]++;
-				if(this.rareGases[2] >= 40 ){
-					this.output.setOrFillFluid(getMultivessel().tank_Ne, stack_Ne());
-					this.rareGases[2] = 0;
+			if(!isGasInhibited(1) && canFillChannel(getMultivessel().tank_CO, stack_CO())){
+				if(getMultivessel().rareEnabler[1]){
+					this.rareGases[1]++;
+					if(this.rareGases[1] >= 20 ){
+						this.output.setOrFillFluid(getMultivessel().tank_CO, stack_CO());
+						this.rareGases[1] = 0;
+					}
+				}
+			}			
+			if(!isGasInhibited(2) && canFillChannel(getMultivessel().tank_Ne, stack_Ne())){
+				if(getMultivessel().rareEnabler[2]){
+					this.rareGases[2]++;
+					if(this.rareGases[2] >= 40 ){
+						this.output.setOrFillFluid(getMultivessel().tank_Ne, stack_Ne());
+						this.rareGases[2] = 0;
+					}
 				}
 			}
-
-			if(getMultivessel().rareEnabler[3]){
-				this.rareGases[3]++;
-				if(this.rareGases[3] >= 100 ){
-					this.output.setOrFillFluid(getMultivessel().tank_He, stack_He());
-					this.rareGases[3] = 0;
+			if(!isGasInhibited(3) && canFillChannel(getMultivessel().tank_He, stack_He())){
+				if(getMultivessel().rareEnabler[3]){
+					this.rareGases[3]++;
+					if(this.rareGases[3] >= 100 ){
+						this.output.setOrFillFluid(getMultivessel().tank_He, stack_He());
+						this.rareGases[3] = 0;
+					}
 				}
 			}
-
-			if(getMultivessel().rareEnabler[4]){
-				this.rareGases[4]++;
-				if(this.rareGases[4] >= 200 ){
-					this.output.setOrFillFluid(getMultivessel().tank_Kr, stack_Kr());
-					this.rareGases[4] = 0;
+			if(!isGasInhibited(4) && canFillChannel(getMultivessel().tank_Kr, stack_Kr())){
+				if(getMultivessel().rareEnabler[4]){
+					this.rareGases[4]++;
+					if(this.rareGases[4] >= 200 ){
+						this.output.setOrFillFluid(getMultivessel().tank_Kr, stack_Kr());
+						this.rareGases[4] = 0;
+					}
 				}
 			}
-
-			if(getMultivessel().rareEnabler[5]){
-				this.rareGases[5]++;
-				if(this.rareGases[5] >= 400 ){
-					this.output.setOrFillFluid(getMultivessel().tank_Xe, stack_Xe());
-					this.rareGases[5] = 0;
+			if(!isGasInhibited(5) && canFillChannel(getMultivessel().tank_Xe, stack_Xe())){
+				if(getMultivessel().rareEnabler[5]){
+					this.rareGases[5]++;
+					if(this.rareGases[5] >= 400 ){
+						this.output.setOrFillFluid(getMultivessel().tank_Xe, stack_Xe());
+						this.rareGases[5] = 0;
+					}
 				}
 			}
 		}
@@ -600,5 +632,6 @@ public class TEGanController extends TileEntityInv {
 
 		drainPower();
 	}
+
 
 }
