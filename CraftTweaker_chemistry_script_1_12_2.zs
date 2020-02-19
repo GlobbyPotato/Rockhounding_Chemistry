@@ -422,5 +422,5 @@ mods.rockhounding_chemistry.Transposer.removeByOutput(<liquid:sulfuric_acid>*100
 =======================================================
 CRYOGENIC DISTILLATION PLANT
 =======================================================
-//inhibited gases: gases not being extracted (nitrogen, oxigen, argon, carbon_dioxide, neon, helium, krypton, xenon)
+//inhibited gases: gases not being extracted (nitrogen, oxygen, argon, carbon_dioxide, neon, helium, krypton, xenon)
 mods.rockhounding_chemistry.InhibitGases.inhibit("carbon_dioxide");
