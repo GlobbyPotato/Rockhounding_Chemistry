@@ -62,7 +62,7 @@ public class LeachingVatRecipe {
 	}
 
 	public FluidStack getPulp(){
-		if(this.pulp != null) return this.pulp;
+		if(this.pulp != null) return this.pulp.copy();
 		return null;
 	}
 

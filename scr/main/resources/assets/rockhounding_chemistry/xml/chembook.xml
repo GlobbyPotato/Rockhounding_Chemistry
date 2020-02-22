@@ -1312,7 +1312,7 @@
 												<p>It processes materials by the exposure to gases at certain temperatures and pressures.</p>
 												<p space="4" />
 												<p color="#0000FF">Requirements</p>
-												<p>1x Deposition Chamber</p>
+												<p>1x Vapor Deposition Chamber</p>
 												<p>2x Separator</p>
 												<p>3x <link ref="utilities:pressure_vessel_page" color="#000000">Vessel/Holder</link></p>
 												<p>2x Gas Pressurizer</p>
@@ -1325,7 +1325,7 @@
 													<stack item="rockhounding_chemistry:machines_b" meta="9" count="1" />
 													<stack item="rockhounding_chemistry:misc_blocks_a" meta="3" count="1" />
 													<stack item="rockhounding_chemistry:machines_b" meta="1" count="1" />
-													<stack item="rockhounding_chemistry:machines_d" meta="5" count="1" />
+													<stack item="rockhounding_chemistry:machines_d" meta="4" count="1" />
 													<stack item="rockhounding_chemistry:machines_a" meta="14" count="1" />
 													<stack item="rockhounding_chemistry:machines_a" meta="2" count="1" />
 												</deposition_slots>

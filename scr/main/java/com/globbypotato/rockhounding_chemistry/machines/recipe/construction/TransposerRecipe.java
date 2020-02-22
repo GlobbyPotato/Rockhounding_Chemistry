@@ -12,12 +12,12 @@ public class TransposerRecipe {
 	}
 
 	public FluidStack getInput(){
-		if(this.input != null) return this.input;
+		if(this.input != null) return this.input.copy();
 		return null;
 	}
 
 	public FluidStack getOutput(){
-		if(this.output != null) return this.output;
+		if(this.output != null) return this.output.copy();
 		return null;
 	}
 

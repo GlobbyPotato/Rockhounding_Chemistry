@@ -35,7 +35,7 @@ public class RetentionVatRecipe {
 	}
 
 	public FluidStack getInput(){
-		if(this.input != null) return this.input;
+		if(this.input != null) return this.input.copy();
 		return null;
 	}
 

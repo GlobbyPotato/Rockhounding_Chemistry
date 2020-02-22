@@ -11,7 +11,7 @@ public class PollutantFluidRecipe {
 	}
 
 	public FluidStack getInput(){
-		if(this.input != null) return this.input;
+		if(this.input != null) return this.input.copy();
 		return null;
 	}
 

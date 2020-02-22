@@ -11,7 +11,7 @@ public class AirCompressorRecipe {
 	}
 
 	public FluidStack getOutput(){
-		if(this.output != null) return this.output;
+		if(this.output != null) return this.output.copy();
 		return null;
 	}
 

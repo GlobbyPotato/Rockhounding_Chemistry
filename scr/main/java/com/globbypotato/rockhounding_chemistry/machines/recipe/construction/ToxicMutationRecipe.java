@@ -24,7 +24,7 @@ public class ToxicMutationRecipe {
 	}
 
 	public ItemStack getInput(){
-		if(!this.input.isEmpty()) return this.input;
+		if(!this.input.isEmpty()) return this.input.copy();
 		return ItemStack.EMPTY;
 	}
 
@@ -37,7 +37,7 @@ public class ToxicMutationRecipe {
 	}
 
 	public ItemStack getOutput(){
-		if(!this.output.isEmpty()) return this.output;
+		if(!this.output.isEmpty()) return this.output.copy();
 		return ItemStack.EMPTY;
 	}
 
