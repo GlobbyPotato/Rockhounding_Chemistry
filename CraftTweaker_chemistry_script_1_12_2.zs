@@ -1,4 +1,31 @@
 =======================================================
+FIXED BED REACTOR
+=======================================================
+**Note 1: Recipe can have 1 or up to 4 input ingredients
+**Note 2: Catalysts can be less than 8. They act as multiplier for the quantities in the script
+**Note 3: Null ingredients will be filtered as "thin air". That's just a placeholder, not to be considered.
+//display name: alternative name for the recipe selector. Can be null if not necessary
+//input gas 1: the gas added to vessel #1
+//input gas 2: the gas added to vessel #2 (can be null)
+//input gas 3: the gas added to vessel #3 (can be null)
+//input gas 4: the gas added to vessel #4 (can be null)
+//solution: the output gas
+//catalyst: the damageable ingredient
+mods.rockhounding_chemistry.BedReactor.add("Cheap Fuel", <liquid:water_vapour>*100, <liquid:oxygen>*150, <liquid:hydrogen>*350, <liquid:flue_gas>*450, <liquid:syngas>*510, <rockhounding_chemistry:co_catalyst>);
+mods.rockhounding_chemistry.BedReactor.add("Cheaper Fuel", <liquid:water_vapour>*100, <liquid:flue_gas>*150, null, null, <liquid:syngas>*510, <rockhounding_chemistry:mo_catalyst>);
+
+//input gas: the gas to remove
+mods.rockhounding_chemistry.GasCondenser.removeByInput1(<liquid:water_vapour>*1000);
+mods.rockhounding_chemistry.GasCondenser.removeByInput2(<liquid:oxygen>*1000);
+mods.rockhounding_chemistry.GasCondenser.removeByInput3(<liquid:hydrogen>*1000);
+mods.rockhounding_chemistry.GasCondenser.removeByInput4(<liquid:flue_gas>*1000);
+
+//output gas: the gas to remove
+mods.rockhounding_chemistry.GasCondenser.removeByInput1(<liquid:syngas>*1000);
+
+
+
+=======================================================
 PRECIPITATION CHAMBER
 =======================================================
 **Note: the solute must be always used. Solvent and Solution cannot be null
