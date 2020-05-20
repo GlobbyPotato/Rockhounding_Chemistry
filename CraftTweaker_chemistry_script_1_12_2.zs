@@ -21,7 +21,7 @@ mods.rockhounding_chemistry.GasCondenser.removeByInput3(<liquid:hydrogen>*1000);
 mods.rockhounding_chemistry.GasCondenser.removeByInput4(<liquid:flue_gas>*1000);
 
 //output gas: the gas to remove
-mods.rockhounding_chemistry.GasCondenser.removeByInput1(<liquid:syngas>*1000);
+mods.rockhounding_chemistry.GasCondenser.removeByOutput(<liquid:syngas>*1000);
 
 
 
