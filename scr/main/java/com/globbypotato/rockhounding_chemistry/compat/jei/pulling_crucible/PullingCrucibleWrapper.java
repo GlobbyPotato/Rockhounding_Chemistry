@@ -8,7 +8,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import com.globbypotato.rockhounding_chemistry.compat.jei.RHRecipeWrapper;
-import com.globbypotato.rockhounding_chemistry.enums.EnumFluid;
+import com.globbypotato.rockhounding_chemistry.enums.materials.EnumFluid;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.PullingCrucibleRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.PullingCrucibleRecipe;
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;

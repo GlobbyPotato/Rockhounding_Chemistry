@@ -2,15 +2,17 @@ package com.globbypotato.rockhounding_chemistry.machines.gui;
 
 import java.util.List;
 
-import com.globbypotato.rockhounding_chemistry.enums.EnumCasting;
-import com.globbypotato.rockhounding_chemistry.enums.EnumServer;
+import com.globbypotato.rockhounding_chemistry.enums.utils.EnumCasting;
+import com.globbypotato.rockhounding_chemistry.enums.utils.EnumServer;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.COServer;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.BedReactorRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.DepositionChamberRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.GasReformerRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.LabOvenRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.MetalAlloyerRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.PrecipitationRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.BedReactorRecipe;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.DepositionChamberRecipe;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.GasReformerRecipe;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.LabOvenRecipe;
@@ -143,7 +145,11 @@ public class UIServer extends GuiBase {
 			recipeLabel = recipe.getOutput().getDisplayName();
 		}else if(this.tile.servedDevice() == EnumServer.DEPOSITION.ordinal() && this.tile.isValidInterval()){
 			DepositionChamberRecipe recipe = DepositionChamberRecipes.deposition_chamber_recipes.get(this.tile.getRecipeIndex());
-			recipeLabel = recipe.getOutput().getDisplayName();
+			if(Strings.isNullOrEmpty(recipe.getRecipeName())){
+				recipeLabel = recipe.getOutput().getDisplayName();
+			}else{
+				recipeLabel = recipe.getRecipeName();
+			}
 		}else if(this.tile.servedDevice() == EnumServer.SIZER.ordinal() && this.tile.isValidInterval()){
 			recipeLabel = "Comminution Level: " + this.tile.getRecipeIndex();
 		}else if(this.tile.servedDevice() == EnumServer.LEACHING.ordinal() && this.tile.isValidInterval()){
@@ -163,6 +169,13 @@ public class UIServer extends GuiBase {
 			PrecipitationRecipe recipe = PrecipitationRecipes.precipitation_recipes.get(this.tile.getRecipeIndex());
 			if(Strings.isNullOrEmpty(recipe.getRecipeName())){
 				recipeLabel = recipe.getSolution().getLocalizedName();
+			}else{
+				recipeLabel = recipe.getRecipeName();
+			}
+		}else if(this.tile.servedDevice() == EnumServer.BED_REACTOR.ordinal() && this.tile.isValidInterval()){
+			BedReactorRecipe recipe = BedReactorRecipes.bed_reactor_recipes.get(this.tile.getRecipeIndex());
+			if(Strings.isNullOrEmpty(recipe.getRecipeName())){
+				recipeLabel = recipe.getOutput().getLocalizedName();
 			}else{
 				recipeLabel = recipe.getRecipeName();
 			}

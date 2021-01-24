@@ -8,7 +8,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import com.globbypotato.rockhounding_chemistry.compat.jei.RHRecipeWrapper;
-import com.globbypotato.rockhounding_chemistry.enums.EnumFluid;
+import com.globbypotato.rockhounding_chemistry.enums.materials.EnumFluid;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.RetentionVatRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.RetentionVatRecipe;
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;

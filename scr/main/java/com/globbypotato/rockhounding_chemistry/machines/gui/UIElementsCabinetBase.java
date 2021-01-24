@@ -2,7 +2,7 @@ package com.globbypotato.rockhounding_chemistry.machines.gui;
 
 import java.util.List;
 
-import com.globbypotato.rockhounding_chemistry.enums.EnumElements;
+import com.globbypotato.rockhounding_chemistry.enums.materials.EnumElements;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.COExtractorCabinetBase;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.ChemicalExtractorRecipes;
@@ -49,7 +49,7 @@ public class UIElementsCabinetBase extends GuiBase {
 				   if(enumDust < EnumElements.size()){
 					   String inhibit = "";
 					   for(int ix = 0; ix < ChemicalExtractorRecipes.inhibited_elements.size(); ix++){
-						   if(EnumElements.getName(enumDust).toLowerCase().matches(ChemicalExtractorRecipes.inhibited_elements.get(ix).toLowerCase())){
+						   if(EnumElements.getDust(enumDust).toLowerCase().matches(ChemicalExtractorRecipes.inhibited_elements.get(ix).toLowerCase())){
 							   inhibit = " - (Inhibited)";
 						   }
 					   }

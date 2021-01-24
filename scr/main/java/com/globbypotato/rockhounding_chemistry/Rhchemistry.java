@@ -12,7 +12,7 @@ import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-@Mod(modid = Reference.MODID, name = Reference.NAME, version = Reference.VERSION, dependencies = "required-after:rockhounding_core@[3.22,); required-after:bookshelf@[2.3,); required-after:gbook@[2.9,); required-after:redstoneflux@[2.0.1,);")
+@Mod(modid = Reference.MODID, name = Reference.NAME, version = Reference.VERSION, dependencies = "required-after:rockhounding_core@[3.25,); required-after:bookshelf@[2.3,); required-after:gbook@[2.9,); required-after:redstoneflux@[2.0.1,);")
 public class Rhchemistry {
 
 	@Instance(Reference.MODID)

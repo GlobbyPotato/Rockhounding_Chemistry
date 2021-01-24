@@ -5,7 +5,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 
 import com.globbypotato.rockhounding_chemistry.ModItems;
-import com.globbypotato.rockhounding_chemistry.enums.EnumFluid;
+import com.globbypotato.rockhounding_chemistry.enums.materials.EnumFluid;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_core.enums.EnumFluidNbt;
 import com.globbypotato.rockhounding_core.utils.CoreUtils;
@@ -22,6 +22,7 @@ public class ModUtils {
 	public static final int HEIGHT = 200;
 
 	public static String immersive_id = "immersiveengineering";
+	public static String rh_rocks_id = "rockhounding_rocks";
 	public static String rh_surface_id = "rockhounding_surface";
 	public static String mekanism_id = "mekanism";
 	public static String forestry_id = "forestry";
@@ -153,6 +154,14 @@ public class ModUtils {
 		return Loader.isModLoaded(rh_surface_id);
 	}
 
+	public static boolean hasRocks() {
+		return Loader.isModLoaded(rh_rocks_id);
+	}
+
+	public static boolean hasRhRocksIntegtation() {
+		return hasRocks() && ModConfig.hasRhRocks;
+	}
+
 	public static boolean hasTFoundation() {
 		return Loader.isModLoaded(thermal_f_id);
 	}
@@ -218,6 +227,79 @@ public class ModUtils {
 			}
 		}
 		return ItemStack.EMPTY;
+	}
+
+	public static Item rhrocks_a(){
+		if(hasRocks()){
+			Item material = Item.REGISTRY.getObject(new ResourceLocation(rh_rocks_id + ":" + "rocks_a"));
+			if(material != null){
+				return material;
+			}
+		}
+		return null;
+	}
+	public static Item rhrocks_b(){
+		if(hasRocks()){
+			Item material = Item.REGISTRY.getObject(new ResourceLocation(rh_rocks_id + ":" + "rocks_b"));
+			if(material != null){
+				return material;
+			}
+		}
+		return null;
+	}
+	public static Item rhrocks_c(){
+		if(hasRocks()){
+			Item material = Item.REGISTRY.getObject(new ResourceLocation(rh_rocks_id + ":" + "rocks_c"));
+			if(material != null){
+				return material;
+			}
+		}
+		return null;
+	}
+	public static Item rhrocks_d(){
+		if(hasRocks()){
+			Item material = Item.REGISTRY.getObject(new ResourceLocation(rh_rocks_id + ":" + "rocks_d"));
+			if(material != null){
+				return material;
+			}
+		}
+		return null;
+	}
+	public static Item rhrocks_e(){
+		if(hasRocks()){
+			Item material = Item.REGISTRY.getObject(new ResourceLocation(rh_rocks_id + ":" + "rocks_e"));
+			if(material != null){
+				return material;
+			}
+		}
+		return null;
+	}
+	public static Item rhrocks_f(){
+		if(hasRocks()){
+			Item material = Item.REGISTRY.getObject(new ResourceLocation(rh_rocks_id + ":" + "rocks_f"));
+			if(material != null){
+				return material;
+			}
+		}
+		return null;
+	}
+	public static Item rhrocks_g(){
+		if(hasRocks()){
+			Item material = Item.REGISTRY.getObject(new ResourceLocation(rh_rocks_id + ":" + "rocks_g"));
+			if(material != null){
+				return material;
+			}
+		}
+		return null;
+	}
+	public static Item rhrocks_h(){
+		if(hasRocks()){
+			Item material = Item.REGISTRY.getObject(new ResourceLocation(rh_rocks_id + ":" + "rocks_h"));
+			if(material != null){
+				return material;
+			}
+		}
+		return null;
 	}
 
 	public static ItemStack forestry_charcoal(){

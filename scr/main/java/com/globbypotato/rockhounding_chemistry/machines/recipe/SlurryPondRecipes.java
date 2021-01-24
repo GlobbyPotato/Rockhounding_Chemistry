@@ -2,8 +2,8 @@ package com.globbypotato.rockhounding_chemistry.machines.recipe;
 
 import java.util.ArrayList;
 
-import com.globbypotato.rockhounding_chemistry.enums.EnumFluid;
-import com.globbypotato.rockhounding_chemistry.enums.EnumMinerals;
+import com.globbypotato.rockhounding_chemistry.enums.materials.EnumFluid;
+import com.globbypotato.rockhounding_chemistry.enums.materials.EnumMinerals;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.SlurryPondRecipe;
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
@@ -48,11 +48,57 @@ public class SlurryPondRecipes extends BaseRecipes{
 															getFluid(EnumFluid.ORGANIC_SLURRY, 300)));
 		}
 
-		for(int x = 0; x < EnumMinerals.size(); x++){
-			slurry_pond_recipes.add(new SlurryPondRecipe(	mineral_ores(1, EnumMinerals.values()[x]), 	
+		slurry_pond_recipes.add(new SlurryPondRecipe(		mineral_ores(1, EnumMinerals.ANTIMONATE), 	
+															getFluid(EnumFluid.HYDROCHLORIC_ACID, 250), 	
+															getFluid(EnumFluid.LEACHATE, 250)));
+
+		slurry_pond_recipes.add(new SlurryPondRecipe(		mineral_ores(1, EnumMinerals.ARSENATE), 	
+															getFluid(EnumFluid.SODIUM_HYDROXIDE, 250), 	
+															getFluid(EnumFluid.HIGH_LEACHATE, 250)));
+
+		slurry_pond_recipes.add(new SlurryPondRecipe(		mineral_ores(1, EnumMinerals.BORATE), 	
+															getFluid(EnumFluid.HYDROCHLORIC_ACID, 250), 	
+															getFluid(EnumFluid.LOW_LEACHATE, 250)));
+
+		slurry_pond_recipes.add(new SlurryPondRecipe(		mineral_ores(1, EnumMinerals.CARBONATE), 	
+															getFluid(EnumFluid.SULFURIC_ACID, 250), 	
+															getFluid(EnumFluid.LOW_LEACHATE, 250)));
+
+		slurry_pond_recipes.add(new SlurryPondRecipe(		mineral_ores(1, EnumMinerals.CHROMATE), 	
+															getFluid(EnumFluid.SODIUM_HYDROXIDE, 250), 	
+															getFluid(EnumFluid.LEACHATE, 250)));
+
+		slurry_pond_recipes.add(new SlurryPondRecipe(		mineral_ores(1, EnumMinerals.HALIDE), 	
+															getFluid(EnumFluid.HYDROCHLORIC_ACID, 250), 	
+															getFluid(EnumFluid.LOW_LEACHATE, 250)));
+
+		slurry_pond_recipes.add(new SlurryPondRecipe(		mineral_ores(1, EnumMinerals.NATIVE), 	
+															getFluid(EnumFluid.HYDROFLUORIC_ACID, 250), 	
+															getFluid(EnumFluid.LEACHATE, 250)));
+
+		slurry_pond_recipes.add(new SlurryPondRecipe(		mineral_ores(1, EnumMinerals.OXIDE), 	
+															getFluid(EnumFluid.HYDROFLUORIC_ACID, 250), 	
+															getFluid(EnumFluid.HIGH_LEACHATE, 250)));
+
+		slurry_pond_recipes.add(new SlurryPondRecipe(		mineral_ores(1, EnumMinerals.PHOSPHATE), 	
+															getFluid(EnumFluid.SULFURIC_ACID, 250), 	
+															getFluid(EnumFluid.LOW_LEACHATE, 250)));
+
+		slurry_pond_recipes.add(new SlurryPondRecipe(		mineral_ores(1, EnumMinerals.SILICATE), 	
+															getFluid(EnumFluid.HYDROCHLORIC_ACID, 250), 	
+															getFluid(EnumFluid.HIGH_LEACHATE, 250)));
+
+		slurry_pond_recipes.add(new SlurryPondRecipe(		mineral_ores(1, EnumMinerals.SULFATE), 	
+															getFluid(EnumFluid.HYDROCHLORIC_ACID, 250), 	
+															getFluid(EnumFluid.LEACHATE, 250)));
+
+		slurry_pond_recipes.add(new SlurryPondRecipe(		mineral_ores(1, EnumMinerals.SULFIDE), 	
+															getFluid(EnumFluid.HYDROCHLORIC_ACID, 250), 	
+															getFluid(EnumFluid.HIGH_LEACHATE, 250)));
+
+		slurry_pond_recipes.add(new SlurryPondRecipe(		mineral_ores(1, EnumMinerals.VANADATE), 	
 															getFluid(EnumFluid.SULFURIC_ACID, 250), 	
 															getFluid(EnumFluid.LEACHATE, 250)));
-		}
 
 	}
 

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.globbypotato.rockhounding_chemistry.ModItems;
 import com.globbypotato.rockhounding_chemistry.enums.EnumMiscBlocksA;
 import com.globbypotato.rockhounding_chemistry.enums.EnumMiscItems;
-import com.globbypotato.rockhounding_chemistry.enums.EnumServer;
+import com.globbypotato.rockhounding_chemistry.enums.utils.EnumServer;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.machines.io.MachineIO;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.LabOvenRecipes;
@@ -494,6 +494,10 @@ public class TELabOvenController extends TileEntityInv implements IInternalServe
 		if(!catalystSlot().isEmpty()){
 			int unbreakingLevel = CoreUtils.getEnchantmentLevel(Enchantments.UNBREAKING, catalystSlot());
 			this.input.damageUnbreakingSlot(unbreakingLevel, CATALYST_SLOT);
+
+			if(CoreUtils.hasMending(catalystSlot()) && this.rand.nextInt(CoreUtils.mendingFactor) == 0) {
+				this.input.repairMendingSlot(CATALYST_SLOT);
+			}
 		}
 
 		if(!soluteSlot().isEmpty()){

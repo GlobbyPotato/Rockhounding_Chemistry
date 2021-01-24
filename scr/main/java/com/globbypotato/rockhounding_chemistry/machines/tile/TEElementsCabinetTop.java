@@ -2,7 +2,7 @@ package com.globbypotato.rockhounding_chemistry.machines.tile;
 
 import java.util.ArrayList;
 
-import com.globbypotato.rockhounding_chemistry.enums.EnumElements;
+import com.globbypotato.rockhounding_chemistry.enums.materials.EnumElements;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;

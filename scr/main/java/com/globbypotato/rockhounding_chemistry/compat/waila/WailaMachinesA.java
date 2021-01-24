@@ -2,8 +2,8 @@ package com.globbypotato.rockhounding_chemistry.compat.waila;
 
 import java.util.List;
 
-import com.globbypotato.rockhounding_chemistry.enums.EnumCasting;
-import com.globbypotato.rockhounding_chemistry.enums.EnumSaltStages;
+import com.globbypotato.rockhounding_chemistry.enums.utils.EnumCasting;
+import com.globbypotato.rockhounding_chemistry.enums.utils.EnumSaltStages;
 import com.globbypotato.rockhounding_chemistry.machines.MachinesA;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TEEvaporationTank;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TEFluidInputTank;

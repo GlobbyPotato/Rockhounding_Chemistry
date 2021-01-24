@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.globbypotato.rockhounding_chemistry.ModItems;
 import com.globbypotato.rockhounding_chemistry.enums.EnumMiscItems;
-import com.globbypotato.rockhounding_chemistry.enums.EnumServer;
+import com.globbypotato.rockhounding_chemistry.enums.utils.EnumServer;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.ProfilingBenchRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.ProfilingBenchRecipe;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;

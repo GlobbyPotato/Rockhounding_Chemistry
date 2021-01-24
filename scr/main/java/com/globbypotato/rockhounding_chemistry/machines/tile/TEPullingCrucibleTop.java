@@ -76,7 +76,7 @@ public class TEPullingCrucibleTop extends TileEntityInv {
 						}
 					}
 				}else{
-					if(recipe.getInput().isItemEqual(stack)){
+					if(recipe.getDopant().isItemEqual(stack)){
 						return true;
 					}
 				}

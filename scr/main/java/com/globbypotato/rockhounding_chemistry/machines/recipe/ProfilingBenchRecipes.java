@@ -3,8 +3,8 @@ package com.globbypotato.rockhounding_chemistry.machines.recipe;
 import java.util.ArrayList;
 
 import com.globbypotato.rockhounding_chemistry.enums.EnumAlloyPart;
-import com.globbypotato.rockhounding_chemistry.enums.EnumCasting;
 import com.globbypotato.rockhounding_chemistry.enums.EnumMiscItems;
+import com.globbypotato.rockhounding_chemistry.enums.utils.EnumCasting;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.ProfilingBenchRecipe;
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 

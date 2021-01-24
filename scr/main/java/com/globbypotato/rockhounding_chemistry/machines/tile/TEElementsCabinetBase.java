@@ -1,7 +1,8 @@
 package com.globbypotato.rockhounding_chemistry.machines.tile;
 
-import com.globbypotato.rockhounding_chemistry.enums.EnumElements;
+import com.globbypotato.rockhounding_chemistry.enums.materials.EnumElements;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.ChemicalExtractorRecipes;
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.machines.tileentity.MachineStackHandler;

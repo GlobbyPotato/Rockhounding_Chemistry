@@ -6,6 +6,7 @@ import com.globbypotato.rockhounding_chemistry.fluids.ModFluids;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.PollutantRecipes;
 
+import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
@@ -30,7 +31,7 @@ public abstract interface IToxic {
 						int yRad = world.rand.nextInt(9) - 4;
 						int zRad = world.rand.nextInt(9) - 4;
 						BlockPos toxicPos = new BlockPos(pos.getX() + xRad, pos.getY() + yRad, pos.getZ() + zRad);
-						if(world.isAirBlock(toxicPos) && hasSolidBase(world, toxicPos, xRad, yRad, zRad)){
+						if(world.getBlockState(toxicPos).getBlock() == Blocks.AIR && hasSolidBase(world, toxicPos, xRad, yRad, zRad)){
 				    		world.playSound(null, pos, SoundEvents.ENTITY_TNT_PRIMED, SoundCategory.AMBIENT, 1.0F, 2.0F);
 							world.setBlockState(toxicPos, ModFluids.TOXIC_SLUDGE.getBlock().getStateFromMeta(0));
 				    		world.playSound(null, pos, SoundEvents.BLOCK_WATER_AMBIENT, SoundCategory.AMBIENT, 0.4F, 0.2F);
@@ -51,9 +52,6 @@ public abstract interface IToxic {
 	}
 
 	public default boolean hasSolidBase(World world, BlockPos toxicPos, int xRad, int yRad, int zRad){
-		if((xRad >= -1 && xRad <= 1) && (yRad >= -1 && yRad <= 1) && (zRad >= -1 && zRad <= 1)){
-			return true;
-		}
-		return world.getBlockState(toxicPos.down()).isSideSolid(world, toxicPos, EnumFacing.UP);
+		return world.getBlockState(toxicPos.down()).isSideSolid(world, toxicPos.down(), EnumFacing.UP);
 	}
 }

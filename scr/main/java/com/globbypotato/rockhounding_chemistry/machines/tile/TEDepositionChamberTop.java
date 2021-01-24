@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.globbypotato.rockhounding_chemistry.ModItems;
 import com.globbypotato.rockhounding_chemistry.enums.EnumMiscBlocksA;
 import com.globbypotato.rockhounding_chemistry.enums.EnumMiscItems;
-import com.globbypotato.rockhounding_chemistry.enums.EnumServer;
+import com.globbypotato.rockhounding_chemistry.enums.utils.EnumServer;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.machines.io.MachineIO;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.DepositionChamberRecipes;

@@ -1,9 +1,10 @@
 package com.globbypotato.rockhounding_chemistry.machines.tile;
 
 import com.globbypotato.rockhounding_chemistry.ModItems;
-import com.globbypotato.rockhounding_chemistry.enums.EnumCasting;
 import com.globbypotato.rockhounding_chemistry.enums.EnumMiscItems;
-import com.globbypotato.rockhounding_chemistry.enums.EnumServer;
+import com.globbypotato.rockhounding_chemistry.enums.utils.EnumCasting;
+import com.globbypotato.rockhounding_chemistry.enums.utils.EnumServer;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.BedReactorRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.DepositionChamberRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.GasReformerRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.LabOvenRecipes;
@@ -288,6 +289,11 @@ public class TEServer extends TileEntityInv {
 			if(this.servedDevice() != i){
 				this.device = i;
 				this.deviceMax = PrecipitationRecipes.precipitation_recipes.size();
+			}
+		}else if(i == EnumServer.BED_REACTOR.ordinal()){
+			if(this.servedDevice() != i){
+				this.device = i;
+				this.deviceMax = BedReactorRecipes.bed_reactor_recipes.size();
 			}
 		}else{
 			this.device = -1;

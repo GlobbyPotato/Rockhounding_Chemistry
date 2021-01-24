@@ -8,7 +8,7 @@ import java.util.Set;
 import java.util.function.Function;
 
 import com.globbypotato.rockhounding_chemistry.entities.EntityToxicSlime;
-import com.globbypotato.rockhounding_chemistry.enums.EnumFluid;
+import com.globbypotato.rockhounding_chemistry.enums.materials.EnumFluid;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.ToxicMutationRecipes;
@@ -179,15 +179,17 @@ public class ModFluids {
 				applyDamage(ACID, entityIn, 4F);
 			}
 	});
-	public static final Fluid VIRGIN_WATER = 	createFluid(EnumFluid.VIRGIN_WATER.getFluidName(), 	true, 0xFF79BEDE, "blur", 1000, 1000, 300, false, 0, fluid -> new BlockFluidClassic(fluid, Material.WATER){});
-	public static final Fluid SALT_BRINE = 		createFluid(EnumFluid.SALT_BRINE.getFluidName(), 	true, 0xFF7196A7, "blur", 1000, 1000, 300, false, 0, fluid -> new BlockFluidClassic(fluid, Material.WATER){});
-	public static final Fluid DENSE_BRINE = 	createFluid(EnumFluid.DENSE_BRINE.getFluidName(), 	true, 0xFFD5A6A6, "blur", 1000, 1000, 300, false, 0, fluid -> new BlockFluidClassic(fluid, Material.WATER){});
-	public static final Fluid MOTHER_LIQUOR = 	createFluid(EnumFluid.MOTHER_LIQUOR.getFluidName(), true, 0xFFFFD6D6, "fill", 1000, 1000, 300, false, 0, fluid -> new BlockFluidClassic(fluid, Material.WATER){});
+	public static final Fluid VIRGIN_WATER = 	createFluid(EnumFluid.VIRGIN_WATER.getFluidName(), 		true, 0xFF79BEDE, "blur", 1000, 1000, 300, false, 0, fluid -> new BlockFluidClassic(fluid, Material.WATER){});
+	public static final Fluid SALT_BRINE = 		createFluid(EnumFluid.SALT_BRINE.getFluidName(), 		true, 0xFF7196A7, "blur", 1000, 1000, 300, false, 0, fluid -> new BlockFluidClassic(fluid, Material.WATER){});
+	public static final Fluid DENSE_BRINE = 	createFluid(EnumFluid.DENSE_BRINE.getFluidName(), 		true, 0xFFD5A6A6, "blur", 1000, 1000, 300, false, 0, fluid -> new BlockFluidClassic(fluid, Material.WATER){});
+	public static final Fluid MOTHER_LIQUOR = 	createFluid(EnumFluid.MOTHER_LIQUOR.getFluidName(),	 	true, 0xFFFFD6D6, "fill", 1000, 1000, 300, false, 0, fluid -> new BlockFluidClassic(fluid, Material.WATER){});
 
 
 
 //DENSE
+	public static final Fluid HIGH_LEACHATE = 	createFluid(EnumFluid.HIGH_LEACHATE.getFluidName(), 	true,  0xFF896254, "fill", 3000, 3000, 300, false, 0, fluid -> new BlockFluidClassic(fluid, Material.WATER));
 	public static final Fluid LEACHATE = 		createFluid(EnumFluid.LEACHATE.getFluidName(), 			true,  0xFF4D4011, "fill", 3000, 3000, 300, false, 0, fluid -> new BlockFluidClassic(fluid, Material.WATER));
+	public static final Fluid LOW_LEACHATE = 	createFluid(EnumFluid.LOW_LEACHATE.getFluidName(), 		true,  0xFFAFA298, "fill", 3000, 3000, 300, false, 0, fluid -> new BlockFluidClassic(fluid, Material.WATER));
 	public static final Fluid COAL_SLURRY = 	createFluid(EnumFluid.COAL_SLURRY.getFluidName(), 		false, 0xFF000000, "fill", 3000, 4000, 300, false, 0, fluid -> new BlockFluidClassic(fluid, Material.WATER));
 	public static final Fluid ORGANIC_SLURRY = 	createFluid(EnumFluid.ORGANIC_SLURRY.getFluidName(), 	true,  0xFF8B8B68, "fill", 2000, 2000, 300, false, 0, fluid -> new BlockFluidClassic(fluid, Material.WATER));
 
@@ -304,6 +306,7 @@ public class ModFluids {
 
 
 //GASSES
+	public static final Fluid THIN_AIR =		createFluid(EnumFluid.THIN_AIR.getFluidName(), 			true, 0xFFDCDCDC, "blur", 10, 10,  120, true, 0,fluid -> new BlockFluidClassic(fluid, Material.AIR));
 	public static final Fluid NITROGEN =		createFluid(EnumFluid.NITROGEN.getFluidName(), 			true, 0xFFDCDCDC, "blur", 10, 10,  120, true, 0,fluid -> new BlockFluidClassic(fluid, Material.AIR));
 	public static final Fluid OXYGEN = 			createFluid(EnumFluid.OXYGEN.getFluidName(), 			true, 0xFFDCDCDC, "blur", 10, 10,  110, true, 0,fluid -> new BlockFluidClassic(fluid, Material.AIR));
 	public static final Fluid RAW_SYNGAS = 		createFluid(EnumFluid.RAW_SYNGAS.getFluidName(), 		true, 0xFF5A605B, "blur", 10, 10,  400, true, 0,fluid -> new BlockFluidClassic(fluid, Material.AIR));
@@ -322,6 +325,7 @@ public class ModFluids {
 	public static final Fluid HYDROGEN = 		createFluid(EnumFluid.HYDROGEN.getFluidName(), 			true, 0xFFDCDCDC, "blur", 10, 10,  110, true, 0,fluid -> new BlockFluidClassic(fluid, Material.AIR));
 	public static final Fluid RAW_FLUE_GAS = 	createFluid(EnumFluid.RAW_FLUE_GAS.getFluidName(), 		true, 0xFFA5B2BA, "blur", 10, 10,  450, true, 0,fluid -> new BlockFluidClassic(fluid, Material.AIR));
 	public static final Fluid FLUE_GAS = 		createFluid(EnumFluid.FLUE_GAS.getFluidName(), 			true, 0xFFBFCED8, "blur", 10, 10,  310, true, 0,fluid -> new BlockFluidClassic(fluid, Material.AIR));
+	public static final Fluid PROPYLENE = 		createFluid(EnumFluid.PROPYLENE.getFluidName(), 		true, 0xFFC6C6C6, "blur", 10, 10,  305, true, 0,fluid -> new BlockFluidClassic(fluid, Material.AIR));
 
 
 

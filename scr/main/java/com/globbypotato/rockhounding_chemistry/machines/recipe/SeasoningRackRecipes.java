@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import com.globbypotato.rockhounding_chemistry.ModBlocks;
 import com.globbypotato.rockhounding_chemistry.ModItems;
-import com.globbypotato.rockhounding_chemistry.enums.EnumChemicals;
 import com.globbypotato.rockhounding_chemistry.enums.EnumMiscBlocksA;
+import com.globbypotato.rockhounding_chemistry.enums.materials.EnumChemicals;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.SeasoningRackRecipe;
 
 import net.minecraft.item.ItemStack;

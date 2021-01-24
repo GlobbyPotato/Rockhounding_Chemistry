@@ -2,9 +2,9 @@ package com.globbypotato.rockhounding_chemistry.machines.tile;
 
 import java.util.ArrayList;
 
-import com.globbypotato.rockhounding_chemistry.enums.EnumAirGases;
-import com.globbypotato.rockhounding_chemistry.enums.EnumFluid;
 import com.globbypotato.rockhounding_chemistry.enums.EnumMiscBlocksA;
+import com.globbypotato.rockhounding_chemistry.enums.materials.EnumAirGases;
+import com.globbypotato.rockhounding_chemistry.enums.materials.EnumFluid;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.machines.io.MachineIO;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.GanPlantRecipes;

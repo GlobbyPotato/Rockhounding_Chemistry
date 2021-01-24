@@ -7,9 +7,9 @@ import com.globbypotato.rockhounding_chemistry.enums.EnumAlloyDeco;
 import com.globbypotato.rockhounding_chemistry.enums.EnumAlloyGems;
 import com.globbypotato.rockhounding_chemistry.enums.EnumAlloyTech;
 import com.globbypotato.rockhounding_chemistry.enums.EnumAlloyTechB;
-import com.globbypotato.rockhounding_chemistry.enums.EnumChemicals;
-import com.globbypotato.rockhounding_chemistry.enums.EnumElements;
 import com.globbypotato.rockhounding_chemistry.enums.EnumMetalItems;
+import com.globbypotato.rockhounding_chemistry.enums.materials.EnumChemicals;
+import com.globbypotato.rockhounding_chemistry.enums.materials.EnumElements;
 import com.globbypotato.rockhounding_chemistry.enums.shards.EnumNative;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.LabBlenderRecipe;
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
@@ -37,6 +37,10 @@ public class LabBlenderRecipes extends BaseRecipes{
 															chemicals(1, EnumChemicals.CHLORIDE_COMPOUND)));
 
 		lab_blender_recipes.add(new LabBlenderRecipe(		Arrays.asList(	native_stack(3, EnumNative.GRAPHITE),
+																			chemicals(1, EnumChemicals.COAL_TAR_COMPOUND)), 		
+															chemicals(1, EnumChemicals.GRAPHITE_COMPOUND)));
+
+		lab_blender_recipes.add(new LabBlenderRecipe(		Arrays.asList(	elements(3, EnumElements.CARBON),
 																			chemicals(1, EnumChemicals.COAL_TAR_COMPOUND)), 		
 															chemicals(1, EnumChemicals.GRAPHITE_COMPOUND)));
 

@@ -3,8 +3,8 @@ package com.globbypotato.rockhounding_chemistry.machines.recipe;
 import java.util.ArrayList;
 
 import com.globbypotato.rockhounding_chemistry.ModItems;
-import com.globbypotato.rockhounding_chemistry.enums.EnumChemicals;
-import com.globbypotato.rockhounding_chemistry.enums.EnumFluid;
+import com.globbypotato.rockhounding_chemistry.enums.materials.EnumChemicals;
+import com.globbypotato.rockhounding_chemistry.enums.materials.EnumFluid;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.SlurryDrumRecipe;
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 

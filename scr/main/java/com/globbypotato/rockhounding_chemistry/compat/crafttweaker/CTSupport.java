@@ -15,6 +15,7 @@ public class CTSupport {
 	        CraftTweakerAPI.registerClass(CT_ProfilingBench.class);
 	        CraftTweakerAPI.registerClass(CT_SlurryPond.class);
 	        CraftTweakerAPI.registerClass(CT_MineralSizer.class);
+	        CraftTweakerAPI.registerClass(CT_CrushingGears.class);
 	        CraftTweakerAPI.registerClass(CT_LabBlender.class);
 	        CraftTweakerAPI.registerClass(CT_LabOven.class);
 	        CraftTweakerAPI.registerClass(CT_HeatExchanger.class);
@@ -38,6 +39,7 @@ public class CTSupport {
 	        CraftTweakerAPI.registerClass(CT_StirredTank.class);
 	        CraftTweakerAPI.registerClass(CT_Precipitator.class);
 	        CraftTweakerAPI.registerClass(CT_InhibitGases.class);
+	        CraftTweakerAPI.registerClass(CT_BedReactor.class);
     	}
     }
 

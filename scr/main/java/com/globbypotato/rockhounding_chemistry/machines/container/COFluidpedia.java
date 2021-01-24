@@ -118,7 +118,7 @@ public class COFluidpedia extends ContainerBase<TEFluidpedia>{
 
 	@Override
 	protected boolean mergeItemStack(ItemStack stack, int startIndex, int endIndex, boolean reverseDirection){
-		return super.mergeItemStack(stack, 41, endIndex, reverseDirection);
+		return super.mergeItemStack(stack, 43, endIndex, reverseDirection);
     }
 
 }

@@ -5,6 +5,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 public class ModConfig {
 	public static final String ABSOLUTE = "absolute";
+	public static final String ABSOLUTE_INTEGRATIONS = "absolute_integrations";
 	public static final String ORES = "ores";
 	public static final String MINERAL_SIZER = "mineral_sizer";
 	public static final String LEACHING_VAT = "leaching_vat";
@@ -70,6 +71,7 @@ public class ModConfig {
 	public static int speedDeposition = 500;
 	public static int speedPulling = 300;
 	public static int speedCstr = 400;
+	public static int speedBedReactor = 500;
 
 	//consumes
 	public static int consumedHydr = 30;
@@ -101,6 +103,9 @@ public class ModConfig {
 	public static int tankSubstance = 4000;
 	public static double kinematicPar = 1.5;
 
+	//integrations
+	public static boolean hasRhRocks;
+
 	//salt
 	public static int speedEvaporation;
 	public static int meltingTime;
@@ -118,6 +123,9 @@ public class ModConfig {
 		speedMultiplier = config.get(								ABSOLUTE, "speed multiplier", 						true,					"Multiplies the consumed power to balance the speed upgrades").getBoolean();
 		catalystMultiplier = config.get(							ABSOLUTE, "catalyst multiplier", 					1, 						"Multiplies all the catalysts duration").getInt();
 		dictSmelt = config.get(										ABSOLUTE, "oredict smelting", 						true,					"Smelt metals by using oredicted ingredients").getBoolean();
+
+		config.addCustomCategoryComment(ABSOLUTE_INTEGRATIONS, "Mod Integrations");
+		hasRhRocks = config.get(									ABSOLUTE_INTEGRATIONS, "Integrate Rockhounding:Rocks", 						false,					"Includes Rockhounding Rocks into the mineral processing chain").getBoolean();
 
 		config.addCustomCategoryComment(MUTATION, "Generic configurations");
 		enableMutation = config.get(								MUTATION, "enable toxic mutation", 					true,					"Enable the toxic mutation procedure").getBoolean();

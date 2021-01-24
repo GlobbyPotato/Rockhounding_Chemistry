@@ -19,14 +19,15 @@ import com.globbypotato.rockhounding_chemistry.enums.EnumAlloyGems;
 import com.globbypotato.rockhounding_chemistry.enums.EnumAlloyTech;
 import com.globbypotato.rockhounding_chemistry.enums.EnumAlloyTechB;
 import com.globbypotato.rockhounding_chemistry.enums.EnumDidymium;
-import com.globbypotato.rockhounding_chemistry.enums.EnumMachinesA;
-import com.globbypotato.rockhounding_chemistry.enums.EnumMachinesB;
-import com.globbypotato.rockhounding_chemistry.enums.EnumMachinesC;
-import com.globbypotato.rockhounding_chemistry.enums.EnumMachinesD;
-import com.globbypotato.rockhounding_chemistry.enums.EnumMachinesE;
-import com.globbypotato.rockhounding_chemistry.enums.EnumMinerals;
 import com.globbypotato.rockhounding_chemistry.enums.EnumMiscBlocksA;
-import com.globbypotato.rockhounding_chemistry.enums.EnumWaterlock;
+import com.globbypotato.rockhounding_chemistry.enums.machines.EnumMachinesA;
+import com.globbypotato.rockhounding_chemistry.enums.machines.EnumMachinesB;
+import com.globbypotato.rockhounding_chemistry.enums.machines.EnumMachinesC;
+import com.globbypotato.rockhounding_chemistry.enums.machines.EnumMachinesD;
+import com.globbypotato.rockhounding_chemistry.enums.machines.EnumMachinesE;
+import com.globbypotato.rockhounding_chemistry.enums.machines.EnumMachinesF;
+import com.globbypotato.rockhounding_chemistry.enums.materials.EnumMinerals;
+import com.globbypotato.rockhounding_chemistry.enums.utils.EnumWaterlock;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.handlers.RegistryHandler;
 import com.globbypotato.rockhounding_chemistry.machines.GaslineDuct;
@@ -37,6 +38,7 @@ import com.globbypotato.rockhounding_chemistry.machines.MachinesB;
 import com.globbypotato.rockhounding_chemistry.machines.MachinesC;
 import com.globbypotato.rockhounding_chemistry.machines.MachinesD;
 import com.globbypotato.rockhounding_chemistry.machines.MachinesE;
+import com.globbypotato.rockhounding_chemistry.machines.MachinesF;
 import com.globbypotato.rockhounding_chemistry.machines.PipelineDuct;
 import com.globbypotato.rockhounding_chemistry.machines.PipelineHalt;
 import com.globbypotato.rockhounding_chemistry.machines.PipelinePump;
@@ -67,6 +69,7 @@ public class ModBlocks {
 	public static final Block MACHINES_C = new MachinesC("machines_c");
 	public static final Block MACHINES_D = new MachinesD("machines_d");
 	public static final Block MACHINES_E = new MachinesE("machines_e");
+	public static final Block MACHINES_F = new MachinesF("machines_f");
 
 	public static final Block ALLOY_BLOCKS_TECH = new AlloyBlocksTech("alloy_blocks_tech");
 	public static final Block ALLOY_BRICKS_TECH = new AlloyBricksTech("alloy_bricks_tech");
@@ -106,6 +109,7 @@ public class ModBlocks {
 			registry.register(MACHINES_C);
 			registry.register(MACHINES_D);
 			registry.register(MACHINES_E);
+			registry.register(MACHINES_F);
 
 			registry.register(ALLOY_BLOCKS_TECH);
 			registry.register(ALLOY_BRICKS_TECH);
@@ -144,6 +148,7 @@ public class ModBlocks {
 			registry.register(new PoweredMetaIB(MACHINES_C, EnumMachinesC.getNames()).setRegistryName(MACHINES_C.getRegistryName()));
 			registry.register(new PoweredMetaIB(MACHINES_D, EnumMachinesD.getNames()).setRegistryName(MACHINES_D.getRegistryName()));
 			registry.register(new PoweredMetaIB(MACHINES_E, EnumMachinesE.getNames()).setRegistryName(MACHINES_E.getRegistryName()));
+			registry.register(new PoweredMetaIB(MACHINES_F, EnumMachinesF.getNames()).setRegistryName(MACHINES_F.getRegistryName()));
 
 			registry.register(new BaseMetaIB(ALLOY_BLOCKS_TECH, EnumAlloyTech.getAlloys()).setRegistryName(ALLOY_BLOCKS_TECH.getRegistryName()));
 			registry.register(new BaseMetaIB(ALLOY_BRICKS_TECH, EnumAlloyTech.getAlloys()).setRegistryName(ALLOY_BRICKS_TECH.getRegistryName()));
@@ -183,6 +188,7 @@ public class ModBlocks {
 			RegistryHandler.registerMetaModel(MACHINES_C, EnumMachinesC.getNames());
 			RegistryHandler.registerMetaModel(MACHINES_D, EnumMachinesD.getNames());
 			RegistryHandler.registerMetaModel(MACHINES_E, EnumMachinesE.getNames());
+			RegistryHandler.registerMetaModel(MACHINES_F, EnumMachinesF.getNames());
 
 			RegistryHandler.registerMetaModel(ALLOY_BLOCKS_TECH, EnumAlloyTech.getAlloys());
 			RegistryHandler.registerMetaModel(ALLOY_BRICKS_TECH, EnumAlloyTech.getAlloys());

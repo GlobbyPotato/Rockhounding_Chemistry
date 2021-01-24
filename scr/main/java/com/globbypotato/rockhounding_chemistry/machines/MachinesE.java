@@ -8,8 +8,8 @@ import javax.annotation.Nullable;
 
 import com.globbypotato.rockhounding_chemistry.ModItems;
 import com.globbypotato.rockhounding_chemistry.Rhchemistry;
-import com.globbypotato.rockhounding_chemistry.enums.EnumMachinesE;
 import com.globbypotato.rockhounding_chemistry.enums.EnumMiscItems;
+import com.globbypotato.rockhounding_chemistry.enums.machines.EnumMachinesE;
 import com.globbypotato.rockhounding_chemistry.handlers.GuiHandler;
 import com.globbypotato.rockhounding_chemistry.machines.io.MachineIO;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TEBufferTank;
@@ -402,7 +402,9 @@ public class MachinesE extends MachineIO {
 		    		player.openGui(Rhchemistry.instance, GuiHandler.buffer_tank_id, world, pos.getX(), pos.getY(), pos.getZ());
 				}
 				if(meta == EnumMachinesE.STIRRED_TANK_BASE.ordinal()){
-		    		player.openGui(Rhchemistry.instance, GuiHandler.stirred_tank_id, world, pos.getX(), pos.getY() + 1, pos.getZ());
+					if(world.getTileEntity(pos.up(1)) != null && world.getTileEntity(pos.up(1)) instanceof TEStirredTankTop){
+			    		player.openGui(Rhchemistry.instance, GuiHandler.stirred_tank_id, world, pos.getX(), pos.getY() + 1, pos.getZ());
+					}
 				}
 				if(meta == EnumMachinesE.STIRRED_TANK_TOP.ordinal()){
 		    		player.openGui(Rhchemistry.instance, GuiHandler.stirred_tank_id, world, pos.getX(), pos.getY(), pos.getZ());

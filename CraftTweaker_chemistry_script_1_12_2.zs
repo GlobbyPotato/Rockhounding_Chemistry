@@ -62,6 +62,14 @@ mods.rockhounding_chemistry.StirredTank.add(<liquid:hydrochloric_acid>*130, <liq
 
 
 =======================================================
+CRUSHING GEARS
+=======================================================
+//input gear: the gear to be accepted inside the Mieral Sizer (must be a damageable item)
+mods.rockhounding_chemistry.CrushingGears.add(<minecraft:diamond_sword>);
+
+
+
+=======================================================
 HEAVY DRUM
 =======================================================
 //input stack: the item to spill into fluid

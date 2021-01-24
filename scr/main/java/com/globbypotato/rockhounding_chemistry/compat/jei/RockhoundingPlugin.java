@@ -4,6 +4,8 @@ import com.globbypotato.rockhounding_chemistry.ModBlocks;
 import com.globbypotato.rockhounding_chemistry.ModItems;
 import com.globbypotato.rockhounding_chemistry.compat.jei.air_compressor.AirCompressorCategory;
 import com.globbypotato.rockhounding_chemistry.compat.jei.air_compressor.AirCompressorWrapper;
+import com.globbypotato.rockhounding_chemistry.compat.jei.bed_reactor.BedReactorCategory;
+import com.globbypotato.rockhounding_chemistry.compat.jei.bed_reactor.BedReactorWrapper;
 import com.globbypotato.rockhounding_chemistry.compat.jei.chemical_extractor.ChemicalExtractorCategory;
 import com.globbypotato.rockhounding_chemistry.compat.jei.chemical_extractor.ChemicalExtractorWrapper;
 import com.globbypotato.rockhounding_chemistry.compat.jei.deposition_chamber.DepositionChamberCategory;
@@ -58,15 +60,16 @@ import com.globbypotato.rockhounding_chemistry.compat.jei.toxic_mutation.ToxicMu
 import com.globbypotato.rockhounding_chemistry.compat.jei.toxic_mutation.ToxicMutationWrapper;
 import com.globbypotato.rockhounding_chemistry.compat.jei.transposer.TransposerCategory;
 import com.globbypotato.rockhounding_chemistry.compat.jei.transposer.TransposerWrapper;
-import com.globbypotato.rockhounding_chemistry.enums.EnumCasting;
-import com.globbypotato.rockhounding_chemistry.enums.EnumFluid;
-import com.globbypotato.rockhounding_chemistry.enums.EnumMachinesA;
-import com.globbypotato.rockhounding_chemistry.enums.EnumMachinesB;
-import com.globbypotato.rockhounding_chemistry.enums.EnumMachinesC;
-import com.globbypotato.rockhounding_chemistry.enums.EnumMachinesD;
-import com.globbypotato.rockhounding_chemistry.enums.EnumMachinesE;
 import com.globbypotato.rockhounding_chemistry.enums.EnumMiscBlocksA;
-import com.globbypotato.rockhounding_chemistry.enums.EnumSpeeds;
+import com.globbypotato.rockhounding_chemistry.enums.machines.EnumMachinesA;
+import com.globbypotato.rockhounding_chemistry.enums.machines.EnumMachinesB;
+import com.globbypotato.rockhounding_chemistry.enums.machines.EnumMachinesC;
+import com.globbypotato.rockhounding_chemistry.enums.machines.EnumMachinesD;
+import com.globbypotato.rockhounding_chemistry.enums.machines.EnumMachinesE;
+import com.globbypotato.rockhounding_chemistry.enums.machines.EnumMachinesF;
+import com.globbypotato.rockhounding_chemistry.enums.materials.EnumFluid;
+import com.globbypotato.rockhounding_chemistry.enums.utils.EnumCasting;
+import com.globbypotato.rockhounding_chemistry.enums.utils.EnumSpeeds;
 import com.globbypotato.rockhounding_chemistry.fluids.ModFluids;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.machines.gui.UIAirCompressor;
@@ -100,6 +103,8 @@ import com.globbypotato.rockhounding_chemistry.machines.gui.UISlurryDrum;
 import com.globbypotato.rockhounding_chemistry.machines.gui.UISlurryPond;
 import com.globbypotato.rockhounding_chemistry.machines.gui.UIStirredTankTop;
 import com.globbypotato.rockhounding_chemistry.machines.gui.UITransposer;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UITubularBedController;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UITubularBedLow;
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 import com.globbypotato.rockhounding_core.utils.CoreUtils;
 
@@ -157,7 +162,8 @@ public class RockhoundingPlugin implements IModPlugin {
 				new SlurryDrumCategory(guiHelper, RHRecipeUID.SLURRY_DRUM),
 				new StirredTankCategory(guiHelper, RHRecipeUID.STIRRED_TANK),
 				new EvaporationTankCategory(guiHelper, RHRecipeUID.EVAPORATION_TANK),
-				new PrecipitationCategory(guiHelper, RHRecipeUID.PRECIPITATION)
+				new PrecipitationCategory(guiHelper, RHRecipeUID.PRECIPITATION),
+				new BedReactorCategory(guiHelper, RHRecipeUID.BED_REACTOR)
 		);
 	}
 
@@ -194,6 +200,7 @@ public class RockhoundingPlugin implements IModPlugin {
 		registry.addRecipes(StirredTankWrapper.getRecipes(), RHRecipeUID.STIRRED_TANK);
 		registry.addRecipes(EvaporationTankWrapper.getRecipes(), RHRecipeUID.EVAPORATION_TANK);
 		registry.addRecipes(PrecipitationWrapper.getRecipes(), RHRecipeUID.PRECIPITATION);
+		registry.addRecipes(BedReactorWrapper.getRecipes(), RHRecipeUID.BED_REACTOR);
 
 		registry.addRecipeClickArea(UIMineralSizerController.class, rX, rY, rW, rH, RHRecipeUID.SIZER);
 		registry.addRecipeClickArea(UIMineralSizerTank.class, rX, rY, rW, rH, RHRecipeUID.SIZER);
@@ -226,6 +233,8 @@ public class RockhoundingPlugin implements IModPlugin {
 		registry.addRecipeClickArea(UIStirredTankTop.class, rX, rY, rW, rH, RHRecipeUID.STIRRED_TANK);
 		registry.addRecipeClickArea(UIPrecipitationController.class, rX, rY, rW, rH, RHRecipeUID.PRECIPITATION);
 		registry.addRecipeClickArea(UIPrecipitationChamber.class, rX, rY, rW, rH, RHRecipeUID.PRECIPITATION);
+		registry.addRecipeClickArea(UITubularBedController.class, rX, rY, rW, rH, RHRecipeUID.BED_REACTOR);
+		registry.addRecipeClickArea(UITubularBedLow.class, rX, rY, rW, rH, RHRecipeUID.BED_REACTOR);
 
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.MACHINES_A, 1, EnumMachinesA.SIZER_CONTROLLER.ordinal()), RHRecipeUID.SIZER);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.MACHINES_B, 1, EnumMachinesB.SLURRY_POND.ordinal()), RHRecipeUID.POND);
@@ -254,6 +263,7 @@ public class RockhoundingPlugin implements IModPlugin {
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.MACHINES_E, 1, EnumMachinesE.STIRRED_TANK_BASE.ordinal()), RHRecipeUID.STIRRED_TANK);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.MACHINES_A, 1, EnumMachinesA.EVAPORATION_TANK.ordinal()), RHRecipeUID.EVAPORATION_TANK);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.MACHINES_E, 1, EnumMachinesE.PRECIPITATION_CHAMBER.ordinal()), RHRecipeUID.PRECIPITATION);
+		registry.addRecipeCatalyst(new ItemStack(ModBlocks.MACHINES_F, 1, EnumMachinesF.TUBULAR_BED_TANK.ordinal()), RHRecipeUID.BED_REACTOR);
 		registry.addRecipeCatalyst(CoreUtils.getFluidBucket(EnumFluid.pickFluid(EnumFluid.TOXIC_WASTE)), RHRecipeUID.MUTATION);
 
 		String salt_text = "Raw salt is an intermediate stage of the salt making. It is produced by the Evaporation Tank as result of water evaporation or desublimation and is refined in the Seasoning Rack into the generic refined salt used for recipes. In case of desublimation, since less water is required, a poorer variant will be produced, returning less refined salt.";
@@ -276,6 +286,9 @@ public class RockhoundingPlugin implements IModPlugin {
 		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.MACHINES_D, 1, EnumMachinesD.PULLING_CRUCIBLE_TOP.ordinal()));
 		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.MACHINES_E, 1, EnumMachinesE.STIRRED_TANK_TOP.ordinal()));
 		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.MACHINES_E, 1, EnumMachinesE.PRECIPITATION_CONTROLLER.ordinal()));
+		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.MACHINES_F, 1, EnumMachinesF.TUBULAR_BED_LOW.ordinal()));
+		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.MACHINES_F, 1, EnumMachinesF.TUBULAR_BED_TOP.ordinal()));
+		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.MACHINES_F, 1, EnumMachinesF.TUBULAR_BED_CONTROLLER.ordinal()));
 
 		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.PIPELINE_HALT));
 		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.GASLINE_HALT));

@@ -2,7 +2,7 @@ package com.globbypotato.rockhounding_chemistry.machines.gui;
 
 import java.util.List;
 
-import com.globbypotato.rockhounding_chemistry.enums.EnumAirGases;
+import com.globbypotato.rockhounding_chemistry.enums.materials.EnumAirGases;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.COMultivessel;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.GanPlantRecipes;

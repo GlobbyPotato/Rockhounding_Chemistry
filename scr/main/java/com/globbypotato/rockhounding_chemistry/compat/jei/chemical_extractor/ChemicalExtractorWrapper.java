@@ -6,9 +6,7 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import com.globbypotato.rockhounding_chemistry.ModItems;
 import com.globbypotato.rockhounding_chemistry.compat.jei.RHRecipeWrapper;
-import com.globbypotato.rockhounding_chemistry.enums.EnumElements;
 import com.globbypotato.rockhounding_chemistry.fluids.ModFluids;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.ChemicalExtractorRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.ChemicalExtractorRecipe;
@@ -54,7 +52,13 @@ public class ChemicalExtractorWrapper extends RHRecipeWrapper<ChemicalExtractorR
 
 	@Nonnull
 	public List<String> getElements() {
-		return getRecipe().getElements();
+		ArrayList<String> allowedDicts = new ArrayList<String>();
+		for(int x = 0; x < getRecipe().getElements().size(); x++) {
+			if(!(ChemicalExtractorRecipes.inhibited_elements.contains(getRecipe().getElements().get(x).toLowerCase()))) {
+				allowedDicts.add(getRecipe().getElements().get(x));
+			}
+		}
+		return allowedDicts;
 	}
 
 	@Nonnull
@@ -73,9 +77,25 @@ public class ChemicalExtractorWrapper extends RHRecipeWrapper<ChemicalExtractorR
 	@Nonnull
 	public List<ItemStack> getOutputs() {
 		ArrayList<ItemStack> stacks = new ArrayList<ItemStack>();
+		for(int x = 0; x < getElements().size(); x++){
+			ArrayList<ItemStack> firstDict = new ArrayList<ItemStack>();
+			String recipeDict = getElements().get(x);
+			if(!OreDictionary.getOres(recipeDict).isEmpty()){
+				firstDict.addAll(OreDictionary.getOres(recipeDict));
+				if(!firstDict.isEmpty() && firstDict.size() > 0){
+					stacks.addAll(firstDict);
+				}
+			}
+
+		}
+
+		/*
+		ArrayList<ItemStack> stacks = new ArrayList<ItemStack>();
 		for(int x = 0; x < EnumElements.size(); x++){
 			stacks.add(new ItemStack(ModItems.CHEMICAL_DUSTS, 1, x));
 		}
+		return stacks;
+		*/
 		return stacks;
 	}
 

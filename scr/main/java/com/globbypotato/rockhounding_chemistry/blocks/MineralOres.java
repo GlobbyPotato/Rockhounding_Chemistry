@@ -1,7 +1,7 @@
 package com.globbypotato.rockhounding_chemistry.blocks;
 
 import com.globbypotato.rockhounding_chemistry.blocks.io.MetaIO;
-import com.globbypotato.rockhounding_chemistry.enums.EnumMinerals;
+import com.globbypotato.rockhounding_chemistry.enums.materials.EnumMinerals;
 
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;

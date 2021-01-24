@@ -2,8 +2,8 @@ package com.globbypotato.rockhounding_chemistry.compat.top;
 
 import javax.annotation.Nullable;
 
-import com.globbypotato.rockhounding_chemistry.enums.EnumCasting;
-import com.globbypotato.rockhounding_chemistry.enums.EnumSaltStages;
+import com.globbypotato.rockhounding_chemistry.enums.utils.EnumCasting;
+import com.globbypotato.rockhounding_chemistry.enums.utils.EnumSaltStages;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TEAirCompressor;

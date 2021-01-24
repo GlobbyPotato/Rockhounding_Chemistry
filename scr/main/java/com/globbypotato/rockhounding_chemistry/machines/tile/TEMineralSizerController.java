@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.globbypotato.rockhounding_chemistry.ModItems;
 import com.globbypotato.rockhounding_chemistry.enums.EnumMiscItems;
-import com.globbypotato.rockhounding_chemistry.enums.EnumServer;
+import com.globbypotato.rockhounding_chemistry.enums.utils.EnumServer;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.MineralSizerRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.MineralSizerRecipe;
@@ -516,8 +516,8 @@ public class TEMineralSizerController extends TileEntityInv implements IInternal
 
 	private void handleConsumableDamage() {
 		if(isValidRecipe()){
-			for(int damage = 0; damage <= getComminution(); damage++){
-				int gearCount = damage / 2;
+			int damage = getComminution() / 2;
+			for(int gearCount = 0; gearCount <= damage; gearCount++){
 				if(gearCount < 4){
 					if(!getTankA().gearSlot(gearCount).isEmpty()){
 						int unbreakingLevel = CoreUtils.getEnchantmentLevel(Enchantments.UNBREAKING, getTankA().gearSlot(gearCount));

@@ -91,6 +91,13 @@ public class ModTileEntities {
 		GameRegistry.registerTileEntity(TEPrecipitationChamber.class, Reference.MODID + "_" + TEPrecipitationChamber.getName());
 		GameRegistry.registerTileEntity(TEPrecipitationReactor.class, Reference.MODID + "_" + TEPrecipitationReactor.getName());
 
+		GameRegistry.registerTileEntity(TETubularBedBase.class, Reference.MODID + "_" + TETubularBedBase.getName());
+		GameRegistry.registerTileEntity(TETubularBedLow.class, Reference.MODID + "_" + TETubularBedLow.getName());
+		GameRegistry.registerTileEntity(TETubularBedMid.class, Reference.MODID + "_" + TETubularBedMid.getName());
+		GameRegistry.registerTileEntity(TETubularBedTop.class, Reference.MODID + "_" + TETubularBedTop.getName());
+		GameRegistry.registerTileEntity(TETubularBedTank.class, Reference.MODID + "_" + TETubularBedTank.getName());
+		GameRegistry.registerTileEntity(TETubularBedController.class, Reference.MODID + "_" + TETubularBedController.getName());
+
 		GameRegistry.registerTileEntity(TEPipelinePump.class, Reference.MODID + "_" + TEPipelinePump.getName());
 		GameRegistry.registerTileEntity(TEPipelineValve.class, Reference.MODID + "_" + TEPipelineValve.getName());
 		GameRegistry.registerTileEntity(TEGaslinePump.class, Reference.MODID + "_" + TEGaslinePump.getName());

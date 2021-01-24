@@ -5,16 +5,18 @@ import java.util.Random;
 
 import com.globbypotato.rockhounding_chemistry.ModBlocks;
 import com.globbypotato.rockhounding_chemistry.ModItems;
-import com.globbypotato.rockhounding_chemistry.enums.EnumCasting;
-import com.globbypotato.rockhounding_chemistry.enums.EnumMachinesB;
-import com.globbypotato.rockhounding_chemistry.enums.EnumMachinesD;
 import com.globbypotato.rockhounding_chemistry.enums.EnumMiscBlocksA;
 import com.globbypotato.rockhounding_chemistry.enums.EnumMiscItems;
-import com.globbypotato.rockhounding_chemistry.enums.EnumServer;
-import com.globbypotato.rockhounding_chemistry.enums.EnumSpeeds;
+import com.globbypotato.rockhounding_chemistry.enums.machines.EnumMachinesB;
+import com.globbypotato.rockhounding_chemistry.enums.machines.EnumMachinesD;
+import com.globbypotato.rockhounding_chemistry.enums.materials.EnumElements;
+import com.globbypotato.rockhounding_chemistry.enums.utils.EnumCasting;
+import com.globbypotato.rockhounding_chemistry.enums.utils.EnumServer;
+import com.globbypotato.rockhounding_chemistry.enums.utils.EnumSpeeds;
 import com.globbypotato.rockhounding_chemistry.fluids.ModFluids;
 import com.globbypotato.rockhounding_chemistry.items.ProbeItems;
 import com.globbypotato.rockhounding_chemistry.machines.io.MachineIO;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.BedReactorRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.ChemicalExtractorRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.DepositionChamberRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.GasReformerRecipes;
@@ -200,6 +202,8 @@ public class GlobbyEventHandler {
 			        			}else{
 					        		event.getToolTip().add(TextFormatting.GRAY + "Recipe: " + TextFormatting.BOLD +  TextFormatting.YELLOW + PrecipitationRecipes.precipitation_recipes.get(recipe).getRecipeName());
 			        			}
+			        		}else if(device == EnumServer.BED_REACTOR.ordinal()){
+				        		event.getToolTip().add(TextFormatting.GRAY + "Recipe: " + TextFormatting.BOLD +  TextFormatting.YELLOW + BedReactorRecipes.bed_reactor_recipes.get(recipe).getOutput().getLocalizedName());
 			        		}
 			        		if(tag.hasKey("FilterStack")){
 			        			ItemStack filter = new ItemStack(tag.getCompoundTag("FilterStack"));
@@ -255,14 +259,21 @@ public class GlobbyEventHandler {
 	}
 
 	private void addExtractorRecipe(ChemicalExtractorRecipe recipe, ItemTooltipEvent event) {
+		String inhibit = "";
 		event.getToolTip().add(TextFormatting.GRAY + "Category: " + TextFormatting.YELLOW + recipe.getCategory());
 		for(int x = 0; x < recipe.getElements().size(); x++){
+			inhibit = "";
 			String recipeDict = recipe.getElements().get(x);
 			ArrayList<ItemStack> firstDict = new ArrayList<ItemStack>();
 			if(!OreDictionary.getOres(recipeDict).isEmpty()){
 				firstDict.addAll(OreDictionary.getOres(recipeDict));
 				if(!firstDict.isEmpty() && firstDict.size() > 0){
-					event.getToolTip().add(TextFormatting.GRAY + firstDict.get(0).getDisplayName() + " - " + TextFormatting.WHITE + TextFormatting.BOLD + recipe.getQuantities().get(x) + "%");
+				   for(int ix = 0; ix < ChemicalExtractorRecipes.inhibited_elements.size(); ix++){
+					   if(recipeDict.toLowerCase().matches(ChemicalExtractorRecipes.inhibited_elements.get(ix).toLowerCase())){
+						   inhibit = " - (Inhibited)";
+					   }
+				   }
+				   event.getToolTip().add(TextFormatting.GRAY + firstDict.get(0).getDisplayName() + " - " + TextFormatting.WHITE + TextFormatting.BOLD + recipe.getQuantities().get(x) + "%" + TextFormatting.RESET + TextFormatting.RED + inhibit);
 				}
 			}
 		}

@@ -2,7 +2,7 @@ package com.globbypotato.rockhounding_chemistry.machines.gui;
 
 import java.util.List;
 
-import com.globbypotato.rockhounding_chemistry.enums.EnumEmitting;
+import com.globbypotato.rockhounding_chemistry.enums.utils.EnumEmitting;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.COPressureVessel;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TEPressureVessel;

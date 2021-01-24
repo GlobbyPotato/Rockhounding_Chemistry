@@ -1,7 +1,7 @@
 package com.globbypotato.rockhounding_chemistry.handlers;
 
 import com.globbypotato.rockhounding_chemistry.ModItems;
-import com.globbypotato.rockhounding_chemistry.enums.EnumChemicals;
+import com.globbypotato.rockhounding_chemistry.enums.materials.EnumChemicals;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;

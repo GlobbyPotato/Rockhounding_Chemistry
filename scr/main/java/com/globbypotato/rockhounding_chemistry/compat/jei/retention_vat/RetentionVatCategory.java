@@ -1,7 +1,7 @@
 package com.globbypotato.rockhounding_chemistry.compat.jei.retention_vat;
 
 import com.globbypotato.rockhounding_chemistry.compat.jei.RHRecipeCategory;
-import com.globbypotato.rockhounding_chemistry.enums.EnumFluid;
+import com.globbypotato.rockhounding_chemistry.enums.materials.EnumFluid;
 import com.globbypotato.rockhounding_chemistry.machines.gui.UIRetentionVat;
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 

@@ -3,9 +3,9 @@ package com.globbypotato.rockhounding_chemistry.machines.tile;
 import java.util.ArrayList;
 
 import com.globbypotato.rockhounding_chemistry.ModItems;
-import com.globbypotato.rockhounding_chemistry.enums.EnumFluid;
 import com.globbypotato.rockhounding_chemistry.enums.EnumMiscItems;
-import com.globbypotato.rockhounding_chemistry.enums.EnumServer;
+import com.globbypotato.rockhounding_chemistry.enums.materials.EnumFluid;
+import com.globbypotato.rockhounding_chemistry.enums.utils.EnumServer;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.RetentionVatRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.RetentionVatRecipe;

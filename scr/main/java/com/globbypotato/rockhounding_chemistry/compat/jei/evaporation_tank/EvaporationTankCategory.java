@@ -2,7 +2,7 @@ package com.globbypotato.rockhounding_chemistry.compat.jei.evaporation_tank;
 
 import com.globbypotato.rockhounding_chemistry.ModBlocks;
 import com.globbypotato.rockhounding_chemistry.compat.jei.RHRecipeCategory;
-import com.globbypotato.rockhounding_chemistry.enums.EnumMachinesA;
+import com.globbypotato.rockhounding_chemistry.enums.machines.EnumMachinesA;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_core.utils.CoreBasics;
 

@@ -1,8 +1,8 @@
 package com.globbypotato.rockhounding_chemistry.machines.tile;
 
 import com.globbypotato.rockhounding_chemistry.ModItems;
-import com.globbypotato.rockhounding_chemistry.enums.EnumChemicals;
-import com.globbypotato.rockhounding_chemistry.enums.EnumFluid;
+import com.globbypotato.rockhounding_chemistry.enums.materials.EnumChemicals;
+import com.globbypotato.rockhounding_chemistry.enums.materials.EnumFluid;
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.machines.tileentity.MachineStackHandler;
@@ -165,7 +165,7 @@ public class TECatalystRegen extends TileEntityTank {
 								regenCat(thisCat);
 							}
 						}else if(tile instanceof TEReformerController){
-							TileEntity reactor = this.world.getTileEntity(this.pos.offset(EnumFacing.UP, 2));
+							TileEntity reactor = this.world.getTileEntity(this.pos.up(2));
 							if(reactor != null){
 								TEReformerReactor served = (TEReformerReactor)reactor;
 								for(int x = 0; x < TEReformerReactor.totCatalysts; x++){
@@ -174,11 +174,20 @@ public class TECatalystRegen extends TileEntityTank {
 								}
 							}
 						}else if(tile instanceof TELabOvenChamber){
-							TileEntity reactor = this.world.getTileEntity(this.pos.offset(EnumFacing.UP, 2));
+							TileEntity reactor = this.world.getTileEntity(this.pos.up(2));
 							if(reactor != null){
 								TELabOvenController served = (TELabOvenController)reactor;
 								if(canRegen()){
 									ItemStack thisCat = served.catalystSlot();
+									regenCat(thisCat);
+								}
+							}
+						}else if(tile instanceof TETubularBedLow){
+							TileEntity reactor = this.world.getTileEntity(this.pos.up(2));
+							if(reactor != null){
+								TETubularBedLow served = (TETubularBedLow)reactor;
+								for(int x = 0; x < TETubularBedLow.SLOT_INPUTS.length; x++){
+									ItemStack thisCat = served.catalystSlot(x);
 									regenCat(thisCat);
 								}
 							}

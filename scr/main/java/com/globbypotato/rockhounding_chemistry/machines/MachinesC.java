@@ -7,7 +7,7 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import com.globbypotato.rockhounding_chemistry.Rhchemistry;
-import com.globbypotato.rockhounding_chemistry.enums.EnumMachinesC;
+import com.globbypotato.rockhounding_chemistry.enums.machines.EnumMachinesC;
 import com.globbypotato.rockhounding_chemistry.handlers.GuiHandler;
 import com.globbypotato.rockhounding_chemistry.machines.io.MachineIO;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TEElementsCabinetBase;

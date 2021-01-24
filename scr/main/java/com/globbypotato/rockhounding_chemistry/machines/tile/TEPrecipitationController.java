@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.globbypotato.rockhounding_chemistry.ModItems;
 import com.globbypotato.rockhounding_chemistry.enums.EnumMiscItems;
-import com.globbypotato.rockhounding_chemistry.enums.EnumServer;
+import com.globbypotato.rockhounding_chemistry.enums.utils.EnumServer;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.PrecipitationRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.PrecipitationRecipe;
@@ -464,6 +464,10 @@ public class TEPrecipitationController extends TileEntityInv implements IInterna
 		if(!catalystSlot().isEmpty()){
 			int unbreakingLevel = CoreUtils.getEnchantmentLevel(Enchantments.UNBREAKING, catalystSlot());
 			this.input.damageUnbreakingSlot(unbreakingLevel, CATALYST_SLOT);
+
+			if(CoreUtils.hasMending(catalystSlot()) && this.rand.nextInt(CoreUtils.mendingFactor) == 0) {
+				this.input.repairMendingSlot(CATALYST_SLOT);
+			}
 		}
 
 		if(!soluteSlot().isEmpty()){

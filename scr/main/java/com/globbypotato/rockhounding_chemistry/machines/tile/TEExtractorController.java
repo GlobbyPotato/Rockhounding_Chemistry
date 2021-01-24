@@ -3,11 +3,11 @@ package com.globbypotato.rockhounding_chemistry.machines.tile;
 import java.util.ArrayList;
 
 import com.globbypotato.rockhounding_chemistry.ModItems;
-import com.globbypotato.rockhounding_chemistry.enums.EnumElements;
-import com.globbypotato.rockhounding_chemistry.enums.EnumFluid;
 import com.globbypotato.rockhounding_chemistry.enums.EnumMiscBlocksA;
 import com.globbypotato.rockhounding_chemistry.enums.EnumMiscItems;
-import com.globbypotato.rockhounding_chemistry.enums.EnumServer;
+import com.globbypotato.rockhounding_chemistry.enums.materials.EnumElements;
+import com.globbypotato.rockhounding_chemistry.enums.materials.EnumFluid;
+import com.globbypotato.rockhounding_chemistry.enums.utils.EnumServer;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.machines.io.MachineIO;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.ChemicalExtractorRecipes;
@@ -544,7 +544,7 @@ public class TEExtractorController extends TileEntityInv implements IInternalSer
 					if(recipeDust.contains(EnumElements.getDust(y))){
 						boolean isInhibited = false;
 						for(int ix = 0; ix < inhibitedList().size(); ix++){
-							if(recipeDust.matches(inhibitedList().get(ix))){
+							if(recipeDust.toLowerCase().matches(inhibitedList().get(ix).toLowerCase())){
 								isInhibited = true;
 							}
 						}
@@ -570,7 +570,7 @@ public class TEExtractorController extends TileEntityInv implements IInternalSer
 					if(recipeDust.contains(materialList().get(y).getOredict())){
 						boolean isInhibited = false;
 						for(int ix = 0; ix < inhibitedList().size(); ix++){
-							if(recipeDust.matches(inhibitedList().get(ix))){
+							if(recipeDust.toLowerCase().matches(inhibitedList().get(ix).toLowerCase())){
 								isInhibited = true;
 							}
 						}
@@ -601,11 +601,22 @@ public class TEExtractorController extends TileEntityInv implements IInternalSer
 			}
 	
 			int unbreakingLevel = 0;
-			unbreakingLevel = CoreUtils.getEnchantmentLevel(Enchantments.UNBREAKING, getInjector().tubeSlot());
-			((MachineStackHandler)getInjector().getInput()).damageUnbreakingSlot(unbreakingLevel, TEExtractorInjector.TUBE_SLOT);
-	
-			unbreakingLevel = CoreUtils.getEnchantmentLevel(Enchantments.UNBREAKING, getInjector().cylinderSlot());
-			((MachineStackHandler)getInjector().getInput()).damageUnbreakingSlot(unbreakingLevel, TEExtractorInjector.CYLINDER_SLOT);
+			if(!getInjector().tubeSlot().isEmpty()){
+				unbreakingLevel = CoreUtils.getEnchantmentLevel(Enchantments.UNBREAKING, getInjector().tubeSlot());
+				((MachineStackHandler)getInjector().getInput()).damageUnbreakingSlot(unbreakingLevel, TEExtractorInjector.TUBE_SLOT);
+
+				if(CoreUtils.hasMending(getInjector().tubeSlot()) && this.rand.nextInt(CoreUtils.mendingFactor) == 0) {
+					((MachineStackHandler)getInjector().getInput()).repairMendingSlot(TEExtractorInjector.TUBE_SLOT);
+				}
+			}
+			if(!getInjector().cylinderSlot().isEmpty()){
+				unbreakingLevel = CoreUtils.getEnchantmentLevel(Enchantments.UNBREAKING, getInjector().cylinderSlot());
+				((MachineStackHandler)getInjector().getInput()).damageUnbreakingSlot(unbreakingLevel, TEExtractorInjector.CYLINDER_SLOT);
+
+				if(CoreUtils.hasMending(getInjector().cylinderSlot()) && this.rand.nextInt(CoreUtils.mendingFactor) == 0) {
+					((MachineStackHandler)getInjector().getInput()).repairMendingSlot(TEExtractorInjector.CYLINDER_SLOT);
+				}
+			}
 	
 			this.input.decrementSlot(INPUT_SLOT);
 	
@@ -619,12 +630,24 @@ public class TEExtractorController extends TileEntityInv implements IInternalSer
 		if(isValidRecipe() && hasStabilizer()){
 			for(int x = 0; x < TEExtractorStabilizer.SLOT_INPUTS.length; x++){
 				if(!getStabilizer().catSlot(x).isEmpty()){
-					int unbreakingLevel = CoreUtils.getEnchantmentLevel(Enchantments.UNBREAKING, getStabilizer().catSlot(x));
-					((MachineStackHandler) getStabilizer().getInput()).damageUnbreakingSlot(unbreakingLevel, x);
+					
+					damageOrRepairConsumable(x);
+
 				}
 			}
 		}
 	}
+
+	private void damageOrRepairConsumable(int cats) {
+		int unbreakingLevel = CoreUtils.getEnchantmentLevel(Enchantments.UNBREAKING, getStabilizer().catSlot(cats));
+		((MachineStackHandler)getStabilizer().getInput()).damageUnbreakingSlot(unbreakingLevel, cats);
+
+		if(CoreUtils.hasMending(getStabilizer().catSlot(cats)) && this.rand.nextInt(CoreUtils.mendingFactor) == 0) {
+			((MachineStackHandler)getStabilizer().getInput()).repairMendingSlot(cats);
+		}
+	}
+
+
 
 	//----------------------- SERVER -----------------------
 	//if there is any file with remaining recipes, get its slot

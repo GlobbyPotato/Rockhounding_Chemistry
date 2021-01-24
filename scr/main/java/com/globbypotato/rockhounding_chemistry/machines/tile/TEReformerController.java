@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.globbypotato.rockhounding_chemistry.ModItems;
 import com.globbypotato.rockhounding_chemistry.enums.EnumMiscBlocksA;
 import com.globbypotato.rockhounding_chemistry.enums.EnumMiscItems;
-import com.globbypotato.rockhounding_chemistry.enums.EnumServer;
+import com.globbypotato.rockhounding_chemistry.enums.utils.EnumServer;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.machines.io.MachineIO;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.GasReformerRecipes;
@@ -537,8 +537,9 @@ public class TEReformerController extends TileEntityInv implements IInternalServ
 
 			if(hasReactor()){
 				for(int cats = 0; cats < TEReformerReactor.totCatalysts; cats++){
-					int unbreakingLevel = CoreUtils.getEnchantmentLevel(Enchantments.UNBREAKING, getReactor().inputSlot(cats));
-					((MachineStackHandler)getReactor().getInput()).damageUnbreakingSlot(unbreakingLevel, cats);
+					
+					damageOrRepairConsumable(cats);
+
 				}
 			}
 
@@ -555,6 +556,15 @@ public class TEReformerController extends TileEntityInv implements IInternalServ
 		
 		this.dummyRecipe = null;
 
+	}
+
+	private void damageOrRepairConsumable(int cats) {
+		int unbreakingLevel = CoreUtils.getEnchantmentLevel(Enchantments.UNBREAKING, getReactor().inputSlot(cats));
+		((MachineStackHandler)getReactor().getInput()).damageUnbreakingSlot(unbreakingLevel, cats);
+
+		if(CoreUtils.hasMending(getReactor().inputSlot(cats)) && this.rand.nextInt(CoreUtils.mendingFactor) == 0) {
+			((MachineStackHandler)getReactor().getInput()).repairMendingSlot(cats);
+		}
 	}
 
 	private void handlePurge() {

@@ -7,11 +7,11 @@ import com.globbypotato.rockhounding_chemistry.enums.EnumAlloyGems;
 import com.globbypotato.rockhounding_chemistry.enums.EnumAlloyPart;
 import com.globbypotato.rockhounding_chemistry.enums.EnumAlloyTech;
 import com.globbypotato.rockhounding_chemistry.enums.EnumAlloyTechB;
-import com.globbypotato.rockhounding_chemistry.enums.EnumChemicals;
-import com.globbypotato.rockhounding_chemistry.enums.EnumElements;
 import com.globbypotato.rockhounding_chemistry.enums.EnumMetalItems;
 import com.globbypotato.rockhounding_chemistry.enums.EnumMiscBlocksA;
 import com.globbypotato.rockhounding_chemistry.enums.EnumMiscItems;
+import com.globbypotato.rockhounding_chemistry.enums.materials.EnumChemicals;
+import com.globbypotato.rockhounding_chemistry.enums.materials.EnumElements;
 import com.globbypotato.rockhounding_chemistry.enums.shards.EnumNative;
 
 import net.minecraft.item.ItemStack;

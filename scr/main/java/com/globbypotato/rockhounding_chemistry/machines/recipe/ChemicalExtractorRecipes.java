@@ -3,8 +3,8 @@ package com.globbypotato.rockhounding_chemistry.machines.recipe;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import com.globbypotato.rockhounding_chemistry.enums.EnumElements;
-import com.globbypotato.rockhounding_chemistry.enums.EnumMinerals;
+import com.globbypotato.rockhounding_chemistry.enums.materials.EnumElements;
+import com.globbypotato.rockhounding_chemistry.enums.materials.EnumMinerals;
 import com.globbypotato.rockhounding_chemistry.enums.shards.EnumAntimonate;
 import com.globbypotato.rockhounding_chemistry.enums.shards.EnumArsenate;
 import com.globbypotato.rockhounding_chemistry.enums.shards.EnumBorate;
@@ -627,7 +627,7 @@ public class ChemicalExtractorRecipes extends BaseRecipes{
 																							element(EnumElements.ALUMINUM), 
 																							element(EnumElements.IRON)),
 																			Arrays.asList(19,14,10,6,6)));
-		
+
 		extractor_recipes.add(new ChemicalExtractorRecipe(getText(EnumMinerals.SILICATE), silicate_stack(1, EnumSilicate.GADOLINITE),
 																			Arrays.asList(	element(EnumElements.YTTRIUM),
 																							element(EnumElements.IRON), 
@@ -653,7 +653,7 @@ public class ChemicalExtractorRecipes extends BaseRecipes{
 																							element(EnumElements.IRON),
 																							element(EnumElements.MAGNESIUM)), 
 																			Arrays.asList(25,12,6,5,5,3)));
-		
+
 		extractor_recipes.add(new ChemicalExtractorRecipe(getText(EnumMinerals.SILICATE), silicate_stack(1, EnumSilicate.MAGBASITE), 
 																			Arrays.asList(	element(EnumElements.SILICON),
 																							element(EnumElements.IRON), 
@@ -662,7 +662,7 @@ public class ChemicalExtractorRecipes extends BaseRecipes{
 																							element(EnumElements.SCANDIUM), 
 																							element(EnumElements.ALUMINUM)), 
 																			Arrays.asList(18,12,10,4,2,2)));
-		
+
 		extractor_recipes.add(new ChemicalExtractorRecipe(getText(EnumMinerals.SILICATE), silicate_stack(1, EnumSilicate.MOSKVINITE), 
 																			Arrays.asList(	element(EnumElements.SILICON),
 																							element(EnumElements.YTTRIUM),
@@ -680,7 +680,7 @@ public class ChemicalExtractorRecipes extends BaseRecipes{
 																							element(EnumElements.ALUMINUM), 
 																							element(EnumElements.LITHIUM)),
 																			Arrays.asList(22,22,6)));
-		
+
 		extractor_recipes.add(new ChemicalExtractorRecipe(getText(EnumMinerals.SILICATE), silicate_stack(1, EnumSilicate.STEACYITE), 
 																			Arrays.asList(	element(EnumElements.SILICON), 
 																							element(EnumElements.THORIUM), 
@@ -689,21 +689,21 @@ public class ChemicalExtractorRecipes extends BaseRecipes{
 																							element(EnumElements.SODIUM),
 																							element(EnumElements.MANGANESE)),
 																			Arrays.asList(27,25,4,2,2,1)));
-		
+
 		extractor_recipes.add(new ChemicalExtractorRecipe(getText(EnumMinerals.SILICATE), silicate_stack(1, EnumSilicate.MANANDONITE), 
 																			Arrays.asList(	element(EnumElements.ALUMINUM), 
 																							element(EnumElements.SILICON),
 																							element(EnumElements.LITHIUM), 
 																							element(EnumElements.BORON)), 
 																			Arrays.asList(26,11,3,2)));
-		
+
 		extractor_recipes.add(new ChemicalExtractorRecipe(getText(EnumMinerals.SILICATE), silicate_stack(1, EnumSilicate.VISTEPITE), 
 																			Arrays.asList(	element(EnumElements.MANGANESE),
 																							element(EnumElements.TIN),
 																							element(EnumElements.PLATINUM),
 																							element(EnumElements.BORON)), 
 																			Arrays.asList(29,16,15,3)));
-		
+
 		extractor_recipes.add(new ChemicalExtractorRecipe(getText(EnumMinerals.SILICATE), silicate_stack(1, EnumSilicate.KHRISTOVITE), 
 																			Arrays.asList(	element(EnumElements.SILICON), 
 																							element(EnumElements.CERIUM),
@@ -719,13 +719,13 @@ public class ChemicalExtractorRecipes extends BaseRecipes{
 																							element(EnumElements.CHROMIUM), 
 																							element(EnumElements.IRON)), 
 																			Arrays.asList(14,12,9,5,5,4,4,4,4,2,1,1,1)));
-		
+
 		extractor_recipes.add(new ChemicalExtractorRecipe(getText(EnumMinerals.SILICATE), silicate_stack(1, EnumSilicate.CAVANSITE), 
 																			Arrays.asList(	element(EnumElements.SILICON), 
 																							element(EnumElements.VANADIUM), 
 																							element(EnumElements.CALCIUM)), 
 																			Arrays.asList(25,11,9)));
-		
+
 		extractor_recipes.add(new ChemicalExtractorRecipe(getText(EnumMinerals.SILICATE), silicate_stack(1, EnumSilicate.PHENAKITE), 
 																			Arrays.asList(	element(EnumElements.SILICON), 
 																							element(EnumElements.BERYLLIUM)), 
@@ -760,6 +760,19 @@ public class ChemicalExtractorRecipes extends BaseRecipes{
 																							element(EnumElements.SODIUM)), 
 																			Arrays.asList(28,17,10)));
 
+		extractor_recipes.add(new ChemicalExtractorRecipe(getText(EnumMinerals.SILICATE), silicate_stack(1, EnumSilicate.FUCHSITE), 
+																			Arrays.asList(	element(EnumElements.SILICON), 
+																							element(EnumElements.ALUMINUM),
+																							element(EnumElements.POTASSIUM),
+																							element(EnumElements.CHROMIUM)), 
+																			Arrays.asList(21,15,10,5)));
+
+		extractor_recipes.add(new ChemicalExtractorRecipe(getText(EnumMinerals.SILICATE), silicate_stack(1, EnumSilicate.MUSCOVITE), 
+																			Arrays.asList(	element(EnumElements.SILICON), 
+																							element(EnumElements.ALUMINUM),
+																							element(EnumElements.POTASSIUM)), 
+																			Arrays.asList(21,20,10)));
+
 		extractor_recipes.add(new ChemicalExtractorRecipe(getText(EnumMinerals.SULFATE), sulfate_stack(1, EnumSulfate.ALUNITE), 
 																			Arrays.asList(	element(EnumElements.ALUMINUM), 
 																							element(EnumElements.SULFUR),
@@ -771,13 +784,13 @@ public class ChemicalExtractorRecipes extends BaseRecipes{
 																							element(EnumElements.SULFUR), 
 																							element(EnumElements.POTASSIUM)), 
 																			Arrays.asList(33,17,14)));
-		
+
 		extractor_recipes.add(new ChemicalExtractorRecipe(getText(EnumMinerals.SULFATE), sulfate_stack(1, EnumSulfate.JAROSITE), 
 																			Arrays.asList(	element(EnumElements.IRON), 
 																							element(EnumElements.SULFUR),
 																							element(EnumElements.POTASSIUM)), 
 																			Arrays.asList(33,13,8)));
-		
+
 		extractor_recipes.add(new ChemicalExtractorRecipe(getText(EnumMinerals.SULFATE), sulfate_stack(1, EnumSulfate.GUARINOITE), 
 																			Arrays.asList(	element(EnumElements.ZINC), 
 																							element(EnumElements.COBALT), 
@@ -791,52 +804,50 @@ public class ChemicalExtractorRecipes extends BaseRecipes{
 																							element(EnumElements.CHROMIUM), 
 																							element(EnumElements.ALUMINUM)), 
 																			Arrays.asList(19,7,6,1)));
-		
+
 		extractor_recipes.add(new ChemicalExtractorRecipe(getText(EnumMinerals.SULFATE), sulfate_stack(1, EnumSulfate.APLOWITE), 
 																			Arrays.asList(	element(EnumElements.COBALT),
 																							element(EnumElements.SULFUR),
 																							element(EnumElements.MANGANESE),
 																							element(EnumElements.NICKEL)),
 																			Arrays.asList(16,14,7,3)));
-		
+
 		extractor_recipes.add(new ChemicalExtractorRecipe(getText(EnumMinerals.SULFATE), sulfate_stack(1, EnumSulfate.BIEBERITE), 
 																			Arrays.asList(	element(EnumElements.COBALT), 
 																							element(EnumElements.SULFUR)), 
 																			Arrays.asList(21,11)));
-		
+
 		extractor_recipes.add(new ChemicalExtractorRecipe(getText(EnumMinerals.SULFATE), sulfate_stack(1, EnumSulfate.SCHEELITE), 
 																			Arrays.asList(	element(EnumElements.TUNGSTEN), 
 																							element(EnumElements.CALCIUM)), 
 																			Arrays.asList(64,14)));
-		
+
 		extractor_recipes.add(new ChemicalExtractorRecipe(getText(EnumMinerals.SULFATE), sulfate_stack(1, EnumSulfate.STOLZITE), 
 																			Arrays.asList(	element(EnumElements.LEAD), 
 																							element(EnumElements.TUNGSTEN)), 
 																			Arrays.asList(46,40)));
-		
+
 		extractor_recipes.add(new ChemicalExtractorRecipe(getText(EnumMinerals.SULFATE), sulfate_stack(1, EnumSulfate.KAMCHATKITE), 
 																			Arrays.asList(	element(EnumElements.COPPER), 
 																							element(EnumElements.SULFUR), 
 																							element(EnumElements.POTASSIUM)), 
 																			Arrays.asList(40,13,8)));
-		
+
 		extractor_recipes.add(new ChemicalExtractorRecipe(getText(EnumMinerals.SULFATE), sulfate_stack(1, EnumSulfate.CHILUITE), 
 																			Arrays.asList(	element(EnumElements.BISMUTH), 
 																							element(EnumElements.TELLURIUM), 
 																							element(EnumElements.MOLYBDENUM)), 
 																			Arrays.asList(61,12,10)));
-															
+
 		extractor_recipes.add(new ChemicalExtractorRecipe(getText(EnumMinerals.SULFATE), sulfate_stack(1, EnumSulfate.POWELLITE), 
 																			Arrays.asList(	element(EnumElements.MOLYBDENUM), 
 																							element(EnumElements.CALCIUM)), 
 																			Arrays.asList(48,20)));
 
-		
 		extractor_recipes.add(new ChemicalExtractorRecipe(getText(EnumMinerals.SULFATE), sulfate_stack(1, EnumSulfate.SEDOVITE), 
 																			Arrays.asList(	element(EnumElements.YELLOWCAKE), 
 																							element(EnumElements.MOLYBDENUM)), 
 																			Arrays.asList(43,34)));
-
 
 		extractor_recipes.add(new ChemicalExtractorRecipe(getText(EnumMinerals.SULFIDE), sulfide_stack(1, EnumSulfide.ABRAMOVITE), 
 																			Arrays.asList(	element(EnumElements.LEAD),
@@ -844,25 +855,25 @@ public class ChemicalExtractorRecipes extends BaseRecipes{
 																							element(EnumElements.BISMUTH), 
 																							element(EnumElements.TIN)),
 																			Arrays.asList(37,21,17,12)));
-		
+
 		extractor_recipes.add(new ChemicalExtractorRecipe(getText(EnumMinerals.SULFIDE), sulfide_stack(1, EnumSulfide.AIKINITE), 
 																			Arrays.asList(	element(EnumElements.BISMUTH),
 																							element(EnumElements.LEAD),
 																							element(EnumElements.SULFUR), 
 																							element(EnumElements.COPPER)), 
 																			Arrays.asList(36,36,17,11)));
-		
+
 		extractor_recipes.add(new ChemicalExtractorRecipe(getText(EnumMinerals.SULFIDE), sulfide_stack(1, EnumSulfide.BALKANITE),
 																			Arrays.asList(	element(EnumElements.BISMUTH),
 																							element(EnumElements.SILVER),
 																							element(EnumElements.SULFUR)), 
 																			Arrays.asList(36,35,16)));
-		
+
 		extractor_recipes.add(new ChemicalExtractorRecipe(getText(EnumMinerals.SULFIDE), sulfide_stack(1, EnumSulfide.GALENA), 
 																			Arrays.asList(	element(EnumElements.LEAD), 
 																							element(EnumElements.SULFUR)), 
 																			Arrays.asList(88,12)));
-		
+
 		extractor_recipes.add(new ChemicalExtractorRecipe(getText(EnumMinerals.SULFIDE), sulfide_stack(1, EnumSulfide.KESTERITE), 
 																			Arrays.asList(	element(EnumElements.TIN), 
 																							element(EnumElements.COPPER), 
@@ -870,18 +881,18 @@ public class ChemicalExtractorRecipes extends BaseRecipes{
 																							element(EnumElements.ZINC), 
 																							element(EnumElements.IRON)),
 																			Arrays.asList(32,27,27,10,3)));
-		
+
 		extractor_recipes.add(new ChemicalExtractorRecipe(getText(EnumMinerals.SULFIDE), sulfide_stack(1, EnumSulfide.PENTLANDITE),
 																			Arrays.asList(	element(EnumElements.NICKEL), 
 																							element(EnumElements.IRON),
 																							element(EnumElements.SULFUR)),
 																			Arrays.asList(37,33,33)));
-		
+
 		extractor_recipes.add(new ChemicalExtractorRecipe(getText(EnumMinerals.SULFIDE), sulfide_stack(1, EnumSulfide.PYRITE), 
 																			Arrays.asList(	element(EnumElements.SULFUR), 
 																							element(EnumElements.IRON)), 
 																			Arrays.asList(53,47)));
-		
+
 		extractor_recipes.add(new ChemicalExtractorRecipe(getText(EnumMinerals.SULFIDE), sulfide_stack(1, EnumSulfide.STANNITE), 
 																			Arrays.asList(	element(EnumElements.SULFUR),
 																							element(EnumElements.COPPER), 
@@ -889,7 +900,7 @@ public class ChemicalExtractorRecipes extends BaseRecipes{
 																							element(EnumElements.IRON),
 																							element(EnumElements.ZINC)), 
 																			Arrays.asList(30,30,28,10,2)));
-		
+
 		extractor_recipes.add(new ChemicalExtractorRecipe(getText(EnumMinerals.SULFIDE), sulfide_stack(1, EnumSulfide.VALLERIITE), 
 																			Arrays.asList(	element(EnumElements.IRON), 
 																							element(EnumElements.SULFUR), 
@@ -897,13 +908,13 @@ public class ChemicalExtractorRecipes extends BaseRecipes{
 																							element(EnumElements.MAGNESIUM), 
 																							element(EnumElements.ALUMINUM)), 
 																			Arrays.asList(26,26,24,9,7)));
-		
+
 		extractor_recipes.add(new ChemicalExtractorRecipe(getText(EnumMinerals.SULFIDE), sulfide_stack(1, EnumSulfide.SPHALERITE), 
 																			Arrays.asList(	element(EnumElements.ZINC), 
 																							element(EnumElements.SULFUR),
 																							element(EnumElements.IRON)), 
 																			Arrays.asList(64,33,3)));
-		
+
 		extractor_recipes.add(new ChemicalExtractorRecipe(getText(EnumMinerals.SULFIDE), sulfide_stack(1, EnumSulfide.PETRUKITE), 
 																			Arrays.asList(	element(EnumElements.SULFUR),
 																							element(EnumElements.TIN), 
@@ -1021,6 +1032,5 @@ public class ChemicalExtractorRecipes extends BaseRecipes{
 																							element(EnumElements.NICKEL)), 
 																			Arrays.asList(18,17,8,2)));
 	}
-
 
 }

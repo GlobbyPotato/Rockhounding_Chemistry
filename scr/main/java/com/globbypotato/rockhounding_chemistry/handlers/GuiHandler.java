@@ -59,6 +59,8 @@ import com.globbypotato.rockhounding_chemistry.machines.container.COSlurryPond;
 import com.globbypotato.rockhounding_chemistry.machines.container.COStirredTankOut;
 import com.globbypotato.rockhounding_chemistry.machines.container.COStirredTankTop;
 import com.globbypotato.rockhounding_chemistry.machines.container.COTransposer;
+import com.globbypotato.rockhounding_chemistry.machines.container.COTubularBedLow;
+import com.globbypotato.rockhounding_chemistry.machines.container.COTubularBedController;
 import com.globbypotato.rockhounding_chemistry.machines.container.COWasteDumper;
 import com.globbypotato.rockhounding_chemistry.machines.gui.UIAirCompressor;
 import com.globbypotato.rockhounding_chemistry.machines.gui.UIBufferTank;
@@ -119,6 +121,8 @@ import com.globbypotato.rockhounding_chemistry.machines.gui.UISlurryPond;
 import com.globbypotato.rockhounding_chemistry.machines.gui.UIStirredTankOut;
 import com.globbypotato.rockhounding_chemistry.machines.gui.UIStirredTankTop;
 import com.globbypotato.rockhounding_chemistry.machines.gui.UITransposer;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UITubularBedLow;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UITubularBedController;
 import com.globbypotato.rockhounding_chemistry.machines.gui.UIWasteDumper;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TEAirCompressor;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TEBufferTank;
@@ -179,6 +183,8 @@ import com.globbypotato.rockhounding_chemistry.machines.tile.TESlurryPond;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TEStirredTankOut;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TEStirredTankTop;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TETransposer;
+import com.globbypotato.rockhounding_chemistry.machines.tile.TETubularBedLow;
+import com.globbypotato.rockhounding_chemistry.machines.tile.TETubularBedController;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TEWasteDumper;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -252,6 +258,9 @@ public class GuiHandler implements IGuiHandler {
 	public static final int stirred_tank_out_id = 70;
 	public static final int precipitation_chamber_id = 71;
 	public static final int precipitation_controller_id = 72;
+
+	public static final int tubular_bed_mid_id = 81;
+	public static final int tubular_bed_monitor_id = 82;
 
 	public static final int pipeline_valve_ID = 100;
 
@@ -439,6 +448,12 @@ public class GuiHandler implements IGuiHandler {
 				break;
 			case precipitation_controller_id:
 				if (entity != null && entity instanceof TEPrecipitationController){return new COPrecipitationController(player.inventory, (TEPrecipitationController) entity);}
+				break;
+			case tubular_bed_mid_id:
+				if (entity != null && entity instanceof TETubularBedLow){return new COTubularBedLow(player.inventory, (TETubularBedLow) entity);}
+				break;
+			case tubular_bed_monitor_id:
+				if (entity != null && entity instanceof TETubularBedController){return new COTubularBedController(player.inventory, (TETubularBedController) entity);}
 				break;
 		}
         return null;
@@ -628,6 +643,12 @@ public class GuiHandler implements IGuiHandler {
 				break;
 			case precipitation_controller_id:
 				if (entity != null && entity instanceof TEPrecipitationController){return new UIPrecipitationController(player.inventory, (TEPrecipitationController) entity);}
+				break;
+			case tubular_bed_mid_id:
+				if (entity != null && entity instanceof TETubularBedLow){return new UITubularBedLow(player.inventory, (TETubularBedLow) entity);}
+				break;
+			case tubular_bed_monitor_id:
+				if (entity != null && entity instanceof TETubularBedController){return new UITubularBedController(player.inventory, (TETubularBedController) entity);}
 				break;
 		}
         return null;

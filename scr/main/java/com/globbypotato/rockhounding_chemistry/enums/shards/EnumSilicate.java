@@ -18,7 +18,9 @@ public enum EnumSilicate {
 	CALDERITE,//408
 	HUTTONITE,//7.1
 	ZIRCON,//465
-	KELDYSHITE;//3.3 PULP
+	KELDYSHITE,
+	FUCHSITE,//2.85
+	MUSCOVITE; //2.90
 
 	public static String[] getNames(){
 		String[] temp = new String[size()];

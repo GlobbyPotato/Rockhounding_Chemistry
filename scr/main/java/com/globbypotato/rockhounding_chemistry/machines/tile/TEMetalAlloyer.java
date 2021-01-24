@@ -3,9 +3,9 @@ package com.globbypotato.rockhounding_chemistry.machines.tile;
 import java.util.ArrayList;
 
 import com.globbypotato.rockhounding_chemistry.ModItems;
-import com.globbypotato.rockhounding_chemistry.enums.EnumElements;
 import com.globbypotato.rockhounding_chemistry.enums.EnumMiscItems;
-import com.globbypotato.rockhounding_chemistry.enums.EnumServer;
+import com.globbypotato.rockhounding_chemistry.enums.materials.EnumElements;
+import com.globbypotato.rockhounding_chemistry.enums.utils.EnumServer;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.MaterialCabinetRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.MetalAlloyerRecipes;
@@ -307,6 +307,7 @@ public class TEMetalAlloyer extends TileEntityInv implements IInternalServer{
 			&& hasFuelPower()
 			&& hasPattern()
 			&& canOutput()
+			&& hasCabinet() && hasMaterial()
 			&& handleServer(hasServer(), getServer(), this.currentFile); //server
 	}
 
@@ -321,23 +322,25 @@ public class TEMetalAlloyer extends TileEntityInv implements IInternalServer{
 			int unbreakingLevel = CoreUtils.getEnchantmentLevel(Enchantments.UNBREAKING, patternSlot());
 			this.input.damageUnbreakingSlot(unbreakingLevel, PATTERN_SLOT);
 	
-			for(int ingredient = 0; ingredient < getDummyRecipe().getInputs().size(); ingredient++){
-				String ingrOredict = getDummyRecipe().getInputs().get(ingredient);
-				int ingrQuantity = getDummyRecipe().getQuantities().get(ingredient);
-				for(int element = 0; element < getCabinet().elementList.length; element++){
-					if(EnumElements.getDust(element).matches(ingrOredict)){
-						getCabinet().elementList[element] -= ingrQuantity;
+			if(hasCabinet() && hasMaterial()){
+				for(int ingredient = 0; ingredient < getDummyRecipe().getInputs().size(); ingredient++){
+					String ingrOredict = getDummyRecipe().getInputs().get(ingredient);
+					int ingrQuantity = getDummyRecipe().getQuantities().get(ingredient);
+					for(int element = 0; element < getCabinet().elementList.length; element++){
+						if(EnumElements.getDust(element).matches(ingrOredict)){
+							getCabinet().elementList[element] -= ingrQuantity;
+						}
+					}
+					for(int element = 0; element < materialList().size(); element++){
+						if(getMaterialList(element).getOredict().matches(ingrOredict)){
+							getMaterial().elementList[element] -= ingrQuantity;
+						}
 					}
 				}
-				for(int element = 0; element < materialList().size(); element++){
-					if(getMaterialList(element).getOredict().matches(ingrOredict)){
-						getMaterial().elementList[element] -= ingrQuantity;
-					}
-				}
+				getCabinet().markDirtyClient();
+				getMaterial().markDirtyClient();
 			}
-			getCabinet().markDirtyClient();
-			getMaterial().markDirtyClient();
-	
+
 			updateServer(hasServer(), getServer(), this.currentFile);
 		}
 		this.dummyRecipe = null;

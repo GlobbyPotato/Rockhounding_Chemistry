@@ -1,8 +1,8 @@
 package com.globbypotato.rockhounding_chemistry.machines.render;
 
 import com.globbypotato.rockhounding_chemistry.ModBlocks;
-import com.globbypotato.rockhounding_chemistry.enums.EnumCasting;
 import com.globbypotato.rockhounding_chemistry.enums.EnumMiscBlocksA;
+import com.globbypotato.rockhounding_chemistry.enums.utils.EnumCasting;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TEProfilingBench;
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityInv;

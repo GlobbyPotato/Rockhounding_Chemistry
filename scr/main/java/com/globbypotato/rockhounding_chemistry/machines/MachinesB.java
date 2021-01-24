@@ -8,7 +8,7 @@ import javax.annotation.Nullable;
 
 import com.globbypotato.rockhounding_chemistry.ModBlocks;
 import com.globbypotato.rockhounding_chemistry.Rhchemistry;
-import com.globbypotato.rockhounding_chemistry.enums.EnumMachinesB;
+import com.globbypotato.rockhounding_chemistry.enums.machines.EnumMachinesB;
 import com.globbypotato.rockhounding_chemistry.fluids.ModFluids;
 import com.globbypotato.rockhounding_chemistry.handlers.GuiHandler;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
@@ -365,6 +365,21 @@ public class MachinesB extends MachineIO {
 				if(meta == EnumMachinesB.GAS_PURIFIER.ordinal()){
 		    		player.openGui(Rhchemistry.instance, GuiHandler.gasifier_purifier_id, world, pos.getX(), pos.getY(), pos.getZ());
 				}
+				if(meta == EnumMachinesB.PURIFIER_CYCLONE_BASE.ordinal()){
+					if(world.getTileEntity(pos.down(1)) != null && world.getTileEntity(pos.down(1)) instanceof TEGasPurifier){
+			    		player.openGui(Rhchemistry.instance, GuiHandler.gasifier_purifier_id, world, pos.getX(), pos.getY() - 1, pos.getZ());
+					}
+				}
+				if(meta == EnumMachinesB.PURIFIER_CYCLONE_TOP.ordinal()){
+					if(world.getTileEntity(pos.down(2)) != null && world.getTileEntity(pos.down(2)) instanceof TEGasPurifier){
+			    		player.openGui(Rhchemistry.instance, GuiHandler.gasifier_purifier_id, world, pos.getX(), pos.getY() - 2, pos.getZ());
+					}
+				}
+				if(meta == EnumMachinesB.PURIFIER_CYCLONE_CAP.ordinal()){
+					if(world.getTileEntity(pos.down(3)) != null && world.getTileEntity(pos.down(3)) instanceof TEGasPurifier){
+			    		player.openGui(Rhchemistry.instance, GuiHandler.gasifier_purifier_id, world, pos.getX(), pos.getY() - 3, pos.getZ());
+					}
+				}
 				if(meta == EnumMachinesB.PARTICULATE_COLLECTOR.ordinal()){
 		    		player.openGui(Rhchemistry.instance, GuiHandler.particulate_collector_id, world, pos.getX(), pos.getY(), pos.getZ());
 				}
@@ -378,7 +393,9 @@ public class MachinesB extends MachineIO {
 		    		player.openGui(Rhchemistry.instance, GuiHandler.gan_exchanger_base_id, world, pos.getX(), pos.getY(), pos.getZ());
 				}
 				if(meta == EnumMachinesB.HEAT_EXCHANGER_TOP.ordinal()){
-		    		player.openGui(Rhchemistry.instance, GuiHandler.gan_exchanger_base_id, world, pos.getX(), pos.getY() - 1, pos.getZ());
+					if(world.getTileEntity(pos.down(1)) != null && world.getTileEntity(pos.down(1)) instanceof TEHeatExchangerBase){
+						player.openGui(Rhchemistry.instance, GuiHandler.gan_exchanger_base_id, world, pos.getX(), pos.getY() - 1, pos.getZ());
+					}
 				}
 				if(meta == EnumMachinesB.GAS_PURIFIER.ordinal()){
 		    		player.openGui(Rhchemistry.instance, GuiHandler.gasifier_purifier_id, world, pos.getX(), pos.getY(), pos.getZ());

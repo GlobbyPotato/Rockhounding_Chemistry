@@ -2,7 +2,7 @@ package com.globbypotato.rockhounding_chemistry.machines.recipe;
 
 import java.util.ArrayList;
 
-import com.globbypotato.rockhounding_chemistry.enums.EnumFluid;
+import com.globbypotato.rockhounding_chemistry.enums.materials.EnumFluid;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.PollutantFluidRecipe;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.PollutantGasRecipe;
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
@@ -20,7 +20,9 @@ public class PollutantRecipes extends BaseRecipes{
 		pollutant_fluids.add(CoreUtils.getFluid(EnumFluid.TOXIC_WASTE.getFluidName(), 1000));
 		pollutant_fluids.add(CoreUtils.getFluid(EnumFluid.TOXIC_SLUDGE.getFluidName(), 1000));
 		pollutant_fluids.add(CoreUtils.getFluid(EnumFluid.NITRIC_ACID.getFluidName(), 1000));
+		pollutant_fluids.add(CoreUtils.getFluid(EnumFluid.LOW_LEACHATE.getFluidName(), 1000));
 		pollutant_fluids.add(CoreUtils.getFluid(EnumFluid.LEACHATE.getFluidName(), 1000));
+		pollutant_fluids.add(CoreUtils.getFluid(EnumFluid.HIGH_LEACHATE.getFluidName(), 1000));
 		pollutant_fluids.add(CoreUtils.getFluid(EnumFluid.LIQUID_AMMONIA.getFluidName(), 1000));
 		pollutant_fluids.add(CoreUtils.getFluid(EnumFluid.METHANOL.getFluidName(), 1000));
 		pollutant_fluids.add(CoreUtils.getFluid(EnumFluid.CHLOROMETHANE.getFluidName(), 1000));

@@ -8,7 +8,7 @@ import javax.annotation.Nullable;
 
 import com.globbypotato.rockhounding_chemistry.ModBlocks;
 import com.globbypotato.rockhounding_chemistry.Rhchemistry;
-import com.globbypotato.rockhounding_chemistry.enums.EnumMachinesD;
+import com.globbypotato.rockhounding_chemistry.enums.machines.EnumMachinesD;
 import com.globbypotato.rockhounding_chemistry.fluids.ModFluids;
 import com.globbypotato.rockhounding_chemistry.handlers.GuiHandler;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
@@ -416,9 +416,11 @@ public class MachinesD extends MachineIO {
 					alloyer.showPreview();
 				}
 				if(meta == EnumMachinesD.METAL_ALLOYER_TANK.ordinal()){
-					player.openGui(Rhchemistry.instance, GuiHandler.metal_alloyer_id, world, pos.getX(), pos.getY() - 1, pos.getZ());
-					TEMetalAlloyer alloyer = (TEMetalAlloyer)world.getTileEntity(pos.down());
-					alloyer.showPreview();
+					if(world.getTileEntity(pos.down(1)) != null && world.getTileEntity(pos.down(1)) instanceof TEMetalAlloyer){
+						player.openGui(Rhchemistry.instance, GuiHandler.metal_alloyer_id, world, pos.getX(), pos.getY() - 1, pos.getZ());
+						TEMetalAlloyer alloyer = (TEMetalAlloyer)world.getTileEntity(pos.down());
+						alloyer.showPreview();
+					}
 				}
 				if(meta == EnumMachinesD.DEPOSITION_CHAMBER_BASE.ordinal()){
 		    		player.openGui(Rhchemistry.instance, GuiHandler.deposition_chamber_id, world, pos.getX(), pos.getY(), pos.getZ());
@@ -430,7 +432,9 @@ public class MachinesD extends MachineIO {
 		    		player.openGui(Rhchemistry.instance, GuiHandler.gas_holder_id, world, pos.getX(), pos.getY(), pos.getZ());
 				}
 				if(meta == EnumMachinesD.GAS_HOLDER_TOP.ordinal()){
-					player.openGui(Rhchemistry.instance, GuiHandler.gas_holder_id, world, pos.getX(), pos.getY() - 1, pos.getZ());
+					if(world.getTileEntity(pos.down(1)) != null && world.getTileEntity(pos.down(1)) instanceof TEGasHolderBase){
+						player.openGui(Rhchemistry.instance, GuiHandler.gas_holder_id, world, pos.getX(), pos.getY() - 1, pos.getZ());
+					}
 				}
 				if(meta == EnumMachinesD.PULLING_CRUCIBLE_BASE.ordinal()){
 					player.openGui(Rhchemistry.instance, GuiHandler.pulling_crucible_base_id, world, pos.getX(), pos.getY(), pos.getZ());

@@ -44,7 +44,7 @@ public class MineralSizerCategory extends RHRecipeCategory {
 		guiItemStacks.init(OUTPUT_SLOT, false, 112, 54);
 
 		for(int gear = 2; gear < GEAR_SLOTS.length + 2; gear++){
-			guiItemStacks.set(gear, BaseRecipes.crushing_gear);
+			guiItemStacks.set(gear, wrapper.getGears());
 		}
 		guiItemStacks.set(INPUT_SLOT, wrapper.getInputs());
 		guiItemStacks.set(OUTPUT_SLOT, wrapper.getOutputs());

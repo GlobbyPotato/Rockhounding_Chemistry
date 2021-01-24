@@ -1,9 +1,9 @@
 package com.globbypotato.rockhounding_chemistry.machines.tile;
 
 import com.globbypotato.rockhounding_chemistry.ModBlocks;
-import com.globbypotato.rockhounding_chemistry.enums.EnumFluid;
 import com.globbypotato.rockhounding_chemistry.enums.EnumMiscBlocksA;
-import com.globbypotato.rockhounding_chemistry.enums.EnumSaltStages;
+import com.globbypotato.rockhounding_chemistry.enums.materials.EnumFluid;
+import com.globbypotato.rockhounding_chemistry.enums.utils.EnumSaltStages;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;

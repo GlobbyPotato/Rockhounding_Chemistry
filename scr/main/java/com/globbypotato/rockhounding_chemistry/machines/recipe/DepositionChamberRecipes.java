@@ -3,8 +3,8 @@ package com.globbypotato.rockhounding_chemistry.machines.recipe;
 import java.util.ArrayList;
 
 import com.globbypotato.rockhounding_chemistry.enums.EnumAlloyTech;
-import com.globbypotato.rockhounding_chemistry.enums.EnumChemicals;
-import com.globbypotato.rockhounding_chemistry.enums.EnumFluid;
+import com.globbypotato.rockhounding_chemistry.enums.materials.EnumChemicals;
+import com.globbypotato.rockhounding_chemistry.enums.materials.EnumFluid;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.DepositionChamberRecipe;
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 

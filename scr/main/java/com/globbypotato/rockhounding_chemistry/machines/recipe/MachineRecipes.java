@@ -4,6 +4,7 @@ public class MachineRecipes {
 
 	public static void init() {
 		MineralSizerRecipes.machineRecipes();
+		MineralSizerGearRecipes.machineRecipes();
 		LabOvenRecipes.machineRecipes();
 		LabBlenderRecipes.machineRecipes();
 		ProfilingBenchRecipes.machineRecipes();
@@ -30,5 +31,6 @@ public class MachineRecipes {
 		StirredTankRecipes.machineRecipes();
 		EvaporationTankRecipes.machineRecipes();
 		PrecipitationRecipes.machineRecipes();
+		BedReactorRecipes.machineRecipes();
 	}
 }

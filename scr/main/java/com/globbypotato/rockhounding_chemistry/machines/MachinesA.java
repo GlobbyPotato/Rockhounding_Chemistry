@@ -7,8 +7,8 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import com.globbypotato.rockhounding_chemistry.Rhchemistry;
-import com.globbypotato.rockhounding_chemistry.enums.EnumCasting;
-import com.globbypotato.rockhounding_chemistry.enums.EnumMachinesA;
+import com.globbypotato.rockhounding_chemistry.enums.machines.EnumMachinesA;
+import com.globbypotato.rockhounding_chemistry.enums.utils.EnumCasting;
 import com.globbypotato.rockhounding_chemistry.handlers.GuiHandler;
 import com.globbypotato.rockhounding_chemistry.machines.io.MachineIO;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TEEvaporationTank;
@@ -335,7 +335,9 @@ public class MachinesA extends MachineIO {
 					player.openGui(Rhchemistry.instance, GuiHandler.lab_oven_controller_id, world, pos.getX(), pos.getY(), pos.getZ());
 				}
 				if(meta == EnumMachinesA.LAB_OVEN_CHAMBER.ordinal()){
-					player.openGui(Rhchemistry.instance, GuiHandler.lab_oven_controller_id, world, pos.getX(), pos.getY() + 1, pos.getZ());
+					if(world.getTileEntity(pos.up(1)) != null && world.getTileEntity(pos.up(1)) instanceof TELabOvenController){
+						player.openGui(Rhchemistry.instance, GuiHandler.lab_oven_controller_id, world, pos.getX(), pos.getY() + 1, pos.getZ());
+					}
 				}
 				if(meta == EnumMachinesA.FLUID_INPUT_TANK.ordinal()){
 					player.openGui(Rhchemistry.instance, GuiHandler.lab_oven_intank_id, world, pos.getX(), pos.getY(), pos.getZ());
@@ -601,7 +603,7 @@ public class MachinesA extends MachineIO {
 			tank.reagentTank.getFluid().writeToNBT(reagent);
 			itemstack.getTagCompound().setTag(EnumFluidNbt.REAGENT.nameTag(), reagent);
 		}
-		if(tank.getFilterSolvent() != null){
+		if(tank.getFilterReagent() != null){
 	        NBTTagCompound filterReagentNBT = new NBTTagCompound();
 	        tank.filterReagent.writeToNBT(filterReagentNBT);
 	        itemstack.getTagCompound().setTag("FilterReagent", filterReagentNBT);

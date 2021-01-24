@@ -3,7 +3,7 @@ package com.globbypotato.rockhounding_chemistry.machines.gui;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.globbypotato.rockhounding_chemistry.enums.EnumElements;
+import com.globbypotato.rockhounding_chemistry.enums.materials.EnumElements;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.COMetalAlloyer;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.MetalAlloyerRecipe;

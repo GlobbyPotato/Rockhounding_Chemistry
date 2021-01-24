@@ -1,6 +1,7 @@
 package com.globbypotato.rockhounding_chemistry.machines.render;
 
 import com.globbypotato.rockhounding_chemistry.machines.tile.TEMineralSizerTank;
+import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -20,7 +21,8 @@ public class RendererMineralSizerTank extends TileEntitySpecialRenderer<TEMinera
 			float offset = 0F;
 			for(int gear = 0; gear < TEMineralSizerTank.SLOT_INPUTS.length; gear++){
 				ItemStack plug = te.getInput().getStackInSlot(gear).copy();
-				EntityItem plugEntity = new EntityItem(world, 0, 0, 0, plug);
+				ItemStack plugItem = BaseRecipes.crushing_gear.copy();
+				EntityItem plugEntity = new EntityItem(world, 0, 0, 0, plugItem);
 				plugEntity.hoverStart = 0;
 				if(!plug.isEmpty()){
 					if(te.getFacing() == EnumFacing.NORTH || te.getFacing() == EnumFacing.SOUTH){

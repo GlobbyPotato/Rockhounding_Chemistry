@@ -7,9 +7,10 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import com.globbypotato.rockhounding_chemistry.compat.jei.RHRecipeWrapper;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.MineralSizerGearRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.MineralSizerRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.MineralSizerGearRecipe;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.MineralSizerRecipe;
-import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.ingredients.VanillaTypes;
@@ -61,15 +62,17 @@ public class MineralSizerWrapper extends RHRecipeWrapper<MineralSizerRecipe>{
 	}
 
 	@Nonnull
-	public List<ItemStack> getCatalysts() {
-		ArrayList<ItemStack> stacks = new ArrayList<ItemStack>();
-		stacks.add(BaseRecipes.crushing_gear);
+	public List<ItemStack> getGears() {
+		List<ItemStack> stacks = new ArrayList<ItemStack>();
+		for (MineralSizerGearRecipe recipe : MineralSizerGearRecipes.mineral_sizer_gears) {
+			stacks.add(recipe.getGear());
+		}
 		return stacks;
 	}
 
 	@Override
 	public void getIngredients(IIngredients ingredients) {
-		ingredients.setInputLists(VanillaTypes.ITEM, Arrays.asList(getInputs(), getCatalysts()));
+		ingredients.setInputLists(VanillaTypes.ITEM, Arrays.asList(getInputs(), getGears()));
 		ingredients.setOutputs(VanillaTypes.ITEM, getOutputs());
 	}
 

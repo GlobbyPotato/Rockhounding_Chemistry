@@ -3,7 +3,7 @@ package com.globbypotato.rockhounding_chemistry.utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.globbypotato.rockhounding_chemistry.enums.EnumFluid;
+import com.globbypotato.rockhounding_chemistry.enums.materials.EnumFluid;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.ChemicalExtractorRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.DepositionChamberRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.GasCondenserRecipes;

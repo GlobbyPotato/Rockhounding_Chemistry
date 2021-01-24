@@ -1,7 +1,7 @@
 package com.globbypotato.rockhounding_chemistry.compat.jei.toxic_mutation;
 
 import com.globbypotato.rockhounding_chemistry.compat.jei.RHRecipeCategory;
-import com.globbypotato.rockhounding_chemistry.enums.EnumFluid;
+import com.globbypotato.rockhounding_chemistry.enums.materials.EnumFluid;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 

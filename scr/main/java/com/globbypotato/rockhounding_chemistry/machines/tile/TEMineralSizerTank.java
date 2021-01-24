@@ -1,5 +1,9 @@
 package com.globbypotato.rockhounding_chemistry.machines.tile;
 
+import java.util.ArrayList;
+
+import com.globbypotato.rockhounding_chemistry.machines.recipe.MineralSizerGearRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.MineralSizerGearRecipe;
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.machines.tileentity.MachineStackHandler;
@@ -24,7 +28,7 @@ public class TEMineralSizerTank extends TileEntityInv {
 		this.input =  new MachineStackHandler(inputSlots, this){
 			@Override
 			public ItemStack insertItem(int slot, ItemStack insertingStack, boolean simulate){
-				if(slot >= SLOT_INPUTS[0] && slot < inputSlots && CoreUtils.hasConsumable(BaseRecipes.crushing_gear, insertingStack) ){
+				if(slot >= SLOT_INPUTS[0] && slot < inputSlots && CoreUtils.hasConsumable(isValidGear(insertingStack), insertingStack) ){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
 				return insertingStack;
@@ -74,12 +78,44 @@ public class TEMineralSizerTank extends TileEntityInv {
 	public boolean hasConsumables(){
 		int gearFail = 0;
 		for (int gear = 0; gear < inputSlots; gear++){
-			if(CoreUtils.hasConsumable(BaseRecipes.crushing_gear, gearSlot(gear))){
+			if(CoreUtils.hasConsumable(getValidGear(gear), gearSlot(gear))){
 				gearFail++;	
 			}
 		}
 		return gearFail == inputSlots;
 	}
+
+	public static ArrayList<MineralSizerGearRecipe> recipeList(){
+		return MineralSizerGearRecipes.mineral_sizer_gears;
+	}
+
+	public static MineralSizerGearRecipe getRecipeList(int x){
+		return recipeList().get(x);
+	}
+
+	private ItemStack isValidGear(ItemStack insertingStack) {
+		if(!insertingStack.isEmpty()) {
+			for(MineralSizerGearRecipe recipe: recipeList()){
+				if(recipe.getGear().isItemEqualIgnoreDurability(insertingStack)) {
+					return recipe.getGear();
+				}
+			}
+		}
+		return ItemStack.EMPTY;
+	}
+
+	private ItemStack getValidGear(int gear) {
+		if(!gearSlot(gear).isEmpty()) {
+			for(MineralSizerGearRecipe recipe: recipeList()){
+				if(recipe.getGear().isItemEqualIgnoreDurability(gearSlot(gear))) {
+					return recipe.getGear();
+				}
+			}
+		}
+		return ItemStack.EMPTY;
+	}
+
+
 
 	public int getRolling(){
 		return this.rotation;
