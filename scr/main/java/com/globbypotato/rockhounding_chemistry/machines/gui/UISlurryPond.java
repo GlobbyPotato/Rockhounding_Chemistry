@@ -105,7 +105,7 @@ public class UISlurryPond extends GuiBase {
 	   //monitor
 	   if(GuiUtils.hoveringArea(15, 86, 14, 14, mouseX, mouseY, x, y)){
 		   String tk = TextFormatting.GRAY + "Process Time: " + TextFormatting.YELLOW + this.tile.getCooktimeMax() + " ticks"; 
-		   String yd = TextFormatting.GRAY + "Slurry Yeld: " + TextFormatting.RED + "Not available"; 
+		   String yd = TextFormatting.GRAY + "Slurry Yield: " + TextFormatting.RED + "Not available"; 
 		   String us = TextFormatting.GRAY + "Consumed Solvent: " + TextFormatting.RED + " Not available"; 
 		   String so = TextFormatting.GRAY + "Consumed Solute: " + TextFormatting.DARK_GREEN + this.tile.calculateInputAmount() + "x"; 
 
@@ -113,7 +113,7 @@ public class UISlurryPond extends GuiBase {
 			   us = TextFormatting.GRAY + "Consumed Solvent: " + TextFormatting.GREEN + this.tile.calculateSolventAmount() + " mB";
 		   }
 		   if(this.tile.calculateSlurryAmount() > 0){
-			   yd = TextFormatting.GRAY + "Slurry Yeld: " + TextFormatting.GREEN + this.tile.calculateSlurryAmount() + " mB";
+			   yd = TextFormatting.GRAY + "Slurry Yield: " + TextFormatting.GREEN + this.tile.calculateSlurryAmount() + " mB";
 		   }
 
 		   multistring = new String[]{concstring, tk, "", so, us, yd};
