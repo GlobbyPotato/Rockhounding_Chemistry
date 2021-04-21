@@ -593,11 +593,11 @@
 												<p space="2" />
 												<p color="#0000FF">> High concentration (green area)</p> 
 												<p>Dense smaller scale process.</p> 
-												<p>Consumes less ingredients and yelds less slurry, but it outputs at a faster rate.</p>
+												<p>Consumes less ingredients and yields less slurry, but it outputs at a faster rate.</p>
 												<p space="2" />
 												<p color="#0000FF">> Low concentration (red area)</p> 
 												<p>Diluted larger scale process.</p> 
-												<p>Consumes more ingredients and yelds more slurry, but requires more time to output.</p> 
+												<p>Consumes more ingredients and yields more slurry, but requires more time to output.</p> 
 												<p space="2" />
 												<p>The gui monitor indicates the required ingredients and their managed quantity, as well as the process time.</p>
 											</page>
@@ -859,7 +859,7 @@
 												<p>> The exposed item/s can be seen by moving the cursor on the icon appearing when an output is found.</p>
 												<image src="rockhounding_chemistry:gbook/wiki/sizer_comm_2" tw="23" th="20"/>
 												<p space="4" />
-												<p>> The gangue collector gets the crushed product and it must be kept always free with hoppers or pipes for the next process to start. Slots are handled by the machine, giving an extra yeld depending on the recipe.</p>
+												<p>> The gangue collector gets the crushed product and it must be kept always free with hoppers or pipes for the next process to start. Slots are handled by the machine, giving an extra yield depending on the recipe.</p>
 											</page>
 
 											<page id="cstr_page">
