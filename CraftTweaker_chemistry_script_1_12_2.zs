@@ -70,6 +70,14 @@ mods.rockhounding_chemistry.CrushingGears.add(<minecraft:diamond_sword>);
 
 
 =======================================================
+ORBITER
+=======================================================
+//input Fluid: the modded Fluid XP
+mods.rockhounding_chemistry.Orbiter.add(<liquid:water_vapour>*1000);
+
+
+
+=======================================================
 SLURRY AGITATORS
 =======================================================
 //input gear: the item to be accepted inside the Leaching Vat and Retention Vat (must be a damageable item)
