@@ -216,7 +216,7 @@ public class TopMachines implements IProbeInfoProvider{
 				if(tank.wasteHasFluid()){
 					probeInfo.progress(tank.getWasteAmount(), tank.getWasteCapacity(), probeInfo.defaultProgressStyle().suffix(" mB").filledColor(0xFFA0B073).alternateFilledColor(0xFF737E56).borderColor(0x000000).numberFormat(NumberFormat.FULL));
 				}
-				if(tank.xpJuiceExists()){
+				if(tank.isValidPreset()){
 					if(tank.juiceHasFluid()){
 						probeInfo.progress(tank.getJuiceAmount(), tank.getJuiceCapacity(), probeInfo.defaultProgressStyle().suffix(" mB").filledColor(0xFF439E00).alternateFilledColor(0xFF5DD703).borderColor(0x000000).numberFormat(NumberFormat.FULL));
 					}

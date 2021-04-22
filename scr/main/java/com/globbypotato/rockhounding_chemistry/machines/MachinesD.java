@@ -637,7 +637,7 @@ public class MachinesD extends MachineIO {
 			tank.inputTank.getFluid().writeToNBT(solvent);
 			itemstack.getTagCompound().setTag(EnumFluidNbt.BATH.nameTag(), solvent);
 		}
-		if(tank.xpJuiceExists()){
+		if(tank.isValidPreset()){
 			NBTTagCompound juice = new NBTTagCompound(); 
 			if(tank.outputTank.getFluid() != null){
 				tank.outputTank.getFluid().writeToNBT(juice);
@@ -652,15 +652,15 @@ public class MachinesD extends MachineIO {
 			if(itemstack.getTagCompound().hasKey(EnumFluidNbt.BATH.nameTag())){
 				tank.inputTank.setFluid(FluidStack.loadFluidStackFromNBT(itemstack.getTagCompound().getCompoundTag(EnumFluidNbt.BATH.nameTag())));
 			}
-			if(tank.xpJuiceExists()){
+			if(tank.isValidPreset()){
 				if(itemstack.getTagCompound().hasKey(EnumFluidNbt.SOLUTION.nameTag())){
 					tank.outputTank.setFluid(FluidStack.loadFluidStackFromNBT(itemstack.getTagCompound().getCompoundTag(EnumFluidNbt.SOLUTION.nameTag())));
 				}
 			}
+			if(itemstack.getTagCompound().hasKey("XPCount")){
+				tank.xpCount = itemstack.getTagCompound().getInteger("XPCount");
+			}
     	}
-		if(itemstack.getTagCompound().hasKey("XPCount")){
-			tank.xpCount = itemstack.getTagCompound().getInteger("XPCount");
-		}
 	}
 
 	private static void addTransposerNbt(ItemStack itemstack, TileEntity te) {

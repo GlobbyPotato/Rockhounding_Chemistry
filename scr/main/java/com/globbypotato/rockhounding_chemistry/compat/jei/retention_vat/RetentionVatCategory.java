@@ -21,7 +21,7 @@ public class RetentionVatCategory extends RHRecipeCategory {
 	private String uid;
 
 	public RetentionVatCategory(IGuiHelper guiHelper, String uid) {
-		super(guiHelper.createDrawable(guiTexture, 0, 0, 122, 63), "jei." + uid + ".name");
+		super(guiHelper.createDrawable(guiTexture, 0, 0, 121, 64), "jei." + uid + ".name");
 		this.uid = uid;
 	}
 
@@ -43,12 +43,12 @@ public class RetentionVatCategory extends RHRecipeCategory {
 		int WATER_SLOT = 4;
 		int PULP_SLOT = 5;
 
-		guiFluidStacks.init(INPUT_SLOT, true,  1, 9, 16, 34, 1000, false, null);
-		guiItemStacks.init(OUTPUT_SLOT, false, 86, 11);
-		guiFluidStacks.init(FLUO_SLOT, true,  31, 11, 18, 18, 1000, false, null);
-		guiFluidStacks.init(WATER_SLOT, true, 59, 11, 18, 18, 1000, false, null);
-		guiFluidStacks.init(STEAM_SLOT, true, 32, 46, 34, 16, 1000, false, null);
-		guiFluidStacks.init(PULP_SLOT, false, 87, 46, 34, 16, 1000, false, null);
+		guiFluidStacks.init(INPUT_SLOT, true,  1, 1, 34, 16, 1000, false, null);
+		guiItemStacks.init(OUTPUT_SLOT, false, 78, 46);
+		guiFluidStacks.init(FLUO_SLOT, true,  48, 3, 18, 18, 1000, false, null);
+		guiFluidStacks.init(WATER_SLOT, true, 48, 27, 18, 18, 1000, false, null);
+		guiFluidStacks.init(STEAM_SLOT, true, 86, 1, 34, 16, 1000, false, null);
+		guiFluidStacks.init(PULP_SLOT, false, 1, 47, 34, 16, 1000, false, null);
 
 		guiFluidStacks.set(INPUT_SLOT, wrapper.getInputs());
 		guiItemStacks.set(OUTPUT_SLOT, wrapper.getOutputs());

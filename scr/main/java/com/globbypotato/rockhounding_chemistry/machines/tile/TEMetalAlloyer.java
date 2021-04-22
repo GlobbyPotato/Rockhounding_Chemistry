@@ -322,6 +322,10 @@ public class TEMetalAlloyer extends TileEntityInv implements IInternalServer{
 			int unbreakingLevel = CoreUtils.getEnchantmentLevel(Enchantments.UNBREAKING, patternSlot());
 			this.input.damageUnbreakingSlot(unbreakingLevel, PATTERN_SLOT);
 	
+			if(CoreUtils.hasMending(patternSlot()) && this.rand.nextInt(CoreUtils.mendingFactor) == 0) {
+				this.input.repairMendingSlot(PATTERN_SLOT);
+			}
+
 			if(hasCabinet() && hasMaterial()){
 				for(int ingredient = 0; ingredient < getDummyRecipe().getInputs().size(); ingredient++){
 					String ingrOredict = getDummyRecipe().getInputs().get(ingredient);

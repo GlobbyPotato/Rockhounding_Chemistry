@@ -43,6 +43,11 @@
 		<p color="#CC3333" indent="102">Layer 4</p>
     </template>
 
+	<template id="layer_3_4_5" height="10">
+		<p color="#CC3333" indent="12" >Layer 3/4</p>
+		<p color="#CC3333" indent="102">Layer 5</p>
+    </template>
+
 	<template id="layer_4_5" height="10">
 		<p color="#CC3333" indent="18" >Layer 4</p>
 		<p color="#CC3333" indent="102">Layer 5</p>
@@ -484,6 +489,33 @@
         <element index="2"  x="4"  y="3"/>
         <element index="3"  x="29" y="3"/>
     </template>
+
+
+
+
+	<template id="bedreactor_slots_1" height="74">
+		<image src="rockhounding_chemistry:gbook/grids/bed_reactor_slots_1" tw="158" th="74"/>
+        <element index="0"  x="29"  y="1"/>
+        <element index="1"  x="7"   y="29"/>
+        <element index="2"  x="29"  y="32"/>
+        <element index="3"  x="28"  y="57"/>
+        <element index="4"  x="57"  y="54"/>
+        <element index="1"  x="113" y="7"/>
+        <element index="2"  x="113" y="32"/>
+        <element index="3"  x="113" y="57"/>
+    </template>
+
+	<template id="bedreactor_slots_2" height="74">
+		<image src="rockhounding_chemistry:gbook/grids/bed_reactor_slots_2" tw="158" th="74"/>
+        <element index="0"  x="29"  y="32"/>
+        <element index="1"  x="113" y="29"/>
+        <element index="2"  x="113" y="1"/>
+        <element index="2"  x="86"  y="29"/>
+        <element index="2"  x="141" y="29"/>
+        <element index="2"  x="113" y="57"/>
+    </template>
+
+
 
 
 

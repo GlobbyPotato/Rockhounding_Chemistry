@@ -3,15 +3,12 @@
 	"group": "rockhounding_chemistry:machines",
 	"pattern": [
 		"SHS",
-		"FIF",
+		"F F",
 		"SFS"
 	],
 	"key": {
 		"H":{
 				"item": "#HOPPER"
-			},
-		"I":{
-				"item": "#ITEM_FILTER"
 			},
 		"F":{
 				"item": "#IRON_FOIL"

@@ -32,4 +32,5 @@ public class RHRecipeUID {
 	public static final String EVAPORATION_TANK = Reference.MODID 		+ "." + "evaporation_tank";
 	public static final String PRECIPITATION = Reference.MODID 			+ "." + "precipitation_chamber";
 	public static final String BED_REACTOR = Reference.MODID 			+ "." + "bed_reactor";
+	public static final String ORBITER = Reference.MODID 				+ "." + "orbiter";
 }

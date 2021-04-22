@@ -36,6 +36,8 @@ import com.globbypotato.rockhounding_chemistry.compat.jei.metal_alloyer.MetalAll
 import com.globbypotato.rockhounding_chemistry.compat.jei.metal_alloyer.MetalAlloyerWrapper;
 import com.globbypotato.rockhounding_chemistry.compat.jei.mineral_sizer.MineralSizerCategory;
 import com.globbypotato.rockhounding_chemistry.compat.jei.mineral_sizer.MineralSizerWrapper;
+import com.globbypotato.rockhounding_chemistry.compat.jei.orbiter_exp.OrbiterCategory;
+import com.globbypotato.rockhounding_chemistry.compat.jei.orbiter_exp.OrbiterWrapper;
 import com.globbypotato.rockhounding_chemistry.compat.jei.pollutant_fluids.PollutantFluidCategory;
 import com.globbypotato.rockhounding_chemistry.compat.jei.pollutant_fluids.PollutantFluidWrapper;
 import com.globbypotato.rockhounding_chemistry.compat.jei.pollutant_gases.PollutantGasCategory;
@@ -91,6 +93,7 @@ import com.globbypotato.rockhounding_chemistry.machines.gui.UIMetalAlloyer;
 import com.globbypotato.rockhounding_chemistry.machines.gui.UIMineralSizerCollector;
 import com.globbypotato.rockhounding_chemistry.machines.gui.UIMineralSizerController;
 import com.globbypotato.rockhounding_chemistry.machines.gui.UIMineralSizerTank;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UIOrbiter;
 import com.globbypotato.rockhounding_chemistry.machines.gui.UIPrecipitationChamber;
 import com.globbypotato.rockhounding_chemistry.machines.gui.UIPrecipitationController;
 import com.globbypotato.rockhounding_chemistry.machines.gui.UIPullingCrucibleBase;
@@ -163,6 +166,7 @@ public class RockhoundingPlugin implements IModPlugin {
 				new StirredTankCategory(guiHelper, RHRecipeUID.STIRRED_TANK),
 				new EvaporationTankCategory(guiHelper, RHRecipeUID.EVAPORATION_TANK),
 				new PrecipitationCategory(guiHelper, RHRecipeUID.PRECIPITATION),
+				new OrbiterCategory(guiHelper, RHRecipeUID.ORBITER),
 				new BedReactorCategory(guiHelper, RHRecipeUID.BED_REACTOR)
 		);
 	}
@@ -201,6 +205,7 @@ public class RockhoundingPlugin implements IModPlugin {
 		registry.addRecipes(EvaporationTankWrapper.getRecipes(), RHRecipeUID.EVAPORATION_TANK);
 		registry.addRecipes(PrecipitationWrapper.getRecipes(), RHRecipeUID.PRECIPITATION);
 		registry.addRecipes(BedReactorWrapper.getRecipes(), RHRecipeUID.BED_REACTOR);
+		registry.addRecipes(OrbiterWrapper.getRecipes(), RHRecipeUID.ORBITER);
 
 		registry.addRecipeClickArea(UIMineralSizerController.class, rX, rY, rW, rH, RHRecipeUID.SIZER);
 		registry.addRecipeClickArea(UIMineralSizerTank.class, rX, rY, rW, rH, RHRecipeUID.SIZER);
@@ -264,6 +269,8 @@ public class RockhoundingPlugin implements IModPlugin {
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.MACHINES_A, 1, EnumMachinesA.EVAPORATION_TANK.ordinal()), RHRecipeUID.EVAPORATION_TANK);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.MACHINES_E, 1, EnumMachinesE.PRECIPITATION_CHAMBER.ordinal()), RHRecipeUID.PRECIPITATION);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.MACHINES_F, 1, EnumMachinesF.TUBULAR_BED_TANK.ordinal()), RHRecipeUID.BED_REACTOR);
+		registry.addRecipeCatalyst(new ItemStack(ModBlocks.MACHINES_D, 1, EnumMachinesD.ORBITER.ordinal()), RHRecipeUID.ORBITER);
+
 		registry.addRecipeCatalyst(CoreUtils.getFluidBucket(EnumFluid.pickFluid(EnumFluid.TOXIC_WASTE)), RHRecipeUID.MUTATION);
 
 		String salt_text = "Raw salt is an intermediate stage of the salt making. It is produced by the Evaporation Tank as result of water evaporation or desublimation and is refined in the Seasoning Rack into the generic refined salt used for recipes. In case of desublimation, since less water is required, a poorer variant will be produced, returning less refined salt.";

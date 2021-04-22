@@ -58,7 +58,7 @@ public class UILabOvenController extends GuiBase {
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
 
-	   //prev
+	   //next
 	   if(GuiUtils.hoveringArea(43, 20, 18, 18, mouseX, mouseY, x, y)){
 		   tooltip = GuiUtils.drawLabel("Next Recipe", mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
@@ -90,10 +90,10 @@ public class UILabOvenController extends GuiBase {
 
     }
 
-	 @Override
+	@Override
 	public void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-		String recipeLabel = "No recipe relected";
+		String recipeLabel = "No recipe selected";
 		if(this.tile.isValidPreset()){
 			if(Strings.isNullOrEmpty(this.tile.getRecipeList(this.tile.getRecipeIndex()).getRecipeName())){
 				recipeLabel = this.tile.getRecipeList(this.tile.getRecipeIndex()).getSolution().getLocalizedName();

@@ -72,6 +72,8 @@
 	{"name": "REINFORCED_GLASS",	"ingredient": {	"item": "rockhounding_chemistry:misc_blocks_a",		"data": 13}},
 
 	{"name": "CRUSHING_GEAR",		"ingredient": {	"item": "rockhounding_chemistry:crushing_gear",		"data": 0}},
+
+	{"name": "GAS_PRESSURIZER",		"ingredient": {	"item": "rockhounding_chemistry:machines_b",		"data": 1}},
 	
 	{"name": "GAS_TURBINE",			"ingredient": {	"item": "rockhounding_core:gas_turbine",			"data": 0}}
 

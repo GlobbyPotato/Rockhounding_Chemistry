@@ -2,7 +2,8 @@ package com.globbypotato.rockhounding_chemistry.machines.tile;
 
 import java.util.ArrayList;
 
-import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.VatAgitatorRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.VatAgitatorRecipe;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.machines.tileentity.MachineStackHandler;
 import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityTank;
@@ -45,7 +46,7 @@ public class TELeachingVatTank extends TileEntityTank implements IToxic{
 		this.input =  new MachineStackHandler(inputSlots, this){
 			@Override
 			public ItemStack insertItem(int slot, ItemStack insertingStack, boolean simulate){
-				if(slot == INPUT_SLOT && CoreUtils.hasConsumable(BaseRecipes.slurry_agitator, insertingStack) ){
+				if(slot == INPUT_SLOT && CoreUtils.hasConsumable(isValidAgitator(insertingStack), insertingStack) ){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
 				return insertingStack;
@@ -129,7 +130,37 @@ public class TELeachingVatTank extends TileEntityTank implements IToxic{
 	}
 
 	public boolean hasConsumables(){
-		return CoreUtils.hasConsumable(BaseRecipes.slurry_agitator, gearSlot());
+		return CoreUtils.hasConsumable(getValidGear(INPUT_SLOT), gearSlot());
+	}
+
+	public ItemStack getValidGear(int gear) {
+		if(!gearSlot().isEmpty()) {
+			for(VatAgitatorRecipe recipe: recipeList()){
+				if(recipe.getAgitator().isItemEqualIgnoreDurability(gearSlot())) {
+					return recipe.getAgitator();
+				}
+			}
+		}
+		return ItemStack.EMPTY;
+	}
+
+	public static ArrayList<VatAgitatorRecipe> recipeList(){
+		return VatAgitatorRecipes.leaching_vat_agitator;
+	}
+
+	public static VatAgitatorRecipe getRecipeList(int x){
+		return recipeList().get(x);
+	}
+
+	public ItemStack isValidAgitator(ItemStack insertingStack) {
+		if(!insertingStack.isEmpty()) {
+			for(VatAgitatorRecipe recipe: recipeList()){
+				if(recipe.getAgitator().isItemEqualIgnoreDurability(insertingStack)) {
+					return recipe.getAgitator();
+				}
+			}
+		}
+		return ItemStack.EMPTY;
 	}
 
 	public float getRotation(){

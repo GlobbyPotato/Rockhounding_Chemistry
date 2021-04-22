@@ -570,6 +570,10 @@ public class TELeachingVatController extends TileEntityInv implements IInternalS
 				this.output.drainOrCleanFluid(getLeacherA().inputTank, calculatedSulf(), true);
 				int unbreakingLevel = CoreUtils.getEnchantmentLevel(Enchantments.UNBREAKING, getLeacherA().gearSlot());
 				((MachineStackHandler)getLeacherA().getInput()).damageUnbreakingSlot(unbreakingLevel, TileEntityInv.INPUT_SLOT);
+
+				if(CoreUtils.hasMending(getLeacherA().gearSlot()) && this.rand.nextInt(CoreUtils.mendingFactor) == 0) {
+					((MachineStackHandler)getLeacherA().getInput()).repairMendingSlot(TileEntityInv.INPUT_SLOT);
+				}
 			}
 			if(hasVesselA()){
 				this.output.drainOrCleanFluid(getVesselA().inputTank, calculatedSteam(), true);
@@ -579,6 +583,10 @@ public class TELeachingVatController extends TileEntityInv implements IInternalS
 				this.output.drainOrCleanFluid(getLeacherB().inputTank, calculatedChlo(), true);
 				int unbreakingLevel = CoreUtils.getEnchantmentLevel(Enchantments.UNBREAKING, getLeacherB().gearSlot());
 				((MachineStackHandler)getLeacherB().getInput()).damageUnbreakingSlot(unbreakingLevel, TileEntityInv.INPUT_SLOT);
+
+				if(CoreUtils.hasMending(getLeacherB().gearSlot()) && this.rand.nextInt(CoreUtils.mendingFactor) == 0) {
+					((MachineStackHandler)getLeacherB().getInput()).repairMendingSlot(TileEntityInv.INPUT_SLOT);
+				}
 			}
 			if(hasVesselB()){
 				this.output.drainOrCleanFluid(getVesselB().inputTank, calculatedSteam(), true);
@@ -588,6 +596,10 @@ public class TELeachingVatController extends TileEntityInv implements IInternalS
 				this.output.drainOrCleanFluid(getLeacherC().inputTank, calculatedWater(), true);
 				int unbreakingLevel = CoreUtils.getEnchantmentLevel(Enchantments.UNBREAKING, getLeacherC().gearSlot());
 				((MachineStackHandler)getLeacherC().getInput()).damageUnbreakingSlot(unbreakingLevel, TileEntityInv.INPUT_SLOT);
+
+				if(CoreUtils.hasMending(getLeacherC().gearSlot()) && this.rand.nextInt(CoreUtils.mendingFactor) == 0) {
+					((MachineStackHandler)getLeacherC().getInput()).repairMendingSlot(TileEntityInv.INPUT_SLOT);
+				}
 			}
 
 			this.input.decrementSlot(INPUT_SLOT);

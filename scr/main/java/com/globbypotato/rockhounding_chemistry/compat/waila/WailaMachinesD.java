@@ -71,7 +71,7 @@ public class WailaMachinesD implements IWailaDataProvider{
 					currenttip.add(TextFormatting.GRAY + "Content: " + TextFormatting.WHITE + "Empty");
 				}
 				
-				if(tank.xpJuiceExists()){
+				if(tank.isValidPreset()){
 					if(tank.juiceHasFluid()){
 						currenttip.add(TextFormatting.GRAY + "Content: " + TextFormatting.WHITE + tank.getJuiceFluid().getLocalizedName() + " - " + TextFormatting.WHITE + tank.getJuiceAmount() + "/" + tank.getJuiceCapacity() + " mB");
 					}else{

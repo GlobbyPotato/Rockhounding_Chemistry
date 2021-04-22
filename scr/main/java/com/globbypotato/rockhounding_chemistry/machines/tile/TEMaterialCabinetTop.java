@@ -127,6 +127,10 @@ public class TEMaterialCabinetTop extends TileEntityInv {
 									int unbreakingLevel = CoreUtils.getEnchantmentLevel(Enchantments.UNBREAKING, cylinderSlot());
 									this.input.damageUnbreakingSlot(unbreakingLevel, CYLINDER_SLOT);
 	
+									if(CoreUtils.hasMending(cylinderSlot()) && this.rand.nextInt(CoreUtils.mendingFactor) == 0) {
+										this.input.repairMendingSlot(CYLINDER_SLOT);
+									}
+
 									this.input.decrementSlot(INPUT_SLOT);
 
 									getCollector().markDirtyClient();

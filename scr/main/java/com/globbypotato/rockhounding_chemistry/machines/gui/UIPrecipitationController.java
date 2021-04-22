@@ -93,7 +93,7 @@ public class UIPrecipitationController extends GuiBase {
 	@Override
 	public void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-		String recipeLabel = "No recipe relected";
+		String recipeLabel = "No recipe selected";
 		if(this.tile.isValidPreset()){
 			if(Strings.isNullOrEmpty(this.tile.getRecipeList(this.tile.getRecipeIndex()).getRecipeName())){
 				recipeLabel = this.tile.getRecipeList(this.tile.getRecipeIndex()).getPrecipitate().getDisplayName();

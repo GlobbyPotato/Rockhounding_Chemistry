@@ -17,7 +17,7 @@ public abstract class GuiBase extends GuiContainer{
 	String casing_label = Translator.translateToLocal("label." + Reference.MODID + ":descr.casing");
 
     public static ResourceLocation TEXTURE = new ResourceLocation("");
-	public static final int WIDTH = 176;
+	public static int WIDTH = 176;
     public String containerName = "";
 	public GuiBase(ContainerBase container, int height) {
         super(container);

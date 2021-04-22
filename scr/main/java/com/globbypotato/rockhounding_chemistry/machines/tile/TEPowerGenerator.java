@@ -1,5 +1,6 @@
 package com.globbypotato.rockhounding_chemistry.machines.tile;
 
+import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.gas.GasHandlerConcatenate;
 import com.globbypotato.rockhounding_core.machines.tileentity.MachineStackHandler;
@@ -123,6 +124,16 @@ public class TEPowerGenerator extends TileEntityPoweredVessel {
 
 	public boolean enableRedstone() {
 		return this.enableRedstone;
+	}
+
+	@Override
+	public int gasBurntime(){
+		return ModConfig.gasBurntime;
+	}
+
+	@Override
+	public int gasEnergizer(){
+		return ModConfig.gasEnergizer;
 	}
 
 

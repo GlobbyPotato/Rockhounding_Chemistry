@@ -1,0 +1,45 @@
+{
+    "variants": {
+        "facing=down,variant=tubular_bed_base": 					{ "model": "rockhounding_chemistry:machines_f_tubular_bed_base", "y": 180},
+        "facing=up,variant=tubular_bed_base": 						{ "model": "rockhounding_chemistry:machines_f_tubular_bed_base", "y": 180},
+        "facing=north,variant=tubular_bed_base": 					{ "model": "rockhounding_chemistry:machines_f_tubular_bed_base", "y": 180},
+        "facing=south,variant=tubular_bed_base": 					{ "model": "rockhounding_chemistry:machines_f_tubular_bed_base"},
+        "facing=west,variant=tubular_bed_base": 					{ "model": "rockhounding_chemistry:machines_f_tubular_bed_base", "y": 90},
+        "facing=east,variant=tubular_bed_base": 					{ "model": "rockhounding_chemistry:machines_f_tubular_bed_base", "y": 270},
+
+        "facing=down,variant=tubular_bed_low": 						{ "model": "rockhounding_chemistry:machines_f_tubular_bed_low", "y": 180},
+        "facing=up,variant=tubular_bed_low": 						{ "model": "rockhounding_chemistry:machines_f_tubular_bed_low", "y": 180},
+        "facing=north,variant=tubular_bed_low": 					{ "model": "rockhounding_chemistry:machines_f_tubular_bed_low", "y": 180},
+        "facing=south,variant=tubular_bed_low": 					{ "model": "rockhounding_chemistry:machines_f_tubular_bed_low"},
+        "facing=west,variant=tubular_bed_low": 						{ "model": "rockhounding_chemistry:machines_f_tubular_bed_low", "y": 90},
+        "facing=east,variant=tubular_bed_low": 						{ "model": "rockhounding_chemistry:machines_f_tubular_bed_low", "y": 270},
+
+        "facing=down,variant=tubular_bed_mid": 						{ "model": "rockhounding_chemistry:machines_f_tubular_bed_mid", "y": 180},
+        "facing=up,variant=tubular_bed_mid": 						{ "model": "rockhounding_chemistry:machines_f_tubular_bed_mid", "y": 180},
+        "facing=north,variant=tubular_bed_mid": 					{ "model": "rockhounding_chemistry:machines_f_tubular_bed_mid", "y": 180},
+        "facing=south,variant=tubular_bed_mid": 					{ "model": "rockhounding_chemistry:machines_f_tubular_bed_mid"},
+        "facing=west,variant=tubular_bed_mid": 						{ "model": "rockhounding_chemistry:machines_f_tubular_bed_mid", "y": 90},
+        "facing=east,variant=tubular_bed_mid": 						{ "model": "rockhounding_chemistry:machines_f_tubular_bed_mid", "y": 270},
+		
+        "facing=down,variant=tubular_bed_top": 						{ "model": "rockhounding_chemistry:machines_f_tubular_bed_top", "y": 180},
+        "facing=up,variant=tubular_bed_top": 						{ "model": "rockhounding_chemistry:machines_f_tubular_bed_top", "y": 180},
+        "facing=north,variant=tubular_bed_top": 					{ "model": "rockhounding_chemistry:machines_f_tubular_bed_top", "y": 180},
+        "facing=south,variant=tubular_bed_top": 					{ "model": "rockhounding_chemistry:machines_f_tubular_bed_top"},
+        "facing=west,variant=tubular_bed_top": 						{ "model": "rockhounding_chemistry:machines_f_tubular_bed_top", "y": 90},
+        "facing=east,variant=tubular_bed_top": 						{ "model": "rockhounding_chemistry:machines_f_tubular_bed_top", "y": 270},
+
+        "facing=down,variant=tubular_bed_tank": 					{ "model": "rockhounding_chemistry:machines_f_tubular_bed_tank", "y": 180},
+        "facing=up,variant=tubular_bed_tank": 						{ "model": "rockhounding_chemistry:machines_f_tubular_bed_tank", "y": 180},
+        "facing=north,variant=tubular_bed_tank": 					{ "model": "rockhounding_chemistry:machines_f_tubular_bed_tank", "y": 180},
+        "facing=south,variant=tubular_bed_tank": 					{ "model": "rockhounding_chemistry:machines_f_tubular_bed_tank"},
+        "facing=west,variant=tubular_bed_tank": 					{ "model": "rockhounding_chemistry:machines_f_tubular_bed_tank", "y": 90},
+        "facing=east,variant=tubular_bed_tank": 					{ "model": "rockhounding_chemistry:machines_f_tubular_bed_tank", "y": 270},
+		
+        "facing=down,variant=tubular_bed_controller": 				{ "model": "rockhounding_chemistry:machines_f_tubular_bed_controller", "y": 180},
+        "facing=up,variant=tubular_bed_controller": 				{ "model": "rockhounding_chemistry:machines_f_tubular_bed_controller", "y": 180},
+        "facing=north,variant=tubular_bed_controller": 				{ "model": "rockhounding_chemistry:machines_f_tubular_bed_controller", "y": 180},
+        "facing=south,variant=tubular_bed_controller": 				{ "model": "rockhounding_chemistry:machines_f_tubular_bed_controller"},
+        "facing=west,variant=tubular_bed_controller": 				{ "model": "rockhounding_chemistry:machines_f_tubular_bed_controller", "y": 90},
+        "facing=east,variant=tubular_bed_controller": 				{ "model": "rockhounding_chemistry:machines_f_tubular_bed_controller", "y": 270}
+	}
+}

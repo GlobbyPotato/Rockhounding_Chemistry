@@ -10,7 +10,9 @@ import javax.annotation.Nonnull;
 import com.globbypotato.rockhounding_chemistry.compat.jei.RHRecipeWrapper;
 import com.globbypotato.rockhounding_chemistry.enums.materials.EnumFluid;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.LeachingVatRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.VatAgitatorRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.LeachingVatRecipe;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.VatAgitatorRecipe;
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 
 import mezz.jei.api.ingredients.IIngredients;
@@ -75,15 +77,17 @@ public class LeachingVatWrapper extends RHRecipeWrapper<LeachingVatRecipe>{
 	}
 
 	@Nonnull
-	public List<ItemStack> getCatalysts() {
-		ArrayList<ItemStack> stacks = new ArrayList<ItemStack>();
-		stacks.add(BaseRecipes.slurry_agitator);
+	public List<ItemStack> getGears() {
+		List<ItemStack> stacks = new ArrayList<ItemStack>();
+		for (VatAgitatorRecipe recipe : VatAgitatorRecipes.leaching_vat_agitator) {
+			stacks.add(recipe.getAgitator());
+		}
 		return stacks;
 	}
 
 	@Override
 	public void getIngredients(IIngredients ingredients) {
-		ingredients.setInputLists(VanillaTypes.ITEM, Arrays.asList(getInputs(), getCatalysts()));
+		ingredients.setInputLists(VanillaTypes.ITEM, Arrays.asList(getInputs(), getGears()));
 		ingredients.setOutputs(VanillaTypes.ITEM, getOutputs());
 		ingredients.setInputs(VanillaTypes.FLUID, getSolvents());
 		ingredients.setOutputs(VanillaTypes.FLUID, getSolutions());

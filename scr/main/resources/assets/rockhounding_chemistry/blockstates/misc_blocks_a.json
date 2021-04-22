@@ -13,6 +13,7 @@
 		"variant=pulling_crucible_cap": {"model" : "rockhounding_chemistry:misc_blocks_a_pulling_crucible_cap"},
 		"variant=charcoal_block": 		{"model" : "rockhounding_chemistry:misc_blocks_a_charcoal_block"},
 		"variant=poor_raw_salt": 		{"model" : "rockhounding_chemistry:misc_blocks_a_poor_raw_salt"},
-		"variant=reinforced_glass": 	{"model" : "rockhounding_chemistry:misc_blocks_a_reinforced_glass"}
+		"variant=reinforced_glass": 	{"model" : "rockhounding_chemistry:misc_blocks_a_reinforced_glass"},
+		"variant=gas_router": 			{"model" : "rockhounding_chemistry:misc_blocks_a_gas_router"}
     }
 }

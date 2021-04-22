@@ -19,6 +19,8 @@ public class ModConfig {
 	public static final String MUTATION = "toxic_mutation";
 	public static final String WATER_PUMP = "water_pump";
 	public static final String CABINETS = "cabinets";
+	public static final String POWER_STATION = "power_station";
+	public static final String ORBITER = "orbiter";
 
 	//ore
 	public static int mineralFrequency; 
@@ -90,6 +92,10 @@ public class ModConfig {
 	public static int consumeWaterChance;
 	public static boolean dictSmelt;
 	public static int cabinetTiming = 10;
+	public static int gasBurntime;
+	public static int gasEnergizer;
+	public static int recycleChance;
+	public static int wasteConsumed;
 
 	//toxic waste
 	public static boolean xpDrop;
@@ -119,8 +125,6 @@ public class ModConfig {
 		config.addCustomCategoryComment(ABSOLUTE, "Generic configurations");
 		hasInfo = config.get(										ABSOLUTE, "show info bulbs", 						false,					"Shows info bulbs on hot topics in guis").getBoolean();
 		fluidDamage = config.get(									ABSOLUTE, "fluid damage", 							true,					"Chemical products cause damage").getBoolean();
-		basePower = config.get(										ABSOLUTE, "power multiplier", 						1, 						"Multiplies the base RF consumed by all the machines").getInt();
-		speedMultiplier = config.get(								ABSOLUTE, "speed multiplier", 						true,					"Multiplies the consumed power to balance the speed upgrades").getBoolean();
 		catalystMultiplier = config.get(							ABSOLUTE, "catalyst multiplier", 					1, 						"Multiplies all the catalysts duration").getInt();
 		dictSmelt = config.get(										ABSOLUTE, "oredict smelting", 						true,					"Smelt metals by using oredicted ingredients").getBoolean();
 
@@ -171,9 +175,19 @@ public class ModConfig {
 		config.addCustomCategoryComment(METAL_ALLOYER, "Configuration of the Metal Alloyer");
 		patternUses = config.get(									METAL_ALLOYER, "ingot pattern uses", 				500,					"Max uses for the ingot pattern").getInt();
 
+		config.addCustomCategoryComment(POWER_STATION, "Configuration of the Power Station");
+		gasBurntime = config.get(									POWER_STATION, "gas burntime factor", 				2000,					"Burntime value for 0.010cu of Syngas").getInt();
+		gasEnergizer = config.get(									POWER_STATION, "gas turbine factor", 				2000,					"RF value for 0.010cu of Syngas").getInt();
+		basePower = config.get(										POWER_STATION, "power multiplier", 					1, 						"Multiplies the base RF consumed by all the machines").getInt();
+		speedMultiplier = config.get(								POWER_STATION, "speed multiplier", 					true,					"Multiplies the consumed power to balance the speed upgrades").getBoolean();
+
 		config.addCustomCategoryComment(CABINETS, "Configuration of the Cabinets");
 		extractorFactor = config.get(								CABINETS, "extraction factor", 						100,					"How much element is required for 1 regular dust").getInt();
 		extractorCap = config.get(									CABINETS, "cabinets cap", 							6400,					"Max quantity of element that can be inserted into the cabinets from the loader").getInt();
+
+		config.addCustomCategoryComment(ORBITER, "Configuration of the Orbiter");
+		recycleChance = config.get(									ORBITER, "waste recycling chance", 					3,						"1/N chance to infuse an Exp Orb by recycling Toxic Waste for double XP").getInt();
+		wasteConsumed = config.get(									ORBITER, "waste consumed by recycling",				10,						"Millibuckets of Toxic Waste infused in the Exp Orb").getInt();
 
 		config.addCustomCategoryComment(GASIFICATION_PLANT, "Configuration of the Gasification Plant");
 		burner_main_slag = config.get(								GASIFICATION_PLANT, "main slag chance", 			25,						"n% chance to recover the main slag when available (10ppc)").getInt();

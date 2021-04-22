@@ -28,12 +28,10 @@
 					<page id="readme_page">
 						<link ref="chapters:index" color="#CC3333">&lt;- Readme first</link>
 						<p>- If the size of this book doesn't allow an optimal reading, it is suggested to set the GUI scale to 0 in the Guidebook configuration "gbook.cfg" or a suiting combination with the game GUI scale.</p>
-						<p space="10" />
 						<p>- This mod works better with other tech mods introducing metals and other materials to quickly share common resources, since the key is the production of uncommon or non-minable resources usable later in the game.</p>
-						<p space="10" />
 						<p>- This book tries to describe all the parts of the mod and the steps to proceed into it. The table of contents is divided into the main arguments, each one splitted into chapters. Each chapter contains sorted lists of documentation.</p> 
-						<p space="10" />
 						<p>- For a faster navigation, clicking on the indexes leads you to the proper page, while clicking on the red page titles leads you back to its direct parent index.</p>
+						<p>- Search for the Chemistry Quest Book in JEI for a progressive quest line to assembly the entire factory.</p>
 					</page>
 					<page id="concept_page">
 						<link ref="chapters:index" color="#CC3333">&lt;- Mod Concept</link>
@@ -153,7 +151,9 @@
 
 								<page id="consumables_page">
 									<link ref="tech:tech_page" color="#CC3333">&lt;- Consumables</link>
-									<p>Some of the machines use consumables for their processes. They are damageable items that will slowly get consumed and needing a replacement. All of them are anyway enchantable with Unbreaking to last longer.</p>
+									<p>Some of the machines use consumables for their processes. They are damageable items that will slowly get consumed and needing a replacement. All of them are anyway enchantable with Unbreaking to last longer or with mending to have a chance to repair themselves over time.</p>
+									<p space="5" />
+									<p>In case of catalysts, there is available a specific process that is able to clean and recover them from being definitely spent. It is the Catalyst Regeneration.</p>
 								</page>
 							</chapter>
 
@@ -269,7 +269,7 @@
 									<p>In Minecraft gases are fluids marked as "gaseous" (depicted by a flipped bucket icon). Inside the mod, gases are handled only in vessels and moved through a <link ref="utilities:pipeline_page" color="#000000">Gas Pipeline</link>.</p>
 									<p space="4" />
 									<p color="#0000FF">Fluid Category:</p>
-									<p>The <link ref="utilities:fluidpedia_page" color="#000000">Fluidpedia</link> provides some parameters which tell the way a fluid can be stored inside the mod tanks. It roughly depends on Density and Viscosity. While Light Fluids can be held in a <link ref="utilities:fluid_tank_page" color="#000000">Fluid Tank</link>, Heavy Fluids require a <link ref="utilities:fluid_tank_page" color="#000000">Heavy Drun</link> to be stored. </p>
+									<p>The <link ref="utilities:fluidpedia_page" color="#000000">Fluidpedia</link> provides some parameters which tell the way a fluid can be stored inside the mod tanks. It roughly depends on Density and Viscosity. While Light Fluids can be held in a <link ref="utilities:fluid_tank_page" color="#000000">Fluid Tank</link>, Heavy Fluids require a <link ref="utilities:fluid_tank_page" color="#000000">Heavy Drum</link> to be stored. </p>
 									<p>Af = (D + V) / 2</p>
 									<p>Kf = V / D</p>
 									<p>Light Fluid: Af&lt;=3500 and Kf&lt;=1.50</p>
@@ -776,8 +776,7 @@
 												<p>Lab Oven: Controller</p>
 												<p>Gas Reforming: Controller</p>
 												<p>Chemical Extractor: Stabilizer</p>
-												<p space="2" />
-												<image src="rockhounding_chemistry:gbook/screens/catalyst_regen" tw="90" th="66"/>
+												<p>Fixed Bed Reactor: Controller</p>
 											</page>
 
 											<page>
@@ -788,6 +787,8 @@
 												<p>> Feed water to the Regenerator and Flue Gas to the attached vessel.</p>
 												<p space="4" />
 												<p>> When activated, once any monitored catalyst drops its durability below 25%, it gets replenished. As a side effect of the cleaning process, a coke compound can be occasionally saved.</p>
+												<p space="2" />
+												<image src="rockhounding_chemistry:gbook/screens/catalyst_regen" tw="90" th="66"/>
 											</page>
 											
 											<page id="compressor_page">
@@ -859,7 +860,7 @@
 												<p>> The exposed item/s can be seen by moving the cursor on the icon appearing when an output is found.</p>
 												<image src="rockhounding_chemistry:gbook/wiki/sizer_comm_2" tw="23" th="20"/>
 												<p space="4" />
-												<p>> The gangue collector gets the crushed product and it must be kept always free with hoppers or pipes for the next process to start. Slots are handled by the machine, giving an extra yield depending on the recipe.</p>
+												<p>> The gangue collector gets the crushed product and it must be kept always free with hoppers or pipes for the next process to start. Slots are handled by the machine, giving an extra yeld depending on the recipe.</p>
 											</page>
 
 											<page id="cstr_page">
@@ -1178,6 +1179,7 @@
 									<p><stack item="rockhounding_chemistry:machines_c" meta="0" count="1" /> <link ref="tierthree:gan_page" color="#333399">-&gt; Cryogenic Distillation</link></p>
 									<p><stack item="rockhounding_chemistry:machines_d" meta="5" count="1" /> <link ref="tierthree:deposition_page" color="#333399">-&gt; Deposition Chamber</link></p>
 									<p><stack item="rockhounding_chemistry:machines_d" meta="8" count="1" /> <link ref="tierthree:pulling_page" color="#333399">-&gt; Crystal Pulling Crucible</link></p>
+									<p><stack item="rockhounding_chemistry:machines_f" meta="5" count="1" /> <link ref="tierthree:bedreactor_page" color="#333399">-&gt; Fixed Bed Reactor</link></p>
 								</page>
 							</chapter>
 
@@ -1389,6 +1391,49 @@
 												<p space="7" />
 												<p color="#0000FF">Preview</p>
 												<link ref="galleries:gal_pulling" color="#336633">Front View</link>
+											</page>
+
+											<page id="bedreactor_page">
+												<p><stack item="rockhounding_chemistry:machines_f" meta="5" count="1" /> <link ref="tier_three:tier_three_page" color="#CC3333">&lt;- Fixed Bed Reactor</link></p>
+												<p>It produces a gas compound by the interaction of gases with catalysts. Up to 8 catalysts can be used, multiplying the handled quantities. Output vessel is on the side, the purge one is at the back. At the input it's sugggested to use holders.</p>
+												<p space="4" />
+												<p color="#0000FF">Requirements</p>
+												<p>1x Fixed Bed Reactor Controller</p>
+												<p>1x Fixed Bed Reactor Chamber</p>
+												<p>1x Tubular System</p>
+												<p>1x Gas Router</p>
+												<p>6x <link ref="utilities:pressure_vessel_page" color="#000000">Vessel/Holder</link></p>								
+												<p>1x <link ref="utilities:engine_page" color="#000000">Power Station</link> (Both)</p>
+												<p>1x <link ref="utilities:server_page" color="#000000">Server</link></p>
+												<p space="4" />
+												<p color="#0000FF">Assembling</p>
+												<layer_1_2 />
+												<bedreactor_slots_1>
+													<stack item="rockhounding_chemistry:machines_a" meta="14" count="1" />
+													<stack item="rockhounding_chemistry:machines_b" meta="9" count="1" />
+													<stack item="rockhounding_chemistry:machines_f" meta="0" count="1" />
+													<stack item="rockhounding_chemistry:machines_f" meta="4" count="1" />
+													<stack item="rockhounding_chemistry:machines_a" meta="2" count="1" />
+												</bedreactor_slots_1>
+											</page>
+
+											<page>
+												<layer_3_4_5 />
+												<bedreactor_slots_2>
+													<stack item="rockhounding_chemistry:machines_f" meta="2" count="1" />
+													<stack item="rockhounding_chemistry:misc_blocks_a" meta="14" count="1" />
+													<stack item="rockhounding_chemistry:machines_b" meta="9" count="1" />
+												</bedreactor_slots_2>
+												<p space="8" />
+												<p color="#0000FF">How to set the Fixed Bed Reactor:</p>
+												<p>> Select the reaction to perform from the Controller.</p>
+												<p space="4" />
+												<p>> Feed the input gases to the top holders, according to the filters automatically set.</p>
+												<p space="4" />
+												<p>> Insert up to 8 Catalysts in order to increase the output. No need to be 8, each one will multiply the quantities.</p>
+												<p space="7" />
+												<p color="#0000FF">Preview</p>
+												<link ref="galleries:bed_reactor" color="#336633">Front View</link>
 											</page>
 
 										</chapter>
@@ -1741,6 +1786,11 @@
 						<link ref="tiertwo:cstr_page" color="#CC3333">&lt;- Back to Electrochemical CSTR</link>
 						<p space="5" />
 						<image src="rockhounding_chemistry:gbook/screens/cstr" tw="180" th="183"/>
+					</page>
+					<page id="bed_reactor">
+						<link ref="tierthree:bedreactor_page" color="#CC3333">&lt;- Back to Fixed Bed Reactor</link>
+						<p space="5" />
+						<image src="rockhounding_chemistry:gbook/screens/bed_reactor" tw="180" th="246"/>
 					</page>
 					<page id="gal_signal">
 						<link ref="structures:signal_page" color="#CC3333">&lt;- Back to Redstone handling</link>

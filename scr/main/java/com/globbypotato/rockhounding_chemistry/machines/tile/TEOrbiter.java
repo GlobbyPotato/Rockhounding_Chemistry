@@ -1,9 +1,13 @@
 package com.globbypotato.rockhounding_chemistry.machines.tile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.globbypotato.rockhounding_chemistry.enums.materials.EnumFluid;
+import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.items.ProbeItems;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.OrbiterRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.OrbiterRecipe;
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.machines.tileentity.MachineStackHandler;
@@ -22,12 +26,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerConcatenate;
-import net.minecraftforge.fml.common.Loader;
 
 public class TEOrbiter extends TileEntityTank {
 
 	public static int inputSlots = 2;
-	public static int templateSlots = 4;
+	public static int templateSlots = 6;
 
 	public FluidTank inputTank;
 	public FluidTank outputTank;
@@ -56,7 +59,7 @@ public class TEOrbiter extends TileEntityTank {
 			}
 			@Override
 			public boolean canDrainFluidType(FluidStack fluid) {
-				return canDrainJuice(fluid);
+				return true;
 			}
 		};
 		this.outputTank.setTileEntity(this);
@@ -130,7 +133,7 @@ public class TEOrbiter extends TileEntityTank {
 	// ----------------------- HANDLER -----------------------
 	@Override
 	public int getGUIHeight() {
-		return ModUtils.HEIGHT;
+		return 220;
 	}
 
 	public static String getName(){
@@ -174,12 +177,18 @@ public class TEOrbiter extends TileEntityTank {
 	}
 
 	private FluidStack waste() {
-		return BaseRecipes.getFluid(EnumFluid.TOXIC_WASTE, 5);
+		return BaseRecipes.getFluid(EnumFluid.TOXIC_WASTE, wasteAmount());
 	}
 
 	private int wasteAmount(){
-		return 5;
+		return ModConfig.wasteConsumed;
 	}
+
+	private int recycleChance(){
+		return 1 + ModConfig.recycleChance;
+	}
+
+
 
 //fluid I/O
 	public boolean canFillWaste(FluidStack fluid) {
@@ -188,22 +197,29 @@ public class TEOrbiter extends TileEntityTank {
 			&& this.input.canSetOrFillFluid(this.inputTank, getWasteFluid(), fluid);
 	}
 
-	public boolean xpJuiceExists(){
-		return Loader.isModLoaded(ModUtils.openblocks_id) && ModUtils.liquidXP() != null;
-	}
-
 	public boolean canFillJuice(FluidStack fluid) {
-		return xpJuiceExists()
+		return isValidPreset()
 			&& fluid!= null && fluid.getFluid() != null 
-			&& fluid.isFluidEqual(ModUtils.liquidXP())
+			&& fluid.isFluidEqual(recipeJuice())
 			&& this.input.canSetOrFillFluid(this.outputTank, getJuiceFluid(), fluid);
 	}
 
-	private boolean canDrainJuice(FluidStack fluid) {
-		return xpJuiceExists()
-			&& fluid!= null && fluid.getFluid() != null 
-			&& fluid.isFluidEqual(ModUtils.liquidXP());
+
+
+	// ----------------------- RECIPE -----------------------
+	public static ArrayList<OrbiterRecipe> recipeList(){
+		return OrbiterRecipes.exp_recipes;
 	}
+
+	public static OrbiterRecipe getRecipeList(int x){
+		return recipeList().get(x);
+	}
+
+	public boolean isValidPreset(){
+		return getRecipeIndex() > -1 && getRecipeIndex() < recipeList().size();
+	}
+
+	public FluidStack recipeJuice(){ return isValidPreset() ? getRecipeList(getRecipeIndex()).getInput() : null; }
 
 
 
@@ -237,15 +253,17 @@ public class TEOrbiter extends TileEntityTank {
 	}
 
 	public int getstoredXP(){
-		return xpJuiceExists() && juiceHasFluid() && getJuiceAmount() > 0 ? getJuiceAmount() / 20 : this.getXPCount(); 
+		return isValidPreset() && juiceHasFluid() && getJuiceAmount() > 0 ? getJuiceAmount() / 20 : this.getXPCount(); 
 	}
 
 	public int getstoredXPMax(){
-		return xpJuiceExists() ? getJuiceCapacity() : this.getXPCountMax(); 
+		return isValidPreset() ? getJuiceCapacity() : this.getXPCountMax(); 
 	}
 
-	private boolean canAbsorb(int currJuice) {
-		return getstoredXP() <= getstoredXPMax() - currJuice;
+	private boolean canAbsorb(int currJuice, int xpJuice) {
+		return isValidPreset()
+			&& this.output.canSetOrAddFluid(outputTank, getJuiceFluid(), recipeJuice(), xpJuice)
+			&& getstoredXP() <= getstoredXPMax() - (currJuice*2);
 	}
 
 
@@ -263,49 +281,30 @@ public class TEOrbiter extends TileEntityTank {
 					for(int i = 0; i < orbs.size(); i++) {
 						EntityXPOrb orb = (EntityXPOrb)orbs.get(i);
 						int currJuice = orb.getXpValue();
-						int luckyOrb = rand.nextInt(2);
+						int xpJuice = 20 * currJuice;
 
-						//handle waste modifier
-						if(hasWaste() && luckyOrb == 0){
-							currJuice *= 2;
-						}
-
-						if(canAbsorb(currJuice)){
+						if(canAbsorb(currJuice, xpJuice)){
 							//handle waste bonus
-							if(luckyOrb == 0){
+							int luckyOrb = rand.nextInt(recycleChance());
+							if(hasWaste() && luckyOrb == 0){
 								if(this.input.canDrainFluid(getWasteFluid(), waste())){
 									this.input.drainOrCleanFluid(inputTank, wasteAmount(), true);
+									currJuice *= 2;
 								}
 							}
 
 							//handle xp storage
 							this.xpCount += currJuice;
-							int xpJuice = 20 * currJuice;
-							if(xpJuiceExists()){
-								if(this.output.canSetOrAddFluid(outputTank, getJuiceFluid(), ModUtils.liquidXP(), xpJuice)){
-									this.output.setOrFillFluid(outputTank, ModUtils.liquidXP(), xpJuice);
-									this.xpCount -= currJuice;
-								}
-							}
+							//handle xp infusion
+							this.output.setOrFillFluid(outputTank, recipeJuice(), xpJuice);
+							this.xpCount -= currJuice;
 							orb.setDead();
 						}
+				
 					}
 				}
 			}
-
-			//adding openblocks
-			if(xpJuiceExists() && getXPCount() > 0){
-				for(int x = 0; x < getXPCount(); x++){
-					if(this.output.canSetOrAddFluid(outputTank, getJuiceFluid(), ModUtils.liquidXP(), 20)){
-						this.output.setOrFillFluid(outputTank, ModUtils.liquidXP(), 20);
-						this.xpCount--;
-						this.markDirtyClient();
-					}
-				}
-			}
-
 			this.markDirtyClient();
-
 		}
 	}
 
@@ -324,7 +323,7 @@ public class TEOrbiter extends TileEntityTank {
 		if(!player.getEntityWorld().isRemote){
 			int required = calculateRetrievedXP(player, 0);
 			int xpJuice = required * 20;
-			if(xpJuiceExists()){
+			if(isValidPreset()){
 				if(juiceHasFluid() && getJuiceAmount() >= xpJuice){
 					player.addExperience(required);
 					this.output.drainOrCleanFluid(outputTank, xpJuice, true);

@@ -1,6 +1,7 @@
 package com.globbypotato.rockhounding_chemistry.machines.render;
 
 import com.globbypotato.rockhounding_chemistry.machines.tile.TELeachingVatTank;
+import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityInv;
 
 import net.darkhax.bookshelf.util.RenderUtils;
@@ -21,7 +22,8 @@ public class RendererLeachingVatTank extends TileEntitySpecialRenderer<TELeachin
 			World world = Minecraft.getMinecraft().world;
 
 			ItemStack plug = te.getInput().getStackInSlot(TileEntityInv.INPUT_SLOT).copy();
-			EntityItem plugEntity = new EntityItem(world, 0, 0, 0, plug);
+			ItemStack plugItem = BaseRecipes.slurry_agitator.copy();
+			EntityItem plugEntity = new EntityItem(world, 0, 0, 0, plugItem);
 			plugEntity.hoverStart = 0;
 			if(!plug.isEmpty()){
 				GlStateManager.pushMatrix();

@@ -1,6 +1,5 @@
 package com.globbypotato.rockhounding_chemistry.machines.container;
 
-import com.globbypotato.rockhounding_chemistry.fluids.ModFluids;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TEFluidpedia;
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
@@ -39,6 +38,7 @@ public class COFluidpedia extends ContainerBase<TEFluidpedia>{
 		this.addSlotToContainer(new SlotItemHandler(template, 42, 93,  96));//page +
 
 	}
+
 
 	@Override
 	public ItemStack slotClick(int slot, int dragType, ClickType clickTypeIn, EntityPlayer player){

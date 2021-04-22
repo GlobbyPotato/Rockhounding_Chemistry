@@ -1,5 +1,6 @@
 package com.globbypotato.rockhounding_chemistry.machines.gui;
 
+import java.io.IOException;
 import java.util.List;
 
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
@@ -32,6 +33,7 @@ public class UIFluidpedia extends GuiBase {
         GuiBase.TEXTURE = TEXTURE_REF;
         this.tile = tile;
 		this.containerName = "container." + TEFluidpedia.getName();
+		this.xSize = 201;
     }
 
     @Override
@@ -96,6 +98,7 @@ public class UIFluidpedia extends GuiBase {
 			             	   	FluidStack fluidstack = new FluidStack(this.tile.PAGED_FLUID_LIST.get(j + i * 9), 1000);
 			        		   	String modstring = TextFormatting.GRAY + "Owner: " + TextFormatting.RED + getMod(FluidRegistry.getDefaultFluidName(fluid).split(":")[0]);
 	
+			        		   	String filterunloc = TextFormatting.GRAY + "Registry: " + TextFormatting.DARK_GRAY + fluidstack.getUnlocalizedName();
 			        		   	String filterstring = TextFormatting.GRAY + "Material: " + TextFormatting.WHITE + fluidstack.getLocalizedName();
 			        		   	String categorystring = TextFormatting.GRAY + "Type: " + TextFormatting.AQUA + "Fluid";
 			        		   	if(fluid.isGaseous()){
@@ -113,9 +116,9 @@ public class UIFluidpedia extends GuiBase {
 			        		   	String catstring = TextFormatting.GRAY + "Category: " + TextFormatting.GREEN + fluidCat + " Fluid";
 	
 			        		   	if(fluid.isGaseous()){
-				        			multiString = new String[]{modstring, "", filterstring, categorystring, tempstring};
+				        			multiString = new String[]{modstring, "", filterstring, filterunloc, categorystring, tempstring};
 			        		   	}else{
-				        			multiString = new String[]{modstring, "", filterstring, categorystring, tempstring, substancestring, catstring};
+				        			multiString = new String[]{modstring, "", filterstring, filterunloc, categorystring, tempstring, substancestring, catstring};
 			        		   	}
 			   					tooltip = GuiUtils.drawMultiLabel(multiString, mouseX, mouseY);
 			   					drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
@@ -138,6 +141,46 @@ public class UIFluidpedia extends GuiBase {
 		this.fontRenderer.drawString(this.tile.getAlphabet(), 27, 100, 4210752);
 		this.fontRenderer.drawString(String.valueOf(this.tile.getPage()), 80, 100, 4210752);
 	}
+	
+	@Override
+	public void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException{
+        super.mouseClicked(mouseX, mouseY, mouseButton);
+        if (mouseButton == 0){
+            int i = (this.width - this.xSize) / 2;
+            int j = (this.height - this.ySize) / 2;
+            if(GuiUtils.hoveringArea(173, 2,   26, 143, mouseX, mouseY, i, j)){
+	            if(GuiUtils.hoveringArea(173, 2,   13, 11, mouseX, mouseY, i, j)){this.tile.charNum = 0;}//A
+	            if(GuiUtils.hoveringArea(173, 13,  13, 11, mouseX, mouseY, i, j)){this.tile.charNum = 1;}//B
+	            if(GuiUtils.hoveringArea(173, 24,  13, 11, mouseX, mouseY, i, j)){this.tile.charNum = 2;}//C
+	            if(GuiUtils.hoveringArea(173, 35,  13, 11, mouseX, mouseY, i, j)){this.tile.charNum = 3;}//D
+	            if(GuiUtils.hoveringArea(173, 46,  13, 11, mouseX, mouseY, i, j)){this.tile.charNum = 4;}//E
+	            if(GuiUtils.hoveringArea(173, 57,  13, 11, mouseX, mouseY, i, j)){this.tile.charNum = 5;}//F
+	            if(GuiUtils.hoveringArea(173, 68,  13, 11, mouseX, mouseY, i, j)){this.tile.charNum = 6;}//G
+	            if(GuiUtils.hoveringArea(173, 79,  13, 11, mouseX, mouseY, i, j)){this.tile.charNum = 7;}//H
+	            if(GuiUtils.hoveringArea(173, 90,  13, 11, mouseX, mouseY, i, j)){this.tile.charNum = 8;}//I
+	            if(GuiUtils.hoveringArea(173, 101, 13, 11, mouseX, mouseY, i, j)){this.tile.charNum = 9;}//J
+	            if(GuiUtils.hoveringArea(173, 112, 13, 11, mouseX, mouseY, i, j)){this.tile.charNum = 10;}//K
+	            if(GuiUtils.hoveringArea(173, 123, 13, 11, mouseX, mouseY, i, j)){this.tile.charNum = 11;}//L
+	            if(GuiUtils.hoveringArea(173, 134, 13, 11, mouseX, mouseY, i, j)){this.tile.charNum = 12;}//M
+	
+	            if(GuiUtils.hoveringArea(186, 2,   13, 11, mouseX, mouseY, i, j)){this.tile.charNum = 13;}//N
+	            if(GuiUtils.hoveringArea(186, 13,  13, 11, mouseX, mouseY, i, j)){this.tile.charNum = 14;}//O
+	            if(GuiUtils.hoveringArea(186, 24,  13, 11, mouseX, mouseY, i, j)){this.tile.charNum = 15;}//P
+	            if(GuiUtils.hoveringArea(186, 35,  13, 11, mouseX, mouseY, i, j)){this.tile.charNum = 16;}//Q
+	            if(GuiUtils.hoveringArea(186, 46,  13, 11, mouseX, mouseY, i, j)){this.tile.charNum = 17;}//R
+	            if(GuiUtils.hoveringArea(186, 57,  13, 11, mouseX, mouseY, i, j)){this.tile.charNum = 18;}//S
+	            if(GuiUtils.hoveringArea(186, 68,  13, 11, mouseX, mouseY, i, j)){this.tile.charNum = 19;}//T
+	            if(GuiUtils.hoveringArea(186, 79,  13, 11, mouseX, mouseY, i, j)){this.tile.charNum = 20;}//U
+	            if(GuiUtils.hoveringArea(186, 90,  13, 11, mouseX, mouseY, i, j)){this.tile.charNum = 21;}//V
+	            if(GuiUtils.hoveringArea(186, 101, 13, 11, mouseX, mouseY, i, j)){this.tile.charNum = 22;}//W
+	            if(GuiUtils.hoveringArea(186, 112, 13, 11, mouseX, mouseY, i, j)){this.tile.charNum = 23;}//X
+	            if(GuiUtils.hoveringArea(186, 123, 13, 11, mouseX, mouseY, i, j)){this.tile.charNum = 24;}//W
+	            if(GuiUtils.hoveringArea(186, 134, 13, 11, mouseX, mouseY, i, j)){this.tile.charNum = 25;}//Z
+	            
+	            this.tile.collectFluids(this.tile.getAlphabet(), this.tile.getView());
+        	}
+        }
+    }
 
 	@Override
     public void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY){
@@ -149,7 +192,7 @@ public class UIFluidpedia extends GuiBase {
 
         int adjustedX = 120 + this.tile.getView() * 17;
         int adjustedV = this.tile.getView() * 14;
-   		this.drawTexturedModalRect(i + adjustedX, j + 97, 176, adjustedV, 14, 14);
+   		this.drawTexturedModalRect(i + adjustedX, j + 97, 202, adjustedV, 14, 14);
         
    		if(!this.tile.PAGED_FLUID_LIST.isEmpty() && this.tile.PAGED_FLUID_LIST.size() > 0){
 	        for (int u = 0; u < 4; ++u){

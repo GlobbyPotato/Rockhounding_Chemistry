@@ -1,0 +1,27 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:machines",
+	"pattern": [
+		"GSG",
+		"GSG",
+		"pXp"
+	],
+	"key": {
+		"S":{
+				"item": "#SCAFFOLD"
+			},
+		"p":{
+				"item": "#GLASS_PIPE"
+			},
+		"X":{
+				"item": "#GAS_PRESSURIZER"
+			},
+		"G":{
+				"item": "#GLASS"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:machines_f",
+				"data": 2
+			}
+}

@@ -522,11 +522,19 @@ public class TEMineralSizerController extends TileEntityInv implements IInternal
 					if(!getTankA().gearSlot(gearCount).isEmpty()){
 						int unbreakingLevel = CoreUtils.getEnchantmentLevel(Enchantments.UNBREAKING, getTankA().gearSlot(gearCount));
 						((MachineStackHandler)getTankA().getInput()).damageUnbreakingSlot(unbreakingLevel, gearCount);
+
+						if(CoreUtils.hasMending(getTankA().gearSlot(gearCount)) && this.rand.nextInt(CoreUtils.mendingFactor) == 0) {
+							((MachineStackHandler)getTankA().getInput()).repairMendingSlot(gearCount);
+						}
 					}
 				}else{
 					if(!getTankB().gearSlot(gearCount - 4).isEmpty()){
 						int unbreakingLevel = CoreUtils.getEnchantmentLevel(Enchantments.UNBREAKING, getTankB().gearSlot(gearCount - 4));
 						((MachineStackHandler)getTankB().getInput()).damageUnbreakingSlot(unbreakingLevel, gearCount - 4);
+						
+						if(CoreUtils.hasMending(getTankB().gearSlot(gearCount - 4)) && this.rand.nextInt(CoreUtils.mendingFactor) == 0) {
+							((MachineStackHandler)getTankB().getInput()).repairMendingSlot(gearCount - 4);
+						}
 					}
 				}
 			}

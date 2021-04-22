@@ -31,6 +31,7 @@ public class ModUtils {
 	public static String openblocks_id = "openblocks";
 	public static String gcplanet_id = "galacticraftplanets";
 	public static String wawla_id = "wawla";
+	public static String enderio_id = "enderio";
 
 	public static String creosote = "creosote";
 	public static String liquidXP = "xpjuice";
@@ -146,6 +147,10 @@ public class ModUtils {
 		return Loader.isModLoaded(openblocks_id);
 	}
 
+	public static boolean hasEnderIO() {
+		return Loader.isModLoaded(enderio_id);
+	}
+
 	public static boolean hasForestry() {
 		return Loader.isModLoaded(forestry_id);
 	}
@@ -188,9 +193,9 @@ public class ModUtils {
 	}
 
 	public static FluidStack liquidXP() {
-		if(hasOpenBlocks()){
+		if(hasOpenBlocks() || hasEnderIO()){
 			if(CoreUtils.fluidExists(liquidXP)){
-				return CoreUtils.getFluid(liquidXP, 20);
+				return CoreUtils.getFluid(liquidXP, 1000);
 			}
 		}
 		return null;

@@ -483,6 +483,10 @@ public class TERetentionVat extends TileEntityInv implements IInternalServer {
 				this.output.drainOrCleanFluid(getLeacherA().inputTank, calculatedFluo(), true);
 				int unbreakingLevel = CoreUtils.getEnchantmentLevel(Enchantments.UNBREAKING, getLeacherA().gearSlot());
 				((MachineStackHandler)getLeacherA().getInput()).damageUnbreakingSlot(unbreakingLevel, TileEntityInv.INPUT_SLOT);
+
+				if(CoreUtils.hasMending(getLeacherA().gearSlot()) && this.rand.nextInt(CoreUtils.mendingFactor) == 0) {
+					((MachineStackHandler)getLeacherA().getInput()).repairMendingSlot(TileEntityInv.INPUT_SLOT);
+				}
 			}
 			if(hasVesselA()){
 				this.output.drainOrCleanFluid(getVesselA().inputTank, calculatedSteam(), true);
@@ -492,6 +496,10 @@ public class TERetentionVat extends TileEntityInv implements IInternalServer {
 				this.output.drainOrCleanFluid(getLeacherB().inputTank, calculatedWater(), true);
 				int unbreakingLevel = CoreUtils.getEnchantmentLevel(Enchantments.UNBREAKING, getLeacherB().gearSlot());
 				((MachineStackHandler)getLeacherB().getInput()).damageUnbreakingSlot(unbreakingLevel, TileEntityInv.INPUT_SLOT);
+
+				if(CoreUtils.hasMending(getLeacherB().gearSlot()) && this.rand.nextInt(CoreUtils.mendingFactor) == 0) {
+					((MachineStackHandler)getLeacherB().getInput()).repairMendingSlot(TileEntityInv.INPUT_SLOT);
+				}
 			}
 	
 			if(hasTankPulp()){

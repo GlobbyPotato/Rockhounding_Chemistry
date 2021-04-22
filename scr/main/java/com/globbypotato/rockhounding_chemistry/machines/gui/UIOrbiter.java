@@ -12,6 +12,9 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -27,6 +30,7 @@ public class UIOrbiter extends GuiBase {
         GuiBase.TEXTURE = TEXTURE_REF;
         this.tile = tile;
 		this.containerName = "container." + TEOrbiter.getName();
+		this.ySize = 220;
     }
 
     @Override
@@ -39,8 +43,8 @@ public class UIOrbiter extends GuiBase {
 	   List<String> tooltip;
 
 		//drain
-	    if(GuiUtils.hoveringArea(152, 96, 18, 18, mouseX, mouseY, x, y)){
-			if(this.tile.xpJuiceExists()){
+	    if(GuiUtils.hoveringArea(152, 117, 16, 16, mouseX, mouseY, x, y)){
+			if(this.tile.isValidPreset()){
 				String voidstring = TextFormatting.GREEN + "Can Drain Liquid XP";
 				tooltip = GuiUtils.drawLabel(voidstring, mouseX, mouseY);
 			}else{
@@ -49,13 +53,13 @@ public class UIOrbiter extends GuiBase {
 			drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	    }
 
-	   //-
+	   //-lev
 	   if(GuiUtils.hoveringArea(59, 58, 18, 18, mouseX, mouseY, x, y)){
 		   tooltip = GuiUtils.drawLabel("Decrease levels", mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
 
-	   //+
+	   //+lev
 	   if(GuiUtils.hoveringArea(99, 58, 18, 18, mouseX, mouseY, x, y)){
 		   tooltip = GuiUtils.drawLabel("Increase levels", mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
@@ -71,8 +75,20 @@ public class UIOrbiter extends GuiBase {
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
 
+	   //prev
+	   if(GuiUtils.hoveringArea(8, 109, 18, 18, mouseX, mouseY, x, y)){
+		   tooltip = GuiUtils.drawLabel("Previous Recipe", mouseX, mouseY);
+		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
+	   }
+
+	   //next
+	   if(GuiUtils.hoveringArea(25, 109, 18, 18, mouseX, mouseY, x, y)){
+		   tooltip = GuiUtils.drawLabel("Next Recipe", mouseX, mouseY);
+		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
+	   }
+
 	   //activation
-	   if(GuiUtils.hoveringArea(79, 96, 18, 18, mouseX, mouseY, x, y)){
+	   if(GuiUtils.hoveringArea(79, 116, 18, 18, mouseX, mouseY, x, y)){
 		   tooltip = GuiUtils.drawLabel(this.activation_label, mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
@@ -93,20 +109,41 @@ public class UIOrbiter extends GuiBase {
 
 		//output juice
 		if(GuiUtils.hoveringArea(36, 78, 102, 12, mouseX, mouseY, x, y)){
-			if(this.tile.xpJuiceExists()){
+			if(this.tile.isValidPreset()){
 				tooltip = GuiUtils.drawFluidTankInfo(this.tile.outputTank, mouseX, mouseY);
 			}else{
-			   String xpTot = TextFormatting.GRAY + "Stored Experience: " + TextFormatting.YELLOW + this.tile.getXPCount() + "/" + this.tile.getXPCountMax() + " xp";
-			   tooltip = GuiUtils.drawLabel(xpTot, mouseX, mouseY);
+				String xpTot = TextFormatting.GRAY + "Stored Experience: " + TextFormatting.YELLOW + this.tile.getXPCount() + "/" + this.tile.getXPCountMax() + " xp";
+			   	tooltip = GuiUtils.drawLabel(xpTot, mouseX, mouseY);
 			}
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 		}
+		
+		//juice filter
+	    if(GuiUtils.hoveringArea(115, 116, 18, 18, mouseX, mouseY, x, y)){
+			String filterstring = TextFormatting.BLUE + "Filter: " + TextFormatting.WHITE + "Currently selected Liquid XP";
+			if(this.tile.isValidPreset() && this.tile.recipeJuice() != null){
+				filterstring = TextFormatting.GRAY + "Filter: " + TextFormatting.GREEN + this.tile.recipeJuice().getLocalizedName();
+				tooltip = GuiUtils.drawLabel(filterstring, mouseX, mouseY);
+				drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
+			}
+		}
+
     }
 
 	 @Override
 	public void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+		String recipeLabel = "No Liquid XP selected";
+		if(this.tile.isValidPreset() && this.tile.getRecipeList(this.tile.getRecipeIndex()).getInput() != null){
+			recipeLabel = getMod(FluidRegistry.getDefaultFluidName(this.tile.getRecipeList(this.tile.getRecipeIndex()).getInput().getFluid()).split(":")[0]);
+		}
 		this.fontRenderer.drawString(String.valueOf(this.tile.getLevels()), 80, 64, 4210752);
+		this.fontRenderer.drawString(String.valueOf(recipeLabel), 9, 99, 4210752);
+	}
+
+	private String getMod(String id) {
+	    ModContainer mods = Loader.instance().getIndexedModList().get(id);
+	    return mods != null ? mods.getName() : id;
 	}
 
 	@Override
@@ -120,15 +157,15 @@ public class UIOrbiter extends GuiBase {
 		//activation
         if(this.tile.isActive()){
         	if(this.tile.isPowered()){
-        		this.drawTexturedModalRect(i + 81, j + 97, 190, 10, 14, 14);
+        		this.drawTexturedModalRect(i + 81, j + 117, 190, 10, 14, 14);
         	}else{
-        		this.drawTexturedModalRect(i + 81, j + 97, 176, 10, 14, 14);
+        		this.drawTexturedModalRect(i + 81, j + 117, 176, 10, 14, 14);
         	}
         }
 
         // drain icon
-		if(this.tile.xpJuiceExists()){
-    		this.drawTexturedModalRect(i + 153, j + 97, 176, 25, 14, 14);
+		if(this.tile.isValidPreset()){
+    		this.drawTexturedModalRect(i + 153, j + 118, 176, 25, 14, 14);
 		}
 
 		//offscale icon
@@ -137,7 +174,7 @@ public class UIOrbiter extends GuiBase {
 		}
 
 		// output bar
-		if(!this.tile.xpJuiceExists()){
+		if(!this.tile.isValidPreset()){
 			if(this.tile.getXPCount() > 0){
 	            int k = GuiUtils.getScaledValue(100, this.tile.getXPCount(), this.tile.getXPCountMax());
 	            this.drawTexturedModalRect(i + 37, j + 79, 0, 200, k, 10);
@@ -150,10 +187,15 @@ public class UIOrbiter extends GuiBase {
 		}
 
 		//output liquid xp
-		if(this.tile.xpJuiceExists()){
+		if(this.tile.isValidPreset()){
 			if(this.tile.juiceHasFluid() && this.tile.getJuiceAmount() > 0){
 				GuiUtils.renderFluidBar(this.tile.getJuiceFluid(), this.tile.getJuiceAmount(), this.tile.getJuiceCapacity(), i + 37, j + 79, 100, 10);
 			}
+		}
+
+		//output juice
+		if(this.tile.isValidPreset() && this.tile.recipeJuice() != null){
+			GuiUtils.renderFluidBar(this.tile.recipeJuice(), 1000, 1000, i + 116, j + 117, 16, 16);
 		}
 
     }

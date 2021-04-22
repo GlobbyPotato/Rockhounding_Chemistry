@@ -10,7 +10,9 @@ import javax.annotation.Nonnull;
 import com.globbypotato.rockhounding_chemistry.compat.jei.RHRecipeWrapper;
 import com.globbypotato.rockhounding_chemistry.enums.materials.EnumFluid;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.RetentionVatRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.VatAgitatorRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.RetentionVatRecipe;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.VatAgitatorRecipe;
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 
 import mezz.jei.api.ingredients.IIngredients;
@@ -48,6 +50,15 @@ public class RetentionVatWrapper extends RHRecipeWrapper<RetentionVatRecipe>{
 	}
 
 	@Nonnull
+	public List<ItemStack> getGears() {
+		List<ItemStack> stacks = new ArrayList<ItemStack>();
+		for (VatAgitatorRecipe recipe : VatAgitatorRecipes.leaching_vat_agitator) {
+			stacks.add(recipe.getAgitator());
+		}
+		return stacks;
+	}
+
+	@Nonnull
 	public List<FluidStack> getSolvents() {
 		List<FluidStack> outputs = new ArrayList<FluidStack>();
 		outputs.add(BaseRecipes.getFluid(EnumFluid.HYDROFLUORIC_ACID, 1000));
@@ -66,6 +77,7 @@ public class RetentionVatWrapper extends RHRecipeWrapper<RetentionVatRecipe>{
 	@Override
 	public void getIngredients(IIngredients ingredients) {
 		ingredients.setInputLists(VanillaTypes.FLUID, Arrays.asList(getInputs(), getSolvents()));
+		ingredients.setInputs(VanillaTypes.ITEM, getGears());
 		ingredients.setOutputs(VanillaTypes.ITEM, getOutputs());
 		ingredients.setOutputs(VanillaTypes.FLUID, getSolutions());
 	}

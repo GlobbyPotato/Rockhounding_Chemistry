@@ -32,5 +32,7 @@ public class MachineRecipes {
 		EvaporationTankRecipes.machineRecipes();
 		PrecipitationRecipes.machineRecipes();
 		BedReactorRecipes.machineRecipes();
+		VatAgitatorRecipes.machineRecipes();
+		OrbiterRecipes.machineRecipes();
 	}
 }

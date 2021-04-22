@@ -40,6 +40,8 @@ public class CTSupport {
 	        CraftTweakerAPI.registerClass(CT_Precipitator.class);
 	        CraftTweakerAPI.registerClass(CT_InhibitGases.class);
 	        CraftTweakerAPI.registerClass(CT_BedReactor.class);
+	        CraftTweakerAPI.registerClass(CT_SlurryAgitators.class);
+	        CraftTweakerAPI.registerClass(CT_Orbiter.class);
     	}
     }
 
