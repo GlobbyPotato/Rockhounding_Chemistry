@@ -172,9 +172,11 @@ public class TETubularBedController extends TileEntityInv implements IInternalSe
 	}
 
 	private boolean handleOutput() {
-		return getRecipeOutput() != null && hasOutTank() && this.input.canSetOrAddFluid(getOutTank().inputTank, getOutTank().inputTank.getFluid(), getRecipeOutput(), calculatedAmount(getRecipeOutput().amount));	
+		return getRecipeOutput() != null 
+			&& hasOutTank() 
+			&& this.output.canSetOrAddFluid(getOutTank().inputTank, getOutTank().inputTank.getFluid(), getRecipeOutput(), calculatedAmount(getRecipeOutput().amount));	
 	}
-	
+
 	private int calculatedAmount(int amount) {
 		int multi = 0;
 		for(int x = 0; x < getTubularCatalysts().SLOT_INPUTS.length; x++) {
@@ -187,9 +189,11 @@ public class TETubularBedController extends TileEntityInv implements IInternalSe
 
 	public int catSize() {
 		int multi = 0;
-		for(int x = 0; x < getTubularCatalysts().SLOT_INPUTS.length; x++) {
-			if(getTubularCatalysts().catalystSlot(x).isItemEqualIgnoreDurability(getRecipeCatalyst())) {
-				multi++;
+		if(this.hasCatalysts()) {
+			for(int x = 0; x < getTubularCatalysts().SLOT_INPUTS.length; x++) {
+				if(getTubularCatalysts().catalystSlot(x).isItemEqualIgnoreDurability(getRecipeCatalyst())) {
+					multi++;
+				}
 			}
 		}
 		return multi;
@@ -548,8 +552,6 @@ public class TETubularBedController extends TileEntityInv implements IInternalSe
 		}
 	}
 
-
-
 	private boolean canProcess() {
 		return isActive()
 			&& isAssembled()
@@ -559,12 +561,10 @@ public class TETubularBedController extends TileEntityInv implements IInternalSe
 			&& handleServer(hasServer(), getServer(), this.currentFile); //server;
 	}
 
-
-
 	private void process() {
 		if(isValidRecipe()){
 			if(hasOutTank()){
-				this.input.setOrFillFluid(getOutTank().inputTank, getRecipeOutput(), calculatedAmount(getRecipeOutput().amount));
+				this.output.setOrFillFluid(getOutTank().inputTank, getRecipeOutput(), calculatedAmount(getRecipeOutput().amount));
 			}
 
 			if(hasTubularCatalysts()){

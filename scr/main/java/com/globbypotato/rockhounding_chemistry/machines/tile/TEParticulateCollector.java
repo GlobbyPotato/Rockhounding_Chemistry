@@ -152,16 +152,16 @@ public class TEParticulateCollector extends TileEntityInv {
 
 	}
 
-	public void handleParticulate(boolean hasMainSlag, int main_slag, boolean hasAltSlag, int secondary_slag) {
+	public void handleParticulate(boolean hasMainSlag, int main_slag, boolean hasAltSlag, int secondary_slag, int multiplier) {
 		if(hasMainSlag){
 			if(this.rand.nextInt(100) < main_slag){
-				this.primaryCount += this.rand.nextInt(10) + 1;
+				this.primaryCount += (this.rand.nextInt(10) + 1) * multiplier;
 				this.markDirtyClient();
 			}
 		}
 		if(hasAltSlag){
 			if(this.rand.nextInt(100) < secondary_slag){
-				this.secondaryCount += this.rand.nextInt(5) + 1;
+				this.secondaryCount += (this.rand.nextInt(5) + 1) * multiplier;
 				this.markDirtyClient();
 			}
 		}

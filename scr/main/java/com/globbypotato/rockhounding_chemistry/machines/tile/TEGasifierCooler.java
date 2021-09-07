@@ -428,7 +428,7 @@ public class TEGasifierCooler extends TileEntityInv {
 			this.input.drainOrCleanFluid(getSlurryTank().inputTank, getDrainSlurry(), true);
 
 			if(hasParticulate()){
-				getParticulate().handleParticulate(hasMainSlag(), ModConfig.burner_main_slag, hasAltSlag(), ModConfig.burner_secondary_slag);
+				getParticulate().handleParticulate(hasMainSlag(), ModConfig.burner_main_slag, hasAltSlag(), ModConfig.burner_secondary_slag, speedFactor());
 			}
 			
 			if(hasRefractory()){

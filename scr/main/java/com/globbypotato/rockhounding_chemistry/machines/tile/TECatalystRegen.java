@@ -13,6 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerConcatenate;
@@ -182,8 +183,9 @@ public class TECatalystRegen extends TileEntityTank {
 									regenCat(thisCat);
 								}
 							}
-						}else if(tile instanceof TETubularBedLow){
-							TileEntity reactor = this.world.getTileEntity(this.pos.up(2));
+						}else if(tile instanceof TETubularBedTank){
+							BlockPos tubularLowPos = this.pos.up(2).offset(getFacing(), 1);
+							TileEntity reactor = this.world.getTileEntity(tubularLowPos);
 							if(reactor != null){
 								TETubularBedLow served = (TETubularBedLow)reactor;
 								for(int x = 0; x < TETubularBedLow.SLOT_INPUTS.length; x++){

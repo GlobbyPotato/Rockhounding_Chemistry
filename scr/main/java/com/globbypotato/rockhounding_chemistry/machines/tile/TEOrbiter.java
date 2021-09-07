@@ -248,6 +248,10 @@ public class TEOrbiter extends TileEntityTank {
 		return this.offScale;
 	}
 	
+	private int infusingFactor() {
+		return ModConfig.infusingFactor;
+	}
+
 	public int getRadius(){
 		return ProbeItems.orbiterUpgrade(probeSlot());
 	}
@@ -261,9 +265,12 @@ public class TEOrbiter extends TileEntityTank {
 	}
 
 	private boolean canAbsorb(int currJuice, int xpJuice) {
-		return isValidPreset()
-			&& this.output.canSetOrAddFluid(outputTank, getJuiceFluid(), recipeJuice(), xpJuice)
+		return this.output.canSetOrAddFluid(outputTank, getJuiceFluid(), recipeJuice(), xpJuice)
 			&& getstoredXP() <= getstoredXPMax() - (currJuice*2);
+	}
+
+	private boolean canPull(int xpJuice) {
+		return this.output.canSetOrAddFluid(outputTank, getJuiceFluid(), recipeJuice(), xpJuice);
 	}
 
 
@@ -276,31 +283,31 @@ public class TEOrbiter extends TileEntityTank {
 			fillContainer(DRAIN_BUCKET, this.outputTank);
 
 			if(this.isActive()){
+				if(isValidPreset()){
+					if(canPull(infusingFactor())){
+						pullXP(1, infusingFactor());
+					}
+				}
+
 				List orbs = this.world.getEntitiesWithinAABB(EntityXPOrb.class, new AxisAlignedBB(new BlockPos(this.pos.getX() - getRadius(), this.pos.getY() - getRadius(), this.pos.getZ() - getRadius()), new BlockPos(this.pos.getX() + getRadius(), this.pos.getY() + getRadius(), this.pos.getZ() + getRadius())), EntitySelectors.IS_ALIVE);
 				if(!orbs.isEmpty() && orbs.size() > 0) {
 					for(int i = 0; i < orbs.size(); i++) {
 						EntityXPOrb orb = (EntityXPOrb)orbs.get(i);
 						int currJuice = orb.getXpValue();
-						int xpJuice = 20 * currJuice;
-
-						if(canAbsorb(currJuice, xpJuice)){
-							//handle waste bonus
-							int luckyOrb = rand.nextInt(recycleChance());
-							if(hasWaste() && luckyOrb == 0){
-								if(this.input.canDrainFluid(getWasteFluid(), waste())){
-									this.input.drainOrCleanFluid(inputTank, wasteAmount(), true);
-									currJuice *= 2;
-								}
+						int xpJuice = infusingFactor() * currJuice;
+						
+						if(isValidPreset()){
+							if(canAbsorb(currJuice, xpJuice) && canAcquire(currJuice)){
+								handleOrbStorage(currJuice, xpJuice);
+								pullXP(currJuice, xpJuice);
+								orb.setDead();
 							}
-
-							//handle xp storage
-							this.xpCount += currJuice;
-							//handle xp infusion
-							this.output.setOrFillFluid(outputTank, recipeJuice(), xpJuice);
-							this.xpCount -= currJuice;
-							orb.setDead();
+						}else {
+							if(canAcquire(currJuice)) {
+								handleOrbStorage(currJuice, xpJuice);
+								orb.setDead();
+							}
 						}
-				
 					}
 				}
 			}
@@ -308,6 +315,30 @@ public class TEOrbiter extends TileEntityTank {
 		}
 	}
 
+	private void pullXP(int currJuice, int xpJuice) {
+		//handle xp liquid
+		if(recipeJuice() != null) {
+			this.output.setOrFillFluid(outputTank, recipeJuice(), xpJuice);
+			this.xpCount -= currJuice;
+		}
+	}
+
+	private boolean canAcquire(int currJuice) {
+		return this.getXPCount() <= getXPCountMax() - currJuice;
+	}
+
+	private void handleOrbStorage(int currJuice, int xpJuice) {
+		//handle waste bonus
+		int luckyOrb = rand.nextInt(recycleChance());
+		if(hasWaste() && luckyOrb == 0){
+			if(this.input.canDrainFluid(getWasteFluid(), waste())){
+				this.input.drainOrCleanFluid(inputTank, wasteAmount(), true);
+				currJuice *= 2;
+			}
+		}
+		//handle xp storage
+		this.xpCount += currJuice;
+	}
 
 	public int calculateRetrievedXP(EntityPlayer player, int offset){
 	    int exp = 0;

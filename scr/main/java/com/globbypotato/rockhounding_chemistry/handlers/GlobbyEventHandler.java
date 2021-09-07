@@ -253,7 +253,10 @@ public class GlobbyEventHandler {
 						}
 		    		}
 		    	}
-
+			}else {
+				if(itemstack.isItemEqual(BaseRecipes.sampling_ampoule)){
+					itemstack.setTagCompound(new NBTTagCompound());
+				}
 			}
 		}
 	}

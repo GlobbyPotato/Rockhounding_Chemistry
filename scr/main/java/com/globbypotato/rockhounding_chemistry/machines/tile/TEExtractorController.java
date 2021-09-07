@@ -664,8 +664,8 @@ public class TEExtractorController extends TileEntityInv implements IInternalSer
 							if(tag.getInteger("Device") == deviceCode()){
 								if(tag.getInteger("Recipe") < 16){
 									if(tag.getInteger("Done") > 0){
-										if(this.recipeIndex != tag.getInteger("Recipe")){
-											this.recipeIndex = tag.getInteger("Recipe");
+										if(this.intensity != 1 + (tag.getInteger("Recipe"))){
+											this.intensity = 1 + (tag.getInteger("Recipe"));
 											this.markDirtyClient();
 										}
 										if(this.currentFile != x){

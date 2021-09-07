@@ -456,8 +456,6 @@ public class MachinesD extends MachineIO {
 				}
 				if(meta == EnumMachinesD.FLUIDPEDIA.ordinal()){
 					player.openGui(Rhchemistry.instance, GuiHandler.fluidpedia_id, world, pos.getX(), pos.getY(), pos.getZ());
-					TEFluidpedia pedia = (TEFluidpedia)world.getTileEntity(pos);
-					pedia.collectFluids(pedia.getAlphabet(), pedia.getView());
 				}
 				if(meta == EnumMachinesD.WASTE_DUMPER.ordinal()){
 					player.openGui(Rhchemistry.instance, GuiHandler.waste_dumper_id, world, pos.getX(), pos.getY(), pos.getZ());

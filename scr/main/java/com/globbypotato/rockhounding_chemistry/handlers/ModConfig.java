@@ -96,6 +96,7 @@ public class ModConfig {
 	public static int gasEnergizer;
 	public static int recycleChance;
 	public static int wasteConsumed;
+	public static int infusingFactor;
 
 	//toxic waste
 	public static boolean xpDrop;
@@ -188,6 +189,7 @@ public class ModConfig {
 		config.addCustomCategoryComment(ORBITER, "Configuration of the Orbiter");
 		recycleChance = config.get(									ORBITER, "waste recycling chance", 					3,						"1/N chance to infuse an Exp Orb by recycling Toxic Waste for double XP").getInt();
 		wasteConsumed = config.get(									ORBITER, "waste consumed by recycling",				10,						"Millibuckets of Toxic Waste infused in the Exp Orb").getInt();
+		infusingFactor = config.get(								ORBITER, "XP infusing factor",						20,						"Millibuckets of any fluidXP from 1 XP").getInt();
 
 		config.addCustomCategoryComment(GASIFICATION_PLANT, "Configuration of the Gasification Plant");
 		burner_main_slag = config.get(								GASIFICATION_PLANT, "main slag chance", 			25,						"n% chance to recover the main slag when available (10ppc)").getInt();

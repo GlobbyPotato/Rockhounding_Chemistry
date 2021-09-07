@@ -177,7 +177,7 @@ public class UIOrbiter extends GuiBase {
 		if(!this.tile.isValidPreset()){
 			if(this.tile.getXPCount() > 0){
 	            int k = GuiUtils.getScaledValue(100, this.tile.getXPCount(), this.tile.getXPCountMax());
-	            this.drawTexturedModalRect(i + 37, j + 79, 0, 200, k, 10);
+	            this.drawTexturedModalRect(i + 37, j + 79, 0, 220, k, 10);
 			}
 		}
 

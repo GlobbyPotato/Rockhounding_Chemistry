@@ -330,7 +330,7 @@ public class TEGasPurifier extends TileEntityInv {
 
 		if(hasParticulate()){
 			if(isValidRecipe()){
-				getParticulate().handleParticulate(hasMainSlag(), ModConfig.purifier_main_slag, hasAltSlag(), ModConfig.purifier_secondary_slag);
+				getParticulate().handleParticulate(hasMainSlag(), ModConfig.purifier_main_slag, hasAltSlag(), ModConfig.purifier_secondary_slag, speedFactor());
 			}
 		}
 	}
