@@ -101,6 +101,8 @@ public class ModConfig {
 	//toxic waste
 	public static boolean xpDrop;
 	public static boolean enableHazard;
+	public static boolean leakingType;
+	public static int leakingRadius;
 	public static int hazardChance;
 	public static int pressureTolerance;
 	public static int exhaustRate;
@@ -136,8 +138,10 @@ public class ModConfig {
 		enableMutation = config.get(								MUTATION, "enable toxic mutation", 					true,					"Enable the toxic mutation procedure").getBoolean();
 
 		config.addCustomCategoryComment(TOXIC_WASTE, "Hazard and pollution configuration");
-		xpDrop = config.get(										TOXIC_WASTE, "xp from toxic Waste", 				true,					"Toxic Waste dropd xp if killing entities").getBoolean();
+		xpDrop = config.get(										TOXIC_WASTE, "xp from toxic Waste", 				true,					"Toxic Waste drops xp when killing entities").getBoolean();
 		enableHazard = config.get(									TOXIC_WASTE, "enable hazard", 						false,					"Enable the chance to have pollution with blocks handling Toxic Waste").getBoolean();
+		leakingType = config.get(									TOXIC_WASTE, "safer pollution", 					true,					"Enable a safer pollution leaking only in empty spots. By setting True replaceable blocks can be eroded").getBoolean();
+		leakingRadius = config.get(									TOXIC_WASTE, "pollution leaking radius", 			4, 						"Distance in each direction in which pollution may appear").getInt();
 		hazardChance = config.get(									TOXIC_WASTE, "hazard chance", 						1000, 					"1/N chance the block containing Toxic Waste causes pollution").getInt();
 		pressureTolerance = config.get(								TOXIC_WASTE, "pressure tolerance", 					10, 					"tolerance level of a vessel before collapsing").getInt();
 		exhaustRate = config.get(									TOXIC_WASTE, "exhaustion amount", 					20, 					"percentage of gas purged when tolerance is reached. Max 50%").getInt();

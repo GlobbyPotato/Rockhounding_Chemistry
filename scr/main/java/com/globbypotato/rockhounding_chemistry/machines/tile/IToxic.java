@@ -6,6 +6,7 @@ import com.globbypotato.rockhounding_chemistry.fluids.ModFluids;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.PollutantRecipes;
 
+import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.EnumFacing;
@@ -27,11 +28,12 @@ public abstract interface IToxic {
 			if(world.rand.nextInt(ModConfig.hazardChance) == 0){
 				for(FluidTank tank : hazardList()){	
 					if(isHazardousFluid(tank)){
-						int xRad = world.rand.nextInt(9) - 4;
-						int yRad = world.rand.nextInt(9) - 4;
-						int zRad = world.rand.nextInt(9) - 4;
+						int maxRadius = (ModConfig.leakingRadius * 2) + 1;
+						int xRad = world.rand.nextInt(maxRadius) - ModConfig.leakingRadius;
+						int yRad = world.rand.nextInt(maxRadius) - ModConfig.leakingRadius;
+						int zRad = world.rand.nextInt(maxRadius) - ModConfig.leakingRadius;
 						BlockPos toxicPos = new BlockPos(pos.getX() + xRad, pos.getY() + yRad, pos.getZ() + zRad);
-						if(world.getBlockState(toxicPos).getBlock() == Blocks.AIR && hasSolidBase(world, toxicPos, xRad, yRad, zRad)){
+						if(canLeakByType(world, toxicPos) && hasSolidBase(world, toxicPos, xRad, yRad, zRad)){
 				    		world.playSound(null, pos, SoundEvents.ENTITY_TNT_PRIMED, SoundCategory.AMBIENT, 1.0F, 2.0F);
 							world.setBlockState(toxicPos, ModFluids.TOXIC_SLUDGE.getBlock().getStateFromMeta(0));
 				    		world.playSound(null, pos, SoundEvents.BLOCK_WATER_AMBIENT, SoundCategory.AMBIENT, 0.4F, 0.2F);
@@ -42,6 +44,15 @@ public abstract interface IToxic {
 			}
 		}
 	}
+
+	public default boolean canLeakByType(World world, BlockPos toxicPos) {
+		Block erodedBlock = world.getBlockState(toxicPos).getBlock();
+		if(ModConfig.leakingType) {
+			return erodedBlock == Blocks.AIR;
+		}else {
+			return world.getBlockState(toxicPos).getMaterial().isReplaceable() || erodedBlock.isReplaceable(world, toxicPos);
+		}
+	};
 
 	public default boolean isHazardousFluid(FluidTank tank){
 		return tank.getFluid() != null 
