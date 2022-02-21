@@ -147,7 +147,7 @@ tasks.register("cloneRHCore") {
             if(coreBranch != null)
                 refToCheckout = coreBranch
         }
-        println("Cloned libVulpes repository from $coreRepo (current branch: ${repo.branch.current().name})")
+        println("Cloned rockhounding_core repository from $coreRepo (current branch: ${repo.branch.current().name})")
     }
 }
 
