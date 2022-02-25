@@ -864,7 +864,7 @@ public class ChemicalExtractorRecipes extends BaseRecipes{
 																			Arrays.asList(36,36,17,11)));
 
 		extractor_recipes.add(new ChemicalExtractorRecipe(getText(EnumMinerals.SULFIDE), sulfide_stack(1, EnumSulfide.BALKANITE),
-																			Arrays.asList(	element(EnumElements.BISMUTH),
+																			Arrays.asList(	element(EnumElements.COPPER),
 																							element(EnumElements.SILVER),
 																							element(EnumElements.SULFUR)), 
 																			Arrays.asList(36,35,16)));
