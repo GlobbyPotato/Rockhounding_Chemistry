@@ -65,7 +65,7 @@ public class UIPowerGenerator extends GuiBase {
 
 	   //fuel status
 	   if(GuiUtils.hoveringArea(7, 95, 18, 18, mouseX, mouseY, x, y)){
-		   String[] fuelstatusString = GuiUtils.handleFuelStatus(this.tile.isFuelGated(), this.tile.hasFuelBlend(), this.tile.canInduct(), this.tile.allowPermanentInduction());
+		   String[] fuelstatusString = GuiUtils.handleFuelStatus(this.tile.isFuelGated(), this.tile.canInduct(), this.tile.allowPermanentInduction());
 		   tooltip = GuiUtils.drawMultiLabel(fuelstatusString, mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
@@ -170,11 +170,6 @@ public class UIPowerGenerator extends GuiBase {
             int k = GuiUtils.getScaledValue(32, this.tile.gasTank.getFluidAmount(), this.tile.gasTank.getCapacity());
             this.drawTexturedModalRect(i + 90, j + 61+(32-k), 180, 93, 4, k);
         }
-
-		//blend fix
-		if(this.tile.hasFuelBlend()){
-			this.drawTexturedModalRect(i + 126, j + 51, 176, 89, 43, 62); //blend fix
-		}
 
     }
 

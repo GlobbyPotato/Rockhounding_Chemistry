@@ -87,9 +87,7 @@ public class TopMachines implements IProbeInfoProvider{
 					probeInfo.progress(tile.getPower(), tile.getPowerMax(), probeInfo.defaultProgressStyle().suffix(" ticks").filledColor(0xFFFFB400).alternateFilledColor(0xFFFF7200).borderColor(0x000000).numberFormat(NumberFormat.FULL));
 				}
 				if(tile.hasRedstone()){
-					if(!tile.hasFuelBlend()){
-						probeInfo.progress(tile.getRedstone(), tile.getRedstoneMax(), probeInfo.defaultProgressStyle().suffix(" RF").filledColor(0xFFFF0000).alternateFilledColor(0xFF5A0303).borderColor(0x000000).numberFormat(NumberFormat.FULL));
-					}
+					probeInfo.progress(tile.getRedstone(), tile.getRedstoneMax(), probeInfo.defaultProgressStyle().suffix(" RF").filledColor(0xFFFF0000).alternateFilledColor(0xFF5A0303).borderColor(0x000000).numberFormat(NumberFormat.FULL));
 				}
 			}
 			if(te instanceof TEAirCompressor){

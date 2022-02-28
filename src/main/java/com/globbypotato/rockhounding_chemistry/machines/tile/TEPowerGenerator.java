@@ -101,11 +101,6 @@ public class TEPowerGenerator extends TileEntityPoweredVessel {
 	}
 
 	@Override
-	public boolean isRFGatedByBlend() {
-		return true;
-	}
-
-	@Override
 	public boolean hasRF() {
 		return true;
 	}

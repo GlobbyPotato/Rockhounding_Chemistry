@@ -54,9 +54,7 @@ public class WailaMachinesA implements IWailaDataProvider{
 					currenttip.add(TextFormatting.GRAY + "Fuel Storage: " + TextFormatting.GOLD + engine.getPower() + "/" + engine.getPowerMax() + " ticks");
 				}
 				if(engine.hasRedstone()){
-					if(!engine.hasFuelBlend()){
-						currenttip.add(TextFormatting.GRAY + "Energy Storage: " + TextFormatting.RED + engine.getRedstone() + "/" + engine.getRedstoneMax() + " RF");
-					}
+					currenttip.add(TextFormatting.GRAY + "Energy Storage: " + TextFormatting.RED + engine.getRedstone() + "/" + engine.getRedstoneMax() + " RF");
 				}
 			}
 			if(te instanceof TEFluidTank){
