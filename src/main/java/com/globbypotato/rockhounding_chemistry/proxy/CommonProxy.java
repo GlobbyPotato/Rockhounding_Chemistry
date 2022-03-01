@@ -12,7 +12,6 @@ import com.globbypotato.rockhounding_chemistry.handlers.GuiHandler;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.handlers.ModTileEntities;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
-import com.globbypotato.rockhounding_chemistry.utils.IMCUtils;
 import com.globbypotato.rockhounding_chemistry.world.ChemOresGenerator;
 
 import net.minecraftforge.common.MinecraftForge;
@@ -59,8 +58,7 @@ public class CommonProxy {
 	}
 
 	public void imcInit(IMCEvent event) {
-		// Add custom recipes
-		IMCUtils.extraRecipes(event.getMessages());
+
 	}
 
 	public void postInit(FMLPostInitializationEvent e){
