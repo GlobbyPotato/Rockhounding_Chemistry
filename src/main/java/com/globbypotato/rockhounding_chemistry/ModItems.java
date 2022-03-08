@@ -40,6 +40,7 @@ import com.globbypotato.rockhounding_chemistry.items.SpeedItems;
 import com.globbypotato.rockhounding_chemistry.items.io.ArrayIO;
 import com.globbypotato.rockhounding_chemistry.items.io.ConsumableIO;
 import com.globbypotato.rockhounding_chemistry.items.io.ItemIO;
+import com.globbypotato.rockhounding_chemistry.items.io.UtilIO;
 import com.globbypotato.rockhounding_chemistry.utils.OredictUtils;
 
 import net.minecraft.item.Item;
@@ -77,6 +78,8 @@ public class ModItems {
 	public static final Item SILICONE_CARTRIDGE = new SiliconCartridge("silicone_cartridge", 100);
 	public static final Item SODIUM_POLYACRYLATE = new SodiumPolyacrylate("sodium_polyacrylate");
 	public static final Item SAMPLING_AMPOULE = new SamplingAmpoule("sampling_ampoule");
+	public static final Item HEAT_INDUCTOR = new UtilIO("heat_inductor");
+	public static final Item GAS_TURBINE = new UtilIO("gas_turbine");
 
 	public static final Item ALLOY_ITEMS_TECH = new ArrayIO("alloy_items_tech", EnumAlloyTech.getItemNames());
 	public static final Item ALLOY_ITEMS_TECH_B = new ArrayIO("alloy_items_tech_b", EnumAlloyTechB.getItemNames());
@@ -125,6 +128,8 @@ public class ModItems {
 			registry.register(SILICONE_CARTRIDGE);
 			registry.register(SODIUM_POLYACRYLATE);
 			registry.register(SAMPLING_AMPOULE);
+			registry.register(HEAT_INDUCTOR);
+			registry.register(GAS_TURBINE);
 			registry.register(FE_CATALYST);
 			registry.register(VA_CATALYST);
 			registry.register(GR_CATALYST);
@@ -196,6 +201,8 @@ public class ModItems {
 			RegistryHandler.registerSingleModel(SILICONE_CARTRIDGE);
 			RegistryHandler.registerSingleModel(SODIUM_POLYACRYLATE);
 			RegistryHandler.registerSingleModel(SAMPLING_AMPOULE);
+			RegistryHandler.registerSingleModel(HEAT_INDUCTOR);
+			RegistryHandler.registerSingleModel(GAS_TURBINE);
 			RegistryHandler.registerMetaModel(ANTIMONATE_SHARDS, EnumAntimonate.getNames());
 			RegistryHandler.registerMetaModel(ARSENATE_SHARDS, EnumArsenate.getNames());
 			RegistryHandler.registerMetaModel(BORATE_SHARDS, EnumBorate.getNames());
