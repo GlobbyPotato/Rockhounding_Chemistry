@@ -76,6 +76,16 @@ public class ModUtils {
 		return 1.0F;
 	}
 
+	public static boolean hasInductor(ItemStack insertingStack) {
+		return !insertingStack.isEmpty() 
+			&& (ItemStack.areItemsEqual(insertingStack, new ItemStack(ModItems.HEAT_INDUCTOR)));
+	}
+
+	public static boolean hasTurbine(ItemStack insertingStack) {
+		return !insertingStack.isEmpty() 
+			&& (ItemStack.areItemsEqual(insertingStack, new ItemStack(ModItems.GAS_TURBINE)));
+	}
+
 	public static boolean isOrbiterProbe(ItemStack insertingStack) {
 		return insertingStack != null && insertingStack.getItem() == ModItems.PROBE_ITEMS;
 	}
