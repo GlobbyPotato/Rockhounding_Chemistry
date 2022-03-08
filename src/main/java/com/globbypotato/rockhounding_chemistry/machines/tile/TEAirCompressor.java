@@ -1,6 +1,7 @@
 package com.globbypotato.rockhounding_chemistry.machines.tile;
 
 import com.globbypotato.rockhounding_chemistry.enums.materials.EnumFluid;
+import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.gas.GasHandlerConcatenate;
@@ -8,7 +9,6 @@ import com.globbypotato.rockhounding_core.machines.tileentity.MachineStackHandle
 import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityPoweredVessel;
 import com.globbypotato.rockhounding_core.machines.tileentity.WrappedItemHandler;
 import com.globbypotato.rockhounding_core.machines.tileentity.WrappedItemHandler.WriteMode;
-import com.globbypotato.rockhounding_core.utils.CoreBasics;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
@@ -17,22 +17,37 @@ import net.minecraftforge.fluids.capability.templates.FluidHandlerConcatenate;
 
 public class TEAirCompressor extends TileEntityPoweredVessel {
 
+	public static final int INDUCTOR_SLOT = 0;
+
 	public static int inputSlots = 1;
 	public static int templateSlots = 1;
+	public static int upgradeSlots = 1;
 
 	public TEAirCompressor() {
-		super(inputSlots, 0, templateSlots, 0);
+		super(inputSlots, 0, templateSlots, upgradeSlots);
 
 		this.input =  new MachineStackHandler(inputSlots, this){
 			@Override
 			public ItemStack insertItem(int slot, ItemStack insertingStack, boolean simulate){
-				if(slot == fuelID() && isGatedPowerSource(insertingStack)){
+				if(slot == fuelID() && isFuel(insertingStack)){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
 				return insertingStack;
 			}
 		};
 		this.automationInput = new WrappedItemHandler(this.input, WriteMode.IN);
+
+		this.upgrade =  new MachineStackHandler(upgradeSlots, this){
+			@Override
+			public ItemStack insertItem(int slot, ItemStack insertingStack, boolean simulate){
+				if(slot == INDUCTOR_SLOT && ModUtils.hasInductor(insertingStack) ){
+					return super.insertItem(slot, insertingStack, simulate);
+				}
+				return insertingStack;
+			}
+		};
+		this.automationUpgrade = new WrappedItemHandler(this.upgrade, WriteMode.IN);
+
 	}
 
 
@@ -50,6 +65,17 @@ public class TEAirCompressor extends TileEntityPoweredVessel {
 
 
 
+	//----------------------- SLOTS -----------------------
+	public ItemStack fuelSlot(){
+		return this.input.getStackInSlot(fuelID());
+	}
+
+	public ItemStack inductorSlot(){
+		return this.upgrade.getStackInSlot(INDUCTOR_SLOT);
+	}
+
+
+
 	//----------------------- HANDLER -----------------------
 	@Override
 	public int getGUIHeight() {
@@ -60,21 +86,27 @@ public class TEAirCompressor extends TileEntityPoweredVessel {
 		return "air_compressor";
 	}
 
+
+
+	//----------------------- FUEL -----------------------
+	@Override
+	public boolean canInduct() {
+		return ModUtils.hasInductor(inductorSlot());
+	}
+
 	@Override
 	public int fuelID() {
 		return 0;
 	}
 
 	@Override
-	public EnumFacing poweredFacing(){
-		return EnumFacing.fromAngle(getFacing().getHorizontalAngle() + 90);
+	public int getRFToFuel() {
+		return this.storage.getEnergyStored() * ModConfig.rfToFuelFactor;
 	}
 
-
-
-	//----------------------- SLOTS -----------------------
-	public ItemStack fuelSlot(){
-		return this.input.getStackInSlot(fuelID());
+	@Override
+	public boolean hasRF() {
+		return true;
 	}
 
 
@@ -82,6 +114,11 @@ public class TEAirCompressor extends TileEntityPoweredVessel {
 	//----------------------- CUSTOM -----------------------
 	public int getCooktimeMax(){
 		return 20;
+	}
+
+	@Override
+	public EnumFacing poweredFacing(){
+		return EnumFacing.fromAngle(getFacing().getHorizontalAngle() + 90);
 	}
 
 
@@ -103,7 +140,7 @@ public class TEAirCompressor extends TileEntityPoweredVessel {
 	public void update() {
 		if(!this.world.isRemote){
 
-			handleSupplies();
+			handlePowerSupplies();
 
 			if(isActive()){
 				if(canCompress()){
@@ -121,27 +158,18 @@ public class TEAirCompressor extends TileEntityPoweredVessel {
 		}
 	}
 
-	private void handleSupplies() {
+	private void handlePowerSupplies() {
 		if(!fuelSlot().isEmpty()){
-			if(fuelSlot().isItemEqual(CoreBasics.heat_inductor)){
-				powerHandler(fuelSlot());
-				if(isActive()){
-					injectFuel();
-				}
-				this.markDirtyClient();
-			}else{
-				if(isActive()){
-					fuelHandler(fuelSlot());
-				}
-			}
+			fuelHandler(fuelSlot());
 		}
-		if(isActive() && isInductionActive()){
+
+		if(canInduct()){
 			injectFuel();
 		}
-		if(isActive()){
-			lavaHandler();
-			gasHandler();
-		}
+
+		lavaHandler();
+
+		gasHandler();
 	}
 
 	private boolean canCompress() {
@@ -167,5 +195,5 @@ public class TEAirCompressor extends TileEntityPoweredVessel {
 	public void drainPower() {
 		this.powerCount --;
 	}
-	
+
 }

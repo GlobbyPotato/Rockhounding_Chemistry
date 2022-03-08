@@ -127,7 +127,7 @@ public class UIPowerGenerator extends GuiBase {
         //lava reservoir bar
         if (this.tile.lavaTank.getFluidAmount() > 0){
             int k = GuiUtils.getScaledValue(33, this.tile.lavaTank.getFluidAmount(), this.tile.lavaTank.getCapacity());
-            this.drawTexturedModalRect(i + 8, j + 50+(32-k), 196, 14, 10, k);
+            this.drawTexturedModalRect(i + 8, j + 51+(32-k), 196, 14, 10, k);
         }
 
         //syngas reservoir bar

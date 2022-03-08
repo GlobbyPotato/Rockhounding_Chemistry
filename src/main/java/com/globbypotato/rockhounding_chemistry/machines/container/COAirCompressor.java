@@ -18,9 +18,14 @@ public class COAirCompressor extends ContainerBase<TEAirCompressor>{
 	public void addOwnSlots() {
 		IItemHandler input = this.tile.getInput();
 		IItemHandler template = this.tile.getTemplate();
+		IItemHandler upgrade = this.tile.getUpgrade();
 
-		this.addSlotToContainer(new SlotItemHandler(input, 0, 8, 96));//redstone
-		this.addSlotToContainer(new SlotItemHandler(template, 0, 80, 96));//activation
+		this.addSlotToContainer(new SlotItemHandler(input, 0, 26,  24));//fuel
+
+		this.addSlotToContainer(new SlotItemHandler(template, 0, 152, 91));//activation
+		
+		this.addSlotToContainer(new SlotItemHandler(upgrade, 0, 70, 88));//inductor
+
 	}
 
 	@Override

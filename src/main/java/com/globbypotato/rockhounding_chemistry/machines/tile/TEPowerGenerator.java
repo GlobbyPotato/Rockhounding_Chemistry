@@ -17,7 +17,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerConcatenate;
 
 public class TEPowerGenerator extends TileEntityPoweredVessel {
-	//create slots in the guis for station and compressor
 	public static final int REDSTONE_SLOT = 1;
 
 	public static final int INDUCTOR_SLOT = 0;

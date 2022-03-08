@@ -36,15 +36,36 @@ public class UIAirCompressor extends GuiBase {
 	   int x = (this.width - this.xSize) / 2;
 	   int y = (this.height - this.ySize) / 2;
 
+	   String[] multistring;
+	   List<String> tooltip;
+
 	   //activation
-	   if(GuiUtils.hoveringArea(79, 96, 18, 18, mouseX, mouseY, x, y)){
-		   List<String> tooltip = GuiUtils.drawLabel(this.activation_label, mouseX, mouseY);
+	   if(GuiUtils.hoveringArea(152, 91, 14, 14, mouseX, mouseY, x, y)){
+		   tooltip = GuiUtils.drawLabel(this.activation_label, mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
 
 	   //fuel
-	   if(GuiUtils.hoveringArea(28, 107, 51, 6, mouseX, mouseY, x, y)){
-		   List<String> tooltip = GuiUtils.drawStorage(TextFormatting.GOLD, "ticks", TextFormatting.YELLOW, 0, this.tile.getPower(), this.tile.getPowerMax(), mouseX, mouseY);
+	   if(GuiUtils.hoveringArea(28, 51, 12, 61, mouseX, mouseY, x, y)){
+		   tooltip = GuiUtils.drawStorage(TextFormatting.GOLD, "ticks", TextFormatting.YELLOW, 0, this.tile.getPower(), this.tile.getPowerMax(), mouseX, mouseY);
+		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
+	   }
+
+	   //reservoir lava
+	   if(GuiUtils.hoveringArea(7, 49, 12, 35, mouseX, mouseY, x, y)){
+		   String content = TextFormatting.GRAY + "Internal Buffer: " + TextFormatting.GOLD + TextFormatting.BOLD + "Lava";
+		   String amount = TextFormatting.GOLD + "" + this.tile.lavaTank.getFluidAmount() + "/" + this.tile.lavaTank.getCapacity() + " mB";
+		   multistring = new String[]{content, amount};
+		   tooltip = GuiUtils.drawMultiLabel(multistring, mouseX, mouseY);
+		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
+	   }
+
+	   //reservoir syngas
+	   if(GuiUtils.hoveringArea(72, 24, 12, 35, mouseX, mouseY, x, y)){
+		   String content = TextFormatting.GRAY + "Internal Buffer: " + TextFormatting.WHITE + TextFormatting.BOLD + "Syngas";
+		   String amount = TextFormatting.WHITE + "" + GuiUtils.translateMC(this.tile.gasTank.getFluidAmount()) + "/" + GuiUtils.translateMC(this.tile.gasTank.getCapacity()) + " cu";
+		   multistring = new String[]{content, amount};
+		   tooltip = GuiUtils.drawMultiLabel(multistring, mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
 
@@ -61,27 +82,34 @@ public class UIAirCompressor extends GuiBase {
 		//activation
         if(this.tile.isActive()){
         	if(this.tile.isPowered()){
-        		this.drawTexturedModalRect(i + 81, j + 97, 190, 10, 14, 14);
+           		this.drawTexturedModalRect(i + 153, j + 92, 190, 0, 14, 14);
         	}else{
-        		this.drawTexturedModalRect(i + 81, j + 97, 176, 10, 14, 14);
+           		this.drawTexturedModalRect(i + 153, j + 92, 176, 0, 14, 14);
         	}
         }
 
         //power bar
         if (this.tile.getPower() > 0){
-            int k = GuiUtils.getScaledValue(50, this.tile.getPower(), this.tile.getPowerMax());
-            this.drawTexturedModalRect(i + 25, j + 108, 176, 0, k, 4);
+            int k = GuiUtils.getScaledValue(59, this.tile.getPower(), this.tile.getPowerMax());
+            this.drawTexturedModalRect(i + 29, j + 52+(59-k), 176, 14, 10, k);
         }
 
-        //inductor
-        if(this.tile.hasPermanentInduction()){
-            this.drawTexturedModalRect(i + 8, j + 96, 211, 10, 16, 16);
+        //lava reservoir bar
+        if (this.tile.lavaTank.getFluidAmount() > 0){
+            int k = GuiUtils.getScaledValue(33, this.tile.lavaTank.getFluidAmount(), this.tile.lavaTank.getCapacity());
+            this.drawTexturedModalRect(i + 8, j + 51+(32-k), 196, 14, 10, k);
+        }
+
+        //syngas reservoir bar
+        if (this.tile.gasTank.getFluidAmount() > 0){
+            int k = GuiUtils.getScaledValue(33, this.tile.gasTank.getFluidAmount(), this.tile.gasTank.getCapacity());
+            this.drawTexturedModalRect(i + 67, j + 25+(33-k), 206, 14, 10, k);
         }
 
         //air bar
         if (this.tile.getCooktime() > 0){
-            int k = GuiUtils.getScaledValue(62, this.tile.getCooktime(), this.tile.getCooktimeMax());
-            this.drawTexturedModalRect(i + 71, j + 57, 176, 27, k, 12);
+            int k = GuiUtils.getScaledValue(60, this.tile.getCooktime(), this.tile.getCooktimeMax());
+            this.drawTexturedModalRect(i + 118, j + 40, 180, 85, k, 38);
         }
 
     }
