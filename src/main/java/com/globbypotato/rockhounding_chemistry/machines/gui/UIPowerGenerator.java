@@ -40,44 +40,37 @@ public class UIPowerGenerator extends GuiBase {
 	   List<String> tooltip;
 
 	   //activation
-	   if(GuiUtils.hoveringArea(81, 97, 14, 14, mouseX, mouseY, x, y)){
+	   if(GuiUtils.hoveringArea(152, 91, 14, 14, mouseX, mouseY, x, y)){
 		   tooltip = GuiUtils.drawLabel("RF Generator Mode", mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
 
 	   //fuel module
-	   if(GuiUtils.hoveringArea(52, 28, 14, 14, mouseX, mouseY, x, y)){
+	   if(GuiUtils.hoveringArea(153, 26, 14, 14, mouseX, mouseY, x, y)){
 		   tooltip = GuiUtils.drawLabel("Fuel Module", mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
 
 	   //redstone module
-	   if(GuiUtils.hoveringArea(110, 28, 14, 14, mouseX, mouseY, x, y)){
+	   if(GuiUtils.hoveringArea(153, 44, 14, 14, mouseX, mouseY, x, y)){
 		   tooltip = GuiUtils.drawLabel("Redstone Module", mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
 
 	   //fuel
-	   if(GuiUtils.hoveringArea(25, 51, 25, 62, mouseX, mouseY, x, y)){
+	   if(GuiUtils.hoveringArea(28, 51, 12, 61, mouseX, mouseY, x, y)){
 		   tooltip = GuiUtils.drawStorage(TextFormatting.GOLD, "ticks", TextFormatting.YELLOW, this.tile.getCooktime(), this.tile.getPower(), this.tile.getPowerMax(), mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
 
-	   //fuel status
-	   if(GuiUtils.hoveringArea(7, 95, 18, 18, mouseX, mouseY, x, y)){
-		   String[] fuelstatusString = GuiUtils.handleFuelStatus(this.tile.isFuelGated(), this.tile.canInduct(), this.tile.allowPermanentInduction());
-		   tooltip = GuiUtils.drawMultiLabel(fuelstatusString, mouseX, mouseY);
-		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
-	   }
-
 	   //redstone
-	   if(GuiUtils.hoveringArea(126, 51, 25, 62, mouseX, mouseY, x, y)){
+	   if(GuiUtils.hoveringArea(126, 48, 12, 61, mouseX, mouseY, x, y)){
 		   tooltip = GuiUtils.drawStorage(TextFormatting.RED, "RF", TextFormatting.DARK_RED, 0, this.tile.getRedstone(), this.tile.getRedstoneMax(), mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
 
 	   //reservoir lava
-	   if(GuiUtils.hoveringArea(81, 60, 6, 34, mouseX, mouseY, x, y)){
+	   if(GuiUtils.hoveringArea(7, 49, 12, 35, mouseX, mouseY, x, y)){
 		   String content = TextFormatting.GRAY + "Internal Buffer: " + TextFormatting.GOLD + TextFormatting.BOLD + "Lava";
 		   String amount = TextFormatting.GOLD + "" + this.tile.lavaTank.getFluidAmount() + "/" + this.tile.lavaTank.getCapacity() + " mB";
 		   multistring = new String[]{content, amount};
@@ -86,7 +79,7 @@ public class UIPowerGenerator extends GuiBase {
 	   }
 
 	   //reservoir syngas
-	   if(GuiUtils.hoveringArea(89, 60, 6, 34, mouseX, mouseY, x, y)){
+	   if(GuiUtils.hoveringArea(72, 24, 12, 35, mouseX, mouseY, x, y)){
 		   String content = TextFormatting.GRAY + "Internal Buffer: " + TextFormatting.WHITE + TextFormatting.BOLD + "Syngas";
 		   String amount = TextFormatting.WHITE + "" + GuiUtils.translateMC(this.tile.gasTank.getFluidAmount()) + "/" + GuiUtils.translateMC(this.tile.gasTank.getCapacity()) + " cu";
 		   multistring = new String[]{content, amount};
@@ -94,25 +87,6 @@ public class UIPowerGenerator extends GuiBase {
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
 
-	   //info
-	   if(ModConfig.hasInfo){
-		   if(GuiUtils.hoveringArea(154, 81, 12, 12, mouseX, mouseY, x, y)){
-			   String text = "Takes Redstone dust or blocks";
-			   String text2 = "The Gas Turbine turns Syngas into RF";
-			   multistring = new String[]{text, text2};
-			   tooltip = GuiUtils.drawMultiLabel(multistring, mouseX, mouseY);
-			   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
-		   }
-	
-		   if(GuiUtils.hoveringArea(10, 81, 12, 12, mouseX, mouseY, x, y)){
-			   String text = "Takes coal, lava or any burnable item";
-			   String text2 = "Syngas turns into fuel power";
-			   String text3 = "The Induction Heating Interface turns external RF into fuel power";
-			   multistring = new String[]{text, text2, text3};
-			   tooltip = GuiUtils.drawMultiLabel(multistring, mouseX, mouseY);
-			   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
-		   }
-	   }
     }
 
     @Override
@@ -123,52 +97,43 @@ public class UIPowerGenerator extends GuiBase {
         int j = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
 
- 	   //info
- 	   if(ModConfig.hasInfo){
-   		this.drawTexturedModalRect(i + 10, j + 81,  242, 12, 12, 12);
-		this.drawTexturedModalRect(i + 154, j + 81, 242, 12, 12, 12);
- 	   }
-
 		//activation
         if(this.tile.isActive()){
-       		this.drawTexturedModalRect(i + 81, j + 97, 204, 152, 14, 14);
+       		this.drawTexturedModalRect(i + 153, j + 92, 232, 0, 14, 14);
         }
 
         //power module
         if (this.tile.enablePower()){
-            this.drawTexturedModalRect(i + 52, j + 28, 176, 152, 14, 14);
+            this.drawTexturedModalRect(i + 153, j + 26, 204, 0, 14, 14);
         }
 
         //redstone module
         if (this.tile.enableRedstone()){
-            this.drawTexturedModalRect(i + 110, j + 28, 190, 152, 14, 14);
+            this.drawTexturedModalRect(i + 153, j + 44, 218, 0, 14, 14);
         }
 
         //power bar
         if (this.tile.getPower() > 0){
-            int k = GuiUtils.getScaledValue(60, this.tile.getPower(), this.tile.getPowerMax());
-            this.drawTexturedModalRect(i + 26, j + 52+(60-k), 176, 29, 23, k);
-        }
-
-        //inductor
-        if(this.tile.hasPermanentInduction()){
-            this.drawTexturedModalRect(i + 8, j + 96, 211, 10, 16, 16);
+            int k = GuiUtils.getScaledValue(59, this.tile.getPower(), this.tile.getPowerMax());
+            this.drawTexturedModalRect(i + 29, j + 52+(59-k), 176, 14, 10, k);
         }
 
         //redstone bar
         if (this.tile.getRedstone() > 0){
-            int k = GuiUtils.getScaledValue(60, this.tile.getRedstone(), this.tile.getRedstoneMax());
-            this.drawTexturedModalRect(i + 127, j + 52+(60-k), 199, 29, 23, k);
+            int k = GuiUtils.getScaledValue(59, this.tile.getRedstone(), this.tile.getRedstoneMax());
+            this.drawTexturedModalRect(i + 127, j + 52+(59-k), 186, 14, 10, k);
         }
 
-        //reservoir bar
+        //lava reservoir bar
         if (this.tile.lavaTank.getFluidAmount() > 0){
-            int k = GuiUtils.getScaledValue(32, this.tile.lavaTank.getFluidAmount(), this.tile.lavaTank.getCapacity());
-            this.drawTexturedModalRect(i + 82, j + 61+(32-k), 176, 93, 4, k);
+            int k = GuiUtils.getScaledValue(33, this.tile.lavaTank.getFluidAmount(), this.tile.lavaTank.getCapacity());
+            this.drawTexturedModalRect(i + 8, j + 50+(32-k), 196, 14, 10, k);
         }
+
+        //syngas reservoir bar
         if (this.tile.gasTank.getFluidAmount() > 0){
-            int k = GuiUtils.getScaledValue(32, this.tile.gasTank.getFluidAmount(), this.tile.gasTank.getCapacity());
-            this.drawTexturedModalRect(i + 90, j + 61+(32-k), 180, 93, 4, k);
+            int k = GuiUtils.getScaledValue(33, this.tile.gasTank.getFluidAmount(), this.tile.gasTank.getCapacity());
+            this.drawTexturedModalRect(i + 73, j + 25+(33-k), 206, 14, 10, k);
         }
 
     }
