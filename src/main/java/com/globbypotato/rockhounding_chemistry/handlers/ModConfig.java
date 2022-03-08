@@ -85,7 +85,6 @@ public class ModConfig {
 	//generic
 	public static boolean consumeWater;
 	public static boolean fluidDamage;
-	public static boolean hasInfo;
 	public static boolean speedMultiplier;
 	public static int basePower = 1;
 	public static int catalystMultiplier = 1;
@@ -93,6 +92,7 @@ public class ModConfig {
 	public static boolean dictSmelt;
 	public static int cabinetTiming = 10;
 	public static int gasBurntime;
+	public static int rfToFuelFactor;
 	public static int gasEnergizer;
 	public static int recycleChance;
 	public static int wasteConsumed;
@@ -126,7 +126,6 @@ public class ModConfig {
 		config.load();
 
 		config.addCustomCategoryComment(ABSOLUTE, "Generic configurations");
-		hasInfo = config.get(										ABSOLUTE, "show info bulbs", 						false,					"Shows info bulbs on hot topics in guis").getBoolean();
 		fluidDamage = config.get(									ABSOLUTE, "fluid damage", 							true,					"Chemical products cause damage").getBoolean();
 		catalystMultiplier = config.get(							ABSOLUTE, "catalyst multiplier", 					1, 						"Multiplies all the catalysts duration").getInt();
 		dictSmelt = config.get(										ABSOLUTE, "oredict smelting", 						true,					"Smelt metals by using oredicted ingredients").getBoolean();
@@ -185,7 +184,8 @@ public class ModConfig {
 		gasEnergizer = config.get(									POWER_STATION, "gas turbine factor", 				2000,					"RF value for 0.010cu of Syngas").getInt();
 		basePower = config.get(										POWER_STATION, "power multiplier", 					1, 						"Multiplies the base RF consumed by all the machines").getInt();
 		speedMultiplier = config.get(								POWER_STATION, "speed multiplier", 					true,					"Multiplies the consumed power to balance the speed upgrades").getBoolean();
-
+		rfToFuelFactor = config.get(								POWER_STATION, "rf to fuel factor", 				1,				  		"How many fuel ticks 1RF can produce via induction").getInt();
+		
 		config.addCustomCategoryComment(CABINETS, "Configuration of the Cabinets");
 		extractorFactor = config.get(								CABINETS, "extraction factor", 						100,					"How much element is required for 1 regular dust").getInt();
 		extractorCap = config.get(									CABINETS, "cabinets cap", 							6400,					"Max quantity of element that can be inserted into the cabinets from the loader").getInt();
