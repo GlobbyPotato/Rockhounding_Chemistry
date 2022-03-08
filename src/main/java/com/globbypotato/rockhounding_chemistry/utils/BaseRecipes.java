@@ -119,6 +119,8 @@ public class BaseRecipes {
 	public static ItemStack graduated_cylinder = 	new ItemStack(ModItems.GRADUATED_CYLINDER);
 	public static ItemStack ingot_pattern = 		new ItemStack(ModItems.INGOT_PATTERN);
 	public static ItemStack sampling_ampoule = 		new ItemStack(ModItems.SAMPLING_AMPOULE);
+	public static ItemStack heat_inductor = 		new ItemStack(ModItems.HEAT_INDUCTOR);
+	public static ItemStack gas_turbine = 			new ItemStack(ModItems.GAS_TURBINE);
 	public static ItemStack tile_nullifier = 		new ItemStack(ModItems.TILE_NULLIFIER);
 
 	public static ItemStack va_catalyst = new ItemStack(ModItems.VA_CATALYST);
