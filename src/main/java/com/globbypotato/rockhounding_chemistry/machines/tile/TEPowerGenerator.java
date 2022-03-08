@@ -7,7 +7,6 @@ import com.globbypotato.rockhounding_core.machines.tileentity.MachineStackHandle
 import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityPoweredVessel;
 import com.globbypotato.rockhounding_core.machines.tileentity.WrappedItemHandler;
 import com.globbypotato.rockhounding_core.machines.tileentity.WrappedItemHandler.WriteMode;
-import com.globbypotato.rockhounding_core.utils.CoreBasics;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -18,23 +17,28 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerConcatenate;
 
 public class TEPowerGenerator extends TileEntityPoweredVessel {
+	//create slots in the guis for station and compressor
 	public static final int REDSTONE_SLOT = 1;
+
+	public static final int INDUCTOR_SLOT = 0;
+	public static final int TURBINE_SLOT = 1;
+	
 	public boolean enablePower = false;
 	public boolean enableRedstone = false;
 
 	public static int inputSlots = 2;
 	public static int templateSlots = 1;
+	public static int upgradeSlots = 2;
 
 	public TEPowerGenerator() {
-		super(inputSlots, 0, templateSlots, 0);
+		super(inputSlots, 0, templateSlots, upgradeSlots);
 
 		this.input =  new MachineStackHandler(inputSlots, this){
 			@Override
 			public ItemStack insertItem(int slot, ItemStack insertingStack, boolean simulate){
-				if(slot == fuelID() && isGatedPowerSource(insertingStack)){
+				if(slot == fuelID() && isFuel(insertingStack)){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
-
 				if(slot == REDSTONE_SLOT && hasRedstone(insertingStack)){
 					return super.insertItem(slot, insertingStack, simulate);
 				}
@@ -42,6 +46,20 @@ public class TEPowerGenerator extends TileEntityPoweredVessel {
 			}
 		};
 		this.automationInput = new WrappedItemHandler(this.input, WriteMode.IN);
+		
+		this.upgrade =  new MachineStackHandler(upgradeSlots, this){
+			@Override
+			public ItemStack insertItem(int slot, ItemStack insertingStack, boolean simulate){
+				if(slot == INDUCTOR_SLOT && ModUtils.hasInductor(insertingStack) ){
+					return super.insertItem(slot, insertingStack, simulate);
+				}
+				if(slot == TURBINE_SLOT && ModUtils.hasTurbine(insertingStack) ){
+					return super.insertItem(slot, insertingStack, simulate);
+				}
+				return insertingStack;
+			}
+		};
+		this.automationUpgrade = new WrappedItemHandler(this.upgrade, WriteMode.IN);
 	}
 
 
@@ -83,9 +101,30 @@ public class TEPowerGenerator extends TileEntityPoweredVessel {
 		return this.input.getStackInSlot(REDSTONE_SLOT);
 	}
 
+	public ItemStack inductorSlot(){
+		return this.upgrade.getStackInSlot(INDUCTOR_SLOT);
+	}
+
+	public ItemStack turbineSlot(){
+		return this.upgrade.getStackInSlot(TURBINE_SLOT);
+	}
+
+
+
+	//----------------------- FUEL -----------------------
+	@Override
+	public boolean canInduct() {
+		return ModUtils.hasInductor(inductorSlot());
+	}
+
 	@Override
 	public int fuelID() {
 		return 0;
+	}
+
+	@Override
+	public int getRFToFuel() {
+		return this.storage.getEnergyStored() * ModConfig.rfToFuelFactor;
 	}
 
 
@@ -137,13 +176,15 @@ public class TEPowerGenerator extends TileEntityPoweredVessel {
 	@Override
 	public void update(){
 		if(!this.world.isRemote){
-			debuffEnergy();
 
-			handlePowerSupplies();
+			if(enablePower()){
+				handlePowerSupplies();
+			}
 
 			if(enableRedstone()){
 				handleRedstoneSupplies();
 			}
+
 			if(isActive()){
 				provideEnergy();
 				this.markDirtyClient();
@@ -151,35 +192,18 @@ public class TEPowerGenerator extends TileEntityPoweredVessel {
 		}
 	}
 
-	private void debuffEnergy() {
-		if(!isFullRedstone()){
-	        int energyReceived = Math.min(this.getRedstoneMax() - this.getRedstone(), this.storage.getEnergyStored());
-	    	if(this.storage.extractEnergy(energyReceived, true) > 0){
-	        	this.redstoneCount += this.storage.extractEnergy(energyReceived, false);
-				this.markDirtyClient();
-	    	}
-		}
-	}
-
 	private void handlePowerSupplies() {
-		if(!fuelSlot().isEmpty()){
-			if(fuelSlot().isItemEqual(CoreBasics.heat_inductor)){
-				powerHandler(fuelSlot());
-				if(enablePower()){
-					injectFuel();
-				}
-				this.markDirtyClient();
-			}else{
-				if(enablePower()){
-					fuelHandler(fuelSlot());
-				}
+			if(!fuelSlot().isEmpty()){
+				fuelHandler(fuelSlot());
 			}
-		}
-		if(enablePower() && isInductionActive()){
-			injectFuel();
-		}
-		lavaHandler();
-		gasHandler();
+
+			if(canInduct()){
+				injectFuel();
+			}
+
+			lavaHandler();
+
+			gasHandler();
 	}
 
 	private void handleRedstoneSupplies() {
@@ -189,15 +213,13 @@ public class TEPowerGenerator extends TileEntityPoweredVessel {
 					redstoneHandler(REDSTONE_SLOT, getRFConsume());
 					this.markDirtyClient();
 				}
-
-				if(redstoneSlot().isItemEqual(CoreBasics.gas_turbine)){
-					turbineHandler(redstoneSlot());
-					this.markDirtyClient();
-				}
-			}else{
-				injectEnergy();
 			}
 		}
+		if(ModUtils.hasTurbine(turbineSlot())){
+			turbineHandler();
+		}
+
+		injectEnergy();
 	}
 
 	private void provideEnergy() {
