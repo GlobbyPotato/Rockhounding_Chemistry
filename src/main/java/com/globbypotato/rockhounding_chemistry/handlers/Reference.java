@@ -12,6 +12,7 @@ public class Reference {
     public static final String NAME = "Rockhounding Mod: Chemistry";
 	public static final String CLIENT_PROXY_CLASS = "com.globbypotato.rockhounding_chemistry.proxy.ClientProxy";
 	public static final String SERVER_PROXY_CLASS = "com.globbypotato.rockhounding_chemistry.proxy.CommonProxy";
+    public static final String VERSION = "${version_mod}";
 
 	//Create new Creative Tab with Icon
 	public static CreativeTabs RockhoundingChemistry = new CreativeTabs("rockhoundingChemistry") {
