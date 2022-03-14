@@ -473,6 +473,8 @@ item.rockhounding_chemistry:tile_nullifier.name=Tile Nullifier
 item.rockhounding_chemistry:silicone_cartridge.name=Silicone Cartridge
 item.rockhounding_chemistry:sodium_polyacrylate.name=Sodium Polyacrylate
 item.rockhounding_chemistry:sampling_ampoule.name=Sampling Ampoule
+item.rockhounding_chemistry:heat_inductor.name=Induction Heating Interface
+item.rockhounding_chemistry:gas_turbine.name=Gas Turbine
 #utils
 item.rockhounding_chemistry:misc_items.server_file.name=Server File
 item.rockhounding_chemistry:misc_items.base_chip.name=Basic Logic Chip

@@ -23,9 +23,9 @@ public class COPowerGenerator extends ContainerBase<TEPowerGenerator>{
 		this.addSlotToContainer(new SlotItemHandler(input, 0, 26,  24));//fuel
 		this.addSlotToContainer(new SlotItemHandler(input, 1, 124, 24));//redstone
 
-		this.addSlotToContainer(new SlotItemHandler(template, 0, 152, 91));//activation
+		this.addSlotToContainer(new SlotItemHandler(template, 0, 152, 97));//activation
 		
-		this.addSlotToContainer(new SlotItemHandler(upgrade, 0, 70, 88));//inductor
+		this.addSlotToContainer(new SlotItemHandler(upgrade, 0, 66, 86));//inductor
 		this.addSlotToContainer(new SlotItemHandler(upgrade, 1, 97, 42));//turbine
 
 	}

@@ -12,7 +12,7 @@
   "logoFile": "",
   "screenshots": [],
   "useDependencyInformation": true,
-  "requiredMods": ["rockhounding_core@${coreModVersion}", "bookshelf@[2.3,)", "gbook@[2.9,)", "redstoneflux@[2.0.1,)"],
-  "dependencies": ["rockhounding_core", "bookshelf", "gbook", "redstoneflux"]
+  "requiredMods": ["rockhounding_core@${coreModVersion}", "bookshelf@[2.3,)", "gbook@[2.9,)"],
+  "dependencies": ["rockhounding_core", "bookshelf", "gbook"]
 }
 ]

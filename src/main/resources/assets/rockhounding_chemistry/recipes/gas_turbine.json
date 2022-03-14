@@ -21,7 +21,7 @@
 			}
 	},
 	"result":{
-				"item": "rockhounding_core:gas_turbine",
+				"item": "rockhounding_chemistry:gas_turbine",
 				"data": 0
 			}
 }

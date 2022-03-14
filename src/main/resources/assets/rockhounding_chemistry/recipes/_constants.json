@@ -75,7 +75,7 @@
 
 	{"name": "GAS_PRESSURIZER",		"ingredient": {	"item": "rockhounding_chemistry:machines_b",		"data": 1}},
 	
-	{"name": "GAS_TURBINE",			"ingredient": {	"item": "rockhounding_core:gas_turbine",			"data": 0}}
+	{"name": "GAS_TURBINE",			"ingredient": {	"item": "rockhounding_chemistry:gas_turbine",		"data": 0}}
 
 
 ]

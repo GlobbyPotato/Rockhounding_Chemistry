@@ -460,6 +460,8 @@ item.rockhounding_chemistry:tile_nullifier.name=Нейтрализатр
 item.rockhounding_chemistry:silicone_cartridge.name=Силиконовый Картридж
 item.rockhounding_chemistry:sodium_polyacrylate.name=Полиакрилат Натрия
 item.rockhounding_chemistry:sampling_ampoule.name=Ампула Для Отбора Проб
+item.rockhounding_chemistry:heat_inductor.name=Индукционный Нагрев 
+item.rockhounding_chemistry:gas_turbine.name=Газовая Турбина
 #utils
 item.rockhounding_chemistry:misc_items.server_file.name=Файл Сервера
 item.rockhounding_chemistry:misc_items.base_chip.name=Базовый Логический Чип

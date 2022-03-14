@@ -40,7 +40,7 @@ public class UIPowerGenerator extends GuiBase {
 	   List<String> tooltip;
 
 	   //activation
-	   if(GuiUtils.hoveringArea(152, 91, 14, 14, mouseX, mouseY, x, y)){
+	   if(GuiUtils.hoveringArea(153, 98, 14, 14, mouseX, mouseY, x, y)){
 		   tooltip = GuiUtils.drawLabel("RF Generator Mode", mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
@@ -99,7 +99,7 @@ public class UIPowerGenerator extends GuiBase {
 
 		//activation
         if(this.tile.isActive()){
-       		this.drawTexturedModalRect(i + 153, j + 92, 232, 0, 14, 14);
+       		this.drawTexturedModalRect(i + 153, j + 98, 232, 0, 14, 14);
         }
 
         //power module
