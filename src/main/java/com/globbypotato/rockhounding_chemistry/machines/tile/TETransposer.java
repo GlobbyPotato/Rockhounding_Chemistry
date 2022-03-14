@@ -15,7 +15,6 @@ import com.globbypotato.rockhounding_core.machines.tileentity.WrappedItemHandler
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.NonNullList;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
@@ -77,18 +76,6 @@ public class TETransposer extends TileEntityTankVessel implements IToxic, IColla
 
 	
 		this.upgrade =  new MachineStackHandler(upgradeSlots, this){
-			@Override
-			public void validateSlotIndex(int slot){
-				if(upgrade.getSlots() < upgradeSlots){
-					NonNullList<ItemStack> stacksCloned = stacks;
-					upgrade.setSize(upgradeSlots);
-					for(ItemStack stack : stacksCloned){
-		                stacks.set(slot, stack);
-					}
-				}
-				super.validateSlotIndex(slot);
-			}
-
 			@Override
 			public ItemStack insertItem(int slot, ItemStack insertingStack, boolean simulate){
 				if(slot == SPEED_SLOT && ModUtils.isValidSpeedUpgrade(insertingStack) ){

@@ -13,7 +13,6 @@ import com.globbypotato.rockhounding_core.machines.tileentity.WrappedItemHandler
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.NonNullList;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -33,18 +32,6 @@ public class TEFluidpedia extends TileEntityInv {
 		super(inputSlots, 0, templateSlots, 0);
 		
 		this.input =  new MachineStackHandler(inputSlots, this){
-			@Override
-			public void validateSlotIndex(int slot){
-				if(input.getSlots() < inputSlots){
-					NonNullList<ItemStack> stacksCloned = stacks;
-					input.setSize(inputSlots);
-					for(ItemStack stack : stacksCloned){
-		                stacks.set(slot, stack);
-					}
-				}
-				super.validateSlotIndex(slot);
-			}
-
 			@Override
 			public ItemStack insertItem(int slot, ItemStack insertingStack, boolean simulate){
 				if(slot == INPUT_SLOT && insertingStack.isItemEqual(BaseRecipes.sampling_ampoule) ){

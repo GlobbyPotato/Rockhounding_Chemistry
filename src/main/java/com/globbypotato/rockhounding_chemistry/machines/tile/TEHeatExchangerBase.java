@@ -14,7 +14,6 @@ import com.globbypotato.rockhounding_core.machines.tileentity.WrappedItemHandler
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -31,18 +30,6 @@ public class TEHeatExchangerBase extends TileEntityInv {
 		super(0, 0, templateSlots, upgradeSlots);
 
 		this.upgrade =  new MachineStackHandler(upgradeSlots, this){
-			@Override
-			public void validateSlotIndex(int slot){
-				if(upgrade.getSlots() < upgradeSlots){
-					NonNullList<ItemStack> stacksCloned = stacks;
-					upgrade.setSize(upgradeSlots);
-					for(ItemStack stack : stacksCloned){
-		                stacks.set(slot, stack);
-					}
-				}
-				super.validateSlotIndex(slot);
-			}
-
 			@Override
 			public ItemStack insertItem(int slot, ItemStack insertingStack, boolean simulate){
 				if(slot == SPEED_SLOT && ModUtils.isValidSpeedUpgrade(insertingStack) ){

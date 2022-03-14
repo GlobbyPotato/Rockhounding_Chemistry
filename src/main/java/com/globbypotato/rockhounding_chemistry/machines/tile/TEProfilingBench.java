@@ -16,7 +16,6 @@ import com.globbypotato.rockhounding_core.utils.CoreUtils;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.NonNullList;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class TEProfilingBench extends TileEntityInv implements IInternalServer{
@@ -46,20 +45,6 @@ public class TEProfilingBench extends TileEntityInv implements IInternalServer{
 		};
 		this.automationInput = new WrappedItemHandler(this.input, WriteMode.IN);
 
-		this.output =  new MachineStackHandler(outputSlots, this){
-			@Override
-			public void validateSlotIndex(int slot){
-				if(output.getSlots() < outputSlots){
-					NonNullList<ItemStack> stacksCloned = stacks;
-					output.setSize(outputSlots);
-					for(ItemStack stack : stacksCloned){
-		                stacks.set(slot, stack);
-					}
-				}
-				super.validateSlotIndex(slot);
-			}
-		};
-		this.automationOutput = new WrappedItemHandler(this.output, WriteMode.OUT);
 	}
 
 
