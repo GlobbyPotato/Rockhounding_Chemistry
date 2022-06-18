@@ -43,6 +43,8 @@ public class CTSupport {
 	        CraftTweakerAPI.registerClass(CT_BedReactor.class);
 	        CraftTweakerAPI.registerClass(CT_SlurryAgitators.class);
 	        CraftTweakerAPI.registerClass(CT_Orbiter.class);
+	        CraftTweakerAPI.registerClass(CT_ShakingTable.class);
+	        CraftTweakerAPI.registerClass(CT_PowderMixer.class);
     	}
     }
 
