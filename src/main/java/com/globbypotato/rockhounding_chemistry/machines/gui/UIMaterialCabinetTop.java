@@ -2,7 +2,7 @@ package com.globbypotato.rockhounding_chemistry.machines.gui;
 
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.COMaterialCabinetTop;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEMaterialCabinetTop;
+import com.globbypotato.rockhounding_chemistry.machines.tile.collateral.TEMaterialCabinetTop;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 
 import net.minecraft.client.renderer.GlStateManager;

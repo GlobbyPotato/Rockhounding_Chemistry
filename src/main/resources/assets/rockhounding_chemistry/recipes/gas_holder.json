@@ -3,13 +3,10 @@
 	"group": "rockhounding_chemistry:machines",
 	"pattern": [
 		"SCS",
-		"CcC",
+		"C C",
 		"SCS"
 	],
 	"key": {
-		"c":{
-				"item": "#COMPRESSOR"
-			},
 		"C":{
 				"item": "#IRON_CASING"
 			},

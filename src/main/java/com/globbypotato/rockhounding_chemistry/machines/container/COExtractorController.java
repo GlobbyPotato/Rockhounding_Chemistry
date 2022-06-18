@@ -17,16 +17,17 @@ public class COExtractorController extends ContainerBase<TEExtractorController>{
 	@Override
 	public void addOwnSlots() {
 		IItemHandler input = this.tile.getInput();
-		IItemHandler output = this.tile.getOutput();
 		IItemHandler template = this.tile.getTemplate();
+		IItemHandler upgrade = this.tile.getUpgrade();
 
 		this.addSlotToContainer(new SlotItemHandler(input, 0, 80, 59));//input
-
-		this.addSlotToContainer(new SlotItemHandler(output, 0, 144, 72));//purge
 
 		this.addSlotToContainer(new SlotItemHandler(template, 0, 80, 96));//activation
 		this.addSlotToContainer(new SlotItemHandler(template, 1, 10, 97));//lo
 		this.addSlotToContainer(new SlotItemHandler(template, 2, 41, 97));//hi
+
+		this.addSlotToContainer(new SlotItemHandler(upgrade, 0, 134,  61));//speed upgrade
+
 	}
 
 	@Override
@@ -34,18 +35,18 @@ public class COExtractorController extends ContainerBase<TEExtractorController>{
 		if(slot == 0){
     		this.tile.dummyRecipe = null;
     		return super.slotClick(slot, dragType, clickTypeIn, player);
-		}else if(slot == 2){
+		}else if(slot == 1){
     		this.tile.dummyRecipe = null;
 			this.tile.activation = !this.tile.activation;
 			doClickSound(player, this.tile.getWorld(), this.tile.getPos());
 	    	return ItemStack.EMPTY;
-    	}else if(slot == 3){
+    	}else if(slot == 2){
 			if(this.tile.getIntensity() >= 2){
 				this.tile.intensity -= 1;
 			}
 			doClickSound(player, this.tile.getWorld(), this.tile.getPos());
         	return ItemStack.EMPTY;
-		}else if(slot == 4){
+		}else if(slot == 3){
 			if(this.tile.getIntensity() <= 15){
 				this.tile.intensity += 1;
 			}
@@ -61,7 +62,7 @@ public class COExtractorController extends ContainerBase<TEExtractorController>{
 		if(super.mergeItemStack(stack, startIndex, 1, reverseDirection)){
 			return true;
 		}
-		return super.mergeItemStack(stack, 5, endIndex, reverseDirection);
+		return super.mergeItemStack(stack, 4, endIndex, reverseDirection);
     }
 
 }

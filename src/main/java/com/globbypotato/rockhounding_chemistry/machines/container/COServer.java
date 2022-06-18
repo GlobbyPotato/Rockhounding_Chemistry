@@ -1,6 +1,6 @@
 package com.globbypotato.rockhounding_chemistry.machines.container;
 
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEServer;
+import com.globbypotato.rockhounding_chemistry.machines.tile.collateral.TEServer;
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 
@@ -54,24 +54,43 @@ public class COServer extends ContainerBase<TEServer>{
 			this.tile.writeFile();
 			doClickSound(player, this.tile.getWorld(), this.tile.getPos());
         	return ItemStack.EMPTY;
-		}else if(slot == 12){
-    		if(this.tile.getRecipeIndex() > 0){
-    			this.tile.recipeIndex--;
-    		}else{
-    			this.tile.recipeIndex = this.tile.servedMaxRecipes() - 1;
+
+    	}else if(slot == 12){
+    		if(this.tile.requiresParameter()) {
+	    		if(this.tile.getRecipeIndex() > this.tile.getRecipeStep()){
+	    			this.tile.recipeIndex -= this.tile.getRecipeStep();
+	    		}else{
+	    			this.tile.recipeIndex = this.tile.getRecipeMax() - this.tile.getRecipeStep();
+	    		}
+    		} else {
+	    		if(this.tile.getSelectedRecipe() > 1){
+	    			this.tile.recipeIndex--;
+	    		}else{
+	    			this.tile.recipeIndex = this.tile.getRecipeMax() - 1;
+	    		}
     		}
 			this.tile.writeFile();
 			doClickSound(player, this.tile.getWorld(), this.tile.getPos());
     		return ItemStack.EMPTY;
 		}else if(slot == 13){
-    		if(this.tile.getRecipeIndex() < this.tile.servedMaxRecipes() - 1){
-    			this.tile.recipeIndex++;
-    		}else{
-    			this.tile.recipeIndex = 0;
+    		if(this.tile.requiresParameter()) {
+	    		if(this.tile.getRecipeIndex() < this.tile.getRecipeMax() - this.tile.getRecipeStep()){
+	    			this.tile.recipeIndex += this.tile.getRecipeStep();
+	    		}else{
+	    			this.tile.recipeIndex = 0;
+	    		}
+    		} else {
+        		if(this.tile.getSelectedRecipe() < this.tile.getRecipeMax() - 1){
+        			this.tile.recipeIndex++;
+        		}else{
+        			this.tile.recipeIndex = 0;
+        		}
     		}
 			this.tile.writeFile();
 			doClickSound(player, this.tile.getWorld(), this.tile.getPos());
     		return ItemStack.EMPTY;
+
+		
 		}else if(slot == 14){
     		if(this.tile.getRecipeAmount() > 0){
     			this.tile.recipeAmount--;

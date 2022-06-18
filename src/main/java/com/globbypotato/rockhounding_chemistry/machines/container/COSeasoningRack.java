@@ -1,6 +1,6 @@
 package com.globbypotato.rockhounding_chemistry.machines.container;
 
-import com.globbypotato.rockhounding_chemistry.machines.tile.TESeasoningRack;
+import com.globbypotato.rockhounding_chemistry.machines.tile.devices.TESeasoningRack;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraftforge.items.IItemHandler;

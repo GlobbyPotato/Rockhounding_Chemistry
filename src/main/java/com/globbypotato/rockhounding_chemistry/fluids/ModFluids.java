@@ -183,6 +183,7 @@ public class ModFluids {
 	public static final Fluid SALT_BRINE = 		createFluid(EnumFluid.SALT_BRINE.getFluidName(), 		true, 0xFF7196A7, "blur", 1000, 1000, 300, false, 0, fluid -> new BlockFluidClassic(fluid, Material.WATER){});
 	public static final Fluid DENSE_BRINE = 	createFluid(EnumFluid.DENSE_BRINE.getFluidName(), 		true, 0xFFD5A6A6, "blur", 1000, 1000, 300, false, 0, fluid -> new BlockFluidClassic(fluid, Material.WATER){});
 	public static final Fluid MOTHER_LIQUOR = 	createFluid(EnumFluid.MOTHER_LIQUOR.getFluidName(),	 	true, 0xFFFFD6D6, "fill", 1000, 1000, 300, false, 0, fluid -> new BlockFluidClassic(fluid, Material.WATER){});
+	public static final Fluid XPJUICE = 		createFluid(EnumFluid.XPJUICE.getFluidName(), 			true, 0xFFA1FC03, "molten", 1000, 1000, 300, false, 0, fluid -> new BlockFluidClassic(fluid, Material.WATER){});
 
 
 

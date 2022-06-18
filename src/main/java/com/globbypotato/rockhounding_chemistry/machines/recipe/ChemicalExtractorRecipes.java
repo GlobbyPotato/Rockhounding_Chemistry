@@ -23,7 +23,6 @@ import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 
 public class ChemicalExtractorRecipes extends BaseRecipes{
 	public static ArrayList<ChemicalExtractorRecipe> extractor_recipes = new ArrayList<ChemicalExtractorRecipe>();
-	public static ArrayList<String> inhibited_elements = new ArrayList<String>();
 
 	public static void machineRecipes() {
 

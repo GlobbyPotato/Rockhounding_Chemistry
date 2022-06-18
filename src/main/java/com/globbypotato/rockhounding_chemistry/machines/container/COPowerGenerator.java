@@ -1,6 +1,6 @@
 package com.globbypotato.rockhounding_chemistry.machines.container;
 
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEPowerGenerator;
+import com.globbypotato.rockhounding_chemistry.machines.tile.devices.TEPowerGenerator;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ClickType;

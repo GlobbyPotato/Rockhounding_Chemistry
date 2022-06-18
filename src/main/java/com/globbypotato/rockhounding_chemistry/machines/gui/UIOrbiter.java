@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.COOrbiter;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEOrbiter;
+import com.globbypotato.rockhounding_chemistry.machines.tile.devices.TEOrbiter;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.machines.gui.GuiUtils;
 
@@ -43,9 +43,9 @@ public class UIOrbiter extends GuiBase {
 	   List<String> tooltip;
 
 		//drain
-	    if(GuiUtils.hoveringArea(152, 117, 16, 16, mouseX, mouseY, x, y)){
+	    if(GuiUtils.hoveringArea(134, 116, 16, 16, mouseX, mouseY, x, y)){
 			if(this.tile.isValidPreset()){
-				String voidstring = TextFormatting.GREEN + "Can Drain Liquid XP";
+				String voidstring = "Infuse Liquid XP";
 				tooltip = GuiUtils.drawLabel(voidstring, mouseX, mouseY);
 			}else{
 				tooltip = GuiUtils.drawLabel(TextFormatting.RED + "No Liquid XP available", mouseX, mouseY);
@@ -77,13 +77,13 @@ public class UIOrbiter extends GuiBase {
 
 	   //prev
 	   if(GuiUtils.hoveringArea(8, 109, 18, 18, mouseX, mouseY, x, y)){
-		   tooltip = GuiUtils.drawLabel("Previous Recipe", mouseX, mouseY);
+		   tooltip = GuiUtils.drawLabel(this.prev_recipe_label, mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
 
 	   //next
 	   if(GuiUtils.hoveringArea(25, 109, 18, 18, mouseX, mouseY, x, y)){
-		   tooltip = GuiUtils.drawLabel("Next Recipe", mouseX, mouseY);
+		   tooltip = GuiUtils.drawLabel(this.next_recipe_label, mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
 
@@ -103,26 +103,22 @@ public class UIOrbiter extends GuiBase {
 
 		//input waste
 		if(GuiUtils.hoveringArea(157, 26, 12, 40, mouseX, mouseY, x, y)){
-			tooltip = GuiUtils.drawFluidTankInfo(this.tile.inputTank, mouseX, mouseY);
+			tooltip = GuiUtils.drawFluidTankInfo(this.tile.getFluidCistern().inputTank, mouseX, mouseY);
 			drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 		}
 
 		//output juice
 		if(GuiUtils.hoveringArea(36, 78, 102, 12, mouseX, mouseY, x, y)){
-			if(this.tile.isValidPreset()){
-				tooltip = GuiUtils.drawFluidTankInfo(this.tile.outputTank, mouseX, mouseY);
-			}else{
-				String xpTot = TextFormatting.GRAY + "Stored Experience: " + TextFormatting.YELLOW + this.tile.getXPCount() + "/" + this.tile.getXPCountMax() + " xp";
-			   	tooltip = GuiUtils.drawLabel(xpTot, mouseX, mouseY);
-			}
+			String xpTot = TextFormatting.GRAY + "Stored Experience: " + TextFormatting.YELLOW + this.tile.getXPCount() + "/" + this.tile.getXPCountMax() + " xp";
+		   	tooltip = GuiUtils.drawLabel(xpTot, mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 		}
 		
 		//juice filter
-	    if(GuiUtils.hoveringArea(115, 116, 18, 18, mouseX, mouseY, x, y)){
-			String filterstring = TextFormatting.BLUE + "Filter: " + TextFormatting.WHITE + "Currently selected Liquid XP";
+	    if(GuiUtils.hoveringArea(152, 116, 16, 16, mouseX, mouseY, x, y)){
+			String filterstring = TextFormatting.BLUE + this.filter_label + ": " + TextFormatting.WHITE + "Currently selected Liquid XP";
 			if(this.tile.isValidPreset() && this.tile.recipeJuice() != null){
-				filterstring = TextFormatting.GRAY + "Filter: " + TextFormatting.GREEN + this.tile.recipeJuice().getLocalizedName();
+				filterstring = TextFormatting.GRAY + this.filter_label + ": " + TextFormatting.GREEN + this.tile.recipeJuice().getLocalizedName();
 				tooltip = GuiUtils.drawLabel(filterstring, mouseX, mouseY);
 				drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 			}
@@ -134,8 +130,8 @@ public class UIOrbiter extends GuiBase {
 	public void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 		String recipeLabel = "No Liquid XP selected";
-		if(this.tile.isValidPreset() && this.tile.getRecipeList(this.tile.getRecipeIndex()).getInput() != null){
-			recipeLabel = getMod(FluidRegistry.getDefaultFluidName(this.tile.getRecipeList(this.tile.getRecipeIndex()).getInput().getFluid()).split(":")[0]);
+		if(this.tile.isValidPreset() && this.tile.getRecipeList(this.tile.getSelectedRecipe()).getInput() != null){
+			recipeLabel = getMod(FluidRegistry.getDefaultFluidName(this.tile.getRecipeList(this.tile.getSelectedRecipe()).getInput().getFluid()).split(":")[0]);
 		}
 		this.fontRenderer.drawString(String.valueOf(this.tile.getLevels()), 80, 64, 4210752);
 		this.fontRenderer.drawString(String.valueOf(recipeLabel), 9, 99, 4210752);
@@ -164,9 +160,12 @@ public class UIOrbiter extends GuiBase {
         }
 
         // drain icon
-		if(this.tile.isValidPreset()){
-    		this.drawTexturedModalRect(i + 153, j + 118, 176, 25, 14, 14);
+		if(this.tile.isValidPreset() && this.tile.canDrain()){
+    		this.drawTexturedModalRect(i + 135, j + 117, 176, 25, 14, 14);
+		}else if(this.tile.isValidPreset() && !this.tile.canDrain()) {
+			this.drawTexturedModalRect(i + 135, j + 117, 190, 25, 14, 14);
 		}
+		
 
 		//offscale icon
 		if(this.tile.getOffScale()){
@@ -174,28 +173,19 @@ public class UIOrbiter extends GuiBase {
 		}
 
 		// output bar
-		if(!this.tile.isValidPreset()){
-			if(this.tile.getXPCount() > 0){
-	            int k = GuiUtils.getScaledValue(100, this.tile.getXPCount(), this.tile.getXPCountMax());
-	            this.drawTexturedModalRect(i + 37, j + 79, 0, 220, k, 10);
-			}
+		if(this.tile.getXPCount() > 0){
+            int k = GuiUtils.getScaledValue(100, this.tile.getXPCount(), this.tile.getXPCountMax());
+            this.drawTexturedModalRect(i + 37, j + 79, 0, 220, k, 10);
 		}
 
 		//input waste
 		if(this.tile.wasteHasFluid() && this.tile.getWasteAmount() > 0){
-			GuiUtils.renderFluidBar(this.tile.getWasteFluid(), this.tile.getWasteAmount(), this.tile.getWasteCapacity(), i + 158, j + 27, 10, 38);
-		}
-
-		//output liquid xp
-		if(this.tile.isValidPreset()){
-			if(this.tile.juiceHasFluid() && this.tile.getJuiceAmount() > 0){
-				GuiUtils.renderFluidBar(this.tile.getJuiceFluid(), this.tile.getJuiceAmount(), this.tile.getJuiceCapacity(), i + 37, j + 79, 100, 10);
-			}
+			GuiUtils.renderFluidBar(this.tile.getWasteFluid(), this.tile.getWasteAmount(), 1000, i + 158, j + 27, 10, 38);
 		}
 
 		//output juice
 		if(this.tile.isValidPreset() && this.tile.recipeJuice() != null){
-			GuiUtils.renderFluidBar(this.tile.recipeJuice(), 1000, 1000, i + 116, j + 117, 16, 16);
+			GuiUtils.renderFluidBar(this.tile.recipeJuice(), 1000, 1000, i + 152, j + 116, 16, 16);
 		}
 
     }

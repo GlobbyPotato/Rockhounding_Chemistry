@@ -1,6 +1,6 @@
 package com.globbypotato.rockhounding_chemistry.machines.container;
 
-import com.globbypotato.rockhounding_chemistry.machines.tile.TELabBlenderTank;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TELabBlenderTank;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;

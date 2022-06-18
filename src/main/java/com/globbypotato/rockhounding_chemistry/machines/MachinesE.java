@@ -12,20 +12,26 @@ import com.globbypotato.rockhounding_chemistry.enums.EnumMiscItems;
 import com.globbypotato.rockhounding_chemistry.enums.machines.EnumMachinesE;
 import com.globbypotato.rockhounding_chemistry.handlers.GuiHandler;
 import com.globbypotato.rockhounding_chemistry.machines.io.MachineIO;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEBufferTank;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TECatalystRegen;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEDisposer;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEExhaustionValve;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TELaserEmitter;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEPrecipitationChamber;
+import com.globbypotato.rockhounding_chemistry.machines.tile.TEGanController;
+import com.globbypotato.rockhounding_chemistry.machines.tile.TELabOvenController;
+import com.globbypotato.rockhounding_chemistry.machines.tile.TEPowderMixerController;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TEPrecipitationController;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEPrecipitationReactor;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TESlurryDrum;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEStirredTankBase;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEStirredTankOut;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEStirredTankTop;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEWaterPump;
+import com.globbypotato.rockhounding_chemistry.machines.tile.TEStirredTankController;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TileTank;
+import com.globbypotato.rockhounding_chemistry.machines.tile.collateral.TECatalystRegen;
+import com.globbypotato.rockhounding_chemistry.machines.tile.devices.TEDisposer;
+import com.globbypotato.rockhounding_chemistry.machines.tile.devices.TEWaterPump;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TECatalystRegenPipes;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEExhaustionValve;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEPowderMixerTank;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEPrecipitationChamber;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEPrecipitationReactor;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEStirredTankBase;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEStirredTankOut;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEBufferTank;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TESlurryDrum;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEWashingTank;
+import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 import com.globbypotato.rockhounding_core.enums.EnumFluidNbt;
 import com.globbypotato.rockhounding_core.machines.tileentity.IFluidHandlingTile;
 import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityInv;
@@ -59,7 +65,6 @@ import net.minecraftforge.fluids.FluidStack;
 
 public class MachinesE extends MachineIO {
 	public static PropertyEnum VARIANT = PropertyEnum.create("variant", EnumMachinesE.class);
-    public static final AxisAlignedBB LASER_EMITTER_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.6D, 1.0D);
     public static final AxisAlignedBB EXHAUSTION_VALVE_AABB = new AxisAlignedBB(0.2D, 0.0D, 0.2D, 0.8D, 0.7D, 0.8D);
     public static final AxisAlignedBB SLURRY_DRUM_AABB = new AxisAlignedBB(0.1D, 0.0D, 0.1D, 0.9D, 1.0D, 0.9D);
     public static final AxisAlignedBB BUFFER_TANK_AABB = new AxisAlignedBB(0.2D, 0.0D, 0.2D, 0.8D, 1.0D, 0.8D);
@@ -103,14 +108,18 @@ public class MachinesE extends MachineIO {
 	//---------- BLOCK HANDLER ----------
     @Override
 	public boolean hiddenParts(int meta) {
-		return meta == EnumMachinesE.STIRRED_TANK_TOP.ordinal()
-			|| meta == EnumMachinesE.PRECIPITATION_CONTROLLER.ordinal();
+		return meta == EnumMachinesE.STIRRED_TANK_CONTROLLER.ordinal()
+			|| meta == EnumMachinesE.PRECIPITATION_CONTROLLER.ordinal()
+			|| meta == EnumMachinesE.CATALYST_REGEN_PIPES.ordinal()
+			|| meta == EnumMachinesE.POWDER_MIXER_TANK.ordinal();
 	}
 
     @Override
 	public boolean baseParts(int meta) {
 		return meta == EnumMachinesE.STIRRED_TANK_BASE.ordinal()
-			|| meta == EnumMachinesE.PRECIPITATION_CHAMBER.ordinal();
+			|| meta == EnumMachinesE.PRECIPITATION_CHAMBER.ordinal()
+			|| meta == EnumMachinesE.CATALYST_REGEN.ordinal()
+			|| meta == EnumMachinesE.POWDER_MIXER_CONTROLLER.ordinal();
 	}
 
     @Override
@@ -126,12 +135,22 @@ public class MachinesE extends MachineIO {
 
 	        if(te instanceof TEStirredTankBase){
 	        	TEStirredTankBase reactor = (TEStirredTankBase) world.getTileEntity(pos);
-	        	setOrDropBlock(world, state, pos, reactor.getFacing(), placer, EnumMachinesE.STIRRED_TANK_TOP);
+	        	setOrDropBlock(world, state, pos, reactor.getFacing(), placer, EnumMachinesE.STIRRED_TANK_CONTROLLER);
 	        }
 
 	        if(te instanceof TEPrecipitationChamber){
 	        	TEPrecipitationChamber reactor = (TEPrecipitationChamber) world.getTileEntity(pos);
 	        	setOrDropBlock(world, state, pos, reactor.getFacing(), placer, EnumMachinesE.PRECIPITATION_CONTROLLER);
+	        }
+
+	        if(te instanceof TECatalystRegen){
+	        	TECatalystRegen reactor = (TECatalystRegen) world.getTileEntity(pos);
+	        	setOrDropBlock(world, state, pos, reactor.getFacing(), placer, EnumMachinesE.CATALYST_REGEN_PIPES);
+	        }
+
+	        if(te instanceof TEPowderMixerController){
+	        	TEPowderMixerController reactor = (TEPowderMixerController) world.getTileEntity(pos);
+	        	setOrDropBlock(world, state, pos, reactor.getFacing(), placer, EnumMachinesE.POWDER_MIXER_TANK);
 	        }
 
 	        if(te instanceof TEWaterPump){
@@ -144,6 +163,10 @@ public class MachinesE extends MachineIO {
 
 	        if(te instanceof TESlurryDrum){
 	        	restoreSlurryDrumNBT(stack, te);
+	        }
+
+	        if(te instanceof TEWashingTank){
+	        	restoreWashingTankNBT(stack, te);
 	        }
 
 	        if(te instanceof TEBufferTank){
@@ -164,13 +187,25 @@ public class MachinesE extends MachineIO {
 		if(meta == EnumMachinesE.STIRRED_TANK_BASE.ordinal()){
 			checkTopBlocks(world, world.getBlockState(pos), world.getBlockState(pos.up()), pos);
 		}
-		if(meta == EnumMachinesE.STIRRED_TANK_TOP.ordinal()){
+		if(meta == EnumMachinesE.STIRRED_TANK_CONTROLLER.ordinal()){
 			checkBaseBlocks(world, world.getBlockState(pos.down()), pos);
 		}
 		if(meta == EnumMachinesE.PRECIPITATION_CHAMBER.ordinal()){
 			checkTopBlocks(world, world.getBlockState(pos), world.getBlockState(pos.up()), pos);
 		}
 		if(meta == EnumMachinesE.PRECIPITATION_CONTROLLER.ordinal()){
+			checkBaseBlocks(world, world.getBlockState(pos.down()), pos);
+		}
+		if(meta == EnumMachinesE.CATALYST_REGEN.ordinal()){
+			checkTopBlocks(world, world.getBlockState(pos), world.getBlockState(pos.up()), pos);
+		}
+		if(meta == EnumMachinesE.CATALYST_REGEN_PIPES.ordinal()){
+			checkBaseBlocks(world, world.getBlockState(pos.down()), pos);
+		}
+		if(meta == EnumMachinesE.POWDER_MIXER_CONTROLLER.ordinal()){
+			checkTopBlocks(world, world.getBlockState(pos), world.getBlockState(pos.up()), pos);
+		}
+		if(meta == EnumMachinesE.POWDER_MIXER_TANK.ordinal()){
 			checkBaseBlocks(world, world.getBlockState(pos.down()), pos);
 		}
 
@@ -184,7 +219,9 @@ public class MachinesE extends MachineIO {
 		}else{
 			int meta = state.getBlock().getMetaFromState(state);
 			if(meta == EnumMachinesE.STIRRED_TANK_BASE.ordinal()
-			|| meta == EnumMachinesE.PRECIPITATION_CHAMBER.ordinal()){
+			|| meta == EnumMachinesE.PRECIPITATION_CHAMBER.ordinal()
+			|| meta == EnumMachinesE.CATALYST_REGEN.ordinal()
+			|| meta == EnumMachinesE.POWDER_MIXER_CONTROLLER.ordinal()){
 				TileEntity te = world.getTileEntity(pos);
 				ItemStack itemstack = this.getSilkTouchDrop(state);
 				handleTileNBT(te, itemstack);
@@ -202,13 +239,17 @@ public class MachinesE extends MachineIO {
 		TileEntity teUp = world.getTileEntity(pos.up());
 		if(teUp == null || 
 				(
- 				    (te instanceof TEStirredTankBase && !(teUp instanceof TEStirredTankTop))
+ 				    (te instanceof TECatalystRegen && !(teUp instanceof TECatalystRegenPipes))
+ 				 || (te instanceof TEStirredTankBase && !(teUp instanceof TEStirredTankController))
 			     || (te instanceof TEPrecipitationChamber && !(teUp instanceof TEPrecipitationController))
+				 || (te instanceof TEPowderMixerController && !(teUp instanceof TEPowderMixerTank))
 				)
 		){
 			ItemStack itemstack = this.getSilkTouchDrop(state);
 			if(meta == EnumMachinesE.STIRRED_TANK_BASE.ordinal()
-			|| meta == EnumMachinesE.PRECIPITATION_CHAMBER.ordinal()){
+			|| meta == EnumMachinesE.PRECIPITATION_CHAMBER.ordinal()
+			|| meta == EnumMachinesE.CATALYST_REGEN.ordinal()
+			|| meta == EnumMachinesE.POWDER_MIXER_CONTROLLER.ordinal()){
 				handleTileNBT(te, itemstack);
 			}
 	        spawnAsEntity(world, pos, itemstack);
@@ -216,13 +257,15 @@ public class MachinesE extends MachineIO {
 		}
 	}
 
-	private static void checkBaseBlocks(World world, IBlockState state, BlockPos pos) {
+	private void checkBaseBlocks(World world, IBlockState state, BlockPos pos) {
 		TileEntity te = world.getTileEntity(pos);
 		TileEntity teDown = world.getTileEntity(pos.down());
 		if(teDown == null || 
 				(
-					   (te instanceof TEStirredTankTop && !(teDown instanceof TEStirredTankBase))
+					   (te instanceof TECatalystRegenPipes && !(teDown instanceof TECatalystRegen))
+				   ||  (te instanceof TEStirredTankController && !(teDown instanceof TEStirredTankBase))
 				   ||  (te instanceof TEPrecipitationController && !(teDown instanceof TEPrecipitationChamber))
+				   ||  (te instanceof TEPowderMixerTank && !(teDown instanceof TEPowderMixerController))
 				)
 		){
 			world.setBlockToAir(pos);
@@ -232,9 +275,7 @@ public class MachinesE extends MachineIO {
 	@Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
 		int meta = state.getBlock().getMetaFromState(state);
-		if(meta == EnumMachinesE.LASER_EMITTER.ordinal()){
-			return LASER_EMITTER_AABB;
-		}else if(meta == EnumMachinesE.EXHAUSTION_VALVE.ordinal()){
+		if(meta == EnumMachinesE.EXHAUSTION_VALVE.ordinal()){
 			return EXHAUSTION_VALVE_AABB;
 		}else if(meta == EnumMachinesE.BUFFER_TANK.ordinal()){
 			return BUFFER_TANK_AABB;
@@ -283,8 +324,8 @@ public class MachinesE extends MachineIO {
 	@Override
 	public TileEntity createTileEntity(World world, IBlockState state) {
 		int meta = state.getBlock().getMetaFromState(state);
-		if(meta == EnumMachinesE.LASER_EMITTER.ordinal()){
-			return new TELaserEmitter();
+		if(meta == EnumMachinesE.WASHING_TANK.ordinal()){
+			return new TEWashingTank();
 		}
 		if(meta == EnumMachinesE.EXHAUSTION_VALVE.ordinal()){
 			return new TEExhaustionValve();
@@ -294,6 +335,9 @@ public class MachinesE extends MachineIO {
 		}
 		if(meta == EnumMachinesE.CATALYST_REGEN.ordinal()){
 			return new TECatalystRegen();
+		}
+		if(meta == EnumMachinesE.CATALYST_REGEN_PIPES.ordinal()){
+			return new TECatalystRegenPipes();
 		}
 		if(meta == EnumMachinesE.DISPOSER.ordinal()){
 			return new TEDisposer();
@@ -307,8 +351,8 @@ public class MachinesE extends MachineIO {
 		if(meta == EnumMachinesE.STIRRED_TANK_BASE.ordinal()){
 			return new TEStirredTankBase();
 		}
-		if(meta == EnumMachinesE.STIRRED_TANK_TOP.ordinal()){
-			return new TEStirredTankTop();
+		if(meta == EnumMachinesE.STIRRED_TANK_CONTROLLER.ordinal()){
+			return new TEStirredTankController();
 		}
 		if(meta == EnumMachinesE.STIRRED_TANK_OUT.ordinal()){
 			return new TEStirredTankOut();
@@ -321,6 +365,12 @@ public class MachinesE extends MachineIO {
 		}
 		if(meta == EnumMachinesE.PRECIPITATION_REACTOR.ordinal()){
 			return new TEPrecipitationReactor();
+		}
+		if(meta == EnumMachinesE.POWDER_MIXER_CONTROLLER.ordinal()){
+			return new TEPowderMixerController();
+		}
+		if(meta == EnumMachinesE.POWDER_MIXER_TANK.ordinal()){
+			return new TEPowderMixerTank();
 		}
 		return null;
 	}
@@ -389,8 +439,21 @@ public class MachinesE extends MachineIO {
 						}
 					}
 				}
+				if(meta == EnumMachinesE.POWDER_MIXER_CONTROLLER.ordinal()){
+		    		player.openGui(Rhchemistry.instance, GuiHandler.powder_mixer_id, world, pos.getX(), pos.getY(), pos.getZ());
+				}
+				if(meta == EnumMachinesE.POWDER_MIXER_TANK.ordinal()){
+					if(world.getTileEntity(pos.down(1)) != null && world.getTileEntity(pos.down(1)) instanceof TEPowderMixerController){
+						player.openGui(Rhchemistry.instance, GuiHandler.powder_mixer_id, world, pos.getX(), pos.getY() - 1, pos.getZ());
+					}
+				}
 				if(meta == EnumMachinesE.CATALYST_REGEN.ordinal()){
 		    		player.openGui(Rhchemistry.instance, GuiHandler.catalyst_regen_id, world, pos.getX(), pos.getY(), pos.getZ());
+				}
+				if(meta == EnumMachinesE.CATALYST_REGEN_PIPES.ordinal()){
+					if(world.getTileEntity(pos.down(1)) != null && world.getTileEntity(pos.down(1)) instanceof TECatalystRegen){
+						player.openGui(Rhchemistry.instance, GuiHandler.catalyst_regen_id, world, pos.getX(), pos.getY() - 1, pos.getZ());
+					}
 				}
 				if(meta == EnumMachinesE.DISPOSER.ordinal()){
 		    		player.openGui(Rhchemistry.instance, GuiHandler.disposer_id, world, pos.getX(), pos.getY(), pos.getZ());
@@ -402,21 +465,45 @@ public class MachinesE extends MachineIO {
 		    		player.openGui(Rhchemistry.instance, GuiHandler.buffer_tank_id, world, pos.getX(), pos.getY(), pos.getZ());
 				}
 				if(meta == EnumMachinesE.STIRRED_TANK_BASE.ordinal()){
-					if(world.getTileEntity(pos.up(1)) != null && world.getTileEntity(pos.up(1)) instanceof TEStirredTankTop){
-			    		player.openGui(Rhchemistry.instance, GuiHandler.stirred_tank_id, world, pos.getX(), pos.getY() + 1, pos.getZ());
+					if(!player.isSneaking()) {
+						if(!canInsertUpgrade(world, player, pos.up(), BaseRecipes.speed_upgrade, TEStirredTankController.SPEED_SLOT)) {
+							if(world.getTileEntity(pos.up()) != null && world.getTileEntity(pos.up()) instanceof TEStirredTankController){
+					    		player.openGui(Rhchemistry.instance, GuiHandler.stirred_tank_id, world, pos.getX(), pos.getY() + 1, pos.getZ());
+							}
+						}
+					}else {
+						tryExtractUpgrade(world, player, pos.up(), TEStirredTankController.SPEED_SLOT);
 					}
 				}
-				if(meta == EnumMachinesE.STIRRED_TANK_TOP.ordinal()){
-		    		player.openGui(Rhchemistry.instance, GuiHandler.stirred_tank_id, world, pos.getX(), pos.getY(), pos.getZ());
+				if(meta == EnumMachinesE.STIRRED_TANK_CONTROLLER.ordinal()){
+					if(!player.isSneaking()) {
+						if(!canInsertUpgrade(world, player, pos, BaseRecipes.speed_upgrade, TEStirredTankController.SPEED_SLOT)) {
+							player.openGui(Rhchemistry.instance, GuiHandler.stirred_tank_id, world, pos.getX(), pos.getY(), pos.getZ());
+						}
+					}else {
+						tryExtractUpgrade(world, player, pos, TEStirredTankController.SPEED_SLOT);
+					}
 				}
 				if(meta == EnumMachinesE.STIRRED_TANK_OUT.ordinal()){
 		    		player.openGui(Rhchemistry.instance, GuiHandler.stirred_tank_out_id, world, pos.getX(), pos.getY(), pos.getZ());
 				}
 				if(meta == EnumMachinesE.PRECIPITATION_CHAMBER.ordinal()){
-		    		player.openGui(Rhchemistry.instance, GuiHandler.precipitation_chamber_id, world, pos.getX(), pos.getY(), pos.getZ());
+					if(!player.isSneaking()) {
+						if(!canInsertUpgrade(world, player, pos.up(), BaseRecipes.speed_upgrade, TEPrecipitationController.SPEED_SLOT)) {
+							player.openGui(Rhchemistry.instance, GuiHandler.precipitation_chamber_id, world, pos.getX(), pos.getY(), pos.getZ());
+						}
+					}else {
+						tryExtractUpgrade(world, player, pos.up(), TEPrecipitationController.SPEED_SLOT);
+					}
 				}
 				if(meta == EnumMachinesE.PRECIPITATION_CONTROLLER.ordinal()){
-		    		player.openGui(Rhchemistry.instance, GuiHandler.precipitation_controller_id, world, pos.getX(), pos.getY(), pos.getZ());
+					if(!player.isSneaking()) {
+						if(!canInsertUpgrade(world, player, pos, BaseRecipes.speed_upgrade, TEPrecipitationController.SPEED_SLOT)) {
+							player.openGui(Rhchemistry.instance, GuiHandler.precipitation_controller_id, world, pos.getX(), pos.getY(), pos.getZ());
+						}
+					}else {
+						tryExtractUpgrade(world, player, pos, TEPrecipitationController.SPEED_SLOT);
+					}
 				}
 			}
 		}
@@ -439,23 +526,28 @@ public class MachinesE extends MachineIO {
 	@Override
 	public Item getItemDropped(IBlockState state, Random rand, int fortune){
 		int meta = state.getBlock().getMetaFromState(state);
-		return meta != EnumMachinesE.STIRRED_TANK_TOP.ordinal()
+		return meta != EnumMachinesE.STIRRED_TANK_CONTROLLER.ordinal()
 			&& meta != EnumMachinesE.PRECIPITATION_CONTROLLER.ordinal()
+			&& meta != EnumMachinesE.CATALYST_REGEN_PIPES.ordinal()
 			? Item.getItemFromBlock(this) : null;
 	}
 
 	@Override
 	public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player){
 		int meta = state.getBlock().getMetaFromState(state);
-		return meta != EnumMachinesE.STIRRED_TANK_TOP.ordinal()
+		return meta != EnumMachinesE.STIRRED_TANK_CONTROLLER.ordinal()
+			&& meta != EnumMachinesE.CATALYST_REGEN_PIPES.ordinal()
 			&& meta != EnumMachinesE.PRECIPITATION_CONTROLLER.ordinal();
 	}
 
     @Override
     public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
 		int meta = state.getBlock().getMetaFromState(state);
-		if(meta == EnumMachinesE.STIRRED_TANK_TOP.ordinal()){
+		if(meta == EnumMachinesE.STIRRED_TANK_CONTROLLER.ordinal()){
 			return new ItemStack(Item.getItemFromBlock(this), 1, EnumMachinesE.STIRRED_TANK_BASE.ordinal());
+		}
+		if(meta == EnumMachinesE.CATALYST_REGEN_PIPES.ordinal()){
+			return new ItemStack(Item.getItemFromBlock(this), 1, EnumMachinesE.CATALYST_REGEN.ordinal());
 		}
 		if(meta == EnumMachinesE.PRECIPITATION_CONTROLLER.ordinal()){
 			return new ItemStack(Item.getItemFromBlock(this), 1, EnumMachinesE.PRECIPITATION_CHAMBER.ordinal());
@@ -470,8 +562,9 @@ public class MachinesE extends MachineIO {
         List<ItemStack> items = new ArrayList<ItemStack>();
         int meta = this.getMetaFromState(state);
         ItemStack itemstack = ItemStack.EMPTY;
-        if(meta != EnumMachinesE.STIRRED_TANK_TOP.ordinal()
+        if(meta != EnumMachinesE.STIRRED_TANK_CONTROLLER.ordinal()
         && meta != EnumMachinesE.PRECIPITATION_CONTROLLER.ordinal()
+        && meta != EnumMachinesE.CATALYST_REGEN_PIPES.ordinal()
         ){
         	itemstack = new ItemStack(this, 1, meta);
         }
@@ -504,6 +597,10 @@ public class MachinesE extends MachineIO {
 
     		if(te instanceof TEBufferTank){
         		addBufferTankNbt(itemstack, te);
+        	}
+
+    		if(te instanceof TEWashingTank){
+        		addWashingTankNbt(itemstack, te);
         	}
 
     		if(te instanceof TEStirredTankOut){
@@ -635,6 +732,23 @@ public class MachinesE extends MachineIO {
 					tank.inputTank.setFluid(FluidStack.loadFluidStackFromNBT(stack.getTagCompound().getCompoundTag(EnumFluidNbt.FLUID.nameTag())));
 				}
 	    	}
+    	}
+	}
+
+	private static void addWashingTankNbt(ItemStack itemstack, TileEntity te) {
+    	TEWashingTank tank = ((TEWashingTank)te);
+		NBTTagCompound solvent = new NBTTagCompound(); 
+		if(tank.inputTank.getFluid() != null){
+			tank.inputTank.getFluid().writeToNBT(solvent);
+			itemstack.getTagCompound().setTag(EnumFluidNbt.FLUID.nameTag(), solvent);
+		}
+	}
+    private static void restoreWashingTankNBT(ItemStack stack, TileEntity te) {
+    	TEWashingTank tank = ((TEWashingTank)te);
+    	if(stack.hasTagCompound() && tank != null){
+			if(stack.getTagCompound().hasKey(EnumFluidNbt.FLUID.nameTag())){
+				tank.inputTank.setFluid(FluidStack.loadFluidStackFromNBT(stack.getTagCompound().getCompoundTag(EnumFluidNbt.FLUID.nameTag())));
+			}
     	}
 	}
 

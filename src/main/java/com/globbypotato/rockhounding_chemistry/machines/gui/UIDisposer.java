@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.CODisposer;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEDisposer;
+import com.globbypotato.rockhounding_chemistry.machines.tile.devices.TEDisposer;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.machines.gui.GuiUtils;
 

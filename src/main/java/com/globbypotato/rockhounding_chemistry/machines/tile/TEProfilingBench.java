@@ -2,11 +2,11 @@ package com.globbypotato.rockhounding_chemistry.machines.tile;
 
 import java.util.ArrayList;
 
-import com.globbypotato.rockhounding_chemistry.ModItems;
-import com.globbypotato.rockhounding_chemistry.enums.EnumMiscItems;
+import com.globbypotato.rockhounding_chemistry.enums.utils.EnumCasting;
 import com.globbypotato.rockhounding_chemistry.enums.utils.EnumServer;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.ProfilingBenchRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.ProfilingBenchRecipe;
+import com.globbypotato.rockhounding_chemistry.machines.tile.collateral.TEServer;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.machines.tileentity.MachineStackHandler;
 import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityInv;
@@ -54,8 +54,8 @@ public class TEProfilingBench extends TileEntityInv implements IInternalServer{
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
 		this.currentCast = compound.getInteger("Casting");
-		if(compound.hasKey("Filter")){
-			this.filter = new ItemStack(compound.getCompoundTag("Filter"));
+		if(hasFilterItem(compound)){
+			this.filter = getFilterItem(compound);
 		}
 	}
 
@@ -66,7 +66,7 @@ public class TEProfilingBench extends TileEntityInv implements IInternalServer{
 		if(!this.getFilter().isEmpty()){
 			NBTTagCompound filterstack = new NBTTagCompound(); 
 			this.filter.writeToNBT(filterstack);
-			compound.setTag("Filter", filterstack);
+			compound.setTag(tag_filter_item, filterstack);
 		}
 		return compound;
 	}
@@ -202,7 +202,7 @@ public class TEProfilingBench extends TileEntityInv implements IInternalServer{
 	//----------------------- SERVER -----------------------
 //server
 	public TEServer getServer(){
-		TEServer server = TileStructure.getServer(this.world, this.pos, getFacing(), 1, 0);
+		TEServer server = TileStructure.getServer(this.world, this.pos.offset(getFacing()), getFacing().getOpposite());
 		return server != null ? server : null;
 	}
 
@@ -219,7 +219,7 @@ public class TEProfilingBench extends TileEntityInv implements IInternalServer{
 			handlePurge();
 
 			//server
-			initializeServer(isRepeatable, hasServer(), getServer(), deviceCode());
+			initializeServer(isRepeatable, getServer(), deviceCode(), this.recipeStep, EnumCasting.size());
 
 			if(!inputSlot().isEmpty()){
 				if(canProcess()){
@@ -247,7 +247,7 @@ public class TEProfilingBench extends TileEntityInv implements IInternalServer{
 		return isOutputEmpty()
 			&& isValidRecipe()
 			&& handleFilter(inputSlot(), getFilter()) //server
-			&& handleServer(hasServer(), getServer(), this.currentFile); //server
+			&& handleServer(getServer(), this.currentFile); //server
 	}
 
 	private void process() {
@@ -255,7 +255,7 @@ public class TEProfilingBench extends TileEntityInv implements IInternalServer{
 		this.input.decrementSlot(INPUT_SLOT);
 
 		//server
-		updateServer(hasServer(), getServer(), this.currentFile);
+		updateServer(getServer(), this.currentFile);
 
 	}
 
@@ -270,17 +270,17 @@ public class TEProfilingBench extends TileEntityInv implements IInternalServer{
 		if(getServer().isActive()){
 			for(int x = 0; x < TEServer.FILE_SLOTS.length; x++){
 				ItemStack fileSlot = getServer().inputSlot(x).copy();
-				if(!fileSlot.isEmpty() && fileSlot.isItemEqual(new ItemStack(ModItems.MISC_ITEMS, 1, EnumMiscItems.SERVER_FILE.ordinal()))){
+				if(getServer().isValidFile(fileSlot)){
 					if(fileSlot.hasTagCompound()){
 						NBTTagCompound tag = fileSlot.getTagCompound();
-						if(isValidFile(tag)){
-							if(tag.getInteger("Device") == deviceCode()){
-								if(tag.getInteger("Recipe") < 16){
-									if(tag.getInteger("Done") > 0){
-										this.currentCast = tag.getInteger("Recipe");
+						if(isWrittenFile(tag)){
+							if(isCorrectDevice(tag, deviceCode())){
+								if(getRecipe(tag) < 16){
+									if(getDone(tag) > 0){
+										this.currentCast = getRecipe(tag);
 										this.currentFile = x;
-										if(tag.hasKey("FilterStack")){
-											ItemStack temp = new ItemStack(tag.getCompoundTag("FilterStack"));
+										if(hasFilterItem(tag)){
+											ItemStack temp = getFilterItem(tag);
 											if(this.getFilter().isEmpty() || !this.getFilter().isItemEqual(temp)){
 												this.filter = temp;
 											}

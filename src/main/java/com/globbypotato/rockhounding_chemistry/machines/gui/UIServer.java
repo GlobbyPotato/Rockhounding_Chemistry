@@ -11,14 +11,16 @@ import com.globbypotato.rockhounding_chemistry.machines.recipe.DepositionChamber
 import com.globbypotato.rockhounding_chemistry.machines.recipe.GasReformerRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.LabOvenRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.MetalAlloyerRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.PowderMixerRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.PrecipitationRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.BedReactorRecipe;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.DepositionChamberRecipe;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.GasReformerRecipe;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.LabOvenRecipe;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.MetalAlloyerRecipe;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.PowderMixerRecipe;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.PrecipitationRecipe;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEServer;
+import com.globbypotato.rockhounding_chemistry.machines.tile.collateral.TEServer;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.machines.gui.GuiUtils;
 import com.google.common.base.Strings;
@@ -134,51 +136,55 @@ public class UIServer extends GuiBase {
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 		String recipeLabel = "No recipe selected";
 		if(this.tile.servedDevice() == EnumServer.LAB_OVEN.ordinal() && this.tile.isValidInterval()){
-			LabOvenRecipe recipe = LabOvenRecipes.lab_oven_recipes.get(this.tile.getRecipeIndex());
+			LabOvenRecipe recipe = LabOvenRecipes.lab_oven_recipes.get(this.tile.getSelectedRecipe());
 			if(Strings.isNullOrEmpty(recipe.getRecipeName())){
 				recipeLabel = recipe.getSolution().getLocalizedName();
 			}else{
 				recipeLabel = recipe.getRecipeName();
 			}
 		}else if(this.tile.servedDevice() == EnumServer.METAL_ALLOYER.ordinal() && this.tile.isValidInterval()){
-			MetalAlloyerRecipe recipe = MetalAlloyerRecipes.metal_alloyer_recipes.get(this.tile.getRecipeIndex());
+			MetalAlloyerRecipe recipe = MetalAlloyerRecipes.metal_alloyer_recipes.get(this.tile.getSelectedRecipe());
 			recipeLabel = recipe.getOutput().getDisplayName();
 		}else if(this.tile.servedDevice() == EnumServer.DEPOSITION.ordinal() && this.tile.isValidInterval()){
-			DepositionChamberRecipe recipe = DepositionChamberRecipes.deposition_chamber_recipes.get(this.tile.getRecipeIndex());
+			DepositionChamberRecipe recipe = DepositionChamberRecipes.deposition_chamber_recipes.get(this.tile.getSelectedRecipe());
 			if(Strings.isNullOrEmpty(recipe.getRecipeName())){
 				recipeLabel = recipe.getOutput().getDisplayName();
 			}else{
 				recipeLabel = recipe.getRecipeName();
 			}
 		}else if(this.tile.servedDevice() == EnumServer.SIZER.ordinal() && this.tile.isValidInterval()){
-			recipeLabel = "Comminution Level: " + this.tile.getRecipeIndex();
-		}else if(this.tile.servedDevice() == EnumServer.LEACHING.ordinal() && this.tile.isValidInterval()){
-			float currentGravity = (this.tile.getRecipeIndex() * 2) + 2F;
-			recipeLabel = "Gravity: " + (currentGravity - 2F) + " to " + (currentGravity + 2F);
-		}else if(this.tile.servedDevice() == EnumServer.RETENTION.ordinal() && this.tile.isValidInterval()){
-			float currentGravity = (this.tile.getRecipeIndex() * 2) + 2F;
-			recipeLabel = "Gravity: " + (currentGravity - 2F) + " to " + (currentGravity + 2F);
+			recipeLabel = "Comminution: " + this.tile.getSelectedRecipe();
 		}else if(this.tile.servedDevice() == EnumServer.CASTING.ordinal() && this.tile.isValidInterval()){
-			recipeLabel = "Pattern: " + EnumCasting.getFormalName(this.tile.getRecipeIndex());
+			recipeLabel = "Pattern: " + EnumCasting.getFormalName(this.tile.getSelectedRecipe());
 		}else if(this.tile.servedDevice() == EnumServer.REFORMER.ordinal() && this.tile.isValidInterval()){
-			GasReformerRecipe recipe = GasReformerRecipes.gas_reformer_recipes.get(this.tile.getRecipeIndex());
+			GasReformerRecipe recipe = GasReformerRecipes.gas_reformer_recipes.get(this.tile.getSelectedRecipe());
 			recipeLabel = recipe.getOutput().getLocalizedName();
+		}else if(this.tile.servedDevice() == EnumServer.POWDER_MIXER.ordinal() && this.tile.isValidInterval()){
+			PowderMixerRecipe recipe = PowderMixerRecipes.powder_mixer_recipes.get(this.tile.getSelectedRecipe());
+			recipeLabel = recipe.getOutput().getDisplayName();
 		}else if(this.tile.servedDevice() == EnumServer.EXTRACTOR.ordinal() && this.tile.isValidInterval()){
-			recipeLabel = "Intensity Level: " + this.tile.getRecipeIndex();
+			recipeLabel = "Intensity: " + this.tile.getSelectedRecipe();
 		}else if(this.tile.servedDevice() == EnumServer.PRECIPITATOR.ordinal() && this.tile.isValidInterval()){
-			PrecipitationRecipe recipe = PrecipitationRecipes.precipitation_recipes.get(this.tile.getRecipeIndex());
+			PrecipitationRecipe recipe = PrecipitationRecipes.precipitation_recipes.get(this.tile.getSelectedRecipe());
 			if(Strings.isNullOrEmpty(recipe.getRecipeName())){
-				recipeLabel = recipe.getSolution().getLocalizedName();
+				recipeLabel = recipe.getPrecipitate().getDisplayName();
 			}else{
 				recipeLabel = recipe.getRecipeName();
 			}
 		}else if(this.tile.servedDevice() == EnumServer.BED_REACTOR.ordinal() && this.tile.isValidInterval()){
-			BedReactorRecipe recipe = BedReactorRecipes.bed_reactor_recipes.get(this.tile.getRecipeIndex());
+			BedReactorRecipe recipe = BedReactorRecipes.bed_reactor_recipes.get(this.tile.getSelectedRecipe());
 			if(Strings.isNullOrEmpty(recipe.getRecipeName())){
 				recipeLabel = recipe.getOutput().getLocalizedName();
 			}else{
 				recipeLabel = recipe.getRecipeName();
 			}
+
+		
+		
+		}else if(this.tile.servedDevice() == EnumServer.LEACHING.ordinal() && this.tile.isValidParameter()){
+			recipeLabel = "Gravity: " + GuiUtils.floatRounder(this.tile.getRecipeIndex());
+		}else if(this.tile.servedDevice() == EnumServer.RETENTION.ordinal() && this.tile.isValidParameter()){
+			recipeLabel = "Gravity: " + GuiUtils.floatRounder(this.tile.getRecipeIndex());
 		}
 		this.fontRenderer.drawString(recipeLabel, 9, 52, 0xFF000000);
 		String amount = String.valueOf(this.tile.getRecipeAmount());

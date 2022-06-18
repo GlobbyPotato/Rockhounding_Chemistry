@@ -2,14 +2,19 @@ package com.globbypotato.rockhounding_chemistry.machines.tile;
 
 import java.util.ArrayList;
 
-import com.globbypotato.rockhounding_chemistry.ModItems;
 import com.globbypotato.rockhounding_chemistry.enums.EnumMiscBlocksA;
-import com.globbypotato.rockhounding_chemistry.enums.EnumMiscItems;
 import com.globbypotato.rockhounding_chemistry.enums.utils.EnumServer;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.machines.io.MachineIO;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.GasReformerRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.GasReformerRecipe;
+import com.globbypotato.rockhounding_chemistry.machines.tile.collateral.TEServer;
+import com.globbypotato.rockhounding_chemistry.machines.tile.devices.TEPowerGenerator;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEAuxiliaryEngine;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TECentrifuge;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEReformerReactor;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEUnloader;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEBufferTank;
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.machines.tileentity.MachineStackHandler;
@@ -27,16 +32,19 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.items.ItemStackHandler;
 
 public class TEReformerController extends TileEntityInv implements IInternalServer{
 
 	public static final int SPEED_SLOT = 0;
 
 	public static int upgradeSlots = 1;
-	public static int templateSlots = 3;
+	public static int templateSlots = 4;
 
 	public int currentFile = -1;
 	public boolean isRepeatable = false;
+	public boolean direction = false;
+	private int countCat;
 
 	public int[] catList = new int[5];
 
@@ -63,6 +71,7 @@ public class TEReformerController extends TileEntityInv implements IInternalServ
 	@Override
 	public void readFromNBT(NBTTagCompound compound){
 		super.readFromNBT(compound);
+		this.direction = compound.getBoolean("Direction");
 		if(compound.hasKey("Catalysts")){
 			NBTTagCompound elements = compound.getCompoundTag("Catalysts");
 			for(int i = 0; i < this.catList.length; i++){
@@ -79,6 +88,7 @@ public class TEReformerController extends TileEntityInv implements IInternalServ
 			elements.setInteger("catalyst" + i, this.catList[i]);
 		}
 		compound.setTag("Catalysts", elements);
+		compound.setBoolean("Direction", getDirection());
 		return compound;
 	}
 
@@ -114,8 +124,13 @@ public class TEReformerController extends TileEntityInv implements IInternalServ
 	}
 
 	@Override
+	public BlockPos poweredPosition(){
+		return this.pos.offset(EnumFacing.UP, 3).offset(getFacing(), 1).offset(poweredFacing());
+	}
+
+	@Override
 	public EnumFacing poweredFacing(){
-		return getFacing().getOpposite();
+		return isFacingAt(90);
 	}
 
 
@@ -132,7 +147,7 @@ public class TEReformerController extends TileEntityInv implements IInternalServ
 	public GasReformerRecipe getCurrentRecipe(){
 		if(isActive() && isValidPreset() && hasCatalysts()){
 			if(handleInput() && handleOutput()){
-				return getRecipeList(getRecipeIndex());
+				return getRecipeList(getSelectedRecipe());
 			}
 		}
 		return null;
@@ -143,17 +158,17 @@ public class TEReformerController extends TileEntityInv implements IInternalServ
 	}
 
 	public boolean isValidPreset(){
-		return getRecipeIndex() > -1 && getRecipeIndex() < recipeList().size();
+		return getSelectedRecipe() > -1 && getSelectedRecipe() < recipeList().size();
 	}
 
 	public boolean isValidRecipe() {
 		return getDummyRecipe() != null;
 	}
 
-	public FluidStack getRecipeInputA(){ return isValidPreset() ? getRecipeList(getRecipeIndex()).getInputA() : null; }
-	public FluidStack getRecipeInputB(){ return isValidPreset() ? getRecipeList(getRecipeIndex()).getInputB() : null; }
-	public FluidStack getRecipeOutput(){ return isValidPreset() ? getRecipeList(getRecipeIndex()).getOutput() : null; }
-	public ItemStack getRecipeCatalyst(){ return isValidPreset() ? getRecipeList(getRecipeIndex()).getCatalyst() : ItemStack.EMPTY; }
+	public FluidStack getRecipeInputA(){ return isValidPreset() ? getRecipeList(getSelectedRecipe()).getInputA() : null; }
+	public FluidStack getRecipeInputB(){ return isValidPreset() ? getRecipeList(getSelectedRecipe()).getInputB() : null; }
+	public FluidStack getRecipeOutput(){ return isValidPreset() ? getRecipeList(getSelectedRecipe()).getOutput() : null; }
+	public ItemStack getRecipeCatalyst(){ return isValidPreset() ? getRecipeList(getSelectedRecipe()).getCatalyst() : ItemStack.EMPTY; }
 
 	public boolean isOutputGaseous(){
 		return getRecipeOutput() != null
@@ -248,6 +263,10 @@ public class TEReformerController extends TileEntityInv implements IInternalServ
 		return hasReactor() ? recipeCatalystFactor() : 0;
 	}
 
+	public boolean getDirection() {
+		return this.direction;
+	}
+
 
 
 	//----------------------- CUSTOM -----------------------
@@ -263,25 +282,25 @@ public class TEReformerController extends TileEntityInv implements IInternalServ
 			}
 		}
 		if(isValidPreset()){
-			if(hasATank()){
-				if(getATank().getFilter() != getRecipeInputA()){
-					getATank().filter = getRecipeInputA();
+			if(hasInputVessel1()){
+				if(getInputVessel1().getFilter() != getRecipeInputA()){
+					getInputVessel1().filter = getRecipeInputA();
 				}
 			}
-			if(hasBTank()){
-				if(getBTank().getFilter() != getRecipeInputB()){
-					getBTank().filter = getRecipeInputB();
+			if(hasInputVessel2()){
+				if(getInputVessel2().getFilter() != getRecipeInputB()){
+					getInputVessel2().filter = getRecipeInputB();
 				}
 			}
 		}else{
-			if(hasATank()){
-				if(getATank().getFilter() != null){
-					getATank().filter = null;
+			if(hasInputVessel1()){
+				if(getInputVessel1().getFilter() != null){
+					getInputVessel1().filter = null;
 				}
 			}
-			if(hasBTank()){
-				if(getBTank().getFilter() != null){
-					getBTank().filter = null;
+			if(hasInputVessel1()){
+				if(getInputVessel2().getFilter() != null){
+					getInputVessel2().filter = null;
 				}
 			}
 		}
@@ -321,7 +340,7 @@ public class TEReformerController extends TileEntityInv implements IInternalServ
 	//----------------------- STRUCTURE -----------------------
 //engine
 	public TEPowerGenerator getEngine(){
-		TEPowerGenerator engine = TileStructure.getEngine(this.world, this.pos, getFacing(), 1, 0);
+		TEPowerGenerator engine = TileStructure.getEngine(this.world, this.pos.offset(isFacingAt(90)), isFacingAt(270));
 		return engine != null ? engine : null;
 	}
 
@@ -344,8 +363,9 @@ public class TEReformerController extends TileEntityInv implements IInternalServ
 	}
 
 	public TEReformerReactor getReactor(){
-		TileEntity te = this.world.getTileEntity(reactorPos());
-		if(this.world.getBlockState(reactorPos()) != null && te instanceof TEReformerReactor){
+		BlockPos reactorPos = this.pos.offset(EnumFacing.UP, 1);
+		TileEntity te = this.world.getTileEntity(reactorPos);
+		if(this.world.getBlockState(reactorPos) != null && te instanceof TEReformerReactor){
 			TEReformerReactor reactor = (TEReformerReactor)te;
 			if(reactor.getFacing() == getFacing()){
 				return reactor;
@@ -358,65 +378,160 @@ public class TEReformerController extends TileEntityInv implements IInternalServ
 		return getReactor() != null;
 	}
 
-//input vessel 1
-	public TileVessel getATank(){
-		TileVessel vessel = TileStructure.getHolder(this.world, separatorPos(), isFacingAt(90), 1, 180);
-		return vessel != null ? vessel : null;
+//tower
+	public boolean hasTower(){
+		//tower
+		int countTower = 0;
+		for (int x = 2; x <= 4; x++){
+			BlockPos tPos = new BlockPos(this.pos.getX(), this.pos.getY() + x, this.pos.getZ());
+			Block tower = TileStructure.getStructure(this.world, tPos, EnumMiscBlocksA.REFORMER_TOWER.ordinal());
+			if(tower != null) {
+				countTower++;
+			}
+		}
+		//towercap
+		BlockPos tPos = new BlockPos(this.pos.getX(), this.pos.getY() + 5, this.pos.getZ());
+		Block tower = TileStructure.getStructure(this.world, tPos, EnumMiscBlocksA.REFORMER_TOWER_TOP.ordinal());
+		if(tower != null) {
+			countTower++;
+		}
+
+		return countTower == 4;
 	}
 
-	public boolean hasATank(){
-		return getATank() != null;
+//separators
+	public Block getSeparator(){
+		Block separator = TileStructure.getStructure(this.world, this.pos.offset(getFacing(), 1), EnumMiscBlocksA.SEPARATOR.ordinal());
+		return separator != null ? separator : null;
 	}
 
-	public FluidStack tankAInput(){
-		return hasATank() ? getATank().inputTank.getFluid() : null;
+	public Block getSeparator2(){
+		Block separator = TileStructure.getStructure(this.world, this.pos.offset(getFacing(), 3), EnumMiscBlocksA.SEPARATOR.ordinal());
+		return separator != null ? separator : null;
 	}
 
-//input vessel 2
-	public TileVessel getBTank(){
-		TileVessel vessel = TileStructure.getHolder(this.world, separatorPos(), isFacingAt(270), 1, 180);
-		return vessel != null ? vessel : null;
+	public boolean hasSeparators(){
+		return getSeparator() != null && getSeparator2() != null;
 	}
 
-	public boolean hasBTank(){
-		return getBTank() != null;
+//routers
+	public BlockPos routerPos1(){
+		return this.pos.offset(getFacing(), 2);
 	}
 
-	public FluidStack tankBInput(){
-		return hasBTank() ? getBTank().inputTank.getFluid() : null;
+	public BlockPos routerPos2(){
+		return this.pos.offset(getFacing(), 4);
 	}
 
-//output vessel
-	public TileVessel getOutTank(){
-		TileVessel vessel = TileStructure.getHolder(this.world, separatorPos(), getFacing(), 1, 0);
-		return vessel != null ? vessel : null;
+	public Block getRouter1(){
+		IBlockState sepState = this.world.getBlockState(routerPos1());
+		Block separator = sepState.getBlock();
+		if(MachineIO.miscBlocksA(separator, sepState, EnumMiscBlocksA.GAS_ROUTER.ordinal())){
+			return separator;
+		}
+		return null;
 	}
 
-	public boolean hasOutTank(){
-		return getOutTank() != null;
+	public Block getRouter2(){
+		IBlockState sepState = this.world.getBlockState(routerPos2());
+		Block separator = sepState.getBlock();
+		if(MachineIO.miscBlocksA(separator, sepState, EnumMiscBlocksA.GAS_ROUTER.ordinal())){
+			return separator;
+		}
+		return null;
 	}
 
-	public FluidStack outGas(){
-		return hasOutTank() ? getOutTank().inputTank.getFluid() : null;
+	public boolean hasRouters(){
+		return getRouter1() != null && getRouter2() != null;
 	}
 
-//purge vessel
-	public TileVessel getPurgeTank(){
-		TileVessel vessel = TileStructure.getHolder(this.world, this.pos, isFacingAt(90), 1, 0);
-		return vessel != null ? vessel : null;
+//Unloader
+	public TEUnloader getUnloader(){
+		BlockPos unloaderPos = this.pos.offset(getFacing(), 5);
+		TEUnloader unloader = TileStructure.getUnloader(this.world, unloaderPos, getFacing().getOpposite());
+		return unloader != null ? unloader : null;
 	}
 
-	public boolean hasPurgeTank(){
-		return getPurgeTank() != null;
+	public boolean hasUnloader(){
+		return getUnloader() != null;
 	}
 
-	public FluidStack purgeGas(){
-		return hasPurgeTank() ? getPurgeTank().inputTank.getFluid() : null;
+//centrifuge
+	public TECentrifuge getInputCentrifuge1(){
+		EnumFacing directionalFacing = isFacingAt(90);
+		if(getDirection()) {
+			directionalFacing = isFacingAt(270);
+		}
+		TECentrifuge centrifuge = TileStructure.getCentrifuge(this.world, routerPos1().offset(isFacingAt(270)), directionalFacing);
+		return centrifuge != null ? centrifuge : null;
+	}
+
+	public TECentrifuge getInputCentrifuge2(){
+		EnumFacing directionalFacing = isFacingAt(90);
+		if(getDirection()) {
+			directionalFacing = isFacingAt(270);
+		}
+		TECentrifuge centrifuge = TileStructure.getCentrifuge(this.world, routerPos2().offset(isFacingAt(270)), directionalFacing);
+		return centrifuge != null ? centrifuge : null;
+	}
+
+	public TECentrifuge getOutputCentrifuge1(){
+		EnumFacing directionalFacing = isFacingAt(90);
+		if(getDirection()) {
+			directionalFacing = isFacingAt(270);
+		}
+		TECentrifuge centrifuge = TileStructure.getCentrifuge(this.world, routerPos1().offset(isFacingAt(90)), directionalFacing);
+		return centrifuge != null ? centrifuge : null;
+	}
+
+	public TECentrifuge getOutputCentrifuge2(){
+		EnumFacing directionalFacing = isFacingAt(90);
+		if(getDirection()) {
+			directionalFacing = isFacingAt(270);
+		}
+		TECentrifuge centrifuge = TileStructure.getCentrifuge(this.world, routerPos2().offset(isFacingAt(90)), directionalFacing);
+		return centrifuge != null ? centrifuge : null;
+	}
+
+	public boolean hasCentrifuges(){
+		return getInputCentrifuge1() != null && getInputCentrifuge2() != null && getOutputCentrifuge1() != null && getOutputCentrifuge2() != null;
+	}
+
+//main pressurizer
+	public TEAuxiliaryEngine getPressurizer1(){
+		TEAuxiliaryEngine pressurizer = TileStructure.getPressurizer(this.world, this.pos.offset(getFacing(), 6), getFacing().getOpposite());
+		return pressurizer != null ? pressurizer : null;
+	}
+	public TEAuxiliaryEngine getPressurizer2(){
+		TEAuxiliaryEngine pressurizer = TileStructure.getPressurizer(this.world, this.pos.offset(getFacing(), 1).offset(isFacingAt(90)), isFacingAt(270));
+		return pressurizer != null ? pressurizer : null;
+	}
+	public TEAuxiliaryEngine getPressurizer3(){
+		TEAuxiliaryEngine pressurizer = TileStructure.getPressurizer(this.world, this.pos.offset(getFacing(), 1).offset(isFacingAt(270)), isFacingAt(90));
+		return pressurizer != null ? pressurizer : null;
+	}
+	public TEAuxiliaryEngine getPressurizer4(){
+		TEAuxiliaryEngine pressurizer = TileStructure.getPressurizer(this.world, this.pos.offset(getFacing(), 3).offset(isFacingAt(90)), isFacingAt(270));
+		return pressurizer != null ? pressurizer : null;
+	}
+	public TEAuxiliaryEngine getPressurizer5(){
+		TEAuxiliaryEngine pressurizer = TileStructure.getPressurizer(this.world, this.pos.offset(getFacing(), 3).offset(isFacingAt(270)), isFacingAt(90));
+		return pressurizer != null ? pressurizer : null;
+	}
+
+	public boolean hasPressurizers(){
+		return getPressurizer1() != null && getPressurizer2() != null && getPressurizer3() != null && getPressurizer4() != null && getPressurizer5() != null;
+	}
+
+//cyclone base
+	public boolean hasCycloneSeparator(){
+		return TileStructure.getCycloneSeparator(this.world, this.pos.offset(EnumFacing.UP).offset(getFacing()), getFacing().getOpposite());
 	}
 
 //output tank
 	public TEBufferTank getTank(){
-		TEBufferTank tank = TileStructure.getBufferTank(this.world, this.pos, EnumFacing.UP, 5);
+		BlockPos tankPos = this.pos.offset(getFacing(), 5).offset(EnumFacing.UP);
+		TEBufferTank tank = TileStructure.getBufferTank(this.world, tankPos);
 		return tank != null ? tank : null;
 	}
 
@@ -424,52 +539,98 @@ public class TEReformerController extends TileEntityInv implements IInternalServ
 		return getTank() != null;
 	}
 
-//separator
-	public BlockPos separatorPos(){
-		return reactorPos().offset(getFacing(), 1);
+//input vessel
+	public TileVessel getInputVessel1(){
+		EnumFacing positionFacing = isFacingAt(270);
+		EnumFacing directionalFacing = isFacingAt(90);
+		if(getDirection()) {
+			positionFacing = isFacingAt(90);
+			directionalFacing = isFacingAt(270);
+		}
+		TileVessel vessel = TileStructure.getHolder(this.world, routerPos1().offset(positionFacing, 2), directionalFacing);
+		return vessel != null ? vessel : null;
 	}
 
-	public Block getSeparator(){
-		IBlockState sepState = this.world.getBlockState(separatorPos());
-		Block separator = sepState.getBlock();
-		if(MachineIO.miscBlocksA(separator, sepState, EnumMiscBlocksA.SEPARATOR.ordinal())){
-			return separator;
+	public TileVessel getInputVessel2(){
+		EnumFacing positionFacing = isFacingAt(270);
+		EnumFacing directionalFacing = isFacingAt(90);
+		if(getDirection()) {
+			positionFacing = isFacingAt(90);
+			directionalFacing = isFacingAt(270);
 		}
-		return null;
+		TileVessel vessel = TileStructure.getHolder(this.world, routerPos2().offset(positionFacing, 2), directionalFacing);
+		return vessel != null ? vessel : null;
 	}
 
-//tower
-	public boolean hasTower(){
-		//tower
-		int countTower = 0;
-		for (int x = 2; x <= 3; x++){
-			BlockPos tPos = new BlockPos(this.pos.getX(), this.pos.getY() + x, this.pos.getZ());
-			IBlockState state = this.world.getBlockState(tPos);
-			Block block = state.getBlock();
-			if(MachineIO.miscBlocksA(block, state, EnumMiscBlocksA.REFORMER_TOWER.ordinal())){
-				countTower++;
-			}
-		}
-		//towercap
-		BlockPos tPos = new BlockPos(this.pos.getX(), this.pos.getY() + 4, this.pos.getZ());
-		IBlockState state = this.world.getBlockState(tPos);
-		Block block = state.getBlock();
-		if(MachineIO.miscBlocksA(block, state, EnumMiscBlocksA.REFORMER_TOWER_TOP.ordinal())){
-			countTower++;
-		}
-
-		return countTower == 3 && getSeparator() != null;
+	public boolean hasInputVessel1(){
+		return getInputVessel1() != null;
 	}
 
+	public boolean hasInputVessel2(){
+		return getInputVessel2() != null;
+	}
+
+	public FluidStack vesselInput1(){
+		return hasInputVessel1() ? getInputVessel1().inputTank.getFluid() : null;
+	}
+
+	public FluidStack vesselInput2(){
+		return hasInputVessel2() ? getInputVessel2().inputTank.getFluid() : null;
+	}
+
+//output vessel
+	public TileVessel getOutputVessel(){
+		EnumFacing positionFacing = isFacingAt(90);
+		EnumFacing directionalFacing = isFacingAt(90);
+		if(getDirection()) {
+			positionFacing = isFacingAt(270);
+			directionalFacing = isFacingAt(270);
+		}
+		TileVessel vessel = TileStructure.getHolder(this.world, routerPos1().offset(positionFacing, 2), directionalFacing);
+		return vessel != null ? vessel : null;
+	}
+
+	public boolean hasOutputVessel(){
+		return getOutputVessel() != null;
+	}
+
+	public FluidStack outGas(){
+		return hasOutputVessel() ? getOutputVessel().inputTank.getFluid() : null;
+	}
+
+//purge vessel
+	public TileVessel getPurgeVessel(){
+		EnumFacing positionFacing = isFacingAt(90);
+		EnumFacing directionalFacing = isFacingAt(90);
+		if(getDirection()) {
+			positionFacing = isFacingAt(270);
+			directionalFacing = isFacingAt(270);
+		}
+		TileVessel vessel = TileStructure.getHolder(this.world, routerPos2().offset(positionFacing, 2), directionalFacing);
+		return vessel != null ? vessel : null;
+	}
+
+	public boolean hasPurgeVessel(){
+		return getPurgeVessel() != null;
+	}
+
+	public FluidStack purgeGas(){
+		return hasPurgeVessel() ? getPurgeVessel().inputTank.getFluid() : null;
+	}
 
 //server
 	public TEServer getServer(){
-		TEServer server = TileStructure.getServer(this.world, this.pos, isFacingAt(270), 1, 0);
+		TEServer server = TileStructure.getServer(this.world, this.pos.offset(isFacingAt(270)), isFacingAt(90));
 		return server != null ? server : null;
 	}
 
 	public boolean hasServer(){
 		return getServer() != null;
+	}
+
+	private boolean isAssembled() {
+		return hasReactor() && hasTower() && hasRouters() && hasSeparators() && hasUnloader() 
+			&& hasCentrifuges() && hasPressurizers() && hasCycloneSeparator();
 	}
 
 
@@ -481,7 +642,7 @@ public class TEReformerController extends TileEntityInv implements IInternalServ
 			doPreset();
 			handlePurge();
 
-			initializeServer(isRepeatable, hasServer(), getServer(), deviceCode());
+			initializeServer(isRepeatable, getServer(), deviceCode(), this.recipeStep, recipeList().size());
 
 			if(getDummyRecipe() == null){
 				dummyRecipe = getCurrentRecipe();
@@ -497,6 +658,7 @@ public class TEReformerController extends TileEntityInv implements IInternalServ
 				}
 				this.markDirtyClient();
 			}else{
+				this.dummyRecipe = null;
 				tickOff();
 			}
 		}
@@ -506,18 +668,19 @@ public class TEReformerController extends TileEntityInv implements IInternalServ
 		return isActive()
 			&& isValidRecipe()
 			&& hasRedstonePower()
-			&& hasTower()
-			&& handleServer(hasServer(), getServer(), this.currentFile); //server
+			&& isAssembled()
+			&& handleServer(getServer(), this.currentFile); //server
 	}
 
+
 				private boolean handleInput() {
-					return getRecipeInputA() != null && hasATank() && this.input.canDrainFluid(tankAInput(), getRecipeInputA(), calculatedDrainA())
-						&& getRecipeInputB() != null && hasBTank() && this.input.canDrainFluid(tankBInput(), getRecipeInputB(), calculatedDrainB());
+					return getRecipeInputA() != null && hasInputVessel1() && this.input.canDrainFluid(vesselInput1(), getRecipeInputA(), calculatedDrainA())
+						&& getRecipeInputB() != null && hasInputVessel2() && this.input.canDrainFluid(vesselInput2(), getRecipeInputB(), calculatedDrainB());
 				}
 
 				private boolean handleOutput() {
 					if(isOutputGaseous()){
-						return getRecipeOutput() != null && hasOutTank() && this.input.canSetOrAddFluid(getOutTank().inputTank, getOutTank().inputTank.getFluid(), getRecipeOutput(), calculatedProduct());	
+						return getRecipeOutput() != null && hasOutputVessel() && this.input.canSetOrAddFluid(getOutputVessel().inputTank, getOutputVessel().inputTank.getFluid(), getRecipeOutput(), calculatedProduct());	
 					}
 					return getRecipeOutput() != null && hasTank() && this.input.canSetOrAddFluid(getTank().inputTank, getTank().inputTank.getFluid(), getRecipeOutput(), calculatedProduct());	
 				}
@@ -526,8 +689,8 @@ public class TEReformerController extends TileEntityInv implements IInternalServ
 
 		if(isValidRecipe() && hasCatalysts()){
 			if(isOutputGaseous()){
-				if(hasOutTank()){
-					this.input.setOrFillFluid(getOutTank().inputTank, getRecipeOutput(), calculatedProduct());
+				if(hasOutputVessel()){
+					this.input.setOrFillFluid(getOutputVessel().inputTank, getRecipeOutput(), calculatedProduct());
 				}
 			}else{
 				if(hasTank()){
@@ -543,15 +706,15 @@ public class TEReformerController extends TileEntityInv implements IInternalServ
 				}
 			}
 
-			if(hasATank()){
-				this.input.drainOrCleanFluid(getATank().inputTank, calculatedDrainA(), true);
+			if(hasInputVessel1()){
+				this.input.drainOrCleanFluid(getInputVessel1().inputTank, calculatedDrainA(), true);
 			}
 
-			if(hasBTank()){
-				this.input.drainOrCleanFluid(getBTank().inputTank, calculatedDrainB(), true);
+			if(hasInputVessel2()){
+				this.input.drainOrCleanFluid(getInputVessel2().inputTank, calculatedDrainB(), true);
 			}
 
-			updateServer(hasServer(), getServer(), this.currentFile);
+			updateServer(getServer(), this.currentFile);
 		}
 		
 		this.dummyRecipe = null;
@@ -570,44 +733,59 @@ public class TEReformerController extends TileEntityInv implements IInternalServ
 	private void handlePurge() {
 		if(isActive()){
 			if(!isValidPreset() || !isValidRecipe()){
-				if(hasPurgeTank()){
-					if(hasATank()){
+				if(hasPurgeVessel()){
+					if(hasInputVessel1()){
 						if(isWrongInputA() && canPurgeA()){
-							int canReceive = getPurgeTank().inputTank.getCapacity() - getPurgeTank().inputTank.getFluidAmount();
-							int canSend = Math.min(getATank().inputTank.getFluidAmount(), canReceive);
-							this.input.setOrFillFluid(getPurgeTank().inputTank, tankAInput(), canSend);
-							this.input.drainOrCleanFluid(getATank().inputTank, canSend, true);
+							int canReceive = getPurgeVessel().inputTank.getCapacity() - getPurgeVessel().inputTank.getFluidAmount();
+							int canSend = Math.min(getInputVessel1().inputTank.getFluidAmount(), canReceive);
+							this.input.setOrFillFluid(getPurgeVessel().inputTank, vesselInput1(), canSend);
+							this.input.drainOrCleanFluid(getInputVessel1().inputTank, canSend, true);
 						}
 					}
-					if(hasBTank()){
+					if(hasInputVessel2()){
 						if(isWrongInputB() && canPurgeB()){
-							int canReceive = getPurgeTank().inputTank.getCapacity() - getPurgeTank().inputTank.getFluidAmount();
-							int canSend = Math.min(getBTank().inputTank.getFluidAmount(), canReceive);
-							this.input.setOrFillFluid(getPurgeTank().inputTank, tankBInput(), canSend);
-							this.input.drainOrCleanFluid(getBTank().inputTank, canSend, true);
+							int canReceive = getPurgeVessel().inputTank.getCapacity() - getPurgeVessel().inputTank.getFluidAmount();
+							int canSend = Math.min(getInputVessel2().inputTank.getFluidAmount(), canReceive);
+							this.input.setOrFillFluid(getPurgeVessel().inputTank, vesselInput2(), canSend);
+							this.input.drainOrCleanFluid(getInputVessel2().inputTank, canSend, true);
 						}
 					}
 				}
+				if(countCat < getReactor().SLOT_RECIPE_CAT.length){
+					int inp = getReactor().SLOT_RECIPE_CAT[countCat];
+					if(!getReactor().inputSlot(inp).isEmpty() && !getRecipeCatalyst().isEmpty()){
+						if(!isRecipeCatalyst(getReactor().inputSlot(inp)) ){
+							if(((MachineStackHandler)getUnloader().getOutput()).canSetOrStack(getUnloader().unloaderSlot(), getReactor().inputSlot(inp))){
+								((MachineStackHandler)getUnloader().getOutput()).setOrStack(OUTPUT_SLOT, getReactor().inputSlot(inp));
+								((ItemStackHandler)getReactor().getInput()).setStackInSlot(inp, ItemStack.EMPTY);
+								countCat++;
+							}
+						}
+					}
+				}else{
+					countCat = 0;
+				}
+
 			}
 		}
 	}
 
 				private boolean isWrongInputA() {
-					return tankAInput() != null
-						&& (getRecipeInputA() == null || (getRecipeInputA() != null && !getRecipeInputA().isFluidEqual(tankAInput())));
+					return vesselInput1() != null
+						&& (getRecipeInputA() == null || (getRecipeInputA() != null && !getRecipeInputA().isFluidEqual(vesselInput1())));
 				}
 
 				private boolean isWrongInputB() {
-					return tankBInput() != null
-						&& (getRecipeInputB() == null || (getRecipeInputB() != null && !getRecipeInputB().isFluidEqual(tankBInput())));
+					return vesselInput2() != null
+						&& (getRecipeInputB() == null || (getRecipeInputB() != null && !getRecipeInputB().isFluidEqual(vesselInput2())));
 				}
 
 				private boolean canPurgeA() {
-					return tankAInput() != null && this.input.canSetOrFillFluid(getPurgeTank().inputTank, purgeGas(), tankAInput());
+					return vesselInput1() != null && this.input.canSetOrFillFluid(getPurgeVessel().inputTank, purgeGas(), vesselInput1());
 				}
 
 				private boolean canPurgeB() {
-					return tankBInput() != null && this.input.canSetOrFillFluid(getPurgeTank().inputTank, purgeGas(), tankBInput());
+					return vesselInput2() != null && this.input.canSetOrFillFluid(getPurgeVessel().inputTank, purgeGas(), vesselInput2());
 				}
 
 
@@ -618,18 +796,17 @@ public class TEReformerController extends TileEntityInv implements IInternalServ
 	public void loadServerStatus() {
 		this.currentFile = -1;
 		if(getServer().isActive()){
-			for(int x = 0; x < TEServer.FILE_SLOTS.length; x++){
-				ItemStack fileSlot = getServer().inputSlot(x).copy();
-				if(!fileSlot.isEmpty() && fileSlot.isItemEqual(new ItemStack(ModItems.MISC_ITEMS, 1, EnumMiscItems.SERVER_FILE.ordinal()))){
+			for(int x = 0; x < getServer().FILE_SLOTS.length; x++){
+				ItemStack fileSlot = getServer().inputSlot(x);
+				if(TEServer.isValidFile(fileSlot)){
 					if(fileSlot.hasTagCompound()){
 						NBTTagCompound tag = fileSlot.getTagCompound();
-						if(isValidFile(tag)){
-							if(tag.getInteger("Device") == deviceCode()){
-								if(tag.getInteger("Recipe") < recipeList().size()){
-									if(tag.getInteger("Done") > 0){
-										if(this.recipeIndex != tag.getInteger("Recipe")){
-											this.recipeIndex = tag.getInteger("Recipe");
-											this.markDirtyClient();
+						if(isWrittenFile(tag)){
+							if(isCorrectDevice(tag, deviceCode())){
+								if(getRecipe(tag) < recipeList().size()){
+									if(getDone(tag) > 0){
+										if(this.recipeIndex != getRecipe(tag)){
+											this.recipeIndex = getRecipe(tag);
 										}
 										if(this.currentFile != x){
 											this.currentFile = x;
@@ -642,11 +819,23 @@ public class TEReformerController extends TileEntityInv implements IInternalServ
 						}
 					}
 				}
-				if(x == TEServer.FILE_SLOTS.length - 1){
+				if(x == getServer().FILE_SLOTS.length - 1){
 					resetFiles(getServer(), deviceCode());
 				}
 			}
 		}
+	}
+
+	public void flipResources() {
+		TileStructure.flipTile(this.world, this.pos.offset(getFacing(), 2).offset(isFacingAt(90), 1), getFacing(), getDirection());
+		TileStructure.flipTile(this.world, this.pos.offset(getFacing(), 2).offset(isFacingAt(270), 1), getFacing(), getDirection());
+		TileStructure.flipTile(this.world, this.pos.offset(getFacing(), 4).offset(isFacingAt(90), 1), getFacing(), getDirection());
+		TileStructure.flipTile(this.world, this.pos.offset(getFacing(), 4).offset(isFacingAt(270), 1), getFacing(), getDirection());
+
+		TileStructure.flipTile(this.world, this.pos.offset(getFacing(), 2).offset(isFacingAt(90), 2), getFacing(), getDirection());
+		TileStructure.flipTile(this.world, this.pos.offset(getFacing(), 2).offset(isFacingAt(270), 2), getFacing(), getDirection());
+		TileStructure.flipTile(this.world, this.pos.offset(getFacing(), 4).offset(isFacingAt(90), 2), getFacing(), getDirection());
+		TileStructure.flipTile(this.world, this.pos.offset(getFacing(), 4).offset(isFacingAt(270), 2), getFacing(), getDirection());
 	}
 
 }

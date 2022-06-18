@@ -1,0 +1,27 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:machines",
+	"pattern": [
+		"ppp",
+		" P ",
+		"CWC"
+	],
+	"key": {
+		"P":{
+				"item": "#PISTON"
+			},
+		"W":{
+				"item": "#WATER_BUCKET"
+			},
+		"p":{
+				"item": "#IRON_PLATE"
+			},
+		"C":{
+				"item": "#SCAFFOLD"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:machines_f",
+				"data": 11
+			}
+}

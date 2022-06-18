@@ -1,7 +1,7 @@
 package com.globbypotato.rockhounding_chemistry.compat.jei.pulling_crucible;
 
 import com.globbypotato.rockhounding_chemistry.compat.jei.RHRecipeCategory;
-import com.globbypotato.rockhounding_chemistry.machines.gui.UIPullingCrucibleBase;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UIPullingCrucibleController;
 
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IGuiFluidStackGroup;
@@ -13,7 +13,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class PullingCrucibleCategory extends RHRecipeCategory {
 
-	private final static ResourceLocation guiTexture = UIPullingCrucibleBase.TEXTURE_JEI;
+	private final static ResourceLocation guiTexture = UIPullingCrucibleController.TEXTURE_JEI;
 	private String uid;
 
 	public PullingCrucibleCategory(IGuiHelper guiHelper, String uid) {

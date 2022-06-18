@@ -1,6 +1,6 @@
 package com.globbypotato.rockhounding_chemistry.machines.render;
 
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEEvaporationTank;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEEvaporationTank;
 import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityInv;
 
 import net.darkhax.bookshelf.util.RenderUtils;

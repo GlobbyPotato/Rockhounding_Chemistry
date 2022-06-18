@@ -25,6 +25,7 @@
 	},
 	"result":{
 				"item": "rockhounding_chemistry:machines_e",
-				"data": 12
+				"data": 12,
+				"count": 2
 			}
 }

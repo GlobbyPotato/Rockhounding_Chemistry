@@ -3,7 +3,7 @@ package com.globbypotato.rockhounding_chemistry.compat.waila;
 import java.util.List;
 
 import com.globbypotato.rockhounding_chemistry.machines.MachinesC;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TELeachingVatTank;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TELeachingVatTank;
 
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;

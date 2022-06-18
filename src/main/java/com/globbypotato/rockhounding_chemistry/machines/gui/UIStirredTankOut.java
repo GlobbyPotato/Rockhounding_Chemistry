@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.COStirredTankOut;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEStirredTankOut;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEStirredTankOut;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.machines.gui.GuiUtils;
 
@@ -37,7 +37,7 @@ public class UIStirredTankOut extends GuiBase {
 	   List<String> tooltip;
 
 		//void solvent
-	    if(GuiUtils.hoveringArea(80, 21, 16, 16, mouseX, mouseY, x, y)){
+	    if(GuiUtils.hoveringArea(80, 86, 16, 16, mouseX, mouseY, x, y)){
 			tooltip = GuiUtils.drawLabel(this.void_label, mouseX, mouseY);
 			drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 		}
@@ -60,7 +60,7 @@ public class UIStirredTankOut extends GuiBase {
 
 		//output fluid
 		if(this.tile.getTankFluid() != null){
-			GuiUtils.renderFluidBar(this.tile.getTankFluid(), this.tile.getTankAmount(), this.tile.getTankCapacity(), i + 62, j + 63, 52, 28);
+			GuiUtils.renderFluidBar(this.tile.getTankFluid(), this.tile.getTankAmount(), this.tile.getTankCapacity(), i + 62, j + 53, 52, 28);
 		}
 
     }

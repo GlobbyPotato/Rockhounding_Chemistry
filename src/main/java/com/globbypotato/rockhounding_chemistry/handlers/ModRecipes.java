@@ -149,8 +149,11 @@ public class ModRecipes extends BaseRecipes{
 			//dry waterlock
 			GameRegistry.addSmelting(new ItemStack(ModBlocks.WATERLOCK, 1, 1), new ItemStack(ModBlocks.WATERLOCK, 1, 0), 2.0F);
 
-			//refractory brick
+			//flyash brick
 			GameRegistry.addSmelting(misc_items(1, EnumMiscItems.FLYASH_BALL), misc_items(1, EnumMiscItems.FLYASH_BRICK), 2.0F);
+
+			//didymium panel
+			GameRegistry.addSmelting(chemicals(1, EnumChemicals.DIDYMIUM_COMPOUND), misc_items(1, EnumMiscItems.DIDYMIUM_PANEL), 2.0F);
 
 			//machines recipes
 			MachineRecipes.init();

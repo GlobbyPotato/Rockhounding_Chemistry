@@ -57,7 +57,7 @@ public class LeachingVatRecipes extends BaseRecipes{
 																						chromate_stack(1, EnumChromate.CROCOITE),
 																						chromate_stack(1, EnumChromate.CHROMATITE), 
 																						chromate_stack(1, EnumChromate.IRANITE)), 
-																		Arrays.asList(2.69F, 0.6F, 3.142F, 5.8F), getFluid(EnumFluid.LOW_LEACHATE, 1000)));
+																		Arrays.asList(2.69F, 0.6F, 3.14F, 5.8F), getFluid(EnumFluid.LOW_LEACHATE, 1000)));
 		//halide vat 1
 		leaching_vat_recipes.add(new LeachingVatRecipe(mineral_ores(1,EnumMinerals.HALIDE), 
 																		Arrays.asList(	halide_stack(1, EnumHalide.BOLEITE), 

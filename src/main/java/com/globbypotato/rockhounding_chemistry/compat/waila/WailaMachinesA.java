@@ -5,14 +5,11 @@ import java.util.List;
 import com.globbypotato.rockhounding_chemistry.enums.utils.EnumCasting;
 import com.globbypotato.rockhounding_chemistry.enums.utils.EnumSaltStages;
 import com.globbypotato.rockhounding_chemistry.machines.MachinesA;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEEvaporationTank;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEFluidInputTank;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEFluidOutputTank;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEFluidTank;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TEMineralSizerController;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEPowerGenerator;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TEProfilingBench;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TESlurryPond;
+import com.globbypotato.rockhounding_chemistry.machines.tile.devices.TEPowerGenerator;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEEvaporationTank;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEFluidTank;
 
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
@@ -65,40 +62,9 @@ public class WailaMachinesA implements IWailaDataProvider{
 					currenttip.add(TextFormatting.GRAY + "Content: " + TextFormatting.WHITE + "Empty");
 				}
 			}
-			if(te instanceof TEFluidInputTank){
-				TEFluidInputTank tank = (TEFluidInputTank)te;
-				if(tank.hasSolventFluid()){
-					currenttip.add(TextFormatting.GRAY + "Solvent: " + TextFormatting.WHITE + tank.getSolventFluid().getLocalizedName() + " - " + tank.getSolventAmount() + "/" + tank.getTankCapacity() + " mB");
-				}
-				if(tank.hasReagentFluid()){
-					currenttip.add(TextFormatting.GRAY + "Reagent: " + TextFormatting.WHITE + tank.getReagentFluid().getLocalizedName() + " - " + tank.getReagentAmount() + "/" + tank.getTankCapacity() + " mB");
-				}
-			}
-			if(te instanceof TEFluidOutputTank){
-				TEFluidOutputTank tank = (TEFluidOutputTank)te;
-				if(tank.hasSolutionFluid()){
-					currenttip.add(TextFormatting.GRAY + "Solution: " + TextFormatting.WHITE + tank.getSolutionFluid().getLocalizedName() + " - " + tank.getSolutionAmount() + "/" + tank.getTankCapacity() + " mB");
-				}
-				if(tank.hasByproductFluid()){
-					currenttip.add(TextFormatting.GRAY + "Byproduct: " + TextFormatting.WHITE + tank.getByproductFluid().getLocalizedName() + " - " + tank.getByproductAmount() + "/" + tank.getTankCapacity() + " mB");
-				}
-			}
 			if(te instanceof TEProfilingBench){
 				TEProfilingBench casting = (TEProfilingBench)te;
 		    	currenttip.add(TextFormatting.GRAY + "Pattern: " + TextFormatting.AQUA + EnumCasting.getFormalName(casting.getCasting()));
-			}
-			if(te instanceof TESlurryPond){
-				TESlurryPond tank = (TESlurryPond)te;
-				if(tank.hasInputFluid()){
-					currenttip.add(TextFormatting.GRAY + "Content: " + TextFormatting.WHITE + tank.getInputFluid().getLocalizedName() + " - " + tank.getInputAmount() + "/" + tank.getTankCapacity() + " mB");
-				}else{
-					currenttip.add(TextFormatting.GRAY + "Content: " + TextFormatting.WHITE + "Empty");
-				}
-				if(tank.hasOutputFluid()){
-					currenttip.add(TextFormatting.GRAY + "Content: " + TextFormatting.WHITE + tank.getOutputFluid().getLocalizedName() + " - " + tank.getInputAmount() + "/" + tank.getTankCapacity() + " mB");
-				}else{
-					currenttip.add(TextFormatting.GRAY + "Content: " + TextFormatting.WHITE + "Empty");
-				}
 			}
 			if(te instanceof TEEvaporationTank){
 				TEEvaporationTank tank = (TEEvaporationTank)te;

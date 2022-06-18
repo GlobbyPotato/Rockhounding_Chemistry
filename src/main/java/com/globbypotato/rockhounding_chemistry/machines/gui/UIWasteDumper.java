@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.COWasteDumper;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEWasteDumper;
+import com.globbypotato.rockhounding_chemistry.machines.tile.devices.TEWasteDumper;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.machines.gui.GuiUtils;
 
@@ -37,12 +37,12 @@ public class UIWasteDumper extends GuiBase {
 
 		//filter
 	    if(GuiUtils.hoveringArea(79, 76, 18, 18, mouseX, mouseY, x, y)){
-			String filterstring = TextFormatting.BLUE + "Filter: " + TextFormatting.WHITE + "use a filled ampoule to set";
+			String filterstring = TextFormatting.BLUE + this.filter_label + ": " + TextFormatting.WHITE + this.ampoule_label;
 			if(!this.tile.hasFilter()){
 				List<String> tooltip = GuiUtils.drawLabel(filterstring, mouseX, mouseY);
 				drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 			}else{
-				filterstring = TextFormatting.GRAY + "Filter: " + TextFormatting.WHITE + this.tile.getFilter().getLocalizedName();
+				filterstring = TextFormatting.GRAY + this.filter_label + ": " + TextFormatting.WHITE + this.tile.getFilter().getLocalizedName();
 				List<String> tooltip = GuiUtils.drawLabel(filterstring, mouseX, mouseY);
 				drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 			}

@@ -17,13 +17,10 @@ public class COMineralSizerController extends ContainerBase<TEMineralSizerContro
 	@Override
 	public void addOwnSlots() {
 		IItemHandler input = this.tile.getInput();
-		IItemHandler output = this.tile.getOutput();
 		IItemHandler template = this.tile.getTemplate();
 		IItemHandler upgrade = this.tile.getUpgrade();
 
-		this.addSlotToContainer(new SlotItemHandler(input, 0, 14, 36));//input
-
-		this.addSlotToContainer(new SlotItemHandler(output, 0, 14, 92));//purge
+		this.addSlotToContainer(new SlotItemHandler(input, 0, 14, 68));//input
 
 		this.addSlotToContainer(new SlotItemHandler(template, 0, 80, 96));//activation
 		this.addSlotToContainer(new SlotItemHandler(template, 1, 62, 21));//lo
@@ -34,19 +31,21 @@ public class COMineralSizerController extends ContainerBase<TEMineralSizerContro
 
 	@Override
 	public ItemStack slotClick(int slot, int dragType, ClickType clickTypeIn, EntityPlayer player){
-		if(slot == 2){ 
+		if(slot == 1){ 
 			this.tile.activation = !this.tile.activation;
 			doClickSound(player, this.tile.getWorld(), this.tile.getPos());
 	    	return ItemStack.EMPTY;
-    	}else if(slot == 3){ 
+    	}else if(slot == 2){ 
     		if(this.tile.getComminution() > 0){
     			this.tile.comminution--;
+    			this.tile.pushGears();
     		}
 			doClickSound(player, this.tile.getWorld(), this.tile.getPos());
         	return ItemStack.EMPTY;
-		}else if(slot == 4){
+		}else if(slot == 3){
     		if(this.tile.getComminution() < 15){
     			this.tile.comminution++;
+    			this.tile.pushGears();
     		}
 			doClickSound(player, this.tile.getWorld(), this.tile.getPos());
     		return ItemStack.EMPTY;
@@ -60,7 +59,7 @@ public class COMineralSizerController extends ContainerBase<TEMineralSizerContro
 		if(super.mergeItemStack(stack, startIndex, 1, reverseDirection)){
 			return true;
 		}
-		return super.mergeItemStack(stack, 5, endIndex, reverseDirection);
+		return super.mergeItemStack(stack, 4, endIndex, reverseDirection);
     }
 
 }

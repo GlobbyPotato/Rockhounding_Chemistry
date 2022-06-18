@@ -2,15 +2,22 @@ package com.globbypotato.rockhounding_chemistry.machines.tile;
 
 import java.util.ArrayList;
 
-import com.globbypotato.rockhounding_chemistry.ModItems;
 import com.globbypotato.rockhounding_chemistry.enums.EnumMiscBlocksA;
-import com.globbypotato.rockhounding_chemistry.enums.EnumMiscItems;
 import com.globbypotato.rockhounding_chemistry.enums.utils.EnumServer;
 import com.globbypotato.rockhounding_chemistry.fluids.ModFluids;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
-import com.globbypotato.rockhounding_chemistry.machines.io.MachineIO;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.BedReactorRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.BedReactorRecipe;
+import com.globbypotato.rockhounding_chemistry.machines.tile.collateral.TEServer;
+import com.globbypotato.rockhounding_chemistry.machines.tile.devices.TEPowerGenerator;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEAuxiliaryEngine;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TECentrifuge;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TETubularBedBase;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TETubularBedLow;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TETubularBedMid;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TETubularBedTank;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TETubularBedTop;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEUnloader;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.machines.tileentity.MachineStackHandler;
 import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityInv;
@@ -19,7 +26,6 @@ import com.globbypotato.rockhounding_core.machines.tileentity.WrappedItemHandler
 import com.globbypotato.rockhounding_core.utils.CoreUtils;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Enchantments;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -113,7 +119,7 @@ public class TETubularBedController extends TileEntityInv implements IInternalSe
 		if(isActive() && isValidPreset()){
 			if(hasCatalysts()) {
 				if(handleMainInput() && handleInput() && handleOutput()){
-					return getRecipeList(getRecipeIndex());
+					return getRecipeList(getSelectedRecipe());
 				}
 			}
 		}
@@ -125,7 +131,7 @@ public class TETubularBedController extends TileEntityInv implements IInternalSe
 	}
 
 	public boolean isValidPreset(){
-		return getRecipeIndex() > -1 && getRecipeIndex() < recipeList().size();
+		return getSelectedRecipe() > -1 && getSelectedRecipe() < recipeList().size();
 	}
 
 	public boolean isValidRecipe() {
@@ -199,256 +205,329 @@ public class TETubularBedController extends TileEntityInv implements IInternalSe
 		return multi;
 	}
 
-	public FluidStack getRecipeInput1(){ return isValidPreset() ? getRecipeList(getRecipeIndex()).getInput1() : null; }
-	public FluidStack getRecipeInput2(){ return isValidPreset() ? getRecipeList(getRecipeIndex()).getInput2() : null; }
-	public FluidStack getRecipeInput3(){ return isValidPreset() ? getRecipeList(getRecipeIndex()).getInput3() : null; }
-	public FluidStack getRecipeInput4(){ return isValidPreset() ? getRecipeList(getRecipeIndex()).getInput4() : null; }
-	public FluidStack getRecipeOutput(){ return isValidPreset() ? getRecipeList(getRecipeIndex()).getOutput() : null; }
-	public ItemStack getRecipeCatalyst(){ return isValidPreset() ? getRecipeList(getRecipeIndex()).getCatalyst() : ItemStack.EMPTY; }
+	public FluidStack getRecipeInput1(){ return isValidPreset() ? getRecipeList(getSelectedRecipe()).getInput1() : null; }
+	public FluidStack getRecipeInput2(){ return isValidPreset() ? getRecipeList(getSelectedRecipe()).getInput2() : null; }
+	public FluidStack getRecipeInput3(){ return isValidPreset() ? getRecipeList(getSelectedRecipe()).getInput3() : null; }
+	public FluidStack getRecipeInput4(){ return isValidPreset() ? getRecipeList(getSelectedRecipe()).getInput4() : null; }
+	public FluidStack getRecipeOutput(){ return isValidPreset() ? getRecipeList(getSelectedRecipe()).getOutput() : null; }
+	public ItemStack getRecipeCatalyst(){ return isValidPreset() ? getRecipeList(getSelectedRecipe()).getCatalyst() : ItemStack.EMPTY; }
 
 
 
 	//----------------------- STRUCTURE -----------------------
-	//engine
-		public TEPowerGenerator getEngine(){
-			TEPowerGenerator engine = TileStructure.getEngine(this.world, this.pos.down(1), isFacingAt(90), 1, 0);
-			return engine != null ? engine : null;
-		}
+//engine
+	public TEPowerGenerator getEngine(){
+		TEPowerGenerator engine = TileStructure.getEngine(this.world, chamberPos().offset(isFacingAt(90)), isFacingAt(270));
+		return engine != null ? engine : null;
+	}
 
-		public boolean hasEngine(){
-			return getEngine() != null;
-		}
+	public boolean hasEngine(){
+		return getEngine() != null;
+	}
 
-		public boolean hasFuelPower(){
-			return hasEngine() ? getEngine().getPower() > 0 : false;
-		}
+	public boolean hasFuelPower(){
+		return hasEngine() ? getEngine().getPower() > 0 : false;
+	}
 
-		public boolean hasRedstonePower(){
-			return hasEngine() ? getEngine().getRedstone() >= powerConsume() : false;
-		}
+	public boolean hasRedstonePower(){
+		return hasEngine() ? getEngine().getRedstone() >= powerConsume() : false;
+	}
 
-		private void drainPower() {
-			getEngine().powerCount--;
-			getEngine().redstoneCount -= powerConsume();
-			getEngine().markDirtyClient();
-		}
+	private void drainPower() {
+		getEngine().powerCount--;
+		getEngine().redstoneCount -= powerConsume();
+		getEngine().markDirtyClient();
+	}
 
-		public int powerConsume() {
-			int baseConsume = 20 * ModConfig.basePower;
-			return ModConfig.speedMultiplier ? baseConsume * speedFactor() : baseConsume;
-		}
+	public int powerConsume() {
+		int baseConsume = 20 * ModConfig.basePower;
+		return ModConfig.speedMultiplier ? baseConsume * speedFactor() : baseConsume;
+	}
 
 
 
-	//chamber
-		public BlockPos chamberPos(){
-			return this.pos.down(1);		
-		}
+//chamber
+	public BlockPos chamberPos(){
+		return this.pos.down(1);		
+	}
 
-		public TETubularBedTank getChamber(){
-			TileEntity te = this.world.getTileEntity(chamberPos());
-			if(this.world.getBlockState(chamberPos()) != null && te instanceof TETubularBedTank){
-				TETubularBedTank tank = (TETubularBedTank)te;
-				if(tank.getFacing() == getFacing()){
-					return tank;
-				}
+	public TETubularBedTank getChamber(){
+		TileEntity te = this.world.getTileEntity(chamberPos());
+		if(this.world.getBlockState(chamberPos()) != null && te instanceof TETubularBedTank){
+			TETubularBedTank tank = (TETubularBedTank)te;
+			if(tank.getFacing() == getFacing()){
+				return tank;
 			}
-			return null;
 		}
+		return null;
+	}
 
-		public boolean hasChamber(){
-			return getChamber() != null;
-		}
+	public boolean hasChamber(){
+		return getChamber() != null;
+	}
 
+//tubular base
+	public BlockPos tubularBasePos(){
+		return chamberPos().offset(getFacing(), 1);		
+	}
 
-
-	//tubular base
-		public BlockPos tubularBasePos(){
-			return this.pos.down(1).offset(getFacing(), 1);		
-		}
-
-		public TETubularBedBase getTubularBase(){
-			TileEntity te = this.world.getTileEntity(tubularBasePos());
-			if(this.world.getBlockState(tubularBasePos()) != null && te instanceof TETubularBedBase){
-				TETubularBedBase tank = (TETubularBedBase)te;
-				if(tank.getFacing() == getFacing()){
-					return tank;
-				}
+	public TETubularBedBase getTubularBase(){
+		TileEntity te = this.world.getTileEntity(tubularBasePos());
+		if(this.world.getBlockState(tubularBasePos()) != null && te instanceof TETubularBedBase){
+			TETubularBedBase tank = (TETubularBedBase)te;
+			if(tank.getFacing() == getFacing()){
+				return tank;
 			}
-			return null;
 		}
+		return null;
+	}
 
-		public boolean hasTubularBase(){
-			return getTubularBase() != null;
-		}
-
-		
-		
-	//tubular catalyst
-		public TETubularBedLow getTubularCatalysts(){
-			TileEntity te = this.world.getTileEntity(tubularBasePos().up());
-			if(this.world.getBlockState(tubularBasePos()) != null && te instanceof TETubularBedLow){
-				TETubularBedLow tank = (TETubularBedLow)te;
-				if(tank.getFacing() == getFacing()){
-					return tank;
-				}
+//tubular low -catalysts
+	public TETubularBedLow getTubularCatalysts(){
+		TileEntity te = this.world.getTileEntity(tubularBasePos().up());
+		if(this.world.getBlockState(tubularBasePos()) != null && te instanceof TETubularBedLow){
+			TETubularBedLow tank = (TETubularBedLow)te;
+			if(tank.getFacing() == getFacing()){
+				return tank;
 			}
-			return null;
 		}
+		return null;
+	}
 
-		public boolean hasTubularCatalysts(){
-			return getTubularCatalysts() != null;
-		}
-
-
-		
-	//tubular top
-		public BlockPos tubularTopPos(){
-			return this.pos.offset(getFacing(), 1);		
-		}
-
-		public TETubularBedMid getTubularTop(){
-			TileEntity te = this.world.getTileEntity(tubularTopPos());
-			if(this.world.getBlockState(tubularTopPos()) != null && te instanceof TETubularBedMid){
-				TETubularBedMid tank = (TETubularBedMid)te;
-				if(tank.getFacing() == getFacing()){
-					return tank;
-				}
+//tubular mid
+	public TETubularBedMid getTubularMid(){
+		BlockPos tubularMidPos = tubularBasePos().up(2);
+		TileEntity te = this.world.getTileEntity(tubularMidPos);
+		if(this.world.getBlockState(tubularMidPos) != null && te instanceof TETubularBedMid){
+			TETubularBedMid tank = (TETubularBedMid)te;
+			if(tank.getFacing() == getFacing()){
+				return tank;
 			}
-			return null;
 		}
+		return null;
+	}
 
-		public boolean hasTubularTop(){
-			return getTubularBase() != null;
-		}
-
-
-
-	//router
-		public BlockPos routerPos(){
-			return pos.up(3).offset(getFacing(), 1);
-		}
-
-		public Block getRouter(){
-			IBlockState sepState = this.world.getBlockState(routerPos());
-			Block separator = sepState.getBlock();
-			if(MachineIO.miscBlocksA(separator, sepState, EnumMiscBlocksA.GAS_ROUTER.ordinal())){
-				return separator;
+//tubular top
+	public TETubularBedTop getTubularTop(){
+		BlockPos tubularTopPos = tubularBasePos().up(3);
+		TileEntity te = this.world.getTileEntity(tubularTopPos);
+		if(this.world.getBlockState(tubularTopPos) != null && te instanceof TETubularBedTop){
+			TETubularBedTop tank = (TETubularBedTop)te;
+			if(tank.getFacing() == getFacing()){
+				return tank;
 			}
-			return null;
 		}
+		return null;
+	}
 
-		public boolean hasRouter(){
-			return getRouter() != null;
-		}
+	public boolean hasTubularCatalysts(){
+		return getTubularCatalysts() != null;
+	}
 
+	public boolean hasTubularSystem(){
+		return getTubularBase() != null && getTubularCatalysts() != null && getTubularMid() != null && getTubularTop() != null;
+	}
 
+//router
+	public BlockPos routerPos(){
+		return tubularBasePos().up(4);
+	}
 
-	//output vessel
-		public TileVessel getOutTank(){
-			TileVessel vessel = TileStructure.getHolder(this.world, this.pos.down(1).offset(getFacing(), 1), isFacingAt(270), 1, 0);
-			return vessel != null ? vessel : null;
-		}
+	public Block getRouter1(){
+		Block router = TileStructure.getStructure(this.world, routerPos(), EnumMiscBlocksA.GAS_ROUTER.ordinal());
+		return router != null ? router : null;
+	}
 
-		public boolean hasOutTank(){
-			return getOutTank() != null;
-		}
+	public boolean hasRouter(){
+		return getRouter1() != null;
+	}
 
-		public FluidStack outGas(){
-			return hasOutTank() ? getOutTank().inputTank.getFluid() : null;
-		}
+//centrifuge
+	public TECentrifuge getCentrifuge1(){
+		TECentrifuge centrifuge = TileStructure.getCentrifuge(this.world, routerPos().offset(getFacing().getOpposite()), getFacing());
+		return centrifuge != null ? centrifuge : null;
+	}
 
+	public TECentrifuge getCentrifuge2(){
+		TECentrifuge centrifuge = TileStructure.getCentrifuge(this.world, routerPos().offset(isFacingAt(270)), isFacingAt(90));
+		return centrifuge != null ? centrifuge : null;
+	}
 
+	public TECentrifuge getCentrifuge3(){
+		TECentrifuge centrifuge = TileStructure.getCentrifuge(this.world, routerPos().offset(getFacing()), getFacing().getOpposite());
+		return centrifuge != null ? centrifuge : null;
+	}
 
-	//purge vessel
-		public TileVessel getPurgeTank(){
-			TileVessel vessel = TileStructure.getHolder(this.world, this.pos.offset(getFacing(), 1), getFacing(), 1, 0);
-			return vessel != null ? vessel : null;
-		}
+	public TECentrifuge getCentrifuge4(){
+		TECentrifuge centrifuge = TileStructure.getCentrifuge(this.world, routerPos().offset(isFacingAt(90)), isFacingAt(270));
+		return centrifuge != null ? centrifuge : null;
+	}
 
-		public boolean hasPurgeTank(){
-			return getPurgeTank() != null;
-		}
+	public TECentrifuge getCentrifuge5(){
+		TECentrifuge centrifuge = TileStructure.getCentrifuge(this.world, router2Pos().offset(getFacing().getOpposite()), getFacing().getOpposite());
+		return centrifuge != null ? centrifuge : null;
+	}
 
-		public FluidStack purgeGas(){
-			return hasPurgeTank() ? getPurgeTank().inputTank.getFluid() : null;
-		}
+	public TECentrifuge getCentrifuge6(){
+		TECentrifuge centrifuge = TileStructure.getCentrifuge(this.world, router2Pos().offset(getFacing()), getFacing());
+		return centrifuge != null ? centrifuge : null;
+	}
 
-
-
-	//input 1 vessel
-		public TileVessel getInput1Tank(){
-			TileVessel vessel = TileStructure.getHolder(this.world, this.pos.up(3), getFacing(), 0, 0);
-			return vessel != null ? vessel : null;
-		}
-
-		public boolean hasInput1Tank(){
-			return getInput1Tank() != null;
-		}
-
-		public FluidStack tankInput1(){
-			return hasInput1Tank() ? getInput1Tank().inputTank.getFluid() : null;
-		}
-
-
-
-	//input 2 vessel
-		public TileVessel getInput2Tank(){
-			TileVessel vessel = TileStructure.getHolder(this.world, this.pos.up(3).offset(getFacing(), 1), isFacingAt(90), 1, 180);
-			return vessel != null ? vessel : null;
-		}
-
-		public boolean hasInput2Tank(){
-			return getInput2Tank() != null;
-		}
-
-		public FluidStack tankInput2(){
-			return hasInput2Tank() ? getInput2Tank().inputTank.getFluid() : null;
-		}
+	public boolean hasCentrifuges(){
+		return getCentrifuge1() != null && getCentrifuge2() != null && getCentrifuge3() != null && getCentrifuge4() != null && getCentrifuge5() != null && getCentrifuge6() != null;
+	}
 
 
+//output vessel
+	public TileVessel getOutTank(){
+		TileVessel vessel = TileStructure.getHolder(this.world, router2Pos().offset(getFacing().getOpposite(), 2), getFacing().getOpposite());
+		return vessel != null ? vessel : null;
+	}
 
-	//input 3 vessel
-		public TileVessel getInput3Tank(){
-			TileVessel vessel = TileStructure.getHolder(this.world, routerPos().offset(getFacing(), 2), getFacing().getOpposite(), 1, 0);
-			return vessel != null ? vessel : null;
-		}
+	public boolean hasOutTank(){
+		return getOutTank() != null;
+	}
 
-		public boolean hasInput3Tank(){
-			return getInput3Tank() != null;
-		}
+	public FluidStack outGas(){
+		return hasOutTank() ? getOutTank().inputTank.getFluid() : null;
+	}
 
-		public FluidStack tankInput3(){
-			return hasInput3Tank() ? getInput3Tank().inputTank.getFluid() : null;
-		}
+//purge vessel
+	public TileVessel getPurgeTank(){
+		TileVessel vessel = TileStructure.getHolder(this.world, router2Pos().offset(getFacing(), 2), getFacing());
+		return vessel != null ? vessel : null;
+	}
 
+	public boolean hasPurgeTank(){
+		return getPurgeTank() != null;
+	}
 
+	public FluidStack purgeGas(){
+		return hasPurgeTank() ? getPurgeTank().inputTank.getFluid() : null;
+	}
 
-	//input 4 vessel
-		public TileVessel getInput4Tank(){
-			TileVessel vessel = TileStructure.getHolder(this.world, this.pos.up(3).offset(getFacing(), 1), isFacingAt(270), 1, 180);
-			return vessel != null ? vessel : null;
-		}
+//input 1 vessel
+	public TileVessel getInput1Tank(){
+		TileVessel vessel = TileStructure.getHolder(this.world, routerPos().offset(getFacing().getOpposite(), 2), getFacing());
+		return vessel != null ? vessel : null;
+	}
 
-		public boolean hasInput4Tank(){
-			return getInput4Tank() != null;
-		}
+	public boolean hasInput1Tank(){
+		return getInput1Tank() != null;
+	}
 
-		public FluidStack tankInput4(){
-			return hasInput4Tank() ? getInput4Tank().inputTank.getFluid() : null;
-		}
+	public FluidStack tankInput1(){
+		return hasInput1Tank() ? getInput1Tank().inputTank.getFluid() : null;
+	}
 
+//input 2 vessel
+	public TileVessel getInput2Tank(){
+		TileVessel vessel = TileStructure.getHolder(this.world, routerPos().offset(isFacingAt(270), 2), isFacingAt(90));
+		return vessel != null ? vessel : null;
+	}
 
+	public boolean hasInput2Tank(){
+		return getInput2Tank() != null;
+	}
 
-	//server
-		public TEServer getServer(){
-			TEServer server = TileStructure.getServer(this.world, this.pos.down(1).offset(getFacing(), 1), getFacing(), 1, 0);
-			return server != null ? server : null;
-		}
+	public FluidStack tankInput2(){
+		return hasInput2Tank() ? getInput2Tank().inputTank.getFluid() : null;
+	}
 
-		public boolean hasServer(){
-			return getServer() != null;
-		}
+//input 3 vessel
+	public TileVessel getInput3Tank(){
+		TileVessel vessel = TileStructure.getHolder(this.world, routerPos().offset(getFacing(), 2), getFacing().getOpposite());
+		return vessel != null ? vessel : null;
+	}
+
+	public boolean hasInput3Tank(){
+		return getInput3Tank() != null;
+	}
+
+	public FluidStack tankInput3(){
+		return hasInput3Tank() ? getInput3Tank().inputTank.getFluid() : null;
+	}
+
+//input 4 vessel
+	public TileVessel getInput4Tank(){
+		TileVessel vessel = TileStructure.getHolder(this.world, routerPos().offset(isFacingAt(90), 2), isFacingAt(270));
+		return vessel != null ? vessel : null;
+	}
+
+	public boolean hasInput4Tank(){
+		return getInput4Tank() != null;
+	}
+
+	public FluidStack tankInput4(){
+		return hasInput4Tank() ? getInput4Tank().inputTank.getFluid() : null;
+	}
+
+//separator
+	public BlockPos separatorPos(){
+		return tubularBasePos().offset(isFacingAt(270));
+	}
+
+	public Block getSeparator(){
+		Block separator = TileStructure.getStructure(this.world, separatorPos(), EnumMiscBlocksA.SEPARATOR.ordinal());
+		return separator != null ? separator : null;
+	}
+
+	public BlockPos router2Pos(){
+		return separatorPos().offset(isFacingAt(270));
+	}
+
+	public Block getRouter2(){
+		BlockPos routerPos = separatorPos().offset(isFacingAt(270));
+		Block router = TileStructure.getStructure(this.world, routerPos, EnumMiscBlocksA.GAS_ROUTER.ordinal());
+		return router != null ? router : null;
+	}
+
+	public TEAuxiliaryEngine getPressurizer1(){
+		BlockPos pressPos = chamberPos().offset(isFacingAt(270));
+		TEAuxiliaryEngine pressurizer = TileStructure.getPressurizer(this.world, pressPos, getFacing());
+		return pressurizer != null ? pressurizer : null;
+	}
+
+	public TEAuxiliaryEngine getPressurizer2(){
+		BlockPos pressPos = chamberPos().offset(isFacingAt(270), 3).offset(getFacing());
+		TEAuxiliaryEngine pressurizer = TileStructure.getPressurizer(this.world, pressPos, isFacingAt(90));
+		return pressurizer != null ? pressurizer : null;
+	}
+
+	public TEAuxiliaryEngine getPressurizer3(){
+		BlockPos pressPos = chamberPos().offset(isFacingAt(270)).offset(getFacing(), 2);
+		TEAuxiliaryEngine pressurizer = TileStructure.getPressurizer(this.world, pressPos, getFacing().getOpposite());
+		return pressurizer != null ? pressurizer : null;
+	}
+
+	public boolean hasSeparators(){
+		return getSeparator() != null && getRouter2() != null && getPressurizer1() != null && getPressurizer2() != null  && getPressurizer3() != null;
+	}
+
+//unloader
+	public TEUnloader getUnloader(){
+		BlockPos unloaderPos = chamberPos().offset(getFacing(), 2);
+		TEUnloader unloader = TileStructure.getUnloader(this.world, unloaderPos, getFacing().getOpposite());
+		return unloader != null ? unloader : null;
+	}
+
+	public boolean hasUnloader(){
+		return getUnloader() != null;
+	}
+
+//server
+	public TEServer getServer(){
+		TEServer server = TileStructure.getServer(this.world, chamberPos().offset(getFacing(), 3), getFacing().getOpposite());
+		return server != null ? server : null;
+	}
+
+	public boolean hasServer(){
+		return getServer() != null;
+	}
+
+	private boolean isAssembled() {
+		return hasChamber() && hasTubularSystem() && hasRouter() && hasCentrifuges() && hasUnloader() && hasSeparators();
+	}
 
 
 
@@ -531,7 +610,7 @@ public class TETubularBedController extends TileEntityInv implements IInternalSe
 			doPreset();
 			handlePurge();
 
-			initializeServer(isRepeatable, hasServer(), getServer(), deviceCode());
+			initializeServer(isRepeatable, getServer(), deviceCode(), this.recipeStep, recipeList().size());
 
 			if(getDummyRecipe() == null){
 				dummyRecipe = getCurrentRecipe();
@@ -547,6 +626,7 @@ public class TETubularBedController extends TileEntityInv implements IInternalSe
 				}
 				this.markDirtyClient();
 			}else{
+				this.dummyRecipe = null;
 				tickOff();
 			}
 		}
@@ -558,7 +638,7 @@ public class TETubularBedController extends TileEntityInv implements IInternalSe
 			&& isValidRecipe()
 			&& hasFuelPower()
 			&& hasRedstonePower()
-			&& handleServer(hasServer(), getServer(), this.currentFile); //server;
+			&& handleServer(getServer(), this.currentFile); //server;
 	}
 
 	private void process() {
@@ -593,7 +673,7 @@ public class TETubularBedController extends TileEntityInv implements IInternalSe
 				this.input.drainOrCleanFluid(getInput4Tank().inputTank, calculatedAmount(getRecipeInput4().amount), true);
 			}
 
-			updateServer(hasServer(), getServer(), this.currentFile);
+			updateServer(getServer(), this.currentFile);
 		}
 
 		this.dummyRecipe = null;
@@ -606,10 +686,6 @@ public class TETubularBedController extends TileEntityInv implements IInternalSe
 		if(CoreUtils.hasMending(getTubularCatalysts().catalystSlot(cats)) && this.rand.nextInt(CoreUtils.mendingFactor) == 0) {
 			((MachineStackHandler)getTubularCatalysts().getInput()).repairMendingSlot(cats);
 		}
-	}
-
-	private boolean isAssembled() {
-		return hasTubularBase() && hasTubularTop() && hasRouter() && hasEngine();
 	}
 
 	private void handlePurge() {
@@ -650,12 +726,12 @@ public class TETubularBedController extends TileEntityInv implements IInternalSe
 					}
 				}
 				
-				if(hasTubularCatalysts()) {
+				if(hasTubularCatalysts() && hasUnloader()) {
 					if(countCat < getTubularCatalysts().SLOT_INPUTS.length){
 						if(!getTubularCatalysts().catalystSlot(countCat).isEmpty()){
 							if(getRecipeCatalyst().isEmpty() || (!getTubularCatalysts().catalystSlot(countCat).isItemEqualIgnoreDurability(getRecipeCatalyst()))){
-								if(((MachineStackHandler) getTubularCatalysts().getOutput()).canSetOrStack(getTubularCatalysts().purgeSlot(), getTubularCatalysts().catalystSlot(countCat))){
-									((MachineStackHandler) getTubularCatalysts().getOutput()).setOrStack(getTubularCatalysts().SLOT_PURGE, getTubularCatalysts().catalystSlot(countCat));
+								if(((MachineStackHandler) getUnloader().getOutput()).canSetOrStack(getUnloader().unloaderSlot(), getTubularCatalysts().catalystSlot(countCat))){
+									((MachineStackHandler) getUnloader().getOutput()).setOrStack(OUTPUT_SLOT, getTubularCatalysts().catalystSlot(countCat));
 									((ItemStackHandler) getTubularCatalysts().getInput()).setStackInSlot(countCat, ItemStack.EMPTY);
 									countCat++;
 								}
@@ -713,18 +789,17 @@ public class TETubularBedController extends TileEntityInv implements IInternalSe
 	public void loadServerStatus() {
 		this.currentFile = -1;
 		if(getServer().isActive()){
-			for(int x = 0; x < TEServer.FILE_SLOTS.length; x++){
-				ItemStack fileSlot = getServer().inputSlot(x).copy();
-				if(!fileSlot.isEmpty() && fileSlot.isItemEqual(new ItemStack(ModItems.MISC_ITEMS, 1, EnumMiscItems.SERVER_FILE.ordinal()))){
+			for(int x = 0; x < getServer().FILE_SLOTS.length; x++){
+				ItemStack fileSlot = getServer().inputSlot(x);
+				if(TEServer.isValidFile(fileSlot)){
 					if(fileSlot.hasTagCompound()){
 						NBTTagCompound tag = fileSlot.getTagCompound();
-						if(isValidFile(tag)){
-							if(tag.getInteger("Device") == deviceCode()){
-								if(tag.getInteger("Recipe") < recipeList().size()){
-									if(tag.getInteger("Done") > 0){
-										if(this.recipeIndex != tag.getInteger("Recipe")){
-											this.recipeIndex = tag.getInteger("Recipe");
-											this.markDirtyClient();
+						if(isWrittenFile(tag)){
+							if(isCorrectDevice(tag, deviceCode())){
+								if(getRecipe(tag) < recipeList().size()){
+									if(getDone(tag) > 0){
+										if(this.recipeIndex != getRecipe(tag)){
+											this.recipeIndex = getRecipe(tag);
 										}
 										if(this.currentFile != x){
 											this.currentFile = x;
@@ -737,7 +812,7 @@ public class TETubularBedController extends TileEntityInv implements IInternalSe
 						}
 					}
 				}
-				if(x == TEServer.FILE_SLOTS.length - 1){
+				if(x == getServer().FILE_SLOTS.length - 1){
 					resetFiles(getServer(), deviceCode());
 				}
 			}

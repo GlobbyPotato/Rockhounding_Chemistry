@@ -3,6 +3,7 @@ package com.globbypotato.rockhounding_chemistry.machines.tile;
 import java.util.ArrayList;
 
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
+import com.globbypotato.rockhounding_chemistry.machines.tile.pipelines.TEGaslinePump;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.gas.GasHandlerConcatenate;
 import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityVessel;

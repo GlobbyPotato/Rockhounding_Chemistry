@@ -11,8 +11,8 @@
 				"item": "#GLASS_PIPE"
 			},
 		"T":{
-				"item": "rockhounding_chemistry:machines_a",
-				"data": 4
+				"item": "rockhounding_chemistry:machines_b",
+				"data": 2
 			},
 		"C":{
 				"item": "#IRON_CASING"
@@ -24,7 +24,7 @@
 				"item": "#ADVANCED_CHIP"
 			},
 		"A":{
-				"item": "rockhounding_chemistry:slurry_agitator"
+				"item": "#AGITATOR"
 			}
 	},
 	"result":{

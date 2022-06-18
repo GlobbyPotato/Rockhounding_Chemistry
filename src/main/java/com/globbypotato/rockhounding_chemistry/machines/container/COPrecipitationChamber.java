@@ -1,6 +1,6 @@
 package com.globbypotato.rockhounding_chemistry.machines.container;
 
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEPrecipitationChamber;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEPrecipitationChamber;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraftforge.items.IItemHandler;

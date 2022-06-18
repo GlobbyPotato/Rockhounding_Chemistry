@@ -2,13 +2,13 @@
 	"type": "minecraft:crafting_shaped",
 	"group": "rockhounding_chemistry:machines",
 	"pattern": [
-		"SU ",
-		"LA ",
+		" U ",
+		"LAS",
 		"CPC"
 	],
 	"key": {
 		"S":{
-				"item": "#SCAFFOLD"
+				"item": "#CABINET"
 			},
 		"P":{
 				"item": "#PISTON"
@@ -23,8 +23,7 @@
 				"item": "#BASE_CHIP"
 			},
 		"U":{
-				"item": "rockhounding_chemistry:misc_items",
-				"data": 6
+				"item": "#BLEND_UNIT"
 			}
 	},
 	"result":{

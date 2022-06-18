@@ -20,11 +20,12 @@ public class COReformerController extends ContainerBase<TEReformerController>{
 		IItemHandler upgrade = this.tile.getUpgrade();
 		IItemHandler template = this.tile.getTemplate();
 
-		this.addSlotToContainer(new SlotItemHandler(upgrade, 0, 80, 74));//speed
+		this.addSlotToContainer(new SlotItemHandler(upgrade, 0, 147, 62));//speed
 
 		this.addSlotToContainer(new SlotItemHandler(template, 0, 80, 96));//activation
-		this.addSlotToContainer(new SlotItemHandler(template, 1, 26, 24));//prev
-		this.addSlotToContainer(new SlotItemHandler(template, 2, 44, 24));//next
+		this.addSlotToContainer(new SlotItemHandler(template, 1, 8, 24));//prev
+		this.addSlotToContainer(new SlotItemHandler(template, 2, 26, 24));//next
+		this.addSlotToContainer(new SlotItemHandler(template, 3, 80, 74));//swap
 
 	}
 
@@ -36,7 +37,7 @@ public class COReformerController extends ContainerBase<TEReformerController>{
 			doClickSound(player, this.tile.getWorld(), this.tile.getPos());
 	    	return ItemStack.EMPTY;
 		}else if(slot == 2){
-			if(this.tile.isServedClosed(this.tile.hasServer(), this.tile.getServer())){
+			if(this.tile.isServedClosed(this.tile.getServer())){
 				if(this.tile.getRecipeIndex() > -1){
 		    		this.tile.recipeIndex--; 
 				}else{
@@ -48,7 +49,7 @@ public class COReformerController extends ContainerBase<TEReformerController>{
 			}
     		return ItemStack.EMPTY;
 		}else if(slot == 3){
-			if(this.tile.isServedClosed(this.tile.hasServer(), this.tile.getServer())){
+			if(this.tile.isServedClosed(this.tile.getServer())){
 	    		if(this.tile.getRecipeIndex() < GasReformerRecipes.gas_reformer_recipes.size() - 1){
 	    			this.tile.recipeIndex++; 
 	    		}else{
@@ -59,6 +60,11 @@ public class COReformerController extends ContainerBase<TEReformerController>{
 				doClickSound(player, this.tile.getWorld(), this.tile.getPos());
 			}
     		return ItemStack.EMPTY;
+		}else if(slot == 4){
+			this.tile.direction = !this.tile.direction;
+			this.tile.flipResources();
+			doClickSound(player, this.tile.getWorld(), this.tile.getPos());
+	    	return ItemStack.EMPTY;
     	}else{
     		return super.slotClick(slot, dragType, clickTypeIn, player);
     	}

@@ -21,6 +21,7 @@ public class MachineRecipes {
 		ChemicalExtractorRecipes.machineRecipes();
 		GasReformerRecipes.machineRecipes();
 		MaterialCabinetRecipes.machineRecipes();
+		ElementsCabinetRecipes.machineRecipes();
 		MetalAlloyerRecipes.machineRecipes();
 		DepositionChamberRecipes.machineRecipes();
 		PullingCrucibleRecipes.machineRecipes();
@@ -34,5 +35,8 @@ public class MachineRecipes {
 		BedReactorRecipes.machineRecipes();
 		VatAgitatorRecipes.machineRecipes();
 		OrbiterRecipes.machineRecipes();
+		ShakingTableRecipes.machineRecipes();
+		PowderMixerRecipes.machineRecipes();
+		PlanningTableRecipes.machineRecipes();
 	}
 }

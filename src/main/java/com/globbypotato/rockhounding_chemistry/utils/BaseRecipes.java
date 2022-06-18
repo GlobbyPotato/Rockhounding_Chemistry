@@ -16,6 +16,7 @@ import com.globbypotato.rockhounding_chemistry.enums.machines.EnumMachinesB;
 import com.globbypotato.rockhounding_chemistry.enums.machines.EnumMachinesC;
 import com.globbypotato.rockhounding_chemistry.enums.machines.EnumMachinesD;
 import com.globbypotato.rockhounding_chemistry.enums.machines.EnumMachinesE;
+import com.globbypotato.rockhounding_chemistry.enums.machines.EnumMachinesF;
 import com.globbypotato.rockhounding_chemistry.enums.materials.EnumChemicals;
 import com.globbypotato.rockhounding_chemistry.enums.materials.EnumElements;
 import com.globbypotato.rockhounding_chemistry.enums.materials.EnumFluid;
@@ -53,6 +54,7 @@ public class BaseRecipes {
 	public static ItemStack machines_c(int num, EnumMachinesC meta) {	return new ItemStack(ModBlocks.MACHINES_C, num, meta.ordinal());}
 	public static ItemStack machines_d(int num, EnumMachinesD meta) {	return new ItemStack(ModBlocks.MACHINES_D, num, meta.ordinal());}
 	public static ItemStack machines_e(int num, EnumMachinesE meta) {	return new ItemStack(ModBlocks.MACHINES_E, num, meta.ordinal());}
+	public static ItemStack machines_f(int num, EnumMachinesF meta) {	return new ItemStack(ModBlocks.MACHINES_F, num, meta.ordinal());}
 	public static ItemStack metal_items(int num, EnumMetalItems meta){	return new ItemStack(ModItems.METAL_ITEMS, num, meta.ordinal());}
 
 	public static ItemStack alloy_tech(int num, EnumAlloyTech meta){		return new ItemStack(ModItems.ALLOY_ITEMS_TECH, num, meta.ordinal());}
@@ -122,6 +124,12 @@ public class BaseRecipes {
 	public static ItemStack heat_inductor = 		new ItemStack(ModItems.HEAT_INDUCTOR);
 	public static ItemStack gas_turbine = 			new ItemStack(ModItems.GAS_TURBINE);
 	public static ItemStack tile_nullifier = 		new ItemStack(ModItems.TILE_NULLIFIER);
+	public static ItemStack speed_upgrade = 		new ItemStack(ModItems.SPEED_ITEMS);
+	public static ItemStack filter_upgrade = 		new ItemStack(ModItems.FILTER_ITEMS);
+	public static ItemStack refractory_upgrade = 	new ItemStack(ModItems.MISC_ITEMS, 1, EnumMiscItems.REFRACTORY_CASING.ordinal());
+	public static ItemStack casing_upgrade = 		new ItemStack(ModItems.MISC_ITEMS, 1, EnumMiscItems.DEPOSITION_CASING.ordinal());
+	public static ItemStack insulating_upgrade = 	new ItemStack(ModItems.MISC_ITEMS, 1, EnumMiscItems.DEPOSITION_INSULATION.ordinal());
+	public static ItemStack probe_upgrade = 		new ItemStack(ModItems.PROBE_ITEMS);
 
 	public static ItemStack va_catalyst = new ItemStack(ModItems.VA_CATALYST);
 	public static ItemStack fe_catalyst = new ItemStack(ModItems.FE_CATALYST);

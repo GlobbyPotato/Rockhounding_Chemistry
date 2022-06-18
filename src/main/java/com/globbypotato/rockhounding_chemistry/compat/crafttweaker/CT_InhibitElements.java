@@ -2,17 +2,17 @@ package com.globbypotato.rockhounding_chemistry.compat.crafttweaker;
 
 import java.util.ArrayList;
 
-import com.globbypotato.rockhounding_chemistry.machines.recipe.ChemicalExtractorRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.ElementsCabinetRecipes;
 
 import crafttweaker.CraftTweakerAPI;
 import crafttweaker.IAction;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
-@ZenClass("mods.rockhounding_chemistry.InhibitElements")
+@ZenClass("mods.rockhounding_chemistry.InhibitElement")
 public class CT_InhibitElements extends CTSupport{
-	public static String name = "Inhibit Elements";
-	public static ArrayList<String> recipeList = ChemicalExtractorRecipes.inhibited_elements;
+	public static String name = "Inhibit Element";
+	public static ArrayList<String> recipeList = ElementsCabinetRecipes.inhibited_elements;
 
     @ZenMethod
     public static void inhibit(String element) {

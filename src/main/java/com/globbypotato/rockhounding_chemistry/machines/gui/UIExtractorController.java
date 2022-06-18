@@ -50,6 +50,14 @@ public class UIExtractorController extends GuiBase {
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
 
+	   //speed upgrade
+	   if(GuiUtils.hoveringArea(134, 61, 16, 16, mouseX, mouseY, x, y)){
+		   if(this.tile.speedSlot().isEmpty()){
+			   tooltip = GuiUtils.drawLabel(this.speed_label, mouseX, mouseY);
+			   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
+		   }
+	   }
+
 	   // lo
 	   if(GuiUtils.hoveringArea(10, 97, 16, 16, mouseX, mouseY, x, y)){
 		   commDescr = "Decrease reaction intensity";
@@ -80,9 +88,9 @@ public class UIExtractorController extends GuiBase {
 	   if(GuiUtils.hoveringArea(14, 34, 16, 31, mouseX, mouseY, x, y)){
 		   String nitrCons = TextFormatting.RED + "N/A: " + this.tile.calculatedNitr() + " mB";
 		   commDescr = TextFormatting.GRAY + "Left Channel:";
-		   if(this.tile.hasIntank()){
-			   if(this.tile.getIntank().hasSolventFluid()){
-				   nitrCons = TextFormatting.WHITE + this.tile.getIntank().getSolventFluid().getLocalizedName() + ": "+ TextFormatting.AQUA + this.tile.calculatedNitr() + " mB";
+		   if(this.tile.hasFlotationTank1()){
+			   if(this.tile.getFlotationTank1().hasSolventFluid()){
+				   nitrCons = TextFormatting.WHITE + this.tile.getFlotationTank1().getSolventFluid().getLocalizedName() + ": "+ TextFormatting.AQUA + this.tile.calculatedNitr() + " mB";
 			   }
 		   }
 		   multistring = new String[]{commDescr, nitrCons};
@@ -94,9 +102,9 @@ public class UIExtractorController extends GuiBase {
 	   if(GuiUtils.hoveringArea(37, 34, 16, 31, mouseX, mouseY, x, y)){
 		   String cyanCons = TextFormatting.RED + "N/A: " + this.tile.calculatedCyan() + " mB";
 		   commDescr = TextFormatting.GRAY + "Right Channel:";
-		   if(this.tile.hasIntank()){
-			   if(this.tile.getIntank().hasReagentFluid()){
-				   cyanCons = TextFormatting.WHITE + this.tile.getIntank().getReagentFluid().getLocalizedName() + ": "+ TextFormatting.AQUA + this.tile.calculatedCyan() + " mB";
+		   if(this.tile.hasFlotationTank2()){
+			   if(this.tile.getFlotationTank2().hasSolventFluid()){
+				   cyanCons = TextFormatting.WHITE + this.tile.getFlotationTank2().getSolventFluid().getLocalizedName() + ": "+ TextFormatting.AQUA + this.tile.calculatedCyan() + " mB";
 			   }
 		   }
 		   multistring = new String[]{commDescr, cyanCons};
@@ -118,12 +126,6 @@ public class UIExtractorController extends GuiBase {
 	   //activation
 	   if(GuiUtils.hoveringArea(79, 96, 18, 18, mouseX, mouseY, x, y)){
 		   tooltip = GuiUtils.drawLabel(this.activation_label, mouseX, mouseY);
-		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
-	   }
-
-	   //recycle
-	   if(GuiUtils.hoveringArea(120, 62, 12, 22, mouseX, mouseY, x, y)){
-		   tooltip = GuiUtils.drawLabel("Ingredients recycling", mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
 

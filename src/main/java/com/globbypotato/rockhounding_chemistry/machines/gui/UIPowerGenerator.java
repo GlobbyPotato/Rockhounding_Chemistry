@@ -5,7 +5,8 @@ import java.util.List;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.COPowerGenerator;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEPowerGenerator;
+import com.globbypotato.rockhounding_chemistry.machines.tile.devices.TEPowerGenerator;
+import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.machines.gui.GuiUtils;
 
@@ -41,19 +42,19 @@ public class UIPowerGenerator extends GuiBase {
 
 	   //activation
 	   if(GuiUtils.hoveringArea(153, 98, 14, 14, mouseX, mouseY, x, y)){
-		   tooltip = GuiUtils.drawLabel("RF Generator Mode", mouseX, mouseY);
+		   tooltip = GuiUtils.drawLabel(this.generator_label, mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
 
 	   //fuel module
 	   if(GuiUtils.hoveringArea(153, 26, 14, 14, mouseX, mouseY, x, y)){
-		   tooltip = GuiUtils.drawLabel("Fuel Module", mouseX, mouseY);
+		   tooltip = GuiUtils.drawLabel(this.fuel_label, mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
 
 	   //redstone module
 	   if(GuiUtils.hoveringArea(153, 44, 14, 14, mouseX, mouseY, x, y)){
-		   tooltip = GuiUtils.drawLabel("Redstone Module", mouseX, mouseY);
+		   tooltip = GuiUtils.drawLabel(this.redstone_label, mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
 
@@ -69,9 +70,39 @@ public class UIPowerGenerator extends GuiBase {
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
 
+	   //induction
+	   if(GuiUtils.hoveringArea(66, 86, 16, 16, mouseX, mouseY, x, y)){
+		   tooltip = GuiUtils.drawLabel(BaseRecipes.heat_inductor.getDisplayName(), mouseX, mouseY);
+		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
+	   }
+
+	   //turbine
+	   if(GuiUtils.hoveringArea(97, 42, 16, 16, mouseX, mouseY, x, y)){
+		   tooltip = GuiUtils.drawLabel(BaseRecipes.gas_turbine.getDisplayName(), mouseX, mouseY);
+		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
+	   }
+
+	   //voltage
+	   if(GuiUtils.hoveringArea(87, 102, 20, 14, mouseX, mouseY, x, y)){
+		   tooltip = GuiUtils.drawLabel(this.voltage_label, mouseX, mouseY);
+		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
+	   }
+
+	   //burnable
+	   if(GuiUtils.hoveringArea(26, 24, 16, 16, mouseX, mouseY, x, y)){
+		   tooltip = GuiUtils.drawLabel(this.burnable_label, mouseX, mouseY);
+		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
+	   }
+
+	   //reddust
+	   if(GuiUtils.hoveringArea(124, 24, 16, 16, mouseX, mouseY, x, y)){
+		   tooltip = GuiUtils.drawLabel(this.reddust_label, mouseX, mouseY);
+		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
+	   }
+
 	   //reservoir lava
-	   if(GuiUtils.hoveringArea(7, 49, 12, 35, mouseX, mouseY, x, y)){
-		   String content = TextFormatting.GRAY + "Internal Buffer: " + TextFormatting.GOLD + TextFormatting.BOLD + "Lava";
+	   if(GuiUtils.hoveringArea(8, 50, 10, 33, mouseX, mouseY, x, y)){
+		   String content = TextFormatting.GRAY + this.buffer_label + ": " + TextFormatting.GOLD + TextFormatting.BOLD + "Lava";
 		   String amount = TextFormatting.GOLD + "" + this.tile.lavaTank.getFluidAmount() + "/" + this.tile.lavaTank.getCapacity() + " mB";
 		   multistring = new String[]{content, amount};
 		   tooltip = GuiUtils.drawMultiLabel(multistring, mouseX, mouseY);
@@ -79,8 +110,8 @@ public class UIPowerGenerator extends GuiBase {
 	   }
 
 	   //reservoir syngas
-	   if(GuiUtils.hoveringArea(72, 24, 12, 35, mouseX, mouseY, x, y)){
-		   String content = TextFormatting.GRAY + "Internal Buffer: " + TextFormatting.WHITE + TextFormatting.BOLD + "Syngas";
+	   if(GuiUtils.hoveringArea(73, 25, 10, 33, mouseX, mouseY, x, y)){
+		   String content = TextFormatting.GRAY + this.buffer_label + ": " + TextFormatting.WHITE + TextFormatting.BOLD + "Syngas";
 		   String amount = TextFormatting.WHITE + "" + GuiUtils.translateMC(this.tile.gasTank.getFluidAmount()) + "/" + GuiUtils.translateMC(this.tile.gasTank.getCapacity()) + " cu";
 		   multistring = new String[]{content, amount};
 		   tooltip = GuiUtils.drawMultiLabel(multistring, mouseX, mouseY);

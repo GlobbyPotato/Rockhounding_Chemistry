@@ -16,6 +16,7 @@
 	},
 	"result":{
 				"item": "rockhounding_chemistry:misc_items",
-				"data": 36
+				"data": 36,
+				"count": 2
 			}
 }

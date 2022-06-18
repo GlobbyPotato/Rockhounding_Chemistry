@@ -17,8 +17,7 @@
 				"item": "#ADVANCED_CHIP"
 			},
 		"O":{
-				"item": "rockhounding_chemistry:machines_a",
-				"data": 6
+				"item": "#LAB_OVEN"
 			}
 	},
 	"result":{

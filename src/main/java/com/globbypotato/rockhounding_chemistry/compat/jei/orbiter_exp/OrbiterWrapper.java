@@ -39,6 +39,7 @@ public class OrbiterWrapper extends RHRecipeWrapper<OrbiterRecipe>{
 	public List<FluidStack> getSolvents() {
 		List<FluidStack> outputs = new ArrayList<FluidStack>();
 		outputs.add(BaseRecipes.getFluid(EnumFluid.TOXIC_WASTE, 1000));
+		outputs.add(BaseRecipes.getFluid(EnumFluid.TOXIC_SLUDGE, 1000));
 		return outputs;
 	}
 

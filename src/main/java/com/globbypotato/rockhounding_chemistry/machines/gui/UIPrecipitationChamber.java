@@ -2,7 +2,7 @@ package com.globbypotato.rockhounding_chemistry.machines.gui;
 
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.COPrecipitationChamber;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEPrecipitationChamber;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEPrecipitationChamber;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 
 import net.minecraft.client.renderer.GlStateManager;

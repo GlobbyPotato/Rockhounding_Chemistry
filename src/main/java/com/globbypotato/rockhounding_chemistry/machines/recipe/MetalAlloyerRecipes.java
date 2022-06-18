@@ -6,7 +6,6 @@ import java.util.Arrays;
 import com.globbypotato.rockhounding_chemistry.enums.EnumAlloyDeco;
 import com.globbypotato.rockhounding_chemistry.enums.EnumAlloyTech;
 import com.globbypotato.rockhounding_chemistry.enums.EnumAlloyTechB;
-import com.globbypotato.rockhounding_chemistry.enums.EnumMiscItems;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.MetalAlloyerRecipe;
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 
@@ -127,10 +126,6 @@ public class MetalAlloyerRecipes extends BaseRecipes{
 															Arrays.asList(50, 25, 18, 5, 2),
 															alloy_deco_ingot(1, EnumAlloyDeco.COSM)));
 
-// MISC ALLOYS
-		metal_alloyer_recipes.add(new MetalAlloyerRecipe(	Arrays.asList("dustLanthanum", "dustNeodymium", "dustPraseodymium", "dustSamarium", "dustGadolinium", "dustSand"),
-															Arrays.asList(46, 34, 11, 5, 4, 60),
-															misc_items(8, EnumMiscItems.DIDYMIUM_PANEL)));
 
 	}
 }

@@ -2,7 +2,7 @@ package com.globbypotato.rockhounding_chemistry.machines.gui;
 
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.COSeasoningRack;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TESeasoningRack;
+import com.globbypotato.rockhounding_chemistry.machines.tile.devices.TESeasoningRack;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.machines.gui.GuiUtils;
 

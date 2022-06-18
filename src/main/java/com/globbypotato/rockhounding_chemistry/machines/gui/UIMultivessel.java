@@ -6,7 +6,7 @@ import com.globbypotato.rockhounding_chemistry.enums.materials.EnumAirGases;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.COMultivessel;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.GanPlantRecipes;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEMultivessel;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEMultivessel;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.machines.gui.GuiUtils;
 

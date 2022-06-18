@@ -13,7 +13,8 @@ public enum EnumServer implements BaseEnum {
 	REFORMER("Gas Reforming Reactor", false),
 	EXTRACTOR("Chemical Extractor", true),
 	PRECIPITATOR("Precipitation Chamber", false),
-	BED_REACTOR("Fixed Bed Reactor", false);
+	BED_REACTOR("Fixed Bed Reactor", false),
+	POWDER_MIXER("Powder Mixer", false);
 
 	private String name;
 	private boolean filter;

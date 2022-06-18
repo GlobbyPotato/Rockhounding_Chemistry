@@ -42,6 +42,8 @@ import com.globbypotato.rockhounding_chemistry.compat.jei.pollutant_fluids.Pollu
 import com.globbypotato.rockhounding_chemistry.compat.jei.pollutant_fluids.PollutantFluidWrapper;
 import com.globbypotato.rockhounding_chemistry.compat.jei.pollutant_gases.PollutantGasCategory;
 import com.globbypotato.rockhounding_chemistry.compat.jei.pollutant_gases.PollutantGasWrapper;
+import com.globbypotato.rockhounding_chemistry.compat.jei.powder_mixer.PowderMixerCategory;
+import com.globbypotato.rockhounding_chemistry.compat.jei.powder_mixer.PowderMixerWrapper;
 import com.globbypotato.rockhounding_chemistry.compat.jei.precipitation_chamber.PrecipitationCategory;
 import com.globbypotato.rockhounding_chemistry.compat.jei.precipitation_chamber.PrecipitationWrapper;
 import com.globbypotato.rockhounding_chemistry.compat.jei.profiling_bench.ProfilingBenchCategory;
@@ -52,6 +54,8 @@ import com.globbypotato.rockhounding_chemistry.compat.jei.retention_vat.Retentio
 import com.globbypotato.rockhounding_chemistry.compat.jei.retention_vat.RetentionVatWrapper;
 import com.globbypotato.rockhounding_chemistry.compat.jei.seasoning_rack.SeasoningRackCategory;
 import com.globbypotato.rockhounding_chemistry.compat.jei.seasoning_rack.SeasoningRackWrapper;
+import com.globbypotato.rockhounding_chemistry.compat.jei.shaking_table.ShakingTableCategory;
+import com.globbypotato.rockhounding_chemistry.compat.jei.shaking_table.ShakingTableWrapper;
 import com.globbypotato.rockhounding_chemistry.compat.jei.slurry_drum.SlurryDrumCategory;
 import com.globbypotato.rockhounding_chemistry.compat.jei.slurry_drum.SlurryDrumWrapper;
 import com.globbypotato.rockhounding_chemistry.compat.jei.slurry_pond.SlurryPondCategory;
@@ -75,36 +79,36 @@ import com.globbypotato.rockhounding_chemistry.enums.utils.EnumSpeeds;
 import com.globbypotato.rockhounding_chemistry.fluids.ModFluids;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.machines.gui.UIAirCompressor;
-import com.globbypotato.rockhounding_chemistry.machines.gui.UIDepositionChamberTop;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UIDepositionController;
 import com.globbypotato.rockhounding_chemistry.machines.gui.UIExtractorController;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UIFluidCistern;
 import com.globbypotato.rockhounding_chemistry.machines.gui.UIGanController;
-import com.globbypotato.rockhounding_chemistry.machines.gui.UIGasCondenser;
-import com.globbypotato.rockhounding_chemistry.machines.gui.UIGasExpander;
-import com.globbypotato.rockhounding_chemistry.machines.gui.UIGasPurifier;
-import com.globbypotato.rockhounding_chemistry.machines.gui.UIGasifierBurner;
-import com.globbypotato.rockhounding_chemistry.machines.gui.UIGasifierCooler;
-import com.globbypotato.rockhounding_chemistry.machines.gui.UIGasifierTank;
-import com.globbypotato.rockhounding_chemistry.machines.gui.UIHeatExchangerBase;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UIGasCondenserController;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UIGasExpanderController;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UIGasPurifierController;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UIGasifierController;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UIHeatExchangerController;
 import com.globbypotato.rockhounding_chemistry.machines.gui.UILabBlenderController;
 import com.globbypotato.rockhounding_chemistry.machines.gui.UILabBlenderTank;
 import com.globbypotato.rockhounding_chemistry.machines.gui.UILabOvenController;
 import com.globbypotato.rockhounding_chemistry.machines.gui.UILeachingVatController;
-import com.globbypotato.rockhounding_chemistry.machines.gui.UIMetalAlloyer;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UIMetalAlloyerController;
 import com.globbypotato.rockhounding_chemistry.machines.gui.UIMineralSizerCollector;
 import com.globbypotato.rockhounding_chemistry.machines.gui.UIMineralSizerController;
 import com.globbypotato.rockhounding_chemistry.machines.gui.UIMineralSizerTank;
-import com.globbypotato.rockhounding_chemistry.machines.gui.UIOrbiter;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UIPowderMixerController;
 import com.globbypotato.rockhounding_chemistry.machines.gui.UIPrecipitationChamber;
 import com.globbypotato.rockhounding_chemistry.machines.gui.UIPrecipitationController;
-import com.globbypotato.rockhounding_chemistry.machines.gui.UIPullingCrucibleBase;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UIPullingCrucibleController;
 import com.globbypotato.rockhounding_chemistry.machines.gui.UIPullingCrucibleTop;
 import com.globbypotato.rockhounding_chemistry.machines.gui.UIReformerController;
 import com.globbypotato.rockhounding_chemistry.machines.gui.UIReformerReactor;
-import com.globbypotato.rockhounding_chemistry.machines.gui.UIRetentionVat;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UIRetentionVatController;
 import com.globbypotato.rockhounding_chemistry.machines.gui.UISeasoningRack;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UIShredderController;
 import com.globbypotato.rockhounding_chemistry.machines.gui.UISlurryDrum;
-import com.globbypotato.rockhounding_chemistry.machines.gui.UISlurryPond;
-import com.globbypotato.rockhounding_chemistry.machines.gui.UIStirredTankTop;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UISlurryPondController;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UIStirredTankController;
 import com.globbypotato.rockhounding_chemistry.machines.gui.UITransposer;
 import com.globbypotato.rockhounding_chemistry.machines.gui.UITubularBedController;
 import com.globbypotato.rockhounding_chemistry.machines.gui.UITubularBedLow;
@@ -167,7 +171,10 @@ public class RockhoundingPlugin implements IModPlugin {
 				new EvaporationTankCategory(guiHelper, RHRecipeUID.EVAPORATION_TANK),
 				new PrecipitationCategory(guiHelper, RHRecipeUID.PRECIPITATION),
 				new OrbiterCategory(guiHelper, RHRecipeUID.ORBITER),
-				new BedReactorCategory(guiHelper, RHRecipeUID.BED_REACTOR)
+				new BedReactorCategory(guiHelper, RHRecipeUID.BED_REACTOR),
+				new ShakingTableCategory(guiHelper, RHRecipeUID.SHAKING_TABLE),
+				new PowderMixerCategory(guiHelper, RHRecipeUID.POWDER_MIXER)
+
 		);
 	}
 
@@ -206,46 +213,49 @@ public class RockhoundingPlugin implements IModPlugin {
 		registry.addRecipes(PrecipitationWrapper.getRecipes(), RHRecipeUID.PRECIPITATION);
 		registry.addRecipes(BedReactorWrapper.getRecipes(), RHRecipeUID.BED_REACTOR);
 		registry.addRecipes(OrbiterWrapper.getRecipes(), RHRecipeUID.ORBITER);
+		registry.addRecipes(ShakingTableWrapper.getRecipes(), RHRecipeUID.SHAKING_TABLE);
+		registry.addRecipes(PowderMixerWrapper.getRecipes(), RHRecipeUID.POWDER_MIXER);
 
 		registry.addRecipeClickArea(UIMineralSizerController.class, rX, rY, rW, rH, RHRecipeUID.SIZER);
 		registry.addRecipeClickArea(UIMineralSizerTank.class, rX, rY, rW, rH, RHRecipeUID.SIZER);
 		registry.addRecipeClickArea(UIMineralSizerCollector.class, rX, rY, rW, rH, RHRecipeUID.SIZER);
-		registry.addRecipeClickArea(UISlurryPond.class, rX, rY, rW, rH, RHRecipeUID.POND);
+		registry.addRecipeClickArea(UISlurryPondController.class, rX, rY, rW, rH, RHRecipeUID.POND);
 		registry.addRecipeClickArea(UILabOvenController.class, rX, rY, rW, rH, RHRecipeUID.OVEN);
 		registry.addRecipeClickArea(UILabBlenderController.class, rX, rY, rW, rH, RHRecipeUID.BLENDER);
 		registry.addRecipeClickArea(UILabBlenderTank.class, rX, rY, rW, rH, RHRecipeUID.BLENDER);
-		registry.addRecipeClickArea(UIGasifierBurner.class, rX, rY, rW, rH, RHRecipeUID.GASIFIER);
-		registry.addRecipeClickArea(UIGasifierCooler.class, rX, rY, rW, rH, RHRecipeUID.GASIFIER);
-		registry.addRecipeClickArea(UIGasifierTank.class, rX, rY, rW, rH, RHRecipeUID.GASIFIER);
-		registry.addRecipeClickArea(UIGasPurifier.class, rX, rY, rW, rH, RHRecipeUID.PURIFIER);
+		registry.addRecipeClickArea(UIFluidCistern.class, rX, rY, rW, rH, RHRecipeUID.GASIFIER);
+		registry.addRecipeClickArea(UIGasifierController.class, rX, rY, rW, rH, RHRecipeUID.GASIFIER);
+		registry.addRecipeClickArea(UIGasPurifierController.class, rX, rY, rW, rH, RHRecipeUID.PURIFIER);
 		registry.addRecipeClickArea(UIAirCompressor.class, rX, rY, rW, rH, RHRecipeUID.COMPRESSOR);
 		registry.addRecipeClickArea(UISeasoningRack.class, rX, rY, rW, rH, RHRecipeUID.SEASONING);
-		registry.addRecipeClickArea(UIHeatExchangerBase.class, rX, rY, rW, rH, RHRecipeUID.EXCHANGER);
-		registry.addRecipeClickArea(UIGasCondenser.class, rX, rY, rW, rH, RHRecipeUID.CONDENSER);
+		registry.addRecipeClickArea(UIHeatExchangerController.class, rX, rY, rW, rH, RHRecipeUID.EXCHANGER);
+		registry.addRecipeClickArea(UIGasCondenserController.class, rX, rY, rW, rH, RHRecipeUID.CONDENSER);
 		registry.addRecipeClickArea(UILeachingVatController.class, rX, rY, rW, rH, RHRecipeUID.LEACHING);
-		registry.addRecipeClickArea(UIRetentionVat.class, rX, rY, rW, rH, RHRecipeUID.RETENTION);
+		registry.addRecipeClickArea(UIRetentionVatController.class, rX, rY, rW, rH, RHRecipeUID.RETENTION);
 		registry.addRecipeClickArea(UIGanController.class, rX, rY, rW, rH, RHRecipeUID.SEPARATION);
 		registry.addRecipeClickArea(UIExtractorController.class, rX, rY, rW, rH, RHRecipeUID.EXTRACTION);
 		registry.addRecipeClickArea(UIReformerController.class, rX, rY, rW, rH, RHRecipeUID.REFORMING);
 		registry.addRecipeClickArea(UIReformerReactor.class, rX, rY, rW, rH, RHRecipeUID.REFORMING);
-		registry.addRecipeClickArea(UIGasExpander.class, rX, rY, rW, rH, RHRecipeUID.EXPANDER);
-		registry.addRecipeClickArea(UIMetalAlloyer.class, rX, rY, rW, rH, RHRecipeUID.ALLOYER);
-		registry.addRecipeClickArea(UIDepositionChamberTop.class, rX, rY, rW, rH, RHRecipeUID.DEPOSITION);
-		registry.addRecipeClickArea(UIPullingCrucibleBase.class, rX, rY, rW, rH, RHRecipeUID.PULLING);
+		registry.addRecipeClickArea(UIGasExpanderController.class, rX, rY, rW, rH, RHRecipeUID.EXPANDER);
+		registry.addRecipeClickArea(UIMetalAlloyerController.class, rX, rY, rW, rH, RHRecipeUID.ALLOYER);
+		registry.addRecipeClickArea(UIDepositionController.class, rX, rY, rW, rH, RHRecipeUID.DEPOSITION);
+		registry.addRecipeClickArea(UIPullingCrucibleController.class, rX, rY, rW, rH, RHRecipeUID.PULLING);
 		registry.addRecipeClickArea(UIPullingCrucibleTop.class, rX, rY, rW, rH, RHRecipeUID.PULLING);
 		registry.addRecipeClickArea(UITransposer.class, rX, rY, rW, rH, RHRecipeUID.TRANSPOSER);
 		registry.addRecipeClickArea(UISlurryDrum.class, rX, rY, rW, rH, RHRecipeUID.SLURRY_DRUM);
-		registry.addRecipeClickArea(UIStirredTankTop.class, rX, rY, rW, rH, RHRecipeUID.STIRRED_TANK);
+		registry.addRecipeClickArea(UIStirredTankController.class, rX, rY, rW, rH, RHRecipeUID.STIRRED_TANK);
 		registry.addRecipeClickArea(UIPrecipitationController.class, rX, rY, rW, rH, RHRecipeUID.PRECIPITATION);
 		registry.addRecipeClickArea(UIPrecipitationChamber.class, rX, rY, rW, rH, RHRecipeUID.PRECIPITATION);
 		registry.addRecipeClickArea(UITubularBedController.class, rX, rY, rW, rH, RHRecipeUID.BED_REACTOR);
 		registry.addRecipeClickArea(UITubularBedLow.class, rX, rY, rW, rH, RHRecipeUID.BED_REACTOR);
+		registry.addRecipeClickArea(UIShredderController.class, rX, rY, rW, rH, RHRecipeUID.SHAKING_TABLE);
+		registry.addRecipeClickArea(UIPowderMixerController.class, rX, rY, rW, rH, RHRecipeUID.POWDER_MIXER);
 
-		registry.addRecipeCatalyst(new ItemStack(ModBlocks.MACHINES_A, 1, EnumMachinesA.SIZER_CONTROLLER.ordinal()), RHRecipeUID.SIZER);
+		registry.addRecipeCatalyst(new ItemStack(ModBlocks.MACHINES_F, 1, EnumMachinesF.SIZER_CONTROLLER.ordinal()), RHRecipeUID.SIZER);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.MACHINES_B, 1, EnumMachinesB.SLURRY_POND.ordinal()), RHRecipeUID.POND);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.MACHINES_A, 1, EnumMachinesA.LAB_OVEN_CHAMBER.ordinal()), RHRecipeUID.OVEN);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.MACHINES_A, 1, EnumMachinesA.LAB_BLENDER_CONTROLLER.ordinal()), RHRecipeUID.BLENDER);
-		registry.addRecipeCatalyst(new ItemStack(ModBlocks.MACHINES_B, 1, EnumMachinesB.GASIFIER_COOLER.ordinal()), RHRecipeUID.GASIFIER);
+		registry.addRecipeCatalyst(new ItemStack(ModBlocks.MACHINES_B, 1, EnumMachinesB.GASIFIER_CONTROLLER.ordinal()), RHRecipeUID.GASIFIER);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.MACHINES_B, 1, EnumMachinesB.GAS_PURIFIER.ordinal()), RHRecipeUID.PURIFIER);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.MACHINES_B, 1, EnumMachinesB.AIR_COMPRESSOR.ordinal()), RHRecipeUID.COMPRESSOR);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.MACHINES_A, 1, EnumMachinesA.SEASONING_RACK.ordinal()), RHRecipeUID.SEASONING);
@@ -253,14 +263,14 @@ public class RockhoundingPlugin implements IModPlugin {
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.MACHINES_C, 1, EnumMachinesC.GAS_CONDENSER.ordinal()), RHRecipeUID.CONDENSER);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.MACHINES_A, 1, EnumMachinesA.PROFILING_BENCH.ordinal()), RHRecipeUID.PROFILER);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.MACHINES_C, 1, EnumMachinesC.LEACHING_VAT_CONTROLLER.ordinal()), RHRecipeUID.LEACHING);
-		registry.addRecipeCatalyst(new ItemStack(ModBlocks.MACHINES_C, 1, EnumMachinesC.RETENTION_VAT.ordinal()), RHRecipeUID.RETENTION);
+		registry.addRecipeCatalyst(new ItemStack(ModBlocks.MACHINES_C, 1, EnumMachinesC.RETENTION_VAT_CONTROLLER.ordinal()), RHRecipeUID.RETENTION);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.MACHINES_C, 1, EnumMachinesC.GAN_CONTROLLER.ordinal()), RHRecipeUID.SEPARATION);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.MACHINES_C, 1, EnumMachinesC.EXTRACTOR_CONTROLLER.ordinal()), RHRecipeUID.EXTRACTION);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.MACHINES_C, 1, EnumMachinesC.REFORMER_CONTROLLER.ordinal()), RHRecipeUID.REFORMING);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.MACHINES_A, 1, EnumMachinesA.GAS_EXPANDER.ordinal()), RHRecipeUID.EXPANDER);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.MACHINES_D, 1, EnumMachinesD.METAL_ALLOYER.ordinal()), RHRecipeUID.ALLOYER);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.MACHINES_D, 1, EnumMachinesD.DEPOSITION_CHAMBER_BASE.ordinal()), RHRecipeUID.DEPOSITION);
-		registry.addRecipeCatalyst(new ItemStack(ModBlocks.MACHINES_D, 1, EnumMachinesD.PULLING_CRUCIBLE_BASE.ordinal()), RHRecipeUID.PULLING);
+		registry.addRecipeCatalyst(new ItemStack(ModBlocks.MACHINES_D, 1, EnumMachinesD.PULLING_CRUCIBLE_CONTROLLER.ordinal()), RHRecipeUID.PULLING);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.MACHINES_D, 1, EnumMachinesD.TRANSPOSER.ordinal()), RHRecipeUID.TRANSPOSER);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.MACHINES_D, 1, EnumMachinesD.CONTAINMENT_TANK.ordinal()), RHRecipeUID.POLLUTANT_FLUIDS);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.MACHINES_B, 1, EnumMachinesB.PRESSURE_VESSEL.ordinal()), RHRecipeUID.POLLUTANT_GASES);
@@ -270,6 +280,8 @@ public class RockhoundingPlugin implements IModPlugin {
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.MACHINES_E, 1, EnumMachinesE.PRECIPITATION_CHAMBER.ordinal()), RHRecipeUID.PRECIPITATION);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.MACHINES_F, 1, EnumMachinesF.TUBULAR_BED_TANK.ordinal()), RHRecipeUID.BED_REACTOR);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.MACHINES_D, 1, EnumMachinesD.ORBITER.ordinal()), RHRecipeUID.ORBITER);
+		registry.addRecipeCatalyst(new ItemStack(ModBlocks.MACHINES_F, 1, EnumMachinesF.SHREDDER_BASE.ordinal()), RHRecipeUID.SHAKING_TABLE);
+		registry.addRecipeCatalyst(new ItemStack(ModBlocks.MACHINES_E, 1, EnumMachinesE.POWDER_MIXER_CONTROLLER.ordinal()), RHRecipeUID.POWDER_MIXER);
 
 		registry.addRecipeCatalyst(CoreUtils.getFluidBucket(EnumFluid.pickFluid(EnumFluid.TOXIC_WASTE)), RHRecipeUID.MUTATION);
 
@@ -279,7 +291,7 @@ public class RockhoundingPlugin implements IModPlugin {
 
 		IIngredientBlacklist itemBlacklist = registry.getJeiHelpers().getIngredientBlacklist();
 		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.MISC_BLOCKS_A, 1, EnumMiscBlocksA.PRESSER.ordinal()));
-		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.MACHINES_B, 1, EnumMachinesB.PURIFIER_CYCLONE_TOP.ordinal()));
+		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.MACHINES_B, 1, EnumMachinesB.CYCLONE_SEPARATOR_TOP.ordinal()));
 		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.MACHINES_B, 1, EnumMachinesB.HEAT_EXCHANGER_TOP.ordinal()));
 		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.MACHINES_B, 1, EnumMachinesB.GAN_TURBOEXPANDER_TOP.ordinal()));
 		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.MACHINES_A, 1, EnumMachinesA.LAB_BLENDER_TANK.ordinal()));
@@ -287,15 +299,17 @@ public class RockhoundingPlugin implements IModPlugin {
 		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.MACHINES_C, 1, EnumMachinesC.ELEMENTS_CABINET_TOP.ordinal()));
 		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.MACHINES_C, 1, EnumMachinesC.REFORMER_REACTOR.ordinal()));
 		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.MACHINES_D, 1, EnumMachinesD.METAL_ALLOYER_TANK.ordinal()));
-		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.MACHINES_D, 1, EnumMachinesD.DEPOSITION_CHAMBER_TOP.ordinal()));
+		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.MACHINES_D, 1, EnumMachinesD.DEPOSITION_CHAMBER_CONTROLLER.ordinal()));
 		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.MACHINES_D, 1, EnumMachinesD.GAS_HOLDER_TOP.ordinal()));
 		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.MACHINES_B, 1, EnumMachinesB.GASIFIER_BURNER.ordinal()));
 		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.MACHINES_D, 1, EnumMachinesD.PULLING_CRUCIBLE_TOP.ordinal()));
-		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.MACHINES_E, 1, EnumMachinesE.STIRRED_TANK_TOP.ordinal()));
+		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.MACHINES_E, 1, EnumMachinesE.STIRRED_TANK_CONTROLLER.ordinal()));
 		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.MACHINES_E, 1, EnumMachinesE.PRECIPITATION_CONTROLLER.ordinal()));
 		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.MACHINES_F, 1, EnumMachinesF.TUBULAR_BED_LOW.ordinal()));
 		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.MACHINES_F, 1, EnumMachinesF.TUBULAR_BED_TOP.ordinal()));
 		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.MACHINES_F, 1, EnumMachinesF.TUBULAR_BED_CONTROLLER.ordinal()));
+		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.MACHINES_F, 1, EnumMachinesF.SHREDDER_CONTROLLER.ordinal()));
+		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.MACHINES_E, 1, EnumMachinesE.POWDER_MIXER_TANK.ordinal()));
 
 		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.PIPELINE_HALT));
 		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.GASLINE_HALT));
@@ -303,7 +317,6 @@ public class RockhoundingPlugin implements IModPlugin {
 		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModItems.SPEED_ITEMS, 1, EnumSpeeds.BASE.ordinal()));
 		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.WATERLOCK,1,1));
 		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.TOXIC_CLOUD));
-		itemBlacklist.addIngredientToBlacklist(new ItemStack(ModBlocks.MACHINES_E, 1, EnumMachinesE.LASER_EMITTER.ordinal()));
 
 		if(!ModConfig.enableHazard){
 			itemBlacklist.addIngredientToBlacklist(BaseRecipes.toxic_slimeball);

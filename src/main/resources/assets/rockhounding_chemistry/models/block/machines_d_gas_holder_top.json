@@ -4,7 +4,9 @@
     "textures": {
         "particle": "rockhounding_chemistry:models/machines_generic_b",
 		"0": "rockhounding_chemistry:models/machines_generic_b",
-		"1": "rockhounding_chemistry:models/machines_generic"
+		"1": "rockhounding_chemistry:models/machines_generic",
+		"2": "rockhounding_chemistry:models/machines_generic_d",
+		"3": "rockhounding_chemistry:models/machines_generic_c"
     },
     "elements": [
         {
@@ -292,6 +294,32 @@
                 "west": { "texture": "#1", "uv": [ 0.0, 4.0, 4.0, 8.0 ] },
                 "up": { "texture": "#1", "uv": [ 0.0, 4.0, 4.0, 8.0 ] },
                 "down": { "texture": "#1", "uv": [ 0.0, 4.0, 4.0, 8.0 ] }
+            }
+        },
+        {
+            "name": "Cube",
+            "from": [ -0.10000000149011612, 12.799999997019768, 6.499999992549419 ], 
+            "to": [ 16.099999998509883, 14.799999997019768, 9.500000001490116 ], 
+            "faces": {
+                "north": { "texture": "#1", "uv": [ 4.0, 2.0, 6.0, 4.0 ] },
+                "east": { "texture": "#2", "uv": [ 4.0, 4.0, 8.0, 8.0 ], "rotation": 180 },
+                "south": { "texture": "#1", "uv": [ 4.0, 2.0, 6.0, 4.0 ] },
+                "west": { "texture": "#2", "uv": [ 4.0, 4.0, 8.0, 8.0 ] },
+                "up": { "texture": "#1", "uv": [ 4.0, 2.0, 6.0, 4.0 ] },
+                "down": { "texture": "#1", "uv": [ 4.0, 2.0, 6.0, 4.0 ] }
+            }
+        },
+        {
+            "name": "Cube",
+            "from": [ -0.10000000149011612, 10.299999989569187, 7.0 ], 
+            "to": [ 16.099999998509883, 12.299999989569187, 9.000000008940697 ], 
+            "faces": {
+                "north": { "texture": "#1", "uv": [ 4.0, 2.0, 6.0, 4.0 ] },
+                "east": { "texture": "#3", "uv": [ 8.0, 4.0, 12.0, 8.0 ] },
+                "south": { "texture": "#1", "uv": [ 4.0, 2.0, 6.0, 4.0 ] },
+                "west": { "texture": "#3", "uv": [ 8.0, 4.0, 12.0, 8.0 ] },
+                "up": { "texture": "#1", "uv": [ 4.0, 2.0, 6.0, 4.0 ] },
+                "down": { "texture": "#1", "uv": [ 4.0, 2.0, 6.0, 4.0 ] }
             }
         }
     ]

@@ -1,0 +1,30 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:machines",
+	"pattern": [
+		"ScS",
+		"GpG",
+		"fff"
+	],
+	"key": {
+		"c":{
+				"item": "#BASE_CHIP"
+			},
+		"S":{
+				"item": "#SCAFFOLD"
+			},
+		"p":{
+				"item": "#HOPPER"
+			},
+		"f":{
+				"item": "#IRON_FOIL"
+			},
+		"G":{
+				"item": "#GLASS"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:machines_a",
+				"data": 8
+			}
+}

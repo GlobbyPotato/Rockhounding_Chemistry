@@ -15,7 +15,8 @@ public enum EnumMiscBlocksA implements BaseEnum {
 	CHARCOAL_BLOCK,
 	POOR_RAW_SALT,
 	REINFORCED_GLASS,
-	GAS_ROUTER;
+	GAS_ROUTER,
+	REFRACTORY_BRICK;
 
 	//---------CUSTOM----------------
 	public static int size(){

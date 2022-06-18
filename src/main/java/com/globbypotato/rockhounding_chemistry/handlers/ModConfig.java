@@ -62,9 +62,11 @@ public class ModConfig {
 	public static int extractorCap;
 
 	//speeds
+	public static int speedShredder = 500;
 	public static int speedSizer = 100;
 	public static int speedOven = 200;
 	public static int speedBlender = 60;
+	public static int speedMixer = 20;
 	public static int speedPond = 20;
 	public static int speedSeasoning;
 	public static int speedLeaching = 200;
@@ -90,7 +92,7 @@ public class ModConfig {
 	public static int catalystMultiplier = 1;
 	public static int consumeWaterChance;
 	public static boolean dictSmelt;
-	public static int cabinetTiming = 10;
+	public static int cabinetTiming = 3;
 	public static int gasBurntime;
 	public static int rfToFuelFactor;
 	public static int gasEnergizer;

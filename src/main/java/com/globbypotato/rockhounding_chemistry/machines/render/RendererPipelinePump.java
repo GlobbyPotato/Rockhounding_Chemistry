@@ -1,6 +1,6 @@
 package com.globbypotato.rockhounding_chemistry.machines.render;
 
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEPipelinePump;
+import com.globbypotato.rockhounding_chemistry.machines.tile.pipelines.TEPipelinePump;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;

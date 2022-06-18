@@ -115,12 +115,6 @@ public class UILeachingVatController extends GuiBase {
 		   }
 	   }
 
-	   //recycle
-	   if(GuiUtils.hoveringArea(30, 30, 23, 12, mouseX, mouseY, x, y)){
-		   tooltip = GuiUtils.drawLabel("Ingredients recycling", mouseX, mouseY);
-		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
-	   }
-
 	   //bugged
        if(this.tile.isBugged()){
 		   if(GuiUtils.hoveringArea(122, 52, 13, 13, mouseX, mouseY, x, y)){

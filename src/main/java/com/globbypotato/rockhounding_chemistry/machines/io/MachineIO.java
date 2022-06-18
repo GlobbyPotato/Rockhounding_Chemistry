@@ -21,12 +21,14 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -163,4 +165,61 @@ public class MachineIO extends BaseRotatingMachine {
 		}
 	}
 
+	public boolean tryExtractConsumable(World world, EntityPlayer player, BlockPos pos, int slot) {
+		TileEntityInv te = (TileEntityInv)world.getTileEntity(pos);
+		ItemStack inputStack = te.getInput().getStackInSlot(slot);
+		if(!inputStack.isEmpty()){
+			if(!world.isRemote){
+				player.inventory.addItemStackToInventory(inputStack);
+			}
+            world.playSound((EntityPlayer)null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ENTITY_ITEMFRAME_REMOVE_ITEM, SoundCategory.AMBIENT, 0.5F, this.rand.nextFloat() * 0.1F + 0.9F);
+			te.getInput().extractItem(slot, inputStack.getCount(), false);
+            te.markDirtyClient();
+            return true;
+		}
+		return false;
+	}
+
+	public boolean tryExtractUpgrade(World world, EntityPlayer player, BlockPos pos, int slot) {
+		TileEntityInv te = (TileEntityInv)world.getTileEntity(pos);
+		ItemStack inputStack = te.getUpgrade().getStackInSlot(slot);
+		if(!inputStack.isEmpty()){
+			if(!world.isRemote){
+				player.inventory.addItemStackToInventory(inputStack);
+			}
+            world.playSound((EntityPlayer)null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ENTITY_ITEMFRAME_REMOVE_ITEM, SoundCategory.AMBIENT, 0.5F, this.rand.nextFloat() * 0.1F + 0.9F);
+			te.getUpgrade().extractItem(slot, inputStack.getCount(), false);
+            te.markDirtyClient();
+            return true;
+		}
+		return false;
+	}
+
+	public boolean canInsertConsumable(World world, EntityPlayer player, BlockPos pos, ItemStack consumable, int slot) {
+		if((player.getHeldItemMainhand().isItemEqualIgnoreDurability(consumable))){
+			TileEntityInv te = (TileEntityInv)world.getTileEntity(pos);
+			if(te.getInput().getStackInSlot(slot).isEmpty()) {
+				te.getInput().insertItem(slot, new ItemStack(player.getHeldItemMainhand().getItem(), 1, player.getHeldItemMainhand().getItemDamage()), false);
+				player.getHeldItemMainhand().shrink(1);
+	            world.playSound((EntityPlayer)null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ENTITY_ITEMFRAME_PLACE, SoundCategory.AMBIENT, 0.5F, this.rand.nextFloat() * 0.1F + 0.9F);
+	            te.markDirtyClient();
+	            return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean canInsertUpgrade(World world, EntityPlayer player, BlockPos pos, ItemStack upgrade, int slot) {
+		if(player.getHeldItemMainhand().getItem() == upgrade.getItem() ){
+			TileEntityInv te = (TileEntityInv)world.getTileEntity(pos);
+			if(te.getUpgrade().getStackInSlot(slot).isEmpty()) {
+				te.getUpgrade().insertItem(slot, new ItemStack(player.getHeldItemMainhand().getItem(), 1, player.getHeldItemMainhand().getItemDamage()), false);
+				player.getHeldItemMainhand().shrink(1);
+	            world.playSound((EntityPlayer)null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ENTITY_ITEMFRAME_PLACE, SoundCategory.AMBIENT, 0.5F, this.rand.nextFloat() * 0.1F + 0.9F);
+	            te.markDirtyClient();
+	            return true;
+			}
+		}
+		return false;
+	}
 }

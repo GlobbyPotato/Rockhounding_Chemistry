@@ -6,8 +6,12 @@ import com.globbypotato.rockhounding_chemistry.enums.EnumMiscBlocksA;
 import com.globbypotato.rockhounding_chemistry.enums.materials.EnumAirGases;
 import com.globbypotato.rockhounding_chemistry.enums.materials.EnumFluid;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
-import com.globbypotato.rockhounding_chemistry.machines.io.MachineIO;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.GanPlantRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.tile.devices.TEPowerGenerator;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEAuxiliaryEngine;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TECentrifuge;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEGanExpanderBase;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEMultivessel;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.machines.tileentity.MachineStackHandler;
 import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityInv;
@@ -15,7 +19,6 @@ import com.globbypotato.rockhounding_core.machines.tileentity.WrappedItemHandler
 import com.globbypotato.rockhounding_core.machines.tileentity.WrappedItemHandler.WriteMode;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -129,19 +132,19 @@ public class TEGanController extends TileEntityInv {
 				getEngine().markDirtyClient();
 			}
 		}
-		if(hasInTank()){
-			if(getInTank().getFilter() != airStack()){
-				getInTank().filter = airStack();
+		if(hasInputVessel()){
+			if(getInputVessel().getFilter() != airStack()){
+				getInputVessel().filter = airStack();
 			}
 		}
-		if(hasFirstOutput()){
-			if(getChOut1().getFilter() != nitrogenStack()){
-				getChOut1().filter = nitrogenStack();
+		if(hasOutputVessel1()){
+			if(getOutputVessel1().getFilter() != nitrogenStack()){
+				getOutputVessel1().filter = nitrogenStack();
 			}
 		}
-		if(hasSecondOutput()){
-			if(getChOut2().getFilter() != oxygenStack()){
-				getChOut2().filter = oxygenStack();
+		if(hasOutputVessel2()){
+			if(getOutputVessel2().getFilter() != oxygenStack()){
+				getOutputVessel2().filter = oxygenStack();
 			}
 		}
 
@@ -269,33 +272,9 @@ public class TEGanController extends TileEntityInv {
 
 
 	//----------------------- STRUCTURE -----------------------
-	public BlockPos plantInverse(){
-		return this.pos.offset(isFacingAt(90).getOpposite(), 1);		
-	}
-
-	public BlockPos plantPos1(){
-		return this.pos.offset(isFacingAt(90), 1);		
-	}
-
-	public BlockPos plantPos2(){
-		return this.pos.offset(isFacingAt(90), 2);		
-	}
-
-	public BlockPos plantPos3(){
-		return this.pos.offset(isFacingAt(90), 3);		
-	}
-
-	public BlockPos plantPos4(){
-		return this.pos.offset(isFacingAt(90), 4);		
-	}
-
-	public BlockPos plantPos5(){
-		return this.pos.offset(isFacingAt(90), 5);		
-	}
-
 //engine
 	public TEPowerGenerator getEngine(){
-		TEPowerGenerator engine = TileStructure.getEngine(this.world, this.pos, getFacing(), 1, 0);
+		TEPowerGenerator engine = TileStructure.getEngine(this.world, this.pos.offset(getFacing()), getFacing().getOpposite());
 		return engine != null ? engine : null;
 	}
 
@@ -312,101 +291,110 @@ public class TEGanController extends TileEntityInv {
 		getEngine().markDirtyClient();
 	}
 
-//in tank
-	public TileVessel getInTank(){
-		TileVessel vessel = TileStructure.getHolder(this.world, this.pos, isFacingAt(90), 1, 180);
-		return vessel != null ? vessel : null;
+//centrifuge
+	public TECentrifuge getInputCentrifuge(){
+		TECentrifuge centrifuge = TileStructure.getCentrifuge(this.world, this.pos.offset(isFacingAt(270)), isFacingAt(90));
+		return centrifuge != null ? centrifuge : null;
 	}
 
-	public boolean hasInTank(){
-		return getInTank() != null;
+	public TECentrifuge getOutputCentrifuge1(){
+		BlockPos startPos = this.pos.offset(isFacingAt(90), 2).offset(getFacing());
+		TECentrifuge centrifuge = TileStructure.getCentrifuge(this.world, startPos, getFacing());
+		return centrifuge != null ? centrifuge : null;
 	}
 
-	public boolean inputTankHasGas(){
-		return hasInTank() 
-			&& this.input.canDrainFluid(getInTank().inputTank.getFluid(), airStack());
+	public TECentrifuge getOutputCentrifuge2(){
+		BlockPos startPos = this.pos.offset(isFacingAt(90), 4).offset(getFacing());
+		TECentrifuge centrifuge = TileStructure.getCentrifuge(this.world, startPos, getFacing());
+		return centrifuge != null ? centrifuge : null;
+	}
+
+	public boolean hasCentrifuges(){
+		return getInputCentrifuge() != null && getOutputCentrifuge1() != null && getOutputCentrifuge2() != null;
 	}
 
 //tower 1
-	public boolean hasChannel1(){
+	public boolean hasTower1(){
 		//tower
 		int countTower = 0;
-		for (int x = 1; x <= 3; x++){
-			BlockPos tPos = new BlockPos(plantPos1().getX(), plantPos1().getY() + x, plantPos1().getZ());
-			IBlockState state = this.world.getBlockState(tPos);
-			Block block = state.getBlock();
-			if(MachineIO.miscBlocksA(block, state, EnumMiscBlocksA.GAN_TOWER.ordinal())){
+		BlockPos startPos = this.pos.offset(isFacingAt(90), 2);
+		for (int x = 1; x <= 5; x++){
+			BlockPos tPos = new BlockPos(startPos.getX(), startPos.getY() + x, startPos.getZ());
+			Block tower = TileStructure.getStructure(this.world, tPos, EnumMiscBlocksA.GAN_TOWER.ordinal());
+			if(tower != null) {
 				countTower++;
 			}
 		}
+
 		//towercap
-		BlockPos tPos = new BlockPos(plantPos1().getX(), plantPos1().getY() + 4, plantPos1().getZ());
-		IBlockState state = this.world.getBlockState(tPos);
-		Block block = state.getBlock();
-		if(MachineIO.miscBlocksA(block, state, EnumMiscBlocksA.GAN_TOWER_TOP.ordinal())){
+		BlockPos tPos = new BlockPos(startPos.getX(), startPos.getY() + 6, startPos.getZ());
+		Block tower = TileStructure.getStructure(this.world, tPos, EnumMiscBlocksA.GAN_TOWER_TOP.ordinal());
+		if(tower != null) {
 			countTower++;
 		}
+
 		//filter
-		state = this.world.getBlockState(plantPos1());
-		block = state.getBlock();
-		if(MachineIO.miscBlocksA(block, state, EnumMiscBlocksA.GAN_INJECTOR.ordinal())){
+		Block injector = TileStructure.getStructure(this.world, startPos, EnumMiscBlocksA.GAN_INJECTOR.ordinal());
+		if(injector != null) {
 			countTower++;
 		}
 
-		return countTower == 5 && hasFirstPressurizer() && hasFirstOutput();
+		return countTower == 7;
 	}
 
-//pressurizer 1
-	public BlockPos pressurizer1Pos(){
-		return this.plantPos1().offset(getFacing(), 1);		
-	}
+//tower 2
+	public boolean hasTower2(){
+		//tower
+		int countTower = 0;
+		BlockPos startPos = this.pos.offset(isFacingAt(90), 4);
+		for (int x = 1; x <= 3; x++){
+			BlockPos tPos = new BlockPos(startPos.getX(), startPos.getY() + x, startPos.getZ());
+			Block tower = TileStructure.getStructure(this.world, tPos, EnumMiscBlocksA.GAN_TOWER.ordinal());
+			if(tower != null) {
+				countTower++;
+			}
+		}
 
-	public TEGasPressurizer getPressurizer1(){
-		TEGasPressurizer pressurizer = TileStructure.getPressurizer(this.world, plantPos1(), getFacing(), 1, 0);
-		return pressurizer != null ? pressurizer : null;
-	}
+		//towercap
+		BlockPos tPos = new BlockPos(startPos.getX(), startPos.getY() + 4, startPos.getZ());
+		Block tower = TileStructure.getStructure(this.world, tPos, EnumMiscBlocksA.GAN_TOWER_TOP.ordinal());
+		if(tower != null) {
+			countTower++;
+		}
 
-	public boolean hasFirstPressurizer(){
-		return getPressurizer1() != null;
-	}
+		//filter
+		Block injector = TileStructure.getStructure(this.world, startPos, EnumMiscBlocksA.GAN_INJECTOR.ordinal());
+		if(injector != null) {
+			countTower++;
+		}
 
-//output vessel 1
-	public TileVessel getChOut1(){
-		TileVessel vessel = TileStructure.getHolder(this.world, plantPos1(), getFacing().getOpposite(), 1, 0);
-		return vessel != null ? vessel : null;
-	}
-
-	public boolean hasFirstOutput(){
-		return getChOut1() != null;
+		return countTower == 5;
 	}
 
 //separator
-	public boolean hasSeparator(){
-		IBlockState state = this.world.getBlockState(plantPos2());
-		Block block = state.getBlock();
-		return MachineIO.miscBlocksA(block, state, EnumMiscBlocksA.SEPARATOR.ordinal());
+	public Block getSeparator1(){
+		BlockPos separatorPos = this.pos.offset(isFacingAt(90), 1);
+		Block separator = TileStructure.getStructure(this.world, separatorPos, EnumMiscBlocksA.SEPARATOR.ordinal());
+		return separator != null ? separator : null;
 	}
 
-//pressurizer S
-	public TEGasPressurizer getPressurizerS(){
-		TEGasPressurizer pressurizer = TileStructure.getPressurizer(this.world, plantPos2(), getFacing().getOpposite(), 1, 0);
-		return pressurizer != null ? pressurizer : null;
+	public Block getSeparator2(){
+		BlockPos separatorPos = this.pos.offset(isFacingAt(90), 3);
+		Block separator = TileStructure.getStructure(this.world, separatorPos, EnumMiscBlocksA.SEPARATOR.ordinal());
+		return separator != null ? separator : null;
 	}
 
-	public boolean hasExpanderPressurizer(){
-		return getPressurizerS() != null;
+	public boolean hasSeparators(){
+		return getSeparator1() != null && getSeparator2() != null;
 	}
 
 //expander
-	public BlockPos expanderPos(){
-		return this.plantPos2().offset(getFacing(), 1);		
-	}
-
 	public TEGanExpanderBase getExpander(){
-		TileEntity te = this.world.getTileEntity(expanderPos());
-		if(this.world.getBlockState(expanderPos()) != null && te instanceof TEGanExpanderBase){
+		BlockPos expanderPos = this.pos.offset(isFacingAt(90), 3).offset(getFacing().getOpposite());
+		TileEntity te = this.world.getTileEntity(expanderPos);
+		if(this.world.getBlockState(expanderPos) != null && te instanceof TEGanExpanderBase){
 			TEGanExpanderBase press = (TEGanExpanderBase)te;
-			if(press.getFacing() == getFacing().getOpposite()){
+			if(press.getFacing() == getFacing()){
 				return press;
 			}
 		}
@@ -414,62 +402,86 @@ public class TEGanController extends TileEntityInv {
 	}
 
 	public boolean hasExpander(){
-		return getExpander() != null && hasSeparator() && hasExpanderPressurizer();
+		return getExpander() != null;
 	}
 
-//tower 2
-	public boolean hasChannel2(){
-		//tower
-		int countTower = 0;
-		for (int x = 1; x <= 2; x++){
-			BlockPos tPos = new BlockPos(plantPos3().getX(), plantPos3().getY() + x, plantPos3().getZ());
-			IBlockState state = this.world.getBlockState(tPos);
-			Block block = state.getBlock();
-			if(MachineIO.miscBlocksA(block, state, EnumMiscBlocksA.GAN_TOWER.ordinal())){
-				countTower++;
-			}
-		}
-		//towercap
-		BlockPos tPos = new BlockPos(plantPos3().getX(), plantPos3().getY() + 4, plantPos3().getZ());
-		IBlockState state = this.world.getBlockState(tPos);
-		Block block = state.getBlock();
-		if(MachineIO.miscBlocksA(block, state, EnumMiscBlocksA.GAN_TOWER_TOP.ordinal())){
-			countTower++;
-		}
-		//filter
-		state = this.world.getBlockState(plantPos3());
-		block = state.getBlock();
-		if(MachineIO.miscBlocksA(block, state, EnumMiscBlocksA.GAN_INJECTOR.ordinal())){
-			countTower++;
-		}
-
-		return countTower == 3 && hasSecondPressurizer() && hasSecondOutput();
-	}
-
-//pressurizer 2
-	public TEGasPressurizer getPressurizer2(){
-		TEGasPressurizer pressurizer = TileStructure.getPressurizer(this.world, plantPos3(), getFacing(), 1, 0);
+//pressurizer
+	public TEAuxiliaryEngine getPressurizer1(){
+		BlockPos pressPos = this.pos.offset(isFacingAt(90)).offset(getFacing());
+		TEAuxiliaryEngine pressurizer = TileStructure.getPressurizer(this.world, pressPos, getFacing().getOpposite());
 		return pressurizer != null ? pressurizer : null;
 	}
 
-	public boolean hasSecondPressurizer(){
-		return getPressurizer2() != null;
+	public TEAuxiliaryEngine getPressurizer3(){
+		BlockPos pressPos = this.pos.offset(isFacingAt(90)).offset(getFacing().getOpposite());
+		TEAuxiliaryEngine pressurizer = TileStructure.getPressurizer(this.world, pressPos, getFacing());
+		return pressurizer != null ? pressurizer : null;
 	}
 
-//output vessel 2
-	public TileVessel getChOut2(){
-		TileVessel vessel = TileStructure.getHolder(this.world, plantPos3(), getFacing().getOpposite(), 1, 0);
+	public TEAuxiliaryEngine getPressurizer4(){
+		BlockPos pressPos = this.pos.offset(isFacingAt(90), 2).offset(getFacing().getOpposite());
+		TEAuxiliaryEngine pressurizer = TileStructure.getPressurizer(this.world, pressPos, getFacing());
+		return pressurizer != null ? pressurizer : null;
+	}
+
+	public TEAuxiliaryEngine getPressurizer2(){
+		BlockPos pressPos = this.pos.offset(isFacingAt(90), 3).offset(getFacing());
+		TEAuxiliaryEngine pressurizer = TileStructure.getPressurizer(this.world, pressPos, getFacing().getOpposite());
+		return pressurizer != null ? pressurizer : null;
+	}
+
+	public TEAuxiliaryEngine getPressurizer5(){
+		BlockPos pressPos = this.pos.offset(isFacingAt(90), 4).offset(getFacing().getOpposite());
+		TEAuxiliaryEngine pressurizer = TileStructure.getPressurizer(this.world, pressPos, getFacing());
+		return pressurizer != null ? pressurizer : null;
+	}
+
+	public boolean hasPressurizers(){
+		return getPressurizer1() != null && getPressurizer2() != null && getPressurizer3() != null && getPressurizer4() != null && getPressurizer5() != null;
+	}
+
+//input vessel
+	public TileVessel getInputVessel(){
+		TileVessel vessel = TileStructure.getHolder(this.world, this.pos.offset(isFacingAt(270), 2), isFacingAt(90));
 		return vessel != null ? vessel : null;
 	}
 
-	public boolean hasSecondOutput(){
-		return getChOut2() != null;
+	public boolean hasInputVessel(){
+		return getInputVessel() != null;
+	}
+
+	public boolean inputTankHasGas(){
+		return hasInputVessel() 
+			&& this.input.canDrainFluid(getInputVessel().inputTank.getFluid(), airStack());
+	}
+
+//output vessel 1
+	public TileVessel getOutputVessel1(){
+		BlockPos tankPos = this.pos.offset(isFacingAt(90), 2).offset(getFacing(), 2);
+		TileVessel vessel = TileStructure.getHolder(this.world, tankPos, getFacing());
+		return vessel != null ? vessel : null;
+	}
+
+	public boolean hasOutputVessel1(){
+		return getOutputVessel1() != null;
+	}
+
+//output vessel 2
+	public TileVessel getOutputVessel2(){
+		BlockPos tankPos = this.pos.offset(isFacingAt(90), 4).offset(getFacing(), 2);
+		TileVessel vessel = TileStructure.getHolder(this.world, tankPos, getFacing());
+		return vessel != null ? vessel : null;
+	}
+
+	public boolean hasOutputVessel2(){
+		return getOutputVessel2() != null;
 	}
 
 //multivessel
 	public TEMultivessel getMultivessel(){
-		TileEntity te = this.world.getTileEntity(plantPos4());
-		if(this.world.getBlockState(plantPos5()) != null && te instanceof TEMultivessel){
+		BlockPos tankPos = this.pos.offset(isFacingAt(90), 5);
+		TileEntity te = this.world.getTileEntity(tankPos);
+		if(this.world.getBlockState(tankPos) != null && te instanceof TEMultivessel){
 			TEMultivessel press = (TEMultivessel)te;
 			if(press.getFacing() == isFacingAt(90)){
 				return press;
@@ -482,8 +494,8 @@ public class TEGanController extends TileEntityInv {
 		return getMultivessel() != null;
 	}
 
-	public boolean hasChannel3(){
-		return hasRareOutput();
+	private boolean isAssembled() {
+		return hasTower1() && hasTower2() && hasCentrifuges() && hasSeparators() && hasExpander() && hasPressurizers();
 	}
 
 
@@ -511,6 +523,7 @@ public class TEGanController extends TileEntityInv {
 
 	private boolean canDistillate() {
 		return hasRedstonePower()
+			&& isAssembled()
 			&& inputTankHasGas()
 			&& hasCorrectSetup();
 	}
@@ -527,17 +540,17 @@ public class TEGanController extends TileEntityInv {
 	}
 
 	private boolean handleCh1() {
-		return hasChannel1() && hasExpander()
-			&& this.output.canSetOrFillFluid(getChOut1().inputTank, getChOut1().inputTank.getFluid(), nitrogenStack());
+		return hasOutputVessel1()
+			&& this.output.canSetOrFillFluid(getOutputVessel1().inputTank, getOutputVessel1().inputTank.getFluid(), nitrogenStack());
 	}
 
 	private boolean handleCh2() {
-		return handleCh1() && hasChannel2()
-			&& this.output.canSetOrFillFluid(getChOut2().inputTank, getChOut2().inputTank.getFluid(), oxygenStack());
+		return hasOutputVessel2()
+			&& this.output.canSetOrFillFluid(getOutputVessel2().inputTank, getOutputVessel2().inputTank.getFluid(), oxygenStack());
 	}
 
 	private boolean handleCh3() {
-		return hasChannel2() && hasChannel3();
+		return hasRareOutput();
 	}
 
 	public boolean doOutput1(){
@@ -562,11 +575,11 @@ public class TEGanController extends TileEntityInv {
 
 	private void distillate() {
 		if(doOutput1() && !isGasInhibited(6)){
-			this.output.setOrFillFluid(getChOut1().inputTank, nitrogenStack());
+			this.output.setOrFillFluid(getOutputVessel1().inputTank, nitrogenStack());
 		}
 
 		if(doOutput2() && !isGasInhibited(7)){
-			this.output.setOrFillFluid(getChOut2().inputTank, oxygenStack());
+			this.output.setOrFillFluid(getOutputVessel2().inputTank, oxygenStack());
 		}
 
 		if(doOutput3()){
@@ -626,8 +639,8 @@ public class TEGanController extends TileEntityInv {
 			}
 		}
 
-		if(hasInTank()){
-			this.input.drainOrCleanFluid(getInTank().inputTank, num_air(), true);	
+		if(hasInputVessel()){
+			this.input.drainOrCleanFluid(getInputVessel().inputTank, num_air(), true);	
 		}
 
 		drainPower();

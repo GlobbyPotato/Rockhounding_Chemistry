@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.globbypotato.rockhounding_chemistry.ModBlocks;
 import com.globbypotato.rockhounding_chemistry.machines.GaslinePump;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEGaslinePump;
+import com.globbypotato.rockhounding_chemistry.machines.tile.pipelines.TEGaslinePump;
 
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;

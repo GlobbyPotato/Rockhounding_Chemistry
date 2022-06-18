@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.COBufferTank;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEBufferTank;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEBufferTank;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.machines.gui.GuiUtils;
 
@@ -37,13 +37,13 @@ public class UIBufferTank extends GuiBase {
 	   List<String> tooltip;
 
 		//void solvent
-	    if(GuiUtils.hoveringArea(79, 95, 18, 18, mouseX, mouseY, x, y)){
+	    if(GuiUtils.hoveringArea(80, 88, 16, 16, mouseX, mouseY, x, y)){
 			tooltip = GuiUtils.drawLabel(this.void_label, mouseX, mouseY);
 			drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 		}
 
 		//input solvent
-	    if(GuiUtils.hoveringArea(62, 43, 52, 28, mouseX, mouseY, x, y)){
+	    if(GuiUtils.hoveringArea(62, 35, 52, 28, mouseX, mouseY, x, y)){
 			tooltip = GuiUtils.drawFluidTankInfo(this.tile.inputTank, mouseX, mouseY);
 			drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 		}
@@ -60,7 +60,7 @@ public class UIBufferTank extends GuiBase {
 
 		//output fluid
 		if(this.tile.getTankFluid() != null){
-			GuiUtils.renderFluidBar(this.tile.getTankFluid(), this.tile.getTankAmount(), this.tile.getTankCapacity(), i + 62, j + 43, 52, 28);
+			GuiUtils.renderFluidBar(this.tile.getTankFluid(), this.tile.getTankAmount(), this.tile.getTankCapacity(), i + 62, j + 35, 52, 28);
 		}
 
     }

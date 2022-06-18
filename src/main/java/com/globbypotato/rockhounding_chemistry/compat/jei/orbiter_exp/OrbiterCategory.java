@@ -42,7 +42,7 @@ public class OrbiterCategory extends RHRecipeCategory {
 		guiFluidStacks.init(EXP_SLOT, false,  51, 44, 34, 16, 1000, false, null);
 		guiItemStacks.init(PROBE_SLOT, true, 96, 22);
 
-		guiFluidStacks.set(WASTE_SLOT, new FluidStack(ModFluids.TOXIC_WASTE, 1000));
+		guiFluidStacks.set(WASTE_SLOT, wrapper.getSolvents());
 		guiFluidStacks.set(EXP_SLOT, wrapper.getInputs());
 		guiItemStacks.set(PROBE_SLOT, wrapper.getProbes());
 

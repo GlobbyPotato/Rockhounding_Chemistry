@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.COTransposer;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TETransposer;
+import com.globbypotato.rockhounding_chemistry.machines.tile.devices.TETransposer;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.machines.gui.GuiUtils;
 
@@ -53,29 +53,26 @@ public class UITransposer extends GuiBase {
 
 		//void
 	    if(GuiUtils.hoveringArea(146, 22, 18, 18, mouseX, mouseY, x, y)){
-			String voidstring = TextFormatting.RED + "Void Tank: " + TextFormatting.WHITE + "content will be lost";
-			tooltip = GuiUtils.drawLabel(voidstring, mouseX, mouseY);
+			tooltip = GuiUtils.drawLabel(this.void_label, mouseX, mouseY);
 			drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	    }
 	    if(GuiUtils.hoveringArea(146, 94, 18, 18, mouseX, mouseY, x, y)){
-			String voidstring = TextFormatting.RED + "Void Tank: " + TextFormatting.WHITE + "content will be lost";
-			tooltip = GuiUtils.drawLabel(voidstring, mouseX, mouseY);
+			tooltip = GuiUtils.drawLabel(this.void_label, mouseX, mouseY);
 			drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	    }
 	    if(GuiUtils.hoveringArea(94, 58, 18, 18, mouseX, mouseY, x, y)){
-			String voidstring = TextFormatting.RED + "Void Tank: " + TextFormatting.WHITE + "content will be lost";
-			tooltip = GuiUtils.drawLabel(voidstring, mouseX, mouseY);
+			tooltip = GuiUtils.drawLabel(this.void_label, mouseX, mouseY);
 			drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	    }
 
 		//filter
 	    if(GuiUtils.hoveringArea(24, 58, 18, 18, mouseX, mouseY, x, y)){
-			String filterstring = TextFormatting.BLUE + "Fluid/Gas Filter: " + TextFormatting.WHITE + "use a filled ampoule to set";
+			String filterstring = TextFormatting.BLUE + this.filter_label + ": " + TextFormatting.WHITE + this.ampoule_label;
 			if(!this.tile.hasFilterMain()){
 				tooltip = GuiUtils.drawLabel(filterstring, mouseX, mouseY);
 				drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 			}else{
-				filterstring = TextFormatting.GRAY + "Filter: " + TextFormatting.WHITE + this.tile.getFilterMain().getLocalizedName();
+				filterstring = TextFormatting.GRAY + this.filter_label + ": " + TextFormatting.WHITE + this.tile.getFilterMain().getLocalizedName();
 				tooltip = GuiUtils.drawLabel(filterstring, mouseX, mouseY);
 				drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 			}

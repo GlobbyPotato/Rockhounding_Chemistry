@@ -5,7 +5,7 @@ import java.util.List;
 import com.globbypotato.rockhounding_chemistry.enums.utils.EnumEmitting;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.COFluidTank;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEFluidTank;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEFluidTank;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.machines.gui.GuiUtils;
 
@@ -47,20 +47,20 @@ public class UIFluidTank extends GuiBase {
 
 		//-
 	    if(GuiUtils.hoveringArea(63, 95, 16, 16, mouseX, mouseY, x, y)){
-			tooltip = GuiUtils.drawLabel("Decrease Threashold", mouseX, mouseY);
+			tooltip = GuiUtils.drawLabel(this.thres_lo_label, mouseX, mouseY);
 			drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	    }
 
 		//+
 	    if(GuiUtils.hoveringArea(81, 95, 16, 16, mouseX, mouseY, x, y)){
-			tooltip = GuiUtils.drawLabel("Increase Threashold", mouseX, mouseY);
+			tooltip = GuiUtils.drawLabel(this.thres_hi_label, mouseX, mouseY);
 			drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	    }
 
 	    //emit type
 	    if(GuiUtils.hoveringArea(45, 95, 16, 16, mouseX, mouseY, x, y)){
-	    	String emitTitle = TextFormatting.WHITE + "Redstone signal. Click to change";
-	    	String emitType = TextFormatting.GRAY + "Method: " + TextFormatting.RED + EnumEmitting.getFormals()[this.tile.getEmitType()];
+	    	String emitTitle = TextFormatting.WHITE + this.signal_label;
+	    	String emitType = TextFormatting.GRAY + this.method_label + ": " + TextFormatting.RED + EnumEmitting.getFormals()[this.tile.getEmitType()];
 			multiString = new String[]{emitTitle, emitType};
 			tooltip = GuiUtils.drawMultiLabel(multiString, mouseX, mouseY);
 			drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
@@ -69,12 +69,12 @@ public class UIFluidTank extends GuiBase {
 	    
 		//filter
 	    if(GuiUtils.hoveringArea(136, 34, 18, 18, mouseX, mouseY, x, y)){
-			String filterstring = TextFormatting.BLUE + "Fluid Filter: " + TextFormatting.WHITE + "use a filled ampoule to set";
+			String filterstring = TextFormatting.BLUE + this.filter_label + ": " + TextFormatting.WHITE + this.ampoule_label;
 			if(!this.tile.hasFilter()){
 				tooltip = GuiUtils.drawLabel(filterstring, mouseX, mouseY);
 				drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 			}else{
-				filterstring = TextFormatting.GRAY + "Filter: " + TextFormatting.WHITE + this.tile.getFilter().getLocalizedName();
+				filterstring = TextFormatting.GRAY + this.filter_label + ": " + TextFormatting.WHITE + this.tile.getFilter().getLocalizedName();
 				tooltip = GuiUtils.drawLabel(filterstring, mouseX, mouseY);
 				drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 			}

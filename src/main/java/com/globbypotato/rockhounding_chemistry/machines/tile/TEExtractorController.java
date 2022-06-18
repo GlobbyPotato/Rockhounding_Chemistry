@@ -2,19 +2,27 @@ package com.globbypotato.rockhounding_chemistry.machines.tile;
 
 import java.util.ArrayList;
 
-import com.globbypotato.rockhounding_chemistry.ModItems;
 import com.globbypotato.rockhounding_chemistry.enums.EnumMiscBlocksA;
-import com.globbypotato.rockhounding_chemistry.enums.EnumMiscItems;
-import com.globbypotato.rockhounding_chemistry.enums.materials.EnumElements;
 import com.globbypotato.rockhounding_chemistry.enums.materials.EnumFluid;
 import com.globbypotato.rockhounding_chemistry.enums.utils.EnumServer;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
-import com.globbypotato.rockhounding_chemistry.machines.io.MachineIO;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.ChemicalExtractorRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.ElementsCabinetRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.MaterialCabinetRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.ChemicalExtractorRecipe;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.ElementsCabinetRecipe;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.MaterialCabinetRecipe;
-import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.tile.collateral.TEElementsCabinetBase;
+import com.globbypotato.rockhounding_chemistry.machines.tile.collateral.TEMaterialCabinetBase;
+import com.globbypotato.rockhounding_chemistry.machines.tile.collateral.TEServer;
+import com.globbypotato.rockhounding_chemistry.machines.tile.devices.TEPowerGenerator;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEAuxiliaryEngine;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TECentrifuge;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEExtractorGlassware;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEExtractorReactor;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEExtractorStabilizer;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEUnloader;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEFlotationTank;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.machines.tileentity.MachineStackHandler;
 import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityInv;
@@ -23,7 +31,6 @@ import com.globbypotato.rockhounding_core.machines.tileentity.WrappedItemHandler
 import com.globbypotato.rockhounding_core.utils.CoreUtils;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.init.Enchantments;
 import net.minecraft.item.ItemStack;
@@ -36,11 +43,11 @@ import net.minecraftforge.oredict.OreDictionary;
 
 public class TEExtractorController extends TileEntityInv implements IInternalServer{
 
-	public static final int PURGE_SLOT = 0;
+	public static final int SPEED_SLOT = 0;
 
 	public static int inputSlots = 1;
-	public static int outputSlots = 1;
 	public static int templateSlots = 3;
+	public static int upgradeSlots = 1;
 
 	public int intensity = 8;
 	public ItemStack filter = ItemStack.EMPTY;
@@ -51,7 +58,7 @@ public class TEExtractorController extends TileEntityInv implements IInternalSer
 	public ChemicalExtractorRecipe dummyRecipe;
 
 	public TEExtractorController() {
-		super(inputSlots, outputSlots, templateSlots, 0);
+		super(inputSlots, 0, templateSlots, upgradeSlots);
 
 		this.input =  new MachineStackHandler(inputSlots, this){
 			@Override
@@ -63,6 +70,18 @@ public class TEExtractorController extends TileEntityInv implements IInternalSer
 			}
 		};
 		this.automationInput = new WrappedItemHandler(this.input, WriteMode.IN);
+
+		this.upgrade =  new MachineStackHandler(upgradeSlots, this){
+			@Override
+			public ItemStack insertItem(int slot, ItemStack insertingStack, boolean simulate){
+				if(slot == SPEED_SLOT && ModUtils.isValidSpeedUpgrade(insertingStack) ){
+					return super.insertItem(slot, insertingStack, simulate);
+				}
+				return insertingStack;
+			}
+		};
+		this.automationUpgrade = new WrappedItemHandler(this.upgrade, WriteMode.IN);
+
 	}
 
 
@@ -96,8 +115,8 @@ public class TEExtractorController extends TileEntityInv implements IInternalSer
 		return this.input.getStackInSlot(INPUT_SLOT);
 	}
 
-	public ItemStack purgeSlot() {
-		return this.output.getStackInSlot(PURGE_SLOT);
+	public ItemStack speedSlot(){
+		return this.upgrade.getStackInSlot(SPEED_SLOT);
 	}
 
 
@@ -113,11 +132,11 @@ public class TEExtractorController extends TileEntityInv implements IInternalSer
 	}
 
 	public int speedFactor() {
-		return hasInjector() && ModUtils.isValidSpeedUpgrade(getInjector().speedSlot()) ? ModUtils.speedUpgrade(getInjector().speedSlot()) : 1;
+		return ModUtils.isValidSpeedUpgrade(speedSlot()) ? ModUtils.speedUpgrade(speedSlot()) : 1;
 	}
 
 	public int getCooktimeMax(){
-		return hasInjector() && ModUtils.isValidSpeedUpgrade(getInjector().speedSlot()) ? ModConfig.speedExtractor / getInjector().speedUpgrade(): ModConfig.speedExtractor;
+		return ModUtils.isValidSpeedUpgrade(speedSlot()) ? ModConfig.speedAlloyer / ModUtils.speedUpgrade(speedSlot()): ModConfig.speedAlloyer;
 	}
 
 	private static int deviceCode() {
@@ -135,21 +154,29 @@ public class TEExtractorController extends TileEntityInv implements IInternalSer
 	public ArrayList<ChemicalExtractorRecipe> recipeList(){
 		return ChemicalExtractorRecipes.extractor_recipes;
 	}
+	public ChemicalExtractorRecipe getRecipeList(int x){
+		return recipeList().get(x);
+	}
 
-	public ArrayList<String> inhibitedList(){
-		return ChemicalExtractorRecipes.inhibited_elements;
+	public ArrayList<String> inhibitedElements(){
+		return ElementsCabinetRecipes.inhibited_elements;
+	}
+	public ArrayList<String> inhibitedMaterial(){
+		return MaterialCabinetRecipes.inhibited_material;
+	}
+
+	public ArrayList<ElementsCabinetRecipe> elementsList(){
+		return ElementsCabinetRecipes.elements_cabinet_recipes;
+	}
+	public ElementsCabinetRecipe getElementsList(int x){
+		return elementsList().get(x);
 	}
 
 	public ArrayList<MaterialCabinetRecipe> materialList(){
 		return MaterialCabinetRecipes.material_cabinet_recipes;
 	}
-
 	public MaterialCabinetRecipe getMaterialList(int x){
 		return materialList().get(x);
-	}
-
-	public ChemicalExtractorRecipe getRecipeList(int x){
-		return recipeList().get(x);
 	}
 
 	boolean isValidInput(ItemStack stack) {
@@ -217,7 +244,7 @@ public class TEExtractorController extends TileEntityInv implements IInternalSer
 	//----------------------- STRUCTURE -----------------------
 //engine
 	public TEPowerGenerator getEngine(){
-		TEPowerGenerator engine = TileStructure.getEngine(this.world, this.pos, isFacingAt(90), 1, 0);
+		TEPowerGenerator engine = TileStructure.getEngine(this.world, this.pos.offset(isFacingAt(90)), isFacingAt(270));
 		return engine != null ? engine : null;
 	}
 
@@ -230,13 +257,10 @@ public class TEExtractorController extends TileEntityInv implements IInternalSer
 	}
 
 //reactor
-	public BlockPos reactorPos(){
-		return this.pos.offset(getFacing(), 1);		
-	}
-
 	public TEExtractorReactor getReactor(){
-		TileEntity te = this.world.getTileEntity(reactorPos());
-		if(this.world.getBlockState(reactorPos()) != null && te instanceof TEExtractorReactor){
+		BlockPos reactorPos = this.pos.offset(getFacing(), 1);
+		TileEntity te = this.world.getTileEntity(reactorPos);
+		if(this.world.getBlockState(reactorPos) != null && te instanceof TEExtractorReactor){
 			TEExtractorReactor reactor = (TEExtractorReactor)te;
 			if(reactor.getFacing() == getFacing().getOpposite()){
 				return reactor;
@@ -249,16 +273,47 @@ public class TEExtractorController extends TileEntityInv implements IInternalSer
 		return getReactor() != null;
 	}
 
-//glassware holder
-	public BlockPos injectorPos(){
-		return intankPos().offset(isFacingAt(90), 1);		
+//charger
+	public Block getCharger(){
+		BlockPos chargerPos= this.pos.offset(getFacing(), 1).offset(EnumFacing.UP);
+		Block charger = TileStructure.getStructure(this.world, chargerPos, EnumMiscBlocksA.EXTRACTOR_CHARGER.ordinal());
+		return charger != null ? charger : null;
 	}
 
-	public TEExtractorInjector getInjector(){
-		TileEntity te = this.world.getTileEntity(injectorPos());
-		if(this.world.getBlockState(injectorPos()) != null && te instanceof TEExtractorInjector){
-			TEExtractorInjector injector = (TEExtractorInjector)te;
-			if(injector.getFacing() == getFacing().getOpposite()){
+	public boolean hasCharger(){
+		return getCharger() != null;
+	}
+
+//separators
+	public BlockPos separatorPos1(){
+		return this.pos.offset(getFacing(), 2);
+	}
+
+	public BlockPos separatorPos2(){
+		return this.pos.offset(getFacing(), 3);
+	}
+
+	public Block getSeparator(){
+		Block separator = TileStructure.getStructure(this.world, separatorPos1(), EnumMiscBlocksA.SEPARATOR.ordinal());
+		return separator != null ? separator : null;
+	}
+
+	public Block getSeparator2(){
+		Block separator = TileStructure.getStructure(this.world, separatorPos2(), EnumMiscBlocksA.SEPARATOR.ordinal());
+		return separator != null ? separator : null;
+	}
+
+	public boolean hasSeparators(){
+		return getSeparator() != null && getSeparator2() != null;
+	}
+
+//glassware holder
+	public TEExtractorGlassware getInjector(){
+		BlockPos injectorPos = separatorPos2().offset(isFacingAt(270), 1);
+		TileEntity te = this.world.getTileEntity(injectorPos);
+		if(this.world.getBlockState(injectorPos) != null && te instanceof TEExtractorGlassware){
+			TEExtractorGlassware injector = (TEExtractorGlassware)te;
+			if(injector.getFacing() == isFacingAt(90)){
 				return injector;
 			}
 		}
@@ -269,97 +324,13 @@ public class TEExtractorController extends TileEntityInv implements IInternalSer
 		return getInjector() != null;
 	}
 
-	private boolean hasTube() {
-		return hasInjector()
-			&& CoreUtils.hasConsumable(BaseRecipes.test_tube, getInjector().getInput().getStackInSlot(TEExtractorInjector.TUBE_SLOT))
-			&& CoreUtils.hasConsumable(BaseRecipes.graduated_cylinder, getInjector().getInput().getStackInSlot(TEExtractorInjector.CYLINDER_SLOT));
-	}
-
-//charger
-	public Block getCharger(){
-		BlockPos chargerPos = reactorPos().offset(EnumFacing.UP);
-		IBlockState chargerState = this.world.getBlockState(chargerPos);
-		Block charger = chargerState.getBlock();
-		if(MachineIO.miscBlocksA(charger, chargerState, EnumMiscBlocksA.EXTRACTOR_CHARGER.ordinal())){
-			return charger;
-		}
-		return null;
-	}
-
-	public boolean hasCharger(){
-		return getCharger() != null;
-	}
-
-//intank
-	public BlockPos intankPos(){
-		return this.pos.offset(getFacing(), 2);		
-	}
-
-	public TEFluidInputTank getIntank(){
-		TileEntity te = this.world.getTileEntity(intankPos());
-		if(this.world.getBlockState(intankPos()) != null && te instanceof TEFluidInputTank){
-			TEFluidInputTank tank = (TEFluidInputTank)te;
-			if(tank.getFacing() == getFacing().getOpposite()){
-				return tank;
-			}
-		}
-		return null;
-	}
-
-	public boolean hasIntank(){
-		return getIntank() != null;
-	}
-
-	public boolean hasFluids() {
-		return hasIntank()
-			&& this.input.canDrainFluid(getIntank().solventTank.getFluid(), nitricAcid(), calculatedNitr())
-			&& this.input.canDrainFluid(getIntank().reagentTank.getFluid(), cyanideAcid(), calculatedCyan());
-	}
-
-//element cabinet
-	public TEElementsCabinetBase getElementCabinet(){
-		BlockPos cabinetPos = reactorPos().offset(isFacingAt(270), 1);
-		TileEntity te = this.world.getTileEntity(cabinetPos);
-		if(this.world.getBlockState(cabinetPos) != null && te instanceof TEElementsCabinetBase){
-			TEElementsCabinetBase cabinet = (TEElementsCabinetBase)te;
-			if(cabinet.getFacing() == isFacingAt(270).getOpposite()){
-				return cabinet;
-			}
-		}
-		return null;
-	}
-
-	public boolean hasElementCabinet(){
-		return getElementCabinet() != null;
-	}
-
-	public TEMaterialCabinetBase getMaterialCabinet(){
-		BlockPos cabinetPos = this.pos.offset(isFacingAt(270), 1);
-		TileEntity te = this.world.getTileEntity(cabinetPos);
-		if(this.world.getBlockState(cabinetPos) != null && te instanceof TEMaterialCabinetBase){
-			TEMaterialCabinetBase cabinet = (TEMaterialCabinetBase)te;
-			if(cabinet.getFacing() == isFacingAt(270).getOpposite()){
-				return cabinet;
-			}
-		}
-		return null;
-	}
-
-	public boolean hasMaterialCabinet(){
-		return getMaterialCabinet() != null;
-	}
-
-	private boolean isAssembled() {
-		return hasElementCabinet() && hasMaterialCabinet() && hasReactor() && hasCharger();
-	}
-
 //stabilizer
 	public TEExtractorStabilizer getStabilizer(){
-		BlockPos stabilizerPos = reactorPos().offset(isFacingAt(90), 1);
-		TileEntity te = this.world.getTileEntity(stabilizerPos);
-		if(this.world.getBlockState(stabilizerPos) != null && te instanceof TEExtractorStabilizer){
+		BlockPos injectorPos = separatorPos2().offset(isFacingAt(90), 1);
+		TileEntity te = this.world.getTileEntity(injectorPos);
+		if(this.world.getBlockState(injectorPos) != null && te instanceof TEExtractorStabilizer){
 			TEExtractorStabilizer stabilizer = (TEExtractorStabilizer)te;
-			if(stabilizer.getFacing() == isFacingAt(90).getOpposite()){
+			if(stabilizer.getFacing() == isFacingAt(270)){
 				return stabilizer;
 			}
 		}
@@ -370,9 +341,101 @@ public class TEExtractorController extends TileEntityInv implements IInternalSer
 		return getStabilizer() != null;
 	}
 
+//centrifuge
+	public TECentrifuge getElementCentrifuge(){
+		TECentrifuge centrifuge = TileStructure.getCentrifuge(this.world, separatorPos1().offset(isFacingAt(270)), isFacingAt(270));
+		return centrifuge != null ? centrifuge : null;
+	}
+
+	public TECentrifuge getMaterialCentrifuge(){
+		TECentrifuge centrifuge = TileStructure.getCentrifuge(this.world, separatorPos1().offset(isFacingAt(90)), isFacingAt(90));
+		return centrifuge != null ? centrifuge : null;
+	}
+
+	public boolean hasCentrifuges(){
+		return getElementCentrifuge() != null && getMaterialCentrifuge() != null;
+	}
+	
+//element cabinet
+	public TEElementsCabinetBase getElementsCabinet(){
+		BlockPos cabinetPos = separatorPos1().offset(isFacingAt(270), 2);
+		TEElementsCabinetBase cabinet = TileStructure.getElementCabinet(this.world, cabinetPos, getFacing());
+		return cabinet != null ? cabinet : null;
+	}
+
+	public boolean hasElementsCabinet(){
+		return getElementsCabinet() != null;
+	}
+
+	public TEMaterialCabinetBase getMaterialCabinet(){
+		BlockPos cabinetPos = separatorPos1().offset(isFacingAt(90), 2);
+		TEMaterialCabinetBase cabinet = TileStructure.getMaterialCabinet(this.world, cabinetPos, getFacing());
+		return cabinet != null ? cabinet : null;
+	}
+
+	public boolean hasMaterialCabinet(){
+		return getMaterialCabinet() != null;
+	}
+
+	private boolean isAssembled() {
+		return hasSeparators() && hasPressurizer() && hasElementsCabinet() && hasMaterialCabinet() && hasReactor() && hasCharger() && hasCentrifuges() && hasFluidRouter() && hasStabilizer() && hasUnloader() && hasInjector();
+	}
+
+//Unloader
+	public TEUnloader getUnloader(){
+		BlockPos unloaderPos = this.pos.offset(getFacing(), 4);
+		TEUnloader unloader = TileStructure.getUnloader(this.world, unloaderPos, getFacing().getOpposite());
+		return unloader != null ? unloader : null;
+	}
+
+	public boolean hasUnloader(){
+		return getUnloader() != null;
+	}
+
+//fluid router
+	public boolean hasFluidRouter(){
+		return TileStructure.getFluidRouter(world, this.pos.offset(getFacing(), 5), getFacing());
+	}
+
+//flotation tanks
+	public TEFlotationTank getFlotationTank1(){
+		BlockPos flotationPos = pos.offset(getFacing(), 5).offset(EnumFacing.UP);
+		TEFlotationTank tank = TileStructure.getFlotationTank(this.world, flotationPos);
+		return tank != null ? tank : null;
+	}
+
+	public TEFlotationTank getFlotationTank2(){
+		BlockPos flotationPos = pos.offset(getFacing(), 6).offset(EnumFacing.UP);
+		TEFlotationTank tank = TileStructure.getFlotationTank(this.world, flotationPos);
+		return tank != null ? tank : null;
+	}
+
+	public boolean hasFlotationTank1(){
+		return getFlotationTank1() != null;
+	}
+
+	public boolean hasFlotationTank2(){
+		return getFlotationTank2() != null;
+	}
+
+	public boolean hasFluids() {
+		return (hasFlotationTank1() && this.input.canDrainFluid(getFlotationTank1().inputTank.getFluid(), nitricAcid(), calculatedNitr())) 
+			&& (hasFlotationTank2() && this.input.canDrainFluid(getFlotationTank2().inputTank.getFluid(), cyanideAcid(), calculatedCyan()));
+	}
+
+//pressurizer
+	public TEAuxiliaryEngine getPressurizer(){
+		TEAuxiliaryEngine pressurizer = TileStructure.getPressurizer(this.world, this.pos.offset(getFacing(), 7), getFacing().getOpposite());
+		return pressurizer != null ? pressurizer : null;
+	}
+
+	public boolean hasPressurizer(){
+		return getPressurizer() != null;
+	}
+
 //server
 	public TEServer getServer(){
-		TEServer server = TileStructure.getServer(this.world, injectorPos(), getFacing(), 1, 0);
+		TEServer server = TileStructure.getServer(this.world, this.pos.offset(isFacingAt(270)), isFacingAt(90));
 		return server != null ? server : null;
 	}
 
@@ -463,7 +526,7 @@ public class TEExtractorController extends TileEntityInv implements IInternalSer
 			doPreset();
 			handlePurge();
 
-			initializeServer(isRepeatable, hasServer(), getServer(), deviceCode());
+			initializeServer(isRepeatable, getServer(), deviceCode(), this.recipeStep, 16);
 
 			if(inputSlot().isEmpty() && getDummyRecipe() != null){
 				dummyRecipe = null;
@@ -500,24 +563,31 @@ public class TEExtractorController extends TileEntityInv implements IInternalSer
 				getEngine().markDirtyClient();
 			}
 		}
-		if(hasIntank()){
-			if(getIntank().getFilterSolvent() != nitricAcid()){
-				getIntank().filterSolvent = nitricAcid();
+		if(hasFlotationTank1()){
+			if(getFlotationTank1().getFilterSolvent() != nitricAcid()){
+				getFlotationTank1().filterSolvent = nitricAcid();
 			}
-			if(getIntank().getFilterReagent() != cyanideAcid()){
-				getIntank().filterReagent = cyanideAcid();
+			getFlotationTank1().filterManualSolvent = null;
+			getFlotationTank1().isFiltered = true;
+		}
+		if(hasFlotationTank2()){
+			if(getFlotationTank2().getFilterSolvent() != cyanideAcid()){
+				getFlotationTank2().filterSolvent = cyanideAcid();
 			}
-			getIntank().filterManualSolvent = null;
-			getIntank().filterManualReagent = null;
-			getIntank().isFiltered = true;
+			getFlotationTank2().filterManualSolvent = null;
+			getFlotationTank2().isFiltered = true;
+		}
+
+		if(hasServer() && !getServer().isActive()){
+			this.filter = ItemStack.EMPTY;
 		}
 	}
 
 	private void handlePurge() {
-		if(isActive()){
+		if(isActive() && hasUnloader()){
 			if(!this.inputSlot().isEmpty() && !this.getFilter().isEmpty() && !CoreUtils.isMatchingIngredient(inputSlot(), getFilter())){
-				if(this.output.canSetOrStack(purgeSlot(), inputSlot())){
-					this.output.setOrStack(PURGE_SLOT, inputSlot());
+				if(((MachineStackHandler) getUnloader().getOutput()).canSetOrStack(getUnloader().unloaderSlot(), inputSlot())){
+					((MachineStackHandler) getUnloader().getOutput()).setOrStack(OUTPUT_SLOT, inputSlot());
 					this.input.setStackInSlot(INPUT_SLOT, ItemStack.EMPTY);
 				}
 			}
@@ -529,38 +599,46 @@ public class TEExtractorController extends TileEntityInv implements IInternalSer
 			&& getDummyRecipe() != null
 			&& isAssembled()
 			&& hasFuelPower()
-			&& hasTube()
 			&& hasFluids()
 			&& handleFilter(inputSlot(), getFilter()) //server
-			&& handleServer(hasServer(), getServer(), this.currentFile); //server
+			&& handleServer(getServer(), this.currentFile); //server
 	}
 
 	private void process() {
 		if(getDummyRecipe() != null && getDummyRecipe() == getCurrentRecipe()){
 			for(int x = 0; x < getDummyRecipe().getElements().size(); x++){
 				int formulaValue = getDummyRecipe().getQuantities().get(x);
-				for(int y = 0; y < EnumElements.size(); y++){
+				
+				for(int y = 0; y < elementsList().size(); y++){
 					String recipeDust = getDummyRecipe().getElements().get(x);
-					if(recipeDust.contains(EnumElements.getDust(y))){
+					if(recipeDust.contains(elementsList().get(y).getOredict())){
 						boolean isInhibited = false;
-						for(int ix = 0; ix < inhibitedList().size(); ix++){
-							if(recipeDust.toLowerCase().matches(inhibitedList().get(ix).toLowerCase())){
+						for(int ix = 0; ix < inhibitedElements().size(); ix++){
+							if(recipeDust.toLowerCase().matches(inhibitedElements().get(ix).toLowerCase())){
 								isInhibited = true;
 							}
 						}
 						if(!isInhibited){
-							if(hasElementCabinet()){
+							if(hasElementsCabinet()){
+								int storedAmount = getElementsCabinet().MATERIAL_LIST.get(y).getAmount();
 								if(formulaValue > baseRecovery()){
 									if(recombinationChance() == 0){
-										getElementCabinet().elementList[y] += baseRecovery() + calculatedRecombination(formulaValue - baseRecovery());
-										handleConsumableDamage();
+										storedAmount += baseRecovery() + calculatedRecombination(formulaValue - baseRecovery());
+										ElementsCabinetRecipe currentMaterial = new ElementsCabinetRecipe(getElementsCabinet().MATERIAL_LIST.get(y).getSymbol(), getElementsCabinet().MATERIAL_LIST.get(y).getOredict(), getElementsCabinet().MATERIAL_LIST.get(y).getName(), storedAmount, getElementsCabinet().MATERIAL_LIST.get(y).getExtraction());
+										getElementsCabinet().MATERIAL_LIST.set(y, currentMaterial);
+
+										handleCatalystDamage();
 									}else{
-										getElementCabinet().elementList[y] += baseRecovery() + calculatedDust(formulaValue - baseRecovery());
+										storedAmount += baseRecovery() + calculatedDust(formulaValue - baseRecovery());
+										ElementsCabinetRecipe currentMaterial = new ElementsCabinetRecipe(getElementsCabinet().MATERIAL_LIST.get(y).getSymbol(), getElementsCabinet().MATERIAL_LIST.get(y).getOredict(), getElementsCabinet().MATERIAL_LIST.get(y).getName(), storedAmount, getElementsCabinet().MATERIAL_LIST.get(y).getExtraction());
+										getElementsCabinet().MATERIAL_LIST.set(y, currentMaterial);
 									}
 								}else{
-									getElementCabinet().elementList[y] += formulaValue;
+									storedAmount += formulaValue;
+									ElementsCabinetRecipe currentMaterial = new ElementsCabinetRecipe(getElementsCabinet().MATERIAL_LIST.get(y).getSymbol(), getElementsCabinet().MATERIAL_LIST.get(y).getOredict(), getElementsCabinet().MATERIAL_LIST.get(y).getName(), storedAmount, getElementsCabinet().MATERIAL_LIST.get(y).getExtraction());
+									getElementsCabinet().MATERIAL_LIST.set(y, currentMaterial);
 								}
-								getElementCabinet().markDirtyClient();
+								getElementsCabinet().markDirtyClient();
 							}
 						}
 					}
@@ -569,22 +647,30 @@ public class TEExtractorController extends TileEntityInv implements IInternalSer
 					String recipeDust = getDummyRecipe().getElements().get(x);
 					if(recipeDust.contains(materialList().get(y).getOredict())){
 						boolean isInhibited = false;
-						for(int ix = 0; ix < inhibitedList().size(); ix++){
-							if(recipeDust.toLowerCase().matches(inhibitedList().get(ix).toLowerCase())){
+						for(int ix = 0; ix < inhibitedElements().size(); ix++){
+							if(recipeDust.toLowerCase().matches(inhibitedElements().get(ix).toLowerCase())){
 								isInhibited = true;
 							}
 						}
 						if(!isInhibited){
 							if(hasMaterialCabinet()){
+								int storedAmount = getMaterialCabinet().MATERIAL_LIST.get(y).getAmount();
 								if(formulaValue > baseRecovery()){
 									if(recombinationChance() == 0){
-										getMaterialCabinet().elementList[y] += baseRecovery() + calculatedRecombination(formulaValue - baseRecovery());
-										handleConsumableDamage();
+										storedAmount += baseRecovery() + calculatedRecombination(formulaValue - baseRecovery());
+										MaterialCabinetRecipe currentMaterial = new MaterialCabinetRecipe(getMaterialCabinet().MATERIAL_LIST.get(y).getSymbol(), getMaterialCabinet().MATERIAL_LIST.get(y).getOredict(), getMaterialCabinet().MATERIAL_LIST.get(y).getName(), storedAmount, getMaterialCabinet().MATERIAL_LIST.get(y).getExtraction());
+										getMaterialCabinet().MATERIAL_LIST.set(y, currentMaterial);
+
+										handleCatalystDamage();
 									}else{
-										getMaterialCabinet().elementList[y] += baseRecovery() + calculatedDust(formulaValue - baseRecovery());
+										storedAmount += baseRecovery() + calculatedDust(formulaValue - baseRecovery());
+										MaterialCabinetRecipe currentMaterial = new MaterialCabinetRecipe(getMaterialCabinet().MATERIAL_LIST.get(y).getSymbol(), getMaterialCabinet().MATERIAL_LIST.get(y).getOredict(), getMaterialCabinet().MATERIAL_LIST.get(y).getName(), storedAmount, getMaterialCabinet().MATERIAL_LIST.get(y).getExtraction());
+										getMaterialCabinet().MATERIAL_LIST.set(y, currentMaterial);
 									}
 								}else{
-									getMaterialCabinet().elementList[y] += formulaValue;
+									storedAmount += formulaValue;
+									MaterialCabinetRecipe currentMaterial = new MaterialCabinetRecipe(getMaterialCabinet().MATERIAL_LIST.get(y).getSymbol(), getMaterialCabinet().MATERIAL_LIST.get(y).getOredict(), getMaterialCabinet().MATERIAL_LIST.get(y).getName(), storedAmount, getMaterialCabinet().MATERIAL_LIST.get(y).getExtraction());
+									getMaterialCabinet().MATERIAL_LIST.set(y, currentMaterial);
 								}
 								getMaterialCabinet().markDirtyClient();
 							}
@@ -593,46 +679,30 @@ public class TEExtractorController extends TileEntityInv implements IInternalSer
 				}
 			}
 
-			if(getIntank().hasSolventFluid() && getIntank().getSolventAmount() >= calculatedNitr() ){
-				this.output.drainOrCleanFluid(getIntank().solventTank, calculatedNitr(), true);
-			}
-			if(getIntank().hasReagentFluid() && getIntank().getReagentAmount() >= calculatedCyan() ){
-				this.output.drainOrCleanFluid(getIntank().reagentTank, calculatedCyan(), true);
-			}
-	
-			int unbreakingLevel = 0;
-			if(!getInjector().tubeSlot().isEmpty()){
-				unbreakingLevel = CoreUtils.getEnchantmentLevel(Enchantments.UNBREAKING, getInjector().tubeSlot());
-				((MachineStackHandler)getInjector().getInput()).damageUnbreakingSlot(unbreakingLevel, TEExtractorInjector.TUBE_SLOT);
-
-				if(CoreUtils.hasMending(getInjector().tubeSlot()) && this.rand.nextInt(CoreUtils.mendingFactor) == 0) {
-					((MachineStackHandler)getInjector().getInput()).repairMendingSlot(TEExtractorInjector.TUBE_SLOT);
+			if(hasFlotationTank1()) {
+				if(getFlotationTank1().hasSolventFluid() && getFlotationTank1().getSolventAmount() >= calculatedNitr() ){
+					this.output.drainOrCleanFluid(getFlotationTank1().inputTank, calculatedNitr(), true);
 				}
 			}
-			if(!getInjector().cylinderSlot().isEmpty()){
-				unbreakingLevel = CoreUtils.getEnchantmentLevel(Enchantments.UNBREAKING, getInjector().cylinderSlot());
-				((MachineStackHandler)getInjector().getInput()).damageUnbreakingSlot(unbreakingLevel, TEExtractorInjector.CYLINDER_SLOT);
-
-				if(CoreUtils.hasMending(getInjector().cylinderSlot()) && this.rand.nextInt(CoreUtils.mendingFactor) == 0) {
-					((MachineStackHandler)getInjector().getInput()).repairMendingSlot(TEExtractorInjector.CYLINDER_SLOT);
+			if(hasFlotationTank2()) {
+				if(getFlotationTank2().hasSolventFluid() && getFlotationTank2().getSolventAmount() >= calculatedCyan() ){
+					this.output.drainOrCleanFluid(getFlotationTank2().inputTank, calculatedCyan(), true);
 				}
 			}
-	
+
 			this.input.decrementSlot(INPUT_SLOT);
 	
-			updateServer(hasServer(), getServer(), this.currentFile);
+			updateServer(getServer(), this.currentFile);
 		}
 
 		this.dummyRecipe = null;
 	}
 
-	private void handleConsumableDamage() {
+	private void handleCatalystDamage() {
 		if(isValidRecipe() && hasStabilizer()){
-			for(int x = 0; x < TEExtractorStabilizer.SLOT_INPUTS.length; x++){
+			for(int x = 0; x < getStabilizer().SLOT_INPUTS.length; x++){
 				if(!getStabilizer().catSlot(x).isEmpty()){
-					
 					damageOrRepairConsumable(x);
-
 				}
 			}
 		}
@@ -655,25 +725,25 @@ public class TEExtractorController extends TileEntityInv implements IInternalSer
 	public void loadServerStatus() {
 		this.currentFile = -1;
 		if(getServer().isActive()){
-			for(int x = 0; x < TEServer.FILE_SLOTS.length; x++){
+			for(int x = 0; x < getServer().FILE_SLOTS.length; x++){
 				ItemStack fileSlot = getServer().inputSlot(x).copy();
-				if(!fileSlot.isEmpty() && fileSlot.isItemEqual(new ItemStack(ModItems.MISC_ITEMS, 1, EnumMiscItems.SERVER_FILE.ordinal()))){
+				if(getServer().isValidFile(fileSlot)){
 					if(fileSlot.hasTagCompound()){
 						NBTTagCompound tag = fileSlot.getTagCompound();
-						if(isValidFile(tag)){
-							if(tag.getInteger("Device") == deviceCode()){
-								if(tag.getInteger("Recipe") < 16){
-									if(tag.getInteger("Done") > 0){
-										if(this.intensity != 1 + (tag.getInteger("Recipe"))){
-											this.intensity = 1 + (tag.getInteger("Recipe"));
+						if(isWrittenFile(tag)){
+							if(isCorrectDevice(tag, deviceCode())){
+								if(getRecipe(tag) < 16){
+									if(getDone(tag) > 0){
+										if(this.intensity != 1 + (getRecipe(tag))){
+											this.intensity = 1 + (getRecipe(tag));
 											this.markDirtyClient();
 										}
 										if(this.currentFile != x){
 											this.currentFile = x;
 											this.markDirtyClient();
 										}
-										if(tag.hasKey("FilterStack")){
-											ItemStack temp = new ItemStack(tag.getCompoundTag("FilterStack"));
+										if(hasFilterItem(tag)){
+											ItemStack temp = getFilterItem(tag);
 											if(this.getFilter().isEmpty() || !this.getFilter().isItemEqual(temp)){
 												this.filter = temp;
 											}
@@ -685,7 +755,7 @@ public class TEExtractorController extends TileEntityInv implements IInternalSer
 						}
 					}
 				}
-				if(x == TEServer.FILE_SLOTS.length - 1){
+				if(x == getServer().FILE_SLOTS.length - 1){
 					resetFiles(getServer(), deviceCode());
 				}
 			}

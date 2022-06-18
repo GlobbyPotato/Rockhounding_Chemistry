@@ -3,7 +3,7 @@ package com.globbypotato.rockhounding_chemistry.enums.machines;
 import com.globbypotato.rockhounding_chemistry.enums.BaseEnum;
 
 public enum EnumMachinesE implements BaseEnum {
-	LASER_EMITTER,
+	WASHING_TANK,
 	EXHAUSTION_VALVE,
 	WATER_PUMP,
 	CATALYST_REGEN,
@@ -11,11 +11,14 @@ public enum EnumMachinesE implements BaseEnum {
 	SLURRY_DRUM,
 	BUFFER_TANK,
 	STIRRED_TANK_BASE,
-	STIRRED_TANK_TOP,
+	STIRRED_TANK_CONTROLLER,
 	STIRRED_TANK_OUT,
 	PRECIPITATION_CONTROLLER,
 	PRECIPITATION_CHAMBER,
-	PRECIPITATION_REACTOR;
+	PRECIPITATION_REACTOR,
+	CATALYST_REGEN_PIPES,
+	POWDER_MIXER_CONTROLLER,
+	POWDER_MIXER_TANK;
 
 	//---------CUSTOM----------------
 	public static int size(){

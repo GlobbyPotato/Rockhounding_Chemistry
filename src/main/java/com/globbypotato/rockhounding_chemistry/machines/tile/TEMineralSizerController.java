@@ -2,12 +2,17 @@ package com.globbypotato.rockhounding_chemistry.machines.tile;
 
 import java.util.ArrayList;
 
-import com.globbypotato.rockhounding_chemistry.ModItems;
-import com.globbypotato.rockhounding_chemistry.enums.EnumMiscItems;
 import com.globbypotato.rockhounding_chemistry.enums.utils.EnumServer;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.MineralSizerRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.MineralSizerRecipe;
+import com.globbypotato.rockhounding_chemistry.machines.tile.collateral.TEServer;
+import com.globbypotato.rockhounding_chemistry.machines.tile.devices.TEPowerGenerator;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEMineralSizerCabinet;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEMineralSizerCollector;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEMineralSizerTank;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEMineralSizerTransmission;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEUnloader;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.machines.tileentity.MachineStackHandler;
 import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityInv;
@@ -26,10 +31,8 @@ import net.minecraftforge.oredict.OreDictionary;
 
 public class TEMineralSizerController extends TileEntityInv implements IInternalServer{
 	public static final int SPEED_SLOT = 0;
-	public static final int PURGE_SLOT = 0;
 
 	public static int inputSlots = 1;
-	public static int outputSlots = 1;
 	public static int templateSlots = 3;
 	public static int upgradeSlots = 1;
 
@@ -42,7 +45,7 @@ public class TEMineralSizerController extends TileEntityInv implements IInternal
 	public boolean isRepeatable = false;
 
 	public TEMineralSizerController() {
-		super(inputSlots, outputSlots, templateSlots, upgradeSlots);
+		super(inputSlots, 0, templateSlots, upgradeSlots);
 		this.input =  new MachineStackHandler(inputSlots, this){
 			@Override
 			public ItemStack insertItem(int slot, ItemStack insertingStack, boolean simulate){
@@ -102,10 +105,6 @@ public class TEMineralSizerController extends TileEntityInv implements IInternal
 		return this.upgrade.getStackInSlot(SPEED_SLOT);
 	}
 
-	public ItemStack purgeSlot() {
-		return this.output.getStackInSlot(PURGE_SLOT);
-	}
-
 
 
 	//----------------------- HANDLER -----------------------
@@ -147,8 +146,13 @@ public class TEMineralSizerController extends TileEntityInv implements IInternal
 	}
 
 	@Override
+	public BlockPos poweredPosition(){
+		return this.pos.offset(EnumFacing.DOWN).offset(poweredFacing());
+	}
+
+	@Override
 	public EnumFacing poweredFacing(){
-		return EnumFacing.fromAngle(getFacing().getHorizontalAngle() + 270);
+		return getFacing().getOpposite();
 	}
 
 
@@ -222,7 +226,7 @@ public class TEMineralSizerController extends TileEntityInv implements IInternal
 
 	//----------------------- CUSTOM -----------------------
 	public int getComminution(){
-		return /*isPowered() ? getBlockPower() :*/ this.comminution;
+		return this.comminution;
 	}
 
 	public ItemStack getFilter() {
@@ -232,63 +236,14 @@ public class TEMineralSizerController extends TileEntityInv implements IInternal
 
 
 	//----------------------- STRUCTURE -----------------------
-	public BlockPos tankPosA(){
-		return this.pos.offset(getFacing(), 1);		
-	}
-
-	public TEMineralSizerTank getTankA(){
-		TileEntity te = this.world.getTileEntity(tankPosA());
-		if(this.world.getBlockState(tankPosA()) != null && te instanceof TEMineralSizerTank){
-			TEMineralSizerTank tank = (TEMineralSizerTank)te;
-			if(getFacing() == tank.getFacing() || getFacing() == tank.getFacing().getOpposite()){
-				return tank;
-			}
-		}
-		return null;
-	}
-
-	public boolean hasTankA(){
-		return getTankA() != null;
-	}
-
-	public boolean hasConsumablesA(){
-		return hasTankA() ? getTankA().hasConsumables() : false;
-	}
-
-	public BlockPos tankPosB(){
-		return this.pos.offset(getFacing(), 2);		
-	}
-
-	public TEMineralSizerTank getTankB(){
-		TileEntity te = this.world.getTileEntity(tankPosB());
-		if(this.world.getBlockState(tankPosB()) != null && te instanceof TEMineralSizerTank){
-			TEMineralSizerTank tank = (TEMineralSizerTank)te;
-			if(getFacing() == tank.getFacing() || getFacing() == tank.getFacing().getOpposite()){
-				return tank;
-			}
-		}
-		return null;
-	}
-
-	public boolean hasTankB(){
-		return getTankB() != null;
-	}
-
-	public boolean hasConsumablesB(){
-		return hasTankB() ? getTankB().hasConsumables() : false;
-	}
-
-	public boolean hasFullTank(){
-		return hasTankA() && hasTankB();
-	}
-
-	public boolean hasConsumables(){
-		return hasConsumablesA() && hasConsumablesB();
-	}
-
 //engine
+	BlockPos startPos() {
+		return this.pos.offset(EnumFacing.DOWN);
+	}
+
 	public TEPowerGenerator getEngine(){
-		TEPowerGenerator engine = TileStructure.getEngine(this.world, this.pos, getFacing(), 4, 0);
+		BlockPos enginePos = this.pos.offset(EnumFacing.DOWN).offset(isFacingAt(270));
+		TEPowerGenerator engine = TileStructure.getEngine(this.world, enginePos, isFacingAt(90));
 		return engine != null ? engine : null;
 	}
 
@@ -305,16 +260,58 @@ public class TEMineralSizerController extends TileEntityInv implements IInternal
 		getEngine().markDirtyClient();
 	}
 
-//collector
-	public BlockPos collectorPos(){
-		return this.pos.offset(getFacing(), 3);		
+//transmission
+	public TEMineralSizerTransmission getTransmission(){
+		TileEntity te = this.world.getTileEntity(startPos());
+		if(this.world.getBlockState(startPos()) != null && te instanceof TEMineralSizerTransmission){
+			TEMineralSizerTransmission engine = (TEMineralSizerTransmission)te;
+			if(engine.getFacing() == engine.getFacing()){
+				return engine;
+			}
+		}
+		return null;
 	}
 
+	public boolean hasTransmission(){
+		return getTransmission() != null;
+	}
+
+//tanks
+	public TEMineralSizerTank getTank1(){
+		TEMineralSizerTank crusher = TileStructure.getCrusher(this.world, startPos().offset(isFacingAt(90), 1), isFacingAt(90));
+		return crusher != null ? crusher : null;
+	}
+
+	public TEMineralSizerTank getTank2(){
+		TEMineralSizerTank crusher = TileStructure.getCrusher(this.world, startPos().offset(isFacingAt(90), 2), isFacingAt(90));
+		return crusher != null ? crusher : null;
+	}
+
+	public TEMineralSizerTank getTank3(){
+		TEMineralSizerTank crusher = TileStructure.getCrusher(this.world, startPos().offset(isFacingAt(90), 3), isFacingAt(90));
+		return crusher != null ? crusher : null;
+	}
+
+	public TEMineralSizerTank getTank4(){
+		TEMineralSizerTank crusher = TileStructure.getCrusher(this.world, startPos().offset(isFacingAt(90), 4), isFacingAt(90));
+		return crusher != null ? crusher : null;
+	}
+
+	public boolean hasTanks(){
+		return getTank1() != null && getTank2() != null && getTank3() != null && getTank4() != null;
+	}
+
+	public boolean hasConsumables(){
+		return hasTanks() ? getTank1().hasConsumables() && getTank2().hasConsumables()  && getTank3().hasConsumables() && getTank4().hasConsumables(): false;
+	}
+
+//collector
 	public TEMineralSizerCollector getCollector(){
-		TileEntity te = this.world.getTileEntity(collectorPos());
-		if(this.world.getBlockState(collectorPos()) != null && te instanceof TEMineralSizerCollector){
+		BlockPos collectorPos = startPos().offset(isFacingAt(90), 5);
+		TileEntity te = this.world.getTileEntity(collectorPos);
+		if(this.world.getBlockState(collectorPos) != null && te instanceof TEMineralSizerCollector){
 			TEMineralSizerCollector collector = (TEMineralSizerCollector)te;
-			if(collector.getFacing() == getFacing()){
+			if(collector.getFacing() == isFacingAt(270)){
 				return collector;
 			}
 		}
@@ -333,9 +330,37 @@ public class TEMineralSizerController extends TileEntityInv implements IInternal
 		return getCollector().getOutput().getStackInSlot(i).isEmpty();
 	}
 
+//unloader
+	public TEUnloader getUnloader(){
+		BlockPos unloaderPos = this.pos.offset(EnumFacing.DOWN).offset(isFacingAt(90), 6);
+		TEUnloader unloader = TileStructure.getUnloader(this.world, unloaderPos, isFacingAt(270));
+		return unloader != null ? unloader : null;
+	}
+
+	public boolean hasUnloader(){
+		return getUnloader() != null;
+	}
+
+//cabinet
+	public TEMineralSizerCabinet getCabinet(){
+		BlockPos cabinetPos = startPos().offset(getFacing(), 1);
+		TileEntity te = this.world.getTileEntity(cabinetPos);
+		if(this.world.getBlockState(cabinetPos) != null && te instanceof TEMineralSizerCabinet){
+			TEMineralSizerCabinet collector = (TEMineralSizerCabinet)te;
+			if(collector.getFacing() == collector.getFacing()){
+				return collector;
+			}
+		}
+		return null;
+	}
+
+	public boolean hasCabinet(){
+		return getCabinet() != null;
+	}
+
 //server
 	public TEServer getServer(){
-		TEServer server = TileStructure.getServer(this.world, this.pos, isFacingAt(90), 1, 0);
+		TEServer server = TileStructure.getServer(this.world, startPos().offset(isFacingAt(90), 7), isFacingAt(270));
 		return server != null ? server : null;
 	}
 
@@ -343,14 +368,18 @@ public class TEMineralSizerController extends TileEntityInv implements IInternal
 		return getServer() != null;
 	}
 
+	private boolean isAssembled() {
+		return hasUnloader() && hasCabinet() && hasTransmission() && hasCollector();
+	}
+
+
 
 	//----------------------- PROCESS -----------------------
 	@Override
 	public void update(){
 		if(!this.world.isRemote){
 			doPreset();
-
-			initializeServer(isRepeatable, hasServer(), getServer(), deviceCode());
+			initializeServer(isRepeatable, getServer(), deviceCode(), this.recipeStep, 16);
 
 			handlePurge();
 
@@ -386,8 +415,8 @@ public class TEMineralSizerController extends TileEntityInv implements IInternal
 	private void handlePurge() {
 		if(isActive()){
 			if(!this.inputSlot().isEmpty() && !this.getFilter().isEmpty() && !CoreUtils.isMatchingIngredient(inputSlot(), getFilter())){
-				if(this.output.canSetOrStack(purgeSlot(), inputSlot())){
-					this.output.setOrStack(PURGE_SLOT, inputSlot());
+				if(((MachineStackHandler)getUnloader().getOutput()).canSetOrStack(getUnloader().unloaderSlot(), inputSlot())){
+					((MachineStackHandler)getUnloader().getOutput()).setOrStack(OUTPUT_SLOT, inputSlot());
 					this.input.setStackInSlot(INPUT_SLOT, ItemStack.EMPTY);
 				}
 			}
@@ -409,39 +438,55 @@ public class TEMineralSizerController extends TileEntityInv implements IInternal
 
 	public void activateTank() {
 		if(this.getCooktime() > 0){
-			if(hasTankA() && !getTankA().isActive()){
-				getTankA().activation = true;
-				getTankA().markDirtyClient();
-			}
-			if(hasTankB() && !getTankB().isActive()){
-				getTankB().activation = true;
-				getTankA().markDirtyClient();
+			if(hasTanks()) {
+				if(!getTank1().isActive()) {
+					getTank1().activation = true;
+					getTank1().markDirtyClient();
+				}
+				if(!getTank2().isActive()) {
+					getTank2().activation = true;
+					getTank2().markDirtyClient();
+				}
+				if(!getTank3().isActive()) {
+					getTank3().activation = true;
+					getTank3().markDirtyClient();
+				}
+				if(!getTank4().isActive()) {
+					getTank4().activation = true;
+					getTank4().markDirtyClient();
+				}
 			}
 		}
 	}
 
 	public void disableTank() {
-		if(hasTankA()){
-			if(getTankA().isActive()){
-				getTankA().activation = false;
-				getTankA().markDirtyClient();
+		if(hasTanks()) {
+			if(getTank1().isActive()) {
+				getTank1().activation = false;
+				getTank1().markDirtyClient();
 			}
-		}
-		if(hasTankB()){
-			if(getTankB().isActive()){
-				getTankB().activation = false;
-				getTankB().markDirtyClient();
+			if(getTank2().isActive()) {
+				getTank2().activation = false;
+				getTank2().markDirtyClient();
+			}
+			if(getTank3().isActive()) {
+				getTank3().activation = false;
+				getTank3().markDirtyClient();
+			}
+			if(getTank4().isActive()) {
+				getTank4().activation = false;
+				getTank4().markDirtyClient();
 			}
 		}
 	}
 
 	private boolean canProcess() {
 		return expectResult()
-			&& hasConsumables()
 			&& hasFuelPower()
+			&& isAssembled()
 			&& isOutputEmpty()
 			&& handleFilter(inputSlot(), getFilter()) //server
-			&& handleServer(hasServer(), getServer(), this.currentFile); //server
+			&& handleServer(getServer(), this.currentFile); //server
 	}
 
 	public void getResult(){
@@ -476,31 +521,59 @@ public class TEMineralSizerController extends TileEntityInv implements IInternal
 	}
 
 	public void process() {
-		if(hasResult()){
-			((ItemStackHandler)getCollector().getOutput()).setStackInSlot(TileEntityInv.OUTPUT_SLOT, pickLevelOutput().copy());
-			if(recipeOutput().size() > 1){
-				((ItemStackHandler)getCollector().getOutput()).getStackInSlot(TileEntityInv.OUTPUT_SLOT).setCount(sizedQuantity());
+		if(hasConsumables()) {
+			if(hasResult()){
+				((ItemStackHandler)getCollector().getOutput()).setStackInSlot(OUTPUT_SLOT, pickLevelOutput().copy());
+				if(recipeOutput().size() > 1){
+					((ItemStackHandler)getCollector().getOutput()).getStackInSlot(OUTPUT_SLOT).setCount(sizedQuantity());
+				}
+		
+				if(this.resultList.size() > 1){
+					if(this.world.rand.nextInt(100) < 25){
+						((ItemStackHandler)getCollector().getOutput()).setStackInSlot(TEMineralSizerCollector.GOOD_SLOT, pickLevelOutput().copy());
+						((ItemStackHandler)getCollector().getOutput()).getStackInSlot(TEMineralSizerCollector.GOOD_SLOT).setCount(this.rand.nextInt(1 + (sizedQuantity() / 2)));
+		
+						if(this.world.rand.nextInt(100) < 5){
+							((ItemStackHandler)getCollector().getOutput()).setStackInSlot(TEMineralSizerCollector.WASTE_SLOT, pickRecipeOutput().copy());
+							((ItemStackHandler)getCollector().getOutput()).getStackInSlot(TEMineralSizerCollector.WASTE_SLOT).setCount(1);
+						}
+					}
+				}
+		
+				handleConsumableDamage();
+				this.input.decrementSlot(INPUT_SLOT);
+				
+				updateServer(getServer(), this.currentFile);
 			}
-	
-			if(this.resultList.size() > 1){
-				if(this.world.rand.nextInt(100) < 25){
-					((ItemStackHandler)getCollector().getOutput()).setStackInSlot(TEMineralSizerCollector.GOOD_SLOT, pickLevelOutput().copy());
-					((ItemStackHandler)getCollector().getOutput()).getStackInSlot(TEMineralSizerCollector.GOOD_SLOT).setCount(this.rand.nextInt(1 + (sizedQuantity() / 2)));
-	
-					if(this.world.rand.nextInt(100) < 5){
-						((ItemStackHandler)getCollector().getOutput()).setStackInSlot(TEMineralSizerCollector.WASTE_SLOT, pickRecipeOutput().copy());
-						((ItemStackHandler)getCollector().getOutput()).getStackInSlot(TEMineralSizerCollector.WASTE_SLOT).setCount(1);
+		}
+		pushGears();
+	}
+
+	public void pushGears() {
+		if(hasCabinet() && hasTanks()) {
+			deliverGearsToTank(getTank1());
+			deliverGearsToTank(getTank2());
+			deliverGearsToTank(getTank3());
+			deliverGearsToTank(getTank4());
+		}
+	}
+
+	public void deliverGearsToTank(TEMineralSizerTank tank) {
+		for(int x = 0; x <=3; x++) {
+			if(tank.gearSlot(x).isEmpty()) {
+				for(int y = 0; y < getCabinet().inputSlots; y++) {
+					if(!getCabinet().gearSlot(y).isEmpty()) {
+						((ItemStackHandler)tank.getInput()).setStackInSlot(x, getCabinet().gearSlot(y).copy());
+						((MachineStackHandler) getCabinet().getInput()).decrementSlot(y);
+						tank.markDirtyClient();
+						break;
 					}
 				}
 			}
-	
-			handleConsumableDamage();
-			this.input.decrementSlot(INPUT_SLOT);
-			
-			updateServer(hasServer(), getServer(), this.currentFile);
 		}
-
 	}
+
+
 
 	private ItemStack pickLevelOutput() {
 		return this.resultList.get(this.rand.nextInt(this.resultList.size()));
@@ -516,27 +589,27 @@ public class TEMineralSizerController extends TileEntityInv implements IInternal
 
 	private void handleConsumableDamage() {
 		if(isValidRecipe()){
-			int damage = getComminution() / 2;
-			for(int gearCount = 0; gearCount <= damage; gearCount++){
-				if(gearCount < 4){
-					if(!getTankA().gearSlot(gearCount).isEmpty()){
-						int unbreakingLevel = CoreUtils.getEnchantmentLevel(Enchantments.UNBREAKING, getTankA().gearSlot(gearCount));
-						((MachineStackHandler)getTankA().getInput()).damageUnbreakingSlot(unbreakingLevel, gearCount);
-
-						if(CoreUtils.hasMending(getTankA().gearSlot(gearCount)) && this.rand.nextInt(CoreUtils.mendingFactor) == 0) {
-							((MachineStackHandler)getTankA().getInput()).repairMendingSlot(gearCount);
-						}
-					}
-				}else{
-					if(!getTankB().gearSlot(gearCount - 4).isEmpty()){
-						int unbreakingLevel = CoreUtils.getEnchantmentLevel(Enchantments.UNBREAKING, getTankB().gearSlot(gearCount - 4));
-						((MachineStackHandler)getTankB().getInput()).damageUnbreakingSlot(unbreakingLevel, gearCount - 4);
-						
-						if(CoreUtils.hasMending(getTankB().gearSlot(gearCount - 4)) && this.rand.nextInt(CoreUtils.mendingFactor) == 0) {
-							((MachineStackHandler)getTankB().getInput()).repairMendingSlot(gearCount - 4);
-						}
-					}
+			for(int gearCount = 0; gearCount <= getComminution(); gearCount++){
+				if(gearCount <= 3){
+					damageGears(gearCount, getTank1());
+				}else if(gearCount >= 4 && gearCount <= 7){
+					damageGears(gearCount- 4, getTank2());
+				}else if(gearCount >= 8 && gearCount <= 11){
+					damageGears(gearCount- 8, getTank3());
+				}else if(gearCount >= 12 && gearCount <= 15){
+					damageGears(gearCount- 12, getTank4());
 				}
+			}
+		}
+	}
+
+	private void damageGears(int gearCount, TEMineralSizerTank tank) {
+		if(!tank.gearSlot(gearCount).isEmpty()){
+			int unbreakingLevel = CoreUtils.getEnchantmentLevel(Enchantments.UNBREAKING, tank.gearSlot(gearCount));
+			((MachineStackHandler)tank.getInput()).damageUnbreakingSlot(unbreakingLevel, gearCount);
+	
+			if(CoreUtils.hasMending(tank.gearSlot(gearCount)) && this.rand.nextInt(CoreUtils.mendingFactor) == 0) {
+				((MachineStackHandler)tank.getInput()).repairMendingSlot(gearCount);
 			}
 		}
 	}
@@ -549,25 +622,25 @@ public class TEMineralSizerController extends TileEntityInv implements IInternal
 	public void loadServerStatus() {
 		this.currentFile = -1;
 		if(getServer().isActive()){
-			for(int x = 0; x < TEServer.FILE_SLOTS.length; x++){
+			for(int x = 0; x < getServer().FILE_SLOTS.length; x++){
 				ItemStack fileSlot = getServer().inputSlot(x).copy();
-				if(!fileSlot.isEmpty() && fileSlot.isItemEqual(new ItemStack(ModItems.MISC_ITEMS, 1, EnumMiscItems.SERVER_FILE.ordinal()))){
+				if(getServer().isValidFile(fileSlot)){
 					if(fileSlot.hasTagCompound()){
 						NBTTagCompound tag = fileSlot.getTagCompound();
-						if(isValidFile(tag)){
-							if(tag.getInteger("Device") == deviceCode()){
-								if(tag.getInteger("Recipe") < 16){
-									if(tag.getInteger("Done") > 0){
-										if(this.comminution != tag.getInteger("Recipe")){
-											this.comminution = tag.getInteger("Recipe");
+						if(isWrittenFile(tag)){
+							if(isCorrectDevice(tag, deviceCode())){
+								if(getRecipe(tag) < 16){
+									if(getDone(tag) > 0){
+										if(this.comminution != getRecipe(tag)){
+											this.comminution = getRecipe(tag);
 											this.markDirtyClient();
 										}
 										if(this.currentFile != x){
 											this.currentFile = x;
 											this.markDirtyClient();
 										}
-										if(tag.hasKey("FilterStack")){
-											ItemStack temp = new ItemStack(tag.getCompoundTag("FilterStack"));
+										if(hasFilterItem(tag)){
+											ItemStack temp = getFilterItem(tag);
 											if(this.getFilter().isEmpty() || !this.getFilter().isItemEqual(temp)){
 												this.filter = temp;
 											}
@@ -579,7 +652,7 @@ public class TEMineralSizerController extends TileEntityInv implements IInternal
 						}
 					}
 				}
-				if(x == TEServer.FILE_SLOTS.length - 1){
+				if(x == getServer().FILE_SLOTS.length - 1){
 					resetFiles(getServer(), deviceCode());
 				}
 			}

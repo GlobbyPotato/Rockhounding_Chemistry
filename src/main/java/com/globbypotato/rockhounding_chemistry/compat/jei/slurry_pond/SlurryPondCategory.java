@@ -1,7 +1,7 @@
 package com.globbypotato.rockhounding_chemistry.compat.jei.slurry_pond;
 
 import com.globbypotato.rockhounding_chemistry.compat.jei.RHRecipeCategory;
-import com.globbypotato.rockhounding_chemistry.machines.gui.UISlurryPond;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UISlurryPondController;
 
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IGuiFluidStackGroup;
@@ -13,7 +13,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class SlurryPondCategory extends RHRecipeCategory {
 
-	private final static ResourceLocation guiTexture = UISlurryPond.TEXTURE_JEI;
+	private final static ResourceLocation guiTexture = UISlurryPondController.TEXTURE_JEI;
 	private String uid;
 
 	public SlurryPondCategory(IGuiHelper guiHelper, String uid) {

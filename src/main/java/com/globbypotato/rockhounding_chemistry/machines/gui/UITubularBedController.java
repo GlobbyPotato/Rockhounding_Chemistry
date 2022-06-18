@@ -2,9 +2,11 @@ package com.globbypotato.rockhounding_chemistry.machines.gui;
 
 import java.util.List;
 
+import com.globbypotato.rockhounding_chemistry.enums.machines.EnumMachinesA;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.COTubularBedController;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TETubularBedController;
+import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.machines.gui.GuiUtils;
 import com.google.common.base.Strings;
@@ -47,14 +49,14 @@ public class UITubularBedController extends GuiBase {
 	   }
 
 	   //prev
-	   if(GuiUtils.hoveringArea(25, 23, 18, 18, mouseX, mouseY, x, y)){
-		   tooltip = GuiUtils.drawLabel("Previous Recipe", mouseX, mouseY);
+	   if(GuiUtils.hoveringArea(7, 23, 18, 18, mouseX, mouseY, x, y)){
+		   tooltip = GuiUtils.drawLabel(this.prev_recipe_label, mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
 
 	   //prev
-	   if(GuiUtils.hoveringArea(43, 23, 18, 18, mouseX, mouseY, x, y)){
-		   tooltip = GuiUtils.drawLabel("Next Recipe", mouseX, mouseY);
+	   if(GuiUtils.hoveringArea(25, 23, 18, 18, mouseX, mouseY, x, y)){
+		   tooltip = GuiUtils.drawLabel(this.next_recipe_label, mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
 	   
@@ -83,15 +85,15 @@ public class UITubularBedController extends GuiBase {
 	@Override
 	public void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-		String recipeLabel = "No recipe selected";
+		String recipeLabel = this.no_recipe_label;
 		if(this.tile.isValidPreset()){
-			if(Strings.isNullOrEmpty(this.tile.getRecipeList(this.tile.getRecipeIndex()).getRecipeName())){
-				recipeLabel = this.tile.getRecipeList(this.tile.getRecipeIndex()).getOutput().getLocalizedName();
+			if(Strings.isNullOrEmpty(this.tile.getRecipeList(this.tile.getSelectedRecipe()).getRecipeName())){
+				recipeLabel = this.tile.getRecipeList(this.tile.getSelectedRecipe()).getOutput().getLocalizedName();
 			}else{
-				recipeLabel = this.tile.getRecipeList(this.tile.getRecipeIndex()).getRecipeName();
+				recipeLabel = this.tile.getRecipeList(this.tile.getSelectedRecipe()).getRecipeName();
 			}
 		}
-		this.fontRenderer.drawString(recipeLabel, 62, 25, 4210752);
+		this.fontRenderer.drawString(recipeLabel, 44, 25, 4210752);
 	}
 
     @Override

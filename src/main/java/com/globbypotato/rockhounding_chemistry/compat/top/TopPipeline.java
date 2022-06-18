@@ -3,9 +3,9 @@ package com.globbypotato.rockhounding_chemistry.compat.top;
 import javax.annotation.Nullable;
 
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEGaslinePump;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEPipelinePump;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEPipelineValve;
+import com.globbypotato.rockhounding_chemistry.machines.tile.pipelines.TEGaslinePump;
+import com.globbypotato.rockhounding_chemistry.machines.tile.pipelines.TEPipelinePump;
+import com.globbypotato.rockhounding_chemistry.machines.tile.pipelines.TEPipelineValve;
 import com.google.common.base.Function;
 
 import mcjty.theoneprobe.api.IProbeHitData;

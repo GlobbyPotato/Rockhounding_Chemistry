@@ -7,7 +7,6 @@ import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.GasP
 
 import crafttweaker.CraftTweakerAPI;
 import crafttweaker.IAction;
-import crafttweaker.api.item.IItemStack;
 import crafttweaker.api.liquid.ILiquidStack;
 import net.minecraftforge.fluids.FluidStack;
 import stanhebben.zenscript.annotations.ZenClass;
@@ -19,9 +18,17 @@ public class CT_GasPurifier extends CTSupport{
 	public static ArrayList<GasPurifierRecipe> recipeList = GasPurifierRecipes.gas_purifier_recipes;
 
     @ZenMethod
-    public static void add(ILiquidStack input, ILiquidStack output, IItemStack slag1, IItemStack slag2) {
+    public static void add(ILiquidStack input, ILiquidStack output, String[] slag, int[] quantity) {
         if(input == null || output == null || !toFluid(input).getFluid().isGaseous() || !toFluid(output).getFluid().isGaseous()) {error(name); return;}
-        CraftTweakerAPI.apply(new Add(new GasPurifierRecipe(toFluid(input), toFluid(output), toStack(slag1), toStack(slag2))));
+       
+        ArrayList<String> slags = new ArrayList<String>();
+        ArrayList<Integer> quantities = new ArrayList<Integer>();
+        for(int x = 0; x < slag.length; x++){
+        	slags.add(slag[x]);
+        	quantities.add(quantity[x]);
+        }
+
+        CraftTweakerAPI.apply(new Add(new GasPurifierRecipe(toFluid(input), toFluid(output), slags, quantities)));
     }
 			private static class Add implements IAction {
 		    	private final GasPurifierRecipe recipe;

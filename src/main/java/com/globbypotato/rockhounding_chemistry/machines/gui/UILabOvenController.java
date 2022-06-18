@@ -2,9 +2,11 @@ package com.globbypotato.rockhounding_chemistry.machines.gui;
 
 import java.util.List;
 
+import com.globbypotato.rockhounding_chemistry.enums.machines.EnumMachinesA;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.COLabOvenController;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TELabOvenController;
+import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.machines.gui.GuiUtils;
 import com.google.common.base.Strings;
@@ -46,30 +48,18 @@ public class UILabOvenController extends GuiBase {
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
        
-	   //preset
-	   if(GuiUtils.hoveringArea(7, 20, 18, 18, mouseX, mouseY, x, y)){
-		   tooltip = GuiUtils.drawLabel("Server", mouseX, mouseY);
-		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
-	   }
-       
 	   //prev
-	   if(GuiUtils.hoveringArea(25, 20, 18, 18, mouseX, mouseY, x, y)){
-		   tooltip = GuiUtils.drawLabel("Previous Recipe", mouseX, mouseY);
+	   if(GuiUtils.hoveringArea(7, 20, 18, 18, mouseX, mouseY, x, y)){
+		   tooltip = GuiUtils.drawLabel(this.prev_recipe_label, mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
 
 	   //next
-	   if(GuiUtils.hoveringArea(43, 20, 18, 18, mouseX, mouseY, x, y)){
-		   tooltip = GuiUtils.drawLabel("Next Recipe", mouseX, mouseY);
+	   if(GuiUtils.hoveringArea(25, 20, 18, 18, mouseX, mouseY, x, y)){
+		   tooltip = GuiUtils.drawLabel(this.next_recipe_label, mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
 	   
-	   //recycle
-	   if(GuiUtils.hoveringArea(28, 59, 12, 22, mouseX, mouseY, x, y)){
-		   tooltip = GuiUtils.drawLabel("Ingredients recycling", mouseX, mouseY);
-		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
-	   }
-
 	   //monitor
 	   if(GuiUtils.hoveringArea(124, 92, 14, 14, mouseX, mouseY, x, y)){
 		   String rf = TextFormatting.GRAY + "Energy: " + TextFormatting.RED + this.tile.powerConsume() + " RF/t"; 
@@ -93,15 +83,15 @@ public class UILabOvenController extends GuiBase {
 	@Override
 	public void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-		String recipeLabel = "No recipe selected";
+		String recipeLabel = this.no_recipe_label;
 		if(this.tile.isValidPreset()){
-			if(Strings.isNullOrEmpty(this.tile.getRecipeList(this.tile.getRecipeIndex()).getRecipeName())){
-				recipeLabel = this.tile.getRecipeList(this.tile.getRecipeIndex()).getSolution().getLocalizedName();
+			if(Strings.isNullOrEmpty(this.tile.getRecipeList(this.tile.getSelectedRecipe()).getRecipeName())){
+				recipeLabel = this.tile.getRecipeList(this.tile.getSelectedRecipe()).getSolution().getLocalizedName();
 			}else{
-				recipeLabel = this.tile.getRecipeList(this.tile.getRecipeIndex()).getRecipeName();
+				recipeLabel = this.tile.getRecipeList(this.tile.getSelectedRecipe()).getRecipeName();
 			}
 		}
-		this.fontRenderer.drawString(recipeLabel, 62, 25, 4210752);
+		this.fontRenderer.drawString(recipeLabel, 44, 25, 4210752);
 	}
 
     @Override
@@ -125,11 +115,6 @@ public class UILabOvenController extends GuiBase {
         if (this.tile.getCooktime() > 0){
             int k = GuiUtils.getScaledValue(22, this.tile.getCooktime(), this.tile.getCooktimeMax());
             this.drawTexturedModalRect(i + 121, j + 58, 176, 42, 22, k);
-        }
-
-		//server icon
-        if(!this.tile.isServedClosed(this.tile.hasServer(), this.tile.getServer())){
-            this.drawTexturedModalRect(i + 9, j + 22, 176, 25, 14, 14);
         }
     }
 

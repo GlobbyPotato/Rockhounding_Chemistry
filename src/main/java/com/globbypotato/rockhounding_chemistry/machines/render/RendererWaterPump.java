@@ -1,6 +1,6 @@
 package com.globbypotato.rockhounding_chemistry.machines.render;
 
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEWaterPump;
+import com.globbypotato.rockhounding_chemistry.machines.tile.devices.TEWaterPump;
 
 import net.darkhax.bookshelf.util.RenderUtils;
 import net.minecraft.client.renderer.GlStateManager;

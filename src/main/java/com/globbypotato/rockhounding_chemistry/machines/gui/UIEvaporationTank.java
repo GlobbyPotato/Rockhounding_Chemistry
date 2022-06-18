@@ -1,7 +1,7 @@
 package com.globbypotato.rockhounding_chemistry.machines.gui;
 
 import com.globbypotato.rockhounding_chemistry.machines.container.COEvaporationTank;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEEvaporationTank;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEEvaporationTank;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 
 import net.minecraft.entity.player.InventoryPlayer;

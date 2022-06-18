@@ -2,9 +2,11 @@ package com.globbypotato.rockhounding_chemistry.machines.gui;
 
 import java.util.List;
 
+import com.globbypotato.rockhounding_chemistry.enums.machines.EnumMachinesA;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.COReformerController;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TEReformerController;
+import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.machines.gui.GuiUtils;
 import com.google.common.base.Strings;
@@ -47,19 +49,19 @@ public class UIReformerController extends GuiBase {
 	   }
 
 	   //prev
-	   if(GuiUtils.hoveringArea(25, 23, 18, 18, mouseX, mouseY, x, y)){
-		   tooltip = GuiUtils.drawLabel("Previous Recipe", mouseX, mouseY);
+	   if(GuiUtils.hoveringArea(7, 23, 18, 18, mouseX, mouseY, x, y)){
+		   tooltip = GuiUtils.drawLabel(this.prev_recipe_label, mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
 
 	   //prev
-	   if(GuiUtils.hoveringArea(43, 23, 18, 18, mouseX, mouseY, x, y)){
-		   tooltip = GuiUtils.drawLabel("Next Recipe", mouseX, mouseY);
+	   if(GuiUtils.hoveringArea(25, 23, 18, 18, mouseX, mouseY, x, y)){
+		   tooltip = GuiUtils.drawLabel(this.next_recipe_label, mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
 
 	   //monitor
-	   if(GuiUtils.hoveringArea(144, 44, 14, 14, mouseX, mouseY, x, y)){
+	   if(GuiUtils.hoveringArea(148, 44, 14, 14, mouseX, mouseY, x, y)){
 		   String sf = TextFormatting.GRAY + "Tier: " + TextFormatting.AQUA + this.tile.speedFactor() + "x"; 
 		   String rf = TextFormatting.GRAY + "Energy: " + TextFormatting.RED + this.tile.powerConsume() + " RF/t";
 		   String inTier = TextFormatting.GRAY + "System Catalyst Tier: " + TextFormatting.GOLD + this.tile.inputTier() + "x";
@@ -69,11 +71,21 @@ public class UIReformerController extends GuiBase {
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
 
+		//direction
+	    if(GuiUtils.hoveringArea(80, 74, 16, 16, mouseX, mouseY, x, y)){
+	    	if(this.tile.getDirection()) {
+	    		tooltip = GuiUtils.drawLabel("Right to Left setup", mouseX, mouseY);
+	    	}else {
+	    		tooltip = GuiUtils.drawLabel("Left to Right setup", mouseX, mouseY);
+	    	}
+			drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
+		}
+
 	   //gas 1 consume
 	   if(GuiUtils.hoveringArea(41, 71, 12, 32, mouseX, mouseY, x, y)){
-		   String gasusage = TextFormatting.GRAY + "Left Channel: " + TextFormatting.GREEN + this.tile.calculatedDrainA() + " mB";
+		   String gasusage = TextFormatting.GRAY + "Channel 1: " + TextFormatting.GREEN + this.tile.calculatedDrainA() + " mB";
 		   if(this.tile.isOutputGaseous()){
-			   gasusage = TextFormatting.GRAY + "Left Channel: " + TextFormatting.GREEN + GuiUtils.translateMC(this.tile.calculatedDrainA()) + " cu";
+			   gasusage = TextFormatting.GRAY + "Channel 1: " + TextFormatting.GREEN + GuiUtils.translateMC(this.tile.calculatedDrainA()) + " cu";
 		   }
 		   tooltip = GuiUtils.drawLabel(gasusage, mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
@@ -81,9 +93,9 @@ public class UIReformerController extends GuiBase {
 
 	   //gas 2 consume
 	   if(GuiUtils.hoveringArea(123, 71, 12, 32, mouseX, mouseY, x, y)){
-		   String gasusage = TextFormatting.GRAY + "Right Channel: " + TextFormatting.GREEN + this.tile.calculatedDrainB() + " mB";
+		   String gasusage = TextFormatting.GRAY + "Channel 2: " + TextFormatting.GREEN + this.tile.calculatedDrainB() + " mB";
 		   if(this.tile.isOutputGaseous()){
-			   gasusage = TextFormatting.GRAY + "Right Channel: " + TextFormatting.GREEN + GuiUtils.translateMC(this.tile.calculatedDrainB()) + " cu";
+			   gasusage = TextFormatting.GRAY + "Channel 2: " + TextFormatting.GREEN + GuiUtils.translateMC(this.tile.calculatedDrainB()) + " cu";
 		   }
 		   tooltip = GuiUtils.drawLabel(gasusage, mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
@@ -110,7 +122,7 @@ public class UIReformerController extends GuiBase {
 	   }
 	   
 	   //speed upgrade
-	   if(GuiUtils.hoveringArea(79, 73, 18, 18, mouseX, mouseY, x, y)){
+	   if(GuiUtils.hoveringArea(147, 44, 16, 16, mouseX, mouseY, x, y)){
 		   if(this.tile.speedSlot().isEmpty()){
 			   tooltip = GuiUtils.drawLabel(this.speed_label, mouseX, mouseY);
 			   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
@@ -122,15 +134,15 @@ public class UIReformerController extends GuiBase {
 	 @Override
 	public void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-		String recipeLabel = "No recipe selected";
+		String recipeLabel = this.no_recipe_label;
 		if(this.tile.isValidPreset()){
-			if(Strings.isNullOrEmpty(this.tile.getRecipeList(this.tile.getRecipeIndex()).getRecipeName())){
-				recipeLabel = this.tile.getRecipeList(this.tile.getRecipeIndex()).getOutput().getLocalizedName();
+			if(Strings.isNullOrEmpty(this.tile.getRecipeList(this.tile.getSelectedRecipe()).getRecipeName())){
+				recipeLabel = this.tile.getRecipeList(this.tile.getSelectedRecipe()).getOutput().getLocalizedName();
 			}else{
-				recipeLabel = this.tile.getRecipeList(this.tile.getRecipeIndex()).getRecipeName();
+				recipeLabel = this.tile.getRecipeList(this.tile.getSelectedRecipe()).getRecipeName();
 			}
 		}
-		this.fontRenderer.drawString(recipeLabel, 62, 28, 4210752);
+		this.fontRenderer.drawString(recipeLabel, 44, 28, 4210752);
 	}
 
     @Override
@@ -159,9 +171,15 @@ public class UIReformerController extends GuiBase {
             this.drawTexturedModalRect(i + 65, j + 46, 176, 55, 46, 23);
         }
 
- 	   if(!this.tile.isOutputGaseous()){
-           this.drawTexturedModalRect(i + 16, j + 65, 177, 41, 12, 12);
- 	   }
+		//direction
+        if(this.tile.getDirection()){
+       		this.drawTexturedModalRect(i + 82, j + 76, 204, 11, 12, 12);
+        }
+
+        //type
+        if(!this.tile.isOutputGaseous()){
+        	this.drawTexturedModalRect(i + 16, j + 65, 177, 41, 12, 12);
+ 	   	}
 
     }
 }

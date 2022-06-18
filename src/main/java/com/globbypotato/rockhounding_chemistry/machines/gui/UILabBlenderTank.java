@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.COLabBlenderTank;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TELabBlenderTank;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TELabBlenderTank;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.machines.gui.GuiUtils;
 

@@ -1,0 +1,28 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:machines",
+	"pattern": [
+		"CGC",
+		"GcG",
+		"SGS"
+	],
+	"key": {
+		"S":{
+				"item": "#SCAFFOLD"
+			},
+		"c":{
+				"item": "#BASE_CHIP"
+			},
+		"C":{
+				"item": "#IRON_CASING"
+			},
+		"G":{
+				"item": "#GLASS"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:machines_f",
+				"data": 6,
+				"count": 2
+			}
+}

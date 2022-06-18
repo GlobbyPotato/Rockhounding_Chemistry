@@ -3,7 +3,7 @@ package com.globbypotato.rockhounding_chemistry.compat.jei.metal_alloyer;
 import com.globbypotato.rockhounding_chemistry.ModItems;
 import com.globbypotato.rockhounding_chemistry.compat.jei.RHRecipeCategory;
 import com.globbypotato.rockhounding_chemistry.enums.utils.EnumSpeeds;
-import com.globbypotato.rockhounding_chemistry.machines.gui.UIMetalAlloyer;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UIMetalAlloyerController;
 
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IGuiItemStackGroup;
@@ -18,7 +18,7 @@ import net.minecraft.util.text.TextFormatting;
 
 public class MetalAlloyerCategory extends RHRecipeCategory {
 
-	private final static ResourceLocation guiTexture = UIMetalAlloyer.TEXTURE_JEI;
+	private final static ResourceLocation guiTexture = UIMetalAlloyerController.TEXTURE_JEI;
 	private String uid;
 
 	public MetalAlloyerCategory(IGuiHelper guiHelper, String uid) {

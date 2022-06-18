@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.COFlotationTank;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEFlotationTank;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEFlotationTank;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.machines.gui.GuiUtils;
 
@@ -43,17 +43,17 @@ public class UIFlotationTank extends GuiBase {
 
 		//filter
 		String filterString = "";
-	    if(GuiUtils.hoveringArea(42, 48, 18, 18, mouseX, mouseY, x, y)){
+	    if(GuiUtils.hoveringArea(80, 22, 16, 16, mouseX, mouseY, x, y)){
 			if(!this.tile.isFiltered() && !this.tile.hasManualSolvent()){
-				filterString = TextFormatting.BLUE + "Fluid Filter: " + TextFormatting.WHITE + "use a filled ampoule to set";			
+				filterString = TextFormatting.BLUE + this.filter_label + ": " + TextFormatting.WHITE + this.ampoule_label;			
 			}
 			if(this.tile.isFiltered()){
 				if(this.tile.hasFilterSolvent()){
-					filterString = TextFormatting.GRAY + "Filter: " + TextFormatting.AQUA + this.tile.getFilterSolvent().getLocalizedName();
+					filterString = TextFormatting.GRAY + this.filter_label + ": " + TextFormatting.AQUA + this.tile.getFilterSolvent().getLocalizedName();
 				}
 			}else{
 				if(this.tile.hasManualSolvent()){
-					filterString = TextFormatting.GRAY + "Filter: " + TextFormatting.AQUA + this.tile.getManualSolvent().getLocalizedName();
+					filterString = TextFormatting.GRAY + this.filter_label + ": " + TextFormatting.AQUA + this.tile.getManualSolvent().getLocalizedName();
 				}
 			}
 			List<String> tooltip = GuiUtils.drawLabel(filterString, mouseX, mouseY);
@@ -83,11 +83,11 @@ public class UIFlotationTank extends GuiBase {
 
 		if(this.tile.isFiltered()){
 			if(this.tile.hasFilterSolvent()){
-				GuiUtils.renderFluidBar(this.tile.getFilterSolvent(), 1000, 1000, i + 43, j + 49, 16, 16);
+				GuiUtils.renderFluidBar(this.tile.getFilterSolvent(), 1000, 1000, i + 80, j + 22, 16, 16);
 			}
 		}else{
 			if(this.tile.hasManualSolvent()){
-				GuiUtils.renderFluidBar(this.tile.getManualSolvent(), 1000, 1000, i + 43, j + 49, 16, 16);
+				GuiUtils.renderFluidBar(this.tile.getManualSolvent(), 1000, 1000, i + 80, j + 22, 16, 16);
 			}
         }
     }

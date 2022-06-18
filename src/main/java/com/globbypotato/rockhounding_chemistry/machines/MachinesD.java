@@ -13,24 +13,27 @@ import com.globbypotato.rockhounding_chemistry.fluids.ModFluids;
 import com.globbypotato.rockhounding_chemistry.handlers.GuiHandler;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.io.MachineIO;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEContainmentTank;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEDepositionChamberBase;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEDepositionChamberTop;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEFlotationTank;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEFluidpedia;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEGasHolderBase;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEGasHolderTop;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEMaterialCabinetBase;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEMaterialCabinetTop;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEMetalAlloyer;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEMetalAlloyerTank;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEOrbiter;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEPullingCrucibleBase;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEPullingCrucibleTop;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TETransposer;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEWasteDumper;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.MaterialCabinetRecipe;
+import com.globbypotato.rockhounding_chemistry.machines.tile.TEDepositionController;
+import com.globbypotato.rockhounding_chemistry.machines.tile.TEMetalAlloyerController;
+import com.globbypotato.rockhounding_chemistry.machines.tile.TEPullingCrucibleController;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TileTank;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TileVessel;
+import com.globbypotato.rockhounding_chemistry.machines.tile.collateral.TEElementsCabinetTop;
+import com.globbypotato.rockhounding_chemistry.machines.tile.collateral.TEFluidpedia;
+import com.globbypotato.rockhounding_chemistry.machines.tile.collateral.TEMaterialCabinetBase;
+import com.globbypotato.rockhounding_chemistry.machines.tile.collateral.TEMaterialCabinetTop;
+import com.globbypotato.rockhounding_chemistry.machines.tile.devices.TEOrbiter;
+import com.globbypotato.rockhounding_chemistry.machines.tile.devices.TETransposer;
+import com.globbypotato.rockhounding_chemistry.machines.tile.devices.TEWasteDumper;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEDepositionBase;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEGasHolderTop;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEMetalAlloyerTank;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEPullingCrucibleTop;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEContainmentTank;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEFlotationTank;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEGasHolderBase;
+import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 import com.globbypotato.rockhounding_core.enums.EnumFluidNbt;
 import com.globbypotato.rockhounding_core.machines.tileentity.IFluidHandlingTile;
 import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityInv;
@@ -122,7 +125,7 @@ public class MachinesD extends MachineIO {
 	public boolean hiddenParts(int meta) {
 		return meta == EnumMachinesD.METAL_ALLOYER_TANK.ordinal()
 			|| meta == EnumMachinesD.MATERIAL_CABINET_TOP.ordinal()
-			|| meta == EnumMachinesD.DEPOSITION_CHAMBER_TOP.ordinal()
+			|| meta == EnumMachinesD.DEPOSITION_CHAMBER_CONTROLLER.ordinal()
 			|| meta == EnumMachinesD.GAS_HOLDER_TOP.ordinal()
 			|| meta == EnumMachinesD.PULLING_CRUCIBLE_TOP.ordinal();
 	}
@@ -133,7 +136,7 @@ public class MachinesD extends MachineIO {
 			|| meta == EnumMachinesD.MATERIAL_CABINET_BASE.ordinal()
 			|| meta == EnumMachinesD.DEPOSITION_CHAMBER_BASE.ordinal()
 			|| meta == EnumMachinesD.GAS_HOLDER_BASE.ordinal()
-			|| meta == EnumMachinesD.PULLING_CRUCIBLE_BASE.ordinal();
+			|| meta == EnumMachinesD.PULLING_CRUCIBLE_CONTROLLER.ordinal();
 	}
 
     @Override
@@ -151,21 +154,21 @@ public class MachinesD extends MachineIO {
 	        	restoreCabinetNBT(stack, te);
 	        	setOrDropBlock(world, state, pos, cabinet.getFacing(), placer, EnumMachinesD.MATERIAL_CABINET_TOP);
 	        }
-	        if(te instanceof TEMetalAlloyer){
-	        	TEMetalAlloyer reactor = (TEMetalAlloyer) world.getTileEntity(pos);
+	        if(te instanceof TEMetalAlloyerController){
+	        	TEMetalAlloyerController reactor = (TEMetalAlloyerController) world.getTileEntity(pos);
 	        	setOrDropBlock(world, state, pos, reactor.getFacing(), placer, EnumMachinesD.METAL_ALLOYER_TANK);
 	        }
-	        if(te instanceof TEDepositionChamberBase){
-	        	TEDepositionChamberBase reactor = (TEDepositionChamberBase) world.getTileEntity(pos);
-	        	setOrDropBlock(world, state, pos, reactor.getFacing(), placer, EnumMachinesD.DEPOSITION_CHAMBER_TOP);
+	        if(te instanceof TEDepositionBase){
+	        	TEDepositionBase reactor = (TEDepositionBase) world.getTileEntity(pos);
+	        	setOrDropBlock(world, state, pos, reactor.getFacing(), placer, EnumMachinesD.DEPOSITION_CHAMBER_CONTROLLER);
 	        }
 	        if(te instanceof TEGasHolderBase){
 	        	TEGasHolderBase reactor = (TEGasHolderBase) world.getTileEntity(pos);
 	        	restoreGasHolderNBT(stack, te);
 	        	setOrDropBlock(world, state, pos, reactor.getFacing(), placer, EnumMachinesD.GAS_HOLDER_TOP);
 	        }
-	        if(te instanceof TEPullingCrucibleBase){
-	        	TEPullingCrucibleBase reactor = (TEPullingCrucibleBase) world.getTileEntity(pos);
+	        if(te instanceof TEPullingCrucibleController){
+	        	TEPullingCrucibleController reactor = (TEPullingCrucibleController) world.getTileEntity(pos);
 	        	setOrDropBlock(world, state, pos, reactor.getFacing(), placer, EnumMachinesD.PULLING_CRUCIBLE_TOP);
 	        }
 	        if(te instanceof TEOrbiter){
@@ -205,7 +208,7 @@ public class MachinesD extends MachineIO {
 		if(meta == EnumMachinesD.DEPOSITION_CHAMBER_BASE.ordinal()){
 			checkTopBlocks(world, world.getBlockState(pos), world.getBlockState(pos.up()), pos);
 		}
-		if(meta == EnumMachinesD.DEPOSITION_CHAMBER_TOP.ordinal()){
+		if(meta == EnumMachinesD.DEPOSITION_CHAMBER_CONTROLLER.ordinal()){
 			checkBaseBlocks(world, world.getBlockState(pos.down()), pos);
 		}
 		if(meta == EnumMachinesD.GAS_HOLDER_BASE.ordinal()){
@@ -214,7 +217,7 @@ public class MachinesD extends MachineIO {
 		if(meta == EnumMachinesD.GAS_HOLDER_TOP.ordinal()){
 			checkBaseBlocks(world, world.getBlockState(pos.down()), pos);
 		}
-		if(meta == EnumMachinesD.PULLING_CRUCIBLE_BASE.ordinal()){
+		if(meta == EnumMachinesD.PULLING_CRUCIBLE_CONTROLLER.ordinal()){
 			checkTopBlocks(world, world.getBlockState(pos), world.getBlockState(pos.up()), pos);
 		}
 		if(meta == EnumMachinesD.PULLING_CRUCIBLE_TOP.ordinal()){
@@ -249,10 +252,10 @@ public class MachinesD extends MachineIO {
 		if(teUp == null || 
 				(
 					   (te instanceof TEMaterialCabinetBase && !(teUp instanceof TEMaterialCabinetTop))
- 				    || (te instanceof TEMetalAlloyer && !(teUp instanceof TEMetalAlloyerTank))
- 				    || (te instanceof TEDepositionChamberBase && !(teUp instanceof TEDepositionChamberTop))
+ 				    || (te instanceof TEMetalAlloyerController && !(teUp instanceof TEMetalAlloyerTank))
+ 				    || (te instanceof TEDepositionBase && !(teUp instanceof TEDepositionController))
  				    || (te instanceof TEGasHolderBase && !(teUp instanceof TEGasHolderTop))
- 				    || (te instanceof TEPullingCrucibleBase && !(teUp instanceof TEPullingCrucibleTop))
+ 				    || (te instanceof TEPullingCrucibleController && !(teUp instanceof TEPullingCrucibleTop))
 				)
 		){
 			ItemStack itemstack = this.getSilkTouchDrop(state);
@@ -260,7 +263,7 @@ public class MachinesD extends MachineIO {
 			|| meta == EnumMachinesD.METAL_ALLOYER.ordinal()
 			|| meta == EnumMachinesD.DEPOSITION_CHAMBER_BASE.ordinal()
 			|| meta == EnumMachinesD.GAS_HOLDER_BASE.ordinal()
-			|| meta == EnumMachinesD.PULLING_CRUCIBLE_BASE.ordinal()){
+			|| meta == EnumMachinesD.PULLING_CRUCIBLE_CONTROLLER.ordinal()){
 				handleTileNBT(te, itemstack);
 			}
 	        spawnAsEntity(world, pos, itemstack);
@@ -268,16 +271,16 @@ public class MachinesD extends MachineIO {
 		}
 	}
 
-	private static void checkBaseBlocks(World world, IBlockState state, BlockPos pos) {
+	private void checkBaseBlocks(World world, IBlockState state, BlockPos pos) {
 		TileEntity te = world.getTileEntity(pos);
 		TileEntity teDown = world.getTileEntity(pos.down());
 		if(teDown == null || 
 				(
 					   (te instanceof TEMaterialCabinetTop && !(teDown instanceof TEMaterialCabinetBase))
-					|| (te instanceof TEMetalAlloyerTank && !(teDown instanceof TEMetalAlloyer))
-					|| (te instanceof TEDepositionChamberTop && !(teDown instanceof TEDepositionChamberBase))
+					|| (te instanceof TEMetalAlloyerTank && !(teDown instanceof TEMetalAlloyerController))
+					|| (te instanceof TEDepositionController && !(teDown instanceof TEDepositionBase))
  				    || (te instanceof TEGasHolderTop && !(teDown instanceof TEGasHolderBase))
- 				    || (te instanceof TEPullingCrucibleTop && !(teDown instanceof TEPullingCrucibleBase))
+ 				    || (te instanceof TEPullingCrucibleTop && !(teDown instanceof TEPullingCrucibleController))
 				)
 		){
 			world.setBlockToAir(pos);
@@ -341,16 +344,16 @@ public class MachinesD extends MachineIO {
 			return new TEMaterialCabinetTop();
 		}
 		if(meta == EnumMachinesD.METAL_ALLOYER.ordinal()){
-			return new TEMetalAlloyer();
+			return new TEMetalAlloyerController();
 		}
 		if(meta == EnumMachinesD.METAL_ALLOYER_TANK.ordinal()){
 			return new TEMetalAlloyerTank();
 		}
 		if(meta == EnumMachinesD.DEPOSITION_CHAMBER_BASE.ordinal()){
-			return new TEDepositionChamberBase();
+			return new TEDepositionBase();
 		}
-		if(meta == EnumMachinesD.DEPOSITION_CHAMBER_TOP.ordinal()){
-			return new TEDepositionChamberTop();
+		if(meta == EnumMachinesD.DEPOSITION_CHAMBER_CONTROLLER.ordinal()){
+			return new TEDepositionController();
 		}
 		if(meta == EnumMachinesD.GAS_HOLDER_BASE.ordinal()){
 			return new TEGasHolderBase();
@@ -358,8 +361,8 @@ public class MachinesD extends MachineIO {
 		if(meta == EnumMachinesD.GAS_HOLDER_TOP.ordinal()){
 			return new TEGasHolderTop();
 		}
-		if(meta == EnumMachinesD.PULLING_CRUCIBLE_BASE.ordinal()){
-			return new TEPullingCrucibleBase();
+		if(meta == EnumMachinesD.PULLING_CRUCIBLE_CONTROLLER.ordinal()){
+			return new TEPullingCrucibleController();
 		}
 		if(meta == EnumMachinesD.PULLING_CRUCIBLE_TOP.ordinal()){
 			return new TEPullingCrucibleTop();
@@ -403,30 +406,70 @@ public class MachinesD extends MachineIO {
 					handleNullifier(world, pos, player, hand, state.getBlock(), meta);
 					return false;
 				}
-	
+
 				if(meta == EnumMachinesD.MATERIAL_CABINET_BASE.ordinal()){
-		    		player.openGui(Rhchemistry.instance, GuiHandler.material_cabinet_id, world, pos.getX(), pos.getY(), pos.getZ());
+					if(!player.isSneaking()) {
+						if(!canInsertConsumable(world, player, pos.up(), BaseRecipes.graduated_cylinder, TEElementsCabinetTop.CYLINDER_SLOT)) {
+				    		player.openGui(Rhchemistry.instance, GuiHandler.material_cabinet_id, world, pos.getX(), pos.getY(), pos.getZ());
+							TEMaterialCabinetBase cabinet = (TEMaterialCabinetBase)world.getTileEntity(pos);
+							cabinet.initializaCabinet();
+						}
+					}else {
+						tryExtractConsumable(world, player, pos.up(), TEElementsCabinetTop.CYLINDER_SLOT);
+					}
 				}
 				if(meta == EnumMachinesD.MATERIAL_CABINET_TOP.ordinal()){
-					player.openGui(Rhchemistry.instance, GuiHandler.material_cabinet_injector_id, world, pos.getX(), pos.getY(), pos.getZ());
+					if(!player.isSneaking()) {
+						if(!canInsertConsumable(world, player, pos, BaseRecipes.graduated_cylinder, TEMaterialCabinetTop.CYLINDER_SLOT)) {
+							player.openGui(Rhchemistry.instance, GuiHandler.material_cabinet_injector_id, world, pos.getX(), pos.getY(), pos.getZ());
+							TEMaterialCabinetBase cabinet = (TEMaterialCabinetBase)world.getTileEntity(pos.down());
+							cabinet.initializaCabinet();
+						}
+					}else {
+						tryExtractConsumable(world, player, pos, TEMaterialCabinetTop.CYLINDER_SLOT);
+					}
 				}
 				if(meta == EnumMachinesD.METAL_ALLOYER.ordinal()){
-					player.openGui(Rhchemistry.instance, GuiHandler.metal_alloyer_id, world, pos.getX(), pos.getY(), pos.getZ());
-					TEMetalAlloyer alloyer = (TEMetalAlloyer)world.getTileEntity(pos);
-					alloyer.showPreview();
+					if(!player.isSneaking()) {
+						if(!canInsertConsumable(world, player, pos, BaseRecipes.ingot_pattern, TEMetalAlloyerController.PATTERN_SLOT)) {
+							player.openGui(Rhchemistry.instance, GuiHandler.metal_alloyer_id, world, pos.getX(), pos.getY(), pos.getZ());
+							TEMetalAlloyerController alloyer = (TEMetalAlloyerController)world.getTileEntity(pos);
+							alloyer.showPreview();
+						}
+					}else {
+						tryExtractConsumable(world, player, pos, TEMetalAlloyerController.PATTERN_SLOT);
+					}
 				}
 				if(meta == EnumMachinesD.METAL_ALLOYER_TANK.ordinal()){
-					if(world.getTileEntity(pos.down(1)) != null && world.getTileEntity(pos.down(1)) instanceof TEMetalAlloyer){
-						player.openGui(Rhchemistry.instance, GuiHandler.metal_alloyer_id, world, pos.getX(), pos.getY() - 1, pos.getZ());
-						TEMetalAlloyer alloyer = (TEMetalAlloyer)world.getTileEntity(pos.down());
-						alloyer.showPreview();
+					if(!player.isSneaking()) {
+						if(!canInsertConsumable(world, player, pos.down(), BaseRecipes.ingot_pattern, TEMetalAlloyerController.PATTERN_SLOT)) {
+							if(world.getTileEntity(pos.down()) != null && world.getTileEntity(pos.down()) instanceof TEMetalAlloyerController){
+								player.openGui(Rhchemistry.instance, GuiHandler.metal_alloyer_id, world, pos.getX(), pos.getY() - 1, pos.getZ());
+								TEMetalAlloyerController alloyer = (TEMetalAlloyerController)world.getTileEntity(pos.down());
+								alloyer.showPreview();
+							}
+						}
+					}else {
+						tryExtractConsumable(world, player, pos.down(), TEMetalAlloyerController.PATTERN_SLOT);
 					}
 				}
 				if(meta == EnumMachinesD.DEPOSITION_CHAMBER_BASE.ordinal()){
-		    		player.openGui(Rhchemistry.instance, GuiHandler.deposition_chamber_id, world, pos.getX(), pos.getY(), pos.getZ());
+					if(!player.isSneaking()) {
+						if(!canInsertUpgrade(world, player, pos, BaseRecipes.speed_upgrade, TEDepositionBase.SPEED_SLOT) && !canInsertUpgrade(world, player, pos, BaseRecipes.insulating_upgrade, TEDepositionBase.INSULATION_SLOT) && !canInsertUpgrade(world, player, pos, BaseRecipes.casing_upgrade, TEDepositionBase.CASING_SLOT) ) {
+							player.openGui(Rhchemistry.instance, GuiHandler.deposition_chamber_id, world, pos.getX(), pos.getY(), pos.getZ());
+						}
+					}else {
+						tryExtractUpgrade(world, player, pos, TEDepositionBase.SPEED_SLOT);
+					}
 				}
-				if(meta == EnumMachinesD.DEPOSITION_CHAMBER_TOP.ordinal()){
-					player.openGui(Rhchemistry.instance, GuiHandler.deposition_chamber_top_id, world, pos.getX(), pos.getY(), pos.getZ());
+				if(meta == EnumMachinesD.DEPOSITION_CHAMBER_CONTROLLER.ordinal()){
+					if(!player.isSneaking()) {
+						if(!canInsertUpgrade(world, player, pos.down(), BaseRecipes.speed_upgrade, TEDepositionBase.SPEED_SLOT) && !canInsertUpgrade(world, player, pos.down(), BaseRecipes.casing_upgrade, TEDepositionBase.CASING_SLOT) && !canInsertUpgrade(world, player, pos.down(), BaseRecipes.insulating_upgrade, TEDepositionBase.INSULATION_SLOT) ) {
+							player.openGui(Rhchemistry.instance, GuiHandler.deposition_chamber_top_id, world, pos.getX(), pos.getY(), pos.getZ());
+						}
+					}else {
+						tryExtractUpgrade(world, player, pos.down(), TEDepositionBase.SPEED_SLOT);
+					}
 				}
 				if(meta == EnumMachinesD.GAS_HOLDER_BASE.ordinal()){
 		    		player.openGui(Rhchemistry.instance, GuiHandler.gas_holder_id, world, pos.getX(), pos.getY(), pos.getZ());
@@ -436,19 +479,25 @@ public class MachinesD extends MachineIO {
 						player.openGui(Rhchemistry.instance, GuiHandler.gas_holder_id, world, pos.getX(), pos.getY() - 1, pos.getZ());
 					}
 				}
-				if(meta == EnumMachinesD.PULLING_CRUCIBLE_BASE.ordinal()){
+				if(meta == EnumMachinesD.PULLING_CRUCIBLE_CONTROLLER.ordinal()){
 					player.openGui(Rhchemistry.instance, GuiHandler.pulling_crucible_base_id, world, pos.getX(), pos.getY(), pos.getZ());
 				}
 				if(meta == EnumMachinesD.PULLING_CRUCIBLE_TOP.ordinal()){
 					player.openGui(Rhchemistry.instance, GuiHandler.pulling_crucible_top_id, world, pos.getX(), pos.getY(), pos.getZ());
 				}
 				if(meta == EnumMachinesD.ORBITER.ordinal()){
-					player.openGui(Rhchemistry.instance, GuiHandler.orbiter_id, world, pos.getX(), pos.getY(), pos.getZ());
-					TEOrbiter orbiter = (TEOrbiter)world.getTileEntity(pos);
-					if(orbiter.calculateRetrievedXP(player, 0) > orbiter.getstoredXP()){
-						orbiter.offScale = true;
-					}else{
-						orbiter.offScale = false;
+					if(!player.isSneaking()) {
+						if(!canInsertUpgrade(world, player, pos, BaseRecipes.probe_upgrade, TEOrbiter.PROBE_SLOT)) {
+							player.openGui(Rhchemistry.instance, GuiHandler.orbiter_id, world, pos.getX(), pos.getY(), pos.getZ());
+							TEOrbiter orbiter = (TEOrbiter)world.getTileEntity(pos);
+							if(orbiter.calculateRetrievedXP(player, 0) > orbiter.getXPCount()){
+								orbiter.offScale = true;
+							}else{
+								orbiter.offScale = false;
+							}
+						}
+					}else {
+						tryExtractUpgrade(world, player, pos, TEOrbiter.PROBE_SLOT);
 					}
 				}
 				if(meta == EnumMachinesD.TRANSPOSER.ordinal()){
@@ -466,6 +515,7 @@ public class MachinesD extends MachineIO {
 				if(meta == EnumMachinesD.CONTAINMENT_TANK.ordinal()){
 					player.openGui(Rhchemistry.instance, GuiHandler.containment_tank_id, world, pos.getX(), pos.getY(), pos.getZ());
 				}
+
 			}
 		}
 		return true;
@@ -489,7 +539,7 @@ public class MachinesD extends MachineIO {
 		int meta = state.getBlock().getMetaFromState(state);
 		return meta != EnumMachinesD.MATERIAL_CABINET_TOP.ordinal()
 			&& meta != EnumMachinesD.METAL_ALLOYER_TANK.ordinal()
-			&& meta != EnumMachinesD.DEPOSITION_CHAMBER_TOP.ordinal()
+			&& meta != EnumMachinesD.DEPOSITION_CHAMBER_CONTROLLER.ordinal()
 			&& meta != EnumMachinesD.GAS_HOLDER_TOP.ordinal()
 			&& meta != EnumMachinesD.PULLING_CRUCIBLE_TOP.ordinal()
 			? Item.getItemFromBlock(this) : null;
@@ -500,7 +550,7 @@ public class MachinesD extends MachineIO {
 		int meta = state.getBlock().getMetaFromState(state);
 		return meta != EnumMachinesD.MATERIAL_CABINET_TOP.ordinal()
 			&& meta != EnumMachinesD.METAL_ALLOYER_TANK.ordinal()
-			&& meta != EnumMachinesD.DEPOSITION_CHAMBER_TOP.ordinal()
+			&& meta != EnumMachinesD.DEPOSITION_CHAMBER_CONTROLLER.ordinal()
 			&& meta != EnumMachinesD.GAS_HOLDER_TOP.ordinal()
 			&& meta != EnumMachinesD.PULLING_CRUCIBLE_TOP.ordinal();
 	}
@@ -514,14 +564,14 @@ public class MachinesD extends MachineIO {
 		if(meta == EnumMachinesD.METAL_ALLOYER_TANK.ordinal()){
 			return new ItemStack(Item.getItemFromBlock(this), 1, EnumMachinesD.METAL_ALLOYER.ordinal());
 		}
-		if(meta == EnumMachinesD.DEPOSITION_CHAMBER_TOP.ordinal()){
+		if(meta == EnumMachinesD.DEPOSITION_CHAMBER_CONTROLLER.ordinal()){
 			return new ItemStack(Item.getItemFromBlock(this), 1, EnumMachinesD.DEPOSITION_CHAMBER_BASE.ordinal());
 		}
 		if(meta == EnumMachinesD.GAS_HOLDER_TOP.ordinal()){
 			return new ItemStack(Item.getItemFromBlock(this), 1, EnumMachinesD.GAS_HOLDER_BASE.ordinal());
 		}
 		if(meta == EnumMachinesD.PULLING_CRUCIBLE_TOP.ordinal()){
-			return new ItemStack(Item.getItemFromBlock(this), 1, EnumMachinesD.PULLING_CRUCIBLE_BASE.ordinal());
+			return new ItemStack(Item.getItemFromBlock(this), 1, EnumMachinesD.PULLING_CRUCIBLE_CONTROLLER.ordinal());
 		}
 		return super.getPickBlock(state, target, world, pos, player);
     }
@@ -535,7 +585,7 @@ public class MachinesD extends MachineIO {
         ItemStack itemstack = ItemStack.EMPTY;
         if(meta != EnumMachinesD.MATERIAL_CABINET_TOP.ordinal()
         && meta != EnumMachinesD.METAL_ALLOYER_TANK.ordinal()
-        && meta != EnumMachinesD.DEPOSITION_CHAMBER_TOP.ordinal()
+        && meta != EnumMachinesD.DEPOSITION_CHAMBER_CONTROLLER.ordinal()
         && meta != EnumMachinesD.GAS_HOLDER_TOP.ordinal()
         && meta != EnumMachinesD.PULLING_CRUCIBLE_TOP.ordinal()
         ){
@@ -582,21 +632,36 @@ public class MachinesD extends MachineIO {
 
 	private static void addCabinetNbt(ItemStack itemstack, TileEntity te) {
     	TEMaterialCabinetBase cabinet = ((TEMaterialCabinetBase)te);
-		NBTTagList quantityList = new NBTTagList();
-		for(int i = 0; i < cabinet.elementList.length; i++){
-			NBTTagCompound tagQuantity = new NBTTagCompound();
-			tagQuantity.setInteger("Element" + i, cabinet.elementList[i]);
-			quantityList.appendTag(tagQuantity);
+		NBTTagList recipes = new NBTTagList();
+		for(int i = 0; i < cabinet.MATERIAL_LIST.size(); i++){
+			NBTTagCompound elements = new NBTTagCompound();
+			elements.setByte("Elements", (byte)i);
+			elements.setString("symbol" + i, cabinet.MATERIAL_LIST.get(i).getSymbol());
+			elements.setString("oredict" + i, cabinet.MATERIAL_LIST.get(i).getOredict());
+			elements.setString("name" + i, cabinet.MATERIAL_LIST.get(i).getName());
+			elements.setInteger("amount" + i, cabinet.MATERIAL_LIST.get(i).getAmount());
+			elements.setBoolean("extraction" + i, cabinet.MATERIAL_LIST.get(i).getExtraction());
+			recipes.appendTag(elements);
 		}
-		itemstack.getTagCompound().setTag("ElementsList", quantityList);
+		itemstack.getTagCompound().setTag("MaterialList", recipes);
 	}
 	private static void restoreCabinetNBT(ItemStack itemstack, TileEntity te) {
 		TEMaterialCabinetBase cabinet = ((TEMaterialCabinetBase)te);
-		if(itemstack.hasTagCompound() && itemstack.getTagCompound().hasKey("ElementsList")){
-			NBTTagList quantityList = itemstack.getTagCompound().getTagList("ElementsList", Constants.NBT.TAG_COMPOUND);
-			for(int i = 0; i < quantityList.tagCount(); i++){
-				NBTTagCompound getQuantities = quantityList.getCompoundTagAt(i);
-				cabinet.elementList[i] = getQuantities.getInteger("Element" + i);
+		if(itemstack.hasTagCompound() && itemstack.getTagCompound().hasKey("MaterialList")){
+			NBTTagList recipes = itemstack.getTagCompound().getTagList("MaterialList", Constants.NBT.TAG_COMPOUND);
+			if(recipes.tagCount() > 0) {
+				cabinet.MATERIAL_LIST.clear();
+				for(int i = 0; i < recipes.tagCount(); i++){
+					NBTTagCompound elements = recipes.getCompoundTagAt(i);
+		            int j = elements.getByte("Elements");
+					String symbol = elements.getString("symbol" + j);
+					String oredict = elements.getString("oredict" + j);
+					String name = elements.getString("name" + j);
+					int amount = elements.getInteger("amount" + j);
+					boolean extraction = elements.getBoolean("extraction" + j);
+					cabinet.MATERIAL_LIST.add(j, new MaterialCabinetRecipe(symbol, oredict, name, amount, extraction));
+				}
+				cabinet.reloadCabinet();
 			}
 		}
 	}
@@ -630,33 +695,13 @@ public class MachinesD extends MachineIO {
     
 	private void addOrbiterNbt(ItemStack itemstack, TileEntity te) {
 		TEOrbiter tank = ((TEOrbiter)te);
-		NBTTagCompound solvent = new NBTTagCompound(); 
-		if(tank.inputTank.getFluid() != null){
-			tank.inputTank.getFluid().writeToNBT(solvent);
-			itemstack.getTagCompound().setTag(EnumFluidNbt.BATH.nameTag(), solvent);
-		}
-		if(tank.isValidPreset()){
-			NBTTagCompound juice = new NBTTagCompound(); 
-			if(tank.outputTank.getFluid() != null){
-				tank.outputTank.getFluid().writeToNBT(juice);
-				itemstack.getTagCompound().setTag(EnumFluidNbt.SOLUTION.nameTag(), juice);
-			}
-		}
 		itemstack.getTagCompound().setInteger("XPCount", tank.getXPCount());
 	}
 	private void restoreOrbiterNBT(ItemStack itemstack, TileEntity te) {
-		TEOrbiter tank = ((TEOrbiter)te);
-    	if(itemstack.hasTagCompound() && tank != null){
-			if(itemstack.getTagCompound().hasKey(EnumFluidNbt.BATH.nameTag())){
-				tank.inputTank.setFluid(FluidStack.loadFluidStackFromNBT(itemstack.getTagCompound().getCompoundTag(EnumFluidNbt.BATH.nameTag())));
-			}
-			if(tank.isValidPreset()){
-				if(itemstack.getTagCompound().hasKey(EnumFluidNbt.SOLUTION.nameTag())){
-					tank.outputTank.setFluid(FluidStack.loadFluidStackFromNBT(itemstack.getTagCompound().getCompoundTag(EnumFluidNbt.SOLUTION.nameTag())));
-				}
-			}
+		TEOrbiter orbiter = ((TEOrbiter)te);
+    	if(itemstack.hasTagCompound() && orbiter != null){
 			if(itemstack.getTagCompound().hasKey("XPCount")){
-				tank.xpCount = itemstack.getTagCompound().getInteger("XPCount");
+				orbiter.xpCount = itemstack.getTagCompound().getInteger("XPCount");
 			}
     	}
 	}

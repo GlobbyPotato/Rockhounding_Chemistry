@@ -7,7 +7,6 @@ import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.Gasi
 
 import crafttweaker.CraftTweakerAPI;
 import crafttweaker.IAction;
-import crafttweaker.api.item.IItemStack;
 import crafttweaker.api.liquid.ILiquidStack;
 import net.minecraftforge.fluids.FluidStack;
 import stanhebben.zenscript.annotations.ZenClass;
@@ -19,9 +18,17 @@ public class CT_GasifierPlant extends CTSupport{
 	public static ArrayList<GasifierPlantRecipe> recipeList = GasifierPlantRecipes.gasifier_plant_recipes;
 
     @ZenMethod
-    public static void add(ILiquidStack input, ILiquidStack reactant, ILiquidStack output, IItemStack slag1, IItemStack slag2, int temperature) {
+    public static void add(ILiquidStack input, ILiquidStack reactant, ILiquidStack output, String[] slag, int[] quantity, int temperature) {
         if(input == null || reactant == null || output == null || !toFluid(output).getFluid().isGaseous()) {error(name); return;}
-        CraftTweakerAPI.apply(new Add(new GasifierPlantRecipe(toFluid(input), toFluid(reactant), toFluid(output), toStack(slag1), toStack(slag2), temperature)));
+        
+        ArrayList<String> slags = new ArrayList<String>();
+        ArrayList<Integer> quantities = new ArrayList<Integer>();
+        for(int x = 0; x < slag.length; x++){
+        	slags.add(slag[x]);
+        	quantities.add(quantity[x]);
+        }
+
+        CraftTweakerAPI.apply(new Add(new GasifierPlantRecipe(toFluid(input), toFluid(reactant), toFluid(output), slags, quantities, temperature)));
     }
 			private static class Add implements IAction {
 		    	private final GasifierPlantRecipe recipe;

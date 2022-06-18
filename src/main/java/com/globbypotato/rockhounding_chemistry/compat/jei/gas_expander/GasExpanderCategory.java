@@ -1,7 +1,7 @@
 package com.globbypotato.rockhounding_chemistry.compat.jei.gas_expander;
 
 import com.globbypotato.rockhounding_chemistry.compat.jei.RHRecipeCategory;
-import com.globbypotato.rockhounding_chemistry.machines.gui.UIGasExpander;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UIGasExpanderController;
 
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IGuiFluidStackGroup;
@@ -12,7 +12,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class GasExpanderCategory extends RHRecipeCategory {
 
-	private final static ResourceLocation guiTexture = UIGasExpander.TEXTURE_JEI;
+	private final static ResourceLocation guiTexture = UIGasExpanderController.TEXTURE_JEI;
 	private String uid;
 
 	public GasExpanderCategory(IGuiHelper guiHelper, String uid) {

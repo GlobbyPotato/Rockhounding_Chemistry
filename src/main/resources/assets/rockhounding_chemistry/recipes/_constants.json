@@ -25,8 +25,11 @@
 	{"name": "QUARTZ_BLOCK",		"ingredient": {	"ore":  "blockQuartz", "type": "forge:ore_dict"				 }},
 	{"name": "CHARCOAL",			"ingredient": {	"item": "minecraft:coal",							"data": 1}},
 	{"name": "WATER_BUCKET",		"ingredient": {	"item": "minecraft:water_bucket",					"data": 0}},
+	{"name": "BRICK",				"ingredient": {	"ore":  "ingotBrick", "type": "forge:ore_dict"				 }},
+	{"name": "CRAFTING_TABLE",		"ingredient": {	"ore":  "workbench", "type": "forge:ore_dict"				 }},
 
 	{"name": "COPPER_WIRE",			"ingredient": {	"ore":  "wireCopper", "type": "forge:ore_dict"				 }},
+	{"name": "CHARCOAL_BLOCK",		"ingredient": {	"ore":  "blockCharcoal", "type": "forge:ore_dict"			 }},
 
 	{"name": "FILE",				"ingredient": {	"item": "rockhounding_chemistry:misc_items",		"data": 0}},
 	{"name": "BASE_CHIP",			"ingredient": {	"item": "rockhounding_chemistry:misc_items",		"data": 1}},
@@ -34,6 +37,7 @@
 	{"name": "IRON_FOIL",			"ingredient": { "item": "rockhounding_chemistry:misc_items",		"data": 3}},
 	{"name": "IRON_ARM",			"ingredient": { "item": "rockhounding_chemistry:misc_items",		"data": 4}},
 	{"name": "IRON_CASING",			"ingredient": { "item": "rockhounding_chemistry:misc_items",		"data": 5}},
+	{"name": "BLEND_UNIT",			"ingredient": { "item": "rockhounding_chemistry:misc_items",		"data": 6}},
 	{"name": "GLASS_PIPE",			"ingredient": {	"item": "rockhounding_chemistry:misc_items",		"data": 7}},
 	{"name": "IRON_COIL",			"ingredient": {	"item": "rockhounding_chemistry:misc_items",		"data": 8}},
 	{"name": "COMPRESSOR",			"ingredient": { "item": "rockhounding_chemistry:misc_items",		"data": 9}},
@@ -68,12 +72,13 @@
 	{"name": "SCAFFOLD",			"ingredient": {	"item": "rockhounding_chemistry:misc_blocks_a",		"data": 0}},
 	{"name": "SEPARATOR",			"ingredient": {	"item": "rockhounding_chemistry:misc_blocks_a",		"data": 3}},
 	{"name": "CHARGER",				"ingredient": {	"item": "rockhounding_chemistry:misc_blocks_a",		"data": 4}},
-	{"name": "CHARCOAL_BLOCK",		"ingredient": {	"ore":  "blockCharcoal", "type": "forge:ore_dict"			 }},
 	{"name": "REINFORCED_GLASS",	"ingredient": {	"item": "rockhounding_chemistry:misc_blocks_a",		"data": 13}},
 
 	{"name": "CRUSHING_GEAR",		"ingredient": {	"item": "rockhounding_chemistry:crushing_gear",		"data": 0}},
+	{"name": "AGITATOR",			"ingredient": {	"item": "rockhounding_chemistry:slurry_agitator",	"data": 0}},
 
-	{"name": "GAS_PRESSURIZER",		"ingredient": {	"item": "rockhounding_chemistry:machines_b",		"data": 1}},
+	{"name": "LAB_OVEN",			"ingredient": {	"item": "rockhounding_chemistry:machines_a",		"data": 6}},
+	{"name": "AUXILIARY_ENGINE",	"ingredient": {	"item": "rockhounding_chemistry:machines_b",		"data": 1}},
 	
 	{"name": "GAS_TURBINE",			"ingredient": {	"item": "rockhounding_chemistry:gas_turbine",		"data": 0}}
 

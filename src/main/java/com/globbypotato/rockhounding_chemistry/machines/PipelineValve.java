@@ -3,7 +3,7 @@ package com.globbypotato.rockhounding_chemistry.machines;
 import com.globbypotato.rockhounding_chemistry.Rhchemistry;
 import com.globbypotato.rockhounding_chemistry.handlers.GuiHandler;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEPipelineValve;
+import com.globbypotato.rockhounding_chemistry.machines.tile.pipelines.TEPipelineValve;
 import com.globbypotato.rockhounding_core.machines.PipelineBase;
 
 import net.minecraft.block.Block;

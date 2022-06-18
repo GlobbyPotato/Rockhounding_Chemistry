@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.COPipelineValve;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEPipelineValve;
+import com.globbypotato.rockhounding_chemistry.machines.tile.pipelines.TEPipelineValve;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.machines.gui.GuiUtils;
 
@@ -37,9 +37,9 @@ public class UIPipelineValve extends GuiBase {
 
 		for(int side = 0; side < this.tile.sideFilter.length; side++){
 			int offset = side * 18;
-			String filterString = TextFormatting.BLUE + "Fluid Filter: " + TextFormatting.WHITE + "use a filled ampoule to set";
+			String filterString = TextFormatting.BLUE + this.filter_label + ": " + TextFormatting.WHITE + this.ampoule_label;
 			if(this.tile.sideFilter[side] != null){
-				filterString = TextFormatting.GRAY + "Filter: " + TextFormatting.AQUA + this.tile.sideFilter[side].getLocalizedName();
+				filterString = TextFormatting.GRAY + this.filter_label + ": " + TextFormatting.AQUA + this.tile.sideFilter[side].getLocalizedName();
 			}
 		    if(GuiUtils.hoveringArea(34 + offset, 63, 18, 18, mouseX, mouseY, x, y)){
 				 List<String> tooltip = GuiUtils.drawLabel(filterString, mouseX, mouseY);

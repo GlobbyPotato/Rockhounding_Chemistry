@@ -3,15 +3,15 @@ package com.globbypotato.rockhounding_chemistry.enums.machines;
 import com.globbypotato.rockhounding_chemistry.enums.BaseEnum;
 
 public enum EnumMachinesA implements BaseEnum {
-	SIZER_CONTROLLER,
+	SIZER_CABINET,
 	SIZER_TANK,
 	POWER_GENERATOR,
 	SIZER_COLLECTOR,
 	FLUID_TANK,
 	LAB_OVEN_CONTROLLER,
 	LAB_OVEN_CHAMBER,
-	FLUID_INPUT_TANK,
-	FLUID_OUTPUT_TANK,
+	CENTRIFUGE,
+	UNLOADER,
 	LAB_BLENDER_CONTROLLER,
 	LAB_BLENDER_TANK,
 	PROFILING_BENCH,

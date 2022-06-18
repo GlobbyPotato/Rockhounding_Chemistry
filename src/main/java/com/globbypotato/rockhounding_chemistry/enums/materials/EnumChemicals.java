@@ -24,7 +24,11 @@ public enum EnumChemicals implements BaseEnum {
 	SAND_COMPOUND,
 	COKE_COMPOUND,
 	CRACKED_LIME,
-	AMMONIUM_CHLORIDE;
+	AMMONIUM_CHLORIDE,
+	CARBON_COMPOUND,
+	LEAD_COMPOUND,
+	QUARTZ_COMPOUND,
+	DIDYMIUM_COMPOUND;
 
 	//---------CUSTOM----------------
 	public static int size(){

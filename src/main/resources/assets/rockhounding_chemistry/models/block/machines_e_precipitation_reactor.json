@@ -5,7 +5,8 @@
         "particle": "rockhounding_chemistry:models/machines_generic_b",
 		"0": "rockhounding_chemistry:models/machines_generic",
 		"1": "rockhounding_chemistry:models/machines_generic_b",
-		"2": "rockhounding_chemistry:models/machines_generic_c"
+		"2": "rockhounding_chemistry:models/machines_generic_c",
+		"3": "rockhounding_chemistry:models/machines_generic_d"
 	},
     "elements": [
         {
@@ -530,6 +531,18 @@
                 "east": { "texture": "#0", "uv": [ 12.0, 12.0, 15.999999992549418, 16.0 ] },
                 "up": { "texture": "#0", "uv": [ 13.0, 12.0, 16.0, 15.99999999254942 ] },
                 "down": { "texture": "#0", "uv": [ 13.0, 12.0, 16.0, 15.99999999254942 ] }
+            }
+        },
+        {
+            "name": "Cube",
+            "from": [ 0.0, 10.000000029802322, 8.200000025331974 ], 
+            "to": [ 16.0, 12.000000029802322, 12.200000025331974 ], 
+            "faces": {
+                "north": { "texture": "#1", "uv": [ 12.0, 0.0, 16.0, 4.0 ] },
+                "east": { "texture": "#3", "uv": [ 4.0, 4.0, 8.0, 8.0 ], "rotation": 180 },
+                "south": { "texture": "#1", "uv": [ 12.0, 0.0, 16.0, 4.0 ] },
+                "west": { "texture": "#3", "uv": [ 4.0, 4.0, 8.0, 8.0 ] },
+                "up": { "texture": "#1", "uv": [ 12.0, 0.0, 16.0, 4.0 ] }
             }
         }
     ]

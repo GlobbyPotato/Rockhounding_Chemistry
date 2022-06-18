@@ -1,8 +1,8 @@
 package com.globbypotato.rockhounding_chemistry.machines.gui;
 
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
-import com.globbypotato.rockhounding_chemistry.machines.container.COExtractorCabinetTop;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEElementsCabinetTop;
+import com.globbypotato.rockhounding_chemistry.machines.container.COElementsCabinetTop;
+import com.globbypotato.rockhounding_chemistry.machines.tile.collateral.TEElementsCabinetTop;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 
 import net.minecraft.client.renderer.GlStateManager;
@@ -17,7 +17,7 @@ public class UIElementsCabinetTop extends GuiBase {
 	public static ResourceLocation TEXTURE_REF = new ResourceLocation(Reference.MODID + ":textures/gui/guicabinetinjector.png");
 
     public UIElementsCabinetTop(InventoryPlayer playerInv, TEElementsCabinetTop tile){
-    	super(new COExtractorCabinetTop(playerInv,tile), ModUtils.HEIGHT);
+    	super(new COElementsCabinetTop(playerInv,tile), ModUtils.HEIGHT);
         GuiBase.TEXTURE = TEXTURE_REF;
 		this.containerName = "container." + TEElementsCabinetTop.getName();
     }

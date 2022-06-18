@@ -9,7 +9,6 @@ import com.globbypotato.rockhounding_chemistry.enums.EnumMiscBlocksA;
 import com.globbypotato.rockhounding_chemistry.enums.EnumMiscItems;
 import com.globbypotato.rockhounding_chemistry.enums.machines.EnumMachinesB;
 import com.globbypotato.rockhounding_chemistry.enums.machines.EnumMachinesD;
-import com.globbypotato.rockhounding_chemistry.enums.materials.EnumElements;
 import com.globbypotato.rockhounding_chemistry.enums.utils.EnumCasting;
 import com.globbypotato.rockhounding_chemistry.enums.utils.EnumServer;
 import com.globbypotato.rockhounding_chemistry.enums.utils.EnumSpeeds;
@@ -19,11 +18,14 @@ import com.globbypotato.rockhounding_chemistry.machines.io.MachineIO;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.BedReactorRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.ChemicalExtractorRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.DepositionChamberRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.ElementsCabinetRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.GasReformerRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.LabOvenRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.LeachingVatRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.MaterialCabinetRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.MetalAlloyerRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.MineralSizerRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.PowderMixerRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.PrecipitationRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.RetentionVatRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.ChemicalExtractorRecipe;
@@ -84,9 +86,11 @@ public class GlobbyEventHandler {
 	    	for(MineralSizerRecipe recipe : MineralSizerRecipes.mineral_sizer_recipes){
 		    	for(int y = 0; y < recipe.getOutput().size(); y++){
 					if(ItemStack.areItemsEqual(recipe.getOutput().get(y), itemstack)){
-						String comText = TextFormatting.GRAY + "Required Comminution Level: " + TextFormatting.GREEN + recipe.getComminution().get(y);
-			    		if(!event.getToolTip().contains(comText)){
-			    			event.getToolTip().add(comText);
+						if((!recipe.getType() && !recipe.getInput().isEmpty()) || (recipe.getType() && OreDictionary.getOres(recipe.getOredict()).size() > 0 )){
+							String comText = TextFormatting.GRAY + "Required Comminution Level: " + TextFormatting.GREEN + recipe.getComminution().get(y);
+				    		if(!event.getToolTip().contains(comText)){
+				    			event.getToolTip().add(comText);
+							}
 						}
 					}
 				}
@@ -194,11 +198,13 @@ public class GlobbyEventHandler {
 				        		event.getToolTip().add(TextFormatting.GRAY + "Pattern: " + TextFormatting.BOLD +  TextFormatting.YELLOW + EnumCasting.getFormalName(recipe));
 			        		}else if(device == EnumServer.REFORMER.ordinal()){
 				        		event.getToolTip().add(TextFormatting.GRAY + "Recipe: " + TextFormatting.BOLD +  TextFormatting.YELLOW + GasReformerRecipes.gas_reformer_recipes.get(recipe).getOutput().getLocalizedName());
+			        		}else if(device == EnumServer.POWDER_MIXER.ordinal()){
+				        		event.getToolTip().add(TextFormatting.GRAY + "Recipe: " + TextFormatting.BOLD +  TextFormatting.YELLOW + PowderMixerRecipes.powder_mixer_recipes.get(recipe).getOutput().getDisplayName());
 			        		}else if(device == EnumServer.EXTRACTOR.ordinal()){
 				        		event.getToolTip().add(TextFormatting.GRAY + "Intensity Level: " + TextFormatting.BOLD +  TextFormatting.YELLOW + recipe);
 			        		}else if(device == EnumServer.PRECIPITATOR.ordinal()){
 			        			if(Strings.isNullOrEmpty(PrecipitationRecipes.precipitation_recipes.get(recipe).getRecipeName())){
-					        		event.getToolTip().add(TextFormatting.GRAY + "Recipe: " + TextFormatting.BOLD +  TextFormatting.YELLOW + PrecipitationRecipes.precipitation_recipes.get(recipe).getSolution().getLocalizedName());
+					        		event.getToolTip().add(TextFormatting.GRAY + "Recipe: " + TextFormatting.BOLD +  TextFormatting.YELLOW + PrecipitationRecipes.precipitation_recipes.get(recipe).getPrecipitate().getDisplayName());
 			        			}else{
 					        		event.getToolTip().add(TextFormatting.GRAY + "Recipe: " + TextFormatting.BOLD +  TextFormatting.YELLOW + PrecipitationRecipes.precipitation_recipes.get(recipe).getRecipeName());
 			        			}
@@ -264,20 +270,24 @@ public class GlobbyEventHandler {
 	private void addExtractorRecipe(ChemicalExtractorRecipe recipe, ItemTooltipEvent event) {
 		String inhibit = "";
 		event.getToolTip().add(TextFormatting.GRAY + "Category: " + TextFormatting.YELLOW + recipe.getCategory());
+		ArrayList<ItemStack> firstDict = new ArrayList<ItemStack>();
 		for(int x = 0; x < recipe.getElements().size(); x++){
 			inhibit = "";
 			String recipeDict = recipe.getElements().get(x);
-			ArrayList<ItemStack> firstDict = new ArrayList<ItemStack>();
-			if(!OreDictionary.getOres(recipeDict).isEmpty()){
-				firstDict.addAll(OreDictionary.getOres(recipeDict));
-				if(!firstDict.isEmpty() && firstDict.size() > 0){
-				   for(int ix = 0; ix < ChemicalExtractorRecipes.inhibited_elements.size(); ix++){
-					   if(recipeDict.toLowerCase().matches(ChemicalExtractorRecipes.inhibited_elements.get(ix).toLowerCase())){
-						   inhibit = " - (Inhibited)";
-					   }
+			firstDict.clear();
+			firstDict.addAll(OreDictionary.getOres(recipeDict));
+			if(firstDict.size() > 0){
+			   for(int ix = 0; ix < ElementsCabinetRecipes.inhibited_elements.size(); ix++){
+				   if(recipeDict.toLowerCase().matches(ElementsCabinetRecipes.inhibited_elements.get(ix).toLowerCase())){
+					   inhibit = " - (Inhibited)";
 				   }
-				   event.getToolTip().add(TextFormatting.GRAY + firstDict.get(0).getDisplayName() + " - " + TextFormatting.WHITE + TextFormatting.BOLD + recipe.getQuantities().get(x) + "%" + TextFormatting.RESET + TextFormatting.RED + inhibit);
-				}
+			   }
+			   for(int ix = 0; ix < MaterialCabinetRecipes.inhibited_material.size(); ix++){
+				   if(recipeDict.toLowerCase().matches(MaterialCabinetRecipes.inhibited_material.get(ix).toLowerCase())){
+					   inhibit = " - (Inhibited)";
+				   }
+			   }
+			   event.getToolTip().add(TextFormatting.GRAY + firstDict.get(0).getDisplayName() + " - " + TextFormatting.WHITE + TextFormatting.BOLD + recipe.getQuantities().get(x) + "%" + TextFormatting.RESET + TextFormatting.RED + inhibit);
 			}
 		}
 	}

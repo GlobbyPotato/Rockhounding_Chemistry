@@ -11,23 +11,24 @@ import com.globbypotato.rockhounding_chemistry.enums.machines.EnumMachinesA;
 import com.globbypotato.rockhounding_chemistry.enums.utils.EnumCasting;
 import com.globbypotato.rockhounding_chemistry.handlers.GuiHandler;
 import com.globbypotato.rockhounding_chemistry.machines.io.MachineIO;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEEvaporationTank;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEFluidInputTank;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEFluidOutputTank;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEFluidTank;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEGasExpander;
+import com.globbypotato.rockhounding_chemistry.machines.tile.TEGasExpanderController;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TELabBlenderController;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TELabBlenderTank;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TELabOvenChamber;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TELabOvenController;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEMineralSizerCollector;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEMineralSizerController;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEMineralSizerTank;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEPowerGenerator;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TEProfilingBench;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TESeasoningRack;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEServer;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TileTank;
+import com.globbypotato.rockhounding_chemistry.machines.tile.collateral.TEServer;
+import com.globbypotato.rockhounding_chemistry.machines.tile.devices.TEPowerGenerator;
+import com.globbypotato.rockhounding_chemistry.machines.tile.devices.TESeasoningRack;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TECentrifuge;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TELabBlenderTank;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TELabOvenChamber;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEMineralSizerCabinet;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEMineralSizerCollector;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEMineralSizerTank;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEUnloader;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEEvaporationTank;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEFluidTank;
+import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 import com.globbypotato.rockhounding_core.enums.EnumFluidNbt;
 import com.globbypotato.rockhounding_core.machines.tileentity.IFluidHandlingTile;
 import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityInv;
@@ -119,20 +120,11 @@ public class MachinesA extends MachineIO {
 
         TileEntity te = world.getTileEntity(pos);
         if(world.getTileEntity(pos) != null){
-	        if(te instanceof TEMineralSizerController){
-	        	restoreMineralSizerControllerNBT(stack, te);
-	        }
 	        if(te instanceof TEFluidTank){
 	        	restoreFluidTankNBT(stack, te);
 	        }
 	        if(te instanceof TEPowerGenerator){
 	        	restorePowerGeneratorNBT(stack, te);
-	        }
-	        if(te instanceof TEFluidInputTank){
-	        	restoreLabOvenIntankNBT(stack, te);
-	        }
-	        if(te instanceof TEFluidOutputTank){
-	        	restoreLabOvenOuttankNBT(stack, te);
 	        }
 	        if(te instanceof TELabBlenderController){
 	        	TELabBlenderController chamber = (TELabBlenderController) world.getTileEntity(pos);
@@ -189,7 +181,7 @@ public class MachinesA extends MachineIO {
 		}
 	}
 
-	private static void checkBaseBlocks(World world, IBlockState state, BlockPos pos) {
+	private void checkBaseBlocks(World world, IBlockState state, BlockPos pos) {
 		TileEntity te = world.getTileEntity(pos);
 		TileEntity teDown = world.getTileEntity(pos.down());
 		if(teDown == null || 
@@ -207,23 +199,6 @@ public class MachinesA extends MachineIO {
 		int meta = state.getBlock().getMetaFromState(state);
         return meta == EnumMachinesA.EVAPORATION_TANK.ordinal() ? TANK_BLOCK_AABB : FULL_BLOCK_AABB;
     }
-
-	@Override
-	public void breakBlock(World world, BlockPos pos, IBlockState state){
-		TileEntity te = world.getTileEntity(pos);
-		if (te instanceof TEMineralSizerController){
-			TEMineralSizerController sizer = (TEMineralSizerController)te;
-			if(sizer.hasTankA()){
-				sizer.getTankA().activation = false;
-				sizer.getTankA().markDirtyClient();
-			}
-			if(sizer.hasTankB()){
-				sizer.getTankB().activation = false;
-				sizer.getTankB().markDirtyClient();
-			}
-		}
-		super.breakBlock(world, pos, state);
-	}
 
 	public boolean canEmitSignal(IBlockState state){
 		int meta = state.getBlock().getMetaFromState(state);
@@ -262,8 +237,8 @@ public class MachinesA extends MachineIO {
 	@Override
 	public TileEntity createTileEntity(World world, IBlockState state) {
 		int meta = state.getBlock().getMetaFromState(state);
-		if(meta == EnumMachinesA.SIZER_CONTROLLER.ordinal()){
-			return new TEMineralSizerController();
+		if(meta == EnumMachinesA.SIZER_CABINET.ordinal()){
+			return new TEMineralSizerCabinet();
 		}else if(meta == EnumMachinesA.SIZER_TANK.ordinal()){
 			return new TEMineralSizerTank();
 		}else if(meta == EnumMachinesA.POWER_GENERATOR.ordinal()){
@@ -276,10 +251,10 @@ public class MachinesA extends MachineIO {
 			return new TELabOvenController();
 		}else if(meta == EnumMachinesA.LAB_OVEN_CHAMBER.ordinal()){
 			return new TELabOvenChamber();
-		}else if(meta == EnumMachinesA.FLUID_INPUT_TANK.ordinal()){
-			return new TEFluidInputTank();
-		}else if(meta == EnumMachinesA.FLUID_OUTPUT_TANK.ordinal()){
-			return new TEFluidOutputTank();
+		}else if(meta == EnumMachinesA.CENTRIFUGE.ordinal()){
+			return new TECentrifuge();
+		}else if(meta == EnumMachinesA.UNLOADER.ordinal()){
+			return new TEUnloader();
 		}else if(meta == EnumMachinesA.LAB_BLENDER_CONTROLLER.ordinal()){
 			return new TELabBlenderController();
 		}else if(meta == EnumMachinesA.LAB_BLENDER_TANK.ordinal()){
@@ -293,7 +268,7 @@ public class MachinesA extends MachineIO {
 		}else if(meta == EnumMachinesA.SERVER.ordinal()){
 			return new TEServer();
 		}else if(meta == EnumMachinesA.GAS_EXPANDER.ordinal()){
-			return new TEGasExpander();
+			return new TEGasExpanderController();
 		}
 		return null;
 	}
@@ -316,14 +291,21 @@ public class MachinesA extends MachineIO {
 					return false;
 				}
 	
-				if(meta == EnumMachinesA.SIZER_CONTROLLER.ordinal()){
-					player.openGui(Rhchemistry.instance, GuiHandler.mineral_sizer_controller_id, world, pos.getX(), pos.getY(), pos.getZ());
+				if(meta == EnumMachinesA.SIZER_CABINET.ordinal()){
+					player.openGui(Rhchemistry.instance, GuiHandler.mineral_sizer_cabinet_id, world, pos.getX(), pos.getY(), pos.getZ());
 				}
 				if(meta == EnumMachinesA.SIZER_TANK.ordinal()){
 					player.openGui(Rhchemistry.instance, GuiHandler.mineral_sizer_tank_id, world, pos.getX(), pos.getY(), pos.getZ());
 				}
 				if(meta == EnumMachinesA.POWER_GENERATOR.ordinal()){
-					player.openGui(Rhchemistry.instance, GuiHandler.power_generator_id, world, pos.getX(), pos.getY(), pos.getZ());
+					if(!player.isSneaking()) {
+						if(!canInsertUpgrade(world, player, pos, BaseRecipes.heat_inductor, TEPowerGenerator.INDUCTOR_SLOT) && !canInsertUpgrade(world, player, pos, BaseRecipes.gas_turbine, TEPowerGenerator.TURBINE_SLOT)) {
+							player.openGui(Rhchemistry.instance, GuiHandler.power_generator_id, world, pos.getX(), pos.getY(), pos.getZ());
+						}
+					}else {
+						tryExtractUpgrade(world, player, pos, TEPowerGenerator.INDUCTOR_SLOT);
+						tryExtractUpgrade(world, player, pos, TEPowerGenerator.TURBINE_SLOT);
+					}
 				}
 				if(meta == EnumMachinesA.SIZER_COLLECTOR.ordinal()){
 					player.openGui(Rhchemistry.instance, GuiHandler.mineral_sizer_collector_id, world, pos.getX(), pos.getY(), pos.getZ());
@@ -332,18 +314,27 @@ public class MachinesA extends MachineIO {
 					player.openGui(Rhchemistry.instance, GuiHandler.fluid_tank_id, world, pos.getX(), pos.getY(), pos.getZ());
 				}
 				if(meta == EnumMachinesA.LAB_OVEN_CONTROLLER.ordinal()){
-					player.openGui(Rhchemistry.instance, GuiHandler.lab_oven_controller_id, world, pos.getX(), pos.getY(), pos.getZ());
-				}
-				if(meta == EnumMachinesA.LAB_OVEN_CHAMBER.ordinal()){
-					if(world.getTileEntity(pos.up(1)) != null && world.getTileEntity(pos.up(1)) instanceof TELabOvenController){
-						player.openGui(Rhchemistry.instance, GuiHandler.lab_oven_controller_id, world, pos.getX(), pos.getY() + 1, pos.getZ());
+					if(!player.isSneaking()) {
+						if(!canInsertUpgrade(world, player, pos, BaseRecipes.speed_upgrade, TELabOvenController.SPEED_SLOT)) {
+							player.openGui(Rhchemistry.instance, GuiHandler.lab_oven_controller_id, world, pos.getX(), pos.getY(), pos.getZ());
+						}
+					}else {
+						tryExtractUpgrade(world, player, pos, TELabOvenController.SPEED_SLOT);
 					}
 				}
-				if(meta == EnumMachinesA.FLUID_INPUT_TANK.ordinal()){
-					player.openGui(Rhchemistry.instance, GuiHandler.lab_oven_intank_id, world, pos.getX(), pos.getY(), pos.getZ());
+				if(meta == EnumMachinesA.LAB_OVEN_CHAMBER.ordinal()){
+					if(!player.isSneaking()) {
+						if(!canInsertUpgrade(world, player, pos.up(), BaseRecipes.speed_upgrade, TELabOvenController.SPEED_SLOT)) {
+							if(world.getTileEntity(pos.up()) != null && world.getTileEntity(pos.up()) instanceof TELabOvenController){
+								player.openGui(Rhchemistry.instance, GuiHandler.lab_oven_controller_id, world, pos.getX(), pos.getY() + 1, pos.getZ());
+							}
+						}
+					}else {
+						tryExtractUpgrade(world, player, pos.up(), TELabOvenController.SPEED_SLOT);
+					}
 				}
-				if(meta == EnumMachinesA.FLUID_OUTPUT_TANK.ordinal()){
-					player.openGui(Rhchemistry.instance, GuiHandler.lab_oven_outtank_id, world, pos.getX(), pos.getY(), pos.getZ());
+				if(meta == EnumMachinesA.UNLOADER.ordinal()){
+					player.openGui(Rhchemistry.instance, GuiHandler.unloader_id, world, pos.getX(), pos.getY(), pos.getZ());
 				}
 				if(meta == EnumMachinesA.LAB_BLENDER_CONTROLLER.ordinal()){
 					player.openGui(Rhchemistry.instance, GuiHandler.lab_blender_controller_id, world, pos.getX(), pos.getY(), pos.getZ());
@@ -427,7 +418,13 @@ public class MachinesA extends MachineIO {
 					player.openGui(Rhchemistry.instance, GuiHandler.server_id, world, pos.getX(), pos.getY(), pos.getZ());
 				}
 				if(meta == EnumMachinesA.GAS_EXPANDER.ordinal()){
-					player.openGui(Rhchemistry.instance, GuiHandler.gas_expander_id, world, pos.getX(), pos.getY(), pos.getZ());
+					if(!player.isSneaking()) {
+						if(!canInsertUpgrade(world, player, pos, BaseRecipes.speed_upgrade, TEGasExpanderController.SPEED_SLOT)) {
+							player.openGui(Rhchemistry.instance, GuiHandler.gas_expander_id, world, pos.getX(), pos.getY(), pos.getZ());
+						}
+					}else {
+						tryExtractUpgrade(world, player, pos, TEGasExpanderController.SPEED_SLOT);
+					}
 				}
 			}
 		}
@@ -508,20 +505,11 @@ public class MachinesA extends MachineIO {
 
         	MachinesUtils.addMachineNbt(itemstack, te);
 
-        	if(te instanceof TEMineralSizerController){
-        		addMineralSizerControllerNbt(itemstack, te);
-        	}
         	if(te instanceof TEFluidTank){
         		addFluidTankNbt(itemstack, te);
         	}
         	if(te instanceof TEPowerGenerator){
         		addPowerGeneratorNbt(itemstack, te);
-        	}
-        	if(te instanceof TEFluidInputTank){
-        		addLabOvenIntankNbt(itemstack, te);
-        	}
-        	if(te instanceof TEFluidOutputTank){
-        		addLabOvenOuttankNbt(itemstack, te);
         	}
         }
         if (!itemstack.isEmpty()){
@@ -571,88 +559,6 @@ public class MachinesA extends MachineIO {
     	}
 	}
 
-	private static void addMineralSizerControllerNbt(ItemStack itemstack, TileEntity te) {
-		TEMineralSizerController controller = ((TEMineralSizerController)te);
-    	itemstack.getTagCompound().setInteger("Comminution", controller.getComminution());
-	}
-	private static void restoreMineralSizerControllerNBT(ItemStack stack, TileEntity te) {
-		TEMineralSizerController controller = ((TEMineralSizerController)te);
-		if(stack.hasTagCompound() && controller != null){
-			if(stack.getTagCompound().hasKey("Comminution")){
-	        	int comm = stack.getTagCompound().getInteger("Comminution");
-	        	controller.comminution = comm;
-			}
-		}
-	}
 
-    private static void addLabOvenIntankNbt(ItemStack itemstack, TileEntity te) {
-    	TEFluidInputTank tank = ((TEFluidInputTank)te);
-		NBTTagCompound solvent = new NBTTagCompound(); 
-		if(tank.solventTank.getFluid() != null){
-			tank.solventTank.getFluid().writeToNBT(solvent);
-			itemstack.getTagCompound().setTag(EnumFluidNbt.SOLVENT.nameTag(), solvent);
-		}
-		if(tank.getFilterSolvent() != null){
-	        NBTTagCompound filterSolventNBT = new NBTTagCompound();
-	        tank.filterSolvent.writeToNBT(filterSolventNBT);
-	        itemstack.getTagCompound().setTag("FilterSolvent", filterSolventNBT);
-		}
-
-		NBTTagCompound reagent = new NBTTagCompound(); 
-		if(tank.reagentTank.getFluid() != null){
-			tank.reagentTank.getFluid().writeToNBT(reagent);
-			itemstack.getTagCompound().setTag(EnumFluidNbt.REAGENT.nameTag(), reagent);
-		}
-		if(tank.getFilterReagent() != null){
-	        NBTTagCompound filterReagentNBT = new NBTTagCompound();
-	        tank.filterReagent.writeToNBT(filterReagentNBT);
-	        itemstack.getTagCompound().setTag("FilterReagent", filterReagentNBT);
-		}
-
-	}
-    private static void restoreLabOvenIntankNBT(ItemStack stack, TileEntity te) {
-    	TEFluidInputTank tank = ((TEFluidInputTank)te);
-    	if(stack.hasTagCompound() && tank != null){
-			if(stack.getTagCompound().hasKey(EnumFluidNbt.SOLVENT.nameTag())){
-				tank.solventTank.setFluid(FluidStack.loadFluidStackFromNBT(stack.getTagCompound().getCompoundTag(EnumFluidNbt.SOLVENT.nameTag())));
-			}
-			if(stack.getTagCompound().hasKey("FilterSolvent")){
-				tank.filterSolvent = FluidStack.loadFluidStackFromNBT(stack.getTagCompound().getCompoundTag("FilterSolvent"));
-			}
-			if(stack.getTagCompound().hasKey(EnumFluidNbt.REAGENT.nameTag())){
-				tank.reagentTank.setFluid(FluidStack.loadFluidStackFromNBT(stack.getTagCompound().getCompoundTag(EnumFluidNbt.REAGENT.nameTag())));
-			}
-			if(stack.getTagCompound().hasKey("FilterReagent")){
-				tank.filterReagent = FluidStack.loadFluidStackFromNBT(stack.getTagCompound().getCompoundTag("FilterReagent"));
-			}
-    	}
-	}
-
-    private static void addLabOvenOuttankNbt(ItemStack itemstack, TileEntity te) {
-    	TEFluidOutputTank tank = ((TEFluidOutputTank)te);
-		NBTTagCompound solution = new NBTTagCompound(); 
-		if(tank.solutionTank.getFluid() != null){
-			tank.solutionTank.getFluid().writeToNBT(solution);
-			itemstack.getTagCompound().setTag(EnumFluidNbt.SOLUTION.nameTag(), solution);
-		}
-
-		NBTTagCompound byproduct = new NBTTagCompound(); 
-		if(tank.byproductTank.getFluid() != null){
-			tank.byproductTank.getFluid().writeToNBT(byproduct);
-			itemstack.getTagCompound().setTag(EnumFluidNbt.BYPRODUCT.nameTag(), byproduct);
-		}
-
-	}
-    private static void restoreLabOvenOuttankNBT(ItemStack stack, TileEntity te) {
-    	TEFluidOutputTank tank = ((TEFluidOutputTank)te);
-    	if(stack.hasTagCompound() && tank != null){
-			if(stack.getTagCompound().hasKey(EnumFluidNbt.SOLUTION.nameTag())){
-				tank.solutionTank.setFluid(FluidStack.loadFluidStackFromNBT(stack.getTagCompound().getCompoundTag(EnumFluidNbt.SOLUTION.nameTag())));
-			}
-			if(stack.getTagCompound().hasKey(EnumFluidNbt.BYPRODUCT.nameTag())){
-				tank.byproductTank.setFluid(FluidStack.loadFluidStackFromNBT(stack.getTagCompound().getCompoundTag(EnumFluidNbt.BYPRODUCT.nameTag())));
-			}
-    	}
-	}
 
 }

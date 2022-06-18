@@ -1,9 +1,8 @@
 package com.globbypotato.rockhounding_chemistry.machines.recipe;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
-import com.globbypotato.rockhounding_chemistry.ModItems;
-import com.globbypotato.rockhounding_chemistry.enums.materials.EnumChemicals;
 import com.globbypotato.rockhounding_chemistry.enums.materials.EnumFluid;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.GasifierPlantRecipe;
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
@@ -11,7 +10,6 @@ import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.utils.CoreBasics;
 import com.globbypotato.rockhounding_core.utils.CoreUtils;
 
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Loader;
 
 public class GasifierPlantRecipes extends BaseRecipes{
@@ -21,34 +19,46 @@ public class GasifierPlantRecipes extends BaseRecipes{
 		gasifier_plant_recipes.add(new GasifierPlantRecipe(		getFluid(EnumFluid.COAL_SLURRY, 120), 		
 																CoreBasics.waterStack(300), 			
 																getFluid(EnumFluid.RAW_SYNGAS, 100), 
-																new ItemStack(ModItems.CHEMICAL_ITEMS, 1, EnumChemicals.COAL_TAR_COMPOUND.ordinal()), 	
-																new ItemStack(ModItems.CHEMICAL_ITEMS, 1, EnumChemicals.SULFUR_COMPOUND.ordinal()), 800));
+																Arrays.asList(	"compoundTar", "compoundSulfur", "compoundFlyash"), 
+																Arrays.asList(	15, 10, 7),
+																800));
 
 		gasifier_plant_recipes.add(new GasifierPlantRecipe(		getFluid(EnumFluid.ORGANIC_SLURRY, 140), 
 																CoreBasics.waterStack(400), 			
 																getFluid(EnumFluid.RAW_SYNGAS, 100), 	
-																ItemStack.EMPTY, 	
-																ItemStack.EMPTY, 600));
+																Arrays.asList(), 
+																Arrays.asList(),
+																600));
 
 		gasifier_plant_recipes.add(new GasifierPlantRecipe(		CoreBasics.waterStack(100), 	
 																CoreBasics.waterStack(200), 		
 																getFluid(EnumFluid.WATER_VAPOUR, 200), 	
-																ItemStack.EMPTY, 	
-																ItemStack.EMPTY, 400));
+																Arrays.asList(), 
+																Arrays.asList(),
+																400));
 
 		gasifier_plant_recipes.add(new GasifierPlantRecipe(		getFluid(EnumFluid.TOXIC_WASTE, 130), 	
 																CoreBasics.waterStack(500), 			
 																getFluid(EnumFluid.RAW_FLUE_GAS, 150), 	
-																new ItemStack(ModItems.CHEMICAL_ITEMS, 1, EnumChemicals.SULFUR_COMPOUND.ordinal()), 	
-																ItemStack.EMPTY, 1000));
+																Arrays.asList(	"compoundFlyash", "compoundSulfur"), 
+																Arrays.asList(	10, 8),
+																1000));
+
+		gasifier_plant_recipes.add(new GasifierPlantRecipe(		getFluid(EnumFluid.TOXIC_SLUDGE, 130), 	
+																CoreBasics.waterStack(500), 			
+																getFluid(EnumFluid.RAW_FLUE_GAS, 100), 	
+																Arrays.asList(	"compoundFlyash", "compoundSulfur"), 
+																Arrays.asList(	8, 5),
+																1000));
 
 		if(Loader.isModLoaded(ModUtils.forestry_id)){
 			if(CoreUtils.fluidExists(ModUtils.forestry_biomass)){
 				gasifier_plant_recipes.add(new GasifierPlantRecipe(		CoreUtils.getFluid(ModUtils.forestry_id, 120),
 																		CoreBasics.waterStack(300), 			
 																		getFluid(EnumFluid.RAW_SYNGAS, 100), 	
-																		ItemStack.EMPTY, 	
-																		ItemStack.EMPTY, 600));
+																		Arrays.asList(), 
+																		Arrays.asList(),
+																		600));
 			}
 		}
 

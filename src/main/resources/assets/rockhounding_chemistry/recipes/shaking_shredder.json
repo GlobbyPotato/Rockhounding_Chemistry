@@ -1,0 +1,27 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:machines",
+	"pattern": [
+		" H ",
+		"GGG",
+		"CAC"
+	],
+	"key": {
+		"A":{
+				"item": "#AUXILIARY_ENGINE"
+			},
+		"H":{
+				"item": "#HOPPER"
+			},
+		"G":{
+				"item": "#CRUSHING_GEAR"
+			},
+		"C":{
+				"item": "#SCAFFOLD"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:machines_f",
+				"data": 10
+			}
+}

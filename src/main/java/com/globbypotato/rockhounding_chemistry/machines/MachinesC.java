@@ -10,22 +10,24 @@ import com.globbypotato.rockhounding_chemistry.Rhchemistry;
 import com.globbypotato.rockhounding_chemistry.enums.machines.EnumMachinesC;
 import com.globbypotato.rockhounding_chemistry.handlers.GuiHandler;
 import com.globbypotato.rockhounding_chemistry.machines.io.MachineIO;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEElementsCabinetBase;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEElementsCabinetTop;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEExtractorBalance;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.ElementsCabinetRecipe;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TEExtractorController;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEExtractorInjector;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEExtractorReactor;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEExtractorStabilizer;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TEGanController;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEGasCondenser;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TELeachingVatCollector;
+import com.globbypotato.rockhounding_chemistry.machines.tile.TEGasCondenserController;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TELeachingVatController;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TELeachingVatTank;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEMultivessel;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TEReformerController;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEReformerReactor;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TERetentionVat;
+import com.globbypotato.rockhounding_chemistry.machines.tile.TERetentionVatController;
+import com.globbypotato.rockhounding_chemistry.machines.tile.collateral.TEElementsCabinetBase;
+import com.globbypotato.rockhounding_chemistry.machines.tile.collateral.TEElementsCabinetTop;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEExtractorBalance;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEExtractorGlassware;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEExtractorReactor;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEExtractorStabilizer;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TELeachingVatTank;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEReformerReactor;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TESpecimenCollector;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEMultivessel;
+import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 import com.globbypotato.rockhounding_core.enums.EnumFluidNbt;
 import com.globbypotato.rockhounding_core.machines.tileentity.IFluidHandlingTile;
 import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityInv;
@@ -190,7 +192,7 @@ public class MachinesC extends MachineIO {
 		}
 	}
 
-	private static void checkBaseBlocks(World world, IBlockState state, BlockPos pos) {
+	private void checkBaseBlocks(World world, IBlockState state, BlockPos pos) {
 		TileEntity te = world.getTileEntity(pos);
 		TileEntity teDown = world.getTileEntity(pos.down());
 		if(teDown == null || 
@@ -213,7 +215,7 @@ public class MachinesC extends MachineIO {
 			return new TEGanController();
 		}
 		if(meta == EnumMachinesC.GAS_CONDENSER.ordinal()){
-			return new TEGasCondenser();
+			return new TEGasCondenserController();
 		}
 		if(meta == EnumMachinesC.MULTIVESSEL.ordinal()){
 			return new TEMultivessel();
@@ -224,11 +226,11 @@ public class MachinesC extends MachineIO {
 		if(meta == EnumMachinesC.LEACHING_VAT_TANK.ordinal()){
 			return new TELeachingVatTank();
 		}
-		if(meta == EnumMachinesC.LEACHING_VAT_COLLECTOR.ordinal()){
-			return new TELeachingVatCollector();
+		if(meta == EnumMachinesC.SPECIMEN_COLLECTOR.ordinal()){
+			return new TESpecimenCollector();
 		}
-		if(meta == EnumMachinesC.RETENTION_VAT.ordinal()){
-			return new TERetentionVat();
+		if(meta == EnumMachinesC.RETENTION_VAT_CONTROLLER.ordinal()){
+			return new TERetentionVatController();
 		}
 		if(meta == EnumMachinesC.EXTRACTOR_CONTROLLER.ordinal()){
 			return new TEExtractorController();
@@ -242,8 +244,8 @@ public class MachinesC extends MachineIO {
 		if(meta == EnumMachinesC.ELEMENTS_CABINET_TOP.ordinal()){
 			return new TEElementsCabinetTop();
 		}
-		if(meta == EnumMachinesC.EXTRACTOR_INJECTOR.ordinal()){
-			return new TEExtractorInjector();
+		if(meta == EnumMachinesC.EXTRACTOR_GLASSWARE.ordinal()){
+			return new TEExtractorGlassware();
 		}
 		if(meta == EnumMachinesC.EXTRACTOR_BALANCE.ordinal()){
 			return new TEExtractorBalance();
@@ -281,47 +283,114 @@ public class MachinesC extends MachineIO {
 				}
 	
 				if(meta == EnumMachinesC.GAN_CONTROLLER.ordinal()){
-		    		player.openGui(Rhchemistry.instance, GuiHandler.gan_controller_id, world, pos.getX(), pos.getY(), pos.getZ());
+					if(!player.isSneaking()) {
+						if(!canInsertUpgrade(world, player, pos, BaseRecipes.speed_upgrade, TEGanController.SPEED_SLOT)) {
+							player.openGui(Rhchemistry.instance, GuiHandler.gan_controller_id, world, pos.getX(), pos.getY(), pos.getZ());
+						}
+					}else {
+						tryExtractUpgrade(world, player, pos, TEGanController.SPEED_SLOT);
+					}
 				}
 				if(meta == EnumMachinesC.MULTIVESSEL.ordinal()){
 		    		player.openGui(Rhchemistry.instance, GuiHandler.multivessel_id, world, pos.getX(), pos.getY(), pos.getZ());
 				}
 				if(meta == EnumMachinesC.GAS_CONDENSER.ordinal()){
-		    		player.openGui(Rhchemistry.instance, GuiHandler.gas_condenser_id, world, pos.getX(), pos.getY(), pos.getZ());
+					if(!player.isSneaking()) {
+						if(!canInsertUpgrade(world, player, pos, BaseRecipes.speed_upgrade, TEGasCondenserController.SPEED_SLOT)) {
+							player.openGui(Rhchemistry.instance, GuiHandler.gas_condenser_id, world, pos.getX(), pos.getY(), pos.getZ());
+						}
+					}else {
+						tryExtractUpgrade(world, player, pos, TEGasCondenserController.SPEED_SLOT);
+					}
 				}
 				if(meta == EnumMachinesC.LEACHING_VAT_CONTROLLER.ordinal()){
-		    		player.openGui(Rhchemistry.instance, GuiHandler.leaching_vat_controller_id, world, pos.getX(), pos.getY(), pos.getZ());
+					if(!player.isSneaking()) {
+						if(!canInsertUpgrade(world, player, pos, BaseRecipes.speed_upgrade, TELeachingVatController.SPEED_SLOT) && !canInsertUpgrade(world, player, pos, BaseRecipes.filter_upgrade, TERetentionVatController.FILTER_SLOT)) {
+							player.openGui(Rhchemistry.instance, GuiHandler.leaching_vat_controller_id, world, pos.getX(), pos.getY(), pos.getZ());
+						}
+					}else {
+						tryExtractUpgrade(world, player, pos, TELeachingVatController.SPEED_SLOT);
+					}
 				}
 				if(meta == EnumMachinesC.LEACHING_VAT_TANK.ordinal()){
-		    		player.openGui(Rhchemistry.instance, GuiHandler.leaching_vat_tank_id, world, pos.getX(), pos.getY(), pos.getZ());
+					if(!player.isSneaking()) {
+						if(!canInsertConsumable(world, player, pos, BaseRecipes.slurry_agitator, TileEntityInv.INPUT_SLOT)) {
+							player.openGui(Rhchemistry.instance, GuiHandler.leaching_vat_tank_id, world, pos.getX(), pos.getY(), pos.getZ());
+						}
+					}else {
+						tryExtractConsumable(world, player, pos, TileEntityInv.INPUT_SLOT);
+					}
 				}
-				if(meta == EnumMachinesC.LEACHING_VAT_COLLECTOR.ordinal()){
+				if(meta == EnumMachinesC.SPECIMEN_COLLECTOR.ordinal()){
 		    		player.openGui(Rhchemistry.instance, GuiHandler.leaching_vat_collector_id, world, pos.getX(), pos.getY(), pos.getZ());
 				}
-				if(meta == EnumMachinesC.RETENTION_VAT.ordinal()){
-		    		player.openGui(Rhchemistry.instance, GuiHandler.retention_vat_id, world, pos.getX(), pos.getY(), pos.getZ());
-				}
-				if(meta == EnumMachinesC.EXTRACTOR_INJECTOR.ordinal()){
-		    		player.openGui(Rhchemistry.instance, GuiHandler.extraction_injector_id, world, pos.getX(), pos.getY(), pos.getZ());
+				if(meta == EnumMachinesC.RETENTION_VAT_CONTROLLER.ordinal()){
+					if(!player.isSneaking()) {
+						if(!canInsertUpgrade(world, player, pos, BaseRecipes.speed_upgrade, TERetentionVatController.SPEED_SLOT) && !canInsertUpgrade(world, player, pos, BaseRecipes.filter_upgrade, TERetentionVatController.FILTER_SLOT)) {
+							player.openGui(Rhchemistry.instance, GuiHandler.retention_vat_id, world, pos.getX(), pos.getY(), pos.getZ());
+						}
+					}else {
+						tryExtractUpgrade(world, player, pos, TERetentionVatController.SPEED_SLOT);
+					}
 				}
 				if(meta == EnumMachinesC.ELEMENTS_CABINET_BASE.ordinal()){
-		    		player.openGui(Rhchemistry.instance, GuiHandler.extraction_cabinet_id, world, pos.getX(), pos.getY(), pos.getZ());
+					if(!player.isSneaking()) {
+						if(!canInsertConsumable(world, player, pos.up(), BaseRecipes.graduated_cylinder, TEElementsCabinetTop.CYLINDER_SLOT)) {
+				    		player.openGui(Rhchemistry.instance, GuiHandler.extraction_cabinet_id, world, pos.getX(), pos.getY(), pos.getZ());
+				    		TEElementsCabinetBase te = (TEElementsCabinetBase)world.getTileEntity(pos);
+							te.initializaCabinet();
+						}
+					}else {
+						tryExtractConsumable(world, player, pos.up(), TEElementsCabinetTop.CYLINDER_SLOT);
+					}
 				}
 				if(meta == EnumMachinesC.ELEMENTS_CABINET_TOP.ordinal()){
-					player.openGui(Rhchemistry.instance, GuiHandler.extraction_cabinet_injector_id, world, pos.getX(), pos.getY(), pos.getZ());
+					if(!player.isSneaking()) {
+						if(!canInsertConsumable(world, player, pos, BaseRecipes.graduated_cylinder, TEElementsCabinetTop.CYLINDER_SLOT)) {
+							player.openGui(Rhchemistry.instance, GuiHandler.extraction_cabinet_injector_id, world, pos.getX(), pos.getY(), pos.getZ());
+						}
+					}else {
+						tryExtractConsumable(world, player, pos, TEElementsCabinetTop.CYLINDER_SLOT);
+					}
 				}
 				if(meta == EnumMachinesC.EXTRACTOR_CONTROLLER.ordinal()){
-					player.openGui(Rhchemistry.instance, GuiHandler.extraction_controller_id, world, pos.getX(), pos.getY(), pos.getZ());
+					if(!player.isSneaking()) {
+						if(!canInsertUpgrade(world, player, pos, BaseRecipes.speed_upgrade, TEExtractorController.SPEED_SLOT)) {
+							player.openGui(Rhchemistry.instance, GuiHandler.extraction_controller_id, world, pos.getX(), pos.getY(), pos.getZ());
+						}
+					}else {
+						tryExtractUpgrade(world, player, pos, TEExtractorController.SPEED_SLOT);
+					}
+				}
+				if(meta == EnumMachinesC.EXTRACTOR_REACTOR.ordinal()){
+					TEExtractorReactor te = (TEExtractorReactor)world.getTileEntity(pos);
+					BlockPos extrPos = pos.offset(te.getFacing());
+					if(world.getTileEntity(extrPos) != null && world.getTileEntity(extrPos) instanceof TEExtractorController) {
+						if(!player.isSneaking()) {
+							if(!canInsertUpgrade(world, player, extrPos, BaseRecipes.speed_upgrade, TEExtractorController.SPEED_SLOT)) {
+								player.openGui(Rhchemistry.instance, GuiHandler.extraction_controller_id, world, extrPos.getX(), extrPos.getY(), extrPos.getZ());
+							}
+						}else {
+							tryExtractUpgrade(world, player, extrPos, TEExtractorController.SPEED_SLOT);
+						}
+					}
 				}
 				if(meta == EnumMachinesC.EXTRACTOR_STABILIZER.ordinal()){
 					player.openGui(Rhchemistry.instance, GuiHandler.extraction_stabilizer_id, world, pos.getX(), pos.getY(), pos.getZ());
 				}
 				if(meta == EnumMachinesC.REFORMER_CONTROLLER.ordinal()){
-					player.openGui(Rhchemistry.instance, GuiHandler.reformer_controller_id, world, pos.getX(), pos.getY(), pos.getZ());
+					if(!player.isSneaking()) {
+						if(!canInsertUpgrade(world, player, pos, BaseRecipes.speed_upgrade, TEReformerController.SPEED_SLOT)) {
+							player.openGui(Rhchemistry.instance, GuiHandler.reformer_controller_id, world, pos.getX(), pos.getY(), pos.getZ());
+						}
+					}else {
+						tryExtractUpgrade(world, player, pos, TEReformerController.SPEED_SLOT);
+					}
 				}
 				if(meta == EnumMachinesC.REFORMER_REACTOR.ordinal()){
 					player.openGui(Rhchemistry.instance, GuiHandler.reformer_reactor_id, world, pos.getX(), pos.getY(), pos.getZ());
 				}
+
 			}
 		}
 		return true;
@@ -519,21 +588,36 @@ public class MachinesC extends MachineIO {
 
 	private static void addCabinetNbt(ItemStack itemstack, TileEntity te) {
     	TEElementsCabinetBase cabinet = ((TEElementsCabinetBase)te);
-		NBTTagList quantityList = new NBTTagList();
-		for(int i = 0; i < cabinet.elementList.length; i++){
-			NBTTagCompound tagQuantity = new NBTTagCompound();
-			tagQuantity.setInteger("Element" + i, cabinet.elementList[i]);
-			quantityList.appendTag(tagQuantity);
+		NBTTagList recipes = new NBTTagList();
+		for(int i = 0; i < cabinet.MATERIAL_LIST.size(); i++){
+			NBTTagCompound elements = new NBTTagCompound();
+			elements.setByte("Elements", (byte)i);
+			elements.setString("symbol" + i, cabinet.MATERIAL_LIST.get(i).getSymbol());
+			elements.setString("oredict" + i, cabinet.MATERIAL_LIST.get(i).getOredict());
+			elements.setString("name" + i, cabinet.MATERIAL_LIST.get(i).getName());
+			elements.setInteger("amount" + i, cabinet.MATERIAL_LIST.get(i).getAmount());
+			elements.setBoolean("extraction" + i, cabinet.MATERIAL_LIST.get(i).getExtraction());
+			recipes.appendTag(elements);
 		}
-		itemstack.getTagCompound().setTag("ElementsList", quantityList);
+		itemstack.getTagCompound().setTag("MaterialList", recipes);
 	}
 	private static void restoreCabinetNBT(ItemStack itemstack, TileEntity te) {
-    	TEElementsCabinetBase cabinet = ((TEElementsCabinetBase)te);
-		if(itemstack.hasTagCompound() && itemstack.getTagCompound().hasKey("ElementsList")){
-			NBTTagList quantityList = itemstack.getTagCompound().getTagList("ElementsList", Constants.NBT.TAG_COMPOUND);
-			for(int i = 0; i < quantityList.tagCount(); i++){
-				NBTTagCompound getQuantities = quantityList.getCompoundTagAt(i);
-				cabinet.elementList[i] = getQuantities.getInteger("Element" + i);
+		TEElementsCabinetBase cabinet = ((TEElementsCabinetBase)te);
+		if(itemstack.hasTagCompound() && itemstack.getTagCompound().hasKey("MaterialList")){
+			NBTTagList recipes = itemstack.getTagCompound().getTagList("MaterialList", Constants.NBT.TAG_COMPOUND);
+			if(recipes.tagCount() > 0) {
+				cabinet.MATERIAL_LIST.clear();
+				for(int i = 0; i < recipes.tagCount(); i++){
+					NBTTagCompound elements = recipes.getCompoundTagAt(i);
+		            int j = elements.getByte("Elements");
+					String symbol = elements.getString("symbol" + j);
+					String oredict = elements.getString("oredict" + j);
+					String name = elements.getString("name" + j);
+					int amount = elements.getInteger("amount" + j);
+					boolean extraction = elements.getBoolean("extraction" + j);
+					cabinet.MATERIAL_LIST.add(j, new ElementsCabinetRecipe(symbol, oredict, name, amount, extraction));
+				}
+				cabinet.reloadCabinet();
 			}
 		}
 	}

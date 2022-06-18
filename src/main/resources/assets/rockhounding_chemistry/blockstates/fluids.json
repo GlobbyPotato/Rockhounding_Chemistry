@@ -20,6 +20,7 @@
 		"liquid_nitrogen": 			[{"custom": {"fluid": "liquid_nitrogen"}}],
 		"liquid_oxygen": 			[{"custom": {"fluid": "liquid_oxygen"}}],
 		"methanol": 				[{"custom": {"fluid": "methanol"}}],
+		"xpjuice": 					[{"custom": {"fluid": "xpjuice"}}],
 
 		"syngas": 					[{"custom": {"fluid": "syngas"}}],
 		"raw_syngas": 				[{"custom": {"fluid": "raw_syngas"}}],

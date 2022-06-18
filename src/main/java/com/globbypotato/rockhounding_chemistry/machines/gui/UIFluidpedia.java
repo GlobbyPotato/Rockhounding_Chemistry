@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.COFluidpedia;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEFluidpedia;
+import com.globbypotato.rockhounding_chemistry.machines.tile.collateral.TEFluidpedia;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.machines.gui.GuiUtils;
 
@@ -29,12 +29,12 @@ public class UIFluidpedia extends GuiBase {
     InventoryPlayer playerInv;
 
     public UIFluidpedia(InventoryPlayer playerInv, TEFluidpedia tile){
-    	super(new COFluidpedia(playerInv,tile), 208);
+    	super(new COFluidpedia(playerInv,tile), 209);
         GuiBase.TEXTURE = TEXTURE_REF;
         this.tile = tile;
 		this.containerName = "container." + TEFluidpedia.getName();
-		this.xSize = 208;
-		this.ySize = 208;
+		this.xSize = 209;
+		this.ySize = 209;
 		this.playerInv = playerInv;
     }
 
@@ -47,44 +47,32 @@ public class UIFluidpedia extends GuiBase {
 	   List<String> tooltip;
 	   String[] multiString;
 
-	   //-- char
-	   if(GuiUtils.hoveringArea(29, 97, 16, 16, mouseX, mouseY, x, y)){
-		   tooltip = GuiUtils.drawLabel("Previous Char", mouseX, mouseY);
-		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
-	   }
-
-	   //++ char
-	   if(GuiUtils.hoveringArea(54, 97, 16, 16, mouseX, mouseY, x, y)){
-		   tooltip = GuiUtils.drawLabel("Next Char", mouseX, mouseY);
-		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
-	   }
-
 	   //-- page
-	   if(GuiUtils.hoveringArea(73, 97, 16, 16, mouseX, mouseY, x, y)){
-		   tooltip = GuiUtils.drawLabel("Previous Page", mouseX, mouseY);
+	   if(GuiUtils.hoveringArea(120, 97, 16, 16, mouseX, mouseY, x, y)){
+		   tooltip = GuiUtils.drawLabel(this.prev_page_label, mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
 
 	   //++ page
-	   if(GuiUtils.hoveringArea(102, 97, 16, 16, mouseX, mouseY, x, y)){
-		   tooltip = GuiUtils.drawLabel("Next Page", mouseX, mouseY);
+	   if(GuiUtils.hoveringArea(152, 97, 16, 16, mouseX, mouseY, x, y)){
+		   tooltip = GuiUtils.drawLabel(this.next_page_label, mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
 
 	   //all
-	   if(GuiUtils.hoveringArea(121, 97, 16, 16, mouseX, mouseY, x, y)){
+	   if(GuiUtils.hoveringArea(69, 97, 16, 16, mouseX, mouseY, x, y)){
 		   tooltip = GuiUtils.drawLabel("Show All", mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
 
 	   //fluid
-	   if(GuiUtils.hoveringArea(137, 97, 16, 16, mouseX, mouseY, x, y)){
+	   if(GuiUtils.hoveringArea(86, 97, 16, 16, mouseX, mouseY, x, y)){
 		   tooltip = GuiUtils.drawLabel("Show Fluids", mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
 
 	   //gas
-	   if(GuiUtils.hoveringArea(153, 97, 16, 16, mouseX, mouseY, x, y)){
+	   if(GuiUtils.hoveringArea(104, 97, 16, 16, mouseX, mouseY, x, y)){
 		   tooltip = GuiUtils.drawLabel("Show Gases", mouseX, mouseY);
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
@@ -140,8 +128,7 @@ public class UIFluidpedia extends GuiBase {
 	@Override
 	public void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-		this.fontRenderer.drawString(this.tile.getAlphabet(), 47, 101, 4210752);
-		this.fontRenderer.drawString(String.valueOf(this.tile.getPage()), 90, 101, 4210752);
+		this.fontRenderer.drawString(String.valueOf(this.tile.getPage()), 138, 101, 4210752);
 	}
 
 	@Override
@@ -152,9 +139,9 @@ public class UIFluidpedia extends GuiBase {
         int j = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
 
-        int adjustedX = 122 + this.tile.getView() * 16;
+        int adjustedX = 70 + this.tile.getView() * 17;
         int adjustedV = this.tile.getView() * 14;
-   		this.drawTexturedModalRect(i + adjustedX, j + 98, 208, adjustedV, 14, 14);
+   		this.drawTexturedModalRect(i + adjustedX, j + 98, 209, adjustedV, 14, 14);
 
    		if(!this.tile.PAGED_FLUID_LIST.isEmpty() && this.tile.PAGED_FLUID_LIST.size() > 0){
 	        for (int u = 0; u < 4; ++u){

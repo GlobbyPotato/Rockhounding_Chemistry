@@ -14,7 +14,7 @@
 				"item": "#IRON_FOIL"
 			},
 		"A":{
-				"item": "rockhounding_chemistry:slurry_agitator"
+				"item": "#AGITATOR"
 			}
 	},
 	"result":{

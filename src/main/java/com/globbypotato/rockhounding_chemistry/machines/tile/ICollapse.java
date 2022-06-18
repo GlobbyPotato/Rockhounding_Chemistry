@@ -7,6 +7,7 @@ import java.util.Queue;
 import com.globbypotato.rockhounding_chemistry.ModBlocks;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.PollutantRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEExhaustionValve;
 import com.google.common.collect.Lists;
 
 import net.minecraft.block.material.Material;

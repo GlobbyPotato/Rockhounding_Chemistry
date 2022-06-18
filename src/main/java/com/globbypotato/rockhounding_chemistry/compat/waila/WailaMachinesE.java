@@ -4,17 +4,17 @@ import java.util.List;
 
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.machines.MachinesE;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEBufferTank;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TECatalystRegen;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEExhaustionValve;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEGasHolderBase;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEGasHolderTop;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEMultivessel;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEPressureVessel;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TESlurryDrum;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEStirredTankOut;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TETransposer;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEWaterPump;
+import com.globbypotato.rockhounding_chemistry.machines.tile.devices.TETransposer;
+import com.globbypotato.rockhounding_chemistry.machines.tile.devices.TEWaterPump;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEExhaustionValve;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEGasHolderTop;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEStirredTankOut;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEBufferTank;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEGasHolderBase;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEMultivessel;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEPressureVessel;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TESlurryDrum;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEWashingTank;
 
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
@@ -79,14 +79,6 @@ public class WailaMachinesE implements IWailaDataProvider{
 					}
 				}
 			}
-			if(te instanceof TECatalystRegen){
-				TECatalystRegen tank = (TECatalystRegen)te;
-				if(tank.hasInputFluid()){
-					currenttip.add(TextFormatting.GRAY + "Content: " + TextFormatting.WHITE + tank.getInputFluid().getLocalizedName() + " - " + TextFormatting.WHITE + tank.getInputAmount() + "/" + tank.getTankCapacity() + " mB");
-				}else{
-					currenttip.add(TextFormatting.GRAY + "Content: " + TextFormatting.WHITE + "Empty");
-				}
-			}
 			if(te instanceof TESlurryDrum){
 				TESlurryDrum tank = (TESlurryDrum)te;
 				if(tank.hasTankFluid()){
@@ -97,6 +89,14 @@ public class WailaMachinesE implements IWailaDataProvider{
 			}
 			if(te instanceof TEBufferTank){
 				TEBufferTank tank = (TEBufferTank)te;
+				if(tank.hasTankFluid()){
+					currenttip.add(TextFormatting.GRAY + "Content: " + TextFormatting.WHITE + tank.getTankFluid().getLocalizedName() + " - " + TextFormatting.WHITE + tank.getTankAmount() + "/" + tank.getTankCapacity() + " mB");
+				}else{
+					currenttip.add(TextFormatting.GRAY + "Content: " + TextFormatting.WHITE + "Empty");
+				}
+			}
+			if(te instanceof TEWashingTank){
+				TEWashingTank tank = (TEWashingTank)te;
 				if(tank.hasTankFluid()){
 					currenttip.add(TextFormatting.GRAY + "Content: " + TextFormatting.WHITE + tank.getTankFluid().getLocalizedName() + " - " + TextFormatting.WHITE + tank.getTankAmount() + "/" + tank.getTankCapacity() + " mB");
 				}else{

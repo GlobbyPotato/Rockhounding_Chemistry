@@ -17,13 +17,10 @@ public class COLeachingVatController extends ContainerBase<TELeachingVatControll
 	@Override
 	public void addOwnSlots() {
 		IItemHandler input = this.tile.getInput();
-		IItemHandler output = this.tile.getOutput();
 		IItemHandler template = this.tile.getTemplate();
 		IItemHandler upgrade = this.tile.getUpgrade();
 
 		this.addSlotToContainer(new SlotItemHandler(input, 0, 80, 28));//input
-
-		this.addSlotToContainer(new SlotItemHandler(output, 0, 8, 28));//purge
 
 		this.addSlotToContainer(new SlotItemHandler(template, 0, 80, 96));//activation
 		this.addSlotToContainer(new SlotItemHandler(template, 1, 57, 75));//lo
@@ -38,12 +35,12 @@ public class COLeachingVatController extends ContainerBase<TELeachingVatControll
 		if(slot == 0){
     		this.tile.dummyRecipe = null;
     		return super.slotClick(slot, dragType, clickTypeIn, player);
-		}else if(slot == 2){ 
+		}else if(slot == 1){ 
     		this.tile.dummyRecipe = null;
 			this.tile.activation = !this.tile.activation;
 			doClickSound(player, this.tile.getWorld(), this.tile.getPos());
 	    	return ItemStack.EMPTY;
-    	}else if(slot == 3){ 
+    	}else if(slot == 2){ 
     		this.tile.dummyRecipe = null;
 			if(this.tile.getGravity() > 0){
 				this.tile.gravity -= this.tile.filterMove();
@@ -51,7 +48,7 @@ public class COLeachingVatController extends ContainerBase<TELeachingVatControll
 			}
 			doClickSound(player, this.tile.getWorld(), this.tile.getPos());
         	return ItemStack.EMPTY;
-		}else if(slot == 4){
+		}else if(slot == 3){
     		this.tile.dummyRecipe = null;
 			if(this.tile.getGravity() <= 32.00F - (this.tile.filterMove()) ){
 				this.tile.gravity += this.tile.filterMove();
@@ -68,7 +65,7 @@ public class COLeachingVatController extends ContainerBase<TELeachingVatControll
 		if(super.mergeItemStack(stack, startIndex, 1, reverseDirection)){
 			return true;
 		}
-		return super.mergeItemStack(stack, 5, endIndex, reverseDirection);
+		return super.mergeItemStack(stack, 4, endIndex, reverseDirection);
     }
 
 }

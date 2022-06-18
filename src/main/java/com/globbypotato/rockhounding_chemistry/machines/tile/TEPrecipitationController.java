@@ -2,12 +2,17 @@ package com.globbypotato.rockhounding_chemistry.machines.tile;
 
 import java.util.ArrayList;
 
-import com.globbypotato.rockhounding_chemistry.ModItems;
-import com.globbypotato.rockhounding_chemistry.enums.EnumMiscItems;
 import com.globbypotato.rockhounding_chemistry.enums.utils.EnumServer;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.PrecipitationRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.PrecipitationRecipe;
+import com.globbypotato.rockhounding_chemistry.machines.tile.collateral.TEServer;
+import com.globbypotato.rockhounding_chemistry.machines.tile.devices.TEPowerGenerator;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEPrecipitationChamber;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEPrecipitationReactor;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEUnloader;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEBufferTank;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEFlotationTank;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.machines.tileentity.MachineStackHandler;
 import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityInv;
@@ -28,7 +33,6 @@ import net.minecraftforge.oredict.OreDictionary;
 public class TEPrecipitationController extends TileEntityInv implements IInternalServer{
 
 	public static int inputSlots = 2;
-	public static int outputSlots = 2;
 	public static int templateSlots = 3;
 	public static int upgradeSlots = 1;
 
@@ -44,7 +48,7 @@ public class TEPrecipitationController extends TileEntityInv implements IInterna
 	public boolean isRepeatable = false;
 
 	public TEPrecipitationController() {
-		super(inputSlots, outputSlots, templateSlots, upgradeSlots);
+		super(inputSlots, 0, templateSlots, upgradeSlots);
 
 		this.input =  new MachineStackHandler(inputSlots, this){
 			@Override
@@ -83,14 +87,6 @@ public class TEPrecipitationController extends TileEntityInv implements IInterna
 
 	public ItemStack catalystSlot(){
 		return this.input.getStackInSlot(CATALYST_SLOT);
-	}
-
-	public ItemStack soluteOutSlot(){
-		return this.output.getStackInSlot(SOLUTE_OUT_SLOT);
-	}
-
-	public ItemStack catalystOutSlot(){
-		return this.output.getStackInSlot(CATALYST_OUT_SLOT);
 	}
 
 	public ItemStack speedSlot() {
@@ -136,15 +132,15 @@ public class TEPrecipitationController extends TileEntityInv implements IInterna
 	//----------------------- CUSTOM -----------------------
 	boolean isValidInput(ItemStack stack) {
 		if(isValidPreset()){
-			if(recipeList().get(getRecipeIndex()).getType()){
+			if(recipeList().get(getSelectedRecipe()).getType()){
 				ArrayList<Integer> inputOreIDs = CoreUtils.intArrayToList(OreDictionary.getOreIDs(stack));
 				if(!inputOreIDs.isEmpty()){
-					if(inputOreIDs.contains(OreDictionary.getOreID(recipeList().get(getRecipeIndex()).getOredict()))){
+					if(inputOreIDs.contains(OreDictionary.getOreID(recipeList().get(getSelectedRecipe()).getOredict()))){
 						return true;
 					}
 				}
 			}else{
-				if(recipeList().get(getRecipeIndex()).getSolute().isItemEqual(stack)){
+				if(recipeList().get(getSelectedRecipe()).getSolute().isItemEqual(stack)){
 					return true;
 				}
 			}
@@ -169,7 +165,7 @@ public class TEPrecipitationController extends TileEntityInv implements IInterna
 
 	public PrecipitationRecipe getCurrentRecipe(){
 		if(isValidPreset()){
-			return getRecipeList(getRecipeIndex());
+			return getRecipeList(getSelectedRecipe());
 		}
 		return null;
 	}
@@ -179,7 +175,7 @@ public class TEPrecipitationController extends TileEntityInv implements IInterna
 	}
 
 	public boolean isValidPreset(){
-		return getRecipeIndex() > -1 && getRecipeIndex() < recipeList().size();
+		return getSelectedRecipe() > -1 && getSelectedRecipe() < recipeList().size();
 	}
 
 	public ItemStack recipeSolute(){ return isValidRecipe() ? getCurrentRecipe().getSolute() : ItemStack.EMPTY; }
@@ -187,6 +183,7 @@ public class TEPrecipitationController extends TileEntityInv implements IInterna
 	public FluidStack recipeSolvent(){ return isValidRecipe() ? getCurrentRecipe().getSolvent() : null; }
 	public FluidStack recipeSolution(){ return isValidRecipe() ? getCurrentRecipe().getSolution() : null; }
 	public ItemStack recipePrecipitate(){ return isValidRecipe() ? getCurrentRecipe().getPrecipitate() : ItemStack.EMPTY; }
+	public boolean oredictType(){ return isValidRecipe() ? getCurrentRecipe().getType() : false; }
 
 	public void doPreset() {
 		if(hasEngine()){
@@ -224,7 +221,8 @@ public class TEPrecipitationController extends TileEntityInv implements IInterna
 	//----------------------- STRUCTURE -----------------------
 //engine
 	public TEPowerGenerator getEngine(){
-		TEPowerGenerator engine = TileStructure.getEngine(this.world, chamberPos(), isFacingAt(270), 1, 0);
+		BlockPos enginePos = this.pos.offset(EnumFacing.DOWN).offset(isFacingAt(270));
+		TEPowerGenerator engine = TileStructure.getEngine(this.world, enginePos, isFacingAt(90));
 		return engine != null ? engine : null;
 	}
 
@@ -299,14 +297,14 @@ public class TEPrecipitationController extends TileEntityInv implements IInterna
 		return null;
 	}
 
-	public boolean hasReactors(){
+	public boolean hasReactor(){
 		return getReactor1() != null && getReactor2() != null;
 	}
 
 //in tank
 	public TEFlotationTank getIntank(){
 		BlockPos intankPos = this.pos.offset(getFacing(), 1);
-		TEFlotationTank tank = TileStructure.getFlotationTank(this.world, intankPos, EnumFacing.UP, 0);
+		TEFlotationTank tank = TileStructure.getFlotationTank(this.world, intankPos);
 		return tank != null ? tank : null;
 	}
 
@@ -317,12 +315,23 @@ public class TEPrecipitationController extends TileEntityInv implements IInterna
 //out tank
 	public TEBufferTank getOuttank(){
 		BlockPos outtankPos = this.pos.offset(getFacing(), 2);
-		TEBufferTank tank = TileStructure.getBufferTank(this.world, outtankPos, EnumFacing.UP, 0);
+		TEBufferTank tank = TileStructure.getBufferTank(this.world, outtankPos);
 		return tank != null ? tank : null;
 	}
 
 	public boolean hasOuttank(){
 		return getOuttank() != null;
+	}
+
+//Unloader
+	public TEUnloader getUnloader(){
+		BlockPos unloaderPos = this.pos.offset(EnumFacing.DOWN).offset(getFacing(), 3);
+		TEUnloader unloader = TileStructure.getUnloader(this.world, unloaderPos, getFacing().getOpposite());
+		return unloader != null ? unloader : null;
+	}
+
+	public boolean hasUnloader(){
+		return getUnloader() != null;
 	}
 
 //server
@@ -331,12 +340,16 @@ public class TEPrecipitationController extends TileEntityInv implements IInterna
 	}
 
 	public TEServer getServer(){
-		TEServer server = TileStructure.getServer(this.world, chamberPos(), getFacing(), 3, 0);
+		TEServer server = TileStructure.getServer(this.world, chamberPos().offset(getFacing(), 4), getFacing().getOpposite());
 		return server != null ? server : null;
 	}
 
 	public boolean hasServer(){
 		return getServer() != null;
+	}
+
+	private boolean isAssembled() {
+		return hasReactor() && hasUnloader();
 	}
 
 
@@ -348,7 +361,7 @@ public class TEPrecipitationController extends TileEntityInv implements IInterna
 			doPreset();
 			handlePurge();
 
-			initializeServer(isRepeatable, hasServer(), getServer(), deviceCode());
+			initializeServer(isRepeatable, getServer(), deviceCode(), this.recipeStep, 16);
 
 			if(isActive()){
 				if(canProcess()){
@@ -372,20 +385,18 @@ public class TEPrecipitationController extends TileEntityInv implements IInterna
 	}
 
 	private void handlePurge() {
-		if(isActive()){
+		if(isActive() && hasUnloader()){
 			if(!isValidPreset() || isValidRecipe()){
-				if(!soluteSlot().isEmpty() && !recipeSolute().isEmpty()){
-					if(!CoreUtils.isMatchingIngredient(recipeSolute(), soluteSlot())){
-						if(this.output.canSetOrStack(soluteOutSlot(), soluteSlot())){
-							this.output.setOrStack(SOLUTE_OUT_SLOT, soluteSlot());
-							this.input.setStackInSlot(SOLUTE_SLOT, ItemStack.EMPTY);
-						}
+				if(!soluteSlot().isEmpty() && isPurgeable()){
+					if(((MachineStackHandler) getUnloader().getOutput()).canSetOrStack(getUnloader().unloaderSlot(), soluteSlot())){
+						((MachineStackHandler) getUnloader().getOutput()).setOrStack(OUTPUT_SLOT, soluteSlot());
+						this.input.setStackInSlot(SOLUTE_SLOT, ItemStack.EMPTY);
 					}
 				}
 				if(!catalystSlot().isEmpty() && !recipeSolute().isEmpty()){
 					if(!catalystSlot().isItemEqualIgnoreDurability(recipeCatalyst()) ){
-						if(this.output.canSetOrStack(catalystOutSlot(), catalystSlot())){
-							this.output.setOrStack(CATALYST_OUT_SLOT, catalystSlot());
+						if(((MachineStackHandler) getUnloader().getOutput()).canSetOrStack(getUnloader().unloaderSlot(), catalystSlot())){
+							((MachineStackHandler) getUnloader().getOutput()).setOrStack(OUTPUT_SLOT, catalystSlot());
 							this.input.setStackInSlot(CATALYST_SLOT, ItemStack.EMPTY);
 						}
 					}
@@ -394,9 +405,23 @@ public class TEPrecipitationController extends TileEntityInv implements IInterna
 		}
 	}
 
+	private boolean isPurgeable() {
+		if(oredictType()){
+			ArrayList<Integer> inputOreIDs = CoreUtils.intArrayToList(OreDictionary.getOreIDs(soluteSlot()));
+			if(!inputOreIDs.contains(OreDictionary.getOreID(recipeList().get(getSelectedRecipe()).getOredict()))){
+				return true;
+			}
+		}else{
+			if(!CoreUtils.isMatchingIngredient(recipeSolute(), soluteSlot())){
+				return true;
+			}
+		}
+		return false;
+	}
+
 	private boolean canProcess() {
 		return isActive()
-			&& hasReactors()
+			&& isAssembled()
 			&& isValidRecipe()
 			&& hasFuelPower()
 			&& hasRedstonePower()
@@ -405,7 +430,7 @@ public class TEPrecipitationController extends TileEntityInv implements IInterna
 			&& handleSolvent()
 			&& handleSolution()
 			&& handlePrecipitate()
-			&& handleServer(hasServer(), getServer(), this.currentFile); //server
+			&& handleServer(getServer(), this.currentFile); //server
 	}
 
 	private boolean handleSolute() {
@@ -414,14 +439,14 @@ public class TEPrecipitationController extends TileEntityInv implements IInterna
 				if(getCurrentRecipe().getType()){
 					ArrayList<Integer> inputOreIDs = CoreUtils.intArrayToList(OreDictionary.getOreIDs(soluteSlot()));
 					if(!inputOreIDs.isEmpty()){
-						if(!Strings.isNullOrEmpty(recipeList().get(getRecipeIndex()).getOredict())){  
-							if(inputOreIDs.contains(OreDictionary.getOreID(recipeList().get(getRecipeIndex()).getOredict()))){
+						if(!Strings.isNullOrEmpty(recipeList().get(getSelectedRecipe()).getOredict())){  
+							if(inputOreIDs.contains(OreDictionary.getOreID(recipeList().get(getSelectedRecipe()).getOredict()))){
 								return true;
 							}
 						}
 					}
 				}else{
-					return !recipeSolute().isEmpty() ? recipeList().get(getRecipeIndex()).getSolute().isItemEqual(soluteSlot()) : true;
+					return !recipeSolute().isEmpty() ? recipeList().get(getSelectedRecipe()).getSolute().isItemEqual(soluteSlot()) : true;
 				}
 			}
 		}
@@ -474,7 +499,7 @@ public class TEPrecipitationController extends TileEntityInv implements IInterna
 			this.input.decrementSlot(SOLUTE_SLOT);
 		}
 
-		updateServer(hasServer(), getServer(), this.currentFile);
+		updateServer(getServer(), this.currentFile);
 	}
 
 
@@ -485,18 +510,17 @@ public class TEPrecipitationController extends TileEntityInv implements IInterna
 	public void loadServerStatus() {
 		this.currentFile = -1;
 		if(getServer().isActive()){
-			for(int x = 0; x < TEServer.FILE_SLOTS.length; x++){
-				ItemStack fileSlot = getServer().inputSlot(x).copy();
-				if(!fileSlot.isEmpty() && fileSlot.isItemEqual(new ItemStack(ModItems.MISC_ITEMS, 1, EnumMiscItems.SERVER_FILE.ordinal()))){
+			for(int x = 0; x < getServer().FILE_SLOTS.length; x++){
+				ItemStack fileSlot = getServer().inputSlot(x);
+				if(TEServer.isValidFile(fileSlot)){
 					if(fileSlot.hasTagCompound()){
 						NBTTagCompound tag = fileSlot.getTagCompound();
-						if(isValidFile(tag)){
-							if(tag.getInteger("Device") == deviceCode()){
-								if(tag.getInteger("Recipe") < recipeList().size()){
-									if(tag.getInteger("Done") > 0){
-										if(this.recipeIndex != tag.getInteger("Recipe")){
-											this.recipeIndex = tag.getInteger("Recipe");
-											this.markDirtyClient();
+						if(isWrittenFile(tag)){
+							if(isCorrectDevice(tag, deviceCode())){
+								if(getRecipe(tag) < recipeList().size()){
+									if(getDone(tag) > 0){
+										if(this.recipeIndex != getRecipe(tag)){
+											this.recipeIndex = getRecipe(tag);
 										}
 										if(this.currentFile != x){
 											this.currentFile = x;
@@ -509,7 +533,7 @@ public class TEPrecipitationController extends TileEntityInv implements IInterna
 						}
 					}
 				}
-				if(x == TEServer.FILE_SLOTS.length - 1){
+				if(x == getServer().FILE_SLOTS.length - 1){
 					resetFiles(getServer(), deviceCode());
 				}
 			}

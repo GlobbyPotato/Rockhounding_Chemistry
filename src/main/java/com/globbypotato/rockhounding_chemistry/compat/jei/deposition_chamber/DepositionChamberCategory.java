@@ -1,7 +1,7 @@
 package com.globbypotato.rockhounding_chemistry.compat.jei.deposition_chamber;
 
 import com.globbypotato.rockhounding_chemistry.compat.jei.RHRecipeCategory;
-import com.globbypotato.rockhounding_chemistry.machines.gui.UIDepositionChamberTop;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UIDepositionController;
 
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IGuiFluidStackGroup;
@@ -13,7 +13,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class DepositionChamberCategory extends RHRecipeCategory {
 
-	private final static ResourceLocation guiTexture = UIDepositionChamberTop.TEXTURE_JEI;
+	private final static ResourceLocation guiTexture = UIDepositionController.TEXTURE_JEI;
 	private String uid;
 
 	public DepositionChamberCategory(IGuiHelper guiHelper, String uid) {

@@ -1,7 +1,7 @@
 package com.globbypotato.rockhounding_chemistry.compat.jei.stirred_tank;
 
 import com.globbypotato.rockhounding_chemistry.compat.jei.RHRecipeCategory;
-import com.globbypotato.rockhounding_chemistry.machines.gui.UIStirredTankTop;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UIStirredTankController;
 
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IGuiFluidStackGroup;
@@ -12,7 +12,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class StirredTankCategory extends RHRecipeCategory {
 
-	private final static ResourceLocation guiTexture = UIStirredTankTop.TEXTURE_JEI;
+	private final static ResourceLocation guiTexture = UIStirredTankController.TEXTURE_JEI;
 	private String uid;
 
 	public StirredTankCategory(IGuiHelper guiHelper, String uid) {

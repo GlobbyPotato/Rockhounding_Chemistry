@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.LabBlenderRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.LabBlenderRecipe;
+import com.globbypotato.rockhounding_chemistry.machines.tile.devices.TEPowerGenerator;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TELabBlenderTank;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.machines.tileentity.MachineStackHandler;
 import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityInv;
@@ -143,7 +145,7 @@ public class TELabBlenderController extends TileEntityInv {
 	//----------------------- STRUCTURE -----------------------
 //engine
 	public TEPowerGenerator getEngine(){
-		TEPowerGenerator engine = TileStructure.getEngine(this.world, this.pos, getFacing(), 1, 0);
+		TEPowerGenerator engine = TileStructure.getEngine(this.world, this.pos.offset(getFacing()), getFacing().getOpposite());
 		return engine != null ? engine : null;
 	}
 

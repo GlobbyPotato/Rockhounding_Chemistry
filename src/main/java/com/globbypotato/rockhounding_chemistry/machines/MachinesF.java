@@ -10,13 +10,21 @@ import com.globbypotato.rockhounding_chemistry.Rhchemistry;
 import com.globbypotato.rockhounding_chemistry.enums.machines.EnumMachinesF;
 import com.globbypotato.rockhounding_chemistry.handlers.GuiHandler;
 import com.globbypotato.rockhounding_chemistry.machines.io.MachineIO;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TETubularBedBase;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TETubularBedLow;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TETubularBedMid;
+import com.globbypotato.rockhounding_chemistry.machines.tile.TEMineralSizerController;
+import com.globbypotato.rockhounding_chemistry.machines.tile.TEPlanningTable;
+import com.globbypotato.rockhounding_chemistry.machines.tile.TEShredderController;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TETubularBedController;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TETubularBedTank;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TETubularBedTop;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TileTank;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEFluidRouter;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEMineralSizerTransmission;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEShredderBase;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEShredderTable;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TETubularBedBase;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TETubularBedLow;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TETubularBedMid;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TETubularBedTank;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TETubularBedTop;
+import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 import com.globbypotato.rockhounding_core.machines.tileentity.IFluidHandlingTile;
 import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityInv;
 import com.globbypotato.rockhounding_core.utils.CoreUtils;
@@ -82,14 +90,18 @@ public class MachinesF extends MachineIO {
 	public boolean hiddenParts(int meta) {
 		return meta == EnumMachinesF.TUBULAR_BED_LOW.ordinal()
 			|| meta == EnumMachinesF.TUBULAR_BED_TOP.ordinal()
-			|| meta == EnumMachinesF.TUBULAR_BED_CONTROLLER.ordinal();
+			|| meta == EnumMachinesF.TUBULAR_BED_CONTROLLER.ordinal()
+			|| meta == EnumMachinesF.SIZER_CONTROLLER.ordinal()
+			|| meta == EnumMachinesF.SHREDDER_CONTROLLER.ordinal();
 	}
 
     @Override
 	public boolean baseParts(int meta) {
 		return meta == EnumMachinesF.TUBULAR_BED_BASE.ordinal()
 			|| meta == EnumMachinesF.TUBULAR_BED_MID.ordinal()
-			|| meta == EnumMachinesF.TUBULAR_BED_TANK.ordinal();
+			|| meta == EnumMachinesF.TUBULAR_BED_TANK.ordinal()
+			|| meta == EnumMachinesF.SIZER_TRANSMISSION.ordinal()
+			|| meta == EnumMachinesF.SHREDDER_BASE.ordinal();
 	}
 
     @Override
@@ -102,6 +114,10 @@ public class MachinesF extends MachineIO {
 
         TileEntity te = world.getTileEntity(pos);
         if(world.getTileEntity(pos) != null){
+
+	        if(te instanceof TEMineralSizerController){
+	        	restoreMineralSizerControllerNBT(stack, te);
+	        }
 
 	        if(te instanceof TETubularBedBase){
 	        	TETubularBedBase reactor = (TETubularBedBase) world.getTileEntity(pos);
@@ -116,6 +132,16 @@ public class MachinesF extends MachineIO {
 	        if(te instanceof TETubularBedTank){
 	        	TETubularBedTank reactor = (TETubularBedTank) world.getTileEntity(pos);
 	        	setOrDropBlock(world, state, pos, reactor.getFacing(), placer, EnumMachinesF.TUBULAR_BED_CONTROLLER);
+	        }
+
+	        if(te instanceof TEMineralSizerTransmission){
+	        	TEMineralSizerTransmission reactor = (TEMineralSizerTransmission) world.getTileEntity(pos);
+	        	setOrDropBlock(world, state, pos, reactor.getFacing(), placer, EnumMachinesF.SIZER_CONTROLLER);
+	        }
+
+	        if(te instanceof TEShredderBase){
+	        	TEShredderBase reactor = (TEShredderBase) world.getTileEntity(pos);
+	        	setOrDropBlock(world, state, pos, reactor.getFacing(), placer, EnumMachinesF.SHREDDER_CONTROLLER);
 	        }
 
         }
@@ -143,6 +169,18 @@ public class MachinesF extends MachineIO {
 		if(meta == EnumMachinesF.TUBULAR_BED_CONTROLLER.ordinal()){
 			checkBaseBlocks(world, world.getBlockState(pos.down()), pos);
 		}
+		if(meta == EnumMachinesF.SIZER_TRANSMISSION.ordinal()){
+			checkTopBlocks(world, world.getBlockState(pos), world.getBlockState(pos.up()), pos);
+		}
+		if(meta == EnumMachinesF.SIZER_CONTROLLER.ordinal()){
+			checkBaseBlocks(world, world.getBlockState(pos.down()), pos);
+		}
+		if(meta == EnumMachinesF.SHREDDER_BASE.ordinal()){
+			checkTopBlocks(world, world.getBlockState(pos), world.getBlockState(pos.up()), pos);
+		}
+		if(meta == EnumMachinesF.SHREDDER_CONTROLLER.ordinal()){
+			checkBaseBlocks(world, world.getBlockState(pos.down()), pos);
+		}
 
 	}
 
@@ -155,7 +193,9 @@ public class MachinesF extends MachineIO {
 			int meta = state.getBlock().getMetaFromState(state);
 			if(meta == EnumMachinesF.TUBULAR_BED_BASE.ordinal()
 			|| meta == EnumMachinesF.TUBULAR_BED_MID.ordinal()
-			|| meta == EnumMachinesF.TUBULAR_BED_TANK.ordinal()){
+			|| meta == EnumMachinesF.TUBULAR_BED_TANK.ordinal()
+			|| meta == EnumMachinesF.SIZER_TRANSMISSION.ordinal()
+			|| meta == EnumMachinesF.SHREDDER_BASE.ordinal()){
 				TileEntity te = world.getTileEntity(pos);
 				ItemStack itemstack = this.getSilkTouchDrop(state);
 				handleTileNBT(te, itemstack);
@@ -176,12 +216,16 @@ public class MachinesF extends MachineIO {
  				    (te instanceof TETubularBedBase && !(teUp instanceof TETubularBedLow))
 			     || (te instanceof TETubularBedMid && !(teUp instanceof TETubularBedTop))
 			     || (te instanceof TETubularBedTank && !(teUp instanceof TETubularBedController))
+				 || (te instanceof TEMineralSizerTransmission && !(teUp instanceof TEMineralSizerController))
+				 || (te instanceof TEShredderBase && !(teUp instanceof TEShredderController))
 				)
 		){
 			ItemStack itemstack = this.getSilkTouchDrop(state);
 			if(		   meta == EnumMachinesF.TUBULAR_BED_BASE.ordinal()
 					|| meta == EnumMachinesF.TUBULAR_BED_MID.ordinal()
 					|| meta == EnumMachinesF.TUBULAR_BED_TANK.ordinal()
+					|| meta == EnumMachinesF.SIZER_TRANSMISSION.ordinal()
+					|| meta == EnumMachinesF.SHREDDER_BASE.ordinal()
 			){
 				handleTileNBT(te, itemstack);
 			}
@@ -190,7 +234,7 @@ public class MachinesF extends MachineIO {
 		}
 	}
 
-	private static void checkBaseBlocks(World world, IBlockState state, BlockPos pos) {
+	private void checkBaseBlocks(World world, IBlockState state, BlockPos pos) {
 		TileEntity te = world.getTileEntity(pos);
 		TileEntity teDown = world.getTileEntity(pos.down());
 		if(teDown == null || 
@@ -198,6 +242,8 @@ public class MachinesF extends MachineIO {
 					   (te instanceof TETubularBedLow && !(teDown instanceof TETubularBedBase))
 				   ||  (te instanceof TETubularBedTop && !(teDown instanceof TETubularBedMid))
 				   ||  (te instanceof TETubularBedController && !(teDown instanceof TETubularBedTank))
+				   ||  (te instanceof TEMineralSizerController && !(teDown instanceof TEMineralSizerTransmission))
+				   ||  (te instanceof TEShredderController && !(teDown instanceof TEShredderBase))
 				)
 		){
 			world.setBlockToAir(pos);
@@ -267,6 +313,27 @@ public class MachinesF extends MachineIO {
 		if(meta == EnumMachinesF.TUBULAR_BED_CONTROLLER.ordinal()){
 			return new TETubularBedController();
 		}
+		if(meta == EnumMachinesF.FLUID_ROUTER.ordinal()){
+			return new TEFluidRouter();
+		}
+		if(meta == EnumMachinesF.SIZER_CONTROLLER.ordinal()){
+			return new TEMineralSizerController();
+		}
+		if(meta == EnumMachinesF.SIZER_TRANSMISSION.ordinal()){
+			return new TEMineralSizerTransmission();
+		}
+		if(meta == EnumMachinesF.SHREDDER_BASE.ordinal()){
+			return new TEShredderBase();
+		}
+		if(meta == EnumMachinesF.SHREDDER_CONTROLLER.ordinal()){
+			return new TEShredderController();
+		}
+		if(meta == EnumMachinesF.SHREDDER_TABLE.ordinal()){
+			return new TEShredderTable();
+		}
+		if(meta == EnumMachinesF.PLANNING_TABLE.ordinal()){
+			return new TEPlanningTable();
+		}
 		return null;
 	}
 
@@ -305,11 +372,57 @@ public class MachinesF extends MachineIO {
 					}
 				}
 				if(meta == EnumMachinesF.TUBULAR_BED_TANK.ordinal()){
-		    		player.openGui(Rhchemistry.instance, GuiHandler.tubular_bed_monitor_id, world, pos.getX(), pos.getY() + 1, pos.getZ());
+					if(!player.isSneaking()) {
+						if(!canInsertUpgrade(world, player, pos.up(), BaseRecipes.speed_upgrade, TETubularBedController.SPEED_SLOT)) {
+							player.openGui(Rhchemistry.instance, GuiHandler.tubular_bed_monitor_id, world, pos.getX(), pos.getY() + 1, pos.getZ());
+						}
+					}else {
+						tryExtractUpgrade(world, player, pos.up(), TETubularBedController.SPEED_SLOT);
+					}
 				}
 				if(meta == EnumMachinesF.TUBULAR_BED_CONTROLLER.ordinal()){
-		    		player.openGui(Rhchemistry.instance, GuiHandler.tubular_bed_monitor_id, world, pos.getX(), pos.getY(), pos.getZ());
+					if(!player.isSneaking()) {
+						if(!canInsertUpgrade(world, player, pos, BaseRecipes.speed_upgrade, TETubularBedController.SPEED_SLOT)) {
+							player.openGui(Rhchemistry.instance, GuiHandler.tubular_bed_monitor_id, world, pos.getX(), pos.getY(), pos.getZ());
+						}
+					}else {
+						tryExtractUpgrade(world, player, pos, TETubularBedController.SPEED_SLOT);
+					}
 				}
+				if(meta == EnumMachinesF.SIZER_TRANSMISSION.ordinal()){
+					if(!player.isSneaking()) {
+						if(!canInsertUpgrade(world, player, pos.up(), BaseRecipes.speed_upgrade, TEMineralSizerController.SPEED_SLOT)) {
+							if(world.getTileEntity(pos.up()) != null && world.getTileEntity(pos.up()) instanceof TEMineralSizerController){
+					    		player.openGui(Rhchemistry.instance, GuiHandler.mineral_sizer_controller_id, world, pos.getX(), pos.getY() + 1, pos.getZ());
+							}
+						}
+					}else {
+						tryExtractUpgrade(world, player, pos.up(), TEMineralSizerController.SPEED_SLOT);
+					}
+				}
+				if(meta == EnumMachinesF.SIZER_CONTROLLER.ordinal()){
+					if(!player.isSneaking()) {
+						if(!canInsertUpgrade(world, player, pos, BaseRecipes.speed_upgrade, TEMineralSizerController.SPEED_SLOT)) {
+							player.openGui(Rhchemistry.instance, GuiHandler.mineral_sizer_controller_id, world, pos.getX(), pos.getY(), pos.getZ());
+						}
+					}else {
+						tryExtractUpgrade(world, player, pos, TEMineralSizerController.SPEED_SLOT);
+					}
+				}
+				if(meta == EnumMachinesF.SHREDDER_BASE.ordinal()){
+					if(world.getTileEntity(pos.up(1)) != null && world.getTileEntity(pos.up(1)) instanceof TEShredderController){
+			    		player.openGui(Rhchemistry.instance, GuiHandler.shredder_controller_id, world, pos.getX(), pos.getY() + 1, pos.getZ());
+					}
+				}
+				if(meta == EnumMachinesF.SHREDDER_CONTROLLER.ordinal()){
+		    		player.openGui(Rhchemistry.instance, GuiHandler.shredder_controller_id, world, pos.getX(), pos.getY(), pos.getZ());
+				}
+				if(meta == EnumMachinesF.PLANNING_TABLE.ordinal()){
+		    		player.openGui(Rhchemistry.instance, GuiHandler.planning_table_id, world, pos.getX(), pos.getY(), pos.getZ());
+		    		TEPlanningTable machine = (TEPlanningTable)world.getTileEntity(pos);
+		    		machine.showPreview();
+				}
+
 			}
 		}
 		return true;
@@ -325,6 +438,25 @@ public class MachinesF extends MachineIO {
 		}
 	}
 
+	@Override
+	public void breakBlock(World world, BlockPos pos, IBlockState state){
+		TileEntity te = world.getTileEntity(pos);
+		if (te instanceof TEMineralSizerController){
+			TEMineralSizerController sizer = (TEMineralSizerController)te;
+			if(sizer.hasTanks()){
+				sizer.getTank1().activation = false;
+				sizer.getTank1().markDirtyClient();
+				sizer.getTank2().activation = false;
+				sizer.getTank2().markDirtyClient();
+				sizer.getTank3().activation = false;
+				sizer.getTank3().markDirtyClient();
+				sizer.getTank4().activation = false;
+				sizer.getTank4().markDirtyClient();
+			}
+		}
+		super.breakBlock(world, pos, state);
+	}
+
 
 
 	//---------- DROP HANDLER ----------
@@ -334,6 +466,8 @@ public class MachinesF extends MachineIO {
 		return meta != EnumMachinesF.TUBULAR_BED_LOW.ordinal()
 			&& meta != EnumMachinesF.TUBULAR_BED_TOP.ordinal()
 			&& meta != EnumMachinesF.TUBULAR_BED_CONTROLLER.ordinal()
+			&& meta != EnumMachinesF.SIZER_CONTROLLER.ordinal()
+			&& meta != EnumMachinesF.SHREDDER_CONTROLLER.ordinal()
 			? Item.getItemFromBlock(this) : null;
 	}
 
@@ -342,7 +476,9 @@ public class MachinesF extends MachineIO {
 		int meta = state.getBlock().getMetaFromState(state);
 		return meta != EnumMachinesF.TUBULAR_BED_LOW.ordinal()
 			&& meta != EnumMachinesF.TUBULAR_BED_TOP.ordinal()
-			&& meta != EnumMachinesF.TUBULAR_BED_CONTROLLER.ordinal();
+			&& meta != EnumMachinesF.TUBULAR_BED_CONTROLLER.ordinal()
+			&& meta != EnumMachinesF.SIZER_CONTROLLER.ordinal()
+			&& meta != EnumMachinesF.SHREDDER_CONTROLLER.ordinal();
 	}
 
     @Override
@@ -357,6 +493,12 @@ public class MachinesF extends MachineIO {
 		if(meta == EnumMachinesF.TUBULAR_BED_CONTROLLER.ordinal()){
 			return new ItemStack(Item.getItemFromBlock(this), 1, EnumMachinesF.TUBULAR_BED_TANK.ordinal());
 		}
+		if(meta == EnumMachinesF.SIZER_CONTROLLER.ordinal()){
+			return new ItemStack(Item.getItemFromBlock(this), 1, EnumMachinesF.SIZER_TRANSMISSION.ordinal());
+		}
+		if(meta == EnumMachinesF.SHREDDER_CONTROLLER.ordinal()){
+			return new ItemStack(Item.getItemFromBlock(this), 1, EnumMachinesF.SHREDDER_BASE.ordinal());
+		}
 		return super.getPickBlock(state, target, world, pos, player);
     }
 
@@ -370,6 +512,8 @@ public class MachinesF extends MachineIO {
         if(meta != EnumMachinesF.TUBULAR_BED_LOW.ordinal()
         && meta != EnumMachinesF.TUBULAR_BED_TOP.ordinal()
         && meta != EnumMachinesF.TUBULAR_BED_CONTROLLER.ordinal()
+        && meta != EnumMachinesF.SIZER_CONTROLLER.ordinal()
+        && meta != EnumMachinesF.SHREDDER_CONTROLLER.ordinal()
         ){
         	itemstack = new ItemStack(this, 1, meta);
         }
@@ -388,7 +532,24 @@ public class MachinesF extends MachineIO {
 
     		MachinesUtils.addMachineNbt(itemstack, te);
 
+        	if(te instanceof TEMineralSizerController){
+        		addMineralSizerControllerNbt(itemstack, te);
+        	}
+
         }
 	}
 
+	private static void addMineralSizerControllerNbt(ItemStack itemstack, TileEntity te) {
+		TEMineralSizerController controller = ((TEMineralSizerController)te);
+    	itemstack.getTagCompound().setInteger("Comminution", controller.getComminution());
+	}
+	private static void restoreMineralSizerControllerNBT(ItemStack stack, TileEntity te) {
+		TEMineralSizerController controller = ((TEMineralSizerController)te);
+		if(stack.hasTagCompound() && controller != null){
+			if(stack.getTagCompound().hasKey("Comminution")){
+	        	int comm = stack.getTagCompound().getInteger("Comminution");
+	        	controller.comminution = comm;
+			}
+		}
+	}
 }

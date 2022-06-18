@@ -2,7 +2,7 @@ package com.globbypotato.rockhounding_chemistry.machines.container;
 
 import java.util.ArrayList;
 
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEDisposer;
+import com.globbypotato.rockhounding_chemistry.machines.tile.devices.TEDisposer;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;

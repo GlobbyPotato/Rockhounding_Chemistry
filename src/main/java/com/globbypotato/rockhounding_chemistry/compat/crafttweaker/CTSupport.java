@@ -26,6 +26,7 @@ public class CTSupport {
 	        CraftTweakerAPI.registerClass(CT_LeachingVat.class);
 	        CraftTweakerAPI.registerClass(CT_RetentionVat.class);
 	        CraftTweakerAPI.registerClass(CT_ChemicalExtractor.class);
+	        CraftTweakerAPI.registerClass(CT_InhibitMaterial.class);
 	        CraftTweakerAPI.registerClass(CT_InhibitElements.class);
 	        CraftTweakerAPI.registerClass(CT_MaterialCabinet.class);
 	        CraftTweakerAPI.registerClass(CT_MetalAlloyer.class);

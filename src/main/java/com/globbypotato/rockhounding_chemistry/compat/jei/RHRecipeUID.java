@@ -33,4 +33,6 @@ public class RHRecipeUID {
 	public static final String PRECIPITATION = Reference.MODID 			+ "." + "precipitation_chamber";
 	public static final String BED_REACTOR = Reference.MODID 			+ "." + "bed_reactor";
 	public static final String ORBITER = Reference.MODID 				+ "." + "orbiter";
+	public static final String SHAKING_TABLE = Reference.MODID 			+ "." + "shaking_table";
+	public static final String POWDER_MIXER = Reference.MODID 			+ "." + "powder_mixer";
 }

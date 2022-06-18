@@ -2,7 +2,7 @@ package com.globbypotato.rockhounding_chemistry.compat.jei.retention_vat;
 
 import com.globbypotato.rockhounding_chemistry.compat.jei.RHRecipeCategory;
 import com.globbypotato.rockhounding_chemistry.enums.materials.EnumFluid;
-import com.globbypotato.rockhounding_chemistry.machines.gui.UIRetentionVat;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UIRetentionVatController;
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 
 import mezz.jei.api.IGuiHelper;
@@ -17,7 +17,7 @@ import net.minecraftforge.fluids.FluidStack;
 
 public class RetentionVatCategory extends RHRecipeCategory {
 
-	private final static ResourceLocation guiTexture = UIRetentionVat.TEXTURE_JEI;
+	private final static ResourceLocation guiTexture = UIRetentionVatController.TEXTURE_JEI;
 	private String uid;
 
 	public RetentionVatCategory(IGuiHelper guiHelper, String uid) {

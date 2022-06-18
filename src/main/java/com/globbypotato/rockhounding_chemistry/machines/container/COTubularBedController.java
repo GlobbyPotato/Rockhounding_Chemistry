@@ -21,8 +21,8 @@ public class COTubularBedController extends ContainerBase<TETubularBedController
 		IItemHandler upgrade = this.tile.getUpgrade();
 
 		this.addSlotToContainer(new SlotItemHandler(template, 0, 80, 96));//activation
-		this.addSlotToContainer(new SlotItemHandler(template, 1, 26, 21));//prev
-		this.addSlotToContainer(new SlotItemHandler(template, 2, 44, 21));//next
+		this.addSlotToContainer(new SlotItemHandler(template, 1, 8, 21));//prev
+		this.addSlotToContainer(new SlotItemHandler(template, 2, 26, 21));//next
 
 		this.addSlotToContainer(new SlotItemHandler(upgrade, 0, 134, 58));//speed
 
@@ -36,7 +36,7 @@ public class COTubularBedController extends ContainerBase<TETubularBedController
 			doClickSound(player, this.tile.getWorld(), this.tile.getPos());
 	    	return ItemStack.EMPTY;
 		}else if(slot == 1){
-			if(this.tile.isServedClosed(this.tile.hasServer(), this.tile.getServer())){
+			if(this.tile.isServedClosed(this.tile.getServer())){
 				if(this.tile.getRecipeIndex() > -1){
 		    		this.tile.recipeIndex--; 
 				}else{
@@ -48,7 +48,7 @@ public class COTubularBedController extends ContainerBase<TETubularBedController
 			}
     		return ItemStack.EMPTY;
 		}else if(slot == 2){
-			if(this.tile.isServedClosed(this.tile.hasServer(), this.tile.getServer())){
+			if(this.tile.isServedClosed(this.tile.getServer())){
 	    		if(this.tile.getRecipeIndex() < BedReactorRecipes.bed_reactor_recipes.size() - 1){
 	    			this.tile.recipeIndex++; 
 	    		}else{

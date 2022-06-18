@@ -1,6 +1,6 @@
 package com.globbypotato.rockhounding_chemistry.machines.container;
 
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEGasHolderBase;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEGasHolderBase;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 
 import net.minecraft.entity.player.EntityPlayer;

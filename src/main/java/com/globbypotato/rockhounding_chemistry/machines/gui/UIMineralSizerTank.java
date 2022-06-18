@@ -2,7 +2,7 @@ package com.globbypotato.rockhounding_chemistry.machines.gui;
 
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.COMineralSizerTank;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEMineralSizerTank;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEMineralSizerTank;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 
 import net.minecraft.entity.player.InventoryPlayer;

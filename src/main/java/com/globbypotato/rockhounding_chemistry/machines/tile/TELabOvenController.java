@@ -2,14 +2,18 @@ package com.globbypotato.rockhounding_chemistry.machines.tile;
 
 import java.util.ArrayList;
 
-import com.globbypotato.rockhounding_chemistry.ModItems;
 import com.globbypotato.rockhounding_chemistry.enums.EnumMiscBlocksA;
-import com.globbypotato.rockhounding_chemistry.enums.EnumMiscItems;
 import com.globbypotato.rockhounding_chemistry.enums.utils.EnumServer;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
-import com.globbypotato.rockhounding_chemistry.machines.io.MachineIO;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.LabOvenRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.LabOvenRecipe;
+import com.globbypotato.rockhounding_chemistry.machines.tile.collateral.TEServer;
+import com.globbypotato.rockhounding_chemistry.machines.tile.devices.TEPowerGenerator;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEAuxiliaryEngine;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TELabOvenChamber;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEUnloader;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEBufferTank;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEFlotationTank;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.machines.tileentity.MachineStackHandler;
 import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityInv;
@@ -19,7 +23,6 @@ import com.globbypotato.rockhounding_core.utils.CoreUtils;
 import com.google.common.base.Strings;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Enchantments;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -32,15 +35,11 @@ import net.minecraftforge.oredict.OreDictionary;
 public class TELabOvenController extends TileEntityInv implements IInternalServer{
 
 	public static int inputSlots = 2;
-	public static int outputSlots = 2;
 	public static int templateSlots = 3;
 	public static int upgradeSlots = 1;
 
 	public static final int SOLUTE_SLOT = 0;
 	public static final int CATALYST_SLOT = 1;
-
-	public static final int SOLUTE_OUT_SLOT = 0;
-	public static final int CATALYST_OUT_SLOT = 1;
 
 	public static final int SPEED_SLOT = 0;
 
@@ -48,7 +47,7 @@ public class TELabOvenController extends TileEntityInv implements IInternalServe
 	public boolean isRepeatable = false;
 
 	public TELabOvenController() {
-		super(inputSlots, outputSlots, templateSlots, upgradeSlots);
+		super(inputSlots, 0, templateSlots, upgradeSlots);
 
 		this.input =  new MachineStackHandler(inputSlots, this){
 			@Override
@@ -89,14 +88,6 @@ public class TELabOvenController extends TileEntityInv implements IInternalServe
 		return this.input.getStackInSlot(CATALYST_SLOT);
 	}
 
-	public ItemStack soluteOutSlot(){
-		return this.output.getStackInSlot(SOLUTE_OUT_SLOT);
-	}
-
-	public ItemStack catalystOutSlot(){
-		return this.output.getStackInSlot(CATALYST_OUT_SLOT);
-	}
-
 	public ItemStack speedSlot() {
 		return this.upgrade.getStackInSlot(SPEED_SLOT);
 	}
@@ -127,7 +118,7 @@ public class TELabOvenController extends TileEntityInv implements IInternalServe
 
 	@Override
 	public BlockPos poweredPosition(){
-		return chamberPos().offset(poweredFacing());
+		return this.pos.offset(EnumFacing.DOWN).offset(poweredFacing());
 	}
 
 	@Override
@@ -140,15 +131,15 @@ public class TELabOvenController extends TileEntityInv implements IInternalServe
 	//----------------------- CUSTOM -----------------------
 	boolean isValidInput(ItemStack stack) {
 		if(isValidPreset()){
-			if(recipeList().get(getRecipeIndex()).getType()){
+			if(recipeList().get(getSelectedRecipe()).getType()){
 				ArrayList<Integer> inputOreIDs = CoreUtils.intArrayToList(OreDictionary.getOreIDs(stack));
 				if(!inputOreIDs.isEmpty()){
-					if(inputOreIDs.contains(OreDictionary.getOreID(recipeList().get(getRecipeIndex()).getOredict()))){
+					if(inputOreIDs.contains(OreDictionary.getOreID(recipeList().get(getSelectedRecipe()).getOredict()))){
 						return true;
 					}
 				}
 			}else{
-				if(recipeList().get(getRecipeIndex()).getSolute().isItemEqual(stack)){
+				if(recipeList().get(getSelectedRecipe()).getSolute().isItemEqual(stack)){
 					return true;
 				}
 			}
@@ -173,7 +164,7 @@ public class TELabOvenController extends TileEntityInv implements IInternalServe
 
 	public LabOvenRecipe getCurrentRecipe(){
 		if(isValidPreset()){
-			return getRecipeList(getRecipeIndex());
+			return getRecipeList(getSelectedRecipe());
 		}
 		return null;
 	}
@@ -183,7 +174,7 @@ public class TELabOvenController extends TileEntityInv implements IInternalServe
 	}
 
 	public boolean isValidPreset(){
-		return getRecipeIndex() > -1 && getRecipeIndex() < recipeList().size();
+		return getSelectedRecipe() > -1 && getSelectedRecipe() < recipeList().size();
 	}
 
 	public ItemStack recipeSolute(){ return isValidRecipe() ? getCurrentRecipe().getSolute() : ItemStack.EMPTY; }
@@ -206,16 +197,20 @@ public class TELabOvenController extends TileEntityInv implements IInternalServe
 			}
 		}
 		if(isValidPreset()){
-			if(hasIntank()){
-				if(getIntank().getFilterSolvent() != recipeSolvent()){
-					getIntank().filterSolvent = recipeSolvent();
+			if(hasSolventTank()){
+				if(getSolventTank().getFilterSolvent() != recipeSolvent()){
+					getSolventTank().filterSolvent = recipeSolvent();
 				}
-				if(getIntank().getFilterReagent() != recipeReagent()){
-					getIntank().filterReagent = recipeReagent();
+				getSolventTank().filterManualSolvent = null;
+				getSolventTank().isFiltered = true;
+			}
+
+			if(hasReagentTank()){
+				if(getReagentTank().getFilterSolvent() != recipeReagent()){
+					getReagentTank().filterSolvent = recipeReagent();
 				}
-				getIntank().filterManualSolvent = null;
-				getIntank().filterManualReagent = null;
-				getIntank().isFiltered = true;
+				getReagentTank().filterManualSolvent = null;
+				getReagentTank().isFiltered = true;
 			}
 		}else{
 			emptyFilters();
@@ -223,11 +218,16 @@ public class TELabOvenController extends TileEntityInv implements IInternalServe
 	}
 
 	public void emptyFilters() {
-		if(hasIntank()){
-			getIntank().filterSolvent = null;
-			getIntank().filterReagent = null;
-			getIntank().isFiltered = false;
+		if(hasSolventTank()){
+			getSolventTank().filterSolvent = null;
+			getSolventTank().isFiltered = false;
 		}
+		
+		if(hasReagentTank()){
+			getReagentTank().filterSolvent = null;
+			getReagentTank().isFiltered = false;
+		}
+
 	}
 
 
@@ -235,7 +235,7 @@ public class TELabOvenController extends TileEntityInv implements IInternalServe
 	//----------------------- STRUCTURE -----------------------
 //engine
 	public TEPowerGenerator getEngine(){
-		TEPowerGenerator engine = TileStructure.getEngine(this.world, this.pos, getFacing(), 1, 0);
+		TEPowerGenerator engine = TileStructure.getEngine(this.world, this.pos.offset(getFacing()), getFacing().getOpposite());
 		return engine != null ? engine : null;
 	}
 
@@ -263,13 +263,10 @@ public class TELabOvenController extends TileEntityInv implements IInternalServe
 	}
 
 //chamber
-	public BlockPos chamberPos(){
-		return this.pos.offset(EnumFacing.DOWN, 1);		
-	}
-
 	public TELabOvenChamber getChamber(){
-		TileEntity te = this.world.getTileEntity(chamberPos());
-		if(this.world.getBlockState(chamberPos()) != null && te instanceof TELabOvenChamber){
+		BlockPos chamberPos = this.pos.offset(EnumFacing.DOWN);
+		TileEntity te = this.world.getTileEntity(chamberPos);
+		if(this.world.getBlockState(chamberPos) != null && te instanceof TELabOvenChamber){
 			TELabOvenChamber tank = (TELabOvenChamber)te;
 			if(tank.getFacing() == getFacing()){
 				return tank;
@@ -284,68 +281,107 @@ public class TELabOvenController extends TileEntityInv implements IInternalServe
 
 //separator
 	public BlockPos separatorPos(){
-		return chamberPos().offset(getFacing(), 1);
+		return this.pos.offset(EnumFacing.DOWN).offset(getFacing(), 1);
 	}
 
 	public Block getSeparator(){
-		IBlockState sepState = this.world.getBlockState(separatorPos());
-		Block separator = sepState.getBlock();
-		if(MachineIO.miscBlocksA(separator, sepState, EnumMiscBlocksA.SEPARATOR.ordinal())){
-			return separator;
-		}
-		return null;
+		Block separator = TileStructure.getStructure(this.world, separatorPos(), EnumMiscBlocksA.SEPARATOR.ordinal());
+		return separator != null ? separator : null;
 	}
 
 	public boolean hasSeparator(){
 		return getSeparator() != null;
 	}
 
-//in tank
-	public TEFluidInputTank getIntank(){
-		BlockPos intankPos = separatorPos().offset(isFacingAt(270), 1);
-		TileEntity te = this.world.getTileEntity(intankPos);
-		if(this.world.getBlockState(intankPos) != null && te instanceof TEFluidInputTank){
-			TEFluidInputTank tank = (TEFluidInputTank)te;
-			if(tank.getFacing() == isFacingAt(270).getOpposite()){
-				return tank;
-			}
-		}
-		return null;
+//Unloader
+	public TEUnloader getUnloader(){
+		BlockPos unloaderPos = this.pos.offset(EnumFacing.DOWN).offset(getFacing(), 2);
+		TEUnloader unloader = TileStructure.getUnloader(this.world, unloaderPos, getFacing().getOpposite());
+		return unloader != null ? unloader : null;
 	}
 
-	public boolean hasIntank(){
-		return getIntank() != null;
+	public boolean hasUnloader(){
+		return getUnloader() != null;
 	}
 
-//out tank
-	public TEFluidOutputTank getOuttank(){
-		BlockPos outtankPos = separatorPos().offset(isFacingAt(90), 1);
-		TileEntity te = this.world.getTileEntity(outtankPos);
-		if(this.world.getBlockState(outtankPos) != null && te instanceof TEFluidOutputTank){
-			TEFluidOutputTank tank = (TEFluidOutputTank)te;
-			if(tank.getFacing() == isFacingAt(90).getOpposite()){
-				return tank;
-			}
-		}
-		return null;
+//solvent tank
+	public TEFlotationTank getSolventTank(){
+		BlockPos tankPos = this.pos.offset(getFacing()).offset(isFacingAt(270), 2);
+		TEFlotationTank tank = TileStructure.getFlotationTank(this.world, tankPos);
+		return tank != null ? tank : null;
 	}
 
-	public boolean hasOuttank(){
-		return getOuttank() != null;
+	public boolean hasSolventTank(){
+		return getSolventTank() != null;
+	}
+
+//reagent tank
+	public TEFlotationTank getReagentTank(){
+		BlockPos tankPos = this.pos.offset(getFacing()).offset(isFacingAt(270), 1);
+		TEFlotationTank tank = TileStructure.getFlotationTank(this.world, tankPos);
+		return tank != null ? tank : null;
+	}
+
+	public boolean hasReagentTank(){
+		return getReagentTank() != null;
+	}
+
+//solution tank
+	public TEBufferTank getSolutionTank(){
+		BlockPos tankPos = this.pos.offset(getFacing()).offset(isFacingAt(90), 1);
+		TEBufferTank tank = TileStructure.getBufferTank(this.world, tankPos);
+		return tank != null ? tank : null;
+	}
+
+	public boolean hasSolutionTank(){
+		return getSolutionTank() != null;
+	}
+
+//byproduct tank
+	public TEBufferTank getByproductTank(){
+		BlockPos tankPos = this.pos.offset(getFacing()).offset(isFacingAt(90), 2);
+		TEBufferTank tank = TileStructure.getBufferTank(this.world, tankPos);
+		return tank != null ? tank : null;
+	}
+
+	public boolean hasByproductTank(){
+		return getByproductTank() != null;
+	}
+
+//routers
+	public boolean hasRouters(){
+		return TileStructure.getFluidRouter(world, separatorPos().offset(isFacingAt(270)), isFacingAt(270))
+			&& TileStructure.getFluidRouter(world, separatorPos().offset(isFacingAt(90)), isFacingAt(90));
+	}
+
+//input pressurizer
+	public TEAuxiliaryEngine getInputPressurizer(){
+		TEAuxiliaryEngine pressurizer = TileStructure.getPressurizer(this.world, separatorPos().offset(isFacingAt(270), 3), isFacingAt(90));
+		return pressurizer != null ? pressurizer : null;
+	}
+
+//output pressurizer
+	public TEAuxiliaryEngine getOutputPressurizer(){
+		TEAuxiliaryEngine pressurizer = TileStructure.getPressurizer(this.world, separatorPos().offset(isFacingAt(90), 3), isFacingAt(270));
+		return pressurizer != null ? pressurizer : null;
+	}
+
+	public boolean hasPressurizers(){
+		return getInputPressurizer() != null && getOutputPressurizer() != null;
 	}
 
 //server
-	public BlockPos serverPos(){
-		return this.pos.offset(getFacing(), 2).offset(EnumFacing.DOWN, 1);
-	}
-
 	public TEServer getServer(){
-		TEServer server = TileStructure.getServer(this.world, separatorPos(), getFacing(), 1, 0);
+		TEServer server = TileStructure.getServer(this.world, separatorPos().offset(getFacing(), 2), getFacing().getOpposite());
 		return server != null ? server : null;
 	}
 
 	public boolean hasServer(){
 		return getServer() != null;
+	}
+
+	private boolean isAssembled() {
+		return 	hasSeparator() && hasRouters() && hasUnloader() && hasPressurizers();
 	}
 
 
@@ -356,8 +392,7 @@ public class TELabOvenController extends TileEntityInv implements IInternalServe
 		if(!this.world.isRemote){
 			doPreset();
 			handlePurge();
-
-			initializeServer(isRepeatable, hasServer(), getServer(), deviceCode());
+			initializeServer(isRepeatable, getServer(), deviceCode(), this.recipeStep, recipeList().size());
 
 			if(isActive()){
 				if(canProcess()){
@@ -368,6 +403,8 @@ public class TELabOvenController extends TileEntityInv implements IInternalServe
 						process();
 					}
 					this.markDirtyClient();
+				}else {
+					
 				}
 			}else{
 				tickOff();
@@ -381,18 +418,18 @@ public class TELabOvenController extends TileEntityInv implements IInternalServe
 	}
 
 	private void handlePurge() {
-		if(isActive()){
+		if(isActive() && hasUnloader()){
 			if(!isValidPreset() || isValidRecipe()){
 				if(!soluteSlot().isEmpty() && isPurgeable()){
-					if(this.output.canSetOrStack(soluteOutSlot(), soluteSlot())){
-						this.output.setOrStack(SOLUTE_OUT_SLOT, soluteSlot());
+					if(((MachineStackHandler) getUnloader().getOutput()).canSetOrStack(getUnloader().unloaderSlot(), soluteSlot())){
+						((MachineStackHandler) getUnloader().getOutput()).setOrStack(OUTPUT_SLOT, soluteSlot());
 						this.input.setStackInSlot(SOLUTE_SLOT, ItemStack.EMPTY);
 					}
 				}
 				if(!catalystSlot().isEmpty() && !recipeSolute().isEmpty()){
 					if(!catalystSlot().isItemEqualIgnoreDurability(recipeCatalyst()) ){
-						if(this.output.canSetOrStack(catalystOutSlot(), catalystSlot())){
-							this.output.setOrStack(CATALYST_OUT_SLOT, catalystSlot());
+						if(((MachineStackHandler) getUnloader().getOutput()).canSetOrStack(getUnloader().unloaderSlot(), catalystSlot())){
+							((MachineStackHandler) getUnloader().getOutput()).setOrStack(OUTPUT_SLOT, catalystSlot());
 							this.input.setStackInSlot(CATALYST_SLOT, ItemStack.EMPTY);
 						}
 					}
@@ -404,7 +441,7 @@ public class TELabOvenController extends TileEntityInv implements IInternalServe
 	private boolean isPurgeable() {
 		if(oredictType()){
 			ArrayList<Integer> inputOreIDs = CoreUtils.intArrayToList(OreDictionary.getOreIDs(soluteSlot()));
-			if(!inputOreIDs.contains(OreDictionary.getOreID(recipeList().get(getRecipeIndex()).getOredict()))){
+			if(!inputOreIDs.contains(OreDictionary.getOreID(recipeList().get(getSelectedRecipe()).getOredict()))){
 				return true;
 			}
 		}else{
@@ -420,14 +457,14 @@ public class TELabOvenController extends TileEntityInv implements IInternalServe
 			&& isValidRecipe()
 			&& hasFuelPower()
 			&& hasRedstonePower()
-			&& hasSeparator()
+			&& isAssembled()
 			&& handleSolute()
 			&& handleCatalyst()
 			&& handleSolvent()
 			&& handleReagent()
 			&& handleSolution()
 			&& handleByproduct()
-			&& handleServer(hasServer(), getServer(), this.currentFile); //server
+			&& handleServer(getServer(), this.currentFile); //server
 	}
 
 	private boolean handleSolute() {
@@ -436,14 +473,14 @@ public class TELabOvenController extends TileEntityInv implements IInternalServe
 				if(getCurrentRecipe().getType()){
 					ArrayList<Integer> inputOreIDs = CoreUtils.intArrayToList(OreDictionary.getOreIDs(soluteSlot()));
 					if(!inputOreIDs.isEmpty()){
-						if(!Strings.isNullOrEmpty(recipeList().get(getRecipeIndex()).getOredict())){  
-							if(inputOreIDs.contains(OreDictionary.getOreID(recipeList().get(getRecipeIndex()).getOredict()))){
+						if(!Strings.isNullOrEmpty(recipeList().get(getSelectedRecipe()).getOredict())){  
+							if(inputOreIDs.contains(OreDictionary.getOreID(recipeList().get(getSelectedRecipe()).getOredict()))){
 								return true;
 							}
 						}
 					}
 				}else{
-					return !recipeSolute().isEmpty() ? recipeList().get(getRecipeIndex()).getSolute().isItemEqual(soluteSlot()) : true;
+					return !recipeSolute().isEmpty() ? recipeList().get(getSelectedRecipe()).getSolute().isItemEqual(soluteSlot()) : true;
 				}
 			}
 		}
@@ -455,39 +492,41 @@ public class TELabOvenController extends TileEntityInv implements IInternalServe
 	}
 
 	private boolean handleSolvent() {
-		return recipeSolvent() != null && hasIntank() && this.input.canDrainFluid(getIntank().getSolventFluid(), recipeSolvent());
+		return recipeSolvent() != null && hasSolventTank() && this.input.canDrainFluid(getSolventTank().getSolventFluid(), recipeSolvent());
 	}
 
 	private boolean handleReagent() {
-		return recipeReagent() == null || (recipeReagent() != null && hasIntank() && this.input.canDrainFluid(getIntank().getReagentFluid(), recipeReagent()));
+		return recipeReagent() == null || (recipeReagent() != null && hasReagentTank() && this.input.canDrainFluid(getReagentTank().getSolventFluid(), recipeReagent()));
 	}
 
 	private boolean handleSolution() {
-		return recipeSolution() != null && hasOuttank() && this.input.canSetOrFillFluid(getOuttank().solutionTank, getOuttank().getSolutionFluid(), recipeSolution());
+		return recipeSolution() != null && hasSolutionTank() && this.input.canSetOrFillFluid(getSolutionTank().inputTank, getSolutionTank().getTankFluid(), recipeSolution());
 	}
 	
 	private boolean handleByproduct() {
-		return recipeByproduct() == null || (recipeByproduct() != null && hasOuttank() && this.input.canSetOrFillFluid(getOuttank().byproductTank, getOuttank().getByproductFluid(), recipeByproduct()));
+		return recipeByproduct() == null || (recipeByproduct() != null && hasByproductTank() && this.input.canSetOrFillFluid(getByproductTank().inputTank, getByproductTank().getTankFluid(), recipeByproduct()));
 	}
 
 	private void process() {
-		if(hasIntank()){
+		if(hasSolventTank()){
 			if(recipeSolvent() != null){
-				getIntank().solventTank.drainInternal(recipeSolvent(), true);
+				getSolventTank().inputTank.drainInternal(recipeSolvent(), true);
 			}
-	
+		}
+		if(hasReagentTank()){
 			if(recipeReagent() != null){
-				getIntank().reagentTank.drainInternal(recipeReagent(), true);
+				getReagentTank().inputTank.drainInternal(recipeReagent(), true);
 			}
 		}
 
-		if(hasOuttank()){
+		if(hasSolutionTank()){
 			if(recipeSolution() != null){
-				getOuttank().solutionTank.fillInternal(recipeSolution(), true);
+				getSolutionTank().inputTank.fillInternal(recipeSolution(), true);
 			}
-	
+		}	
+		if(hasByproductTank()){
 			if(recipeByproduct() != null){
-				getOuttank().byproductTank.fillInternal(recipeByproduct(), true);
+				getByproductTank().inputTank.fillInternal(recipeByproduct(), true);
 			}
 		}
 
@@ -504,7 +543,7 @@ public class TELabOvenController extends TileEntityInv implements IInternalServe
 			this.input.decrementSlot(SOLUTE_SLOT);
 		}
 
-		updateServer(hasServer(), getServer(), this.currentFile);
+		updateServer(getServer(), this.currentFile);
 	}
 
 
@@ -515,18 +554,17 @@ public class TELabOvenController extends TileEntityInv implements IInternalServe
 	public void loadServerStatus() {
 		this.currentFile = -1;
 		if(getServer().isActive()){
-			for(int x = 0; x < TEServer.FILE_SLOTS.length; x++){
-				ItemStack fileSlot = getServer().inputSlot(x).copy();
-				if(!fileSlot.isEmpty() && fileSlot.isItemEqual(new ItemStack(ModItems.MISC_ITEMS, 1, EnumMiscItems.SERVER_FILE.ordinal()))){
+			for(int x = 0; x < getServer().FILE_SLOTS.length; x++){
+				ItemStack fileSlot = getServer().inputSlot(x);
+				if(TEServer.isValidFile(fileSlot)){
 					if(fileSlot.hasTagCompound()){
 						NBTTagCompound tag = fileSlot.getTagCompound();
-						if(isValidFile(tag)){
-							if(tag.getInteger("Device") == deviceCode()){
-								if(tag.getInteger("Recipe") < recipeList().size()){
-									if(tag.getInteger("Done") > 0){
-										if(this.recipeIndex != tag.getInteger("Recipe")){
-											this.recipeIndex = tag.getInteger("Recipe");
-											this.markDirtyClient();
+						if(isWrittenFile(tag)){
+							if(isCorrectDevice(tag, deviceCode())){
+								if(getRecipe(tag) < recipeList().size()){
+									if(getDone(tag) > 0){
+										if(this.recipeIndex != getRecipe(tag)){
+											this.recipeIndex = getRecipe(tag);
 										}
 										if(this.currentFile != x){
 											this.currentFile = x;
@@ -539,7 +577,7 @@ public class TELabOvenController extends TileEntityInv implements IInternalServe
 						}
 					}
 				}
-				if(x == TEServer.FILE_SLOTS.length - 1){
+				if(x == getServer().FILE_SLOTS.length - 1){
 					resetFiles(getServer(), deviceCode());
 				}
 			}

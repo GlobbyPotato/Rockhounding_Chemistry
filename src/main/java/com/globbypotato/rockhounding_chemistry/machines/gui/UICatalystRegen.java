@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.COCatalystRegen;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TECatalystRegen;
+import com.globbypotato.rockhounding_chemistry.machines.tile.collateral.TECatalystRegen;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.machines.gui.GuiUtils;
 
@@ -40,12 +40,6 @@ public class UICatalystRegen extends GuiBase {
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
 
-		//input fluid
-	    if(GuiUtils.hoveringArea(19, 81, 42, 16, mouseX, mouseY, x, y)){
-			List<String> tooltip = GuiUtils.drawFluidTankInfo(this.tile.inputTank, mouseX, mouseY);
-			drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
-		}
-
     }
 
     @Override
@@ -64,11 +58,6 @@ public class UICatalystRegen extends GuiBase {
         		this.drawTexturedModalRect(i + 81, j + 97, 176, 10, 14, 14);
         	}
         }
-
-		//input fluid
-		if(this.tile.hasInputFluid()){
-			GuiUtils.renderFluidBar(this.tile.getInputFluid(), this.tile.getInputAmount(), this.tile.getTankCapacity(), i + 19, j + 81, 42, 16);
-		}
 
     }
 }

@@ -1,0 +1,22 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "rockhounding_chemistry:miscs",
+	"pattern": [
+		"FCF",
+		"CFC",
+		"FCF"
+	],
+	"key": {
+		"F":{
+				"item": "#REFRACTORY_BRICK"
+			},
+		"C":{
+				"item": "#BRICK"
+			}
+	},
+	"result":{
+				"item": "rockhounding_chemistry:misc_blocks_a",
+				"data": 15,
+				"count": 4
+			}
+}

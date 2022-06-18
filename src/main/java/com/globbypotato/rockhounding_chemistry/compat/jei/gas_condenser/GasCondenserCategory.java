@@ -1,7 +1,7 @@
 package com.globbypotato.rockhounding_chemistry.compat.jei.gas_condenser;
 
 import com.globbypotato.rockhounding_chemistry.compat.jei.RHRecipeCategory;
-import com.globbypotato.rockhounding_chemistry.machines.gui.UIGasCondenser;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UIGasCondenserController;
 
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IGuiFluidStackGroup;
@@ -12,7 +12,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class GasCondenserCategory extends RHRecipeCategory {
 
-	private final static ResourceLocation guiTexture = UIGasCondenser.TEXTURE_JEI;
+	private final static ResourceLocation guiTexture = UIGasCondenserController.TEXTURE_JEI;
 	private String uid;
 
 	public GasCondenserCategory(IGuiHelper guiHelper, String uid) {

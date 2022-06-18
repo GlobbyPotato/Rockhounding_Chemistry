@@ -1,0 +1,85 @@
+{
+    "__comment": "Model generated using MrCrayfish's Model Creator (http://mrcrayfish.com/modelcreator/)",
+    "parent": "block/cube_all",
+    "textures": {
+        "particle": "rockhounding_chemistry:models/machines_generic_b",
+		"0": "rockhounding_chemistry:models/machines_generic_c",
+		"1": "rockhounding_chemistry:models/machines_generic_d",
+		"2": "rockhounding_chemistry:models/machines_generic_b"
+    },
+    "elements": [
+        {
+            "name": "base",
+            "from": [ 0.0, 4.0, 0.0 ], 
+            "to": [ 16.0, 10.0, 16.0 ], 
+            "faces": {
+                "north": { "texture": "#0", "uv": [ 8.0, 0.0, 12.0, 4.0000000000000036 ] },
+                "east": { "texture": "#0", "uv": [ 8.0, 0.0, 12.0, 4.000000000000002 ] },
+                "south": { "texture": "#0", "uv": [ 8.0, 0.0, 12.0, 4.0 ] },
+                "west": { "texture": "#0", "uv": [ 8.0, 0.0, 12.0, 4.0 ] },
+                "up": { "texture": "#0", "uv": [ 8.0, 0.0, 12.0, 4.0 ] },
+                "down": { "texture": "#0", "uv": [ 8.0, 0.0, 12.0, 4.0 ] }
+            }
+        },
+        {
+            "name": "table",
+            "from": [ 1.0, 7.0, 1.5000000074505806 ], 
+            "to": [ 15.0, 12.800000011920929, 15.50000000745058 ], 
+            "rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "x", "angle": -22.5 },
+            "faces": {
+                "east": { "texture": "#0", "uv": [ 8.0, 0.0, 12.0, 4.000000000000002 ] },
+                "south": { "texture": "#0", "uv": [ 8.0, 0.0, 12.0, 4.0 ] },
+                "west": { "texture": "#0", "uv": [ 8.0, 0.0, 12.0, 4.000000000000002 ] },
+                "up": { "texture": "#1", "uv": [ 8.0, 4.0, 12.0, 8.0 ] }
+            }
+        },
+        {
+            "name": "leg",
+            "from": [ 14.0, 0.0, 0.0 ], 
+            "to": [ 16.0, 4.0, 2.0 ], 
+            "faces": {
+                "north": { "texture": "#2", "uv": [ 8.0, 12.000000000000004, 12.000000000000004, 16.0 ] },
+                "east": { "texture": "#2", "uv": [ 8.0, 12.0, 12.0, 16.0 ] },
+                "south": { "texture": "#2", "uv": [ 8.0, 12.0, 12.0, 16.0 ] },
+                "west": { "texture": "#2", "uv": [ 8.0, 12.0, 12.0, 16.0 ] },
+                "down": { "texture": "#2", "uv": [ 8.0, 12.0, 12.0, 16.0 ] }
+            }
+        },
+        {
+            "name": "Cube",
+            "from": [ 14.0, 0.0, 14.0 ], 
+            "to": [ 16.0, 4.0, 16.0 ], 
+            "faces": {
+                "north": { "texture": "#2", "uv": [ 8.0, 12.000000000000004, 12.000000000000004, 16.0 ] },
+                "east": { "texture": "#2", "uv": [ 8.0, 12.0, 12.0, 16.0 ] },
+                "south": { "texture": "#2", "uv": [ 8.0, 12.0, 12.0, 16.0 ] },
+                "west": { "texture": "#2", "uv": [ 8.0, 12.0, 12.0, 16.0 ] },
+                "down": { "texture": "#2", "uv": [ 8.0, 12.0, 12.0, 16.0 ] }
+            }
+        },
+        {
+            "name": "Cube",
+            "from": [ 0.0, 0.0, 14.0 ], 
+            "to": [ 2.0, 4.0, 16.0 ], 
+            "faces": {
+                "north": { "texture": "#2", "uv": [ 8.0, 12.000000000000004, 12.000000000000004, 16.0 ] },
+                "east": { "texture": "#2", "uv": [ 8.0, 12.0, 12.0, 16.0 ] },
+                "south": { "texture": "#2", "uv": [ 8.0, 12.0, 12.0, 16.0 ] },
+                "west": { "texture": "#2", "uv": [ 8.0, 12.0, 12.0, 16.0 ] },
+                "down": { "texture": "#2", "uv": [ 8.0, 12.0, 12.0, 16.0 ] }
+            }
+        },
+        {
+            "name": "Cube",
+            "from": [ 0.0, 0.0, 0.0 ], 
+            "to": [ 2.0, 4.0, 2.0 ], 
+            "faces": {
+                "north": { "texture": "#2", "uv": [ 8.0, 12.000000000000004, 12.000000000000004, 16.0 ] },
+                "east": { "texture": "#2", "uv": [ 8.0, 12.0, 12.0, 16.0 ] },
+                "south": { "texture": "#2", "uv": [ 8.0, 12.0, 12.0, 16.0 ] },
+                "west": { "texture": "#2", "uv": [ 8.0, 12.0, 12.0, 16.0 ] },
+                "down": { "texture": "#2", "uv": [ 8.0, 12.0, 12.0, 16.0 ] }
+            }
+        }
+    ]
+}

@@ -5,7 +5,7 @@ import javax.annotation.Nullable;
 import com.globbypotato.rockhounding_chemistry.ModItems;
 import com.globbypotato.rockhounding_chemistry.enums.EnumMiscItems;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEGaslinePump;
+import com.globbypotato.rockhounding_chemistry.machines.tile.pipelines.TEGaslinePump;
 import com.globbypotato.rockhounding_core.machines.PipelineBase;
 import com.globbypotato.rockhounding_core.utils.CoreUtils;
 

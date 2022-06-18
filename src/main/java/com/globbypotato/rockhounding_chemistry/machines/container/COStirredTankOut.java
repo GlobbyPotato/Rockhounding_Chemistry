@@ -1,6 +1,6 @@
 package com.globbypotato.rockhounding_chemistry.machines.container;
 
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEStirredTankOut;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEStirredTankOut;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -17,19 +17,16 @@ public class COStirredTankOut extends ContainerBase<TEStirredTankOut>{
 
 	@Override
 	public void addOwnSlots() {
-		IItemHandler input = this.tile.getInput();
 		IItemHandler template = this.tile.getTemplate();
 
-		this.addSlotToContainer(new SlotItemHandler(input, 0, 80, 96));//void solvent
-
-		this.addSlotToContainer(new SlotItemHandler(template, 0, 80, 22));//output solvent
+		this.addSlotToContainer(new SlotItemHandler(template, 0, 80, 86));//void
 
 	}
 
 	@Override
 	public ItemStack slotClick(int slot, int dragType, ClickType clickTypeIn, EntityPlayer player){
         InventoryPlayer inventoryplayer = player.inventory;
-		if(slot == 1){
+		if(slot == 0){
 			this.tile.inputTank.setFluid(null);
 			doClickSound(player, this.tile.getWorld(), this.tile.getPos());
     		return ItemStack.EMPTY;
@@ -40,10 +37,7 @@ public class COStirredTankOut extends ContainerBase<TEStirredTankOut>{
 
 	@Override
 	protected boolean mergeItemStack(ItemStack stack, int startIndex, int endIndex, boolean reverseDirection){
-		if(super.mergeItemStack(stack, startIndex, 1, reverseDirection)){
-			return true;
-		}
-		return super.mergeItemStack(stack, 2, endIndex, reverseDirection);
+		return super.mergeItemStack(stack, 1, endIndex, reverseDirection);
     }
 
 }

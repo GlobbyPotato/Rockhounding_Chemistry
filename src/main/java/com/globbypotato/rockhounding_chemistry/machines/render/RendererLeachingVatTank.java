@@ -1,6 +1,6 @@
 package com.globbypotato.rockhounding_chemistry.machines.render;
 
-import com.globbypotato.rockhounding_chemistry.machines.tile.TELeachingVatTank;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TELeachingVatTank;
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityInv;
 

@@ -8,7 +8,7 @@
 	],
 	"key": {
 		"C":{
-				"item": "#COMPARATOR"
+				"item": "#BASE_CHIP"
 			},
 		"f":{
 				"item": "#IRON_FOIL"

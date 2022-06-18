@@ -3,12 +3,12 @@ package com.globbypotato.rockhounding_chemistry.compat.waila;
 import java.util.List;
 
 import com.globbypotato.rockhounding_chemistry.machines.MachinesB;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEAirCompressor;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEGasifierBurner;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEGasifierCooler;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEGasifierTank;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEPressureVessel;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TESlurryPond;
+import com.globbypotato.rockhounding_chemistry.machines.tile.TEGasifierController;
+import com.globbypotato.rockhounding_chemistry.machines.tile.collateral.TEAirCompressor;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEGasifierBurner;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEFluidCistern;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEPressureVessel;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEReinforcedCistern;
 import com.globbypotato.rockhounding_core.machines.gui.GuiUtils;
 
 import mcp.mobius.waila.api.IWailaConfigHandler;
@@ -19,6 +19,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -41,37 +42,31 @@ public class WailaMachinesB implements IWailaDataProvider{
 		World world = accessor.getWorld();
 		TileEntity te = world.getTileEntity(pos);
 		if(te != null){
-			if(te instanceof TESlurryPond){
-				TESlurryPond tank = (TESlurryPond)te;
-				if(tank.hasInputFluid()){
-					currenttip.add(TextFormatting.GRAY + "Input: " + TextFormatting.WHITE + tank.getInputFluid().getLocalizedName() + " - " + tank.getInputAmount() + "/" + tank.getTankCapacity() + " mB");
-				}else{
-					currenttip.add(TextFormatting.GRAY + "Input: " + TextFormatting.WHITE + "Empty");
-				}
-				if(tank.hasOutputFluid()){
-					currenttip.add(TextFormatting.GRAY + "Output: " + TextFormatting.WHITE + tank.getOutputFluid().getLocalizedName() + " - " + tank.getOutputAmount() + "/" + tank.getTankCapacity() + " mB");
-				}else{
-					currenttip.add(TextFormatting.GRAY + "Output: " + TextFormatting.WHITE + "Empty");
-				}
-			}
-			if(te instanceof TEGasifierTank){
-				TEGasifierTank tank = (TEGasifierTank)te;
+			if(te instanceof TEReinforcedCistern){
+				TEReinforcedCistern tank = (TEReinforcedCistern)te;
 				if(tank.hasInputFluid()){
 					currenttip.add(TextFormatting.GRAY + "Content: " + TextFormatting.WHITE + tank.getInputFluid().getLocalizedName() + " - " + tank.getInputAmount() + "/" + tank.getTankCapacity() + " mB");
 				}else{
 					currenttip.add(TextFormatting.GRAY + "Content: " + TextFormatting.WHITE + "Empty");
 				}
 			}
-			if(te instanceof TEGasifierCooler){
-				TEGasifierCooler tank = (TEGasifierCooler)te;
+			if(te instanceof TEFluidCistern){
+				TEFluidCistern tank = (TEFluidCistern)te;
+				if(tank.hasTankFluid()){
+					currenttip.add(TextFormatting.GRAY + "Content: " + TextFormatting.WHITE + tank.getTankFluid().getLocalizedName() + " - " + tank.getTankAmount() + "/" + tank.getTankCapacity() + " mB");
+				}else{
+					currenttip.add(TextFormatting.GRAY + "Content: " + TextFormatting.WHITE + "Empty");
+				}
+			}
+			if(te instanceof TEGasifierController){
+				TEGasifierController tank = (TEGasifierController)te;
 				currenttip.add(TextFormatting.GRAY + "Temperature: " + TextFormatting.WHITE + tank.getTemperature() + "/" + tank.getTemperatureMax() + "K");
 			}
 			if(te instanceof TEGasifierBurner){
-				TEGasifierBurner tank = (TEGasifierBurner)te;
-				if(tank.hasReactant()){
-					currenttip.add(TextFormatting.GRAY + "Content: " + TextFormatting.WHITE + tank.getReactant().getLocalizedName() + " - " + tank.getReactantAmount() + "/" + tank.getTankCapacity() + " mB");
-				}else{
-					currenttip.add(TextFormatting.GRAY + "Content: " + TextFormatting.WHITE + "Empty");
+				TileEntity base = world.getTileEntity(pos.offset(EnumFacing.DOWN));
+				if(base instanceof TEGasifierController){
+					TEGasifierController tank = (TEGasifierController)base;
+					currenttip.add(TextFormatting.GRAY + "Temperature: " + TextFormatting.WHITE + tank.getTemperature() + "/" + tank.getTemperatureMax() + "K");
 				}
 			}
 			if(te instanceof TEPressureVessel){

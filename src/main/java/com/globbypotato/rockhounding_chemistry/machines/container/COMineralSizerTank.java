@@ -1,6 +1,6 @@
 package com.globbypotato.rockhounding_chemistry.machines.container;
 
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEMineralSizerTank;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEMineralSizerTank;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraftforge.items.IItemHandler;

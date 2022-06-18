@@ -3,12 +3,12 @@ package com.globbypotato.rockhounding_chemistry.compat.waila;
 import java.util.List;
 
 import com.globbypotato.rockhounding_chemistry.machines.MachinesD;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEContainmentTank;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEFlotationTank;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEGasHolderBase;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEGasHolderTop;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEOrbiter;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TETransposer;
+import com.globbypotato.rockhounding_chemistry.machines.tile.devices.TEOrbiter;
+import com.globbypotato.rockhounding_chemistry.machines.tile.devices.TETransposer;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEGasHolderTop;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEContainmentTank;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEFlotationTank;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEGasHolderBase;
 import com.globbypotato.rockhounding_core.machines.gui.GuiUtils;
 
 import mcp.mobius.waila.api.IWailaConfigHandler;
@@ -65,24 +65,10 @@ public class WailaMachinesD implements IWailaDataProvider{
 			}
 			if(te instanceof TEOrbiter){
 				TEOrbiter tank = (TEOrbiter)te;
-				if(tank.wasteHasFluid()){
-					currenttip.add(TextFormatting.GRAY + "Content: " + TextFormatting.WHITE + tank.getWasteFluid().getLocalizedName() + " - " + TextFormatting.WHITE + tank.getWasteAmount() + "/" + tank.getWasteCapacity() + " mB");
+				if(tank.getXPCount() > 0){
+					currenttip.add(TextFormatting.GRAY + "Content: " + TextFormatting.WHITE + "Stored Experience" + " - " + TextFormatting.WHITE + tank.getXPCount() + "/" + tank.getXPCountMax() + " xp");
 				}else{
 					currenttip.add(TextFormatting.GRAY + "Content: " + TextFormatting.WHITE + "Empty");
-				}
-				
-				if(tank.isValidPreset()){
-					if(tank.juiceHasFluid()){
-						currenttip.add(TextFormatting.GRAY + "Content: " + TextFormatting.WHITE + tank.getJuiceFluid().getLocalizedName() + " - " + TextFormatting.WHITE + tank.getJuiceAmount() + "/" + tank.getJuiceCapacity() + " mB");
-					}else{
-						currenttip.add(TextFormatting.GRAY + "Content: " + TextFormatting.WHITE + "Empty");
-					}
-				}else{
-					if(tank.getXPCount() > 0){
-						currenttip.add(TextFormatting.GRAY + "Content: " + TextFormatting.WHITE + "Stored Experience" + " - " + TextFormatting.WHITE + tank.getXPCount() + "/" + tank.getXPCountMax() + " xp");
-					}else{
-						currenttip.add(TextFormatting.GRAY + "Content: " + TextFormatting.WHITE + "Empty");
-					}
 				}
 			}
 			if(te instanceof TETransposer){

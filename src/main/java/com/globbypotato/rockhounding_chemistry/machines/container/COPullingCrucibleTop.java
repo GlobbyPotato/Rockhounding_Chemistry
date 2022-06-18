@@ -1,6 +1,6 @@
 package com.globbypotato.rockhounding_chemistry.machines.container;
 
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEPullingCrucibleTop;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEPullingCrucibleTop;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ClickType;
@@ -18,7 +18,7 @@ public class COPullingCrucibleTop extends ContainerBase<TEPullingCrucibleTop>{
 	public void addOwnSlots() {
 		IItemHandler input = this.tile.getInput();
 
-		this.addSlotToContainer(new SlotItemHandler(input, 0, 80, 60));//input
+		this.addSlotToContainer(new SlotItemHandler(input, 0, 80, 90));//input
 	}
 
 	@Override

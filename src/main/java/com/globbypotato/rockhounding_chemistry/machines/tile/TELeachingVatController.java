@@ -2,13 +2,19 @@ package com.globbypotato.rockhounding_chemistry.machines.tile;
 
 import java.util.ArrayList;
 
-import com.globbypotato.rockhounding_chemistry.ModItems;
-import com.globbypotato.rockhounding_chemistry.enums.EnumMiscItems;
 import com.globbypotato.rockhounding_chemistry.enums.materials.EnumFluid;
 import com.globbypotato.rockhounding_chemistry.enums.utils.EnumServer;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.LeachingVatRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.LeachingVatRecipe;
+import com.globbypotato.rockhounding_chemistry.machines.tile.collateral.TEServer;
+import com.globbypotato.rockhounding_chemistry.machines.tile.devices.TEPowerGenerator;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TECentrifuge;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TELeachingVatTank;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEMineralSizerCollector;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TESpecimenCollector;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEUnloader;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEBufferTank;
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.machines.tileentity.MachineStackHandler;
@@ -32,9 +38,7 @@ public class TELeachingVatController extends TileEntityInv implements IInternalS
 
 	public static final int SPEED_SLOT = 0;
 	public static final int FILTER_SLOT = 1;
-	public static final int PURGE_SLOT = 0;
 	public static int inputSlots = 1;
-	public static int outputSlots = 1;
 	public static int templateSlots = 3;
 	public static int upgradeSlots = 2;
 	public ArrayList<ItemStack> resultList;
@@ -49,7 +53,7 @@ public class TELeachingVatController extends TileEntityInv implements IInternalS
 	public LeachingVatRecipe dummyRecipe;
 
 	public TELeachingVatController() {
-		super(inputSlots, outputSlots, templateSlots, upgradeSlots);
+		super(inputSlots, 0, templateSlots, upgradeSlots);
 
 		this.input =  new MachineStackHandler(inputSlots, this){
 			@Override
@@ -82,10 +86,6 @@ public class TELeachingVatController extends TileEntityInv implements IInternalS
 	//----------------------- SLOTS -----------------------
 	public ItemStack inputSlot(){
 		return this.input.getStackInSlot(INPUT_SLOT);
-	}
-
-	public ItemStack purgeSlot() {
-		return this.output.getStackInSlot(PURGE_SLOT);
 	}
 
 	public ItemStack speedSlot() {
@@ -286,6 +286,7 @@ public class TELeachingVatController extends TileEntityInv implements IInternalS
 				getVesselB().filter = steam();
 			}
 		}
+
 	}
 
 
@@ -340,7 +341,7 @@ public class TELeachingVatController extends TileEntityInv implements IInternalS
 	//----------------------- STRUCTURE -----------------------
 //engine
 	public TEPowerGenerator getEngine(){
-		TEPowerGenerator engine = TileStructure.getEngine(this.world, this.pos, isFacingAt(270), 1, 0);
+		TEPowerGenerator engine = TileStructure.getEngine(this.world, this.pos.offset(isFacingAt(270)), isFacingAt(90));
 		return engine != null ? engine : null;
 	}
 
@@ -359,7 +360,7 @@ public class TELeachingVatController extends TileEntityInv implements IInternalS
 
 //leacher1
 	public TELeachingVatTank getLeacherA(){
-		TELeachingVatTank tank = TileStructure.getLeacher(this.world, this.pos, getFacing(), 1);
+		TELeachingVatTank tank = TileStructure.getLeacher(this.world, this.pos.offset(getFacing(), 1), getFacing());
 		return tank != null ? tank : null;
 	}
 
@@ -369,7 +370,7 @@ public class TELeachingVatController extends TileEntityInv implements IInternalS
 
 //leacher2
 	public TELeachingVatTank getLeacherB(){
-		TELeachingVatTank tank = TileStructure.getLeacher(this.world, this.pos, getFacing(), 2);
+		TELeachingVatTank tank = TileStructure.getLeacher(this.world, this.pos.offset(getFacing(), 2), getFacing());
 		return tank != null ? tank : null;
 	}
 
@@ -379,7 +380,7 @@ public class TELeachingVatController extends TileEntityInv implements IInternalS
 
 //leacher3
 	public TELeachingVatTank getLeacherC(){
-		TELeachingVatTank tank = TileStructure.getLeacher(this.world, this.pos, getFacing(), 3);
+		TELeachingVatTank tank = TileStructure.getLeacher(this.world, this.pos.offset(getFacing(), 3), getFacing());
 		return tank != null ? tank : null;
 	}
 
@@ -389,34 +390,53 @@ public class TELeachingVatController extends TileEntityInv implements IInternalS
 
 //vessel1
 	public TileVessel getVesselA(){
-		TileVessel vessel = TileStructure.getHolder(this.world, this.pos.offset(getFacing()), isFacingAt(270), 1, 180);
+		TileVessel vessel = TileStructure.getHolder(this.world, this.pos.offset(getFacing(), 1).offset(isFacingAt(90), 2), isFacingAt(270));
 		return vessel != null ? vessel : null;
 	}
 
 	public boolean hasVesselA(){
-		return getVesselA() != null;
+		return getVesselA() != null && hasCentrifuge1();
 	}
 
 //vessel2
 	public TileVessel getVesselB(){
-		TileVessel vessel = TileStructure.getHolder(this.world, this.pos.offset(getFacing(), 2), isFacingAt(270), 1, 180);
+		TileVessel vessel = TileStructure.getHolder(this.world, this.pos.offset(getFacing(), 2).offset(isFacingAt(90), 2), isFacingAt(270));
 		return vessel != null ? vessel : null;
 	}
 
 	public boolean hasVesselB(){
-		return getVesselB() != null;
+		return getVesselB() != null && hasCentrifuge2();
+	}
+
+//centrifuge
+	public TECentrifuge getSteamCentrifuge1(){
+		TECentrifuge centrifuge = TileStructure.getCentrifuge(this.world, this.pos.offset(getFacing(), 1).offset(isFacingAt(90)), isFacingAt(270));
+		return centrifuge != null ? centrifuge : null;
+	}
+
+	public TECentrifuge getSteamCentrifuge2(){
+		TECentrifuge centrifuge = TileStructure.getCentrifuge(this.world, this.pos.offset(getFacing(), 2).offset(isFacingAt(90)), isFacingAt(270));
+		return centrifuge != null ? centrifuge : null;
+	}
+
+	public boolean hasCentrifuge1(){
+		return getSteamCentrifuge1() != null;
+	}
+
+	public boolean hasCentrifuge2(){
+		return getSteamCentrifuge2() != null;
 	}
 
 //collector
 	public BlockPos collectorPos(){
-		return this.pos.offset(getFacing(), 4);		
+		return this.pos.offset(getFacing(), 5);		
 	}
 
-	public TELeachingVatCollector getCollector(){
+	public TESpecimenCollector getCollector(){
 		TileEntity te = this.world.getTileEntity(collectorPos());
-		if(this.world.getBlockState(collectorPos()) != null && te instanceof TELeachingVatCollector){
-			TELeachingVatCollector collector = (TELeachingVatCollector)te;
-			if(collector.getFacing() == getFacing()){
+		if(this.world.getBlockState(collectorPos()) != null && te instanceof TESpecimenCollector){
+			TESpecimenCollector collector = (TESpecimenCollector)te;
+			if(collector.getFacing() == getFacing().getOpposite()){
 				return collector;
 			}
 		}
@@ -435,9 +455,22 @@ public class TELeachingVatController extends TileEntityInv implements IInternalS
 		return getCollector().getOutput().getStackInSlot(i).isEmpty();
 	}
 
+//unloader
+	public TEUnloader getUnloader(){
+		BlockPos unloaderPos = this.pos.offset(getFacing(), 4);
+		TEUnloader unloader = TileStructure.getUnloader(this.world, unloaderPos, getFacing().getOpposite());
+		return unloader != null ? unloader : null;
+	}
+
+	public boolean hasUnloader(){
+		return getUnloader() != null;
+	}
+
+
 // tank pulp
 	public TEBufferTank getTankPulp(){
-		TEBufferTank tank = TileStructure.getBufferTank(this.world, collectorPos(), EnumFacing.UP, 1);
+		BlockPos tankPos = this.pos.offset(getFacing(), 5).offset(EnumFacing.UP);
+		TEBufferTank tank = TileStructure.getBufferTank(this.world, tankPos);
 		return tank != null ? tank : null;
 	}
 
@@ -470,7 +503,7 @@ public class TELeachingVatController extends TileEntityInv implements IInternalS
 
 //server
 	public TEServer getServer(){
-		TEServer server = TileStructure.getServer(this.world, this.pos, isFacingAt(90), 1, 0);
+		TEServer server = TileStructure.getServer(this.world, this.pos.offset(isFacingAt(90)), isFacingAt(270));
 		return server != null ? server : null;
 	}
 
@@ -487,7 +520,7 @@ public class TELeachingVatController extends TileEntityInv implements IInternalS
 			doPreset();
 			handlePurge();
 
-			initializeServer(isRepeatable, hasServer(), getServer(), deviceCode());
+			initializeServer(isRepeatable, getServer(), deviceCode(), filterMove(), 16);
 
 			if(inputSlot().isEmpty() && getDummyRecipe() != null){
 				dummyRecipe = null;
@@ -517,8 +550,8 @@ public class TELeachingVatController extends TileEntityInv implements IInternalS
 	private void handlePurge() {
 		if(isActive()){
 			if(!this.inputSlot().isEmpty() && !this.getFilter().isEmpty() && !CoreUtils.isMatchingIngredient(inputSlot(), getFilter())){
-				if(this.output.canSetOrStack(purgeSlot(), inputSlot())){
-					this.output.setOrStack(PURGE_SLOT, inputSlot());
+				if(((MachineStackHandler)getUnloader().getOutput()).canSetOrStack(getUnloader().unloaderSlot(), inputSlot())){
+					((MachineStackHandler)getUnloader().getOutput()).setOrStack(OUTPUT_SLOT, inputSlot());
 					this.input.setStackInSlot(INPUT_SLOT, ItemStack.EMPTY);
 				}
 			}
@@ -532,12 +565,13 @@ public class TELeachingVatController extends TileEntityInv implements IInternalS
 			&& hasFuelPower()
 			&& isAssembled()
 			&& handleFilter(inputSlot(), getFilter()) //server
-			&& handleServer(hasServer(), getServer(), this.currentFile); //server
+			&& handleServer(getServer(), this.currentFile); //server
 	}
 
 	private boolean isAssembled() {
 		return isOutputEmpty() && hasTankPulp()
-			&& (hasLeacherA() && hasLeacherB() && hasLeacherC());
+			&& (hasLeacherA() && hasLeacherB() && hasLeacherC())
+			&& hasUnloader();
 	}
 
 	private void process() {
@@ -604,7 +638,7 @@ public class TELeachingVatController extends TileEntityInv implements IInternalS
 
 			this.input.decrementSlot(INPUT_SLOT);
 
-			updateServer(hasServer(), getServer(), this.currentFile);
+			updateServer(getServer(), this.currentFile);
 		}else{
 			this.isBugged = true;
 		}
@@ -658,25 +692,25 @@ public class TELeachingVatController extends TileEntityInv implements IInternalS
 	public void loadServerStatus() {
 		this.currentFile = -1;
 		if(getServer().isActive()){
-			for(int x = 0; x < TEServer.FILE_SLOTS.length; x++){
+			for(int x = 0; x < getServer().FILE_SLOTS.length; x++){
 				ItemStack fileSlot = getServer().inputSlot(x).copy();
-				if(!fileSlot.isEmpty() && fileSlot.isItemEqual(new ItemStack(ModItems.MISC_ITEMS, 1, EnumMiscItems.SERVER_FILE.ordinal()))){
+				if(getServer().isValidFile(fileSlot)){
 					if(fileSlot.hasTagCompound()){
 						NBTTagCompound tag = fileSlot.getTagCompound();
-						if(isValidFile(tag)){
-							if(tag.getInteger("Device") == deviceCode()){
-								if(tag.getInteger("Recipe") < 16){
-									if(tag.getInteger("Done") > 0){
-										if(this.gravity != (tag.getInteger("Recipe") * 2) + 2F){
-											this.gravity = (tag.getInteger("Recipe") * 2) + 2F;
+						if(isWrittenFile(tag)){
+							if(isCorrectDevice(tag, deviceCode())){
+								if(getRecipe(tag) < 16){
+									if(getDone(tag) > 0){
+										if(this.gravity != (getRecipe(tag))){
+											this.gravity = (getRecipe(tag));
 											this.markDirtyClient();
 										}
 										if(this.currentFile != x){
 											this.currentFile = x;
 											this.markDirtyClient();
 										}
-										if(tag.hasKey("FilterStack")){
-											ItemStack temp = new ItemStack(tag.getCompoundTag("FilterStack"));
+										if(hasFilterItem(tag)){
+											ItemStack temp = getFilterItem(tag);
 											if(this.getFilter().isEmpty() || !this.getFilter().isItemEqual(temp)){
 												if(this.filter != temp){
 													this.filter = temp;
@@ -691,7 +725,7 @@ public class TELeachingVatController extends TileEntityInv implements IInternalS
 						}
 					}
 				}
-				if(x == TEServer.FILE_SLOTS.length - 1){
+				if(x == getServer().FILE_SLOTS.length - 1){
 					resetFiles(getServer(), deviceCode());
 				}
 			}

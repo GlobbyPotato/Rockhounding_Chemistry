@@ -6,33 +6,31 @@ import com.globbypotato.rockhounding_chemistry.enums.utils.EnumCasting;
 import com.globbypotato.rockhounding_chemistry.enums.utils.EnumSaltStages;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEAirCompressor;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEBufferTank;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TECatalystRegen;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEContainmentTank;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEEvaporationTank;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEExhaustionValve;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEFlotationTank;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEFluidInputTank;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEFluidOutputTank;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEFluidTank;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEGasHolderBase;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEGasHolderTop;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEGasifierBurner;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEGasifierCooler;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEGasifierTank;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TELeachingVatTank;
+import com.globbypotato.rockhounding_chemistry.machines.tile.TEGasifierController;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TEMineralSizerController;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEMultivessel;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEOrbiter;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEPowerGenerator;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEPressureVessel;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TEProfilingBench;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TESlurryDrum;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TESlurryPond;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEStirredTankOut;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TETransposer;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEWaterPump;
+import com.globbypotato.rockhounding_chemistry.machines.tile.collateral.TEAirCompressor;
+import com.globbypotato.rockhounding_chemistry.machines.tile.devices.TEOrbiter;
+import com.globbypotato.rockhounding_chemistry.machines.tile.devices.TEPowerGenerator;
+import com.globbypotato.rockhounding_chemistry.machines.tile.devices.TETransposer;
+import com.globbypotato.rockhounding_chemistry.machines.tile.devices.TEWaterPump;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEExhaustionValve;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEGasHolderTop;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEGasifierBurner;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TELeachingVatTank;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEStirredTankOut;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEBufferTank;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEContainmentTank;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEEvaporationTank;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEFlotationTank;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEFluidCistern;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEFluidTank;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEGasHolderBase;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEMultivessel;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEPressureVessel;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEReinforcedCistern;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TESlurryDrum;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEWashingTank;
 import com.globbypotato.rockhounding_core.machines.gui.GuiUtils;
 import com.google.common.base.Function;
 
@@ -109,39 +107,12 @@ public class TopMachines implements IProbeInfoProvider{
 					probeInfo.progress(tank.getTankAmount(), tank.getTankCapacity(), probeInfo.defaultProgressStyle().suffix(" mB").filledColor(0xFFFFFFFF).alternateFilledColor(0xFFD3D3D3).borderColor(0x000000).numberFormat(NumberFormat.FULL));
 				}
 			}
-			if(te instanceof TEFluidInputTank){
-				TEFluidInputTank tank = (TEFluidInputTank)te;
-				if(tank.hasSolventFluid()){
-					probeInfo.progress(tank.getSolventAmount(), tank.getTankCapacity(), probeInfo.defaultProgressStyle().suffix(" mB - Solvent").filledColor(0xFFFFFFFF).alternateFilledColor(0xFF90FBFF).borderColor(0x000000).numberFormat(NumberFormat.FULL));
-				}
-				if(tank.hasReagentFluid()){
-					probeInfo.progress(tank.getReagentAmount(), tank.getTankCapacity(), probeInfo.defaultProgressStyle().suffix(" mB - Reagent").filledColor(0xFFFFFFFF).alternateFilledColor(0xFF90FFBF).borderColor(0x000000).numberFormat(NumberFormat.FULL));
-				}
-			}
 
-			if(te instanceof TEFluidOutputTank){
-				TEFluidOutputTank tank = (TEFluidOutputTank)te;
-				if(tank.hasSolutionFluid()){
-					probeInfo.progress(tank.getSolutionAmount(), tank.getTankCapacity(), probeInfo.defaultProgressStyle().suffix(" mB - Solution").filledColor(0xFFFFFFFF).alternateFilledColor(0xFFE9FF90).borderColor(0x000000).numberFormat(NumberFormat.FULL));
-				}
-				if(tank.hasByproductFluid()){
-					probeInfo.progress(tank.getByproductAmount(), tank.getTankCapacity(), probeInfo.defaultProgressStyle().suffix(" mB - Byproduct").filledColor(0xFFFFFFFF).alternateFilledColor(0xFFFFDE90).borderColor(0x000000).numberFormat(NumberFormat.FULL));
-				}
-			}
 	        if (te instanceof TEProfilingBench) {
 	        	TEProfilingBench bench = (TEProfilingBench)te;
 	        	String pattern = TextFormatting.GRAY + "Pattern: " + TextFormatting.AQUA + EnumCasting.getFormalName(bench.getCasting());
 	            probeInfo.text(pattern);
 	        }
-			if(te instanceof TESlurryPond){
-				TESlurryPond tank = (TESlurryPond)te;
-				if(tank.hasInputFluid()){
-					probeInfo.progress(tank.getInputAmount(), tank.getTankCapacity(), probeInfo.defaultProgressStyle().suffix(" mB").filledColor(0xFF84CCFF).alternateFilledColor(0xFF0096FF).borderColor(0x000000).numberFormat(NumberFormat.FULL));
-				}
-				if(tank.hasOutputFluid()){
-					probeInfo.progress(tank.getOutputAmount(), tank.getTankCapacity(), probeInfo.defaultProgressStyle().suffix(" mB").filledColor(0xFFC2C2C2).alternateFilledColor(0xFF656769).borderColor(0x000000).numberFormat(NumberFormat.FULL));
-				}
-			}
 			if(te instanceof TEEvaporationTank){
 				TEEvaporationTank tank = (TEEvaporationTank)te;
 				probeInfo.text("Stage " + (tank.getStage() + 1) + ": " + EnumSaltStages.getStageName(tank.getStage()));
@@ -160,20 +131,27 @@ public class TopMachines implements IProbeInfoProvider{
 				}
 
 			}
-			if(te instanceof TEGasifierTank){
-				TEGasifierTank tank = (TEGasifierTank)te;
+			if(te instanceof TEReinforcedCistern){
+				TEReinforcedCistern tank = (TEReinforcedCistern)te;
 				if(tank.hasInputFluid()){
 					probeInfo.progress(tank.getInputAmount(), tank.getTankCapacity(), probeInfo.defaultProgressStyle().suffix(" mB").filledColor(0xFF84CCFF).alternateFilledColor(0xFF0096FF).borderColor(0x000000).numberFormat(NumberFormat.FULL));
 				}
 			}
-			if(te instanceof TEGasifierCooler){
-				TEGasifierCooler tank = (TEGasifierCooler)te;
+			if(te instanceof TEFluidCistern){
+				TEFluidCistern tank = (TEFluidCistern)te;
+				if(tank.hasTankFluid()){
+					probeInfo.progress(tank.getTankAmount(), tank.getTankCapacity(), probeInfo.defaultProgressStyle().suffix(" mB").filledColor(0xFF84CCFF).alternateFilledColor(0xFF0096FF).borderColor(0x000000).numberFormat(NumberFormat.FULL));
+				}
+			}
+			if(te instanceof TEGasifierController){
+				TEGasifierController tank = (TEGasifierController)te;
 				probeInfo.progress(tank.getTemperature(), tank.getTemperatureMax(), probeInfo.defaultProgressStyle().suffix("k").filledColor(0xFFFF7200).alternateFilledColor(0xFFFF0000).borderColor(0x000000).numberFormat(NumberFormat.FULL));
 			}
 			if(te instanceof TEGasifierBurner){
-				TEGasifierBurner tank = (TEGasifierBurner)te;
-				if(tank.hasReactant() ){
-					probeInfo.progress(tank.getReactantAmount(), tank.getTankCapacity(), probeInfo.defaultProgressStyle().suffix(" mB").filledColor(0xFF84CCFF).alternateFilledColor(0xFF0096FF).borderColor(0x000000).numberFormat(NumberFormat.FULL));
+				TileEntity base = world.getTileEntity(data.getPos().offset(EnumFacing.DOWN));
+				if(base instanceof TEGasifierController){
+					TEGasifierController tank = (TEGasifierController)base;
+					probeInfo.progress(tank.getTemperature(), tank.getTemperatureMax(), probeInfo.defaultProgressStyle().suffix("k").filledColor(0xFFFF7200).alternateFilledColor(0xFFFF0000).borderColor(0x000000).numberFormat(NumberFormat.FULL));
 				}
 			}
 			if(te instanceof TEPressureVessel){
@@ -211,17 +189,8 @@ public class TopMachines implements IProbeInfoProvider{
 			}
 			if(te instanceof TEOrbiter){
 				TEOrbiter tank = (TEOrbiter)te;
-				if(tank.wasteHasFluid()){
-					probeInfo.progress(tank.getWasteAmount(), tank.getWasteCapacity(), probeInfo.defaultProgressStyle().suffix(" mB").filledColor(0xFFA0B073).alternateFilledColor(0xFF737E56).borderColor(0x000000).numberFormat(NumberFormat.FULL));
-				}
-				if(tank.isValidPreset()){
-					if(tank.juiceHasFluid()){
-						probeInfo.progress(tank.getJuiceAmount(), tank.getJuiceCapacity(), probeInfo.defaultProgressStyle().suffix(" mB").filledColor(0xFF439E00).alternateFilledColor(0xFF5DD703).borderColor(0x000000).numberFormat(NumberFormat.FULL));
-					}
-				}else{
-					if(tank.getXPCount() > 0){
-						probeInfo.progress(tank.getXPCount(), tank.getXPCountMax(), probeInfo.defaultProgressStyle().suffix(" xp").filledColor(0xFF439E00).alternateFilledColor(0xFF5DD703).borderColor(0x000000).numberFormat(NumberFormat.FULL));
-					}
+				if(tank.getXPCount() > 0){
+					probeInfo.progress(tank.getXPCount(), tank.getXPCountMax(), probeInfo.defaultProgressStyle().suffix(" xp").filledColor(0xFF439E00).alternateFilledColor(0xFF5DD703).borderColor(0x000000).numberFormat(NumberFormat.FULL));
 				}
 			}
 			if(te instanceof TETransposer){
@@ -288,12 +257,6 @@ public class TopMachines implements IProbeInfoProvider{
 					}
 				}
 			}
-			if(te instanceof TECatalystRegen){
-				TECatalystRegen tank = (TECatalystRegen)te;
-				if(tank.hasInputFluid()){
-					probeInfo.progress(tank.getInputAmount(), tank.getTankCapacity(), probeInfo.defaultProgressStyle().suffix(" mB").filledColor(0xFFFFFFFF).alternateFilledColor(0xFFD3D3D3).borderColor(0x000000).numberFormat(NumberFormat.FULL));
-				}
-			}
 			if(te instanceof TESlurryDrum){
 				TESlurryDrum tank = (TESlurryDrum)te;
 				if(tank.hasTankFluid()){
@@ -308,6 +271,12 @@ public class TopMachines implements IProbeInfoProvider{
 			}
 			if(te instanceof TEStirredTankOut){
 				TEStirredTankOut tank = (TEStirredTankOut)te;
+				if(tank.hasTankFluid()){
+					probeInfo.progress(tank.getTankAmount(), tank.getTankCapacity(), probeInfo.defaultProgressStyle().suffix(" mB").filledColor(0xFFFFFFFF).alternateFilledColor(0xFFD3D3D3).borderColor(0x000000).numberFormat(NumberFormat.FULL));
+				}
+			}
+			if(te instanceof TEWashingTank){
+				TEWashingTank tank = (TEWashingTank)te;
 				if(tank.hasTankFluid()){
 					probeInfo.progress(tank.getTankAmount(), tank.getTankCapacity(), probeInfo.defaultProgressStyle().suffix(" mB").filledColor(0xFFFFFFFF).alternateFilledColor(0xFFD3D3D3).borderColor(0x000000).numberFormat(NumberFormat.FULL));
 				}

@@ -1,7 +1,7 @@
 package com.globbypotato.rockhounding_chemistry.compat.jei.gasifier_plant;
 
 import com.globbypotato.rockhounding_chemistry.compat.jei.RHRecipeCategory;
-import com.globbypotato.rockhounding_chemistry.machines.gui.UIGasifierCooler;
+import com.globbypotato.rockhounding_chemistry.machines.gui.UIGasifierController;
 
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IGuiFluidStackGroup;
@@ -13,7 +13,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class GasifierPlantCategory extends RHRecipeCategory {
 
-	private final static ResourceLocation guiTexture = UIGasifierCooler.TEXTURE_JEI;
+	private final static ResourceLocation guiTexture = UIGasifierController.TEXTURE_JEI;
 	private String uid;
 
 	public GasifierPlantCategory(IGuiHelper guiHelper, String uid) {
@@ -35,20 +35,17 @@ public class GasifierPlantCategory extends RHRecipeCategory {
 		int INPUT_SLOT = 0;
 		int REACTANT_SLOT = 1;
 		int OUTPUT_SLOT = 2;
-		int MSLAG_SLOT = 3;
-		int ASLAG_SLOT = 4;
+		int SLAG_SLOT = 3;
 
 		guiFluidStacks.init(INPUT_SLOT, true,  11, 2, 16, 34, 1000, false, null);
 		guiFluidStacks.init(REACTANT_SLOT, true,  35, 18, 16, 34, 1000, false, null);
 		guiFluidStacks.init(OUTPUT_SLOT, true,  101, 46, 16, 34, 1000, false, null);
-		guiItemStacks.init(MSLAG_SLOT, true, 0, 63);
-		guiItemStacks.init(ASLAG_SLOT, true, 18, 63);
+		guiItemStacks.init(SLAG_SLOT, true, 0, 63);
 		
 		guiFluidStacks.set(INPUT_SLOT, wrapper.getSlurries());
 		guiFluidStacks.set(REACTANT_SLOT, wrapper.getReactants());
 		guiFluidStacks.set(OUTPUT_SLOT, wrapper.getOutputs());
-		guiItemStacks.set(MSLAG_SLOT, wrapper.getMainSlags());
-		guiItemStacks.set(ASLAG_SLOT, wrapper.getAltSlags());
+		guiItemStacks.set(SLAG_SLOT, wrapper.getSlags());
 
 	}
 

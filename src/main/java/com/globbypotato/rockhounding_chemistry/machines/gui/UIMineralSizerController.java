@@ -42,8 +42,6 @@ public class UIMineralSizerController extends GuiBase {
 
 	   String commDescr = "";
 	   String commValue = TextFormatting.GRAY + "Comminution level: " + TextFormatting.GREEN + this.tile.getComminution();
-//	   String commState = TextFormatting.GRAY + "Switching Mode: " + TextFormatting.GOLD + "Manual switch";
-//	   if(this.tile.isPowered()){commState = TextFormatting.GRAY + "Switching Mode: " + TextFormatting.GOLD + "Redstone signal";}
 
 	   //slider
 	   if(GuiUtils.hoveringArea(79, 20, 18, 18, mouseX, mouseY, x, y)){
@@ -106,11 +104,6 @@ public class UIMineralSizerController extends GuiBase {
 		   }
 	   }
 
-	   //recycle
-	   if(GuiUtils.hoveringArea(16, 61, 12, 22, mouseX, mouseY, x, y)){
-		   tooltip = GuiUtils.drawLabel("Ingredients recycling", mouseX, mouseY);
-		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
-	   }
     }
 
     @Override

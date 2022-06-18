@@ -40,6 +40,55 @@
         "facing=north,variant=tubular_bed_controller": 				{ "model": "rockhounding_chemistry:machines_f_tubular_bed_controller", "y": 180},
         "facing=south,variant=tubular_bed_controller": 				{ "model": "rockhounding_chemistry:machines_f_tubular_bed_controller"},
         "facing=west,variant=tubular_bed_controller": 				{ "model": "rockhounding_chemistry:machines_f_tubular_bed_controller", "y": 90},
-        "facing=east,variant=tubular_bed_controller": 				{ "model": "rockhounding_chemistry:machines_f_tubular_bed_controller", "y": 270}
+        "facing=east,variant=tubular_bed_controller": 				{ "model": "rockhounding_chemistry:machines_f_tubular_bed_controller", "y": 270},
+		
+		"facing=down,variant=fluid_router": 						{ "model": "rockhounding_chemistry:machines_f_fluid_router", "y": 180},
+        "facing=up,variant=fluid_router": 							{ "model": "rockhounding_chemistry:machines_f_fluid_router", "y": 180},
+        "facing=north,variant=fluid_router": 						{ "model": "rockhounding_chemistry:machines_f_fluid_router", "y": 180},
+        "facing=south,variant=fluid_router": 						{ "model": "rockhounding_chemistry:machines_f_fluid_router"},
+        "facing=west,variant=fluid_router": 						{ "model": "rockhounding_chemistry:machines_f_fluid_router", "y": 90},
+        "facing=east,variant=fluid_router": 						{ "model": "rockhounding_chemistry:machines_f_fluid_router", "y": 270},
+
+        "facing=down,variant=sizer_controller": 					{ "model": "rockhounding_chemistry:machines_f_sizer_controller", "y": 180},
+        "facing=up,variant=sizer_controller": 						{ "model": "rockhounding_chemistry:machines_f_sizer_controller", "y": 180},
+        "facing=north,variant=sizer_controller": 					{ "model": "rockhounding_chemistry:machines_f_sizer_controller", "y": 180},
+        "facing=south,variant=sizer_controller": 					{ "model": "rockhounding_chemistry:machines_f_sizer_controller"},
+        "facing=west,variant=sizer_controller": 					{ "model": "rockhounding_chemistry:machines_f_sizer_controller", "y": 90},
+        "facing=east,variant=sizer_controller": 					{ "model": "rockhounding_chemistry:machines_f_sizer_controller", "y": 270},
+		
+		"facing=down,variant=sizer_transmission": 					{ "model": "rockhounding_chemistry:machines_f_sizer_transmission", "y": 180},
+        "facing=up,variant=sizer_transmission": 					{ "model": "rockhounding_chemistry:machines_f_sizer_transmission", "y": 180},
+        "facing=north,variant=sizer_transmission": 					{ "model": "rockhounding_chemistry:machines_f_sizer_transmission", "y": 180},
+        "facing=south,variant=sizer_transmission": 					{ "model": "rockhounding_chemistry:machines_f_sizer_transmission"},
+        "facing=west,variant=sizer_transmission": 					{ "model": "rockhounding_chemistry:machines_f_sizer_transmission", "y": 90},
+        "facing=east,variant=sizer_transmission": 					{ "model": "rockhounding_chemistry:machines_f_sizer_transmission", "y": 270},
+		
+		"facing=down,variant=shredder_controller": 					{ "model": "rockhounding_chemistry:machines_f_shredder_controller", "y": 180},
+        "facing=up,variant=shredder_controller": 					{ "model": "rockhounding_chemistry:machines_f_shredder_controller", "y": 180},
+        "facing=north,variant=shredder_controller": 				{ "model": "rockhounding_chemistry:machines_f_shredder_controller", "y": 180},
+        "facing=south,variant=shredder_controller": 				{ "model": "rockhounding_chemistry:machines_f_shredder_controller"},
+        "facing=west,variant=shredder_controller": 					{ "model": "rockhounding_chemistry:machines_f_shredder_controller", "y": 90},
+        "facing=east,variant=shredder_controller": 					{ "model": "rockhounding_chemistry:machines_f_shredder_controller", "y": 270},
+
+        "facing=down,variant=shredder_base": 						{ "model": "rockhounding_chemistry:machines_f_shredder_base", "y": 180},
+        "facing=up,variant=shredder_base": 							{ "model": "rockhounding_chemistry:machines_f_shredder_base", "y": 180},
+        "facing=north,variant=shredder_base": 						{ "model": "rockhounding_chemistry:machines_f_shredder_base", "y": 180},
+        "facing=south,variant=shredder_base": 						{ "model": "rockhounding_chemistry:machines_f_shredder_base"},
+        "facing=west,variant=shredder_base": 						{ "model": "rockhounding_chemistry:machines_f_shredder_base", "y": 90},
+        "facing=east,variant=shredder_base": 						{ "model": "rockhounding_chemistry:machines_f_shredder_base", "y": 270},
+		
+		"facing=down,variant=shredder_table": 						{ "model": "rockhounding_chemistry:machines_f_shredder_table", "y": 180},
+        "facing=up,variant=shredder_table": 						{ "model": "rockhounding_chemistry:machines_f_shredder_table", "y": 180},
+        "facing=north,variant=shredder_table": 						{ "model": "rockhounding_chemistry:machines_f_shredder_table", "y": 180},
+        "facing=south,variant=shredder_table": 						{ "model": "rockhounding_chemistry:machines_f_shredder_table"},
+        "facing=west,variant=shredder_table": 						{ "model": "rockhounding_chemistry:machines_f_shredder_table", "y": 90},
+        "facing=east,variant=shredder_table": 						{ "model": "rockhounding_chemistry:machines_f_shredder_table", "y": 270},
+		
+		"facing=down,variant=planning_table": 						{ "model": "rockhounding_chemistry:machines_f_planning_table", "y": 180},
+        "facing=up,variant=planning_table": 						{ "model": "rockhounding_chemistry:machines_f_planning_table", "y": 180},
+        "facing=north,variant=planning_table": 						{ "model": "rockhounding_chemistry:machines_f_planning_table", "y": 180},
+        "facing=south,variant=planning_table": 						{ "model": "rockhounding_chemistry:machines_f_planning_table"},
+        "facing=west,variant=planning_table": 						{ "model": "rockhounding_chemistry:machines_f_planning_table", "y": 90},
+        "facing=east,variant=planning_table": 						{ "model": "rockhounding_chemistry:machines_f_planning_table", "y": 270}
 	}
 }

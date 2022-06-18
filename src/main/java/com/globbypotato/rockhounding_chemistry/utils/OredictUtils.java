@@ -55,20 +55,27 @@ public class OredictUtils extends BaseRecipes{
 		OreDictionary.registerOre("compoundFlyash", chemicals(1, EnumChemicals.FLYASH_COMPOUND));
 		OreDictionary.registerOre("compoundYag", chemicals(1, EnumChemicals.YAG_COMPOUND));
 		OreDictionary.registerOre("compoundPureYag", chemicals(1, EnumChemicals.PURE_YAG_COMPOUND));
-		OreDictionary.registerOre("compoundZeolite", chemicals(1, EnumChemicals.ZEOLITE_COMPOUND));
+		OreDictionary.registerOre("compoundZeolite", chemicals(1, EnumChemicals.ZEOLITE_PELLET));
 		OreDictionary.registerOre("compoundWidia", chemicals(1, EnumChemicals.WIDIA_COMPOUND));
 		OreDictionary.registerOre("compoundGraphite", native_stack(1, EnumNative.CHAOITE));
 		OreDictionary.registerOre("compoundGraphite", native_stack(1, EnumNative.GRAPHITE));
 		OreDictionary.registerOre("compoundGraphite", native_stack(1, EnumNative.FULLERITE));
+		OreDictionary.registerOre("compoundCoke", chemicals(1, EnumChemicals.COKE_COMPOUND));
+		OreDictionary.registerOre("compoundCarbon", chemicals(1, EnumChemicals.CARBON_COMPOUND));
+		OreDictionary.registerOre("compoundLead", chemicals(1, EnumChemicals.LEAD_COMPOUND));
+		OreDictionary.registerOre("compoundQuartz", chemicals(1, EnumChemicals.QUARTZ_COMPOUND));
+		OreDictionary.registerOre("compoundNitrate", chemicals(1, EnumChemicals.POTASSIUM_NITRATE));
+
+		//misc
+		OreDictionary.registerOre("foodSalt", chemicals(1, EnumChemicals.SALT));
+		OreDictionary.registerOre("itemSalt", chemicals(1, EnumChemicals.SALT));
 
 		//dusts
 		OreDictionary.registerOre("dustSalt", chemicals(1, EnumChemicals.SALT));
-		OreDictionary.registerOre("foodSalt", chemicals(1, EnumChemicals.SALT));
-		OreDictionary.registerOre("itemSalt", chemicals(1, EnumChemicals.SALT));
 		OreDictionary.registerOre("dustGraphite", chemicals(1, EnumChemicals.GRAPHITE_COMPOUND));
-		OreDictionary.registerOre("dustZeolite", chemicals(1, EnumChemicals.ZEOLITE_PELLET));
+		OreDictionary.registerOre("dustZeolite", chemicals(1, EnumChemicals.ZEOLITE_COMPOUND));
 		OreDictionary.registerOre("dustSand", chemicals(1, EnumChemicals.SAND_COMPOUND));
-		OreDictionary.registerOre("dustCoke", chemicals(1, EnumChemicals.COKE_COMPOUND));
+		OreDictionary.registerOre("dustDidymium", chemicals(1, EnumChemicals.DIDYMIUM_COMPOUND));
 		for(int x = 0; x < EnumElements.size(); x++){
 			OreDictionary.registerOre(EnumElements.getDust(x), elements(1, EnumElements.values()[x]));
 		}

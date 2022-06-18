@@ -3,16 +3,14 @@
   "modid": "rockhounding_chemistry",
   "name": "Rockhounding Mod: Chemistry",
   "description": "Mineral processing through an industrial chemistry path for mid-late game material supplying. Featuring additional chemistry and metallurgic applications.",
-  "version": "${chemistryModVersion}",
-  "mcversion": "${mcVersion}",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
   "authorList": ["GlobbyPotato"],
   "credits": "The Forge and FML guys for their job, MrCrayfish for the Model Creator, Fizzy81 for the JSON Model Animator, gigaherz for the Guidebook, Darkhax for the Bookshelf dependency, the CoFH Team for the RedstoneFlux dependency",
   "logoFile": "",
   "screenshots": [],
-  "useDependencyInformation": true,
-  "requiredMods": ["rockhounding_core@${coreModVersion}", "bookshelf@[2.3,)", "gbook@[2.9,)"],
-  "dependencies": ["rockhounding_core", "bookshelf", "gbook"]
+  "dependencies": []
 }
 ]

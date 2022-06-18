@@ -2,7 +2,7 @@ package com.globbypotato.rockhounding_chemistry.machines.gui;
 
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.container.COPullingCrucibleTop;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEPullingCrucibleTop;
+import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEPullingCrucibleTop;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 
 import net.minecraft.entity.player.InventoryPlayer;

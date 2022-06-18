@@ -13,6 +13,7 @@ public class CompatWaila {
 		FMLInterModComms.sendMessage(wailaID, "register", part1 + "WailaMachinesC" + part2);
 		FMLInterModComms.sendMessage(wailaID, "register", part1 + "WailaMachinesD" + part2);
 		FMLInterModComms.sendMessage(wailaID, "register", part1 + "WailaMachinesE" + part2);
+		FMLInterModComms.sendMessage(wailaID, "register", part1 + "WailaMachinesF" + part2);
 		FMLInterModComms.sendMessage(wailaID, "register", part1 + "WailaPipelinePump" + part2);
 		FMLInterModComms.sendMessage(wailaID, "register", part1 + "WailaPipelineValve" + part2);
 		FMLInterModComms.sendMessage(wailaID, "register", part1 + "WailaGaslinePump" + part2);

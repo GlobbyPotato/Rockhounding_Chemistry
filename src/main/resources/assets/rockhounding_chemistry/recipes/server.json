@@ -3,10 +3,13 @@
 	"group": "rockhounding_chemistry:machines",
 	"pattern": [
 		"COC",
-		"LLL",
+		"FLF",
 		"CSC"
 	],
 	"key": {
+		"F":{
+				"item": "#FILE"
+			},
 		"O":{
 				"item": "#OBSERVER"
 			},

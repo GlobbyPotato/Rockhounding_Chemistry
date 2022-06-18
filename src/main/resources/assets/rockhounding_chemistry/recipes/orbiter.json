@@ -2,11 +2,14 @@
 	"type": "minecraft:crafting_shaped",
 	"group": "rockhounding_chemistry:machines",
 	"pattern": [
-		" D ",
+		"IDI",
 		"GSG",
 		"CCC"
 	],
 	"key": {
+		"I":{
+				"item": "#IRON_COIL"
+			},
 		"C":{
 				"item": "#IRON_CASING"
 			},

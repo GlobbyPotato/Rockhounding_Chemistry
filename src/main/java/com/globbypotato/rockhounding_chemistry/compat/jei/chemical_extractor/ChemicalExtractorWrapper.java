@@ -9,6 +9,8 @@ import javax.annotation.Nonnull;
 import com.globbypotato.rockhounding_chemistry.compat.jei.RHRecipeWrapper;
 import com.globbypotato.rockhounding_chemistry.fluids.ModFluids;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.ChemicalExtractorRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.ElementsCabinetRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.MaterialCabinetRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.ChemicalExtractorRecipe;
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
 
@@ -54,7 +56,8 @@ public class ChemicalExtractorWrapper extends RHRecipeWrapper<ChemicalExtractorR
 	public List<String> getElements() {
 		ArrayList<String> allowedDicts = new ArrayList<String>();
 		for(int x = 0; x < getRecipe().getElements().size(); x++) {
-			if(!(ChemicalExtractorRecipes.inhibited_elements.contains(getRecipe().getElements().get(x).toLowerCase()))) {
+			if(!(ElementsCabinetRecipes.inhibited_elements.contains(getRecipe().getElements().get(x).toLowerCase()))
+			&& !(MaterialCabinetRecipes.inhibited_material.contains(getRecipe().getElements().get(x).toLowerCase()))) {
 				allowedDicts.add(getRecipe().getElements().get(x));
 			}
 		}

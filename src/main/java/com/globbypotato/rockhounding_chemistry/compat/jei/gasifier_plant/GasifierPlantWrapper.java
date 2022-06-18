@@ -12,6 +12,7 @@ import com.globbypotato.rockhounding_chemistry.ModItems;
 import com.globbypotato.rockhounding_chemistry.compat.jei.RHRecipeWrapper;
 import com.globbypotato.rockhounding_chemistry.enums.EnumMiscItems;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.GasifierPlantRecipes;
+import com.globbypotato.rockhounding_chemistry.machines.recipe.MaterialCabinetRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.GasifierPlantRecipe;
 
 import mezz.jei.api.ingredients.IIngredients;
@@ -20,6 +21,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class GasifierPlantWrapper extends RHRecipeWrapper<GasifierPlantRecipe>{
 
@@ -52,12 +54,36 @@ public class GasifierPlantWrapper extends RHRecipeWrapper<GasifierPlantRecipe>{
 		return Collections.singletonList(getRecipe().getOutput());
 	}
 
-	public List<ItemStack> getMainSlags() {
-		return Collections.singletonList(getRecipe().getMainSlag());
+	@Nonnull
+	public List<String> getElements() {
+		ArrayList<String> allowedDicts = new ArrayList<String>();
+		for(int x = 0; x < getRecipe().getElements().size(); x++) {
+			if(!(MaterialCabinetRecipes.inhibited_material.contains(getRecipe().getElements().get(x).toLowerCase()))) {
+				allowedDicts.add(getRecipe().getElements().get(x));
+			}
+		}
+		return allowedDicts;
 	}
 
-	public List<ItemStack> getAltSlags() {
-		return Collections.singletonList(getRecipe().getAltSlag());
+	@Nonnull
+	public List<Integer> getQuantities() {
+		return getRecipe().getQuantities();
+	}
+
+	@Nonnull
+	public List<ItemStack> getSlags() {
+		ArrayList<ItemStack> stacks = new ArrayList<ItemStack>();
+		for(int x = 0; x < getElements().size(); x++){
+			ArrayList<ItemStack> firstDict = new ArrayList<ItemStack>();
+			String recipeDict = getElements().get(x);
+			if(!OreDictionary.getOres(recipeDict).isEmpty()){
+				firstDict.addAll(OreDictionary.getOres(recipeDict));
+				if(!firstDict.isEmpty() && firstDict.size() > 0){
+					stacks.addAll(firstDict);
+				}
+			}
+		}
+		return stacks;
 	}
 
 	public List<Integer> getTemperatures() {
@@ -87,7 +113,7 @@ public class GasifierPlantWrapper extends RHRecipeWrapper<GasifierPlantRecipe>{
 		ingredients.setInputs(VanillaTypes.ITEM, getUtils());
 		ingredients.setInputLists(VanillaTypes.FLUID, Arrays.asList(getSlurries(), getReactants()));
 		ingredients.setOutputs(VanillaTypes.FLUID, getOutputs());
-		ingredients.setOutputLists(VanillaTypes.ITEM, Arrays.asList(getMainSlags(), getAltSlags()));
+		ingredients.setOutputLists(VanillaTypes.ITEM, Arrays.asList(getSlags()));
 	}
 
 }

@@ -22,6 +22,7 @@ public enum EnumFluid {
 	SALT_BRINE("Brine", "salt_brine"),
 	DENSE_BRINE("Brine", "dense_brine"),
 	MOTHER_LIQUOR("Mother Liquor", "mother_liquor"),
+	XPJUICE("Liquid Experience", "xpjuice"),
 
 //DENSE
 	COAL_TAR("Coal Tar", "coal_tar"),

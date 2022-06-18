@@ -1,6 +1,6 @@
 package com.globbypotato.rockhounding_chemistry.machines.container;
 
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEBufferTank;
+import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEBufferTank;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -17,12 +17,9 @@ public class COBufferTank extends ContainerBase<TEBufferTank>{
 
 	@Override
 	public void addOwnSlots() {
-		IItemHandler input = this.tile.getInput();
 		IItemHandler template = this.tile.getTemplate();
 
-		this.addSlotToContainer(new SlotItemHandler(input, 0, 80, 22));//output solvent
-
-		this.addSlotToContainer(new SlotItemHandler(template, 0, 80, 96));//void solvent
+		this.addSlotToContainer(new SlotItemHandler(template, 0, 80, 88));//void solvent
 	}
 
 	@Override
@@ -39,10 +36,7 @@ public class COBufferTank extends ContainerBase<TEBufferTank>{
 
 	@Override
 	protected boolean mergeItemStack(ItemStack stack, int startIndex, int endIndex, boolean reverseDirection){
-		if(super.mergeItemStack(stack, startIndex, 1, reverseDirection)){
-			return true;
-		}
-		return super.mergeItemStack(stack, 2, endIndex, reverseDirection);
+		return super.mergeItemStack(stack, 1, endIndex, reverseDirection);
     }
 
 }
