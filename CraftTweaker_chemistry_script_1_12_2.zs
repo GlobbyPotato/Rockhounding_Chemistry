@@ -189,14 +189,13 @@ mods.rockhounding_chemistry.GasCondenser.removeByOutput(<liquid:water>*1000);
 =======================================================
 GASIFICATION PLANT
 =======================================================
-**Note: Slags can be both null.
 //input fluid: the main slurry and its quantity
 //reagent fluid: the secondary reagent and its quantity
 //output gas: the resulting gas and its quantity. It must be "gaseous"
-//slag stack 1: the main by-product (optional)
-//slag stack 2: the secondary by-product (optional)
+//output array: the list of elements oredict composing the slag list
+//quantity array: the list of quantities expressed in PartsPerCraft for each slag
 //temperature: the threashold temperature (min 301K, max 2000K)
-mods.rockhounding_chemistry.GasifierPlant.add(<liquid:lava>*150, <liquid:water>*400, <liquid:oxygen>*120, <minecraft:dye:14>, null, 900);
+mods.rockhounding_chemistry.GasifierPlant.add(<liquid:lava>*150, <liquid:water>*400, ["compoundSulfur", "compoundFlyash"], [20, 13], 900);
 
 //input fluid: the fluid to remove
 mods.rockhounding_chemistry.GasifierPlant.removeByInput(<liquid:lava>*1000);
@@ -208,12 +207,11 @@ mods.rockhounding_chemistry.GasifierPlant.removeByOutput(<liquid:oxygen>*1000);
 =======================================================
 GAS PURIFIER
 =======================================================
-**Note: the quantity of the gas ingredients is not relievant. Slags can be both null.
 //input gas: the raw ingredient. It must be "gaseous"
 //output gas: the purified output. It must be "gaseous"
-//slag stack 1: the main by-product (optional)
-//slag stack 2: the secondary by-product (optional)
-mods.rockhounding_chemistry.GasPurifier.add(<liquid:water_vapour>*1000, <liquid:oxygen>*1000, <minecraft:dye:4>, null);
+//output array: the list of elements oredict composing the slag list
+//quantity array: the list of quantities expressed in PartsPerCraft for each slag
+mods.rockhounding_chemistry.GasPurifier.add(<liquid:water_vapour>*1000, <liquid:oxygen>*1000, ["compoundSulfur", "compoundFlyash"], [20, 13]);
 
 //input gas: the gas to remove
 mods.rockhounding_chemistry.GasPurifier.removeByInput(<liquid:water_vapour>*1000);
@@ -475,3 +473,35 @@ CRYOGENIC DISTILLATION PLANT
 =======================================================
 //inhibited gases: gases not being extracted (nitrogen, oxygen, argon, carbon_dioxide, neon, helium, krypton, xenon)
 mods.rockhounding_chemistry.InhibitGases.inhibit("carbon_dioxide");
+
+
+
+=======================================================
+POWDER MIXER
+=======================================================
+//input array: the list of elements oredict composing the mixture
+//input array: the list of quantities expressed in PartsPerCraft for each element
+//output stack: the output mixture
+mods.rockhounding_chemistry.PowderMixer.add(["compoundSulfur", "compoundFlyash"], [20, 13], <minecraft:slime_ball>);
+
+//output stack: the stack to remove
+mods.rockhounding_chemistry.PowderMixer.removeByOutput(<minecraft:slime_ball>);
+
+
+
+=======================================================
+SHAKING TABLE SEPARATOR
+=======================================================
+//input stack: the input stack to shred
+//output slag: the output main slag
+//output array: the list of elements oredict composing the output mixture
+//output array: the list of quantities expressed in PartsPerCraft for each element
+//output leachate: the output liquid waste
+mods.rockhounding_chemistry.ShakingTable.add(<minecraft:hardened_clay>, <minecraft:slime_ball>, ["compoundSulfur", "compoundFlyash"], [20, 13], <liquid:sulfuric_acid>*1000);
+
+//input stack: the input stack to remove
+mods.rockhounding_chemistry.ShakingTable.removeByInput(<minecraft:hardened_clay>);
+//output stack: the output stack to remove
+mods.rockhounding_chemistry.ShakingTable.removeByOutput(<minecraft:slime_ball>);
+//output: the output waste to remove
+mods.rockhounding_chemistry.ShakingTable.removeByWaste(<liquid:sulfuric_acid>*1000));
