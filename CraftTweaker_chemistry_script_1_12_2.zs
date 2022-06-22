@@ -259,10 +259,9 @@ mods.rockhounding_chemistry.HeatExchanger.removeByOutput(<liquid:syngas>*1000);
 =======================================================
 LAB BLENDER
 =======================================================
-**Note 1: input will be extended to their oredicts. Plans to improve this.
 //input array: the list of ingredients with their quantity
 //output stack: the resulting mixture and its quantity
-mods.rockhounding_chemistry.LabBlender.add([<minecraft:redstone>*9, <minecraft:gunpowder>*4, <minecraft:glowstone_dust>*2], <minecraft:magma_cream>*9);
+mods.rockhounding_chemistry.LabBlender.add(["compoundSulfur", "compoundFlyash"], [20, 13], <minecraft:slime_ball>);
 
 //output stack: the output to remove
 mods.rockhounding_chemistry.LabBlender.remove(<minecraft:magma_cream>);
