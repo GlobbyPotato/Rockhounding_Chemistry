@@ -71,8 +71,11 @@ public class UIMetalAlloyerController extends GuiBase {
 
 	   //recipe
 	   this.alloy = new ArrayList<String>();
-	   String recipeready = "";
-	   if(this.tile.isValidRecipe()){recipeready = TextFormatting.DARK_GREEN + "Complete recipe:";}else{recipeready = TextFormatting.GOLD + "Uncomplete recipe:";}
+	   String recipeready = TextFormatting.GOLD + "Uncomplete recipe:";
+	   if(this.tile.isValidPreset() && this.tile.isFullRecipe(this.tile.getRecipeList(this.tile.getSelectedRecipe())) != null){
+		   recipeready = TextFormatting.DARK_GREEN + "Complete recipe:";
+	   }
+
 	   if(this.tile.isValidPreset()){
 		   this.alloy.add(recipeready);
 		   MetalAlloyerRecipe recipe = this.tile.getRecipeList(this.tile.getSelectedRecipe());

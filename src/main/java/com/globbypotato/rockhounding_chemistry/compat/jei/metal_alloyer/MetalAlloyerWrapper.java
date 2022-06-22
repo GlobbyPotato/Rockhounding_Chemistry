@@ -64,9 +64,16 @@ public class MetalAlloyerWrapper extends RHRecipeWrapper<MetalAlloyerRecipe>{
 		return stacks;
 	}
 
+	@Nonnull
+	public List<ItemStack> getMiscs2() {
+		ArrayList<ItemStack> stacks = new ArrayList<ItemStack>();
+		stacks.add(BaseRecipes.graduated_cylinder);
+		return stacks;
+	}
+
 	@Override
 	public void getIngredients(IIngredients ingredients) {
-		ingredients.setInputLists(VanillaTypes.ITEM, Arrays.asList(getMiscs(), getStackedInputs()));
+		ingredients.setInputLists(VanillaTypes.ITEM, Arrays.asList(getMiscs2(), getMiscs(), getStackedInputs()));
 		ingredients.setOutputs(VanillaTypes.ITEM, getOutputs());
 	}
 

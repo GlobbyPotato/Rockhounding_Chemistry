@@ -91,21 +91,12 @@ public class ChemicalExtractorWrapper extends RHRecipeWrapper<ChemicalExtractorR
 			}
 
 		}
-
-		/*
-		ArrayList<ItemStack> stacks = new ArrayList<ItemStack>();
-		for(int x = 0; x < EnumElements.size(); x++){
-			stacks.add(new ItemStack(ModItems.CHEMICAL_DUSTS, 1, x));
-		}
-		return stacks;
-		*/
 		return stacks;
 	}
 
 	@Nonnull
 	public List<ItemStack> getCatalysts() {
 		ArrayList<ItemStack> stacks = new ArrayList<ItemStack>();
-		stacks.add(BaseRecipes.test_tube);
 		stacks.add(BaseRecipes.graduated_cylinder);
 		stacks.add(BaseRecipes.fe_catalyst);
 		return stacks;

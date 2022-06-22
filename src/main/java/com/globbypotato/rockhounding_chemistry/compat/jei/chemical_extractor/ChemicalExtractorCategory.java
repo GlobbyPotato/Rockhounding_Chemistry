@@ -39,15 +39,13 @@ public class ChemicalExtractorCategory extends RHRecipeCategory {
 		int NITR_SLOT = 1;
 		int CYAN_SLOT = 2;
 		int OUTPUT_SLOT = 3;
-		int TUBE_SLOT = 4;
-		int CYLINDER_SLOT = 5;
-		int CATALYST_SLOT = 6;
+		int CYLINDER_SLOT = 4;
+		int CATALYST_SLOT = 5;
 
 		guiItemStacks.init(INPUT_SLOT, true, 73, 40);
 		guiItemStacks.init(OUTPUT_SLOT, false, 137, 39);
 		guiFluidStacks.init(NITR_SLOT, true,  1, 22, 16, 34, 1000, false, null);
 		guiFluidStacks.init(CYAN_SLOT, true,  20, 22, 16, 34, 1000, false, null);
-		guiItemStacks.init(TUBE_SLOT, false, 40, 30);
 		guiItemStacks.init(CYLINDER_SLOT, false, 116, 21);
 		guiItemStacks.init(CATALYST_SLOT, false, 40, 0);
 
@@ -55,7 +53,6 @@ public class ChemicalExtractorCategory extends RHRecipeCategory {
 		guiItemStacks.set(OUTPUT_SLOT, wrapper.getOutputs());
 		guiFluidStacks.set(NITR_SLOT, new FluidStack(EnumFluid.pickFluid(EnumFluid.NITRIC_ACID), 1000));
 		guiFluidStacks.set(CYAN_SLOT, new FluidStack(EnumFluid.pickFluid(EnumFluid.SODIUM_CYANIDE), 1000));
-		guiItemStacks.set(TUBE_SLOT, BaseRecipes.test_tube);
 		guiItemStacks.set(CYLINDER_SLOT, BaseRecipes.graduated_cylinder);
 		guiItemStacks.set(CATALYST_SLOT, BaseRecipes.fe_catalyst);
 	}

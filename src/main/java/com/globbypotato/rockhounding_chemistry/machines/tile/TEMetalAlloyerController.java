@@ -3,7 +3,6 @@ package com.globbypotato.rockhounding_chemistry.machines.tile;
 import java.util.ArrayList;
 
 import com.globbypotato.rockhounding_chemistry.enums.EnumMiscBlocksA;
-import com.globbypotato.rockhounding_chemistry.enums.materials.EnumElements;
 import com.globbypotato.rockhounding_chemistry.enums.utils.EnumServer;
 import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.ElementsCabinetRecipes;
@@ -163,7 +162,7 @@ public class TEMetalAlloyerController extends TileEntityInv implements IInternal
 		return this.dummyRecipe;
 	}
 
-	private MetalAlloyerRecipe isFullRecipe(MetalAlloyerRecipe recipe) {
+	public MetalAlloyerRecipe isFullRecipe(MetalAlloyerRecipe recipe) {
 		int recipeSize = recipe.getInputs().size();
 		int ingrCount = 0;
 		if(hasElementsCabinet() && hasMaterialCabinet()){
