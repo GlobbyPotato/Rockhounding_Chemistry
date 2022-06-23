@@ -124,7 +124,7 @@ public class MachinesA extends MachineIO {
 	        	restoreFluidTankNBT(stack, te);
 	        }
 	        if(te instanceof TEPowerGenerator){
-	        	restorePowerGeneratorNBT(stack, te);
+	        //	restorePowerGeneratorNBT(stack, te);
 	        }
 	        if(te instanceof TELabBlenderController){
 	        	TELabBlenderController chamber = (TELabBlenderController) world.getTileEntity(pos);
@@ -509,7 +509,7 @@ public class MachinesA extends MachineIO {
         		addFluidTankNbt(itemstack, te);
         	}
         	if(te instanceof TEPowerGenerator){
-        		addPowerGeneratorNbt(itemstack, te);
+        		//addPowerGeneratorNbt(itemstack, te);
         	}
         }
         if (!itemstack.isEmpty()){
