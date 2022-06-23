@@ -8,6 +8,7 @@ import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeWrapper;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 public class LabBlenderCategory extends RHRecipeCategory {
@@ -37,8 +38,10 @@ public class LabBlenderCategory extends RHRecipeCategory {
 		}
 		guiItemStacks.init(OUTPUT_SLOT, false, 95, 51);
 
-		for(int y = 0; y < wrapper.getInputs().size(); y++){
-			guiItemStacks.set(y, wrapper.getStackedInputs().get(y));
+		for(int y = 0; y < wrapper.getElements().size(); y++){
+			ItemStack setElement = wrapper.getStackedInputs().get(y).copy();
+			setElement.setCount(wrapper.getQuantities().get(y));
+			guiItemStacks.set(y, setElement);
 		}
 		guiItemStacks.set(OUTPUT_SLOT, wrapper.getOutputs());
 

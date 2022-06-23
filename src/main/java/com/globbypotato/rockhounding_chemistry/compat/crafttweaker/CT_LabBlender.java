@@ -18,24 +18,17 @@ public class CT_LabBlender extends CTSupport{
 	public static ArrayList<LabBlenderRecipe> recipeList = LabBlenderRecipes.lab_blender_recipes;
 
     @ZenMethod
-    public static void add(IItemStack[] input, IItemStack output) {
-        if(input == null || output == null) {error(name); return;}
+    public static void add(String[] element, int[] quantity, IItemStack output) {
+        if(output == null) {error(name); return;}
 
-        ArrayList<ItemStack> inputs = new ArrayList<ItemStack>();
-        for(int x = 0; x < input.length; x++){
-        	inputs.add(toStack(input[x]));
+        ArrayList<String> inputs = new ArrayList<String>();
+        ArrayList<Integer> quantities = new ArrayList<Integer>();
+        for(int x = 0; x < element.length; x++){
+        	inputs.add(element[x]);
+        	quantities.add(quantity[x]);
         }
 
-        CraftTweakerAPI.apply(new Add(new LabBlenderRecipe(inputs, toStack(output))));
-    }
-    @ZenMethod
-    public static void add(IItemStack input, IItemStack output) {
-        if(input == null || output == null) {error(name); return;}
-
-        ArrayList<ItemStack> inputs = new ArrayList<ItemStack>();
-        inputs.add(toStack(input));
-
-        CraftTweakerAPI.apply(new Add(new LabBlenderRecipe(inputs, toStack(output))));
+        CraftTweakerAPI.apply(new Add(new LabBlenderRecipe(inputs, quantities, toStack(output))));
     }
 		    private static class Add implements IAction {
 		    	private final LabBlenderRecipe recipe;

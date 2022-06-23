@@ -14,6 +14,7 @@ import com.globbypotato.rockhounding_chemistry.enums.materials.EnumChemicals;
 import com.globbypotato.rockhounding_chemistry.enums.materials.EnumElements;
 import com.globbypotato.rockhounding_chemistry.enums.shards.EnumNative;
 
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -69,6 +70,9 @@ public class OredictUtils extends BaseRecipes{
 		//misc
 		OreDictionary.registerOre("foodSalt", chemicals(1, EnumChemicals.SALT));
 		OreDictionary.registerOre("itemSalt", chemicals(1, EnumChemicals.SALT));
+		OreDictionary.registerOre("itemCoal", new ItemStack(Items.COAL));
+		OreDictionary.registerOre("itemCharcoal", new ItemStack(Items.COAL,1,1));
+		OreDictionary.registerOre("gemFluorite", chemicals(1, EnumChemicals.FLUORITE));
 
 		//dusts
 		OreDictionary.registerOre("dustSalt", chemicals(1, EnumChemicals.SALT));

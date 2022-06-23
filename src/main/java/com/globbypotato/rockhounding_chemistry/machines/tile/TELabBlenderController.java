@@ -16,6 +16,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class TELabBlenderController extends TileEntityInv {
 	public static int templateSlots = 2;
@@ -83,24 +84,32 @@ public class TELabBlenderController extends TileEntityInv {
 	public LabBlenderRecipe getCurrentRecipe(){
 		if(hasTank()){
 			for(int x = 0; x < recipeList().size(); x++){
-				int recipeSize = getRecipeList(x).getInputs().size(); 
-				if(!getRecipeList(x).getInputs().isEmpty() && recipeSize > 0){ 
+				int recipeSize = getRecipeList(x).getElements().size(); 
+				if(!getRecipeList(x).getElements().isEmpty() && recipeSize > 0){ 
 					int correctIngredient = 0;
 					for(int y = 0; y < recipeSize; y++){
-						ItemStack recipeIngredient = getRecipeList(x).getInputs().get(y);
-						int neededSize = recipeIngredient.getCount(); 
-						int totAvailable = 0;
-						for(int z = 0; z < ingredients(); z++){
-							ItemStack slotIngredient = getTank().inputSlot(z);
-							if(!slotIngredient.isEmpty()){
-								int availableSize = slotIngredient.getCount();
-								if(isValidIngredient(recipeIngredient, slotIngredient)){
-									totAvailable += availableSize;
-								}								
+						if(y < 7) {
+							String recipeDict = getRecipeList(x).getElements().get(y);
+							int neededSize = getRecipeList(x).getQuantities().get(y); 
+							int totAvailable = 0;
+							for(int z = 0; z < ingredients(); z++){
+								ItemStack slotIngredient = getTank().inputSlot(z);
+								if(!slotIngredient.isEmpty()){
+									int availableSize = slotIngredient.getCount();
+									ArrayList<Integer> inputIDs = CoreUtils.intArrayToList(OreDictionary.getOreIDs(slotIngredient));
+									if(!inputIDs.isEmpty() && inputIDs.size() > 0){
+										for(Integer input : inputIDs){
+											String inputDict = OreDictionary.getOreName(input);
+											if(inputDict.matches(recipeDict)){
+												totAvailable += availableSize;
+											}
+										}
+									}
+								}
 							}
-						}
-						if(totAvailable >= neededSize){
-							correctIngredient++; 
+							if(totAvailable >= neededSize){
+								correctIngredient++; 
+							}
 						}
 					}
 					if(correctIngredient == recipeSize && recipeSize == uniqueIngredients()){ 
@@ -111,7 +120,6 @@ public class TELabBlenderController extends TileEntityInv {
 		}
 		return null;
 	}
-
 	private int uniqueIngredients() {
 		ArrayList<ItemStack> uniques = new ArrayList<ItemStack>();
 		for(int y = 0; y < ingredients(); y++){ 
@@ -266,19 +274,23 @@ public class TELabBlenderController extends TileEntityInv {
 				this.output.setOrStack(OUTPUT_SLOT, getDummyRecipe().getOutput());
 			}
 
-			for(int x = 0; x < getDummyRecipe().getInputs().size(); x++){
-				ItemStack recipeIngredient = getDummyRecipe().getInputs().get(x);
-				if(!recipeIngredient.isEmpty()){
-					int neededSize = recipeIngredient.getCount();
-					for(int z = 0; z < ingredients(); z++){
-						if(neededSize > 0){
-							ItemStack slotIngredient = getTank().inputSlot(z);
-							if(!slotIngredient.isEmpty()){
-								if(isValidIngredient(recipeIngredient, slotIngredient)){
-									int availableSize = slotIngredient.getCount();
-									int sizeToDrain = Math.min(neededSize, availableSize);
-									((MachineStackHandler) getTank().getInput()).decrementSlotBy(z, sizeToDrain);
-									neededSize -= sizeToDrain;
+			for(int x = 0; x < getDummyRecipe().getElements().size(); x++){
+				String recipeDict = getDummyRecipe().getElements().get(x);
+				int neededSize = getDummyRecipe().getQuantities().get(x);
+				for(int z = 0; z < ingredients(); z++){
+					if(neededSize > 0){
+						ItemStack slotIngredient = getTank().inputSlot(z);
+						if(!slotIngredient.isEmpty()){
+							ArrayList<Integer> inputIDs = CoreUtils.intArrayToList(OreDictionary.getOreIDs(slotIngredient));
+							if(!inputIDs.isEmpty() && inputIDs.size() > 0){
+								for(Integer input : inputIDs){
+									String inputDict = OreDictionary.getOreName(input);
+									if(inputDict.matches(recipeDict)){
+										int availableSize = slotIngredient.getCount();
+										int sizeToDrain = Math.min(neededSize, availableSize);
+										((MachineStackHandler) getTank().getInput()).decrementSlotBy(z, sizeToDrain);
+										neededSize -= sizeToDrain;
+									}
 								}
 							}
 						}
@@ -288,5 +300,6 @@ public class TELabBlenderController extends TileEntityInv {
 		}
 
 		this.dummyRecipe = null;
+		handlePreview();
 	}
 }

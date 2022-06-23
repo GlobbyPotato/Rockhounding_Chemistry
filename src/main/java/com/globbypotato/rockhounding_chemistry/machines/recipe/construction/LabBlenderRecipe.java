@@ -7,28 +7,28 @@ import net.minecraft.item.ItemStack;
 
 public class LabBlenderRecipe {
 
-	private List<ItemStack> input;
+	private List<String> input;
+	private List<Integer> quantities;
 	private ItemStack output;
 
-	public LabBlenderRecipe(List<ItemStack> input, ItemStack output){
+	public LabBlenderRecipe(List<String> input, List<Integer> quantities, ItemStack output){
 		this.input = input;
+		this.quantities = quantities;
 		this.output = output;
 	}
 
-	public LabBlenderRecipe(ItemStack input, ItemStack output){
-		this(fakeStack(input), output);
-	}
-
-	private static ArrayList<ItemStack> fakeStack(ItemStack input) {
-		ArrayList<ItemStack> temp = new ArrayList<ItemStack>();
-		temp.add(input);
+	public ArrayList<String> getElements() {
+		ArrayList<String> temp = new ArrayList<String>();
+		if(this.input != null){
+			temp.addAll(this.input);
+		}
 		return temp;
 	}
 
-	public ArrayList<ItemStack> getInputs() {
-		ArrayList<ItemStack> temp = new ArrayList<ItemStack>();
-		if(this.input != null){
-			temp.addAll(this.input);
+	public ArrayList<Integer> getQuantities() {
+		ArrayList<Integer> temp = new ArrayList<Integer>();
+		if(this.quantities != null){
+			temp.addAll(this.quantities);
 		}
 		return temp;
 	}
