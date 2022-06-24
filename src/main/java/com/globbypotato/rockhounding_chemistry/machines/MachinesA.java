@@ -123,9 +123,6 @@ public class MachinesA extends MachineIO {
 	        if(te instanceof TEFluidTank){
 	        	restoreFluidTankNBT(stack, te);
 	        }
-	        if(te instanceof TEPowerGenerator){
-	        //	restorePowerGeneratorNBT(stack, te);
-	        }
 	        if(te instanceof TELabBlenderController){
 	        	TELabBlenderController chamber = (TELabBlenderController) world.getTileEntity(pos);
 	        	setOrDropBlock(world, state, pos, chamber.getFacing(), placer, EnumMachinesA.LAB_BLENDER_TANK);
@@ -508,9 +505,6 @@ public class MachinesA extends MachineIO {
         	if(te instanceof TEFluidTank){
         		addFluidTankNbt(itemstack, te);
         	}
-        	if(te instanceof TEPowerGenerator){
-        		//addPowerGeneratorNbt(itemstack, te);
-        	}
         }
         if (!itemstack.isEmpty()){
         	items.add(itemstack);
@@ -545,20 +539,5 @@ public class MachinesA extends MachineIO {
 			}
     	}
 	}
-
-    private static void addPowerGeneratorNbt(ItemStack stack, TileEntity te) {
-    	TEPowerGenerator engine = ((TEPowerGenerator)te);
-    	stack.getTagCompound().setBoolean("FuelModule", engine.enablePower());
-    	stack.getTagCompound().setBoolean("RedstoneModule", engine.enableRedstone());
-    }
-	private static void restorePowerGeneratorNBT(ItemStack stack, TileEntity te) {
-		TEPowerGenerator engine = ((TEPowerGenerator)te);
-    	if(stack.hasTagCompound() && engine != null){
-    		engine.enablePower = stack.getTagCompound().getBoolean("FuelModule");
-    		engine.enableRedstone = stack.getTagCompound().getBoolean("RedstoneModule");
-    	}
-	}
-
-
 
 }

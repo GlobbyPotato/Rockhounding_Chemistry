@@ -30,6 +30,9 @@ import com.globbypotato.rockhounding_chemistry.enums.materials.EnumMinerals;
 import com.globbypotato.rockhounding_chemistry.enums.utils.EnumWaterlock;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.handlers.RegistryHandler;
+import com.globbypotato.rockhounding_chemistry.machines.DustlineDuct;
+import com.globbypotato.rockhounding_chemistry.machines.DustlineHalt;
+import com.globbypotato.rockhounding_chemistry.machines.DustlinePump;
 import com.globbypotato.rockhounding_chemistry.machines.GaslineDuct;
 import com.globbypotato.rockhounding_chemistry.machines.GaslineHalt;
 import com.globbypotato.rockhounding_chemistry.machines.GaslinePump;
@@ -83,10 +86,15 @@ public class ModBlocks {
 	public static final Block PIPELINE_DUCT = new PipelineDuct("pipeline_duct");
 	public static final Block PIPELINE_PUMP = new PipelinePump("pipeline_pump");
 	public static final Block PIPELINE_VALVE = new PipelineValve("pipeline_valve");
+	public static final Block PIPELINE_HALT = new PipelineHalt("pipeline_halt");
+
 	public static final Block GASLINE_DUCT = new GaslineDuct("gasline_duct");
 	public static final Block GASLINE_PUMP = new GaslinePump("gasline_pump");
-	public static final Block PIPELINE_HALT = new PipelineHalt("pipeline_halt");
 	public static final Block GASLINE_HALT = new GaslineHalt("gasline_halt");
+
+	public static final Block DUSTLINE_DUCT = new DustlineDuct("dustline_duct");
+	public static final Block DUSTLINE_PUMP = new DustlinePump("dustline_pump");
+	public static final Block DUSTLINE_HALT = new DustlineHalt("dustline_halt");
 
 	public static final Block DIDYMIUM_GLASS = new DidymiumGlass("didymium_glass");
 
@@ -123,10 +131,13 @@ public class ModBlocks {
 			registry.register(PIPELINE_DUCT);
 			registry.register(PIPELINE_PUMP);
 			registry.register(PIPELINE_VALVE);
+			registry.register(PIPELINE_HALT);
 			registry.register(GASLINE_DUCT);
 			registry.register(GASLINE_PUMP);
-			registry.register(PIPELINE_HALT);
 			registry.register(GASLINE_HALT);
+			registry.register(DUSTLINE_DUCT);
+			registry.register(DUSTLINE_PUMP);
+			registry.register(DUSTLINE_HALT);
 			
 			registry.register(DIDYMIUM_GLASS);
 
@@ -162,10 +173,13 @@ public class ModBlocks {
 			registry.register(new ItemBlock(PIPELINE_DUCT).setRegistryName(PIPELINE_DUCT.getRegistryName()));
 			registry.register(new ItemBlock(PIPELINE_PUMP).setRegistryName(PIPELINE_PUMP.getRegistryName()));
 			registry.register(new ItemBlock(PIPELINE_VALVE).setRegistryName(PIPELINE_VALVE.getRegistryName()));
+			registry.register(new ItemBlock(PIPELINE_HALT).setRegistryName(PIPELINE_HALT.getRegistryName()));
 			registry.register(new ItemBlock(GASLINE_DUCT).setRegistryName(GASLINE_DUCT.getRegistryName()));
 			registry.register(new ItemBlock(GASLINE_PUMP).setRegistryName(GASLINE_PUMP.getRegistryName()));
-			registry.register(new ItemBlock(PIPELINE_HALT).setRegistryName(PIPELINE_HALT.getRegistryName()));
 			registry.register(new ItemBlock(GASLINE_HALT).setRegistryName(GASLINE_HALT.getRegistryName()));
+			registry.register(new ItemBlock(DUSTLINE_DUCT).setRegistryName(DUSTLINE_DUCT.getRegistryName()));
+			registry.register(new ItemBlock(DUSTLINE_PUMP).setRegistryName(DUSTLINE_PUMP.getRegistryName()));
+			registry.register(new ItemBlock(DUSTLINE_HALT).setRegistryName(DUSTLINE_HALT.getRegistryName()));
 			
 			registry.register(new BaseMetaIB(DIDYMIUM_GLASS, EnumDidymium.getNames()).setRegistryName(DIDYMIUM_GLASS.getRegistryName()));
 			
@@ -202,10 +216,13 @@ public class ModBlocks {
 			RegistryHandler.registerSingleModel(PIPELINE_DUCT);
 			RegistryHandler.registerSingleModel(PIPELINE_PUMP);
 			RegistryHandler.registerSingleModel(PIPELINE_VALVE);
+			RegistryHandler.registerSingleModel(PIPELINE_HALT);
 			RegistryHandler.registerSingleModel(GASLINE_DUCT);
 			RegistryHandler.registerSingleModel(GASLINE_PUMP);
-			RegistryHandler.registerSingleModel(PIPELINE_HALT);
 			RegistryHandler.registerSingleModel(GASLINE_HALT);
+			RegistryHandler.registerSingleModel(DUSTLINE_DUCT);
+			RegistryHandler.registerSingleModel(DUSTLINE_PUMP);
+			RegistryHandler.registerSingleModel(DUSTLINE_HALT);
 			
 			RegistryHandler.registerMetaModel(DIDYMIUM_GLASS, EnumDidymium.getNames());
 

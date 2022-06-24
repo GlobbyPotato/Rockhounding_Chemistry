@@ -4,6 +4,7 @@ import com.globbypotato.rockhounding_chemistry.entities.EntityToxicSlime;
 import com.globbypotato.rockhounding_chemistry.entities.renderer.RenderToxicSlime;
 import com.globbypotato.rockhounding_chemistry.machines.render.RendererBufferTank;
 import com.globbypotato.rockhounding_chemistry.machines.render.RendererContainmentTank;
+import com.globbypotato.rockhounding_chemistry.machines.render.RendererDustlinePump;
 import com.globbypotato.rockhounding_chemistry.machines.render.RendererElementsCabinetTop;
 import com.globbypotato.rockhounding_chemistry.machines.render.RendererEvaporationTank;
 import com.globbypotato.rockhounding_chemistry.machines.render.RendererExtractorBalance;
@@ -26,6 +27,7 @@ import com.globbypotato.rockhounding_chemistry.machines.tile.collateral.TEElemen
 import com.globbypotato.rockhounding_chemistry.machines.tile.collateral.TEMaterialCabinetTop;
 import com.globbypotato.rockhounding_chemistry.machines.tile.devices.TEOrbiter;
 import com.globbypotato.rockhounding_chemistry.machines.tile.devices.TEWaterPump;
+import com.globbypotato.rockhounding_chemistry.machines.tile.pipelines.TEDustlinePump;
 import com.globbypotato.rockhounding_chemistry.machines.tile.pipelines.TEGaslinePump;
 import com.globbypotato.rockhounding_chemistry.machines.tile.pipelines.TEPipelinePump;
 import com.globbypotato.rockhounding_chemistry.machines.tile.pipelines.TEPipelineValve;
@@ -69,6 +71,7 @@ public class ModRenderers {
 		ClientRegistry.bindTileEntitySpecialRenderer(TEPipelinePump.class, new RendererPipelinePump());		
 		ClientRegistry.bindTileEntitySpecialRenderer(TEPipelineValve.class, new RendererPipelineValve());
 		ClientRegistry.bindTileEntitySpecialRenderer(TEGaslinePump.class, new RendererGaslinePump());
+		ClientRegistry.bindTileEntitySpecialRenderer(TEDustlinePump.class, new RendererDustlinePump());
 	}
 
 	public static void mobRenders() {

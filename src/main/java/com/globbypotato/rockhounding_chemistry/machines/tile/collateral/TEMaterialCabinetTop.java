@@ -83,6 +83,9 @@ public class TEMaterialCabinetTop extends TileEntityInv {
 	//----------------------- CUSTOM -----------------------
 	public boolean isValidOredict(ItemStack insertingStack) {
 		if(hasCollector()){
+			if(getCollector().MATERIAL_LIST.size() <= 0) {
+				getCollector().initializaCabinet();
+			}
 			if(!insertingStack.isEmpty()){
 				ArrayList<Integer> inputIDs = CoreUtils.intArrayToList(OreDictionary.getOreIDs(insertingStack));
 				if(!inputIDs.isEmpty() && inputIDs.size() > 0){

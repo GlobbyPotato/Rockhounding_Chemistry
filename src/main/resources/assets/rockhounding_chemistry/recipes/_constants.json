@@ -76,6 +76,7 @@
 
 	{"name": "CRUSHING_GEAR",		"ingredient": {	"item": "rockhounding_chemistry:crushing_gear",		"data": 0}},
 	{"name": "AGITATOR",			"ingredient": {	"item": "rockhounding_chemistry:slurry_agitator",	"data": 0}},
+	{"name": "CYLINDER",			"ingredient": {	"item": "rockhounding_chemistry:graduated_cylinder","data": 0}},
 
 	{"name": "LAB_OVEN",			"ingredient": {	"item": "rockhounding_chemistry:machines_a",		"data": 6}},
 	{"name": "AUXILIARY_ENGINE",	"ingredient": {	"item": "rockhounding_chemistry:machines_b",		"data": 1}},

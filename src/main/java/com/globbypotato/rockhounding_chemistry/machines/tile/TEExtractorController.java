@@ -623,20 +623,27 @@ public class TEExtractorController extends TileEntityInv implements IInternalSer
 								int storedAmount = getElementsCabinet().MATERIAL_LIST.get(y).getAmount();
 								if(formulaValue > baseRecovery()){
 									if(recombinationChance() == 0){
-										storedAmount += baseRecovery() + calculatedRecombination(formulaValue - baseRecovery());
-										ElementsCabinetRecipe currentMaterial = new ElementsCabinetRecipe(getElementsCabinet().MATERIAL_LIST.get(y).getSymbol(), getElementsCabinet().MATERIAL_LIST.get(y).getOredict(), getElementsCabinet().MATERIAL_LIST.get(y).getName(), storedAmount, getElementsCabinet().MATERIAL_LIST.get(y).getExtraction());
-										getElementsCabinet().MATERIAL_LIST.set(y, currentMaterial);
-
+										int addedDust = baseRecovery() + calculatedRecombination(formulaValue - baseRecovery());
+										if(storedAmount <= ModConfig.extractorCap - addedDust) {
+											storedAmount += addedDust;
+											ElementsCabinetRecipe currentMaterial = new ElementsCabinetRecipe(getElementsCabinet().MATERIAL_LIST.get(y).getSymbol(), getElementsCabinet().MATERIAL_LIST.get(y).getOredict(), getElementsCabinet().MATERIAL_LIST.get(y).getName(), storedAmount, getElementsCabinet().MATERIAL_LIST.get(y).getExtraction());
+											getElementsCabinet().MATERIAL_LIST.set(y, currentMaterial);
+										}
 										handleCatalystDamage();
 									}else{
-										storedAmount += baseRecovery() + calculatedDust(formulaValue - baseRecovery());
+										int addedDust = baseRecovery() + calculatedDust(formulaValue - baseRecovery());
+										if(storedAmount <= ModConfig.extractorCap - addedDust) {
+											storedAmount += addedDust;
+											ElementsCabinetRecipe currentMaterial = new ElementsCabinetRecipe(getElementsCabinet().MATERIAL_LIST.get(y).getSymbol(), getElementsCabinet().MATERIAL_LIST.get(y).getOredict(), getElementsCabinet().MATERIAL_LIST.get(y).getName(), storedAmount, getElementsCabinet().MATERIAL_LIST.get(y).getExtraction());
+											getElementsCabinet().MATERIAL_LIST.set(y, currentMaterial);
+										}
+									}
+								}else{
+									if(storedAmount <= ModConfig.extractorCap - formulaValue) {
+										storedAmount += formulaValue;
 										ElementsCabinetRecipe currentMaterial = new ElementsCabinetRecipe(getElementsCabinet().MATERIAL_LIST.get(y).getSymbol(), getElementsCabinet().MATERIAL_LIST.get(y).getOredict(), getElementsCabinet().MATERIAL_LIST.get(y).getName(), storedAmount, getElementsCabinet().MATERIAL_LIST.get(y).getExtraction());
 										getElementsCabinet().MATERIAL_LIST.set(y, currentMaterial);
 									}
-								}else{
-									storedAmount += formulaValue;
-									ElementsCabinetRecipe currentMaterial = new ElementsCabinetRecipe(getElementsCabinet().MATERIAL_LIST.get(y).getSymbol(), getElementsCabinet().MATERIAL_LIST.get(y).getOredict(), getElementsCabinet().MATERIAL_LIST.get(y).getName(), storedAmount, getElementsCabinet().MATERIAL_LIST.get(y).getExtraction());
-									getElementsCabinet().MATERIAL_LIST.set(y, currentMaterial);
 								}
 								getElementsCabinet().markDirtyClient();
 							}
@@ -657,20 +664,27 @@ public class TEExtractorController extends TileEntityInv implements IInternalSer
 								int storedAmount = getMaterialCabinet().MATERIAL_LIST.get(y).getAmount();
 								if(formulaValue > baseRecovery()){
 									if(recombinationChance() == 0){
-										storedAmount += baseRecovery() + calculatedRecombination(formulaValue - baseRecovery());
-										MaterialCabinetRecipe currentMaterial = new MaterialCabinetRecipe(getMaterialCabinet().MATERIAL_LIST.get(y).getSymbol(), getMaterialCabinet().MATERIAL_LIST.get(y).getOredict(), getMaterialCabinet().MATERIAL_LIST.get(y).getName(), storedAmount, getMaterialCabinet().MATERIAL_LIST.get(y).getExtraction());
-										getMaterialCabinet().MATERIAL_LIST.set(y, currentMaterial);
-
+										int addedDust = baseRecovery() + calculatedRecombination(formulaValue - baseRecovery());
+										if(storedAmount <= ModConfig.extractorCap - addedDust) {
+											storedAmount += addedDust;
+											MaterialCabinetRecipe currentMaterial = new MaterialCabinetRecipe(getMaterialCabinet().MATERIAL_LIST.get(y).getSymbol(), getMaterialCabinet().MATERIAL_LIST.get(y).getOredict(), getMaterialCabinet().MATERIAL_LIST.get(y).getName(), storedAmount, getMaterialCabinet().MATERIAL_LIST.get(y).getExtraction());
+											getMaterialCabinet().MATERIAL_LIST.set(y, currentMaterial);
+										}
 										handleCatalystDamage();
 									}else{
-										storedAmount += baseRecovery() + calculatedDust(formulaValue - baseRecovery());
+										int addedDust = baseRecovery() + calculatedDust(formulaValue - baseRecovery());
+										if(storedAmount <= ModConfig.extractorCap - addedDust) {
+											storedAmount += addedDust;
+											MaterialCabinetRecipe currentMaterial = new MaterialCabinetRecipe(getMaterialCabinet().MATERIAL_LIST.get(y).getSymbol(), getMaterialCabinet().MATERIAL_LIST.get(y).getOredict(), getMaterialCabinet().MATERIAL_LIST.get(y).getName(), storedAmount, getMaterialCabinet().MATERIAL_LIST.get(y).getExtraction());
+											getMaterialCabinet().MATERIAL_LIST.set(y, currentMaterial);
+										}
+									}
+								}else{
+									if(storedAmount <= ModConfig.extractorCap - formulaValue) {
+										storedAmount += formulaValue;
 										MaterialCabinetRecipe currentMaterial = new MaterialCabinetRecipe(getMaterialCabinet().MATERIAL_LIST.get(y).getSymbol(), getMaterialCabinet().MATERIAL_LIST.get(y).getOredict(), getMaterialCabinet().MATERIAL_LIST.get(y).getName(), storedAmount, getMaterialCabinet().MATERIAL_LIST.get(y).getExtraction());
 										getMaterialCabinet().MATERIAL_LIST.set(y, currentMaterial);
 									}
-								}else{
-									storedAmount += formulaValue;
-									MaterialCabinetRecipe currentMaterial = new MaterialCabinetRecipe(getMaterialCabinet().MATERIAL_LIST.get(y).getSymbol(), getMaterialCabinet().MATERIAL_LIST.get(y).getOredict(), getMaterialCabinet().MATERIAL_LIST.get(y).getName(), storedAmount, getMaterialCabinet().MATERIAL_LIST.get(y).getExtraction());
-									getMaterialCabinet().MATERIAL_LIST.set(y, currentMaterial);
 								}
 								getMaterialCabinet().markDirtyClient();
 							}

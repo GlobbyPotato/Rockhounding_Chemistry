@@ -39,6 +39,7 @@ import com.globbypotato.rockhounding_chemistry.machines.tile.devices.TESeasoning
 import com.globbypotato.rockhounding_chemistry.machines.tile.devices.TETransposer;
 import com.globbypotato.rockhounding_chemistry.machines.tile.devices.TEWasteDumper;
 import com.globbypotato.rockhounding_chemistry.machines.tile.devices.TEWaterPump;
+import com.globbypotato.rockhounding_chemistry.machines.tile.pipelines.TEDustlinePump;
 import com.globbypotato.rockhounding_chemistry.machines.tile.pipelines.TEGaslinePump;
 import com.globbypotato.rockhounding_chemistry.machines.tile.pipelines.TEPipelinePump;
 import com.globbypotato.rockhounding_chemistry.machines.tile.pipelines.TEPipelineValve;
@@ -205,5 +206,6 @@ public class ModTileEntities {
 		GameRegistry.registerTileEntity(TEPipelinePump.class, new ResourceLocation(Reference.MODID, TEPipelinePump.getName()));
 		GameRegistry.registerTileEntity(TEPipelineValve.class, new ResourceLocation(Reference.MODID, TEPipelineValve.getName()));
 		GameRegistry.registerTileEntity(TEGaslinePump.class, new ResourceLocation(Reference.MODID, TEGaslinePump.getName()));
+		GameRegistry.registerTileEntity(TEDustlinePump.class, new ResourceLocation(Reference.MODID, TEDustlinePump.getName()));
 	}
 }

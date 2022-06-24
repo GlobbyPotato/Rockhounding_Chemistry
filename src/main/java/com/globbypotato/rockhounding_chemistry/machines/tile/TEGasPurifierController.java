@@ -3,6 +3,7 @@ package com.globbypotato.rockhounding_chemistry.machines.tile;
 import java.util.ArrayList;
 
 import com.globbypotato.rockhounding_chemistry.enums.EnumMiscBlocksA;
+import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.GasPurifierRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.MaterialCabinetRecipes;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.GasPurifierRecipe;
@@ -385,10 +386,12 @@ public class TEGasPurifierController extends TileEntityInv {
 								if(!isInhibited){
 									if(y < getMaterialCabinet().MATERIAL_LIST.size()) {
 										int storedAmount = getMaterialCabinet().MATERIAL_LIST.get(y).getAmount();
-										storedAmount += formulaValue;
-										MaterialCabinetRecipe currentMaterial = new MaterialCabinetRecipe(getMaterialCabinet().MATERIAL_LIST.get(y).getSymbol(), getMaterialCabinet().MATERIAL_LIST.get(y).getOredict(), getMaterialCabinet().MATERIAL_LIST.get(y).getName(), storedAmount, getMaterialCabinet().MATERIAL_LIST.get(y).getExtraction());
-										getMaterialCabinet().MATERIAL_LIST.set(y, currentMaterial);
-										getMaterialCabinet().markDirtyClient();
+										if(storedAmount <= ModConfig.extractorCap - formulaValue) {
+											storedAmount += formulaValue;
+											MaterialCabinetRecipe currentMaterial = new MaterialCabinetRecipe(getMaterialCabinet().MATERIAL_LIST.get(y).getSymbol(), getMaterialCabinet().MATERIAL_LIST.get(y).getOredict(), getMaterialCabinet().MATERIAL_LIST.get(y).getName(), storedAmount, getMaterialCabinet().MATERIAL_LIST.get(y).getExtraction());
+											getMaterialCabinet().MATERIAL_LIST.set(y, currentMaterial);
+											getMaterialCabinet().markDirtyClient();
+										}
 									}
 								}
 							}

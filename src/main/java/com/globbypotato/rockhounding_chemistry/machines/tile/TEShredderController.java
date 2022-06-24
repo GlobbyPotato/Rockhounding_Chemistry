@@ -458,10 +458,12 @@ public class TEShredderController extends TileEntityInv{
 								}
 								if(!isInhibited){
 									int storedAmount = getMaterialCabinet().MATERIAL_LIST.get(y).getAmount();
-									storedAmount += formulaValue;
-									MaterialCabinetRecipe currentMaterial = new MaterialCabinetRecipe(getMaterialCabinet().MATERIAL_LIST.get(y).getSymbol(), getMaterialCabinet().MATERIAL_LIST.get(y).getOredict(), getMaterialCabinet().MATERIAL_LIST.get(y).getName(), storedAmount, getMaterialCabinet().MATERIAL_LIST.get(y).getExtraction());
-									getMaterialCabinet().MATERIAL_LIST.set(y, currentMaterial);
-									getMaterialCabinet().markDirtyClient();
+									if(storedAmount <= ModConfig.extractorCap - formulaValue) {
+										storedAmount += formulaValue;
+										MaterialCabinetRecipe currentMaterial = new MaterialCabinetRecipe(getMaterialCabinet().MATERIAL_LIST.get(y).getSymbol(), getMaterialCabinet().MATERIAL_LIST.get(y).getOredict(), getMaterialCabinet().MATERIAL_LIST.get(y).getName(), storedAmount, getMaterialCabinet().MATERIAL_LIST.get(y).getExtraction());
+										getMaterialCabinet().MATERIAL_LIST.set(y, currentMaterial);
+										getMaterialCabinet().markDirtyClient();
+									}
 								}
 							}
 						}
