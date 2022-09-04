@@ -174,6 +174,7 @@ public class GlobbyEventHandler {
 				        	int recipe = tag.getInteger("Recipe");
 				        	int amount = tag.getInteger("Amount");
 				        	int done = tag.getInteger("Done");
+                                                if(recipe > -1){
 			        		event.getToolTip().add(TextFormatting.GRAY + "Served Device: " + TextFormatting.BOLD + TextFormatting.YELLOW + EnumServer.values()[device].getName());
 			        		event.getToolTip().add(TextFormatting.GRAY + "Repeatable: " + TextFormatting.BOLD + TextFormatting.YELLOW + cycle);
 			        		if(device == EnumServer.LAB_OVEN.ordinal()){
@@ -227,6 +228,7 @@ public class GlobbyEventHandler {
 			        		event.getToolTip().add(TextFormatting.GRAY + "Process: " + TextFormatting.BOLD +  TextFormatting.YELLOW + done + " to do");
 			    		}
 					}
+                                        }
 		    	}
 
 		    	if(itemstack.isItemEqual(new ItemStack(ModItems.SPEED_ITEMS, 1, EnumSpeeds.BASE.ordinal()))){
