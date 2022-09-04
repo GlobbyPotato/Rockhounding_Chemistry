@@ -216,7 +216,7 @@ public class TEServer extends TileEntityInv implements IInternalServer {
 
 	public void writeFile() {
 		if(!this.world.isRemote){
-			if(isValidFile(printSlot())){
+			if(isValidFile(printSlot()) && getRecipeIndex() > -1 ){
 				if(!printSlot().hasTagCompound()){printSlot().setTagCompound(new NBTTagCompound());}
 				NBTTagCompound tag = printSlot().getTagCompound();
 				tag.setInteger(tag_device, servedDevice());
