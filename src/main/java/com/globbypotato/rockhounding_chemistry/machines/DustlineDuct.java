@@ -45,6 +45,65 @@ public class DustlineDuct extends PipelineBase {
 		return false;
 	}
 
+	public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos) {
+		if (redstoneIsActivated(world, pos)) {
+			onRedstoneActivated(world, pos);
+		}
+	}
+
+
+	@Override
+	public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
+		if (redstoneIsActivated(worldIn, pos)) {
+			onRedstoneActivated(worldIn, pos);
+		}
+	}
+
+	private boolean redstoneIsActivated(World world, BlockPos pos) {
+		if (isBlockPowered(world, pos)) {
+			return true;
+		}
+		return false;
+	}
+
+	protected static final void onRedstoneActivated (World worldIn, BlockPos pos) {
+		worldIn.setBlockState(pos, ModBlocks.DUSTLINE_HALT.getDefaultState(), 2);
+	}
+
+	public boolean isBlockPowered(IBlockAccess world, BlockPos pos)
+	{
+		if (this.getRedstoneWeakPower(world, pos.down(), EnumFacing.DOWN) > 0)
+		{
+			return true;
+		}
+		else if (this.getRedstoneWeakPower(world, pos.up(), EnumFacing.UP) > 0)
+		{
+			return true;
+		}
+		else if (this.getRedstoneWeakPower(world, pos.north(), EnumFacing.NORTH) > 0)
+		{
+			return true;
+		}
+		else if (this.getRedstoneWeakPower(world, pos.south(), EnumFacing.SOUTH) > 0)
+		{
+			return true;
+		}
+		else if (this.getRedstoneWeakPower(world, pos.west(), EnumFacing.WEST) > 0)
+		{
+			return true;
+		}
+		else
+		{
+			return this.getRedstoneWeakPower(world, pos.east(), EnumFacing.EAST) > 0;
+		}
+	}
+
+	public int getRedstoneWeakPower(IBlockAccess world, BlockPos pos, EnumFacing facing)
+	{
+		IBlockState iblockstate = world.getBlockState(pos);
+		return iblockstate.getWeakPower(world, pos, facing);
+	}
+
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if(!worldIn.isRemote){

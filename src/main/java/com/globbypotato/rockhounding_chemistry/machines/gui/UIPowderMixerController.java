@@ -58,7 +58,7 @@ public class UIPowderMixerController extends GuiBase {
 		}
  
 		//ingredients
-		if(this.tile.isValidPreset() && this.tile.isValidRecipe()) {
+		if(this.tile.isValidPreset() && this.tile.isValidRecipe() && tile.hasMaterialCabinet() && tile.hasElementsCabinet()) {
 			for(int i = 0;  i < this.tile.getCurrentRecipe().getElements().size(); i++){
 				if(i < 8) {
 					String recipeIngredient = this.tile.getCurrentRecipe().getElements().get(i);
@@ -113,7 +113,7 @@ public class UIPowderMixerController extends GuiBase {
 		}
 		this.fontRenderer.drawString(recipeLabel, 44, 25, 4210752);
 
-		if(this.tile.isValidPreset() && this.tile.isValidRecipe()) {
+		if(this.tile.isValidPreset() && this.tile.isValidRecipe() && tile.hasMaterialCabinet() && tile.hasElementsCabinet()) {
 			for(int x = 0;  x < this.tile.getCurrentRecipe().getElements().size(); x++){
 				if(x < 8) {
 					String recipeIngredient = this.tile.getCurrentRecipe().getElements().get(x);
@@ -161,7 +161,7 @@ public class UIPowderMixerController extends GuiBase {
         }
 
         //quantities
-		if(this.tile.isValidPreset() && this.tile.isValidRecipe()) {
+		if(this.tile.isValidPreset() && this.tile.isValidRecipe() && tile.hasMaterialCabinet() && tile.hasElementsCabinet()) {
 			for(int x = 0;  x < this.tile.getCurrentRecipe().getElements().size(); x++){
 				if(x < 8) {
 					String recipeIngredient = this.tile.getCurrentRecipe().getElements().get(x);
