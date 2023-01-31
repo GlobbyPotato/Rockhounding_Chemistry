@@ -441,6 +441,7 @@ public class TEShredderController extends TileEntityInv{
 
 			if(hasWasher()){
 				this.output.setOrFillFluid(getWasher().inputTank, recipePulp());
+				getWasher().updateNeighbours();
 			}
 			
 			if(hasMaterialCabinet()) {
@@ -473,6 +474,7 @@ public class TEShredderController extends TileEntityInv{
 			
 			if(hasWater()){
 				this.input.drainOrCleanFluid(getFluidCistern().inputTank, 1000, true);
+				getFluidCistern().updateNeighbours();
 			}
 
 			this.input.decrementSlot(INPUT_SLOT);

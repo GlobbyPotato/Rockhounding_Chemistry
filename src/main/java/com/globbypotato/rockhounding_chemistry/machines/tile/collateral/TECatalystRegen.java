@@ -197,10 +197,12 @@ public class TECatalystRegen extends TileEntityInv {
 	private void consumeStats() {
 		if(hasCistern()) {
 			this.input.drainOrCleanFluid(getFluidCistern().inputTank, 1000, true);
+			getFluidCistern().updateNeighbours();
 		}
 
 		if(hasInTank()) {
 			((MachineStackHandler)getInTank().getInput()).drainOrCleanFluid(getInTank().inputTank, consumedGas(), true);
+			getInTank().updateNeighbours();
 		}
 
 		if(this.world.rand.nextInt(3) == 0){

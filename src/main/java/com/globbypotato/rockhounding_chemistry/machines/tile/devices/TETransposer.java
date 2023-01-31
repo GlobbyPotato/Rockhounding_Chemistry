@@ -392,6 +392,8 @@ public class TETransposer extends TileEntityTankVessel implements IToxic, IColla
 			int fluidHas = getInTank().inputTank.getFluidAmount() >= fluidCan ? fluidCan : getInTank().inputTank.getFluidAmount();
 			this.input.setOrFillFluid(this.inputTankMain, getInTank().getTankFluid(), fluidHas);
 			this.input.drainOrCleanFluid(getInTank().inputTank, fluidHas, true);
+
+			getInTank().updateNeighbours();
 		}
 	}
 

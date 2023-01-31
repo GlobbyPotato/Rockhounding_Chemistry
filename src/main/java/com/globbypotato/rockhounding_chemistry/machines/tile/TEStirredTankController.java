@@ -370,6 +370,7 @@ public class TEStirredTankController extends TileEntityInv{
 		}
 		if(hasFume() && hasFumeTank() && this.output.canSetOrFillFluid(getFumeTank().inputTank, getFumeTank().getTankFluid(), recipeFume())){
 			this.output.setOrFillFluid(getFumeTank().inputTank, getCurrentRecipe().getFume(), getCalculatedFume());
+			getFumeTank().updateNeighbours();
 		}
 	}
 

@@ -475,6 +475,8 @@ public class TEDepositionController extends TileEntityInv implements IInternalSe
 							int canSend = Math.min(getInputVessel().inputTank.getFluidAmount(), canReceive);
 							this.input.setOrFillFluid(getPurgeVessel().inputTank, vesselSolvent(), canSend);
 							this.input.drainOrCleanFluid(getInputVessel().inputTank, canSend, true);
+							getPurgeVessel().updateNeighbours();
+							getInputVessel().updateNeighbours();
 						}
 					}
 					if(hasCarrierVessel()){
@@ -483,6 +485,8 @@ public class TEDepositionController extends TileEntityInv implements IInternalSe
 							int canSend = Math.min(getCarrierVessel().inputTank.getFluidAmount(), canReceive);
 							this.input.setOrFillFluid(getPurgeVessel().inputTank, vesselCarrier(), canSend);
 							this.input.drainOrCleanFluid(getCarrierVessel().inputTank, canSend, true);
+							getPurgeVessel().updateNeighbours();
+							getCarrierVessel().updateNeighbours();
 						}
 					}
 				}
