@@ -15,6 +15,7 @@ import com.globbypotato.rockhounding_core.machines.tileentity.MachineStackHandle
 import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityInv;
 import com.globbypotato.rockhounding_core.utils.CoreUtils;
 
+import net.minecraft.init.Enchantments;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -327,7 +328,9 @@ public class TEElementsCabinetBase extends TileEntityInv {
 						ElementsCabinetRecipe currentRecipe = new ElementsCabinetRecipe(checkSymbol, checkDict, checkName, checkAmount, checkExtract);
 						this.MATERIAL_LIST.set(currentMaterial, currentRecipe);
 						((MachineStackHandler) getBalance().getOutput()).setOrStack(OUTPUT_SLOT, elementStack);
-						((MachineStackHandler) getInjector().getInput()).damageSlot(TEElementsCabinetTop.CYLINDER_SLOT);
+						int unbreakingLevel = CoreUtils.getEnchantmentLevel(
+							Enchantments.UNBREAKING, getInjector().getInput().getStackInSlot(TEElementsCabinetTop.CYLINDER_SLOT));
+						((MachineStackHandler) getInjector().getInput()).damageUnbreakingSlot(unbreakingLevel, TEElementsCabinetTop.CYLINDER_SLOT);
 					}
 					if(this.currentMaterial < this.MATERIAL_LIST.size() -1) {
 						this.currentMaterial++;
