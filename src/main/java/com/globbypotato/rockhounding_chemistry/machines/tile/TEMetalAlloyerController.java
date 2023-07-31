@@ -427,6 +427,7 @@ public class TEMetalAlloyerController extends TileEntityInv implements IInternal
 
 			if(hasReactant()) {
 				this.input.drainOrCleanFluid(getFluidCistern().inputTank, getWashReactant(), true);
+				getFluidCistern().updateNeighbours();
 			}
 
 			if(hasElementsCabinet() && hasMaterialCabinet()){

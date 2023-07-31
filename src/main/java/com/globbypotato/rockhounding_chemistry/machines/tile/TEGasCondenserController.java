@@ -222,6 +222,7 @@ public class TEGasCondenserController extends TileEntityInv {
 	private void process() {
 		this.output.setOrFillFluid(getOutTank().inputTank, getRecipeOutput(), calculateFill());
 		this.input.drainOrCleanFluid(getInTank().inputTank, calculateDrain(), true);
+		getInTank().updateNeighbours();
 	}
 
 	private int calculateFill() {

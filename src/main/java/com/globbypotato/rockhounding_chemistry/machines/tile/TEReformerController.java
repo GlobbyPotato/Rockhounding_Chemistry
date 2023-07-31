@@ -691,6 +691,7 @@ public class TEReformerController extends TileEntityInv implements IInternalServ
 			if(isOutputGaseous()){
 				if(hasOutputVessel()){
 					this.input.setOrFillFluid(getOutputVessel().inputTank, getRecipeOutput(), calculatedProduct());
+					getOutputVessel().updateNeighbours();
 				}
 			}else{
 				if(hasTank()){
@@ -708,10 +709,12 @@ public class TEReformerController extends TileEntityInv implements IInternalServ
 
 			if(hasInputVessel1()){
 				this.input.drainOrCleanFluid(getInputVessel1().inputTank, calculatedDrainA(), true);
+				getInputVessel1().updateNeighbours();
 			}
 
 			if(hasInputVessel2()){
 				this.input.drainOrCleanFluid(getInputVessel2().inputTank, calculatedDrainB(), true);
+				getInputVessel2().updateNeighbours();
 			}
 
 			updateServer(getServer(), this.currentFile);
@@ -740,6 +743,9 @@ public class TEReformerController extends TileEntityInv implements IInternalServ
 							int canSend = Math.min(getInputVessel1().inputTank.getFluidAmount(), canReceive);
 							this.input.setOrFillFluid(getPurgeVessel().inputTank, vesselInput1(), canSend);
 							this.input.drainOrCleanFluid(getInputVessel1().inputTank, canSend, true);
+
+							getPurgeVessel().updateNeighbours();
+							getInputVessel1().updateNeighbours();
 						}
 					}
 					if(hasInputVessel2()){
@@ -748,6 +754,9 @@ public class TEReformerController extends TileEntityInv implements IInternalServ
 							int canSend = Math.min(getInputVessel2().inputTank.getFluidAmount(), canReceive);
 							this.input.setOrFillFluid(getPurgeVessel().inputTank, vesselInput2(), canSend);
 							this.input.drainOrCleanFluid(getInputVessel2().inputTank, canSend, true);
+
+							getPurgeVessel().updateNeighbours();
+							getInputVessel2().updateNeighbours();
 						}
 					}
 				}

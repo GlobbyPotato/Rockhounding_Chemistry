@@ -391,6 +391,10 @@ public class TEHeatExchangerController extends TileEntityInv {
 		if(isValidRecipe() && getDummyRecipe() == getCurrentRecipe()){
 			this.output.setOrFillFluid(getOutputVessel().inputTank, getRecipeOutput(), processRate());
 			this.input.drainOrCleanFluid(getInputVessel().inputTank, processRate(), true);
+
+			getOutputVessel().updateNeighbours();
+			getInputVessel().updateNeighbours();
+
 			if(hasCooling() && this.rand.nextInt(consumeChance()) == 0){
 				getFluidCistern().inputTank.drainInternal(minCoolant(), true);
 			}

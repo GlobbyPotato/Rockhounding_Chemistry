@@ -184,6 +184,7 @@ public class TEAirCompressor extends TileEntityPoweredVessel {
 
 	private void compress() {
 		this.output.setOrFillFluid(getVessel().inputTank, compressedAir());
+		getVessel().updateNeighbours();
 		this.cooktime++;
 		drainPower();
 	}

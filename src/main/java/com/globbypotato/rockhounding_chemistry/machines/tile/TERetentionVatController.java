@@ -517,6 +517,7 @@ public class TERetentionVatController extends TileEntityInv implements IInternal
 
 			if(hasVessel()){
 				this.output.drainOrCleanFluid(getVessel().inputTank, calculatedSteam(), true);
+				getVessel().updateNeighbours();
 			}
 
 			if(hasTankPulp()){

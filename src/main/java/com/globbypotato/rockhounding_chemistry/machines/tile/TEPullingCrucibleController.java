@@ -428,6 +428,7 @@ public class TEPullingCrucibleController extends TileEntityInv {
 
 			if(hasInTank()){
 				this.input.drainOrCleanFluid(getInTank().inputTank, consumedArgon(), true);
+				getInTank().updateNeighbours();
 			}
 
 			if(hasDopant()){

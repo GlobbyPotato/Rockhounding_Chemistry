@@ -576,10 +576,12 @@ public class TEGanController extends TileEntityInv {
 	private void distillate() {
 		if(doOutput1() && !isGasInhibited(6)){
 			this.output.setOrFillFluid(getOutputVessel1().inputTank, nitrogenStack());
+			getOutputVessel1().updateNeighbours();
 		}
 
 		if(doOutput2() && !isGasInhibited(7)){
 			this.output.setOrFillFluid(getOutputVessel2().inputTank, oxygenStack());
+			getOutputVessel2().updateNeighbours();
 		}
 
 		if(doOutput3()){
@@ -640,7 +642,8 @@ public class TEGanController extends TileEntityInv {
 		}
 
 		if(hasInputVessel()){
-			this.input.drainOrCleanFluid(getInputVessel().inputTank, num_air(), true);	
+			this.input.drainOrCleanFluid(getInputVessel().inputTank, num_air(), true);
+			getInputVessel().updateNeighbours();
 		}
 
 		drainPower();
