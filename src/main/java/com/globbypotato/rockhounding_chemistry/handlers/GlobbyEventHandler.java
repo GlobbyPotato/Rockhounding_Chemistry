@@ -171,62 +171,62 @@ public class GlobbyEventHandler {
 				        	int amount = tag.getInteger("Amount");
 				        	int done = tag.getInteger("Done");
 				        	int oversee = tag.getInteger("Oversee");
-                                                if(recipe > -1){
-			        		event.getToolTip().add(TextFormatting.GRAY + "Served Device: " + TextFormatting.BOLD + TextFormatting.YELLOW + EnumServer.values()[device].getName());
-			        		event.getToolTip().add(TextFormatting.GRAY + "Repeatable: " + TextFormatting.BOLD + TextFormatting.YELLOW + cycle);
-			        		if(device == EnumServer.LAB_OVEN.ordinal()){
-			        			if(Strings.isNullOrEmpty(LabOvenRecipes.lab_oven_recipes.get(recipe).getRecipeName())){
-					        		event.getToolTip().add(TextFormatting.GRAY + "Recipe: " + TextFormatting.BOLD +  TextFormatting.YELLOW + LabOvenRecipes.lab_oven_recipes.get(recipe).getSolution().getLocalizedName());
-			        			}else{
-					        		event.getToolTip().add(TextFormatting.GRAY + "Recipe: " + TextFormatting.BOLD +  TextFormatting.YELLOW + LabOvenRecipes.lab_oven_recipes.get(recipe).getRecipeName());
-			        			}
-			        		}else if(device == EnumServer.METAL_ALLOYER.ordinal()){
-				        		event.getToolTip().add(TextFormatting.GRAY + "Recipe: " + TextFormatting.BOLD +  TextFormatting.YELLOW + MetalAlloyerRecipes.metal_alloyer_recipes.get(recipe).getOutput().getDisplayName());
-			        		}else if(device == EnumServer.DEPOSITION.ordinal()){
-				        		event.getToolTip().add(TextFormatting.GRAY + "Recipe: " + TextFormatting.BOLD +  TextFormatting.YELLOW + DepositionChamberRecipes.deposition_chamber_recipes.get(recipe).getOutput().getDisplayName());
-			        		}else if(device == EnumServer.SIZER.ordinal()){
-				        		event.getToolTip().add(TextFormatting.GRAY + "Comminution Level: " + TextFormatting.BOLD +  TextFormatting.YELLOW + recipe);
-			        		}else if(device == EnumServer.LEACHING.ordinal()){
-			        			float currentGravity = (recipe * 2) + 2F;
-			        			event.getToolTip().add(TextFormatting.GRAY + "Gravity: " + TextFormatting.BOLD +  TextFormatting.YELLOW + (currentGravity - 2F) + " to " + (currentGravity + 2F));
-			        		}else if(device == EnumServer.RETENTION.ordinal()){
-			        			float currentGravity = (recipe * 2) + 2F;
-				        		event.getToolTip().add(TextFormatting.GRAY + "Gravity: " + TextFormatting.BOLD +  TextFormatting.YELLOW + (currentGravity - 2F) + " to " + (currentGravity + 2F));
-			        		}else if(device == EnumServer.CASTING.ordinal()){
-				        		event.getToolTip().add(TextFormatting.GRAY + "Pattern: " + TextFormatting.BOLD +  TextFormatting.YELLOW + EnumCasting.getFormalName(recipe));
-			        		}else if(device == EnumServer.REFORMER.ordinal()){
-				        		event.getToolTip().add(TextFormatting.GRAY + "Recipe: " + TextFormatting.BOLD +  TextFormatting.YELLOW + GasReformerRecipes.gas_reformer_recipes.get(recipe).getOutput().getLocalizedName());
-			        		}else if(device == EnumServer.POWDER_MIXER.ordinal()){
-				        		event.getToolTip().add(TextFormatting.GRAY + "Recipe: " + TextFormatting.BOLD +  TextFormatting.YELLOW + PowderMixerRecipes.powder_mixer_recipes.get(recipe).getOutput().getDisplayName());
-			        		}else if(device == EnumServer.EXTRACTOR.ordinal()){
-				        		event.getToolTip().add(TextFormatting.GRAY + "Intensity Level: " + TextFormatting.BOLD +  TextFormatting.YELLOW + recipe);
-			        		}else if(device == EnumServer.PRECIPITATOR.ordinal()){
-			        			if(Strings.isNullOrEmpty(PrecipitationRecipes.precipitation_recipes.get(recipe).getRecipeName())){
-					        		event.getToolTip().add(TextFormatting.GRAY + "Recipe: " + TextFormatting.BOLD +  TextFormatting.YELLOW + PrecipitationRecipes.precipitation_recipes.get(recipe).getPrecipitate().getDisplayName());
-			        			}else{
-					        		event.getToolTip().add(TextFormatting.GRAY + "Recipe: " + TextFormatting.BOLD +  TextFormatting.YELLOW + PrecipitationRecipes.precipitation_recipes.get(recipe).getRecipeName());
-			        			}
-			        		}else if(device == EnumServer.BED_REACTOR.ordinal()){
-				        		event.getToolTip().add(TextFormatting.GRAY + "Recipe: " + TextFormatting.BOLD +  TextFormatting.YELLOW + BedReactorRecipes.bed_reactor_recipes.get(recipe).getOutput().getLocalizedName());
-			        		}
-			        		if(tag.hasKey("FilterStack")){
-			        			ItemStack filter = new ItemStack(tag.getCompoundTag("FilterStack"));
-			        			if(!filter.isEmpty()){
-					        		event.getToolTip().add(TextFormatting.GRAY + "Filter: " + TextFormatting.BOLD +  TextFormatting.DARK_GREEN + filter.getDisplayName());
-			        			}
-			        		}
-			        		if(tag.hasKey("FilterFluid")){
-								FluidStack filter = FluidStack.loadFluidStackFromNBT(tag.getCompoundTag("FilterFluid"));
-			        			if(filter != null){
-					        		event.getToolTip().add(TextFormatting.GRAY + "Filter: " + TextFormatting.BOLD +  TextFormatting.DARK_GREEN + filter.getLocalizedName());
-			        			}
-			        		}
-			        		event.getToolTip().add(TextFormatting.GRAY + "Amount: " + TextFormatting.BOLD +  TextFormatting.YELLOW + amount + " scheduled");
-			        		event.getToolTip().add(TextFormatting.GRAY + "Process: " + TextFormatting.BOLD +  TextFormatting.YELLOW + done + " to do");
-			        		event.getToolTip().add(TextFormatting.GRAY + "Oversee: " + TextFormatting.BOLD +  TextFormatting.YELLOW + oversee + " ticks");
-			    		}
-					}
-                                        }
+                            if(recipe > -1){
+				        		event.getToolTip().add(TextFormatting.GRAY + "Served Device: " + TextFormatting.BOLD + TextFormatting.YELLOW + EnumServer.values()[device].getName());
+				        		event.getToolTip().add(TextFormatting.GRAY + "Repeatable: " + TextFormatting.BOLD + TextFormatting.YELLOW + cycle);
+				        		if(device == EnumServer.LAB_OVEN.ordinal()){
+				        			if(Strings.isNullOrEmpty(LabOvenRecipes.lab_oven_recipes.get(recipe).getRecipeName())){
+						        		event.getToolTip().add(TextFormatting.GRAY + "Recipe: " + TextFormatting.BOLD +  TextFormatting.YELLOW + LabOvenRecipes.lab_oven_recipes.get(recipe).getSolution().getLocalizedName());
+				        			}else{
+						        		event.getToolTip().add(TextFormatting.GRAY + "Recipe: " + TextFormatting.BOLD +  TextFormatting.YELLOW + LabOvenRecipes.lab_oven_recipes.get(recipe).getRecipeName());
+				        			}
+				        		}else if(device == EnumServer.METAL_ALLOYER.ordinal()){
+					        		event.getToolTip().add(TextFormatting.GRAY + "Recipe: " + TextFormatting.BOLD +  TextFormatting.YELLOW + MetalAlloyerRecipes.metal_alloyer_recipes.get(recipe).getOutput().getDisplayName());
+				        		}else if(device == EnumServer.DEPOSITION.ordinal()){
+					        		event.getToolTip().add(TextFormatting.GRAY + "Recipe: " + TextFormatting.BOLD +  TextFormatting.YELLOW + DepositionChamberRecipes.deposition_chamber_recipes.get(recipe).getOutput().getDisplayName());
+				        		}else if(device == EnumServer.SIZER.ordinal()){
+					        		event.getToolTip().add(TextFormatting.GRAY + "Comminution Level: " + TextFormatting.BOLD +  TextFormatting.YELLOW + recipe);
+				        		}else if(device == EnumServer.LEACHING.ordinal()){
+				        			float currentGravity = (recipe * 2) + 2F;
+				        			event.getToolTip().add(TextFormatting.GRAY + "Gravity: " + TextFormatting.BOLD +  TextFormatting.YELLOW + (currentGravity - 2F) + " to " + (currentGravity + 2F));
+				        		}else if(device == EnumServer.RETENTION.ordinal()){
+				        			float currentGravity = (recipe * 2) + 2F;
+					        		event.getToolTip().add(TextFormatting.GRAY + "Gravity: " + TextFormatting.BOLD +  TextFormatting.YELLOW + (currentGravity - 2F) + " to " + (currentGravity + 2F));
+				        		}else if(device == EnumServer.CASTING.ordinal()){
+					        		event.getToolTip().add(TextFormatting.GRAY + "Pattern: " + TextFormatting.BOLD +  TextFormatting.YELLOW + EnumCasting.getFormalName(recipe));
+				        		}else if(device == EnumServer.REFORMER.ordinal()){
+					        		event.getToolTip().add(TextFormatting.GRAY + "Recipe: " + TextFormatting.BOLD +  TextFormatting.YELLOW + GasReformerRecipes.gas_reformer_recipes.get(recipe).getOutput().getLocalizedName());
+				        		}else if(device == EnumServer.POWDER_MIXER.ordinal()){
+					        		event.getToolTip().add(TextFormatting.GRAY + "Recipe: " + TextFormatting.BOLD +  TextFormatting.YELLOW + PowderMixerRecipes.powder_mixer_recipes.get(recipe).getOutput().getDisplayName());
+				        		}else if(device == EnumServer.EXTRACTOR.ordinal()){
+					        		event.getToolTip().add(TextFormatting.GRAY + "Intensity Level: " + TextFormatting.BOLD +  TextFormatting.YELLOW + recipe);
+				        		}else if(device == EnumServer.PRECIPITATOR.ordinal()){
+				        			if(Strings.isNullOrEmpty(PrecipitationRecipes.precipitation_recipes.get(recipe).getRecipeName())){
+						        		event.getToolTip().add(TextFormatting.GRAY + "Recipe: " + TextFormatting.BOLD +  TextFormatting.YELLOW + PrecipitationRecipes.precipitation_recipes.get(recipe).getPrecipitate().getDisplayName());
+				        			}else{
+						        		event.getToolTip().add(TextFormatting.GRAY + "Recipe: " + TextFormatting.BOLD +  TextFormatting.YELLOW + PrecipitationRecipes.precipitation_recipes.get(recipe).getRecipeName());
+				        			}
+				        		}else if(device == EnumServer.BED_REACTOR.ordinal()){
+					        		event.getToolTip().add(TextFormatting.GRAY + "Recipe: " + TextFormatting.BOLD +  TextFormatting.YELLOW + BedReactorRecipes.bed_reactor_recipes.get(recipe).getOutput().getLocalizedName());
+				        		}
+				        		if(tag.hasKey("FilterStack")){
+				        			ItemStack filter = new ItemStack(tag.getCompoundTag("FilterStack"));
+				        			if(!filter.isEmpty()){
+						        		event.getToolTip().add(TextFormatting.GRAY + "Filter: " + TextFormatting.BOLD +  TextFormatting.DARK_GREEN + filter.getDisplayName());
+				        			}
+				        		}
+				        		if(tag.hasKey("FilterFluid")){
+									FluidStack filter = FluidStack.loadFluidStackFromNBT(tag.getCompoundTag("FilterFluid"));
+				        			if(filter != null){
+						        		event.getToolTip().add(TextFormatting.GRAY + "Filter: " + TextFormatting.BOLD +  TextFormatting.DARK_GREEN + filter.getLocalizedName());
+				        			}
+				        		}
+				        		event.getToolTip().add(TextFormatting.GRAY + "Amount: " + TextFormatting.BOLD +  TextFormatting.YELLOW + amount + " scheduled");
+				        		event.getToolTip().add(TextFormatting.GRAY + "Process: " + TextFormatting.BOLD +  TextFormatting.YELLOW + done + " to do");
+				        		event.getToolTip().add(TextFormatting.GRAY + "Oversee: " + TextFormatting.BOLD +  TextFormatting.YELLOW + oversee + " ticks");
+				    		}
+						}
+                    }
 		    	}
 
 		    	if(itemstack.isItemEqual(new ItemStack(ModItems.SPEED_ITEMS, 1, EnumSpeeds.BASE.ordinal()))){
