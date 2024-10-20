@@ -10,6 +10,7 @@ import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_core.enums.EnumFluidNbt;
 import com.globbypotato.rockhounding_core.utils.CoreUtils;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -22,8 +23,7 @@ public class ModUtils {
 	public static final int HEIGHT = 200;
 
 	public static String immersive_id = "immersiveengineering";
-	public static String rh_rocks_id = "rockhounding_rocks";
-	public static String rh_surface_id = "rockhounding_surface";
+//	public static String rh_rocks_id = "rockhounding_rocks";
 	public static String mekanism_id = "mekanism";
 	public static String forestry_id = "forestry";
 	public static String thermal_f_id = "thermalfoundation";
@@ -74,6 +74,11 @@ public class ModUtils {
 			return 0.2F;
 		}
 		return 1.0F;
+	}
+
+	public static boolean hasWrench(EntityPlayer player) {
+		return !player.getHeldItemMainhand().isEmpty() 
+			&& player.getHeldItemMainhand().isItemEqual(BaseRecipes.chemistry_wrench);
 	}
 
 	public static boolean hasInductor(ItemStack insertingStack) {
@@ -164,11 +169,7 @@ public class ModUtils {
 	public static boolean hasForestry() {
 		return Loader.isModLoaded(forestry_id);
 	}
-
-	public static boolean hasSurface() {
-		return Loader.isModLoaded(rh_surface_id);
-	}
-
+/*
 	public static boolean hasRocks() {
 		return Loader.isModLoaded(rh_rocks_id);
 	}
@@ -176,7 +177,7 @@ public class ModUtils {
 	public static boolean hasRhRocksIntegtation() {
 		return hasRocks() && ModConfig.hasRhRocks;
 	}
-
+*/
 	public static boolean hasTFoundation() {
 		return Loader.isModLoaded(thermal_f_id);
 	}
@@ -232,18 +233,7 @@ public class ModUtils {
 		}
 		return ItemStack.EMPTY;
 	}
-
-	public static ItemStack surface_compost(){
-		if(hasSurface()){
-			Item material = Item.REGISTRY.getObject(new ResourceLocation(rh_surface_id + ":" + "gypsum_items"));
-			ItemStack temp = CoreUtils.getModdedStack(material, 1, 4);
-			if(!temp.isEmpty()){
-				return temp;
-			}
-		}
-		return ItemStack.EMPTY;
-	}
-
+/*
 	public static Item rhrocks_a(){
 		if(hasRocks()){
 			Item material = Item.REGISTRY.getObject(new ResourceLocation(rh_rocks_id + ":" + "rocks_a"));
@@ -316,7 +306,7 @@ public class ModUtils {
 		}
 		return null;
 	}
-
+*/
 	public static ItemStack forestry_charcoal(){
 		if(hasForestry()){
 			Item material = Item.REGISTRY.getObject(new ResourceLocation(forestry_id + ":" + "charcoal"));

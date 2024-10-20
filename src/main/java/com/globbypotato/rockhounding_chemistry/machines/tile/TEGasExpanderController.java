@@ -225,6 +225,7 @@ public class TEGasExpanderController extends TileEntityInv {
 	private void process() {
 		this.output.setOrFillFluid(getOutTank().inputTank, getRecipeOutput(), calculateFill());
 		this.input.drainOrCleanFluid(getInTank().inputTank, calculateDrain(), true);
+		getOutTank().updateNeighbours();
 	}
 
 	private int calculateFill() {

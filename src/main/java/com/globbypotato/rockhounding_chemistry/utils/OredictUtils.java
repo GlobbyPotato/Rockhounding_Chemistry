@@ -66,6 +66,7 @@ public class OredictUtils extends BaseRecipes{
 		OreDictionary.registerOre("compoundLead", chemicals(1, EnumChemicals.LEAD_COMPOUND));
 		OreDictionary.registerOre("compoundQuartz", chemicals(1, EnumChemicals.QUARTZ_COMPOUND));
 		OreDictionary.registerOre("compoundNitrate", chemicals(1, EnumChemicals.POTASSIUM_NITRATE));
+		OreDictionary.registerOre("compoundCarbon", elements(1, EnumElements.CARBON));
 
 		//misc
 		OreDictionary.registerOre("foodSalt", chemicals(1, EnumChemicals.SALT));

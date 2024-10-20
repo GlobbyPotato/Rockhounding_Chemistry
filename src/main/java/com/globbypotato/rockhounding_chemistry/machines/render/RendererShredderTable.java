@@ -2,8 +2,8 @@ package com.globbypotato.rockhounding_chemistry.machines.render;
 
 import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEShredderTable;
 import com.globbypotato.rockhounding_core.utils.CoreBasics;
+import com.globbypotato.rockhounding_core.utils.RenderUtils;
 
-import net.darkhax.bookshelf.util.RenderUtils;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraftforge.fluids.FluidStack;

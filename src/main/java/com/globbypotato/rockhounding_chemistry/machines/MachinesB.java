@@ -31,6 +31,7 @@ import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEFluidCi
 import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEPressureVessel;
 import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEReinforcedCistern;
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
+import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.enums.EnumFluidNbt;
 import com.globbypotato.rockhounding_core.machines.tileentity.IFluidHandlingTile;
 import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityInv;
@@ -443,7 +444,7 @@ public class MachinesB extends MachineIO {
 		IBlockState state = world.getBlockState(pos);
 		int meta = state.getBlock().getMetaFromState(state);
 
-		if(CoreUtils.hasWrench(player)){
+		if(ModUtils.hasWrench(player)){
 			handleRotation(world, pos, player, meta);
 		}
 	}

@@ -388,6 +388,7 @@ public class TEMineralSizerController extends TileEntityInv implements IInternal
 					this.cooktime++;
 					drainPower();
 					activateTank();
+					resetOversee(getServer(), this.currentFile);
 					if(getCooktime() >= getCooktimeMax()) {
 						this.cooktime = 0;
 						process();
@@ -395,6 +396,7 @@ public class TEMineralSizerController extends TileEntityInv implements IInternal
 					}
 					this.markDirtyClient();
 				}else{
+					tickOversee(getServer(), this.currentFile);
 					tickOff();		
 				}
 			}else{

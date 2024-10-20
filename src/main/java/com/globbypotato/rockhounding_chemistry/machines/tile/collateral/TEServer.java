@@ -3,6 +3,7 @@ package com.globbypotato.rockhounding_chemistry.machines.tile.collateral;
 import com.globbypotato.rockhounding_chemistry.ModItems;
 import com.globbypotato.rockhounding_chemistry.enums.EnumMiscItems;
 import com.globbypotato.rockhounding_chemistry.enums.utils.EnumServer;
+import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.machines.tile.IInternalServer;
 import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.machines.tileentity.MachineStackHandler;
@@ -24,6 +25,8 @@ public class TEServer extends TileEntityInv implements IInternalServer {
 	public boolean cycle;
 	public int device = -1;
 	public int recipeAmount = 0;
+	public int oversee = ModConfig.baseOversee;
+
 	public ItemStack filterStack = ItemStack.EMPTY;
 	public FluidStack filterFluid = null;
 
@@ -54,6 +57,7 @@ public class TEServer extends TileEntityInv implements IInternalServer {
 		this.cycle = compound.getBoolean(tag_cycle);
 		this.device = compound.getInteger(tag_device);
 		this.recipeAmount = compound.getInteger(tag_amount);
+		this.oversee = compound.getInteger(tag_oversee);
 
 		if(hasFilterItem(compound)){
 			this.filterStack = getFilterItem(compound);
@@ -69,6 +73,7 @@ public class TEServer extends TileEntityInv implements IInternalServer {
 		compound.setBoolean(tag_cycle, getCycle());
 		compound.setInteger(tag_device, servedDevice());
 		compound.setInteger(tag_amount, getRecipeAmount());
+		compound.setInteger(tag_oversee, getOversee());
 
 		if(!this.getFilterStack().isEmpty()){
 			NBTTagCompound filterstack = new NBTTagCompound(); 
@@ -129,6 +134,10 @@ public class TEServer extends TileEntityInv implements IInternalServer {
 
 	public FluidStack getFilterFluid() {
 		return this.filterFluid;
+	}
+
+	public int getOversee() {
+		return this.oversee;
 	}
 
 	public int servedDevice() {
@@ -196,6 +205,9 @@ public class TEServer extends TileEntityInv implements IInternalServer {
 					if(hasRecipe(tag)){
 						this.recipeIndex = getRecipe(tag);
 					}
+					if(hasOversee(tag)){
+						this.oversee = getOversee(tag);
+					}
 					if(hasFilterItem(tag)){
 						ItemStack temp = getFilterItem(tag);
 						if(!temp.isEmpty()){
@@ -216,7 +228,7 @@ public class TEServer extends TileEntityInv implements IInternalServer {
 
 	public void writeFile() {
 		if(!this.world.isRemote){
-			if(isValidFile(printSlot())){
+			if(isValidFile(printSlot()) && getRecipeIndex() > -1 ){
 				if(!printSlot().hasTagCompound()){printSlot().setTagCompound(new NBTTagCompound());}
 				NBTTagCompound tag = printSlot().getTagCompound();
 				tag.setInteger(tag_device, servedDevice());
@@ -224,6 +236,7 @@ public class TEServer extends TileEntityInv implements IInternalServer {
 				tag.setInteger(tag_amount, getRecipeAmount());
 				tag.setBoolean(tag_cycle, getCycle());
 				tag.setInteger(tag_done, getRecipeAmount());
+				tag.setInteger(tag_oversee, ModConfig.baseOversee);
 				if(hasStackFilter()){
 					if(!this.getFilterStack().isEmpty()){
 						NBTTagCompound filterstackNBT = new NBTTagCompound(); 
@@ -255,72 +268,84 @@ public class TEServer extends TileEntityInv implements IInternalServer {
 				this.device = i;
 				this.recipeStep = serverStep;
 				this.recipeMax = serverMax;
+				this.oversee = ModConfig.baseOversee;
 			}
 		}else if(i == EnumServer.METAL_ALLOYER.ordinal()){
 			if(this.servedDevice() != i){
 				this.device = i;
 				this.recipeStep = serverStep;
 				this.recipeMax = serverMax;
+				this.oversee = ModConfig.baseOversee;
 			}
 		}else if(i == EnumServer.DEPOSITION.ordinal()){
 			if(this.servedDevice() != i){
 				this.device = i;
 				this.recipeStep = serverStep;
 				this.recipeMax = serverMax;
+				this.oversee = ModConfig.baseOversee;
 			}
 		}else if(i == EnumServer.SIZER.ordinal()){
 			if(this.servedDevice() != i){
 				this.device = i;
 				this.recipeStep = serverStep;
 				this.recipeMax = serverMax;
+				this.oversee = ModConfig.baseOversee;
 			}
 		}else if(i == EnumServer.LEACHING.ordinal()){
 			if(this.servedDevice() != i){
 				this.device = i;
 				this.recipeStep = serverStep;
 				this.recipeMax = serverMax;
+				this.oversee = ModConfig.baseOversee;
 			}
 		}else if(i == EnumServer.RETENTION.ordinal()){
 			if(this.servedDevice() != i){
 				this.device = i;
 				this.recipeStep = serverStep;
 				this.recipeMax = serverMax;
+				this.oversee = ModConfig.baseOversee;
 			}
 		}else if(i == EnumServer.CASTING.ordinal()){
 			if(this.servedDevice() != i){
 				this.device = i;
 				this.recipeStep = serverStep;
 				this.recipeMax = serverMax;
+				this.oversee = ModConfig.baseOversee;
 			}
 		}else if(i == EnumServer.REFORMER.ordinal()){
 			if(this.servedDevice() != i){
 				this.device = i;
 				this.recipeStep = serverStep;
 				this.recipeMax = serverMax;
+				this.oversee = ModConfig.baseOversee;
 			}
 		}else if(i == EnumServer.POWDER_MIXER.ordinal()){
 			if(this.servedDevice() != i){
 				this.device = i;
 				this.recipeStep = serverStep;
 				this.recipeMax = serverMax;
+				this.oversee = ModConfig.baseOversee;
 			}
 		}else if(i == EnumServer.EXTRACTOR.ordinal()){
 			if(this.servedDevice() != i){
 				this.device = i;
 				this.recipeStep = serverStep;
 				this.recipeMax = serverMax;
+				this.oversee = ModConfig.baseOversee;
 			}
 		}else if(i == EnumServer.PRECIPITATOR.ordinal()){
 			if(this.servedDevice() != i){
 				this.device = i;
 				this.recipeStep = serverStep;
 				this.recipeMax = serverMax;
+				this.oversee = ModConfig.baseOversee;
 			}
 		}else if(i == EnumServer.BED_REACTOR.ordinal()){
 			if(this.servedDevice() != i){
 				this.device = i;
 				this.recipeStep = serverStep;
 				this.recipeMax = serverMax;
+				this.oversee = ModConfig.baseOversee;
 			}
 		}else{
 			this.device = -1;

@@ -20,7 +20,7 @@ public class PrecipitationRecipes extends BaseRecipes{
 															ItemStack.EMPTY,
 															getFluid(EnumFluid.HYDROCHLORIC_ACID, 500),
 															getFluid(EnumFluid.TOXIC_WASTE, 300),
-															chemicals(1, EnumChemicals.ZEOLITE_COMPOUND) ));
+															chemicals(1, EnumChemicals.ZEOLITE_PELLET) ));
 
 		precipitation_recipes.add(new PrecipitationRecipe(	"",
 															new ItemStack(ModItems.CHEMICAL_ITEMS, 1, EnumChemicals.YAG_COMPOUND.ordinal()),

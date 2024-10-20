@@ -364,12 +364,14 @@ public class TEMetalAlloyerController extends TileEntityInv implements IInternal
 			if(canProcess()){
 				this.cooktime++;
 				drainPower();
+				resetOversee(getServer(), this.currentFile);
 				if(getCooktime() >= getCooktimeMax()) {
 					this.cooktime = 0;
 					process();
 				}
 				this.markDirtyClient();
 			}else{
+				tickOversee(getServer(), this.currentFile);
 				this.dummyRecipe = null;
 				tickOff();
 			}
@@ -427,6 +429,7 @@ public class TEMetalAlloyerController extends TileEntityInv implements IInternal
 
 			if(hasReactant()) {
 				this.input.drainOrCleanFluid(getFluidCistern().inputTank, getWashReactant(), true);
+				getFluidCistern().updateNeighbours();
 			}
 
 			if(hasElementsCabinet() && hasMaterialCabinet()){

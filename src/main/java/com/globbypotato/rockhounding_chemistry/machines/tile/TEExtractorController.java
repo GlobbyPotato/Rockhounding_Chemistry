@@ -541,12 +541,14 @@ public class TEExtractorController extends TileEntityInv implements IInternalSer
 			if(canProcess()){
 				this.cooktime++;
 				drainPower();
+				resetOversee(getServer(), this.currentFile);
 				if(getCooktime() >= getCooktimeMax()) {
 					process();
 					this.cooktime = 0;
 				}
 				this.markDirtyClient();
 			}else{
+				tickOversee(getServer(), this.currentFile);
 				tickOff();
 			}
 		}

@@ -123,6 +123,7 @@ public class BaseRecipes {
 	public static ItemStack sampling_ampoule = 		new ItemStack(ModItems.SAMPLING_AMPOULE);
 	public static ItemStack heat_inductor = 		new ItemStack(ModItems.HEAT_INDUCTOR);
 	public static ItemStack gas_turbine = 			new ItemStack(ModItems.GAS_TURBINE);
+	public static ItemStack chemistry_wrench = 		new ItemStack(ModItems.CHEMISTRY_WRENCH);
 	public static ItemStack tile_nullifier = 		new ItemStack(ModItems.TILE_NULLIFIER);
 	public static ItemStack speed_upgrade = 		new ItemStack(ModItems.SPEED_ITEMS);
 	public static ItemStack filter_upgrade = 		new ItemStack(ModItems.FILTER_ITEMS);

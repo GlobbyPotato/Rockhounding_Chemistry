@@ -435,12 +435,14 @@ public class TERetentionVatController extends TileEntityInv implements IInternal
 			if(canProcess()){
 				this.cooktime++;
 				drainPower();
+				resetOversee(getServer(), this.currentFile);
 				if(getCooktime() >= getCooktimeMax()) {
 					this.cooktime = 0;
 					process();
 				}
 				this.markDirtyClient();
 			}else{
+				tickOversee(getServer(), this.currentFile);
 				tickOff();
 			}
 		}
@@ -517,6 +519,7 @@ public class TERetentionVatController extends TileEntityInv implements IInternal
 
 			if(hasVessel()){
 				this.output.drainOrCleanFluid(getVessel().inputTank, calculatedSteam(), true);
+				getVessel().updateNeighbours();
 			}
 
 			if(hasTankPulp()){

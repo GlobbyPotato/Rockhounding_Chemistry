@@ -274,6 +274,7 @@ public class TEOrbiter extends TileEntityInv {
 		int luckyOrb = rand.nextInt(recycleChance());
 		if(hasWaste() && luckyOrb == 0){
 			this.input.drainOrCleanFluid(getFluidCistern().inputTank, wasteAmount(), true);
+			getFluidCistern().updateNeighbours();
 			currJuice *= 2;
 		}
 		//handle xp storage
@@ -327,6 +328,7 @@ public class TEOrbiter extends TileEntityInv {
 		//turn xp into liquid xp
 		if(recipeJuice() != null) {
 			this.output.setOrFillFluid(getBasin().inputTank, recipeJuice(), infusingFactor());
+			getBasin().updateNeighbours();
 			this.xpCount-- ;
 		}
 	}

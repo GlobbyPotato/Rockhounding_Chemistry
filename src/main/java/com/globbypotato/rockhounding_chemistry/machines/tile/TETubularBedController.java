@@ -620,12 +620,14 @@ public class TETubularBedController extends TileEntityInv implements IInternalSe
 			if(canProcess()){
 				this.cooktime++;
 				drainPower();
+				resetOversee(getServer(), this.currentFile);
 				if(getCooktime() >= getCooktimeMax()) {
 					this.cooktime = 0;
 					process();
 				}
 				this.markDirtyClient();
 			}else{
+				tickOversee(getServer(), this.currentFile);
 				this.dummyRecipe = null;
 				tickOff();
 			}
@@ -645,6 +647,7 @@ public class TETubularBedController extends TileEntityInv implements IInternalSe
 		if(isValidRecipe()){
 			if(hasOutTank()){
 				this.output.setOrFillFluid(getOutTank().inputTank, getRecipeOutput(), calculatedAmount(getRecipeOutput().amount));
+				getOutTank().updateNeighbours();
 			}
 
 			if(hasTubularCatalysts()){
@@ -659,18 +662,22 @@ public class TETubularBedController extends TileEntityInv implements IInternalSe
 
 			if(hasInput1Tank() && getRecipeInput1() != null){
 				this.input.drainOrCleanFluid(getInput1Tank().inputTank, calculatedAmount(getRecipeInput1().amount), true);
+				getInput1Tank().updateNeighbours();
 			}
 
 			if(hasInput2Tank() && getRecipeInput2() != null){
 				this.input.drainOrCleanFluid(getInput2Tank().inputTank, calculatedAmount(getRecipeInput2().amount), true);
+				getInput2Tank().updateNeighbours();
 			}
 
 			if(hasInput3Tank() && getRecipeInput3() != null){
 				this.input.drainOrCleanFluid(getInput3Tank().inputTank, calculatedAmount(getRecipeInput3().amount), true);
+				getInput3Tank().updateNeighbours();
 			}
 
 			if(hasInput4Tank() && getRecipeInput4() != null){
 				this.input.drainOrCleanFluid(getInput4Tank().inputTank, calculatedAmount(getRecipeInput4().amount), true);
+				getInput4Tank().updateNeighbours();
 			}
 
 			updateServer(getServer(), this.currentFile);
@@ -698,6 +705,9 @@ public class TETubularBedController extends TileEntityInv implements IInternalSe
 							int canSend = Math.min(getInput1Tank().inputTank.getFluidAmount(), canReceive);
 							this.input.setOrFillFluid(getPurgeTank().inputTank, tankInput1(), canSend);
 							this.input.drainOrCleanFluid(getInput1Tank().inputTank, canSend, true);
+
+							getPurgeTank().updateNeighbours();
+							getInput1Tank().updateNeighbours();
 						}
 					}
 					if(hasInput2Tank()){
@@ -706,6 +716,9 @@ public class TETubularBedController extends TileEntityInv implements IInternalSe
 							int canSend = Math.min(getInput2Tank().inputTank.getFluidAmount(), canReceive);
 							this.input.setOrFillFluid(getPurgeTank().inputTank, tankInput2(), canSend);
 							this.input.drainOrCleanFluid(getInput2Tank().inputTank, canSend, true);
+
+							getPurgeTank().updateNeighbours();
+							getInput2Tank().updateNeighbours();
 						}
 					}
 					if(hasInput3Tank()){
@@ -714,6 +727,9 @@ public class TETubularBedController extends TileEntityInv implements IInternalSe
 							int canSend = Math.min(getInput3Tank().inputTank.getFluidAmount(), canReceive);
 							this.input.setOrFillFluid(getPurgeTank().inputTank, tankInput3(), canSend);
 							this.input.drainOrCleanFluid(getInput3Tank().inputTank, canSend, true);
+
+							getPurgeTank().updateNeighbours();
+							getInput3Tank().updateNeighbours();
 						}
 					}
 					if(hasInput4Tank()){
@@ -722,6 +738,9 @@ public class TETubularBedController extends TileEntityInv implements IInternalSe
 							int canSend = Math.min(getInput4Tank().inputTank.getFluidAmount(), canReceive);
 							this.input.setOrFillFluid(getPurgeTank().inputTank, tankInput4(), canSend);
 							this.input.drainOrCleanFluid(getInput4Tank().inputTank, canSend, true);
+
+							getPurgeTank().updateNeighbours();
+							getInput4Tank().updateNeighbours();
 						}
 					}
 				}

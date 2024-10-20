@@ -21,7 +21,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class UILabOvenController extends GuiBase {
 
-	public static ResourceLocation TEXTURE_REF = new ResourceLocation(Reference.MODID + ":textures/gui/guilabovencontroller.png");
+	public static ResourceLocation TEXTURE_REF = new ResourceLocation(Reference.MODID + ":textures/gui/guilaboven.png");
 	public static ResourceLocation TEXTURE_JEI = new ResourceLocation(Reference.MODID + ":textures/gui/jei/guilabovenjei.png");
 
     private final TELabOvenController tile;
@@ -48,6 +48,16 @@ public class UILabOvenController extends GuiBase {
 		   drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
 	   }
        
+		//direction
+		if(GuiUtils.hoveringArea(24, 61, 16, 16, mouseX, mouseY, x, y)){
+			if(this.tile.getDirection()) {
+				tooltip = GuiUtils.drawLabel("Right to Left setup", mouseX, mouseY);
+			}else {
+				tooltip = GuiUtils.drawLabel("Left to Right setup", mouseX, mouseY);
+			}
+			drawHoveringText(tooltip, mouseX, mouseY, this.fontRenderer);
+		}
+
 	   //prev
 	   if(GuiUtils.hoveringArea(7, 20, 18, 18, mouseX, mouseY, x, y)){
 		   tooltip = GuiUtils.drawLabel(this.prev_recipe_label, mouseX, mouseY);
@@ -109,6 +119,11 @@ public class UILabOvenController extends GuiBase {
         	}else{
         		this.drawTexturedModalRect(i + 81, j + 97, 176, 10, 14, 14);
         	}
+        }
+
+		//direction
+        if(this.tile.getDirection()){
+       		this.drawTexturedModalRect(i + 26, j + 63, 204, 11, 12, 12);
         }
 
         //smelt bar

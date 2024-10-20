@@ -12,8 +12,6 @@ import com.globbypotato.rockhounding_chemistry.enums.EnumMiscItems;
 import com.globbypotato.rockhounding_chemistry.enums.machines.EnumMachinesE;
 import com.globbypotato.rockhounding_chemistry.handlers.GuiHandler;
 import com.globbypotato.rockhounding_chemistry.machines.io.MachineIO;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TEGanController;
-import com.globbypotato.rockhounding_chemistry.machines.tile.TELabOvenController;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TEPowderMixerController;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TEPrecipitationController;
 import com.globbypotato.rockhounding_chemistry.machines.tile.TEStirredTankController;
@@ -32,6 +30,7 @@ import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEBufferT
 import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TESlurryDrum;
 import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEWashingTank;
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
+import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.enums.EnumFluidNbt;
 import com.globbypotato.rockhounding_core.machines.tileentity.IFluidHandlingTile;
 import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityInv;
@@ -398,7 +397,7 @@ public class MachinesE extends MachineIO {
 					TEWaterPump pump = (TEWaterPump)world.getTileEntity(pos);
 					if(!world.isRemote){
 						if(pump.getCompressor()){ //remove upgrade
-							if(CoreUtils.hasWrench(player)){
+							if(ModUtils.hasWrench(player)){
 								pump.compressor = false;
 								EntityItem upgrade = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), compressor);
 								world.spawnEntity(upgrade);
@@ -515,7 +514,7 @@ public class MachinesE extends MachineIO {
 		IBlockState state = world.getBlockState(pos);
 		int meta = state.getBlock().getMetaFromState(state);
 
-		if(CoreUtils.hasWrench(player)){
+		if(ModUtils.hasWrench(player)){
 			handleRotation(world, pos, player, meta);
 		}
 	}

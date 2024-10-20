@@ -92,7 +92,7 @@ public class LabBlenderRecipes extends BaseRecipes{
 
 		lab_blender_recipes.add(new LabBlenderRecipe(		Arrays.asList(	"ingotZeolite"), 
 															Arrays.asList(	1),
-															chemicals(1, EnumChemicals.ZEOLITE_PELLET)));
+															chemicals(1, EnumChemicals.ZEOLITE_COMPOUND)));
 	}
 
 }

@@ -27,6 +27,7 @@ public class COLabOvenController extends ContainerBase<TELabOvenController>{
 		this.addSlotToContainer(new SlotItemHandler(template, 0, 80, 96));//activation
 		this.addSlotToContainer(new SlotItemHandler(template, 1, 8, 21));//prev
 		this.addSlotToContainer(new SlotItemHandler(template, 2, 26, 21));//next
+		this.addSlotToContainer(new SlotItemHandler(template, 3, 24, 61));//direction
 
 		this.addSlotToContainer(new SlotItemHandler(upgrade, 0, 152, 61));//speed
 
@@ -60,6 +61,10 @@ public class COLabOvenController extends ContainerBase<TELabOvenController>{
 				doClickSound(player, this.tile.getWorld(), this.tile.getPos());
 			}
     		return ItemStack.EMPTY;
+		}else if(slot == 5){
+			this.tile.direction = !this.tile.direction;
+			doClickSound(player, this.tile.getWorld(), this.tile.getPos());
+	    	return ItemStack.EMPTY;
     	}else{
     		return super.slotClick(slot, dragType, clickTypeIn, player);
     	}
@@ -70,6 +75,6 @@ public class COLabOvenController extends ContainerBase<TELabOvenController>{
 		if(super.mergeItemStack(stack, startIndex, 2, reverseDirection)){
 			return true;
 		}
-		return super.mergeItemStack(stack, 5, endIndex, reverseDirection);
+		return super.mergeItemStack(stack, 6, endIndex, reverseDirection);
     }
 }

@@ -6,6 +6,7 @@ import com.globbypotato.rockhounding_chemistry.ModItems;
 import com.globbypotato.rockhounding_chemistry.enums.EnumMiscItems;
 import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.tile.pipelines.TEGaslinePump;
+import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.machines.PipelineBase;
 import com.globbypotato.rockhounding_core.utils.CoreUtils;
 
@@ -66,7 +67,7 @@ public class GaslinePump extends PipelineBase {
 		}else{
 			if(!world.isRemote){
 				if(pump.hasUpgrade()){ //remove upgrade
-					if(CoreUtils.hasWrench(player)){
+					if(ModUtils.hasWrench(player)){
 						pump.upgrade = false;
 						EntityItem upgrade = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), compressor);
 						world.spawnEntity(upgrade);
@@ -92,7 +93,7 @@ public class GaslinePump extends PipelineBase {
 		TileEntity tile = worldIn.getTileEntity(pos);
 		if(tile != null && tile instanceof TEGaslinePump){
 			TEGaslinePump pump = (TEGaslinePump)tile;
-			if(CoreUtils.hasWrench(playerIn)){
+			if(ModUtils.hasWrench(playerIn)){
 				if(!playerIn.isSneaking()){
 					if(!worldIn.isRemote){
 						pump.delay++;

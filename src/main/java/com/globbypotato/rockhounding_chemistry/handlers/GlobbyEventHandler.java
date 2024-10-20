@@ -1,7 +1,6 @@
 package com.globbypotato.rockhounding_chemistry.handlers;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import com.globbypotato.rockhounding_chemistry.ModBlocks;
 import com.globbypotato.rockhounding_chemistry.ModItems;
@@ -60,9 +59,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class GlobbyEventHandler {
-	ItemStack petroStack;
-    ItemStack mineralStack;
-	Random rand = new Random();
 
 	@SubscribeEvent
     @SideOnly(Side.CLIENT)
@@ -174,6 +170,8 @@ public class GlobbyEventHandler {
 				        	int recipe = tag.getInteger("Recipe");
 				        	int amount = tag.getInteger("Amount");
 				        	int done = tag.getInteger("Done");
+				        	int oversee = tag.getInteger("Oversee");
+                                                if(recipe > -1){
 			        		event.getToolTip().add(TextFormatting.GRAY + "Served Device: " + TextFormatting.BOLD + TextFormatting.YELLOW + EnumServer.values()[device].getName());
 			        		event.getToolTip().add(TextFormatting.GRAY + "Repeatable: " + TextFormatting.BOLD + TextFormatting.YELLOW + cycle);
 			        		if(device == EnumServer.LAB_OVEN.ordinal()){
@@ -225,8 +223,10 @@ public class GlobbyEventHandler {
 			        		}
 			        		event.getToolTip().add(TextFormatting.GRAY + "Amount: " + TextFormatting.BOLD +  TextFormatting.YELLOW + amount + " scheduled");
 			        		event.getToolTip().add(TextFormatting.GRAY + "Process: " + TextFormatting.BOLD +  TextFormatting.YELLOW + done + " to do");
+			        		event.getToolTip().add(TextFormatting.GRAY + "Oversee: " + TextFormatting.BOLD +  TextFormatting.YELLOW + oversee + " ticks");
 			    		}
 					}
+                                        }
 		    	}
 
 		    	if(itemstack.isItemEqual(new ItemStack(ModItems.SPEED_ITEMS, 1, EnumSpeeds.BASE.ordinal()))){

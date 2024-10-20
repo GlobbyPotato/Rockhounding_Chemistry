@@ -1,5 +1,6 @@
 package com.globbypotato.rockhounding_chemistry.machines.tile;
 
+import com.globbypotato.rockhounding_chemistry.handlers.ModConfig;
 import com.globbypotato.rockhounding_chemistry.machines.tile.collateral.TEServer;
 import com.globbypotato.rockhounding_core.utils.CoreUtils;
 
@@ -14,6 +15,7 @@ public abstract interface IInternalServer {
 	String tag_type = "Type";
 	String tag_amount = "Amount";
 	String tag_recipe = "Recipe";
+	String tag_oversee = "Oversee";
 	String tag_filter_fluid = "FilterFluid";
 	String tag_filter_item = "FilterStack";
 
@@ -35,7 +37,6 @@ public abstract interface IInternalServer {
 		if(server.recipeMax != serverMax) {
 			server.recipeMax = serverMax;
 		}
-
 	}
 
 	// load server data
@@ -90,6 +91,34 @@ public abstract interface IInternalServer {
 		}
 	}
 
+	//reset oversee if can smelt at any time
+	public default void resetOversee(TEServer server, int currentFile) {
+		if(hasActiveFile(currentFile)){
+			NBTTagCompound tag = server.inputSlot(currentFile).getTagCompound();
+			if(isWrittenFile(tag)){
+				if(getOversee(tag) != ModConfig.baseOversee) {
+					tag.setInteger(tag_oversee, ModConfig.baseOversee);
+				}
+			}
+		}
+	}
+
+	//decrease oversee time if cannot smelt
+	public default void tickOversee(TEServer server, int currentFile) {
+		if(hasActiveFile(currentFile)){
+			NBTTagCompound tag = server.inputSlot(currentFile).getTagCompound();
+			if(isWrittenFile(tag)){
+				if(getOversee(tag) > 0) {
+					int dooversee = getOversee(tag) - 1;
+					tag.setInteger(tag_oversee, dooversee);
+				}else {
+					tag.setInteger(tag_done, 0);
+					tag.setInteger(tag_oversee, ModConfig.baseOversee);
+				}
+			}
+		}		
+	}
+
 	//decide if the server can be used or is skipped
 	public default boolean handleServer(TEServer server, int currentFile) {
 		return isServerOpen(server, currentFile) || isServedClosed(server);
@@ -125,6 +154,7 @@ public abstract interface IInternalServer {
 	public default void updateServer(TEServer server, int currentFile) {
 		if(isServerOpen(server, currentFile)){
 			refreshServer(server, currentFile);
+			resetOversee(server, currentFile);
 		}
 	}
 
@@ -141,7 +171,7 @@ public abstract interface IInternalServer {
 
 	//check if the file has all parameters
 	public default boolean isWrittenFile(NBTTagCompound tag) {
-		return hasDevice(tag) && hasCycle(tag) && hasRecipe(tag) && hasDone(tag);
+		return hasDevice(tag) && hasCycle(tag) && hasRecipe(tag) && hasDone(tag) && hasOversee(tag);
 	}
 
 	public default boolean hasType(NBTTagCompound tag) {
@@ -201,6 +231,13 @@ public abstract interface IInternalServer {
 	}
 	public default ItemStack getFilterItem(NBTTagCompound tag) {
 		return new ItemStack(tag.getCompoundTag(tag_filter_item));
+	}
+
+	public default boolean hasOversee(NBTTagCompound tag) {
+		return tag.hasKey(tag_oversee);
+	}
+	public default int getOversee(NBTTagCompound tag) {
+		return tag.getInteger(tag_oversee);
 	}
 
 }

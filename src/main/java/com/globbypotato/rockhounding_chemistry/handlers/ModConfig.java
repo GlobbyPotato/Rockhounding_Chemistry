@@ -99,6 +99,7 @@ public class ModConfig {
 	public static int recycleChance;
 	public static int wasteConsumed;
 	public static int infusingFactor;
+	public static int baseOversee;
 
 	//toxic waste
 	public static boolean xpDrop;
@@ -131,6 +132,7 @@ public class ModConfig {
 		fluidDamage = config.get(									ABSOLUTE, "fluid damage", 							true,					"Chemical products cause damage").getBoolean();
 		catalystMultiplier = config.get(							ABSOLUTE, "catalyst multiplier", 					1, 						"Multiplies all the catalysts duration").getInt();
 		dictSmelt = config.get(										ABSOLUTE, "oredict smelting", 						true,					"Smelt metals by using oredicted ingredients").getBoolean();
+		baseOversee = config.get(									ABSOLUTE, "Server Oversee", 						1000, 					"Ticks before the Server skips a repeatable file if has no ingredients").getInt();
 
 		config.addCustomCategoryComment(ABSOLUTE_INTEGRATIONS, "Mod Integrations");
 		hasRhRocks = config.get(									ABSOLUTE_INTEGRATIONS, "Integrate Rockhounding:Rocks", 						false,					"Includes Rockhounding Rocks into the mineral processing chain").getBoolean();

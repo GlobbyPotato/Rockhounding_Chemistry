@@ -35,13 +35,15 @@ import net.minecraftforge.oredict.OreDictionary;
 public class TELabOvenController extends TileEntityInv implements IInternalServer{
 
 	public static int inputSlots = 2;
-	public static int templateSlots = 3;
+	public static int templateSlots = 4;
 	public static int upgradeSlots = 1;
 
 	public static final int SOLUTE_SLOT = 0;
 	public static final int CATALYST_SLOT = 1;
 
 	public static final int SPEED_SLOT = 0;
+
+	public boolean direction = false;
 
 	public int currentFile = -1;
 	public boolean isRepeatable = false;
@@ -75,6 +77,22 @@ public class TELabOvenController extends TileEntityInv implements IInternalServe
 		};
 		this.automationUpgrade = new WrappedItemHandler(this.upgrade, WriteMode.IN);
 
+	}
+
+
+
+	//----------------------- I/O -----------------------
+	@Override
+	public void readFromNBT(NBTTagCompound compound) {
+		super.readFromNBT(compound);
+		this.direction = compound.getBoolean("Direction");
+	}
+
+	@Override
+	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+		super.writeToNBT(compound);
+		compound.setBoolean("Direction", getDirection());
+        return compound;
 	}
 
 
@@ -149,6 +167,10 @@ public class TELabOvenController extends TileEntityInv implements IInternalServe
 
 	public boolean isValidCatalyst(ItemStack stack){
 		return !stack.isEmpty() && !recipeCatalyst().isEmpty() && stack.isItemEqualIgnoreDurability(recipeCatalyst());
+	}
+
+	public boolean getDirection() {
+		return this.direction;
 	}
 
 
@@ -306,7 +328,11 @@ public class TELabOvenController extends TileEntityInv implements IInternalServe
 
 //solvent tank
 	public TEFlotationTank getSolventTank(){
-		BlockPos tankPos = this.pos.offset(getFacing()).offset(isFacingAt(270), 2);
+		EnumFacing directionalFacing = isFacingAt(270);
+		if(getDirection()) {
+			directionalFacing = isFacingAt(90);
+		}
+		BlockPos tankPos = this.pos.offset(getFacing()).offset(directionalFacing, 2);
 		TEFlotationTank tank = TileStructure.getFlotationTank(this.world, tankPos);
 		return tank != null ? tank : null;
 	}
@@ -317,7 +343,11 @@ public class TELabOvenController extends TileEntityInv implements IInternalServe
 
 //reagent tank
 	public TEFlotationTank getReagentTank(){
-		BlockPos tankPos = this.pos.offset(getFacing()).offset(isFacingAt(270), 1);
+		EnumFacing directionalFacing = isFacingAt(270);
+		if(getDirection()) {
+			directionalFacing = isFacingAt(90);
+		}
+		BlockPos tankPos = this.pos.offset(getFacing()).offset(directionalFacing, 1);
 		TEFlotationTank tank = TileStructure.getFlotationTank(this.world, tankPos);
 		return tank != null ? tank : null;
 	}
@@ -328,7 +358,11 @@ public class TELabOvenController extends TileEntityInv implements IInternalServe
 
 //solution tank
 	public TEBufferTank getSolutionTank(){
-		BlockPos tankPos = this.pos.offset(getFacing()).offset(isFacingAt(90), 1);
+		EnumFacing directionalFacing = isFacingAt(90);
+		if(getDirection()) {
+			directionalFacing = isFacingAt(270);
+		}
+		BlockPos tankPos = this.pos.offset(getFacing()).offset(directionalFacing, 1);
 		TEBufferTank tank = TileStructure.getBufferTank(this.world, tankPos);
 		return tank != null ? tank : null;
 	}
@@ -339,7 +373,11 @@ public class TELabOvenController extends TileEntityInv implements IInternalServe
 
 //byproduct tank
 	public TEBufferTank getByproductTank(){
-		BlockPos tankPos = this.pos.offset(getFacing()).offset(isFacingAt(90), 2);
+		EnumFacing directionalFacing = isFacingAt(90);
+		if(getDirection()) {
+			directionalFacing = isFacingAt(270);
+		}
+		BlockPos tankPos = this.pos.offset(getFacing()).offset(directionalFacing, 2);
 		TEBufferTank tank = TileStructure.getBufferTank(this.world, tankPos);
 		return tank != null ? tank : null;
 	}
@@ -398,18 +436,19 @@ public class TELabOvenController extends TileEntityInv implements IInternalServe
 				if(canProcess()){
 					this.cooktime++;
 					drainPower();
+					resetOversee(getServer(), this.currentFile);
 					if(getCooktime() >= getCooktimeMax()) {
 						this.cooktime = 0;
 						process();
 					}
 					this.markDirtyClient();
 				}else {
-					
+					tickOversee(getServer(), this.currentFile);
 				}
 			}else{
 				tickOff();
 			}
-			
+
 			if(this.soluteSlot().isEmpty() && this.catalystSlot().isEmpty()){
 				tickOff();
 			}

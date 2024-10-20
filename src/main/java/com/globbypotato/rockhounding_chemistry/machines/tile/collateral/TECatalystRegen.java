@@ -121,11 +121,27 @@ public class TECatalystRegen extends TileEntityInv {
 	}
 
 
+	private void doPreset() {
+		if(hasCistern()){
+			if(getFluidCistern().getFilter() != CoreBasics.waterStack(1000)){
+				getFluidCistern().filter = CoreBasics.waterStack(1000);
+			}
+		}
+
+		if(hasInTank()){
+			if(getInTank().getFilter() != fluegas()){
+				getInTank().filter = fluegas();
+			}
+		}
+	}
+
+
 
 	//----------------------- PROCESS -----------------------
 	@Override
 	public void update(){
 		if(!this.world.isRemote){
+			doPreset();
 
 			if(this.isActive()){
 				if(this.world.rand.nextInt(6) == 0){
@@ -197,10 +213,12 @@ public class TECatalystRegen extends TileEntityInv {
 	private void consumeStats() {
 		if(hasCistern()) {
 			this.input.drainOrCleanFluid(getFluidCistern().inputTank, 1000, true);
+			getFluidCistern().updateNeighbours();
 		}
 
 		if(hasInTank()) {
 			((MachineStackHandler)getInTank().getInput()).drainOrCleanFluid(getInTank().inputTank, consumedGas(), true);
+			getInTank().updateNeighbours();
 		}
 
 		if(this.world.rand.nextInt(3) == 0){

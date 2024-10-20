@@ -364,10 +364,12 @@ public class TEGasPurifierController extends TileEntityInv {
 		if(getDummyRecipe() != null && getDummyRecipe() == getCurrentRecipe()){
 			if(hasInTank()) {
 				this.output.setOrFillFluid(getOutTank().inputTank, getRecipeOutput(), effectiveRate());
+				getOutTank().updateNeighbours();
 			}
 	
 			if(hasOutTank()) {
 				this.input.drainOrCleanFluid(getInTank().inputTank, effectiveRate(), true);
+				getInTank().updateNeighbours();
 			}
 	
 			if(hasMaterialCabinet()) {

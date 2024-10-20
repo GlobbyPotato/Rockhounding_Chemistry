@@ -199,7 +199,7 @@ public class MachineIO extends BaseRotatingMachine {
 		if((player.getHeldItemMainhand().isItemEqualIgnoreDurability(consumable))){
 			TileEntityInv te = (TileEntityInv)world.getTileEntity(pos);
 			if(te.getInput().getStackInSlot(slot).isEmpty()) {
-				te.getInput().insertItem(slot, new ItemStack(player.getHeldItemMainhand().getItem(), 1, player.getHeldItemMainhand().getItemDamage()), false);
+				te.getInput().insertItem(slot, player.getHeldItemMainhand().copy(), false);
 				player.getHeldItemMainhand().shrink(1);
 	            world.playSound((EntityPlayer)null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ENTITY_ITEMFRAME_PLACE, SoundCategory.AMBIENT, 0.5F, this.rand.nextFloat() * 0.1F + 0.9F);
 	            te.markDirtyClient();

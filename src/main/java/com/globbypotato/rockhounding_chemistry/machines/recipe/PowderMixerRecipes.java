@@ -24,10 +24,6 @@ public class PowderMixerRecipes extends BaseRecipes{
 																Arrays.asList(	100),
 																chemicals(1, EnumChemicals.SULFUR_COMPOUND)));
 
-		powder_mixer_recipes.add(new PowderMixerRecipe(			Arrays.asList(	"dustCarbon", "compoundTar"), 
-																Arrays.asList(	70, 30),
-																chemicals(1, EnumChemicals.GRAPHITE_COMPOUND)));
-
 		powder_mixer_recipes.add(new PowderMixerRecipe(			Arrays.asList(	"compoundCarbon", "compoundTar"), 
 																Arrays.asList(	70, 30),
 																chemicals(1, EnumChemicals.GRAPHITE_COMPOUND)));
@@ -52,9 +48,9 @@ public class PowderMixerRecipes extends BaseRecipes{
 																Arrays.asList(	100),
 																chemicals(1, EnumChemicals.CHLORIDE_COMPOUND)));
 
-		powder_mixer_recipes.add(new PowderMixerRecipe(			Arrays.asList("compoundQuartz", "dustAluminum", "dustZeolite"),
+		powder_mixer_recipes.add(new PowderMixerRecipe(			Arrays.asList("compoundQuartz", "dustAluminum", "compoundZeolite"),
 																Arrays.asList(65, 27, 8),
-																chemicals(1, EnumChemicals.ZEOLITE_PELLET)));
+																chemicals(1, EnumChemicals.ZEOLITE_COMPOUND)));
 
 	
 	}

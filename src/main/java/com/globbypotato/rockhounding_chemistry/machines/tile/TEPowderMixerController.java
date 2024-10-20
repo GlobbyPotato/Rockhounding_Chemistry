@@ -207,12 +207,14 @@ public class TEPowderMixerController extends TileEntityInv implements IInternalS
 			if(canProcess()){
 				this.cooktime++;
 				drainPower();
+				resetOversee(getServer(), this.currentFile);
 				if(getCooktime() >= getCooktimeMax()) {
 					this.cooktime = 0;
 					process();
 				}
 				this.markDirtyClient();
 			}else{
+				tickOversee(getServer(), this.currentFile);
 				tickOff();
 			}
 		}

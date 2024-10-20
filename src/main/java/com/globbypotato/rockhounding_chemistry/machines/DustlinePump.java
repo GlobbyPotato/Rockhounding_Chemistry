@@ -6,9 +6,9 @@ import com.globbypotato.rockhounding_chemistry.handlers.Reference;
 import com.globbypotato.rockhounding_chemistry.machines.tile.collateral.TEElementsCabinetBase;
 import com.globbypotato.rockhounding_chemistry.machines.tile.collateral.TEMaterialCabinetBase;
 import com.globbypotato.rockhounding_chemistry.machines.tile.pipelines.TEDustlinePump;
+import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.machines.PipelineBase;
 import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityInv;
-import com.globbypotato.rockhounding_core.utils.CoreUtils;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -87,7 +87,7 @@ public class DustlinePump extends PipelineBase {
 		TileEntity tile = worldIn.getTileEntity(pos);
 		if(tile != null && tile instanceof TEDustlinePump){
 			TEDustlinePump pump = (TEDustlinePump)tile;
-			if(CoreUtils.hasWrench(playerIn)){
+			if(ModUtils.hasWrench(playerIn)){
 				if(!playerIn.isSneaking()){
 					if(!worldIn.isRemote){
 						pump.delay++;

@@ -109,10 +109,10 @@ public class TileAssembler {
 			setMachineD(partPos, world, ModBlocks.MACHINES_D, MachinesD.VARIANT, EnumMachinesD.FLOTATION_TANK, MachinesD.FACING, toFront, toFront);
 		partPos = pos.offset(toFront, 8);
 			setMachineB(partPos, world, ModBlocks.MACHINES_B, MachinesB.VARIANT, EnumMachinesB.AUXILIARY_ENGINE, MachinesB.FACING, toFront, toFront.getOpposite());
-		partPos = pos.offset(toFront, 3).offset(toLeft, 3);
-			setMachineC(partPos, world, ModBlocks.MACHINES_C, MachinesC.VARIANT, EnumMachinesC.EXTRACTOR_BALANCE, MachinesC.FACING, toFront, toRight);
-		partPos = pos.offset(toFront, 3).offset(toRight, 3);
-			setMachineC(partPos, world, ModBlocks.MACHINES_C, MachinesC.VARIANT, EnumMachinesC.EXTRACTOR_BALANCE, MachinesC.FACING, toFront, toLeft);
+//		partPos = pos.offset(toFront, 3).offset(toLeft, 3);
+//			setMachineC(partPos, world, ModBlocks.MACHINES_C, MachinesC.VARIANT, EnumMachinesC.EXTRACTOR_BALANCE, MachinesC.FACING, toFront, toRight);
+//		partPos = pos.offset(toFront, 3).offset(toRight, 3);
+//			setMachineC(partPos, world, ModBlocks.MACHINES_C, MachinesC.VARIANT, EnumMachinesC.EXTRACTOR_BALANCE, MachinesC.FACING, toFront, toLeft);
 	}
 
 	public static void loadPrecipitator(BlockPos pos, World world, EnumFacing toFront, EnumFacing toLeft, EnumFacing toRight) {
@@ -347,8 +347,8 @@ public class TileAssembler {
 			setMachineB(partPos, world, ModBlocks.MACHINES_B, MachinesB.VARIANT, EnumMachinesB.FLUID_CISTERN, MachinesB.FACING, toFront, toLeft);
 		partPos = pos.offset(toFront, 1).offset(EnumFacing.UP, 2);
 			setMachineB(partPos, world, ModBlocks.MACHINES_B, MachinesB.VARIANT, EnumMachinesB.REINFORCED_CISTERN, MachinesB.FACING, toFront, toFront);
-		partPos = pos.offset(toFront, 1).offset(toRight, 3);
-			setMachineC(partPos, world, ModBlocks.MACHINES_C, MachinesC.VARIANT, EnumMachinesC.EXTRACTOR_BALANCE, MachinesC.FACING, toFront, toLeft);
+//		partPos = pos.offset(toFront, 1).offset(toRight, 3);
+//			setMachineC(partPos, world, ModBlocks.MACHINES_C, MachinesC.VARIANT, EnumMachinesC.EXTRACTOR_BALANCE, MachinesC.FACING, toFront, toLeft);
 	}
 
 	public static void loadSizer(BlockPos pos, World world, EnumFacing toFront, EnumFacing toLeft, EnumFacing toRight) {
@@ -490,8 +490,8 @@ public class TileAssembler {
 			setMachineD(partPos, world, ModBlocks.MACHINES_D, MachinesD.VARIANT, EnumMachinesD.MATERIAL_CABINET_BASE, MachinesD.FACING, toFront, toFront);
 		partPos = pos.offset(toFront, 6).offset(toRight, 2).offset(EnumFacing.UP, 1);
 			setMachineD(partPos, world, ModBlocks.MACHINES_D, MachinesD.VARIANT, EnumMachinesD.MATERIAL_CABINET_TOP, MachinesD.FACING, toFront, toFront);
-		partPos = pos.offset(toFront, 6).offset(toRight, 3);
-			setMachineC(partPos, world, ModBlocks.MACHINES_C, MachinesC.VARIANT, EnumMachinesC.EXTRACTOR_BALANCE, MachinesC.FACING, toFront, toLeft);
+//		partPos = pos.offset(toFront, 6).offset(toRight, 3);
+//			setMachineC(partPos, world, ModBlocks.MACHINES_C, MachinesC.VARIANT, EnumMachinesC.EXTRACTOR_BALANCE, MachinesC.FACING, toFront, toLeft);
 	}
 
 	public static void loadDeposition(BlockPos pos, World world, EnumFacing toFront, EnumFacing toLeft, EnumFacing toRight) {
@@ -568,8 +568,8 @@ public class TileAssembler {
 			setMachineD(partPos, world, ModBlocks.MACHINES_D, MachinesD.VARIANT, EnumMachinesD.GAS_HOLDER_BASE, MachinesD.FACING, toFront, toLeft);
 		partPos = pos.offset(toFront, 2).offset(toLeft, 2).offset(EnumFacing.UP, 1);
 			setMachineD(partPos, world, ModBlocks.MACHINES_D, MachinesD.VARIANT, EnumMachinesD.GAS_HOLDER_TOP, MachinesD.FACING, toFront, toLeft);
-		partPos = pos.offset(toFront, 1).offset(toRight, 3);
-			setMachineC(partPos, world, ModBlocks.MACHINES_C, MachinesC.VARIANT, EnumMachinesC.EXTRACTOR_BALANCE, MachinesC.FACING, toFront, toLeft);
+//		partPos = pos.offset(toFront, 1).offset(toRight, 3);
+//			setMachineC(partPos, world, ModBlocks.MACHINES_C, MachinesC.VARIANT, EnumMachinesC.EXTRACTOR_BALANCE, MachinesC.FACING, toFront, toLeft);
 		partPos = pos.offset(toFront, 1).offset(toRight, 1).offset(EnumFacing.UP, 3);
 			setMachineB(partPos, world, ModBlocks.MACHINES_B, MachinesB.VARIANT, EnumMachinesB.AUXILIARY_ENGINE, MachinesB.FACING, toFront, toLeft);
 	}

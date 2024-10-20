@@ -29,6 +29,7 @@ import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEUnloade
 import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEEvaporationTank;
 import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEFluidTank;
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
+import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.enums.EnumFluidNbt;
 import com.globbypotato.rockhounding_core.machines.tileentity.IFluidHandlingTile;
 import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityInv;
@@ -398,7 +399,7 @@ public class MachinesA extends MachineIO {
 			    			}
 						}
 					}
-					if(CoreUtils.hasWrench(player)){
+					if(ModUtils.hasWrench(player)){
 						TEEvaporationTank tank = (TEEvaporationTank)world.getTileEntity(pos);
 						if(tank.getPurge() < tank.finalStage()){
 							tank.purge++;
@@ -432,7 +433,7 @@ public class MachinesA extends MachineIO {
 	public void onBlockClicked(World world, BlockPos pos, EntityPlayer player) {
 		IBlockState state = world.getBlockState(pos);
 		int meta = state.getBlock().getMetaFromState(state);
-		if(!CoreUtils.hasWrench(player)){
+		if(!ModUtils.hasWrench(player)){
 			if(meta == EnumMachinesA.PROFILING_BENCH.ordinal()){
 				if(world.getTileEntity(pos) != null && world.getTileEntity(pos) instanceof TEProfilingBench){
 					TEProfilingBench bench = (TEProfilingBench)world.getTileEntity(pos);
@@ -452,7 +453,7 @@ public class MachinesA extends MachineIO {
 				}
 			}
 		}		
-		if(CoreUtils.hasWrench(player)){
+		if(ModUtils.hasWrench(player)){
 			handleRotation(world, pos, player, meta);
 		}
 	}

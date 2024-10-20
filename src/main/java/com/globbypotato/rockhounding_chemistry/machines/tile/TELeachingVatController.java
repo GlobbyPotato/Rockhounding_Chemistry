@@ -536,12 +536,14 @@ public class TELeachingVatController extends TileEntityInv implements IInternalS
 			if(canProcess()){
 				this.cooktime++;
 				drainPower();
+				resetOversee(getServer(), this.currentFile);
 				if(getCooktime() >= getCooktimeMax()) {
 					this.cooktime = 0;
 					process();
 				}
 				this.markDirtyClient();
 			}else{
+				tickOversee(getServer(), this.currentFile);
 				tickOff();
 			}
 		}
@@ -611,6 +613,7 @@ public class TELeachingVatController extends TileEntityInv implements IInternalS
 			}
 			if(hasVesselA()){
 				this.output.drainOrCleanFluid(getVesselA().inputTank, calculatedSteam(), true);
+				getVesselA().updateNeighbours();
 			}
 	
 			if(hasVatB()){
@@ -624,6 +627,7 @@ public class TELeachingVatController extends TileEntityInv implements IInternalS
 			}
 			if(hasVesselB()){
 				this.output.drainOrCleanFluid(getVesselB().inputTank, calculatedSteam(), true);
+				getVesselB().updateNeighbours();
 			}
 	
 			if(hasVatC()){

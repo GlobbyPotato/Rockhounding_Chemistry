@@ -42,12 +42,6 @@ public class SlurryPondRecipes extends BaseRecipes{
 															getFluid(EnumFluid.ORGANIC_SLURRY, 200)));
 		}
 
-		if(!ModUtils.surface_compost().isEmpty()){
-			slurry_pond_recipes.add(new SlurryPondRecipe(	ModUtils.surface_compost(), 			
-															CoreBasics.waterStack(400), 				
-															getFluid(EnumFluid.ORGANIC_SLURRY, 300)));
-		}
-
 		slurry_pond_recipes.add(new SlurryPondRecipe(		mineral_ores(1, EnumMinerals.ANTIMONATE), 	
 															getFluid(EnumFluid.HYDROCHLORIC_ACID, 250), 	
 															getFluid(EnumFluid.LEACHATE, 250)));

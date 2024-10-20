@@ -26,7 +26,7 @@ public class UIPlanningTable extends GuiBase {
     	super(new COPlanningTable(playerInv,tile), ModUtils.HEIGHT);
         GuiBase.TEXTURE = TEXTURE_REF;
         this.tile = tile;
-		this.xSize = 199;
+		this.xSize = 252;
 		this.containerName = "container." + TEPlanningTable.getName();
     }
 
@@ -63,10 +63,21 @@ public class UIPlanningTable extends GuiBase {
 	public void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 		String recipeLabel = this.no_recipe_label;
+		int xLeft = 0, xRight = 0, yUp = 0, zFront = 0;
+
 		if(this.tile.isValidPreset()){
 			recipeLabel = EnumStructure.getStructure(this.tile.getRecipeList(this.tile.getSelectedRecipe()).getOrder());
+			xLeft = EnumStructure.getLeftBlocks(this.tile.getRecipeList(this.tile.getSelectedRecipe()).getOrder());
+			xRight = EnumStructure.getRightBlocks(this.tile.getRecipeList(this.tile.getSelectedRecipe()).getOrder());
+			yUp = EnumStructure.getUpBlocks(this.tile.getRecipeList(this.tile.getSelectedRecipe()).getOrder());
+			zFront = EnumStructure.getFrontBlocks(this.tile.getRecipeList(this.tile.getSelectedRecipe()).getOrder());
 		}
-		this.fontRenderer.drawString(recipeLabel, 44, 25, 4210752);
+
+		this.fontRenderer.drawString(recipeLabel, 46, 25, 4210752);
+		this.fontRenderer.drawString("+" + String.valueOf(xLeft), 177, 183, 4210752);
+		this.fontRenderer.drawString("+" + String.valueOf(xRight), 239, 183, 4210752);
+		this.fontRenderer.drawString("+" + String.valueOf(yUp), 203, 148, 4210752);
+		this.fontRenderer.drawString("+" + String.valueOf(zFront), 235, 154, 4210752);
 	}
 
     @Override
@@ -77,6 +88,10 @@ public class UIPlanningTable extends GuiBase {
         int j = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
 
+		if(this.tile.isValidPreset()){
+        	this.drawTexturedModalRect(i + 181, j + 100, 36, 200, 12, 12);
+		}
+        
         for (int u = 0; u < 4; ++u){
             for (int v = 0; v < 4; ++v){
             	int slot = v + u * 4;
@@ -84,10 +99,10 @@ public class UIPlanningTable extends GuiBase {
             	int y = 40 + u * 19;
             	if(this.tile.isValidPreset() && slot < this.tile.totalInputs().size()) {
 	                if(this.tile.inputSlot(slot).getCount() == this.tile.previewSlot(slot).getCount()){
-	                	this.drawTexturedModalRect(i + x, j + y, 199, 0, 18, 18);
+	                	this.drawTexturedModalRect(i + x, j + y, 0, 200, 18, 18);
 	         	   	}
             	}else {
-                	this.drawTexturedModalRect(i + x, j + y, 217, 0, 18, 18);
+                	this.drawTexturedModalRect(i + x, j + y, 18, 200, 18, 18);
             	}
 
             }

@@ -43,7 +43,6 @@ public class PlanningTableRecipes extends BaseRecipes{
 																			machines_a(2, EnumMachinesA.CENTRIFUGE),
 																			machines_c(1, EnumMachinesC.ELEMENTS_CABINET_BASE),
 																			machines_d(1, EnumMachinesD.MATERIAL_CABINET_BASE),
-																			machines_c(2, EnumMachinesC.EXTRACTOR_BALANCE),
 																			machines_a(1, EnumMachinesA.UNLOADER),
 																			machines_a(1, EnumMachinesA.SERVER))));
 
@@ -140,7 +139,6 @@ public class PlanningTableRecipes extends BaseRecipes{
 																			machines_b(1, EnumMachinesB.FLUID_CISTERN),
 																			machines_a(2, EnumMachinesA.CENTRIFUGE),
 																			machines_d(1, EnumMachinesD.MATERIAL_CABINET_BASE),
-																			machines_c(1, EnumMachinesC.EXTRACTOR_BALANCE),
 																			machines_b(1, EnumMachinesB.AUXILIARY_ENGINE))));
 
 		planning_table_recipes.add(new PlanningTableRecipe(	EnumStructure.SIZER.ordinal(),
@@ -192,7 +190,6 @@ public class PlanningTableRecipes extends BaseRecipes{
 																			machines_d(1, EnumMachinesD.MATERIAL_CABINET_BASE),
 																			machines_a(1, EnumMachinesA.CENTRIFUGE),
 																			machines_a(1, EnumMachinesA.UNLOADER),
-																			machines_c(1, EnumMachinesC.EXTRACTOR_BALANCE),
 																			machines_b(2, EnumMachinesB.AUXILIARY_ENGINE))));
 
 		planning_table_recipes.add(new PlanningTableRecipe(	EnumStructure.DEPOSITION.ordinal(),
@@ -214,7 +211,6 @@ public class PlanningTableRecipes extends BaseRecipes{
 																			machines_a(3, EnumMachinesA.CENTRIFUGE),
 																			blocks_a(1, EnumMiscBlocksA.SEPARATOR),
 																			machines_b(3, EnumMachinesB.AUXILIARY_ENGINE),
-																			machines_c(1, EnumMachinesC.EXTRACTOR_BALANCE),
 																			machines_d(1, EnumMachinesD.MATERIAL_CABINET_BASE))));
 
 		planning_table_recipes.add(new PlanningTableRecipe(	EnumStructure.REFORMER.ordinal(),
@@ -254,7 +250,7 @@ public class PlanningTableRecipes extends BaseRecipes{
 																			machines_d(6, EnumMachinesD.GAS_HOLDER_BASE),
 																			blocks_a(2, EnumMiscBlocksA.GAS_ROUTER),
 																			machines_a(6, EnumMachinesA.CENTRIFUGE),
-																			blocks_a(2, EnumMiscBlocksA.SEPARATOR),
+																			blocks_a(1, EnumMiscBlocksA.SEPARATOR),
 																			machines_b(3, EnumMachinesB.AUXILIARY_ENGINE),
 																			machines_a(1, EnumMachinesA.UNLOADER),
 																			machines_a(1, EnumMachinesA.SERVER))));
@@ -265,7 +261,5 @@ public class PlanningTableRecipes extends BaseRecipes{
 																			machines_d(1, EnumMachinesD.GAS_HOLDER_BASE),
 																			machines_a(1, EnumMachinesA.CENTRIFUGE))));
 
-		
-		
 	}
 }

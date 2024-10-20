@@ -439,6 +439,8 @@ public class TEGasifierController extends TileEntityInv {
 			this.output.setOrFillFluid(getOutTank().inputTank, getRecipeOutput(), getProducedGas());
 			this.input.drainOrCleanFluid(getFluidCistern().inputTank, getDrainReactant(), true);
 			this.input.drainOrCleanFluid(getSlurryTank().inputTank, getDrainSlurry(), true);
+			getOutTank().updateNeighbours();
+			getFluidCistern().updateNeighbours();
 
 			if(hasMaterialCabinet()){
 				if(getDummyRecipe().getElements().size() > 0) {

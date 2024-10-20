@@ -5,12 +5,8 @@ import java.util.Arrays;
 
 import com.globbypotato.rockhounding_chemistry.enums.materials.EnumChemicals;
 import com.globbypotato.rockhounding_chemistry.enums.materials.EnumMinerals;
-import com.globbypotato.rockhounding_chemistry.enums.shards.EnumOxide;
-import com.globbypotato.rockhounding_chemistry.enums.shards.EnumSilicate;
-import com.globbypotato.rockhounding_chemistry.enums.shards.EnumSulfide;
 import com.globbypotato.rockhounding_chemistry.machines.recipe.construction.MineralSizerRecipe;
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
-import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -52,9 +48,7 @@ public class MineralSizerRecipes extends BaseRecipes{
 		mineral_sizer_recipes.add(new MineralSizerRecipe("blockCoal", 							chemicals(32, EnumChemicals.CRACKED_COAL), 8));
 		mineral_sizer_recipes.add(new MineralSizerRecipe("blockCharcoal", 						chemicals(16, EnumChemicals.CRACKED_CHARCOAL), 8));
 		mineral_sizer_recipes.add(new MineralSizerRecipe("sandstone", 							chemicals(8,  EnumChemicals.CRACKED_LIME), 5));
-		mineral_sizer_recipes.add(new MineralSizerRecipe("blockBituminous", 					chemicals(48, EnumChemicals.CRACKED_COAL), 7));
-		mineral_sizer_recipes.add(new MineralSizerRecipe("blockAnthracite", 					chemicals(64, EnumChemicals.CRACKED_COAL), 9));
-
+/*
 		if(ModUtils.hasRhRocksIntegtation()) {
 			mineral_sizer_recipes.add(new MineralSizerRecipe(new ItemStack(ModUtils.rhrocks_a(), 1, 0), 		mineral_ores(1, EnumMinerals.SILICATE), 1));
 			mineral_sizer_recipes.add(new MineralSizerRecipe(new ItemStack(ModUtils.rhrocks_b(), 1, 6), 		mineral_ores(1, EnumMinerals.SILICATE), 1));
@@ -203,6 +197,6 @@ public class MineralSizerRecipes extends BaseRecipes{
 																														4,
 																														12)));
 		}
-
+*/
 	}
 }

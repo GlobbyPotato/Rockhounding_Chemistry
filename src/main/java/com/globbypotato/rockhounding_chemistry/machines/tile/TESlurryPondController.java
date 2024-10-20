@@ -248,6 +248,7 @@ public class TESlurryPondController extends TileEntityInv{
 	private void process() {
 		if(hasWasher()) {
 			this.output.setOrFillFluid(getWasher().inputTank, calculateSlurry());
+			getWasher().updateNeighbours();
 		}
 		
 		if(hasTankPulp()) {

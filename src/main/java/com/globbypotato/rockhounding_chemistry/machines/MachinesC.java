@@ -28,6 +28,7 @@ import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TEReforme
 import com.globbypotato.rockhounding_chemistry.machines.tile.structure.TESpecimenCollector;
 import com.globbypotato.rockhounding_chemistry.machines.tile.utilities.TEMultivessel;
 import com.globbypotato.rockhounding_chemistry.utils.BaseRecipes;
+import com.globbypotato.rockhounding_chemistry.utils.ModUtils;
 import com.globbypotato.rockhounding_core.enums.EnumFluidNbt;
 import com.globbypotato.rockhounding_core.machines.tileentity.IFluidHandlingTile;
 import com.globbypotato.rockhounding_core.machines.tileentity.TileEntityInv;
@@ -400,7 +401,7 @@ public class MachinesC extends MachineIO {
 	public void onBlockClicked(World world, BlockPos pos, EntityPlayer player) {
 		IBlockState state = world.getBlockState(pos);
 		int meta = state.getBlock().getMetaFromState(state);
-		if(CoreUtils.hasWrench(player)){
+		if(ModUtils.hasWrench(player)){
 			handleRotation(world, pos, player, meta);
 		}
 	}
