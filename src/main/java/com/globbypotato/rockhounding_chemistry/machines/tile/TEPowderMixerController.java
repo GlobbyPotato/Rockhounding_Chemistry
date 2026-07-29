@@ -235,6 +235,7 @@ public class TEPowderMixerController extends TileEntityInv implements IInternalS
 
 	private boolean canProcess() {
 		return isActive()
+			&& isAssembled()
 			&& isValidRecipe()
 			&& isFullRecipe()
 			&& hasRedstonePower()
@@ -242,35 +243,46 @@ public class TEPowderMixerController extends TileEntityInv implements IInternalS
 			&& handleServer(getServer(), this.currentFile);
 	}
 
+	/**
+	 * Check if the current recipe's requirements can be satisfied
+	 */
 	private boolean isFullRecipe() {
-		int recipeTotal = getCurrentRecipe().getElements().size();
-		int countedIngr = 0;
+		PowderMixerRecipe currentRecipe = getCurrentRecipe();
+		TEElementsCabinetBase elementsCabinet = getElementsCabinet();
+		TEMaterialCabinetBase materialCabinet = getMaterialCabinet();
+
+		// This shouldn't happen, but it just check to be safe
+		if (currentRecipe == null)
+			return false;
 	
-		for(int i = 0;  i < recipeTotal; i++){
-			String recipeIngredient = getRecipeList(getSelectedRecipe()).getElements().get(i);
-			int recipeQuantity = getCurrentRecipe().getQuantities().get(i);
+		outer: for(int i = 0; i < currentRecipe.getElements().size(); i++) {
+			String recipeIngredient = currentRecipe.getElements().get(i);
+			int recipeQuantity = currentRecipe.getQuantities().get(i);
 
-			for(int j = 0; j < getElementsCabinet().MATERIAL_LIST.size(); j++) {
-				String cabinetIngredient = getElementsCabinet().MATERIAL_LIST.get(j).getOredict();
-				if(cabinetIngredient.matches(recipeIngredient)){
-					int cabinetQuantity = getElementsCabinet().MATERIAL_LIST.get(j).getAmount();
-					if(cabinetQuantity >= recipeQuantity) {
-						countedIngr++;
+			if (elementsCabinet != null) {
+				for (ElementsCabinetRecipe element : elementsCabinet.MATERIAL_LIST) {
+					if (element.getOredict().matches(recipeIngredient) && element.getAmount() >= recipeQuantity) {
+						// Valid match
+						continue outer;
 					}
 				}
 			}
 
-			for(int j = 0; j < getMaterialCabinet().MATERIAL_LIST.size(); j++) {
-				String cabinetIngredient = getMaterialCabinet().MATERIAL_LIST.get(j).getOredict();
-				if(cabinetIngredient.matches(recipeIngredient)){
-					int cabinetQuantity = getMaterialCabinet().MATERIAL_LIST.get(j).getAmount();
-					if(cabinetQuantity >= recipeQuantity) {
-						countedIngr++;
+			if (materialCabinet != null) {
+				for (MaterialCabinetRecipe material : materialCabinet.MATERIAL_LIST) {
+					if (material.getOredict().matches(recipeIngredient) && material.getAmount() >= recipeQuantity) {
+						// Valid match
+						continue outer;
 					}
 				}
 			}
+
+			// Ingredient wasn't matched
+			return false;
 		}
-		return countedIngr == recipeTotal;
+
+		// All ingredients were found
+		return true;
 	}
 
 	private boolean canOutput() {
